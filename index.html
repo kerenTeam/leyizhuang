@@ -25,7 +25,7 @@
 	<body>
 		<div class="mui-content">
 			<div class="title">
-			 
+			 踩踩踩
 			</div>
 		</div>
 		
@@ -38,105 +38,7 @@
 			mui.plusReady(function() {
 				
 				plus.storage.removeItem('oldToken');
-				Sign();
-				var timeSign = null;
-				var loadNum = 0;
-				var loadNum2 = 0;
-				clearInterval(timeSign);
-				timeSign = setInterval(Sign,5000000);//两小时自动更新一次token
-				var timeSign2  =  setInterval(function(){
-					loadNum2++;
-					if(plus.storage.getItem('oldToken') || loadNum2==10){
-						clearInterval(timeSign2);
-					}else{
-						Sign();
-					}
-				},1000)
-				function Sign(){//登录方法
-					//设置默认token
-					if(!plus.storage.getItem('myToken')){//没有用户token
-						mui.ajax('http://119.23.149.7:9999/app/employee/login',{
-							data:{"name":'XQ-000510',"password":'YWRtaW4='},
-							dataType:'json',
-							type:'post',
-							timeout:10000,
-							success:function(data,type,xhr){ 
-								console.log('登录返回',data);
-								if(data.code == -1){
-								 
-								}else{  
-									plus.nativeUI.closeWaiting();
-									console.log('默认账号登录返回'+JSON.stringify(data)); 
-									plus.storage.setItem("oldToken",xhr.getResponseHeader('token'));
-	//							 alert(plus.storage.getItem("oldToken"))
-								}
-							},
-							error:function(xhr,type,errorThrown){
-								plus.nativeUI.closeWaiting();
-								console.log('登录响应失败');
-								loadNum ++;
-								if(loadNum<3){
-									mui.toast('当前网络不好,再次连接');
-								}
-								console.log('获取默认token响应失败');
-							}
-						}); 
-					}else{
-						var Acc_pass = JSON.parse(plus.storage.getItem("Acc_pass"));
-						//根据缓存密码自动登录, 重新获取Token
-						mui.ajax(serverUrl+'/api/useraccount/login',{
-							data:{"phone":Acc_pass[0],"password":Acc_pass[1]},
-							dataType:'json',
-							type:'post',
-							timeout:5000,
-							success:function(data,type,xhr){
-								console.log('自动登录返回'+JSON.stringify(data)); 
-								plus.storage.setItem("oldToken",xhr.getResponseHeader('token'));
-								//app升级方法
-								if(/android/i.test(navigator.userAgent)){
-									checkUpdate(true); 
-								}else{
-									checkUpdateIos();
-								}
-							},
-							error:function(xhr,type,errorThrown){
-								loadNum ++;
-								if(loadNum<3){
-									mui.toast('当前网络不好,再次连接');
-								}
-								console.log('获取默认token响应失败');
-							}
-						});
-						
-						mui.ajax('http://119.23.149.7:9999/app/employee/login',{
-							data:{"name":Acc_pass[0],"password":Acc_pass[1]},
-							dataType:'json',
-							type:'post',
-							timeout:10000,
-							success:function(data,type,xhr){ 
-								console.log('登录返回',data);
-								if(data.code == -1){
-									plus.nativeUI.closeWaiting();
-									mui.toast(data.message)
-								}else{ 
-									console.log('自动登录返回'+JSON.stringify(data)); 
-									plus.storage.setItem("oldToken",xhr.getResponseHeader('token'));
-									plus.nativeUI.closeWaiting();
-								 
-								}
-							},
-							error:function(xhr,type,errorThrown){
-								plus.nativeUI.closeWaiting();
-								console.log('登录响应失败');
-							}
-						});
-					}
-				}//登录方法结束
-				
-				
-				
-				
-				
+			 
 				var self = plus.webview.currentWebview(),
 					nviews = self.getSubNViews(),
 					subpages = util.options.subpages,
@@ -213,7 +115,7 @@
 				}, {
 					tag: 'font',
 					id: 'icon',
-					text: '\ue600', //此为字体图标Unicode码'\e600'转换为'\ue600'
+					text: '去下单', //此为字体图标Unicode码'\e600'转换为'\ue600'
 					position: {
 						top: '0px',
 						left: '0px',
@@ -224,7 +126,7 @@
 						fontSrc: '_www/fonts/iconfont.ttf',
 						align: 'center',
 						color: '#fff',
-						size: '30px'
+						size: '10px'
 					}
 				}]);
 				// append 到父webview中
@@ -235,18 +137,17 @@
 				drawNativeIcon.addEventListener('click', function(e) {
 					mui.alert('你点击了图标，你在此可以打开摄像头或者新窗口等自定义点击事件。', '悬浮球点击事件');
 					// 重绘字体颜色
-					drawNativeIcon.drawText('\ue600', {}, {
+					drawNativeIcon.drawText('去下单', {}, {
 						fontSrc: '_www/fonts/iconfont.ttf',
 						align: 'center',
 						color: '#000',
-						size: '30px'
+						size: '10px'
 					}, 'icon');
 				});
 				
 				//创建子webview窗口 并初始化
 				util.initSubpage();
 				var activePage = plus.webview.currentWebview();
-
 				//给每个view 添加监听点击切换
 				for(var i = 0; i < 4; i++) {
 					nviews[i].addEventListener('click', clickEvent, false);
@@ -257,7 +158,7 @@
 					var currId = e.target.id,
 						currIndex = parseInt(currId.substr(currId.length - 1, 1) - 1),
 						currView = self.getStyle().subNViews[currIndex];
-						
+						alert(currIndex)
 					// 匹配对应tab窗口	
 					if(currIndex > 0){
 						targetPage = plus.webview.getWebviewById(subpages[currIndex-1]);						

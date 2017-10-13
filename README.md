@@ -7,7 +7,6 @@
 3. 支持设置手势密码，登录时可使用手势密码代替账号、密码；
 4. 支持评分、分享、拨打客服电话
 
-
 "launchwebview": {
 			"bottom": "0px",
 			"background": "#fff",
@@ -25,7 +24,7 @@
 						{
 							"tag": "font",
 							"id": "tabBar11",
-							"text": "\ue500",
+							"text": "\uf015",
 							"position": {
 								"top": "4px",
 								"left": "0",
@@ -33,7 +32,7 @@
 								"height": "24px"
 							},
 							"textStyles": {
-								"fontSrc": "_www/fonts/mui.ttf",
+								"fontSrc": "_www/fonts/fontawesome-webfont.ttf",
 								"align": "center",
 								"size": "24px"
 							}
@@ -66,7 +65,7 @@
 						{
 							"tag": "font",
 							"id": "tabBar21",
-							"text": "\ue201",
+							"text": "\uf0c9",
 							"position": {
 								"top": "4px",
 								"left": "-20px",
@@ -74,14 +73,14 @@
 								"height": "24px"
 							},
 							"textStyles": {
-								"fontSrc": "_www/fonts/mui.ttf",
+								"fontSrc": "_www/fonts/fontawesome-webfont.ttf",
 								"align": "center",
 								"size": "24px"
 							}
 						}, {
 							"tag": "font",
 							"id": "tabBar22",
-							"text": "消息",
+							"text": "商品",
 							"position": {
 								"top": "23px",
 								"left": "-20px",
@@ -107,7 +106,7 @@
 						{
 							"tag": "font",
 							"id": "tabBar31",
-							"text": "\ue100",
+							"text": "\uf217",
 							"position": {
 								"top": "4px",
 								"left": "20px",
@@ -115,14 +114,14 @@
 								"height": "24px"
 							},
 							"textStyles": {
-								"fontSrc": "_www/fonts/mui.ttf",
+								"fontSrc": "_www/fonts/fontawesome-webfont.ttf",
 								"align": "center",
 								"size": "24px"
 							}
 						}, {
 							"tag": "font",
 							"id": "tabBar32",
-							"text": "通讯录",
+							"text": "下料清单",
 							"position": {
 								"top": "24px",
 								"left": "20px",
@@ -148,7 +147,7 @@
 						{
 							"tag": "font",
 							"id": "tabBar41",
-							"text": "\ue6c9",
+							"text": "\uf007",
 							"position": {
 								"top": "4px",
 								"left": "0",
@@ -156,14 +155,14 @@
 								"height": "24px"
 							},
 							"textStyles": {
-								"fontSrc": "_www/fonts/iconfont.ttf",
+								"fontSrc": "_www/fonts/fontawesome-webfont.ttf",
 								"align": "center",
 								"size": "24px"
 							}
 						}, {
 							"tag": "font",
 							"id": "tabBar42",
-							"text": "新窗口",
+							"text": "我的",
 							"position": {
 								"top": "24px",
 								"left": "0",
