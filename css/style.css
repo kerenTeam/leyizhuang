@@ -1,0 +1,35 @@
+.ui-page-login,
+body {
+	width: 100%;
+	height: 100%;
+	margin: 0px;
+	padding: 0px;
+}
+.mui-content{height: 100%;}
+.flexw{background-color:#fff;display: flex;align-items: center;justify-content: space-around;text-align: center;}
+.flexw div{font-size:14px;color:#333;padding:15px 0;flex:1;box-size:border-box}	
+.curActive{border-bottom:2px solid red} 
+.categray{margin:5px 0;}
+.categray div{display:inline-block;}
+.categray span{display:inline-block;margin:0 5px}
+.mui-table-view .mui-media-object {
+    line-height: 42px;
+    max-width:100px!important;
+    width: 60px!important;
+    height: 60px!important;
+}
+.mui-numbox { 
+    width: 90px;
+    height: 29px;
+    padding:0 25px; 
+    font-size:12px;
+}
+.mui-numbox [class*=btn-numbox], .mui-numbox [class*=numbox-btn]{
+	width: 30px;
+	font-size:14px;
+	z-index:99;
+}
+.mui-numbox .mui-input-numbox, .mui-numbox .mui-numbox-input{
+	border:none!important;
+	width: 90%!important;
+}

@@ -1,0 +1,85 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../css/mui.min.css" rel="stylesheet" />
+	</head>
+	<style type="text/css">
+		#gxball{padding: 15px;}
+		.gxbList{padding:20px;width: calc((100vw - 50px) / 2);float: left;text-align: center;background-color: #FF5053;margin: 5px;}
+		
+	</style>
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">工序包</h1>
+		</header>
+		<div class="mui-content">
+			<div id="gxball">
+			
+			</div>
+		</div>
+		<script type="text/html" id="goodsTpl">
+			<%for(var i = 0 ;i<list.length;i++){%>
+					<div id="<%=list[i].id%>" class="gxbList" onclick="goList(<%=list[i].id%>,'<%=list[i].processName%>')"> 
+						<%=list[i].processName%>
+					</div>
+			<%}%>
+		</script>
+		<script src="../js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/artTemplate-native.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			mui.init();
+			mui.plusReady(function(){
+				//商品列表
+				mui.ajax('http://119.23.149.7:9999/app/process/list',{
+					dataType:'json',
+					headers: {"Authorization": plus.storage.getItem("oldToken")},
+					type:'post',
+					timeout:10000,
+					success:function(data,type,xhr){ 
+						console.log('工序包列表'+JSON.stringify(data));
+						if(data.code == 0 ){
+							plus.nativeUI.closeWaiting();
+							if(data.content.length){
+								$('#gxball').html(template('goodsTpl',{list:data.content}));
+							}else{
+								$('#gxball').html('<div style="text-align:center;padding:15px">暂无工序包</div>') 
+							}
+						}else{
+							mui.toast(data.message)
+						}
+						 
+					},
+					error:function(xhr,type,errorThrown){
+						plus.nativeUI.closeWaiting();
+						mui.toast(type)
+						console.log('登录响应失败');
+					}
+				}); 
+			})
+			
+			function goList(id,name){
+				mui.openWindow({
+					url: 'gxbList.html',
+					id: 'gxbList', 
+					show: {
+						aniShow: 'fade-in'
+					},
+					styles: {
+						popGesture: 'hide'
+					},
+					waiting: {
+						autoShow: false
+					},
+					 extras:{gid:id,gname:name}
+				});
+			}
+		</script>
+	</body>
+
+</html>

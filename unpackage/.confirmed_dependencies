@@ -1,0 +1,224 @@
+{
+	"main.html": {
+		"refer": [
+			"setting.html",
+			"html/tab-webview-subpage-contact.html",
+			"html/new-webview.html",
+			"goodlist.html",
+			"gxb.html",
+			"page/goodlist.html",
+			"page/gxb.html"
+		],
+		"resources": [
+			"css/mui.min.css",
+			"js/util.js",
+			"html/tab-webview-subpage-chat.html",
+			"js/mui.min.js",
+			"images/m.svg",
+			"images/s.svg",
+			"fonts/mui.ttf",
+			"images/y.svg",
+			"images/w.svg",
+			"images/d.svg",
+			"images/activity.svg",
+			"js/app.js",
+			"js/jquery.min.js",
+			"images/2.svg",
+			"images/1.svg",
+			"images/4.svg",
+			"images/5.svg",
+			"images/7.svg",
+			"images/6.svg",
+			"images/3.svg",
+			"images/8.svg",
+			"images/addcart.svg",
+			"js/artTemplate-native.js",
+			"js/default.js"
+		]
+	},
+	"login.html": {
+		"resources": [
+			"js/app.js",
+			"js/mui.min.js",
+			"images/sinaweibo.png",
+			"css/mui.min.css",
+			"css/style.css",
+			"images/weixin.png",
+			"images/qq.png",
+			"js/mui.enterfocus.js",
+			"fonts/mui.ttf",
+			"js/base64.js"
+		],
+		"refer": [
+			"main.html",
+			"reg.html",
+			"forget_password.html"
+		]
+	},
+	"setting.html": {
+		"resources": [
+			"libs/easymob-webim-sdk/easemob.im-1.0.5.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css",
+			"libs/easymob-webim-sdk/json2.js",
+			"libs/easymob-webim-sdk/jquery-1.11.1.js",
+			"js/mui.locker.js",
+			"js/feedback.js",
+			"css/feedback-page.css",
+			"js/feedback-page.js",
+			"libs/easymob-webim-sdk/strophe-custom-2.0.0.js",
+			"js/mui.view.js",
+			"images/iconfont-tianjia.png",
+			"js/app.js"
+		],
+		"refer": []
+	},
+	"identify.html": {
+		"resources": [
+			"js/mui.min.js",
+			"css/mui.min.css",
+			"js/statusBar.js",
+			"js/jquery.min.js",
+			"js/app.js",
+			"images/weixin.png",
+			"js/base64.js"
+		],
+		"refer": [
+			"login.html",
+			"main.html",
+			"reg.html"
+		]
+	},
+	"reg.html": {
+		"resources": [
+			"css/mui.min.css",
+			"css/style.css"
+		],
+		"refer": []
+	},
+	"forget_password.html": {
+		"resources": [
+			"css/mui.min.css",
+			"css/style.css",
+			"forget_password.html",
+			"fonts/mui.ttf",
+			"js/mui.min.js",
+			"js/base64.js"
+		],
+		"refer": [
+			"main.html"
+		]
+	},
+	"html/tab-webview-subpage-chat.html": {
+		"resources": [
+			"fonts/mui.ttf"
+		],
+		"refer": []
+	},
+	"html/tab-webview-subpage-contact.html": {
+		"resources": [
+			"images/60x60.gif"
+		],
+		"refer": []
+	},
+	"html/new-webview.html": {
+		"resources": [
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css"
+		],
+		"refer": []
+	},
+	"goodlist.html": {
+		"resources": [
+			"css/mui.min.css",
+			"js/webviewGroup.js",
+			"tab-top-subpage-1.html",
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"js/jquery.min.js",
+			"js/artTemplate-native.js",
+			"images/addcart.svg",
+			"js/default.js",
+			"css/style.css"
+		],
+		"refer": [
+			"tab-top-subpage-1.html",
+			"tab-top-subpage-5.html",
+			"tab-top-subpage-2.html",
+			"tab-top-subpage-3.html",
+			"tab-top-subpage-4.html"
+		]
+	},
+	"tab-top-subpage-1.html": {
+		"resources": [
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css"
+		],
+		"refer": []
+	},
+	"gxb.html": {
+		"resources": [
+			"js/mui.min.js",
+			"css/mui.min.css",
+			"fonts/mui.ttf",
+			"js/jquery.min.js",
+			"js/artTemplate-native.js"
+		],
+		"refer": [
+			"page/gxbList.html"
+		]
+	},
+	"index.html": {
+		"resources": [
+			"html/tab-webview-subpage-chat.html",
+			"js/util.js",
+			"js/mui.min.js",
+			"css/mui.min.css",
+			"js/jquery.min.js"
+		],
+		"refer": [
+			"html/tab-webview-subpage-chat.html",
+			"html/tab-webview-subpage-contact.html"
+		]
+	},
+	"page/gxbList.html": {
+		"resources": [
+			"js/default.js",
+			"css/mui.min.css",
+			"css/style.css",
+			"js/jquery.min.js",
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"js/artTemplate-native.js",
+			"images/addcart.svg"
+		],
+		"refer": []
+	},
+	"page/goodlist.html": {
+		"resources": [
+			"css/mui.min.css",
+			"css/style.css",
+			"js/default.js",
+			"js/jquery.min.js",
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"js/artTemplate-native.js",
+			"images/addcart.svg"
+		],
+		"refer": []
+	},
+	"page/gxb.html": {
+		"resources": [
+			"js/jquery.min.js",
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css",
+			"js/artTemplate-native.js"
+		],
+		"refer": [
+			"page/gxbList.html"
+		]
+	}
+}
