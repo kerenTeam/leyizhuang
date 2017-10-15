@@ -5,8 +5,6 @@
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<title>首页</title>
-		<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
-		<script src="js/mui.min.js"></script>
 		<link href="css/mui.min.css" rel="stylesheet" />
 		<style>
 			html,
@@ -19,26 +17,270 @@
 				color: #6d6d72;
 				font-size: 15px;
 			}
+			ul {
+				font-size: 14px;
+				color: #8f8f94;
+			}
+			.mui-btn {
+				padding: 10px;
+			}
+			.mui-placeholder span{color: #333333;}
+			.flexw,.flexws{display: flex;align-items: center;justify-content: space-around;text-align: center;margin-top: 15px;font-size:14px}
+			.flexw img,.flexws img{
+				display: block;
+				width: 30px;
+				height: 30px;
+				margin:auto;
+				 
+			}
+			.ltac .imgb{ 
+				margin:5px auto;
+				width: 60px;
+				height:60px;
+				padding:15px;
+				border-radius:50%;
+				 
+			}
+			.mui-table-view:after,.mui-table-view:before,.mui-table-view-cell:after,.mui-table-view-cell:before{
+				height:0!important;
+			}
 		</style>
 	</head>
 
 	<body>
-		<div class="mui-content">
-			<div class="title">
-			 踩踩踩
-			</div>
-		</div>
 		
+		<div class="mui-content">
+			<div style="position: relative;">
+				<div class="mui-slider"> 
+				  <div class="mui-slider-group mui-slider-loop">
+				    <!--支持循环，需要重复图片节点-->
+				    <div class="mui-slider-item mui-slider-item-duplicate"><a href="#"><img src="https://b-ssl.duitang.com/uploads/item/201610/11/20161011213437_HeKXZ.thumb.700_0.jpeg" /></a></div>
+				    <div class="mui-slider-item"><a href="#"><img src="https://b-ssl.duitang.com/uploads/item/201610/11/20161011213437_HeKXZ.thumb.700_0.jpeg" /></a></div>
+				    <div class="mui-slider-item"><a href="#"><img src="https://b-ssl.duitang.com/uploads/item/201610/11/20161011213437_HeKXZ.thumb.700_0.jpeg" /></a></div>
+				    <div class="mui-slider-item"><a href="#"><img src="https://b-ssl.duitang.com/uploads/item/201610/11/20161011213437_HeKXZ.thumb.700_0.jpeg" /></a></div>
+				    <div class="mui-slider-item"><a href="#"><img src="https://b-ssl.duitang.com/uploads/item/201610/11/20161011213437_HeKXZ.thumb.700_0.jpeg" /></a></div>
+				    <!--支持循环，需要重复图片节点-->
+				    <div class="mui-slider-item mui-slider-item-duplicate"><a href="#"><img src="https://b-ssl.duitang.com/uploads/item/201610/11/20161011213437_HeKXZ.thumb.700_0.jpeg" /></a></div>
+				  </div>
+				</div>
+				<div class="mui-input-row mui-search" onclick="goSearch()" style="z-index:1;position: absolute;top: 10px;left: 20px;right: 20px;">
+				    <input type="search" readonly="" class="mui-input-clear" placeholder="搜索" style="color:#333333;font-size: 12px;">
+				</div>
+			</div>
+			<div class="mui-content flexw">
+			     <div data-id="water">
+			     	<img src="images/s.svg" alt="" /> 水
+			     </div>
+			     <div data-id="electric">
+			     	<img src="images/d.svg" alt="" />电
+			     </div>
+			     <div data-id="wood">
+			     	<img src="images/m.svg" alt="" />木
+			     </div>
+			     <div data-id="tile">
+			     	<img src="images/w.svg" alt="" />瓦
+			     </div>
+			     <div data-id="oil">
+			     	<img src="images/y.svg" alt="" />油
+			     </div>
+			</div>
+			<div style="text-align:center;padding:20px 10px 0">
+				<img style="vertical-align:middle;margin:0 5px;width:25px" src="images/activity.svg"/>最新活动
+			</div>
+			<div class="mui-content flexws ltac">
+			     <div id="">
+			     	<div class="imgb" style="background-color:#7dc5eb"><img src="images/1.svg" alt="" /></div>快捷下单
+			     </div>
+			     <div class="gxb">
+			     	<div class="imgb" style="background-color:#be8dbd"><img src="images/2.svg" alt="" /></div>工序包下单
+			     </div>
+			     <div id="">
+			     	<div class="imgb" style="background-color:#7cba59"><img src="images/3.svg" alt="" /></div>拍照下单
+			     </div>
+			     <div id="">
+			     	<div class="imgb" style="background-color:#ea986c"><img src="images/4.svg" alt="" /></div>我的收藏
+			     </div>
+			</div>
+			<div class="mui-content flexw ltac">
+			     <div id="">
+			     	<div class="imgb" style="background-color:#e8989a"><img src="images/5.svg" alt="" /></div>物流
+			     </div>
+			     <div id="">
+			     	<div class="imgb" style="background-color:#8992c8"><img src="images/6.svg" alt="" /></div>签到
+			     </div>
+			     <div id="">
+			     	<div class="imgb" style="background-color:#199f97"><img src="images/7.svg" alt="" /></div>钱包
+			     </div>
+			     <div id="">
+			     	<div class="imgb" style="background-color:#e15d4b"><img src="images/8.svg" alt="" /></div>咨询
+			     </div>
+			</div>
+			
+			<!--常购清单-->
+			<div style="text-align:center;padding:20px 10px">
+				常购清单
+				<span style="float:right;font-size:12px" onclick="goOftenList()">更多</span>
+			</div>
+			
+			<!--商品列表-->
+		    <div class="goodsList" id="goodsList"></div>
+		    
+		    <script type="text/html" id="goodsTpl">
+		    	<ul class="mui-table-view">
+		    		<%for(var i = 0 ;i<list.length;i++){%>
+			    		<li style="width:50%!important;float:left;border:none" class="mui-table-view-cell mui-media" id="<%=list[i].id%>">
+					        <a href="javascript:;">
+					            <img class="mui-media-object" style="display:block!important;width:100%!important;max-width:none;height:auto" src="<%=list[i].coverImageUri%>">
+					          	<br>
+					            <div class="mui-media-body" style="font-size:12px">
+					                <%=list[i].goodsName%>
+					                <p class='mui-ellipsis'>规格:<%=list[i].goodsSpecification%> &nbsp;单位:<%=list[i].goodsUnit%></p>
+						            <span>￥<%=list[i].memberPrice%></span>
+									<img style="display:inline-block;float:right;margin-left:5px;vertical-align:middle;width:20px" src="images/addcart.svg"/>
+						            
+					            </div>
+					        </a>
+					    </li>
+		    		<%}%> 
+				</ul>
+		    </script>
+		
+			<div style="text-align:center;padding:20px 10px">
+				热门商品
+				<span style="float:right;font-size:12px" onclick="goHotList()">更多</span>
+			</div>
+			<div style="clear: both;"></div>
+			<!--商品列表-->
+		    <div class="goodsList" id="goodsListHot"></div>
+		    
+		    <script type="text/html" id="goodsHotTpl">
+		    	<ul class="mui-table-view" style="border-top: none!important;">
+		    		<%for(var i = 0 ;i<list.length;i++){%>
+			    		<li class="mui-table-view-cell mui-media" id="<%=list[i].id%>"  style="width:50%!important;float:left;border:none!important">
+					        <a href="javascript:;" style="border-top: none!important;">
+					            <img class="mui-media-object" style="display:block!important;width:100%!important;max-width:none;height:auto" src="<%=list[i].coverImageUri%>">
+					          	<br>
+					            <div class="mui-media-body" style="font-size:12px">
+					                <%=list[i].goodsName%>
+					                <p class='mui-ellipsis'>规格:<%=list[i].goodsSpecification%> &nbsp;单位:<%=list[i].goodsUnit%></p>
+						            <span>￥<%=list[i].memberPrice%></span>
+									<img style="display:inline-block;float:right;margin-left:5px;vertical-align:middle;width:20px" src="images/addcart.svg"/>
+						            
+					            </div>
+					        </a>
+					    </li>
+		    		<%}%> 
+				</ul>
+		    </script>
+		</div>
+		<div style="height: 50px;width: 100%;clear: both;"></div>
+		<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/mui.min.js"></script>
+		<script src="js/artTemplate-native.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/util.js"></script>
 		<script type="text/javascript">
 			var aniShow = {};
 			mui.init({
-				swipeBack: true //启用右滑关闭功能
+				swipeBack: false //启用右滑关闭功能
 			});
 			mui.plusReady(function() {
+				 
+				//判断是否登陆
+				Sign();
+				var timeSign = null;
+				var loadNum = 0;
+				var loadNum2 = 0;
+				clearInterval(timeSign);
+				timeSign = setInterval(Sign,5000000);//两小时自动更新一次token
+				var timeSign2  =  setInterval(function(){
+					loadNum2++;
+					if(plus.storage.getItem('oldToken') || loadNum2==10){
+						clearInterval(timeSign2);
+					}else{
+						Sign();
+					}
+				},1000)
+				function Sign(){//登录方法
+					//设置默认token
+					if(!plus.storage.getItem('oldToken')){//没有用户token
+						openview({
+							view:'identify.html',
+							id:'identify'
+						})
+						
+					}else{
+						
+						var Acc_pass = JSON.parse(plus.storage.getItem("Acc_pass"));//员工登陆
+						var openid = plus.storage.getItem("openId");//顾客登录
+						//根据缓存密码自动登录, 重新获取Token
+						if(Acc_pass){
+							mui.ajax('http://119.23.149.7:9999/app/employee/login',{
+								data:{"name":Acc_pass[0],"password":Acc_pass[1]},
+								dataType:'json',
+								type:'post',
+								timeout:10000,
+								success:function(data,type,xhr){ 
+									console.log('登录返回',data);
+									if(data.code == -1){
+									 
+									}else{  
+										plus.nativeUI.closeWaiting();
+										console.log('默认账号登录返回'+JSON.stringify(data)); 
+										plus.storage.setItem("oldToken",xhr.getResponseHeader('token'));
+			//							 alert(plus.storage.getItem("oldToken"))
+									}
+								},
+								error:function(xhr,type,errorThrown){
+									plus.nativeUI.closeWaiting();
+									console.log('登录响应失败');
+									loadNum ++;
+									if(loadNum<3){
+										mui.toast('当前网络不好,再次连接');
+									}
+									console.log('获取默认token响应失败');
+								}
+							}); 
+						}
+						if(openid){
+							mui.ajax('http://119.23.149.7:9999/app/customer/login',{
+								data:{"openId":openid},
+								dataType:'json',
+								type:'post',
+								timeout:10000,
+								success:function(data,type,xhr){ 
+									console.log('登录返回',data);
+									if(data.code == 0 && data.content.isExist){
+										plus.nativeUI.closeWaiting();
+										plus.storage.setItem('$userId',JSON.stringify(data.content.userId))
+										plus.storage.setItem("oldToken",xhr.getResponseHeader('token'));
+										plus.storage.setItem("openId",openid);
+		 								plus.storage.removeItem('Acc_pass');
+										
+										
+									}else if(data.code == -1){ 
+										plus.nativeUI.closeWaiting();
+										mui.toast(data.message);
+										openview({
+											view:'reg.html',
+											id:'reg',
+											extrasobj:{openid:openID},
+										})  
+									}
+									
+								},
+								error:function(xhr,type,errorThrown){
+									plus.nativeUI.closeWaiting();
+									console.log('登录响应失败');
+								}
+								
+							});
+						} 
+					}	
+					
+				 
+				}//登录方法结束
 				
-				plus.storage.removeItem('oldToken');
-			 
+				
 				var self = plus.webview.currentWebview(),
 					nviews = self.getSubNViews(),
 					subpages = util.options.subpages,
@@ -135,7 +377,6 @@
 
 				//自定义监听图标点击事件
 				drawNativeIcon.addEventListener('click', function(e) {
-					mui.alert('你点击了图标，你在此可以打开摄像头或者新窗口等自定义点击事件。', '悬浮球点击事件');
 					// 重绘字体颜色
 					drawNativeIcon.drawText('去下单', {}, {
 						fontSrc: '_www/fonts/iconfont.ttf',
@@ -158,7 +399,6 @@
 					var currId = e.target.id,
 						currIndex = parseInt(currId.substr(currId.length - 1, 1) - 1),
 						currView = self.getStyle().subNViews[currIndex];
-						alert(currIndex)
 					// 匹配对应tab窗口	
 					if(currIndex > 0){
 						targetPage = plus.webview.getWebviewById(subpages[currIndex-1]);						
@@ -185,6 +425,126 @@
 				}
 			});
 		</script>
+		<script>
+			function goSearch(){
+				openview({
+					view:'page/searchGoods.html',
+					id: 'searchGoods', 
+				})
+			}
+			function goOftenList(){
+				openview({
+					view:'page/ofenBuy.html',
+					id: 'ofenBuy', 
+				}) 
+			}
+			function goHotList(){
+				openview({
+					view:'page/hotGoods.html',
+					id: 'hotGoods', 
+				}) 
+			}
+			//获得slider插件对象
+			var gallery = mui('.mui-slider');
+			gallery.slider({
+			  interval:5000//自动轮播周期，若为0则不自动播放，默认为0；
+			});
+			
+			$('.gxb').click(function(){
+				openview({
+					view:'page/gxb.html',
+					id: 'gxb', 
+				}) 
+			})
+			var goodsCt = document.querySelectorAll('.flexw div');
+				[].forEach.call(goodsCt,function(ele,i){
+					ele.onclick = function(){ 
+						openview({
+							view:'page/goodlist.html',
+							id: 'goodlist',
+							extrasobj:{ctid:ele.getAttribute('data-id')}
+						})  
+					}
+				})
+			  
+			mui.plusReady(function() {
+				document.addEventListener('refresh', function() {
+					loadIndex();	
+				}) 
+				loadIndex();
+				function loadIndex(){
+					if(plus.storage.getItem("$identityType")){
+						var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
+					}else{
+						var identityT = 6;
+					}
+					//var userId = plus.storage.getItem('$userId'); 
+					var userId = 49; 
+				  
+					//常购商品列表
+					mui.ajax('http://119.23.149.7:9999/app/goods/often/list',{
+						data:{ 
+							userId:'49',
+							identityType:'6'
+						},
+						dataType:'json',
+						headers: {"Authorization": plus.storage.getItem("oldToken")},
+						type:'post',
+						timeout:10000,
+						success:function(data,type,xhr){ 
+							console.log('常购商品列表',data);
+							if(data.code == 0 ){
+								plus.nativeUI.closeWaiting();
+								if(data.content.length){
+									$('#goodsList').html(template('goodsTpl',{list:data.content}));
+								}else{
+									$('#goodsList').html('<div style="text-align:center;padding:15px;font-size: 12px">暂无商品</div>') 
+								}
+							}else{
+								mui.toast(data.message)
+							}
+							 
+						},
+						error:function(xhr,type,errorThrown){
+							plus.nativeUI.closeWaiting();
+							mui.toast(type)
+							console.log('登录响应失败');
+						}
+					}); 
+					//热门商品列表
+					mui.ajax('http://119.23.149.7:9999/app/goods/hot/list',{
+						data:{ 
+							userId:userId,
+							identityType:'6'
+						},
+						dataType:'json',
+						headers: {"Authorization": plus.storage.getItem("oldToken")},
+						type:'post',
+						timeout:10000,
+						success:function(data,type,xhr){ 
+							console.log('热门商品列表'+JSON.stringify(data));
+							if(data.code == 0 ){
+								plus.nativeUI.closeWaiting();
+								if(data.content.length){
+									$('#goodsListHot').html(template('goodsHotTpl',{list:data.content}));
+								}else{
+									$('#goodsListHot').html('<div style="text-align:center;padding:15px;font-size: 12px;">暂无商品</div>') 
+								}
+							}else{
+								mui.toast(data.message)
+							}
+							 
+						},
+						error:function(xhr,type,errorThrown){
+							plus.nativeUI.closeWaiting();
+							mui.toast(type)
+							console.log('登录响应失败');
+						}
+					}); 
+				
+				}
+			}); 
+		</script> 
 	</body>
 
 </html>

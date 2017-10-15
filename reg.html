@@ -64,6 +64,7 @@
 					</select>
 				</div>
 			</form>
+				<small style="color:#FF5053;padding: 15px;font-size: 12px;">温馨提示：城市选定后无法更改！</small>
 			<div class="mui-content-padded">
 				<button id='sendMail' class="mui-btn mui-btn-block mui-btn-primary">注册</button>
 			</div>
@@ -118,7 +119,8 @@
 									console.log('注册返回',data);
 									if(data.code==1000){//
 										plus.nativeUI.closeWaiting();
-										 mui.toast(data.message); 
+										 mui.toast(data.message);
+										 plus.webview.currentWebview().close(); 
 									}else if(data.code == 0){
 										plus.nativeUI.closeWaiting();
 										mui.toast('注册成功'); 
@@ -132,21 +134,19 @@
 												if(data.code == 0 && data.content.isExist){
 													plus.nativeUI.closeWaiting();
 													plus.storage.setItem('$userId',JSON.stringify(data.content.userId))
+													plus.storage.setItem("$identityType",'6')
 													plus.storage.setItem("oldToken",xhr.getResponseHeader('token'));
 													plus.storage.setItem("openId",openID);
-													mui.openWindow({
-														url: 'main.html',
-														id: 'main', 
-														show: {
-															aniShow: 'fade-in'
-														},
-														styles: {
-															popGesture: 'hide'
-														},
-														waiting: {
-															autoShow: false
-														}, 
-													});
+													plus.storage.removeItem('Acc_pass');
+//												  
+													var time2 = setTimeout(function(){
+														var index = plus.webview.getLaunchWebview();
+														mui.fire(index,'refresh');
+														plus.webview.currentWebview().close(); 
+														plus.nativeUI.closeWaiting();
+														mui.toast('登录成功');
+													},500)
+												 
 												}
 												
 											},
@@ -160,6 +160,7 @@
 									}else{
 										plus.nativeUI.closeWaiting();
 										mui.toast(data.message); 
+										plus.webview.currentWebview().close(); 
 									}
 								},
 								error:function(xhr,type,errorThrown){

@@ -1,0 +1,113 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../css/style.css" />
+	</head>
+ 	<style type="text/css">
+ 		.categray div{
+ 			width: 80%;
+ 			vertical-align: top;
+ 		}
+ 	 
+ 	</style>
+	<body>
+		<header class="mui-bar mui-bar-nav" style="padding-right: 15px;">
+			<a id="leftbtn" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">热门商品</h1>
+		</header>
+		 
+		<div class="mui-content" style="height: 20px;">
+		    <!--商品列表-->
+		    <div class="goodsList" id="goodsList"></div>
+		    
+		    <script type="text/html" id="goodsTpl">
+		    	<ul class="mui-table-view">
+		    		<%for(var i = 0 ;i<list.length;i++){%>
+			    		<li class="mui-table-view-cell mui-media" id="<%=list[i].id%>">
+					        <a href="javascript:;">
+					            <img class="mui-media-object mui-pull-left" src="<%=list[i].coverImageUri%>">
+					            <div class="mui-media-body">
+					                <%=list[i].goodsName%>
+					                <p class='mui-ellipsis'>规格:<%=list[i].goodsSpecification%> &nbsp;单位:<%=list[i].goodsUnit%></p>
+						            <span>￥<%=list[i].memberPrice%></span>
+									<img style="display:inline-block;float:right;margin-left:5px;vertical-align:middle" src="../images/addcart.svg"/>
+						            <div style="display:inline-block;float:right;" class="mui-numbox" data-numbox-step='1' data-numbox-min='0' data-numbox-max='100'>
+									  <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+									  <input class="mui-numbox-input" type="number" />
+									  <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+									</div>
+					            </div>
+					        </a>
+					    </li>
+		    		<%}%> 
+				</ul>
+		    </script> 
+	    </div> 
+		<script src="../js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/artTemplate-native.js" type="text/javascript" charset="utf-8"></script>
+		<!--<script src="../js/default.js" type="text/javascript" charset="utf-8"></script>-->
+		<script type="text/javascript">
+			mui.init();
+			mui.plusReady(function(){
+				if(plus.storage.getItem("$identityType")){
+					var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
+				}else{
+					var identityT = 6;
+				}
+//				var userId = plus.storage.getItem('$userId'); 
+				var userId = 49; 
+				var categoryCode = plus.webview.currentWebview().ctid;
+				if(categoryCode){ 
+					$('.flexw div').siblings().removeClass('curActive')
+					$('.'+categoryCode).addClass('curActive');
+				}
+				plus.nativeUI.showWaiting();
+				 
+				 kindType(categoryCode);
+				 function kindType(categoryCode){
+				 	
+					//商品列表
+					mui.ajax('http://119.23.149.7:9999/app/goods/hot/list',{
+						data:{
+							categoryCode:categoryCode,
+							userId:userId,
+							identityType:'6'
+						},
+						dataType:'json',
+						headers: {"Authorization": plus.storage.getItem("oldToken")},
+						type:'post',
+						timeout:10000,
+						success:function(data,type,xhr){ 
+							console.log('商品列表',data);
+							if(data.code == 0 ){
+								plus.nativeUI.closeWaiting();
+								if(data.content.length){
+									$('#goodsList').html(template('goodsTpl',{list:data.content}));
+									mui('.mui-numbox').numbox()
+								}else{
+									$('#goodsList').html('<div style="text-align:center;padding:15px">暂无商品</div>') 
+								}
+							}else{
+								mui.toast(data.message)
+							}
+							 
+						},
+						error:function(xhr,type,errorThrown){
+							plus.nativeUI.closeWaiting();
+							mui.toast(type)
+							console.log('登录响应失败');
+						}
+					}); 
+				 }
+				 
+			})
+		</script>
+	</body>
+
+</html>
