@@ -729,7 +729,8 @@
 					"fonts/mui.ttf",
 					"js/artTemplate-native.js",
 					"images/center/phone.svg",
-					"css/center.css"
+					"css/center.css",
+					"js/jquery.min.js"
 				],
 				"refer": [],
 				"priority": 0

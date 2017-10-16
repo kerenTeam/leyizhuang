@@ -230,6 +230,13 @@
 							if(data.code == 0 ){
 								plus.nativeUI.closeWaiting();
 								if(data.content.length){
+									var spec = [];
+									for(var i in data.content){
+										spec.push(data.content[i].goodsSpecification)
+									}
+									console.log('spec',spec);
+									//去重
+									
 									$('#goodsList').html(template('goodsTpl',{list:data.content}));
 									mui('.mui-numbox').numbox()
 								}else{
