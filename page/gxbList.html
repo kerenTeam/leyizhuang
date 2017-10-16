@@ -68,20 +68,17 @@
 		<script type="text/javascript">
 			mui.init();
 			mui.plusReady(function(){
-				if(plus.storage.getItem("$identityType")){
-					var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
-				}else{
-					var identityT = 6;
-				}
-//				var userId = plus.storage.getItem('$userId'); 
-				var userId = 1; 
+//				var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
+				var identityT = '6';
+				//var userId = plus.storage.getItem('$userId'); 
+				var userId = 49;
 				var gxId = plus.webview.currentWebview().gid;//商品列表
 				var gName = plus.webview.currentWebview().gname;
 				$('#gName').html(gName)
 				plus.nativeUI.showWaiting();
 				mui.ajax('http://119.23.149.7:9999/app/process/processGoods/list',{
 					data:{
-						userId:userId,identityType:'6',processId:gxId
+						userId:userId,identityType:identityT,processId:gxId
 					},
 					dataType:'json',
 					headers: {"Authorization": plus.storage.getItem("oldToken")},

@@ -55,11 +55,8 @@
 		<script type="text/javascript">
 			mui.init();
 			mui.plusReady(function(){
-				if(plus.storage.getItem("$identityType")){
-					var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
-				}else{
-					var identityT = 6;
-				}
+//				var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
+				var identityT = '6';
 //				var userId = plus.storage.getItem('$userId'); 
 				var userId = 49; 
 				var categoryCode = plus.webview.currentWebview().ctid;
@@ -77,7 +74,7 @@
 						data:{
 							categoryCode:categoryCode,
 							userId:userId,
-							identityType:'6'
+							identityType:identityT
 						},
 						dataType:'json',
 						headers: {"Authorization": plus.storage.getItem("oldToken")},

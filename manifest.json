@@ -589,7 +589,9 @@
 					"images/3.svg",
 					"images/d.svg",
 					"images/addcart.svg",
-					"page/tab-webview-subpage-chat.html"
+					"page/tab-webview-subpage-chat.html",
+					"page/goodList.html",
+					"js/app.js"
 				],
 				"refer": [
 					"html/tab-webview-subpage-contact.html",
@@ -598,7 +600,9 @@
 					"page/gxb.html",
 					"page/tab-webview-subpage-contact.html",
 					"page/ofenBuy.html",
-					"page/searchGoods.html"
+					"page/searchGoods.html",
+					"page/hotGoods.html",
+					"center.html"
 				],
 				"priority": 0
 			},
@@ -683,7 +687,12 @@
 			"page/hotGoods.html": {
 				"resources": [
 					"css/mui.min.css",
-					"css/style.css"
+					"css/style.css",
+					"js/jquery.min.js",
+					"js/mui.min.js",
+					"images/addcart.svg",
+					"fonts/mui.ttf",
+					"js/artTemplate-native.js"
 				],
 				"refer": [],
 				"priority": 0
@@ -698,6 +707,28 @@
 					"fonts/mui.ttf",
 					"js/artTemplate-native.js",
 					"images/delet.svg"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"page/goodList.html": {
+				"resources": [
+					"css/mui.min.css",
+					"css/style.css",
+					"images/addcart.svg"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"center.html": {
+				"resources": [
+					"js/app.js",
+					"css/mui.min.css",
+					"js/mui.min.js",
+					"images/center/shizhi.png",
+					"fonts/mui.ttf",
+					"js/artTemplate-native.js",
+					"images/center/phone.svg"
 				],
 				"refer": [],
 				"priority": 0

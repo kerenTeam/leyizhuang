@@ -48,7 +48,7 @@
 
 	<body>
 		
-		<div class="mui-content">
+		<div class="">
 			<div style="position: relative;">
 				<div class="mui-slider"> 
 				  <div class="mui-slider-group mui-slider-loop">
@@ -62,8 +62,11 @@
 				    <div class="mui-slider-item mui-slider-item-duplicate"><a href="#"><img src="https://b-ssl.duitang.com/uploads/item/201610/11/20161011213437_HeKXZ.thumb.700_0.jpeg" /></a></div>
 				  </div>
 				</div>
-				<div class="mui-input-row mui-search" onclick="goSearch()" style="z-index:1;position: absolute;top: 10px;left: 20px;right: 20px;">
-				    <input type="search" readonly="" class="mui-input-clear" placeholder="搜索" style="color:#333333;font-size: 12px;">
+				<div class="" onclick="goSearch()" style="z-index:1;position: absolute;top: 10px;left: 20px;right: 20px;">
+				   <div style="background-color: rgba(0,0,0,0.1);font-size: 12px;height: 30px;width: 100%;border-radius: 5px;text-align: center;line-height: 30px;">
+				<span class="mui-icon mui-icon-search" style="vertical-align: middle;font-size:20px;"></span><span>搜索</span>
+				   </div>
+				   <!--<input type="search" readonly="" class="mui-input-clear" placeholder="搜索" style="color:#333333;font-size: 12px;">-->
 				</div>
 			</div>
 			<div class="mui-content flexw">
@@ -168,6 +171,7 @@
 					            </div>
 					        </a>
 					    </li>
+					    
 		    		<%}%> 
 				</ul>
 		    </script>
@@ -175,8 +179,9 @@
 		<div style="height: 50px;width: 100%;clear: both;"></div>
 		<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/mui.min.js"></script>
-		<script src="js/artTemplate-native.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/util.js"></script>
+		<script src="js/artTemplate-native.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/app.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
 			var aniShow = {};
 			mui.init({
@@ -208,72 +213,80 @@
 						})
 						
 					}else{
-						
-						var Acc_pass = JSON.parse(plus.storage.getItem("Acc_pass"));//员工登陆
-						var openid = plus.storage.getItem("openId");//顾客登录
-						//根据缓存密码自动登录, 重新获取Token
-						if(Acc_pass){
-							mui.ajax('http://119.23.149.7:9999/app/employee/login',{
-								data:{"name":Acc_pass[0],"password":Acc_pass[1]},
-								dataType:'json',
-								type:'post',
-								timeout:10000,
-								success:function(data,type,xhr){ 
-									console.log('登录返回',data);
-									if(data.code == -1){
-									 
-									}else{  
+						if(plus.storage.getItem("Acc_pass") || plus.storage.getItem("openId")){
+							var Acc_pass = JSON.parse(plus.storage.getItem("Acc_pass"));//员工登陆
+							var openid = plus.storage.getItem("openId");//顾客登录
+							console.log(openid)
+							//根据缓存密码自动登录, 重新获取Token 
+							if(Acc_pass){
+								mui.ajax('http://119.23.149.7:9999/app/employee/login',{
+									data:{"name":Acc_pass[0],"password":Acc_pass[1]},
+									dataType:'json',
+									type:'post',
+									timeout:10000,
+									success:function(data,type,xhr){ 
+										console.log('登录返回',data);
+										if(data.code == -1){
+										 
+										}else{  
+											plus.nativeUI.closeWaiting();
+											console.log('默认账号登录返回'+JSON.stringify(data)); 
+											plus.storage.setItem("oldToken",xhr.getResponseHeader('token'));
+				//							 alert(plus.storage.getItem("oldToken"))
+										}
+									},
+									error:function(xhr,type,errorThrown){
 										plus.nativeUI.closeWaiting();
-										console.log('默认账号登录返回'+JSON.stringify(data)); 
-										plus.storage.setItem("oldToken",xhr.getResponseHeader('token'));
-			//							 alert(plus.storage.getItem("oldToken"))
+										console.log('登录响应失败');
+										loadNum ++;
+										if(loadNum<3){
+											mui.toast('当前网络不好,再次连接');
+										}
+										console.log('获取默认token响应失败');
 									}
-								},
-								error:function(xhr,type,errorThrown){
-									plus.nativeUI.closeWaiting();
-									console.log('登录响应失败');
-									loadNum ++;
-									if(loadNum<3){
-										mui.toast('当前网络不好,再次连接');
-									}
-									console.log('获取默认token响应失败');
-								}
-							}); 
-						}
-						if(openid){
-							mui.ajax('http://119.23.149.7:9999/app/customer/login',{
-								data:{"openId":openid},
-								dataType:'json',
-								type:'post',
-								timeout:10000,
-								success:function(data,type,xhr){ 
-									console.log('登录返回',data);
-									if(data.code == 0 && data.content.isExist){
-										plus.nativeUI.closeWaiting();
-										plus.storage.setItem('$userId',JSON.stringify(data.content.userId))
-										plus.storage.setItem("oldToken",xhr.getResponseHeader('token'));
-										plus.storage.setItem("openId",openid);
-		 								plus.storage.removeItem('Acc_pass');
+								}); 
+							}
+							if(openid){
+								mui.ajax('http://119.23.149.7:9999/app/customer/login',{
+									data:{"openId":openid},
+									dataType:'json',
+									type:'post',
+									timeout:10000,
+									success:function(data,type,xhr){ 
+										console.log('登录返回',data);
+										if(data.code == 0 && data.content.isExist){
+											plus.nativeUI.closeWaiting();
+											plus.storage.setItem('$userId',JSON.stringify(data.content.userId))
+											plus.storage.setItem("oldToken",xhr.getResponseHeader('token'));
+											plus.storage.setItem("openId",openid);
+			 								plus.storage.removeItem('Acc_pass');
+											
+											
+										}else if(data.code == -1){ 
+											plus.nativeUI.closeWaiting();
+											mui.toast(data.message);
+											openview({
+												view:'reg.html',
+												id:'reg',
+												extrasobj:{openid:openID},
+											})  
+										}
 										
-										
-									}else if(data.code == -1){ 
+									},
+									error:function(xhr,type,errorThrown){
 										plus.nativeUI.closeWaiting();
-										mui.toast(data.message);
-										openview({
-											view:'reg.html',
-											id:'reg',
-											extrasobj:{openid:openID},
-										})  
+										console.log('登录响应失败');
 									}
 									
-								},
-								error:function(xhr,type,errorThrown){
-									plus.nativeUI.closeWaiting();
-									console.log('登录响应失败');
-								}
-								
-							});
-						} 
+								});
+							} 
+						}else{
+							openview({
+								view:'identify.html',
+								id:'identify'
+							})
+						}
+						
 					}	
 					
 				 
@@ -409,18 +422,18 @@
 						return;
 					}
 
-					if(currIndex !== 3) {
+//					if(currIndex !== 3) {
 						//底部选项卡切换
 						util.toggleNview(currView, currIndex);
 						// 子页面切换
 						util.changeSubpage(targetPage, activePage);
 						//更改当前活跃的页面
 						activePage = targetPage;
-					} else {
-						//第四个tab 打开新窗口
-						var newWV = plus.webview.create('html/new-webview.html', 'new');
-						newWV.show('slide-in-right', 200);
-					}
+//					} else {
+//						//第四个tab 打开新窗口
+//						var newWV = plus.webview.create('html/new-webview.html', 'new');
+//						newWV.show('slide-in-right', 200);
+//					}
 				}
 			});
 		</script>
@@ -459,32 +472,28 @@
 				[].forEach.call(goodsCt,function(ele,i){
 					ele.onclick = function(){ 
 						openview({
-							view:'page/goodlist.html',
-							id: 'goodlist',
+							view:'page/goodList.html',
+							id: 'goodList',
 							extrasobj:{ctid:ele.getAttribute('data-id')}
 						})  
 					}
-				})
-			  
+				}) 
 			mui.plusReady(function() {
+				
 				document.addEventListener('refresh', function() {
 					loadIndex();	
 				}) 
 				loadIndex();
 				function loadIndex(){
-					if(plus.storage.getItem("$identityType")){
-						var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
-					}else{
-						var identityT = 6;
-					}
+//					var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
+					var identityT = '6';
 					//var userId = plus.storage.getItem('$userId'); 
-					var userId = 49; 
-				  
+					var userId = 49;
 					//常购商品列表
 					mui.ajax('http://119.23.149.7:9999/app/goods/often/list',{
 						data:{ 
-							userId:'49',
-							identityType:'6'
+							userId:userId,
+							identityType:identityT
 						},
 						dataType:'json',
 						headers: {"Authorization": plus.storage.getItem("oldToken")},
@@ -514,7 +523,7 @@
 					mui.ajax('http://119.23.149.7:9999/app/goods/hot/list',{
 						data:{ 
 							userId:userId,
-							identityType:'6'
+							identityType:identityT
 						},
 						dataType:'json',
 						headers: {"Authorization": plus.storage.getItem("oldToken")},

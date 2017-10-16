@@ -64,20 +64,13 @@
 			})
 			
 			function goList(id,name){
-				mui.openWindow({
-					url: 'gxbList.html',
+				openview({
+					view:'gxbList.html',
 					id: 'gxbList', 
-					show: {
-						aniShow: 'fade-in'
-					},
-					styles: {
-						popGesture: 'hide'
-					},
-					waiting: {
-						autoShow: false
-					},
-					 extras:{gid:id,gname:name}
-				});
+					extrasobj:{gid:id,gname:name}
+					
+				}) 
+				
 			}
 		</script>
 	</body>
