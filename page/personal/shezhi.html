@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<title>设置</title>
+		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, width=device-width">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-touch-fullscreen" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black"> 
+		<meta name="format-detection" content="telephone=no">
+		<meta name="format-detection" content="address=no">
+		<link rel="stylesheet" type="text/css" href="../../css/commonY.css">
+		<link rel="stylesheet" type="text/css" href="../../css/index.css">
+		<link rel="stylesheet" type="text/css" href="../../css/mui.min.css"/>
+		<link rel="stylesheet" href="../../css/reset.css">
+		<style type="text/css"> 
+			.mui-bar-nav{box-shadow: none !important;}
+			body{background-color: #f3f3f3;}
+			.liafter:after{
+				content: '';
+				display: block;
+				height: 1px;
+				background-color: rgba(0,0,0,0.1);
+				-webkit-transform: scaleY(.5);
+			}
+			#main li{height: 50px;line-height: 50px;padding-left: 20px; background-color: #fff;font-size: 15px;color: #333;}
+			#main li span{font-size: 20px;color: #999;float: right;margin: 18px 10px 0;} 
+			.aClick:active{background-color: #eee !important;}
+			#xieyi{text-align: center;margin-top: 60px;color: #e21919;font-size: 13px;}
+		</style>
+	</head>
+	<body>
+		<header class="mui-bar mui-bar-nav fineB">
+		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left bigSize"></a>
+		    <h1 class="mui-title">设置</h1>  
+		</header>
+		<script src="../../js/statusBar.js"></script><!--状态栏-->
+		<div id="main">  
+			<ul>
+				<li class="aClick" id="dizhiGuan" style="margin-top: 62px;">地址管理<span class="mui-icon mui-icon-arrowright"></span></li>
+				
+				<li class="aClick" id="editdata" style="margin-top: 12px;">编辑资料<span class="mui-icon mui-icon-arrowright"></span></li>
+				<li class="aClick" id="editpw" style="margin-top: 12px;">修改密码<span class="mui-icon mui-icon-arrowright"></span></li>
+				<li class="aClick" id="appupgrade" style="display: none;">检查更新</li>
+				<li class="aClick liafter" id="tucao" style="margin-top: 12px;">反馈<span class="mui-icon mui-icon-arrowright"></span></li>
+				<li class="aClick" id="aboutme">关于<span class="mui-icon mui-icon-arrowright"></span></li>
+				<li class="aClick" id="Signout" style="margin-top: 20px;text-align: center;padding: 0;color: #e21919;;">退出登录</li>
+			</ul>
+			<div id="xieyi">
+				HI集用户协议
+			</div>
+			<div id="" style="text-align: center;margin-top: 40px;color: #777;font-size: 11px;line-height: 20px;"> 
+				© 宏帆集团  &nbsp; hiji.hifete.com<br />  
+				当前版本号: v<span id="version">- - -</span> 
+			</div>
+	    </div>
+	</body>
+	<script src="../../js/mui.min.js"></script>
+	<script src="../../js/app.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../js/update.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		mui.plusReady(function(){
+			//检测设备信息
+			!function(){
+				plus.runtime.getProperty(plus.runtime.appid,function(inf){//显示当前版本号
+		        	mui('#version')[0].innerHTML = inf.version;
+			    });
+				if(/android/i.test(navigator.userAgent)){
+					mui('#editpw')[0].className += ' liafter';
+					mui('#appupgrade')[0].style.display = 'block'; 
+					mui('#appupgrade')[0].addEventListener('tap',function(){
+						checkUpdate(false);  
+					})
+				}
+			}();
+			 /*地址*/
+			mui('#dizhiGuan')[0].onclick = function(){
+				openview({
+					view: "address.html",
+					id: "address",
+				})
+			}
+			
+			//吐槽
+			mui('#tucao')[0].onclick = function(){
+				openview({
+					view: "../teasing.html",
+					id: "teasing",
+					extrasobj: {
+						page:"hidou"
+					}
+				})
+			}
+			//关于
+			mui('#aboutme')[0].addEventListener('tap',function(){
+				openview({
+					view:'../end.html' 
+				});
+			})
+			//协议
+			mui('#xieyi')[0].addEventListener('tap',function(){
+				openview({
+					view:'../agreement.html' 
+				});
+			})
+			//编辑资料
+			mui('#editdata')[0].addEventListener('tap',function(){
+				openview({
+					view:'setup.html' 
+				});
+			})
+			//修改密码
+			mui('#editpw')[0].addEventListener('tap',function(){
+				openview({
+					view:'../forgetpw.html',
+					id:'forgetpw'
+				});
+			})
+			//退出登录
+			mui('#Signout')[0].addEventListener('tap',function(){
+		        mui.confirm('确认退出登录？', '提示', ['取消', '确定'], function(e) {
+		            if (e.index == 1) {
+			            plus.storage.removeItem('myToken');
+						plus.storage.removeItem('userid');
+						plus.storage.removeItem('Acc_pass');
+						plus.storage.removeItem('$gotCoupon');
+						plus.storage.removeItem('likeH');
+						plus.storage.removeItem('commentH');
+						plus.storage.removeItem('PletterH'); 
+						plus.storage.removeItem("$gameTime"); 
+						mui.fire(plus.webview.getWebviewById('center.html'),'refresh');
+						plus.nativeUI.showWaiting();
+						var time2 = setTimeout(function(){
+							plus.nativeUI.closeWaiting();
+							plus.webview.currentWebview().close();
+							mui.toast('退出成功');
+						},500)	
+		            }
+		        })
+			});
+			
+		});	
+			
+	</script>
+	
+	
+</html>

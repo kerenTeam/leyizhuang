@@ -255,6 +255,14 @@
 					var userId = 49;
 					var oldToken = plus.storage.getItem('oldToken');
 					loadmyinfo();
+					
+					/*设置*/
+					mui('.shezhi')[0].addEventListener('tap',function(){
+						openview({
+							view:'page/personal/shezhi.html',
+							id:'shezhi'
+						});
+					});
 
 					function loadmyinfo() {
 						//个人信息
