@@ -602,7 +602,9 @@
 					"page/ofenBuy.html",
 					"page/searchGoods.html",
 					"page/hotGoods.html",
-					"center.html"
+					"center.html",
+					"cart.html",
+					"page/collect.html"
 				],
 				"priority": 0
 			},
@@ -715,7 +717,11 @@
 				"resources": [
 					"css/mui.min.css",
 					"css/style.css",
-					"images/addcart.svg"
+					"images/addcart.svg",
+					"js/jquery.min.js",
+					"js/mui.min.js",
+					"fonts/mui.ttf",
+					"js/artTemplate-native.js"
 				],
 				"refer": [],
 				"priority": 0
@@ -731,6 +737,25 @@
 					"images/center/phone.svg",
 					"css/center.css",
 					"js/jquery.min.js"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"cart.html": {
+				"resources": [
+					"css/mui.min.css"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"page/collect.html": {
+				"resources": [
+					"css/style.css",
+					"css/mui.min.css",
+					"js/jquery.min.js",
+					"js/mui.min.js",
+					"fonts/mui.ttf",
+					"js/artTemplate-native.js"
 				],
 				"refer": [],
 				"priority": 0
