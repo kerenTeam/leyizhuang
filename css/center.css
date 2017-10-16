@@ -1,0 +1,10 @@
+.orderType{
+	padding: 15px 0;
+	font-size: 14px;
+	background: #FFFFFF;
+}
+.flexRow{
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+}

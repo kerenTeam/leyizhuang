@@ -591,14 +591,14 @@
 					"images/addcart.svg",
 					"page/tab-webview-subpage-chat.html",
 					"page/goodList.html",
-					"js/app.js"
+					"js/app.js",
+					"page/tab-webview-subpage-contact.html"
 				],
 				"refer": [
 					"html/tab-webview-subpage-contact.html",
 					"page/goodlist.html",
 					"identify.html",
 					"page/gxb.html",
-					"page/tab-webview-subpage-contact.html",
 					"page/ofenBuy.html",
 					"page/searchGoods.html",
 					"page/hotGoods.html",
@@ -728,7 +728,8 @@
 					"images/center/shizhi.png",
 					"fonts/mui.ttf",
 					"js/artTemplate-native.js",
-					"images/center/phone.svg"
+					"images/center/phone.svg",
+					"css/center.css"
 				],
 				"refer": [],
 				"priority": 0
