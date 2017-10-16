@@ -99,7 +99,7 @@
 			     <div id="">
 			     	<div class="imgb" style="background-color:#7cba59"><img src="images/3.svg" alt="" /></div>拍照下单
 			     </div>
-			     <div id="">
+			     <div onclick="goCollect()">
 			     	<div class="imgb" style="background-color:#ea986c"><img src="images/4.svg" alt="" /></div>我的收藏
 			     </div>
 			</div>
@@ -187,8 +187,9 @@
 			mui.init({
 				swipeBack: false //启用右滑关闭功能
 			});
+			
 			mui.plusReady(function() {
-				 
+//				 plus.storage.clear();
 				//判断是否登陆
 				Sign();
 				var timeSign = null;
@@ -454,6 +455,13 @@
 				openview({
 					view:'page/hotGoods.html',
 					id: 'hotGoods', 
+				}) 
+			}
+			//收藏
+			function goCollect(){
+				openview({
+					view:'page/collect.html',
+					id: 'collect', 
 				}) 
 			}
 			//获得slider插件对象

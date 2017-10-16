@@ -215,7 +215,9 @@
 			"page/tab-webview-subpage-chat.html",
 			"page/hotGoods.html",
 			"page/goodList.html",
-			"center.html"
+			"center.html",
+			"cart.html",
+			"page/collect.html"
 		]
 	},
 	"page/gxbList.html": {
@@ -312,7 +314,11 @@
 		"resources": [
 			"css/mui.min.css",
 			"css/style.css",
-			"images/addcart.svg"
+			"images/addcart.svg",
+			"js/jquery.min.js",
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"js/artTemplate-native.js"
 		]
 	},
 	"center.html": {
@@ -324,7 +330,23 @@
 			"fonts/mui.ttf",
 			"js/artTemplate-native.js",
 			"images/center/phone.svg",
-			"css/center.css"
+			"css/center.css",
+			"js/jquery.min.js"
+		]
+	},
+	"cart.html": {
+		"resources": [
+			"css/mui.min.css"
+		]
+	},
+	"page/collect.html": {
+		"resources": [
+			"css/style.css",
+			"css/mui.min.css",
+			"js/jquery.min.js",
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"js/artTemplate-native.js"
 		]
 	}
 }

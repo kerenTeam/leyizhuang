@@ -3,7 +3,7 @@
 
 	<head>
 		<meta charset="UTF-8">
-		<title></title>
+		<title>商品列表</title>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="../css/mui.min.css" rel="stylesheet" />
 		<link rel="stylesheet" href="../css/style.css" />
@@ -89,10 +89,8 @@
 		<script type="text/javascript">
 			mui.init();
 			mui.plusReady(function(){
-//				var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
-				var identityT = '6';
-				//var userId = plus.storage.getItem('$userId'); 
-				var userId = 49;
+				var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
+				var userId = plus.storage.getItem('$userId'); 
 				var categoryCode = plus.webview.currentWebview().ctid;
 				if(!categoryCode){
 					categoryCode = 'water';
@@ -230,6 +228,23 @@
 							if(data.code == 0 ){
 								plus.nativeUI.closeWaiting();
 								if(data.content.length){
+									//规格
+									var spec = [];
+									for(var i in data.content){
+										if(data.content[i].goodsSpecification){
+											spec.push(data.content[i].goodsSpecification)
+										}
+									}
+									console.log('spec',spec);
+									//去重
+									spec = spec.unique1();
+									console.log('spec',spec);
+									var str='';
+									for(var i = 0;i<spec.length;i++){
+										str+='<span data-id="'+i+'">'+spec[i]+'</span>';
+									}
+									$('.categrayc').html(str)
+									
 									$('#goodsList').html(template('goodsTpl',{list:data.content}));
 									mui('.mui-numbox').numbox()
 								}else{
@@ -254,6 +269,23 @@
 					kindType($(this).attr('data-id'));
 				})
 			})
+			//数组去重
+			Array.prototype.unique1 = function() {
+				var res = [this[0]];
+				for(var i = 1; i < this.length; i++) {
+					var repeat = false;
+					for(var j = 0; j < res.length; j++) {
+						if(this[i] == res[j]) {
+							repeat = true;
+							break;
+						}
+					}
+					if(!repeat) {
+						res.push(this[i]);
+					}
+				}
+				return res;
+			}
 		</script>
 	</body>
 

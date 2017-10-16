@@ -139,8 +139,8 @@
 								 		plus.storage.removeItem('openId');
 										plus.storage.setItem("oldToken",xhr.getResponseHeader('token'));
 										var Acc_pass = [loginInfo.account,str];
-										plus.storage.setItem('$userId',JSON.stringify(data.content.userId))
-										plus.storage.setItem("$identityType",JSON.stringify({'identityType':data.content.type}))
+										plus.storage.setItem('$userId',JSON.stringify(data.content.userId));
+										plus.storage.setItem("$identityType",JSON.stringify({'identityType':data.content.type}));
 										plus.storage.setItem("Acc_pass",JSON.stringify(Acc_pass));//保存账号密码,用于自动登录
 										
 										if(plus.webview.getWebviewById('identify')){
