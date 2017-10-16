@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<title>管理收货地址</title>
+		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, width=device-width">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-touch-fullscreen" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="format-detection" content="telephone=no">
+		<meta name="format-detection" content="address=no">
+		<link rel="stylesheet" type="text/css" href="../../css/commonY.css">
+		<link rel="stylesheet" type="text/css" href="../../css/index.css">
+		<link rel="stylesheet" type="text/css" href="../../css/mui.min.css"/>
+		<link rel="stylesheet" href="../../css/reset.css">
+		<script type="text/javascript" src="../../js/jquery.min.js"></script>
+		<script src="../../js/hmt.js" type="text/javascript"></script>
+		<script src="../../js/mui.min.js" type="text/javascript"></script>
+		<script src="../../js/app.js" type="text/javascript"></script>
+		<!--引入模板引擎-->
+		<script src="../../js/artTemplate-native.js" type="text/javascript"></script>
+		<style type="text/css">
+			.radio .option{
+				width: .26rem !important;
+				height: .26rem !important;
+				margin-top: -.08rem;
+			}
+			.shopcar .list{
+				padding: .05rem 0rem;
+			}
+			.addlist .bottom .mradd{
+				margin-top: 0.08rem;
+			}
+			#main{
+				margin-top: 50px;
+			}
+			.mui-bar-nav{
+				box-shadow: none;
+			}
+			.mui-bar{
+				height: 50px;
+			}
+			.mui-title,.mui-icon{
+				line-height: 50px;
+			}
+			.mui-bar .mui-icon{
+				padding: 0;
+			}
+			
+			/*消息提示框*/
+			dialog{
+				background-color: #fff !important;
+			}
+			.address-add{
+				margin-top: 50px;
+			}
+			.addlist{
+				border-bottom: none !important;
+				border-top: none !important;
+				margin-bottom: 4%;
+			}
+			.addlist .top{
+				border-bottom: 1px solid #efeff4 !important;
+			} 
+			.adhover:hover{
+				background-color: #eee; 
+			.exterminate,.exterminate i,.editAd,.editAd i{
+				color: #999 !important;
+			}
+			.addlist .bottom .right a:first-child{
+				margin-left: 13%;
+			}
+			.shopcar .list .xuantwo {
+				margin-top: .06rem;
+			}
+			.addlist .bottom .mradd{
+				margin-top: 0.1rem;
+			}
+			.shopcar{
+				padding-bottom: 01px !important; 
+			}
+			.nothing{
+				display: block;
+				background-color: #EFEFF4;
+				margin-top: 60px;
+				text-align: center;
+			}
+			.nothing img{
+				display: block;
+				margin: 20px auto;
+				width: 80px;
+			}
+			.nothing p{
+				text-align: center;
+			}
+		</style>
+	</head>
+	<body>
+		 
+		<header class="mui-bar mui-bar-nav">
+		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left bigSize"></a>
+		    <h1 class="mui-title">管理收货地址</h1>  
+		    <a href="javascript:;" style="line-height: 50px;color:white;font-size: 15px;" class="fr baocun" onclick="addAd()">新增</a>
+		</header>
+		<script src="../../js/statusBar.js"></script><!--状态栏-->
+		<div id="addressList"></div>
+		</div>
+	    <!--模板铺数据-->
+		<script id="addressList-detail" type="text/html">
+			<div id="main" class="mui-clearfix contaniner">
+				<% if(!addressLi || addressLi == ''){%>
+					<div class="nothing" style="margin-top: 60px;">
+						<img src="../../img/theList/ad.png" style="display: block;margin: 20px auto;width: 80px;"/>
+						<p style="text-align: center;">你还没有地址哟！</p>
+					</div>
+				<%}else{%>
+				 	<% for(var i=0;i<addressLi.length;i++){ %>
+				    	<div class="addlist clearfloat"data-addid="<%= addressLi[i].id %>" data-person="<%= addressLi[i].person %>" data-phone="<%= addressLi[i].phone %>" data-pv="<%= addressLi[i].province %>" data-ct="<%= addressLi[i].city %>" data-ar="<%= addressLi[i].area %>" data-adi="<%= addressLi[i].address %>">
+				    		<div class="top clearfloat box-s">
+				    			<ul>
+				    				<li>
+				    					<span class="fl addId"><%= addressLi[i].person %></span>
+				    					<span class="fr"><%= addressLi[i].phone %></span>
+				    				</li>
+				    				<li>
+				    					<%= addressLi[i].province %><%= addressLi[i].city %><%= addressLi[i].area %><%= addressLi[i].address %>
+				    				</li>
+				    			</ul>
+				    		</div>
+				    		<div class="bottom clearfloat box-s">
+				    			<section class="shopcar clearfloat">
+				    				<div class="list listtwo clearfloat">
+										<div class="xuan xuantwo clearfloat fl">
+						    				<div class="radio" onclick="changeState(this)"> 
+											    <label>
+											    	<% if(addressLi[i].state == 1){ %>
+											        	<input type="checkbox" name="sex" value="" checked id="<%= addressLi[i].id %>" />
+											        <% }else{ %>
+														<input type="checkbox" name="sex" value="" id="<%= addressLi[i].id %>" />
+													<% } %>
+											        <div class="option"></div>
+											    </label>
+											</div>
+						    			</div>
+						    			<span class="mradd fl">默认地址</span>
+									<div class="right fr clearfloat">
+										<a href="javascript:;" class="fr exterminate" onclick="deleteAd(<%= addressLi[i].id %>)">
+											<i class="iconfont icon-lajixiang icon-shanchutwo"></i>
+											删除
+										</a>
+										<a href="javascript:;" class="fr editAd" onclick="editAd(<%= addressLi[i].id %>)">
+											<i class="iconfont icon-bianji bianjittt"></i>
+											编辑
+										</a>							
+									</div>
+									</div>
+								</section>
+				    		</div>
+				    	</div>
+			    	<% } %>
+			    <% } %>
+		    </div>
+		</script> 
+	    <script type="text/javascript"> 
+		mui.init(); 
+		mui.plusReady(function(){
+			//plus.nativeUI.showWaiting('加载中...',{width:'100px',height:'80px'});
+			//添加刷新监听
+			
+			//判断是否登录并获取缓存token
+			/*if(plus.storage.getItem('myToken')){
+				var oldToken = plus.storage.getItem('oldToken');
+			}else{
+				mui.toast('请登录！');
+				openview({
+					view:'../login.html'
+				})
+			}*/
+			var userId = plus.webview.currentWebview().userId;
+			var pageid = plus.webview.currentWebview().pageid;
+			RefreshAd();
+			document.addEventListener('refreshAd', function() {
+							RefreshAd();
+							console.log('刷新数据');
+						}) 
+			function RefreshAd(){
+				mui.ajax(serverUrl+'/api/useraccount/addresslist',{
+					data:{userid : userId},
+					dataType:'json',
+					type:'post',
+					timeout:1000,
+					headers:{"token":oldToken},	 
+					success:function(data,type,xhr){
+						plus.nativeUI.closeWaiting();
+						plus.storage.setItem("userid",userId);//userId做缓存
+						var addressObj = {};
+						addressObj.addressLi = data.data;
+						var html = template('addressList-detail',addressObj);
+						document.getElementById('addressList').innerHTML = html; 
+						if(data.data.length==0){
+							document.getElementById('main').innerHTML='<div class="nothing" style="background-color: #EFEFF4;margin-top: 60px;"><img src="../../img/theList/ad.png" style="display: block;margin: 20px auto;width: 80px;"/><p style="text-align: center;">你还没有地址哟！</p></div>';
+						}
+						if(pageid){ 
+							$(".addlist .bottom").css("display","none");
+							$(".addlist").click(function(){
+								$(this).css("background","#eee")
+								$(this).addClass("adhover")
+								var addressStorage = JSON.parse(plus.storage.getItem('$addressStorage') || '[]');
+								var defultAddress ={};
+									defultAddress.id = $(this).attr("data-addid");
+									defultAddress.person = $(this).attr("data-person");
+									defultAddress.phone = $(this).attr("data-phone");
+									defultAddress.province = $(this).attr("data-pv");
+									defultAddress.city = $(this).attr("data-ct");
+									defultAddress.area = $(this).attr("data-ar");
+									defultAddress.address = $(this).attr("data-adi");
+								
+									addressStorage = [defultAddress];
+									plus.storage.setItem('$addressStorage', JSON.stringify(addressStorage));
+								
+									var list = plus.webview.getWebviewById('market-order');   
+									var list2 = plus.webview.getWebviewById('jifen-torder');  
+ 									plus.webview.currentWebview().close();//关闭当前页面
+								 	mui.fire(list,'readdstorage');
+								 	mui.fire(list2,'readdstorage');
+							})
+						}
+						 
+						//点击修改默认地址
+						window.changeState = function(thisobj){
+							var checked = $(thisobj).find('input').attr("checked");
+							var thisAdId = $(thisobj).find('input').attr("id");
+							
+							if(typeof(checked)=="undefined"){//本来不是默认地址
+								$('.radio').find('input').removeAttr('checked');//移除其他勾选
+								$(thisobj).find('input').prop('checked',true);//勾选当前
+								mui.ajax(serverUrl+'/api/useraccount/stateaddress',{
+									data:{userid:userId,address_id:thisAdId,state:1},
+									dataType:'json',
+									type:'post',
+									timeout:1000,
+									headers:{"token":oldToken},	 
+									success:function(data,type,xhr){
+									},
+									error:function(xhr,type,errorThrown){
+										console.log('响应失败  !');
+									}
+								});
+							}else{//本来是默认地址
+								$(thisobj).find('input').removeAttr('checked');
+								mui.ajax(serverUrl+'/api/useraccount/stateaddress',{
+									data:{userid:userId,address_id:thisAdId,state:0},
+									dataType:'json',
+									type:'post',
+									timeout:1000,
+									headers:{"token":oldToken},	 
+									success:function(data,type,xhr){
+									},
+									error:function(xhr,type,errorThrown){
+										console.log('响应失败  !');
+									}
+								});
+							}
+						}
+						//点击编辑跳转传参
+						window.editAd = function(AdId){
+							openview({
+							 	view:"address-edit.html",
+							 	extrasobj:{adId:AdId,userId:userId}
+							})
+						}
+						//删除确认弹框
+						var exterminate = document.getElementsByClassName('exterminate');
+						window.deleteAd = function(AdIdD){
+							mui.confirm('确认删除该地址？','',['取消','确认'],function (e) {
+								if(e.index == 1) { 
+									mui.ajax(serverUrl+'/api/useraccount/deleteaddress',{
+										data:{address_id:AdIdD,state:0},
+										dataType:'json',
+										type:'post',
+										timeout:1000,
+										headers:{"token":oldToken},	 
+										success:function(data,type,xhr){
+											plus.nativeUI.alert("删除成功！");
+											mui.fire(plus.webview.getWebviewById('personal/address.html'),'refreshAd');//打开指定页面
+										},
+										error:function(xhr,type,errorThrown){
+											console.log('响应失败  !');
+										}
+									});
+								}
+							})
+						}
+						//点击添加地址跳转
+						window.addAd = function(){
+							openview({
+								view:'add-address.html'
+							});
+						}
+					},
+					error:function(xhr,type,errorThrown){
+						plus.nativeUI.closeWaiting();
+						mui.toast('响应失败  !');
+					}
+				});
+			}
+		})();
+	</script>
+	</body>	
+</html>
