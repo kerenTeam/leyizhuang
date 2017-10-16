@@ -146,6 +146,8 @@
 										if(plus.webview.getWebviewById('identify')){
 											plus.webview.getWebviewById('identify').close();
 										}
+										mui.fire(plus.webview.getWebviewById('goodList'),'refresh');
+										
 										var time2 = setTimeout(function(){
 											var index = plus.webview.getLaunchWebview();
 											mui.fire(index,'refresh');

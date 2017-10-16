@@ -217,7 +217,8 @@
 						if(plus.storage.getItem("Acc_pass") || plus.storage.getItem("openId")){
 							var Acc_pass = JSON.parse(plus.storage.getItem("Acc_pass"));//员工登陆
 							var openid = plus.storage.getItem("openId");//顾客登录
-							console.log(openid)
+							console.log(openid);
+							
 							//根据缓存密码自动登录, 重新获取Token 
 							if(Acc_pass){
 								mui.ajax('http://119.23.149.7:9999/app/employee/login',{
@@ -233,6 +234,7 @@
 											plus.nativeUI.closeWaiting();
 											console.log('默认账号登录返回'+JSON.stringify(data)); 
 											plus.storage.setItem("oldToken",xhr.getResponseHeader('token'));
+											mui.fire(plus.webview.getWebviewById('goodList'),'refresh');
 				//							 alert(plus.storage.getItem("oldToken"))
 										}
 									},
@@ -257,11 +259,12 @@
 										console.log('登录返回',data);
 										if(data.code == 0 && data.content.isExist){
 											plus.nativeUI.closeWaiting();
-											plus.storage.setItem('$userId',JSON.stringify(data.content.userId))
 											plus.storage.setItem("oldToken",xhr.getResponseHeader('token'));
 											plus.storage.setItem("openId",openid);
 			 								plus.storage.removeItem('Acc_pass');
-											
+//											plus.storage.setItem('$userId',JSON.stringify(data.content.userId));
+											plus.storage.setItem('$userId','49');
+											plus.storage.setItem("$identityType",JSON.stringify({'identityType':'6'}));
 											
 										}else if(data.code == -1){ 
 											plus.nativeUI.closeWaiting();

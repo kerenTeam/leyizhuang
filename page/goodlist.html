@@ -100,7 +100,9 @@
 					$('.'+categoryCode).addClass('curActive');
 				}
 				plus.nativeUI.showWaiting();
-				 
+				document.addEventListener('refresh', function() {
+					kindType(categoryCode);
+				}) 
 				 kindType(categoryCode);
 				 function kindType(categoryCode){
 				 	//列表

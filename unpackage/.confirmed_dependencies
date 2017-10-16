@@ -332,6 +332,9 @@
 			"images/center/phone.svg",
 			"css/center.css",
 			"js/jquery.min.js"
+		],
+		"refer": [
+			"page/collect.html"
 		]
 	},
 	"cart.html": {

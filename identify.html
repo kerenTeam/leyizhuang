@@ -226,6 +226,7 @@
 											plus.storage.setItem("oldToken",xhr.getResponseHeader('token'));
 											plus.storage.setItem("openId",openID);
 			 								plus.storage.removeItem('Acc_pass');
+											mui.fire(plus.webview.getWebviewById('goodList'),'refresh');
 											
 											if(plus.webview.getWebviewById('reg')){
 												plus.webview.getWebviewById('reg').close();

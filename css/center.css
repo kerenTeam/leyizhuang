@@ -4,7 +4,16 @@
 	background: #FFFFFF;
 }
 .flexRow{
+	font-size: 14px;
 	display: flex;
 	justify-content: space-around;
 	align-items: center;
+	text-align: center;
+}
+
+.flexRow2 div{
+	text-align: center;
+	width:calc(100vw / 5)!important;
+	flex-wrap: wrap;
+	
 }

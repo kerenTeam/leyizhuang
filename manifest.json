@@ -738,7 +738,9 @@
 					"css/center.css",
 					"js/jquery.min.js"
 				],
-				"refer": [],
+				"refer": [
+					"page/collect.html"
+				],
 				"priority": 0
 			},
 			"cart.html": {

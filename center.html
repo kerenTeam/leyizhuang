@@ -161,6 +161,51 @@
 					所有订单
 				</div>
 			</div>
+			<div class="centerList">
+				<div class="flexRow flexRow2">
+					<div class="" onclick="goCollect()">
+						商品收藏
+					</div>
+					<div class="">
+						客服
+					</div>
+					<div class="">
+						调色板
+					</div>
+					<div class="" onclick="goMessage()">
+						消息
+					</div>
+					
+				</div>
+				<div class="flexRow flexRow2">
+					<div class="">
+						设置
+					</div> 
+					<div class="">
+						优惠券
+					</div>
+					<div class="">
+						产品券
+					</div>
+					<div class="">
+						我的钱包
+					</div>
+				</div>
+				<div  class="flexRow flexRow2">
+					<div class="">
+						我的乐豆
+					</div>
+					<div >
+						拍照下单
+					</div>
+					<div style="visibility: hidden;">
+						ccc
+					</div>
+					<div style="visibility: hidden;">
+						ccc
+					</div>
+				</div>
+			</div>
 		</div>
 		<script type="text/javascript">
 			window.onscroll = function() {
@@ -186,7 +231,19 @@
 					}
 				});
 			}
-
+			//收藏
+			function goCollect(){
+				openview({
+					view:'page/collect.html',
+					id: 'collect', 
+				}) 
+			}
+			function goMessage(){
+				openview({
+					view:'page/message.html',
+					id: 'message', 
+				}) 
+			}
 			mui.plusReady(function() {
 				Refresh();
 
