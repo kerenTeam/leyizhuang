@@ -592,7 +592,8 @@
 					"page/tab-webview-subpage-chat.html",
 					"page/goodList.html",
 					"js/app.js",
-					"page/tab-webview-subpage-contact.html"
+					"page/tab-webview-subpage-contact.html",
+					"js/default.js"
 				],
 				"refer": [
 					"html/tab-webview-subpage-contact.html",
@@ -604,7 +605,9 @@
 					"page/hotGoods.html",
 					"center.html",
 					"cart.html",
-					"page/collect.html"
+					"page/collect.html",
+					"page/personal/collect.html",
+					"page/goodsInfo.html"
 				],
 				"priority": 0
 			},
@@ -739,7 +742,12 @@
 					"js/jquery.min.js"
 				],
 				"refer": [
-					"page/collect.html"
+					"page/collect.html",
+					"page/personal/message.html",
+					"page/personal/collect.html",
+					"page/guide/myCustomer.html",
+					"page/manager/workerList.html",
+					"page/personal/myCoupon.html"
 				],
 				"priority": 0
 			},
@@ -758,6 +766,124 @@
 					"js/mui.min.js",
 					"fonts/mui.ttf",
 					"js/artTemplate-native.js"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"page/personal/collect.html": {
+				"resources": [
+					"css/mui.min.css",
+					"css/style.css",
+					"js/jquery.min.js",
+					"js/mui.min.js",
+					"fonts/mui.ttf",
+					"js/artTemplate-native.js"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"page/personal/message.html": {
+				"resources": [
+					"js/mui.min.js",
+					"css/mui.min.css",
+					"js/jquery.min.js",
+					"fonts/mui.ttf",
+					"css/style.css",
+					"js/default.js",
+					"js/artTemplate-native.js"
+				],
+				"refer": [
+					"page/personal/infoList.html"
+				],
+				"priority": 0
+			},
+			"page/personal/infoList.html": {
+				"resources": [
+					"js/app.js",
+					"js/statusBar.js",
+					"js/artTemplate-native.js",
+					"css/mui.min.css",
+					"js/jquery.min.js",
+					"js/mui.min.js",
+					"fonts/mui.ttf",
+					"css/configW.css"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"page/guide/myCustomer.html": {
+				"resources": [
+					"js/statusBar.js",
+					"css/mui.min.css",
+					"css/configW.css",
+					"js/app.js",
+					"js/jquery.min.js",
+					"js/mui.min.js",
+					"fonts/mui.ttf",
+					"js/artTemplate-native.js",
+					"images/balls.svg",
+					"images/searchBar.png",
+					"images/search.png",
+					"images/10.png",
+					"images/center/right.svg"
+				],
+				"refer": [
+					"page/guide/searchCustomer.html"
+				],
+				"priority": 0
+			},
+			"page/guide/searchCustomer.html": {
+				"resources": [
+					"js/app.js",
+					"css/mui.min.css",
+					"page/guide/searchCustomer.html",
+					"js/jquery.min.js",
+					"js/mui.min.js",
+					"js/statusBar.js",
+					"fonts/mui.ttf",
+					"images/delet.svg",
+					"js/artTemplate-native.js",
+					"css/configW.css"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"page/manager/workerList.html": {
+				"resources": [
+					"js/jquery.min.js",
+					"js/mui.min.js",
+					"js/statusBar.js",
+					"images/center/right.svg",
+					"fonts/mui.ttf",
+					"css/mui.min.css",
+					"images/searchBar.png",
+					"images/balls.svg",
+					"images/search.png",
+					"css/configW.css",
+					"images/10.png",
+					"js/artTemplate-native.js"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"page/personal/myCoupon.html": {
+				"resources": [
+					"js/mui.min.js",
+					"css/mui.min.css",
+					"js/statusBar.js",
+					"fonts/mui.ttf",
+					"css/configW.css",
+					"js/jquery.min.js",
+					"js/artTemplate-native.js"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"page/goodsInfo.html": {
+				"resources": [
+					"js/statusBar.js",
+					"css/mui.min.css",
+					"css/configW.css"
 				],
 				"refer": [],
 				"priority": 0

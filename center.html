@@ -65,7 +65,15 @@
 				font-size: 12px;
 				border-radius: 2px;
 			}
-		
+			.qiandao{
+				font-size: 12px;
+				border-radius: 2px;
+				background: orange;
+				padding: 2px 8px;
+				top: 45px;
+				right: 10px;
+				position: absolute;
+			}
 			.centop span {
 				display: inline-block;
 				padding: 4px 0;
@@ -135,12 +143,13 @@
 			<div class="content clearfloat fl mui-row white">
 				<div class="mui-col-sm-4 mui-col-xs-4" style="padding-top: 18px;position: relative;left: 3px;"><img src="https://b-ssl.duitang.com/uploads/item/201710/12/20171012232816_GX5iw.thumb.224_0.jpeg" class="myInfo" id="mypic" /></div>
 				<div class="mui-col-sm-8 mui-col-xs-8 writing">
-					<p class="centop">
-						<span class="denlu denluzhuce" id="userName" style="z-index: 99;"></span> <br />
-						<span class="denlu denluzhuce" style="display: inline-block;min-height: 20px;" id="coin">乐币:<span></span> 账户:<span id="accoutoney"></span><br />导购:<span id="guideName"></span><br />灯号:<span id="dengh"></span></span>
+					<p class="centop customerN">
+						<span class="denlu denluzhuce" >用户名：<span id="userName" style="z-index: 99;"></span></span><br />
+						<span class="denlu denluzhuce" style="display: inline-block;min-height: 20px;" id="coin">乐币:<span></span> 账户:<span id="accoutoney"></span><br />灯号:<span id="dengh"></span> 导购:<span id="guideName"></span><a id="guideMobile" href=""><img style="width: 15px;margin-left: 5px;display: none;" src="images/center/phone.svg"/></a></span>
 					</p>
 				</div>
-				<img class="dao shezhi" style="top: 8px;width: 35px;" src="images/center/shizhi.png" />
+				<img class="dao shezhi" style="top: 8px;width: 30px;" src="images/center/shizhi.png" />
+				<div class="qiandao">签到</div>
 			</div>
 		</div>
 		<div id="customar">
@@ -161,8 +170,9 @@
 					所有订单
 				</div>
 			</div>
-			<div class="centerList">
-				<div class="flexRow flexRow2">
+			<!--顾客-->
+			<div class="centerList customerN" style="display: none;">
+				<div class="flexRow2">
 					<div class="" onclick="goCollect()">
 						商品收藏
 					</div>
@@ -175,13 +185,10 @@
 					<div class="" onclick="goMessage()">
 						消息
 					</div>
-					
-				</div>
-				<div class="flexRow flexRow2">
 					<div class="">
 						设置
 					</div> 
-					<div class="">
+					<div onclick="myCoupon()">
 						优惠券
 					</div>
 					<div class="">
@@ -190,23 +197,128 @@
 					<div class="">
 						我的钱包
 					</div>
-				</div>
-				<div  class="flexRow flexRow2">
 					<div class="">
 						我的乐豆
 					</div>
 					<div >
 						拍照下单
 					</div>
-					<div style="visibility: hidden;">
-						ccc
+				</div>
+			</div>
+			<!--导购-->
+			<div class="centerList guiderN"  style="display: none;">
+				<div class="flexRow2">
+					<div class="" onclick="goCollect()">
+						商品收藏
+					</div>
+					<div class="">
+						客服
+					</div>
+					<div class="">
+						调色板
+					</div>
+					<div class="" onclick="goMessage()">
+						消息
+					</div>
+					<div class="">
+						设置
+					</div> 
+					<div onclick="toMyCustomer()">
+						我的顾客
+					</div>
+					<div class="">
+						信用额度
+					</div>
+					<div class="">
+						欠款查询
+					</div>
+					<div class="">
+						我的二维码
+					</div>
+					<div >
+						欠款审核
+					</div>
+					<div>
+						拍照下单
 					</div>
 					<div style="visibility: hidden;">
 						ccc
 					</div>
 				</div>
 			</div>
+			<!--项目经理-->
+			<div class="centerList manageN"  style="display: none;">
+				<div class="flexRow2">
+					<div class="" onclick="goCollect()">
+						商品收藏
+					</div>
+					<div class="">
+						客服
+					</div>
+					<div class="">
+						调色板
+					</div>
+					<div class="" onclick="goMessage()">
+						消息
+					</div>
+					<div class="">
+						设置
+					</div> 
+					<div onclick="">
+						料单审核
+					</div>
+					<div onclick="goworker()">
+						工人
+					</div>
+					<div class="">
+						我的钱包
+					</div>
+					<div class="">
+						信用金
+					</div>
+					<div >
+						现金返利
+					</div>
+					<div>
+						拍照下单
+					</div>
+					<div style="visibility: hidden;">
+						ccc
+					</div>
+				</div>
+			</div>
+			<!--工人-->
+			<div class="centerList workerN"  style="display: none;">
+				<div class="flexRow2">
+					<div class="" onclick="goCollect()">
+						商品收藏
+					</div>
+					<div class="">
+						调色板
+					</div>
+					<div class="">
+						科单申请
+					</div>
+					<div class="">
+						拍照下单
+					</div>
+				</div>
+			</div>
+			<!--配送员-->
+			<div class="centerList distributionN"  style="display: none;">
+				<div class="flexRow2">
+					<div class="" onclick="goCollect()">
+						代收款
+					</div>
+					<div class="">
+						调色板
+					</div>
+				</div>
+			</div>
 		</div>
+		
+		
+		
 		<script type="text/javascript">
 			window.onscroll = function() {
 				if(document.body.scrollTop > 25) {
@@ -223,38 +335,69 @@
 		<script type="text/javascript">
 			//分类订单
 			function typeOrder(type) {
-				openview({
-					view: 'personal/sc-order.html',
-					id: 'sc-order',
-					extrasobj: {
-						status: type
-					}
-				});
 			}
-			//收藏
+			//顾客 收藏
 			function goCollect(){
 				openview({
-					view:'page/collect.html',
+					view:'page/personal/collect.html',
 					id: 'collect', 
 				}) 
 			}
+			//顾客 优惠券
+			function myCoupon(){
+				openview({
+					view:'page/personal/myCoupon.html',
+					id: 'myCoupon', 
+				})
+			}
+			
+			//消息
 			function goMessage(){
 				openview({
-					view:'page/message.html',
+					view:'page/personal/message.html',
 					id: 'message', 
 				}) 
 			}
-			mui.plusReady(function() {
-				Refresh();
+//			导购->我的导购
+			function toMyCustomer(){
+				openview({
+					view:'page/guide/myCustomer.html',
+					id: 'myCustomer', 
+				}) 
+			}
+//			经理-> 工人列表
+			function goworker(){
+				openview({
+					view:'page/manager/workerList.html',
+					id: 'workerList', 
+				})
+			}
 
+			mui.plusReady(function() {
+				document.addEventListener('refresh', function() {
+					Refresh();
+				}) 
+				Refresh();
 				function Refresh() { //刷新
 					//获取缓存 
-					//					var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
-					var identityT = '6';
-					//var userId = plus.storage.getItem('$userId'); 
-					var userId = 49;
+					var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
+					var userId = plus.storage.getItem('$userId'); 
 					var oldToken = plus.storage.getItem('oldToken');
 					loadmyinfo();
+					if(identityT == 0 || identityT == 4 || identityT == 5){
+						$('.guiderN').css('display','block')
+					}else if(identityT == 6){
+						$('.customerN').css('display','block')
+						
+					}else if(identityT == 3){
+						$('.workerN').css('display','block')
+						
+					}else if(identityT == 2){
+						$('.manageN').css('display','block')
+						
+					}else{
+						$('.distributionN').css('display','block')
+					}
 					
 					/*设置*/
 					mui('.shezhi')[0].addEventListener('tap',function(){
@@ -300,10 +443,11 @@
 											$('#guideName').html('无')
 										}
 										if(data.content.guideMobile) {
-											$('#guideMobile').attr('href', 'tel:' + data.content.guideMobile)
+											
+											$('#guideMobile').css('display','').attr('href', 'tel:' + data.content.guideMobile)
 										}
-										if(data.content.number) {
-											$('#dengh').html(data.content.number)
+										if(data.content.light) {
+											$('#dengh').html(data.content.light)
 										} else {
 											$('#dengh').html('无')
 										}

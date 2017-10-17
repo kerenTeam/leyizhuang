@@ -146,7 +146,8 @@
 										if(plus.webview.getWebviewById('identify')){
 											plus.webview.getWebviewById('identify').close();
 										}
-										mui.fire(plus.webview.getWebviewById('goodList'),'refresh');
+										mui.fire(plus.webview.getWebviewById('page/goodList.html'),'refresh');
+										mui.fire(plus.webview.getWebviewById('center.html'),'refresh');
 										
 										var time2 = setTimeout(function(){
 											var index = plus.webview.getLaunchWebview();

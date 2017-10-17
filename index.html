@@ -130,7 +130,7 @@
 		    <script type="text/html" id="goodsTpl">
 		    	<ul class="mui-table-view">
 		    		<%for(var i = 0 ;i<list.length;i++){%>
-			    		<li style="width:50%!important;float:left;border:none" class="mui-table-view-cell mui-media" id="<%=list[i].id%>">
+			    		<li style="width:50%!important;float:left;border:none" class="mui-table-view-cell mui-media" id="<%=list[i].id%>" onclick="goodsInfo(<%=list[i].id%>)">
 					        <a href="javascript:;">
 					            <img class="mui-media-object" style="display:block!important;width:100%!important;max-width:none;height:auto" src="<%=list[i].coverImageUri%>">
 					          	<br>
@@ -158,7 +158,7 @@
 		    <script type="text/html" id="goodsHotTpl">
 		    	<ul class="mui-table-view" style="border-top: none!important;">
 		    		<%for(var i = 0 ;i<list.length;i++){%>
-			    		<li class="mui-table-view-cell mui-media" id="<%=list[i].id%>"  style="width:50%!important;float:left;border:none!important">
+			    		<li class="mui-table-view-cell mui-media" id="<%=list[i].id%>" onclick="goodsInfo(<%=list[i].id%>)"  style="width:50%!important;float:left;border:none!important">
 					        <a href="javascript:;" style="border-top: none!important;">
 					            <img class="mui-media-object" style="display:block!important;width:100%!important;max-width:none;height:auto" src="<%=list[i].coverImageUri%>">
 					          	<br>
@@ -182,6 +182,7 @@
 		<script src="js/util.js"></script>
 		<script src="js/artTemplate-native.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/app.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/default.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
 			var aniShow = {};
 			mui.init({
@@ -197,14 +198,7 @@
 				var loadNum2 = 0;
 				clearInterval(timeSign);
 				timeSign = setInterval(Sign,5000000);//两小时自动更新一次token
-				var timeSign2  =  setInterval(function(){
-					loadNum2++;
-					if(plus.storage.getItem('oldToken') || loadNum2==10){
-						clearInterval(timeSign2);
-					}else{
-						Sign();
-					}
-				},1000)
+				
 				function Sign(){//登录方法
 					//设置默认token
 					if(!plus.storage.getItem('oldToken')){//没有用户token
@@ -234,8 +228,9 @@
 											plus.nativeUI.closeWaiting();
 											console.log('默认账号登录返回'+JSON.stringify(data)); 
 											plus.storage.setItem("oldToken",xhr.getResponseHeader('token'));
-											mui.fire(plus.webview.getWebviewById('goodList'),'refresh');
-				//							 alert(plus.storage.getItem("oldToken"))
+											mui.fire(plus.webview.getWebviewById('page/goodList.html'),'refresh');
+											mui.fire(plus.webview.getWebviewById('center.html'),'refresh');
+											util.initSubpage();
 										}
 									},
 									error:function(xhr,type,errorThrown){
@@ -260,12 +255,14 @@
 										if(data.code == 0 && data.content.isExist){
 											plus.nativeUI.closeWaiting();
 											plus.storage.setItem("oldToken",xhr.getResponseHeader('token'));
-											plus.storage.setItem("openId",openid);
-			 								plus.storage.removeItem('Acc_pass');
-//											plus.storage.setItem('$userId',JSON.stringify(data.content.userId));
-											plus.storage.setItem('$userId','49');
-											plus.storage.setItem("$identityType",JSON.stringify({'identityType':'6'}));
-											
+//											plus.storage.setItem("openId",openid);
+//			 								plus.storage.removeItem('Acc_pass');
+////											plus.storage.setItem('$userId',JSON.stringify(data.content.userId));
+//											plus.storage.setItem('$userId','1');
+//											plus.storage.setItem("$identityType",JSON.stringify({'identityType':'6'}));
+											mui.fire(plus.webview.getWebviewById('page/goodList.html'),'refresh');
+											mui.fire(plus.webview.getWebviewById('center.html'),'refresh');
+											util.initSubpage();
 										}else if(data.code == -1){ 
 											plus.nativeUI.closeWaiting();
 											mui.toast(data.message);
@@ -296,7 +293,9 @@
 				 
 				}//登录方法结束
 				
-				
+				document.addEventListener('refresh', function() {
+					util.initSubpage();
+				})
 				var self = plus.webview.currentWebview(),
 					nviews = self.getSubNViews(),
 					subpages = util.options.subpages,
@@ -425,19 +424,13 @@
 					if(targetPage == activePage) {
 						return;
 					}
-
-//					if(currIndex !== 3) {
-						//底部选项卡切换
-						util.toggleNview(currView, currIndex);
-						// 子页面切换
-						util.changeSubpage(targetPage, activePage);
-						//更改当前活跃的页面
-						activePage = targetPage;
-//					} else {
-//						//第四个tab 打开新窗口
-//						var newWV = plus.webview.create('html/new-webview.html', 'new');
-//						newWV.show('slide-in-right', 200);
-//					}
+					//底部选项卡切换
+					util.toggleNview(currView, currIndex);
+					// 子页面切换
+					util.changeSubpage(targetPage, activePage);
+					//更改当前活跃的页面
+					activePage = targetPage;
+						
 				}
 			});
 		</script>
@@ -463,22 +456,33 @@
 			//收藏
 			function goCollect(){
 				openview({
-					view:'page/collect.html',
+					view:'page/personal/collect.html',
 					id: 'collect', 
 				}) 
 			}
-			//获得slider插件对象
-			var gallery = mui('.mui-slider');
-			gallery.slider({
-			  interval:5000//自动轮播周期，若为0则不自动播放，默认为0；
-			});
-			
+			//工序包
 			$('.gxb').click(function(){
 				openview({
 					view:'page/gxb.html',
 					id: 'gxb', 
 				}) 
 			})
+			
+			function goodsInfo(id){
+				openview({
+					view:'page/goodsInfo.html',
+					id: 'goodsInfo', 
+					extrasobj:{goodId:id}
+				}) 
+				
+			}
+			
+			//获得slider插件对象
+			var gallery = mui('.mui-slider');
+			gallery.slider({
+			  interval:5000//自动轮播周期，若为0则不自动播放，默认为0；
+			});
+			
 			var goodsCt = document.querySelectorAll('.flexw div');
 				[].forEach.call(goodsCt,function(ele,i){
 					ele.onclick = function(){ 
@@ -496,18 +500,18 @@
 				}) 
 				loadIndex();
 				function loadIndex(){
-//					var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
-					var identityT = '6';
-					//var userId = plus.storage.getItem('$userId'); 
-					var userId = 49;
+					//获取缓存 
+					var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
+					var userId = plus.storage.getItem('$userId'); 
+					var oldToken = plus.storage.getItem('oldToken');
 					//常购商品列表
-					mui.ajax('http://119.23.149.7:9999/app/goods/often/list',{
+					mui.ajax(serverUrl+'/app/goods/often/list',{
 						data:{ 
 							userId:userId,
 							identityType:identityT
 						},
 						dataType:'json',
-						headers: {"Authorization": plus.storage.getItem("oldToken")},
+						headers: {"Authorization": oldToken},
 						type:'post',
 						timeout:10000,
 						success:function(data,type,xhr){ 
@@ -531,13 +535,13 @@
 						}
 					}); 
 					//热门商品列表
-					mui.ajax('http://119.23.149.7:9999/app/goods/hot/list',{
+					mui.ajax(serverUrl+'/app/goods/hot/list',{
 						data:{ 
 							userId:userId,
 							identityType:identityT
 						},
 						dataType:'json',
-						headers: {"Authorization": plus.storage.getItem("oldToken")},
+						headers: {"Authorization": oldToken},
 						type:'post',
 						timeout:10000,
 						success:function(data,type,xhr){ 

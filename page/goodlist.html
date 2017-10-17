@@ -88,9 +88,9 @@
 		<!--<script src="../js/default.js" type="text/javascript" charset="utf-8"></script>-->
 		<script type="text/javascript">
 			mui.init();
+			
 			mui.plusReady(function(){
-				var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
-				var userId = plus.storage.getItem('$userId'); 
+				
 				var categoryCode = plus.webview.currentWebview().ctid;
 				if(!categoryCode){
 					categoryCode = 'water';
@@ -99,14 +99,17 @@
 					$('.flexw div').siblings().removeClass('curActive')
 					$('.'+categoryCode).addClass('curActive');
 				}
-				plus.nativeUI.showWaiting();
 				document.addEventListener('refresh', function() {
-					kindType(categoryCode);
+					kindType('water');
 				}) 
 				 kindType(categoryCode);
 				 function kindType(categoryCode){
-				 	//列表
 				 	
+					plus.nativeUI.showWaiting();
+				 	//获取缓存 
+					var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
+					var userId = plus.storage.getItem('$userId'); 
+					var oldToken = plus.storage.getItem('oldToken');
 					mui.ajax('http://119.23.149.7:9999/app/goods/category/list',{
 						data:{
 							categoryCode:categoryCode,
@@ -114,10 +117,11 @@
 							identityType:identityT
 						},
 						dataType:'json',
-						headers: {"Authorization": plus.storage.getItem("oldToken")},
+						headers: {"Authorization": oldToken},
 						type:'post',
 						timeout:10000,
 						success:function(data,type,xhr){ 
+							plus.nativeUI.closeWaiting();
 							console.log('列表',data);
 							if(data.code == 0 ){
 								plus.nativeUI.closeWaiting();
@@ -150,7 +154,7 @@
 							identityType:identityT
 						},
 						dataType:'json',
-						headers: {"Authorization": plus.storage.getItem("oldToken")},
+						headers: {"Authorization": oldToken},
 						type:'post',
 						timeout:10000,
 						success:function(data,type,xhr){ 
@@ -186,7 +190,7 @@
 							identityType:identityT
 						},
 						dataType:'json',
-						headers: {"Authorization": plus.storage.getItem("oldToken")},
+						headers: {"Authorization": oldToken},
 						type:'post',
 						timeout:10000,
 						success:function(data,type,xhr){ 
@@ -222,7 +226,7 @@
 							identityType:identityT
 						},
 						dataType:'json',
-						headers: {"Authorization": plus.storage.getItem("oldToken")},
+						headers: {"Authorization": oldToken},
 						type:'post',
 						timeout:10000,
 						success:function(data,type,xhr){ 

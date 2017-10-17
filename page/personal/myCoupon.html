@@ -1,0 +1,106 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>优惠券</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../../css/configW.css" />
+	</head>
+	<style type="text/css">
+		.mui-content{padding: 15px;}
+		.coupon{text-align: center;background-color: white;border-radius: 3px;padding: 10px;margin: 10px 0;line-height: 1.5;}
+	</style>
+	<body>
+		<header class="mui-bar mui-bar-nav fineB">
+		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left bigSize" style="margin-left: 0;"></a>
+		    <h1 class="mui-title">优惠券</h1>  
+		</header>
+		<script src="../../js/statusBar.js"></script><!--状态栏-->
+		<div class="mui-content">
+			<div id="coupon"></div>
+			<script type="text/html" id="couponTpl">
+				<%for(var i=0;i<dataList.length;i++){%>
+					<div class="coupon">
+						<div class="ft20"><span class="activecl"><%=dataList[i].description%></span></div>
+						<div class="ft14">有效期：<%=dataList[i].effectiveStartTime%> 至 <%=dataList[i].effectiveEndTime%></div>
+						<div class="ft12 disablecl">不可与其他券同时使用</div>
+					</div>
+				<%}%>
+			</script>
+		</div>
+		<script src="../../js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/artTemplate-native.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			mui.init();
+			mui.plusReady(function(){
+				var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
+				var userId = plus.storage.getItem('$userId');
+				var oldToken = plus.storage.getItem('oldToken');
+				
+				plus.nativeUI.showWaiting();//显示等待框
+				mui.ajax('http:119.23.149.7:9999/app/customer/cashCoupon/list',{
+					data:{
+						userId:userId,
+						identityType:identityT
+					},
+					dataType:'json',
+					type:'post',
+					timeout:10000,
+					headers:{"Authorization":oldToken},
+					success:function(data,type,xhr){
+						plus.nativeUI.closeWaiting();
+						console.log('优惠券',data);
+				       	if(data.code == 0){
+					       	if(data.content && data.content.length){
+					       		for(var i in data.content){
+					       			if(data.content[i].effectiveStartTime){
+					       				var date = new Date(data.content[i].effectiveStartTime/1000 *1000);
+											Y = date.getFullYear() + '-';
+											M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
+											D = date.getDate() + ' ';
+											h = date.getHours()-8;
+											if(h<0){
+												h = h+24
+											}
+											h = h + ':';
+											m = date.getMinutes();
+											s = date.getSeconds(); 
+											console.log(Y+M+D+h+m+s); //呀麻碟
+											data.content[i].effectiveStartTime = Y+M+D;
+					       			}
+					       			if(data.content[i].effectiveEndTime){
+					       				var date = new Date(data.content[i].effectiveEndTime/1000 *1000);
+											Y = date.getFullYear() + '-';
+											M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
+											D = date.getDate() + ' ';
+											h = date.getHours()-8;
+											if(h<0){
+												h = h+24
+											}
+											h = h + ':';
+											m = date.getMinutes();
+											s = date.getSeconds(); 
+											console.log(Y+M+D+h+m+s); //呀麻碟
+											data.content[i].effectiveEndTime = Y+M+D;
+					       			}
+					       		}
+				     			document.getElementById("coupon").innerHTML = template("couponTpl", {dataList:data.content});
+							}else{
+								document.getElementById("coupon").innerHTML  = ' <p style="text-align: center;padding: 20pxv;">无可用优惠券 </p>' ;
+							}
+				       	}
+				       	plus.nativeUI.closeWaiting();
+					},
+					error:function(xhr,type,errorThrown){
+						plus.nativeUI.closeWaiting();
+						console.log('当前网络不好,请重试');
+					}
+				});
+			})
+		</script>
+	</body>
+
+</html>

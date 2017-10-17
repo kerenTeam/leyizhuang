@@ -1,0 +1,320 @@
+ /*边距*/
+
+.mt10 {
+	margin-top: 0.1rem;
+}
+
+.mb10 {
+	margin-bottom: 0.1rem;
+}
+
+.ml10 {
+	margin-left: 0.1rem;
+}
+
+.mr10 {
+	margin-right: 0.1rem;
+}
+
+.mar10 {
+	margin: 0.1rem;
+}
+.mar20{
+	margin: 0.2rem;
+}
+.pad_t10 {
+	padding-top: 0.1rem;
+}
+
+.pad_b10 {
+	padding-bottom: 0.1rem;
+}
+
+.pad_l10 {
+	padding-left: 0.1rem;
+}
+
+.pad_r10 {
+	padding-right: 0.1rem;
+}
+
+.pad10 {
+	padding: 0.1rem;
+}
+
+.mt15 {
+	margin-top: 15px !important;
+}
+
+.mb15 {
+	margin-bottom: 15px !important;
+}
+
+.pb50 {
+	padding-bottom: 0.5rem;
+}
+
+.mr20 {
+	margin-right: 0.20rem !important;
+}
+
+.mr25 {
+	margin-right: 10px !important;
+}
+
+.ml25 {
+	margin-left: 10px !important;
+}
+
+/*字体颜色*/
+
+.maincl {
+	color: rgb(101,101,101);
+}
+.activecl{
+	color: rgb(249,60,58);
+}
+.disablecl{
+	color: rgb(153,153,153);
+}
+.whitecl{
+	color: white!important;
+}
+/*标题颜色*/
+.titcl{
+	color: rgb(51,51,51);
+}
+
+/*字体大小*/
+.ft20{
+	font-size: 20px;
+}
+.ft10{
+	font-size: 10px;
+}
+.ft12{
+	font-size: 12px;
+}
+.ft13{
+	font-size: 13px;
+}
+.ft14{
+	font-size: 14px;
+}
+.ft15{
+	font-size: 15px;
+}
+.ft16{
+	font-size: 16px;
+}
+.ft18{
+	font-size: 18px;
+}
+.fttc{
+	text-align: center;
+}
+
+/*css文字溢出省略*/
+
+.line2 {
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+ 
+ /*实心红色按钮
+  * 
+  * 默认灰色空心  .mui-btn
+  <button type="button" class="mui-btn mui-btn-danger mar10">确定</button>
+  */
+ 
+.mui-btn-danger{ 
+	color: #fff!important;
+    background-color: rgb(249,60,58)!important;
+    border:1px solid rgb(249,60,58)!important;
+}
+.mui-btn-blue{ 
+	color: #fff!important;
+    background-color: #5394f2!important;
+    border:1px solid #5394f2!important;
+}
+.mui-btn-outlined{
+    color: rgb(249,60,58)!important;
+    background:transparent!important;
+}
+/*透明红色边框按钮 颜色相应改变
+ <button type="button" class="mui-btn mui-btn-outlined-danger mar10">抢答</button> 
+ */
+/*.mui-btn-outlined-danger{
+	color: rgb(249,60,58);
+    background:transparent;
+    border:1px solid rgb(249,60,58);
+}*/
+
+/*块级按钮
+<button type="button" class="mui-btn mui-btn-danger btn-block">提交</button>
+ */
+.btn-block{
+	display: block;
+	width: 100%;
+}
+
+/*块级内联*/
+.block-inline{
+	display: inline-block;
+}
+/*红色底边框*/
+.borBotRed{
+	border-bottom: 1px solid rgb(249,60,58);
+}
+
+
+/*图片全屏*/
+.mui-preview-image.mui-fullscreen {
+	position: fixed;
+	z-index: 20;
+	background-color: #000;
+}
+.mui-preview-header,
+.mui-preview-footer {
+	position: absolute;
+	width: 100%;
+	left: 0;
+	z-index: 10;
+}
+.mui-preview-header {
+	height: 44px;
+	top: 0;
+}
+.mui-preview-footer {
+	height: 50px;
+	bottom: 0px;
+}
+.mui-preview-header .mui-preview-indicator {
+	display: block;
+	line-height: 25px;
+	color: #fff;
+	text-align: center;
+	margin: 15px auto 4;
+	width: 70px;
+	background-color: rgba(0, 0, 0, 0.4);
+	border-radius: 12px;
+	font-size: 16px;
+}
+.mui-preview-image {
+	display: none;
+	-webkit-animation-duration: 0.5s;
+	animation-duration: 0.5s;
+	-webkit-animation-fill-mode: both;
+	animation-fill-mode: both;
+}
+.mui-preview-image.mui-preview-in {
+	-webkit-animation-name: fadeIn;
+	animation-name: fadeIn;
+}
+.mui-preview-image.mui-preview-out {
+	background: none;
+	-webkit-animation-name: fadeOut;
+	animation-name: fadeOut;
+}
+.mui-preview-image.mui-preview-out .mui-preview-header,
+.mui-preview-image.mui-preview-out .mui-preview-footer {
+	display: none;
+}
+.mui-zoom-scroller {
+	position: absolute;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	align-items: center;
+	-webkit-box-pack: center;
+	-webkit-justify-content: center;
+	justify-content: center;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	-webkit-backface-visibility: hidden;
+}
+.mui-zoom {
+	-webkit-transform-style: preserve-3d;
+	transform-style: preserve-3d;
+}
+.mui-slider .mui-slider-group .mui-slider-item img {
+	width: auto;
+	height: auto;
+	max-width: 100%;
+	max-height: 100%;
+}
+.mui-android-4-1 .mui-slider .mui-slider-group .mui-slider-item img {
+	width: 100%;
+}
+.mui-android-4-1 .mui-slider.mui-preview-image .mui-slider-group .mui-slider-item {
+	display: inline-table;
+}
+.mui-android-4-1 .mui-slider.mui-preview-image .mui-zoom-scroller img {
+	display: table-cell;
+	vertical-align: middle;
+}
+.mui-preview-loading {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	display: none;
+}
+.mui-preview-loading.mui-active {
+	display: block;
+}
+.mui-preview-loading .mui-spinner-white {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin-left: -25px;
+	margin-top: -25px;
+	height: 50px;
+	width: 50px;
+}
+.mui-preview-image img.mui-transitioning {
+	-webkit-transition: -webkit-transform 0.5s ease, opacity 0.5s ease;
+	transition: transform 0.5s ease, opacity 0.5s ease;
+}
+@-webkit-keyframes fadeIn {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}
+@keyframes fadeIn {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}
+@-webkit-keyframes fadeOut {
+	0% {
+		opacity: 1;
+	}
+	100% {
+		opacity: 0;
+	}
+}
+@keyframes fadeOut {
+	0% {
+		opacity: 1;
+	}
+	100% {
+		opacity: 0;
+	}
+}
+.mui-popup-inner{background-color: white;}
+.mui-popup-button{background-color: white;color: black;}

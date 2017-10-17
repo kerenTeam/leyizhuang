@@ -55,10 +55,6 @@
 		<script type="text/javascript">
 			mui.init();
 			mui.plusReady(function(){
-//				var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
-				var identityT = '6';
-//				var userId = plus.storage.getItem('$userId'); 
-				var userId = 49; 
 				var categoryCode = plus.webview.currentWebview().ctid;
 				if(categoryCode){ 
 					$('.flexw div').siblings().removeClass('curActive')
@@ -68,7 +64,9 @@
 				 
 				 kindType(categoryCode);
 				 function kindType(categoryCode){
-				 	
+				 	var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
+					var userId = plus.storage.getItem('$userId');
+					var oldToken = plus.storage.getItem('oldToken');
 					//商品列表
 					mui.ajax('http://119.23.149.7:9999/app/goods/hot/list',{
 						data:{
@@ -77,7 +75,7 @@
 							identityType:identityT
 						},
 						dataType:'json',
-						headers: {"Authorization": plus.storage.getItem("oldToken")},
+						headers: {"Authorization": oldToken},
 						type:'post',
 						timeout:10000,
 						success:function(data,type,xhr){ 
