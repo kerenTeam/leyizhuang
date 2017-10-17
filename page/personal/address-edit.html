@@ -123,10 +123,10 @@
 				</div>
 				<textarea id="address" rows="4" cols="" class="textare box-s"></textarea>
  			</div>
-		    	<div class="address-btn clearfloat">
+		    	<!--<div class="address-btn clearfloat">
 		    		<span class="szwmr fl">设为默认</span>
 		    		<a href="#" class="toggle toggle--on fr" id="acquiescence"></a>
-		    	</div>
+		    	</div>-->
 		    </div>
 		</div>
 	</body>
@@ -142,10 +142,11 @@
 			//获取缓存
 			var adId = plus.webview.currentWebview().adId; /*地址id*/
 			var userId = plus.webview.currentWebview().userId;
+			var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
 			var oldToken = plus.storage.getItem('oldToken');
 			
 			mui.ajax(serverUrl+'/app/user/setting/deliveryAddress/list',{
-					data:{userId : userId},
+					data:{'userId' : userId,'identityType':identityT},
 					dataType:'json',
 					type:'post',
 					timeout:1000,
@@ -157,7 +158,7 @@
 						if(thisAddArray[k].id == adId){
 							$('#person').attr('value',thisAddArray[k].deliveryName);
 							$('#phone').attr('value',thisAddArray[k].deliveryPhone);
-							$('#province').html(thisAddArray[k].deliveryCity + " "); /*省*/
+							$('#province').html(thisAddArray[k].deliveryProvince + " "); /*省*/
 							$('#city').html(thisAddArray[k].deliveryCity + " "); /*市*/
 							$('#area').html(thisAddArray[k].deliveryCounty); /*区*/
 							$('#address').html(thisAddArray[k].detailedAddress); /*详细地址*/
@@ -189,15 +190,20 @@
 								}else{
 									//修改地址
 									mui.ajax(serverUrl+'/app/user/setting/deliveryAddress/edit',{
-										data:{userId:userId,identityType:'', person: newPerson,phone: newPhone,province:newProvince,city:newCity,area:newArea,x_y:'123.354,56.89',state: newState,address: newAddress,address_id:adId},
+										data:{'userId':userId,'identityType':identityT,'id':adId, 'deliveryName': newPerson,'deliveryPhone': newPhone,'deliveryProvince':newProvince,'deliveryCity':newCity,'deliveryCounty':newArea,'detailedAddress': newAddress,'deliveryStreet':' ',},
 										dataType:'json',
 										type:'post',
 										timeout:1000,
-										headers:{"token":oldToken},	 
+										headers:{"Authorization":oldToken},	 
 										success:function(data,type,xhr){
-											plus.nativeUI.alert("修改地址成功");
-											plus.webview.currentWebview().close();//关闭当前页面
-											mui.fire(plus.webview.getWebviewById('personal/address.html'),'refreshAd');//打开指定页面
+											console.log('修改地址',data)
+											if(data.code == 0){
+												plus.nativeUI.alert("修改地址成功");
+												mui.fire(plus.webview.getWebviewById('address'),'refreshAd');
+												plus.webview.currentWebview().close();
+											}else{
+												mui.toast(data.message);
+											}
 										},
 										error:function(xhr,type,errorThrown){
 											console.log('响应失败  !');

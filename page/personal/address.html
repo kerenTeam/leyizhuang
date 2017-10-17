@@ -123,7 +123,7 @@
 				    					<span class="fr"><%= addressLi[i].deliveryPhone %></span>
 				    				</li>
 				    				<li>
-				    					<%= addressLi[i].deliveryCity %> <%= addressLi[i].deliveryCity %><%= addressLi[i].deliveryCounty %> <%= addressLi[i].detailedAddress %>
+				    					<%= addressLi[i].deliveryProvince %> <%= addressLi[i].deliveryCity %><%= addressLi[i].deliveryCounty %> <%= addressLi[i].detailedAddress %>
 				    				</li>
 				    			</ul>
 				    		</div>
@@ -133,7 +133,7 @@
 										<div class="xuan xuantwo clearfloat fl">
 						    				<div class="radio" onclick="changeState(this)"> 
 											    <label>
-											    	<% if(addressLi[i].state == 1){ %>
+											    	<% if(addressLi[i].isDefault){ %>
 											        	<input type="checkbox" name="sex" value="" checked id="<%= addressLi[i].id %>" />
 											        <% }else{ %>
 														<input type="checkbox" name="sex" value="" id="<%= addressLi[i].id %>" />
@@ -164,9 +164,9 @@
 	    <script type="text/javascript"> 
 		mui.init(); 
 		mui.plusReady(function(){
-			//var userId = plus.storage.getItem('$userId');
-			var userId = 1;
+			var userId = plus.storage.getItem('$userId');
 			var oldToken = plus.storage.getItem("oldToken");
+			var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
 			//plus.nativeUI.showWaiting('加载中...',{width:'100px',height:'80px'});
 			//添加刷新监听
 			
@@ -189,7 +189,7 @@
 			function RefreshAd(){
 				/*我的地址*/
 				mui.ajax(serverUrl+'/app/user/setting/deliveryAddress/list',{
-					data:{userId : userId},
+					data:{'userId' : userId,'identityType':identityT},
 					dataType:'json',
 					type:'post',
 					timeout:1000,
@@ -203,7 +203,7 @@
 						if(data.content==0){
 							document.getElementById('main').innerHTML='<div class="nothing" style="background-color: #EFEFF4;margin-top: 60px;"><img src="../../img/theList/ad.png" style="display: block;margin: 20px auto;width: 80px;"/><p style="text-align: center;">你还没有地址哟！</p></div>';
 						}
-						if(pageid){ 
+						if(pageid){/*从选择地址跳转*/
 							$(".addlist .bottom").css("display","none");
 							$(".addlist").click(function(){
 								$(this).css("background","#eee")
@@ -269,6 +269,7 @@
 						window.editAd = function(AdId){
 							openview({
 							 	view:"address-edit.html",
+							 	id:"address-edit",
 							 	extrasobj:{adId:AdId,userId:userId}
 							})
 						}
@@ -277,15 +278,15 @@
 						window.deleteAd = function(AdIdD){
 							mui.confirm('确认删除该地址？','',['取消','确认'],function (e) {
 								if(e.index == 1) { 
-									mui.ajax(serverUrl+'/api/useraccount/deleteaddress',{
-										data:{address_id:AdIdD,state:0},
+									mui.ajax(serverUrl+'/app/user/setting/deliveryAddress/delete',{
+										data:{'deliveryAddressId':AdIdD,'identityType':identityT,'userId':userId},
 										dataType:'json',
 										type:'post',
 										timeout:1000,
-										headers:{"token":oldToken},	 
+										headers:{"Authorization":oldToken},	 
 										success:function(data,type,xhr){
 											plus.nativeUI.alert("删除成功！");
-											mui.fire(plus.webview.getWebviewById('personal/address.html'),'refreshAd');//打开指定页面
+											mui.fire(plus.webview.getWebviewById('address'),'refreshAd');//打开指定页面
 										},
 										error:function(xhr,type,errorThrown){
 											console.log('响应失败  !');
