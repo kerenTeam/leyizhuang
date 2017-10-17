@@ -68,10 +68,10 @@
 		<script type="text/javascript">
 			mui.init();
 			mui.plusReady(function(){
-//				var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
-				var identityT = '6';
-				//var userId = plus.storage.getItem('$userId'); 
-				var userId = 49;
+				//获取缓存 
+				var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
+				var userId = plus.storage.getItem('$userId'); 
+				var oldToken = plus.storage.getItem('oldToken');
 				var gxId = plus.webview.currentWebview().gid;//商品列表
 				var gName = plus.webview.currentWebview().gname;
 				$('#gName').html(gName)
@@ -81,7 +81,7 @@
 						userId:userId,identityType:identityT,processId:gxId
 					},
 					dataType:'json',
-					headers: {"Authorization": plus.storage.getItem("oldToken")},
+					headers: {"Authorization": oldToken},
 					type:'post',
 					timeout:10000,
 					success:function(data,type,xhr){ 
@@ -107,20 +107,11 @@
 			})
 			
 			function goInfo(id){
-				mui.openWindow({
-					url: 'gxblist.html',
-					id: 'gxblist', 
-					show: {
-						aniShow: 'fade-in'
-					},
-					styles: {
-						popGesture: 'hide'
-					},
-					waiting: {
-						autoShow: false
-					},
-					 extras:{gid:id}
-				});
+				openview({
+					view:'gxblist.html',
+					id:'gxblist',
+					extras:{gid:id}
+				})
 			}
 		</script>
 	</body>

@@ -220,13 +220,14 @@
 										if(data.code == 0 && data.content.isExist){
 											plus.nativeUI.closeWaiting();
 //											plus.storage.setItem('$userId',JSON.stringify(data.content.userId))
-											plus.storage.setItem('$userId','49');
+											plus.storage.setItem('$userId','1');
 //											plus.storage.setItem("$identityType",JSON.stringify({'identityType':data.content.type}));
 											plus.storage.setItem("$identityType",JSON.stringify({'identityType':'6'}));
 											plus.storage.setItem("oldToken",xhr.getResponseHeader('token'));
 											plus.storage.setItem("openId",openID);
 			 								plus.storage.removeItem('Acc_pass');
-											mui.fire(plus.webview.getWebviewById('goodList'),'refresh');
+											mui.fire(plus.webview.getWebviewById('page/goodList.html'),'refresh');
+											mui.fire(plus.webview.getWebviewById('center.html'),'refresh');
 											
 											if(plus.webview.getWebviewById('reg')){
 												plus.webview.getWebviewById('reg').close();

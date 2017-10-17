@@ -272,7 +272,6 @@
 	    	
 	    	//缓存记录
 			var searchCircleStorage =JSON.parse(plus.storage.getItem("$searchCircleStorage") || '[]');
-			var myuserid = plus.storage.getItem('userid');
 			//缓存记录 渲染
 			var recordObj = {};
 			recordObj.data= searchCircleStorage;
@@ -330,13 +329,13 @@
 					//执行搜索
 					doSearch(words);
 				}else{
-					mui.toast("请输入搜索问题！");
+					mui.toast("请输入搜索内容！");
 					$(".latest").css("display","block");
 					$("#tab").css("display","none");
 				} 
 			}
-//			var userId = plus.storage.getItem('$userId'); 
-			var userId = 49; 
+			var userId = plus.storage.getItem('$userId'); 
+			var oldToken = plus.storage.getItem("oldToken");
 			function doSearch(words){
 				$(".history").css("display","none");
 				$("#tab").css("display","block"); 
@@ -350,7 +349,7 @@
      						userId:userId
 						},
 						dataType:'json',
-						headers: {"Authorization": plus.storage.getItem("oldToken")},
+						headers: {"Authorization": oldToken},
 						type:'post',
 						timeout:10000,
 						success:function(data,type,xhr){ 

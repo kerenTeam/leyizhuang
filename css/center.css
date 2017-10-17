@@ -10,10 +10,10 @@
 	align-items: center;
 	text-align: center;
 }
-
 .flexRow2 div{
-	text-align: center;
-	width:calc(100vw / 5)!important;
-	flex-wrap: wrap;
-	
+	font-size: 14px;
+	background-color: white;
+	padding: 10PX;
+	margin: 10px 0;
+	box-shadow: 0px 1px #EEEEEE;
 }
