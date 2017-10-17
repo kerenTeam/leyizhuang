@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-		<title>管理收货地址</title>
+		<title>地址管理</title>
 		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, width=device-width">
 		<meta name="apple-mobile-web-app-capable" content="yes">
 		<meta name="apple-touch-fullscreen" content="yes">
@@ -10,13 +10,13 @@
 		<meta name="format-detection" content="telephone=no">
 		<meta name="format-detection" content="address=no">
 		<link rel="stylesheet" type="text/css" href="../../css/commonY.css">
-		<link rel="stylesheet" type="text/css" href="../../css/index.css">
+		<link rel="stylesheet" type="text/css" href="../../css/indexY.css">
 		<link rel="stylesheet" type="text/css" href="../../css/mui.min.css"/>
-		<link rel="stylesheet" href="../../css/reset.css">
+		<link rel="stylesheet" href="../../css/resetY.css">
 		<script type="text/javascript" src="../../js/jquery.min.js"></script>
 		<script src="../../js/hmt.js" type="text/javascript"></script>
 		<script src="../../js/mui.min.js" type="text/javascript"></script>
-		<script src="../../js/app.js" type="text/javascript"></script>
+		<script src="../../js/default.js" type="text/javascript"></script>
 		<!--引入模板引擎-->
 		<script src="../../js/artTemplate-native.js" type="text/javascript"></script>
 		<style type="text/css">
@@ -99,7 +99,7 @@
 		 
 		<header class="mui-bar mui-bar-nav">
 		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left bigSize"></a>
-		    <h1 class="mui-title">管理收货地址</h1>  
+		    <h1 class="mui-title">地址管理</h1>  
 		    <a href="javascript:;" style="line-height: 50px;color:white;font-size: 15px;" class="fr baocun" onclick="addAd()">新增</a>
 		</header>
 		<script src="../../js/statusBar.js"></script><!--状态栏-->
@@ -119,11 +119,11 @@
 				    		<div class="top clearfloat box-s">
 				    			<ul>
 				    				<li>
-				    					<span class="fl addId"><%= addressLi[i].person %></span>
-				    					<span class="fr"><%= addressLi[i].phone %></span>
+				    					<span class="fl addId"><%= addressLi[i].deliveryName %></span>
+				    					<span class="fr"><%= addressLi[i].deliveryPhone %></span>
 				    				</li>
 				    				<li>
-				    					<%= addressLi[i].province %><%= addressLi[i].city %><%= addressLi[i].area %><%= addressLi[i].address %>
+				    					<%= addressLi[i].deliveryCity %> <%= addressLi[i].deliveryCity %><%= addressLi[i].deliveryCounty %> <%= addressLi[i].detailedAddress %>
 				    				</li>
 				    			</ul>
 				    		</div>
@@ -164,6 +164,9 @@
 	    <script type="text/javascript"> 
 		mui.init(); 
 		mui.plusReady(function(){
+			//var userId = plus.storage.getItem('$userId');
+			var userId = 1;
+			var oldToken = plus.storage.getItem("oldToken");
 			//plus.nativeUI.showWaiting('加载中...',{width:'100px',height:'80px'});
 			//添加刷新监听
 			
@@ -176,28 +179,28 @@
 					view:'../login.html'
 				})
 			}*/
-			var userId = plus.webview.currentWebview().userId;
+
 			var pageid = plus.webview.currentWebview().pageid;
 			RefreshAd();
 			document.addEventListener('refreshAd', function() {
-							RefreshAd();
-							console.log('刷新数据');
-						}) 
+				RefreshAd();
+				console.log('刷新数据');
+			}) 
 			function RefreshAd(){
-				mui.ajax(serverUrl+'/api/useraccount/addresslist',{
-					data:{userid : userId},
+				/*我的地址*/
+				mui.ajax(serverUrl+'/app/user/setting/deliveryAddress/list',{
+					data:{userId : userId},
 					dataType:'json',
 					type:'post',
 					timeout:1000,
-					headers:{"token":oldToken},	 
+					headers:{"Authorization":oldToken},
 					success:function(data,type,xhr){
-						plus.nativeUI.closeWaiting();
-						plus.storage.setItem("userid",userId);//userId做缓存
+						console.log('地址',data);
 						var addressObj = {};
-						addressObj.addressLi = data.data;
+						addressObj.addressLi = data.content;
 						var html = template('addressList-detail',addressObj);
 						document.getElementById('addressList').innerHTML = html; 
-						if(data.data.length==0){
+						if(data.content==0){
 							document.getElementById('main').innerHTML='<div class="nothing" style="background-color: #EFEFF4;margin-top: 60px;"><img src="../../img/theList/ad.png" style="display: block;margin: 20px auto;width: 80px;"/><p style="text-align: center;">你还没有地址哟！</p></div>';
 						}
 						if(pageid){ 
