@@ -883,7 +883,14 @@
 				"resources": [
 					"js/statusBar.js",
 					"css/mui.min.css",
-					"css/configW.css"
+					"css/configW.css",
+					"js/app.js",
+					"js/jquery.min.js",
+					"js/mui.min.js",
+					"fonts/mui.ttf",
+					"js/artTemplate-native.js",
+					"js/default.js",
+					"images/img.svg"
 				],
 				"refer": [],
 				"priority": 0
