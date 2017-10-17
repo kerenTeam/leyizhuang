@@ -322,6 +322,9 @@
       "js/mui.min.js",
       "fonts/mui.ttf",
       "js/artTemplate-native.js"
+    ],
+    "refer": [
+      "page/goodsInfo.html"
     ]
   },
   "center.html": {
@@ -348,7 +351,8 @@
   "cart.html": {
     "resources": [
       "css/mui.min.css"
-    ]
+    ],
+    "refer": []
   },
   "page/collect.html": {
     "resources": [
@@ -358,7 +362,8 @@
       "js/mui.min.js",
       "fonts/mui.ttf",
       "js/artTemplate-native.js"
-    ]
+    ],
+    "refer": []
   },
   "page/personal/collect.html": {
     "resources": [
@@ -368,7 +373,8 @@
       "js/mui.min.js",
       "fonts/mui.ttf",
       "js/artTemplate-native.js"
-    ]
+    ],
+    "refer": []
   },
   "page/personal/message.html": {
     "resources": [
@@ -394,7 +400,8 @@
       "js/mui.min.js",
       "fonts/mui.ttf",
       "css/configW.css"
-    ]
+    ],
+    "refer": []
   },
   "page/guide/myCustomer.html": {
     "resources": [
@@ -447,7 +454,8 @@
       "css/configW.css",
       "images/10.png",
       "js/artTemplate-native.js"
-    ]
+    ],
+    "refer": []
   },
   "page/personal/myCoupon.html": {
     "resources": [
@@ -458,7 +466,8 @@
       "css/configW.css",
       "js/jquery.min.js",
       "js/artTemplate-native.js"
-    ]
+    ],
+    "refer": []
   },
   "page/goodsInfo.html": {
     "resources": [
@@ -472,6 +481,7 @@
       "js/artTemplate-native.js",
       "js/default.js",
       "images/img.svg"
-    ]
+    ],
+    "refer": []
   }
 }

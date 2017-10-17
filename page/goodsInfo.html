@@ -61,7 +61,7 @@
 		#maskInfo{z-index:99999;position:fixed;top:0;left:0;width:100%;bottom:0;background-color:rgba(0,0,0,.5)}	
 		.dynamicPic span{display: inline-block;position: absolute;top: 2%;left: 2%;width: 96%;height: 96%;background-color: #F3F3F3;overflow: hidden;}
 		.mui-slider-item img{
-			width: 100%;
+			width: 100%!important;
 		}
 	</style>
 
@@ -76,32 +76,35 @@
 			<div id="moll_info"></div>
 			
 			<script type="text/html" id="infoTpl">
-							<div class="mui-slider">
-				
-				<!--轮播图-->
-				<%if(dataobj.rotationImageUriList.length){%>
-					<div class="mui-slider-group mui-slider-loop">
-					    <!--支持循环，需要重复图片节点-->
-					    <div class="mui-slider-item mui-slider-item-duplicate">
-					    	<img src="<%= dataobj.rotationImageUriList[dataobj.rotationImageUriList.length-1] %>" onerror="javascript:this.src='../images/img.svg';" />
-					    </div>
-						<% for(var i=0;i<dataobj.rotationImageUriList.length;i++){ %> 
-					    	<div class="mui-slider-item">
-					    		<img src="<%=dataobj.rotationImageUriList[i] %>"  onerror="javascript:this.src='../images/img.svg';"/>
-					    	</div>
-					     <% } %>
-					    <!--支持循环，需要重复图片节点-->
-					    <div class="mui-slider-item mui-slider-item-duplicate" >
-					    	<img src="<%=dataobj.rotationImageUriList[0] %>" onerror="javascript:this.src='../images/img.svg';" />
-					    </div>
-					</div>
-					<div class="mui-slider-indicator">
-						<div class="mui-indicator mui-active"></div>
-						<% for(var i=0;i<dataobj.rotationImageUriList.length-1;i++){ %>
-					    	<div class="mui-indicator"></div>
-					    <% } %>
-		            </div> 
-				<%}%>
+				<div class="mui-slider">
+					<!--轮播图-->
+					<%if(dataobj.rotationImageUriList.length){%>
+						<div class="mui-slider-group mui-slider-loop">
+						    <!--支持循环，需要重复图片节点-->
+						    <div class="mui-slider-item mui-slider-item-duplicate">
+						    	<img src="<%= dataobj.rotationImageUriList[dataobj.rotationImageUriList.length-1] %>" onerror="javascript:this.src='../images/img.svg';" />
+						    </div>
+							<% for(var i=0;i<dataobj.rotationImageUriList.length;i++){ %> 
+						    	<div class="mui-slider-item">
+						    		<img src="<%=dataobj.rotationImageUriList[i] %>"  onerror="javascript:this.src='../images/img.svg';"/>
+						    	</div>
+						     <% } %>
+						    <!--支持循环，需要重复图片节点-->
+						    <div class="mui-slider-item mui-slider-item-duplicate" >
+						    	<img src="<%=dataobj.rotationImageUriList[0] %>" onerror="javascript:this.src='../images/img.svg';" />
+						    </div>
+						</div>
+						<div class="mui-slider-indicator">
+							<div class="mui-indicator mui-active"></div>
+							<% for(var i=0;i<dataobj.rotationImageUriList.length-1;i++){ %>
+						    	<div class="mui-indicator"></div>
+						    <% } %>
+			            </div> 
+					<%}%>
+				</div>
+				<div id="brief" style="background: white;padding: 15px;font-size: 14px;">
+					<%=dataobj.skuName%><br/>
+					<span>价格：¥<%=dataobj.price%>  规格：<%=dataobj.goodsSpecification%>  单位：<%=dataobj.goodsUnit%><br/></span>
 				</div>
 				<!--轮播图结束-->
 			</script>
@@ -178,7 +181,7 @@
 		<!--底部-->
 		<div class="opbot maincl ft14">
 			<div class="opbf ft12">
-				<div>
+				<div id='collt'>
 					收藏
 				</div>
 				<div style="border-left: 1px solid #EEEEEE;border-right: 1px solid #EEEEEE;">
@@ -202,6 +205,9 @@
 	<script type="text/javascript">
 		mui.plusReady(function(){
 			var goodid = plus.webview.currentWebview().goodId;
+			if(!goodid){
+				mui.toast('未返回商品id')
+			}
 			//获取缓存 
 			var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
 			var userId = plus.storage.getItem('$userId'); 
@@ -237,6 +243,7 @@
 								interval: 3000 //设置自动轮播周期为3s
 							});
 						}else{
+							
 						}
 					}
 					if(data.code == 1000 ){
@@ -295,38 +302,40 @@
 	    	})
 		    	//收藏
 		    	$('#collt').click(function(){
-		    		if(plus.storage.getItem('myToken')){
-						var curThis = $(this);
-						if(curThis.attr('src') == '../img/localLife/uncollt.png'){ 
-							colltThis(curThis,infiId,newsUserId,cityNum,myuserid,oldToken,'POST','../img/localLife/collt.png')  
-						}else{
-							colltThis(curThis,infiId,newsUserId,cityNum,myuserid,oldToken,'POST','../img/localLife/uncollt.png') 
-						}
-					}else{
-						mui.toast('请登录');
-						openview({
-							view:'../login.html'
-						});
-					} 
+		    		//119.23.149.7:9999/app/user/collect/add
+		    		mui.ajax(serverUrl+'/app/user/collect/add',{
+				data:{
+					goodsId:goodid,
+					userId:userId,
+					identityType:identityT
+				},
+				dataType:'json',
+				headers: {"Authorization": oldToken},
+				type:'post',
+				timeout:10000,
+				success:function(data,type,xhr){ 
+					plus.nativeUI.closeWaiting();
+					console.log('收藏返回',data);
+					if(data.code == 0 ){
+						plus.nativeUI.closeWaiting();
+						
+						mui.toast('收藏成功');$('#collt').html('已收藏')
+					}
+					if(data.code == 1000 ){
+						mui.toast(data.message)
+					}else if(data.code == -1 ){
+						mui.toast(data.message)
+					}
+					 
+				},
+				error:function(xhr,type,errorThrown){
+					plus.nativeUI.closeWaiting();
+					mui.toast(type)
+				}
+			});
 		    	})
 	    
-			//点赞
-			$('#doLike').click(function(){
-				if(plus.storage.getItem('myToken')){
-					var curThis = $(this);
-					if(curThis.attr('src') == '../img/localLife/weizan.png'){ 
-						likeThis(curThis,infiId,newsUserId,cityNum,myuserid,oldToken,'POST','../img/localLife/zan.png')  
-					}else{
-						likeThis(curThis,infiId,newsUserId,cityNum,myuserid,oldToken,'DELETE','../img/localLife/weizan.png') 
-					}
-				}else{
-					mui.toast('请登录');
-					openview({
-						view:'../login.html'
-					});
-				} 
-			})
-	    	 
+		
 		}) 
 		
 		//发布时间判断 
@@ -362,7 +371,7 @@
 			 }
 			return result;
 		}
-		 		mui.previewImage(); 
+//		 		mui.previewImage(); 
 		
 	</script>
 	<script type="text/javascript">
