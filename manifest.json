@@ -894,6 +894,16 @@
 				],
 				"refer": [],
 				"priority": 0
+			},
+			"page/personal/address.html": {
+				"resources": [
+					"css/resetY.css",
+					"css/indexY.css",
+					"css/commonY.css",
+					"css/mui.min.css"
+				],
+				"refer": [],
+				"priority": 0
 			}
 		},
 		"idle": {
