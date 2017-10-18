@@ -63,7 +63,7 @@
 			//检测设备信息
 			!function(){
 				plus.runtime.getProperty(plus.runtime.appid,function(inf){//显示当前版本号
-		        	mui('#version')[0].innerHTML = inf.version;
+//		        	mui('#version')[0].innerHTML = inf.version;
 			    });
 				if(/android/i.test(navigator.userAgent)){
 					mui('#editpw')[0].className += ' liafter';
@@ -98,11 +98,11 @@
 				});
 			})
 			//协议
-			mui('#xieyi')[0].addEventListener('tap',function(){
-				openview({
-					view:'../agreement.html' 
-				});
-			})
+//			mui('#xieyi')[0].addEventListener('tap',function(){
+//				openview({
+//					view:'../agreement.html' 
+//				});
+//			})
 			//编辑资料
 			mui('#editdata')[0].addEventListener('tap',function(){
 				openview({
@@ -120,19 +120,22 @@
 			mui('#Signout')[0].addEventListener('tap',function(){
 		        mui.confirm('确认退出登录？', '提示', ['取消', '确定'], function(e) {
 		            if (e.index == 1) {
-			            plus.storage.removeItem('myToken');
-						plus.storage.removeItem('userid');
-						plus.storage.removeItem('Acc_pass');
-						plus.storage.removeItem('$gotCoupon');
-						plus.storage.removeItem('likeH');
-						plus.storage.removeItem('commentH');
-						plus.storage.removeItem('PletterH'); 
-						plus.storage.removeItem("$gameTime"); 
-						mui.fire(plus.webview.getWebviewById('center.html'),'refresh');
+		            	plus.storage.removeItem('openId');
+					plus.storage.removeItem("oldToken");
+					plus.storage.removeItem('$userId');
+					plus.storage.removeItem("$identityType");
+					plus.storage.removeItem("Acc_pass");//保存账号密码,用于自动登录
+					mui.fire(plus.webview.getWebviewById('../goodList.html'),'refresh');
+					mui.fire(plus.webview.getWebviewById('center.html'),'refresh');
+			       
 						plus.nativeUI.showWaiting();
 						var time2 = setTimeout(function(){
 							plus.nativeUI.closeWaiting();
-							plus.webview.currentWebview().close();
+							openview({
+								view:'../../identify.html',
+								id:'identify'
+							})
+//							plus.webview.currentWebview().close();
 							mui.toast('退出成功');
 						},500)	
 		            }

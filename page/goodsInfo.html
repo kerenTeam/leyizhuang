@@ -63,6 +63,8 @@
 		.mui-slider-item img{
 			width: 100%!important;
 		}
+		#goodsInfo{margin: 10px 0;background-color: white;padding: 10px;}
+		#goodsInfo img{width: 100%;}
 	</style>
 
 	<body style="background-color: white;">
@@ -72,7 +74,7 @@
 			<h1 class="mui-title findUser">商品详情</h1>
 		</header>
 		<script src="../js/statusBar.js"></script><!--状态栏-->
-		<div class="mui-content">
+		<div class="mui-content" style="margin-bottom: 60px;">
 			<div id="moll_info"></div>
 			
 			<script type="text/html" id="infoTpl">
@@ -102,11 +104,24 @@
 			            </div> 
 					<%}%>
 				</div>
+				<!--轮播图结束-->
 				<div id="brief" style="background: white;padding: 15px;font-size: 14px;">
 					<%=dataobj.skuName%><br/>
 					<span>价格：¥<%=dataobj.price%>  规格：<%=dataobj.goodsSpecification%>  单位：<%=dataobj.goodsUnit%><br/></span>
 				</div>
-				<!--轮播图结束-->
+				<!--详情-->
+				<div id="goodsInfo">
+					<div style="line-height: 0.8;"> 
+						<div class="ft14">商品详情</div> 
+					</div>
+					<% for(var i=0;i<dataobj.coverImageUriList.length;i++){ %>
+						<%if(dataobj.coverImageUriList[i]){%>
+							<img src="<%=dataobj.coverImageUriList[i]%>" alt="" />
+							
+						<%}%>
+				    	<div class="mui-indicator"></div>
+				    <% } %>
+				</div>
 			</script>
  
     			
@@ -181,7 +196,7 @@
 		<!--底部-->
 		<div class="opbot maincl ft14">
 			<div class="opbf ft12">
-				<div id='collt'>
+				<div id='collt' data-id='0'>
 					收藏
 				</div>
 				<div style="border-left: 1px solid #EEEEEE;border-right: 1px solid #EEEEEE;">
@@ -229,6 +244,9 @@
 					if(data.code == 0 ){
 						plus.nativeUI.closeWaiting();
 						if(data.content){
+							if(data.content.isCollect){
+								$('#collt').html('取消收藏').attr('data-id','1')
+							}
 							if(data.content.rotationImageUriList){
 								for(var i in data.content.rotationImageUriList){
 									if(!data.content.rotationImageUriList[i]){
@@ -260,7 +278,6 @@
 				}
 			});
 			$('#cmtedup').click(function(){
-				if(plus.storage.getItem('myToken')){
 					mui.prompt('null','请输入留言','留言',['确认','取消'],function(e) {
 						if(e.index == 0) { 
 							if(e.value && e.value!=' '){
@@ -291,48 +308,76 @@
 							}
 						} 
 					},'')
-				}else{
-					mui.toast('请登录');
-					openview({
-						view:'../login.html'
-					});
-				}
-	    		
-	    		
+				
 	    	})
 		    	//收藏
 		    	$('#collt').click(function(){
-		    		//119.23.149.7:9999/app/user/collect/add
-		    		mui.ajax(serverUrl+'/app/user/collect/add',{
-				data:{
-					goodsId:goodid,
-					userId:userId,
-					identityType:identityT
-				},
-				dataType:'json',
-				headers: {"Authorization": oldToken},
-				type:'post',
-				timeout:10000,
-				success:function(data,type,xhr){ 
-					plus.nativeUI.closeWaiting();
-					console.log('收藏返回',data);
-					if(data.code == 0 ){
-						plus.nativeUI.closeWaiting();
-						
-						mui.toast('收藏成功');$('#collt').html('已收藏')
-					}
-					if(data.code == 1000 ){
-						mui.toast(data.message)
-					}else if(data.code == -1 ){
-						mui.toast(data.message)
-					}
-					 
-				},
-				error:function(xhr,type,errorThrown){
-					plus.nativeUI.closeWaiting();
-					mui.toast(type)
-				}
-			});
+		    		if($(this).attr('data-id') == 0){
+		    			mui.ajax(serverUrl+'/app/user/collect/add',{
+						data:{
+							goodsId:goodid,
+							userId:userId,
+							identityType:identityT
+						},
+						dataType:'json',
+						headers: {"Authorization": oldToken},
+						type:'post',
+						timeout:10000,
+						success:function(data,type,xhr){ 
+							plus.nativeUI.closeWaiting();
+							console.log('收藏返回',data);
+							if(data.code == 0 ){
+								plus.nativeUI.closeWaiting();
+								$('#collt').attr('data-id','1');
+								$('#collt').html('取消收藏');
+								mui.toast('收藏成功');
+							}
+							if(data.code == 1000 ){
+								mui.toast(data.message)
+							}else if(data.code == -1 ){
+								mui.toast(data.message)
+							}
+							 
+						},
+						error:function(xhr,type,errorThrown){
+							plus.nativeUI.closeWaiting();
+							mui.toast(type)
+						}
+					});
+		    		}else{
+		    			mui.ajax(serverUrl+'/app/user/collect/remove',{
+						data:{
+							goodsId:goodid,
+							userId:userId,
+							identityType:identityT
+						},
+						dataType:'json',
+						headers: {"Authorization": oldToken},
+						type:'post',
+						timeout:10000,
+						success:function(data,type,xhr){ 
+							plus.nativeUI.closeWaiting();
+							console.log('收藏返回',data);
+							if(data.code == 0 ){
+								plus.nativeUI.closeWaiting();
+								$('#collt').attr('data-id','0');
+								mui.toast('取消成功');
+								$('#collt').html('收藏')
+							}
+							if(data.code == 1000 ){
+								mui.toast(data.message)
+							}else if(data.code == -1 ){
+								mui.toast(data.message)
+							}
+							 
+						},
+						error:function(xhr,type,errorThrown){
+							plus.nativeUI.closeWaiting();
+							mui.toast(type)
+						}
+					});
+		    		}
+		    		
 		    	})
 	    
 		
@@ -373,12 +418,6 @@
 		}
 //		 		mui.previewImage(); 
 		
-	</script>
-	<script type="text/javascript">
-       
-		
-
-	    
 	</script>
 
 </html>

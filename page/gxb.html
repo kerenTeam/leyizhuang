@@ -32,13 +32,18 @@
 		<script src="../js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../js/mui.min.js"></script>
 		<script src="../js/artTemplate-native.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/default.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
 			mui.init();
 			mui.plusReady(function(){
+				//获取缓存 
+				var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
+				var userId = plus.storage.getItem('$userId'); 
+				var oldToken = plus.storage.getItem('oldToken');
 				//商品列表
-				mui.ajax('http://119.23.149.7:9999/app/process/list',{
+				mui.ajax(serverUrl+'/app/process/list',{
 					dataType:'json',
-					headers: {"Authorization": plus.storage.getItem("oldToken")},
+					headers: {"Authorization":oldToken},
 					type:'post',
 					timeout:10000,
 					success:function(data,type,xhr){ 

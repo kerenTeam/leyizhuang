@@ -286,7 +286,7 @@
 		},
 		"runmode": "liberate",/*应用的首次启动运行模式，可取liberate或normal，liberate模式在第一次启动时将解压应用资源（Android平台File API才可正常访问_www目录）*/
 		"signature": "Sk9JTiBVUyBtYWlsdG86aHIyMDEzQGRjbG91ZC5pbw==",/*可选，保留给应用签名，暂不使用*/
-		"distribute": {"plugins":{"oauth":{"weixin":{"appid":"wx6ea338a1c0fc1978","appsecret":"e77fd07f9ed6c117f94692f165661e3b"}}},
+		"distribute": {"plugins":{"oauth":{"weixin":{"appid":"wxa4e8a82e226587dd","appsecret":"bc936a30ffcc36f3ffabb41b4293a889"}}},
 			"apple": {
 				"appid": "",/*iOS应用标识，苹果开发网站申请的appid，如io.dcloud.HelloH5*/
 				"mobileprovision": "",/*iOS应用打包配置文件*/
@@ -361,9 +361,9 @@
 				"android": {
 					"mdpi": "", /*普通屏启动图片，分辨率：240x282*/
 					"ldpi": "", /*大屏启动图片，分辨率：320x442*/
-					"hdpi": "C:/Users/yuoxd/Desktop/st.png", /*高分屏启动图片，分辨率：480x762*/
-					"xhdpi": "C:/Users/yuoxd/Desktop/st.png", /*720P高分屏启动图片，分辨率：720x1242*/
-					"xxhdpi": "C:/Users/yuoxd/Desktop/st.png"
+					"hdpi": "/Users/wangfei/Downloads/st.png", /*高分屏启动图片，分辨率：480x762*/
+					"xhdpi": "/Users/wangfei/Downloads/st.png", /*720P高分屏启动图片，分辨率：720x1242*/
+					"xxhdpi": "/Users/wangfei/Downloads/st.png"
 				}
 			}
 		}
@@ -468,10 +468,12 @@
 					"css/style.css",
 					"js/mui.min.js",
 					"js/app.js",
-					"js/jquery.min.js"
+					"js/jquery.min.js",
+					"js/default.js"
 				],
 				"refer": [
-					"login.html"
+					"login.html",
+					"bindGuide.html"
 				],
 				"priority": 3
 			},
@@ -488,7 +490,8 @@
 					"images/qq.png",
 					"images/sinaweibo.png",
 					"images/weixin.png",
-					"js/base64.js"
+					"js/base64.js",
+					"js/default.js"
 				],
 				"refer": [
 					"unlock.html",
@@ -652,7 +655,8 @@
 					"js/mui.min.js",
 					"fonts/mui.ttf",
 					"css/mui.min.css",
-					"js/artTemplate-native.js"
+					"js/artTemplate-native.js",
+					"js/default.js"
 				],
 				"refer": [
 					"page/gxbList.html"
@@ -711,9 +715,13 @@
 					"js/mui.min.js",
 					"fonts/mui.ttf",
 					"js/artTemplate-native.js",
-					"images/delet.svg"
+					"images/delet.svg",
+					"js/default.js",
+					"css/style.css"
 				],
-				"refer": [],
+				"refer": [
+					"page/goodsInfo.html"
+				],
 				"priority": 0
 			},
 			"page/goodList.html": {
@@ -724,7 +732,8 @@
 					"js/jquery.min.js",
 					"js/mui.min.js",
 					"fonts/mui.ttf",
-					"js/artTemplate-native.js"
+					"js/artTemplate-native.js",
+					"js/default.js"
 				],
 				"refer": [
 					"page/goodsInfo.html"
@@ -749,7 +758,9 @@
 					"page/personal/collect.html",
 					"page/guide/myCustomer.html",
 					"page/manager/workerList.html",
-					"page/personal/myCoupon.html"
+					"page/personal/myCoupon.html",
+					"page/personal/shezhi.html",
+					"page/personal/productCoupon.html"
 				],
 				"priority": 0
 			},
@@ -779,9 +790,15 @@
 					"js/jquery.min.js",
 					"js/mui.min.js",
 					"fonts/mui.ttf",
-					"js/artTemplate-native.js"
+					"js/artTemplate-native.js",
+					"images/center/uncheck.svg",
+					"images/center/checked.svg",
+					"css/configW.css",
+					"js/default.js"
 				],
-				"refer": [],
+				"refer": [
+					"page/goodsInfo.html"
+				],
 				"priority": 0
 			},
 			"page/personal/message.html": {
@@ -894,7 +911,9 @@
 					"js/default.js",
 					"images/img.svg"
 				],
-				"refer": [],
+				"refer": [
+					"login.html"
+				],
 				"priority": 0
 			},
 			"page/personal/address.html": {
@@ -902,7 +921,84 @@
 					"css/resetY.css",
 					"css/indexY.css",
 					"css/commonY.css",
-					"css/mui.min.css"
+					"css/mui.min.css",
+					"js/jquery.min.js",
+					"img/check1.png",
+					"iconfont/iconfont.woff",
+					"js/default.js",
+					"js/artTemplate-native.js",
+					"js/mui.min.js",
+					"js/statusBar.js",
+					"fonts/mui.ttf"
+				],
+				"refer": [
+					"page/personal/address-edit.html",
+					"page/personal/add-address.html"
+				],
+				"priority": 0
+			},
+			"page/personal/shezhi.html": {
+				"resources": [
+					"js/statusBar.js",
+					"css/mui.min.css",
+					"css/commonY.css",
+					"js/app.js",
+					"js/mui.min.js",
+					"fonts/mui.ttf"
+				],
+				"refer": [
+					"page/personal/address.html",
+					"identify.html"
+				],
+				"priority": 0
+			},
+			"page/personal/address-edit.html": {
+				"resources": [
+					"css/resetY.css",
+					"js/mui.picker.minY.js",
+					"css/mui.min.css",
+					"css/indexY.css",
+					"css/mui.picker.minY.css",
+					"css/commonY.css",
+					"js/city.data-3Y.js",
+					"js/app.js",
+					"js/jquery.min.js",
+					"js/mui.min.js",
+					"js/statusBar.js",
+					"fonts/mui.ttf",
+					"js/default.js",
+					"js/artTemplate-native.js"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"page/personal/add-address.html": {
+				"resources": [
+					"css/resetY.css",
+					"js/mui.picker.minY.js",
+					"css/mui.min.css",
+					"css/indexY.css",
+					"css/mui.picker.minY.css",
+					"css/commonY.css",
+					"js/city.data-3Y.js"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"page/personal/productCoupon.html": {
+				"resources": [
+					"images/center/uncheck.svg",
+					"css/mui.min.css",
+					"css/style.css",
+					"css/configW.css"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"bindGuide.html": {
+				"resources": [
+					"css/mui.min.css",
+					"css/configW.css"
 				],
 				"refer": [],
 				"priority": 0

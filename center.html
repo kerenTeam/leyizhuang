@@ -145,7 +145,8 @@
 				<div class="mui-col-sm-8 mui-col-xs-8 writing">
 					<p class="centop customerN">
 						<span class="denlu denluzhuce" >用户名：<span id="userName" style="z-index: 99;"></span></span><br />
-						<span class="denlu denluzhuce" style="display: inline-block;min-height: 20px;" id="coin">乐币:<span></span> 账户:<span id="accoutoney"></span><br />灯号:<span id="dengh"></span> 导购:<span id="guideName"></span><a id="guideMobile" href=""><img style="width: 15px;margin-left: 5px;display: none;" src="images/center/phone.svg"/></a></span>
+						<span class="denlu denluzhuce" >手机号：<span id="guidesPhone" style="z-index: 99;"></span></span> <span id='bindPhone' style="background-color: orange;color: white;font-size: 10px;padding: 2px;border-radius: 3px;display: none;">绑定手机号</span><br />
+						<span class="denlu denluzhuce" style="display: inline-block;min-height: 20px;" id="coin">乐币:<span></span> 账户:<span id="accoutoney"></span><br />灯号:<span id="dengh"></span> 导购:<span id="guideName"></span><a id="guideMobile" style="display: none;" href=""><img style="width: 15px;margin-left: 5px;" src="images/center/phone.svg"/></a></span>
 					</p>
 				</div>
 				<img class="dao shezhi" style="top: 8px;width: 30px;" src="images/center/shizhi.png" />
@@ -191,7 +192,7 @@
 					<div onclick="myCoupon()">
 						优惠券
 					</div>
-					<div class="">
+					<div onclick="productCoupon()">
 						产品券
 					</div>
 					<div class="">
@@ -350,7 +351,13 @@
 					id: 'myCoupon', 
 				})
 			}
-			
+			// 产品券
+			function productCoupon(){
+				openview({
+					view:'page/personal/productCoupon.html',
+					id: 'productCoupon', 
+				})
+			}
 			//消息
 			function goMessage(){
 				openview({
@@ -385,18 +392,29 @@
 					var oldToken = plus.storage.getItem('oldToken');
 					loadmyinfo();
 					if(identityT == 0 || identityT == 4 || identityT == 5){
-						$('.guiderN').css('display','block')
+						$('.orderType').css('display','');
+						$('.centerList').css('display','none');
+						$('.guiderN').css('display','block');
+						$('#dengh,#guideMobile,#guideName,#dengh,#coin').css('display','none')
 					}else if(identityT == 6){
+						$('.orderType').css('display','');
+						$('.centerList').css('display','none');
 						$('.customerN').css('display','block')
 						
 					}else if(identityT == 3){
-						$('.workerN').css('display','block')
+						$('.centerList').css('display','none');
+						$('.workerN').css('display','block');
+						$('.orderType').css('display','none');
 						
 					}else if(identityT == 2){
+						$('.orderType').css('display','');
+						$('.centerList').css('display','none');
 						$('.manageN').css('display','block')
 						
 					}else{
-						$('.distributionN').css('display','block')
+						$('.centerList').css('display','none');
+						$('.distributionN').css('display','block');
+						$('.orderType').css('display','none');
 					}
 					
 					/*设置*/
@@ -443,13 +461,23 @@
 											$('#guideName').html('无')
 										}
 										if(data.content.guideMobile) {
-											
-											$('#guideMobile').css('display','').attr('href', 'tel:' + data.content.guideMobile)
+											$('#guideMobile').css('display','inline-block').attr('href', 'tel:' + data.content.guideMobile)
+										}else{
+											$('#guideMobile').css('display','none')
 										}
 										if(data.content.light) {
 											$('#dengh').html(data.content.light)
 										} else {
 											$('#dengh').html('无')
+										}
+										if(identityT == 0){
+											if(data.content.guideMobile) {
+												$('#bindPhone').css('display','none')
+												$('#guidesPhone').html(data.content.guideMobile);
+											}else{
+												$('#guidesPhone').html('无')
+												$('#bindPhone').css('display','inline-block')
+											}
 										}
 									}
 								} else {
@@ -476,7 +504,7 @@
 							type: 'post',
 							timeout: 10000,
 							success: function(data, type, xhr) {
-								console.log('个人信息', data);
+								console.log('乐币', data);
 								if(data.code == 0) {
 									plus.nativeUI.closeWaiting();
 									if(data.content) {}

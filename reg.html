@@ -57,14 +57,15 @@
 					 
 				</div> 
 				<div class="mui-input-row">
-					<label>城市</label>
-					<select name="city">
-						<option value="1" selected>成都</option>
-						<option value="2">郑州</option>
+					<label>城市选择</label>
+					<select name="city" id="city">
 					</select>
 				</div>
 			</form>
-				<small style="color:#FF5053;padding: 15px;font-size: 12px;">温馨提示：城市选定后无法更改！</small>
+				<div style="color:#FF5053;padding: 15px;font-size: 12px;">
+					<div>温馨提示：城市选定后无法更改！</div>
+					<input type="checkbox" name="" id="protocol" value=""  style="vertical-align: middle;" checked=""/><span style="color: gray;">《用户注册协议》</span>
+				</div>
 			<div class="mui-content-padded">
 				<button id='sendMail' class="mui-btn mui-btn-block mui-btn-primary">注册</button>
 			</div>
@@ -72,6 +73,7 @@
 		<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/mui.min.js"></script>
 		<script src="js/app.js"></script>
+		<script src="js/default.js" type="text/javascript" charset="utf-8"></script>
 		<script>
 			 
 				mui.init(); 
@@ -84,17 +86,25 @@
 					var cityId = $('select option:selected').val() 
 					var newpsd = document.getElementById('newpsd');
 					var VerCode;
+					var codePhone = '';
 					var openId = plus.webview.currentWebview().openid;
 					console.log(openId);
 					
 					//获取城市
-					mui.ajax('http://119.23.149.7:9999/app/city/list',{
+					mui.ajax(serverUrl+'/app/city/list',{
 						dataType:'json',
 						type:'post',
 						timeout:10000,
 						success:function(data,type,xhr){ 
 							console.log('城市列表返回',data);
-							 
+							if(data.content && data.content.length){
+								var cityStr = '';
+								for (var i = data.content.length-1;i>=0;i--) {
+									cityStr += '<option value="'+cityId+'" selected>'+data.content[i].cityName+'</option>'
+									
+								}
+								$('#city').html(cityStr)
+							}
 						},
 						error:function(xhr,type,errorThrown){
 						 
@@ -107,10 +117,12 @@
 							mui.toast('请输入正确的手机号')
 						}else if(!checkcode.value){
 							mui.toast('请输入验证码')
-						}else{  
+						}else if(account.value != codePhone){
+							mui.toast('手机号改变，请重新获取验证码')
+						}else{
 								plus.nativeUI.showWaiting();
-								mui.ajax('http://119.23.149.7:9999/app/customer/registry',{//改密
-								data:{"phone":account.value,"openId":openId,'cityId':cityId},
+								mui.ajax(serverUrl+'/app/customer/registry',{//改密
+								data:{"phone":account.value,"openId":openId,'cityId':1},
 								dataType:'json',
 								type:'post',
 								timeout:10000,
@@ -124,7 +136,7 @@
 									}else if(data.code == 0){
 										plus.nativeUI.closeWaiting();
 										mui.toast('注册成功'); 
-										mui.ajax('http://119.23.149.7:9999/app/customer/login',{
+										mui.ajax(serverUrl+'/app/customer/login',{
 											data:{"openId":openId},
 											dataType:'json',
 											type:'post',
@@ -137,18 +149,23 @@
 													plus.storage.setItem('$userId','1');
 //													plus.storage.setItem("$identityType",JSON.stringify({'identityType':data.content.type}));
 													plus.storage.setItem("$identityType",JSON.stringify({'identityType':'6'}));
-													
+													if(plus.webview.getWebviewById('identify')){
+														plus.webview.getWebviewById('identify').close();
+													}
 													plus.storage.setItem("oldToken",xhr.getResponseHeader('token'));
 													plus.storage.setItem("openId",openId);
 													plus.storage.removeItem('Acc_pass');
 													mui.fire(plus.webview.getWebviewById('page/goodList.html'),'refresh');
-													mui.fire(plus.webview.getWebviewById('center.html'),'refresh');
-													var time2 = setTimeout(function(){
-														var index = plus.webview.getLaunchWebview();
+													mui.fire(plus.webview.getWebviewById('center.html'),'refresh');	
+													var index = plus.webview.getLaunchWebview();
 														mui.fire(index,'refresh');
-														plus.webview.currentWebview().close(); 
+													var time2 = setTimeout(function(){
+//														plus.webview.currentWebview().close(); 
 														plus.nativeUI.closeWaiting();
-														mui.toast('登录成功');
+														openview({
+															view:'bindGuide.html',
+															id:'bindGuide'
+														})
 													},500)
 												 
 												}
@@ -165,6 +182,7 @@
 										plus.nativeUI.closeWaiting();
 										mui.toast(data.message); 
 										plus.webview.currentWebview().close(); 
+										
 									}
 								},
 								error:function(xhr,type,errorThrown){
@@ -172,8 +190,6 @@
 									console.log('修改密码响应失败');
 								}
 							});
-								
-							 
 						}
 						
 					}, false);
@@ -190,8 +206,23 @@
 						if(!account.value || !reg_phone.test(account.value)){
 							mui.toast('请输入正确的手机号')
 						}else{
+							 
 							getCode.setAttribute('disabled',true);
-							getCode.innerHTML = '获取中...'
+							var time = 60;
+							getCode.innerHTML = '倒计时'+time+'s';
+							
+							var djs = setInterval(function(){
+								if(time>0){
+									time--;
+									getCode.innerHTML = '倒计时'+time+'s';
+								}else{
+									getCode.innerHTML = '获取验证码';
+									getCode.removeAttribute('disabled');
+									time = 60;
+									djs = null;
+								}
+							},1000)
+							
 							//发送验证码 
 							mui.ajax('http://119.23.149.7:9999/app/qrcode/send',{
 								data:{mobile:account.value}, 
@@ -199,8 +230,7 @@
 								type:'post',
 								timeout:10000,
 								success:function(data){
-									getCode.innerHTML = '获取验证码'
-									getCode.removeAttribute('disabled')
+									codePhone = account.value;
 									
 									console.log('发送验证码返回',data);
 									mui.toast('验证码已发送');

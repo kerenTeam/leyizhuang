@@ -73,7 +73,9 @@
 			})
 			
 			mui.plusReady(function(){
-				
+				if(plus.webview.getWebviewById('shezhi')){
+					plus.webview.getWebviewById('shezhi').close();
+				}
 				
 //				//判断是否登陆
 //				plus.storage.removeItem('oldToken');
@@ -228,16 +230,16 @@
 			 								plus.storage.removeItem('Acc_pass');
 											mui.fire(plus.webview.getWebviewById('page/goodList.html'),'refresh');
 											mui.fire(plus.webview.getWebviewById('center.html'),'refresh');
-											
+											var index = plus.webview.getLaunchWebview();
+												mui.fire(index,'refresh');
 											if(plus.webview.getWebviewById('reg')){
 												plus.webview.getWebviewById('reg').close();
 											}
-											var time2 = setTimeout(function(){ 
-												var index = plus.webview.getLaunchWebview();
-												mui.fire(index,'refresh');
-												plus.webview.currentWebview().close();
+										 
+											var time2 = setTimeout(function(){
 												plus.nativeUI.closeWaiting();
-												mui.toast('登录成功');
+												mui.toast('登录成功'); 
+												plus.webview.currentWebview().close();
 											},500)
 											
 										}else if(data.code == -1){ 
@@ -273,6 +275,20 @@
 					plus.nativeUI.toast("获取登录认证失败：" + e.message);
 				});
 			})
+			
+			var backButtonPress = 0;
+			mui.back = function(event) {
+				backButtonPress++;
+				if (backButtonPress > 1) {
+					plus.runtime.quit();
+				} else {
+					plus.nativeUI.toast('再按一次退出应用');
+				}
+				setTimeout(function() {
+					backButtonPress = 0;
+				}, 1000);
+				return false;
+			};
 		</script>
 	</body>
 
