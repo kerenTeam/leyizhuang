@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<title>新增地址</title>
+		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, width=device-width">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-touch-fullscreen" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="format-detection" content="telephone=no">
+		<meta name="format-detection" content="address=no">
+
+		<link rel="stylesheet" type="text/css" href="../../css/commonY.css">
+		<link rel="stylesheet" type="text/css" href="../../css/indexY.css">
+		<link rel="stylesheet" type="text/css" href="../../css/mui.min.css"/>
+		<link rel="stylesheet" href="../../css/resetY.css">ß
+		<link href="../../css/mui.picker.minY.css" rel="stylesheet" />
+
+		<script type="text/javascript" src="../../js/jquery.min.js"></script>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/hmt.js" type="text/javascript"></script>
+		<script src="../../js/app.js" type="text/javascript"></script>
+		<script src="../../js/default.js" type="text/javascript"></script>
+		<!--引入模板引擎-->
+		<script src="../../js/artTemplate-native.js" type="text/javascript"></script>
+		<style type="text/css">
+			.data ul li i{
+				position: absolute;
+				right: 10px;
+			}
+			.data ul li .shuru{
+				margin-bottom: 0;
+			}
+			.chooseAd{
+				text-align: left !important;
+			}
+			.mui-bar-nav{
+				box-shadow: none;
+			}
+			.mui-bar{
+				height: 50px;
+			}
+			.mui-title,.mui-icon{
+				line-height: 50px;
+			}
+			.mui-bar .mui-icon{
+				padding: 0;
+			}
+			.hasManyCitytwo .baocun{
+				font-size: 0.12rem;
+			}
+			#main{
+				margin-top: 50px;
+			}
+			.toggle--off{
+				background-color: #f53c42 !important;
+			}
+
+			.mui-btn {
+				font-size: 16px;
+				padding: 8px;
+				margin: 3px;
+			}
+			#showCityPicker3{
+				position: absolute;
+				right: 10px;
+				line-height: 49px;
+				border: none;
+				padding: 0;
+				text-align: right;
+				width: 75%;
+				background-color: rgba(0,0,0,0);
+			}
+			.data ul li span{
+				line-height: 49px;
+			}
+			.ui-alert{
+				padding: 0;
+				line-height: 50px;
+				text-align: left;
+				text-indent: 20px;
+				font-size: 16px;
+			}
+			.data ul li .shuru{
+				line-height: 16px;
+				text-align: left;
+				width: 76%;
+				height: 49px;
+			}
+			.data ul li{
+				height: 50px;
+			}
+			.plist ul li{
+				border-bottom: 1px solid #efeff4;
+			}
+			.address-btn{
+				border-top: none;
+				border-bottom: none;
+				margin-top: 4%;
+			}
+			.add-address .textare{
+				border-bottom: none;
+			}
+			.data ul li span{color: #666;}
+		</style>
+	</head>
+
+	<body>
+		<!--header star-->
+
+		<header class="mui-bar mui-bar-nav">
+		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left bigSize"></a>
+		    <h1 class="mui-title">新增地址</h1>
+		    <a href="javascript:;" style="line-height: 50px;color:#555;" class="fr baocun"  onclick="save()">保存</a>
+		</header>
+		<script src="../../js/statusBar.js"></script><!--状态栏-->
+		<div id="container">
+		    <div id="main" class="mui-clearfix add-address">
+		    	<div id="thisAddLi"></div>
+		    	<div class="plist clearfloat data">
+					<ul>
+						<li class="clearfloat">
+							<a href="#">
+								<p class="fl">收货人</p>
+								<input type="text" class="fr shuru" name="" id="person" value="" placeholder="请输入昵称" />
+							</a>
+						</li>
+						<li class="clearfloat">
+							<a href="#">
+								<p class="fl">联系电话</p>
+								<input type="number" class="fr shuru" name="" id="phone" value="" placeholder="请输入手机号码" />
+							</a>
+						</li>
+						<li class="clearfloat">
+							<a href="javascript:;" id="mapAddress">
+								<p class="fl">所在地区</p>
+								<button id='showCityPicker3' type='button'><span class="mui-icon mui-icon-arrowdown"></span></button>
+								<div id='cityResult3' class="ui-alert"><span id="province"><b style="font-weight: 500;color: #999;">点击选择地区</b></span><span id="city"></span><span id="area"></span></div>
+							</a>
+						</li>
+					</ul>
+				</div>
+				<textarea name="" rows="4" id="address" placeholder="请填写详细地址，不少于5个字" class="textare box-s"></textarea>
+			    	<!--<div class="address-btn clearfloat">
+			    		<span class="szwmr fl">设为默认</span>
+			    		<a href="#" class="toggle toggle--on fr" id="acquiescence"></a>
+			    	</div>-->
+		    </div>
+		</div>
+
+		<script src="../../js/mui.picker.minY.js"></script>
+		<script src="../../js/city.data-3Y.js" type="text/javascript" charset="utf-8"></script>
+		<script>
+			(function($, doc) {
+				$.init();
+				$.ready(function() {
+					//地址选择三级联动
+					var cityPicker3 = new $.PopPicker({
+						layer: 3
+					});
+					cityPicker3.setData(cityData3);
+					var showCityPickerButton = doc.getElementById('showCityPicker3');
+					var cityResult3 = doc.getElementById('cityResult3');
+					showCityPickerButton.addEventListener('tap', function(event) {
+						cityPicker3.show(function(items) {
+							doc.getElementById('province').innerText = (items[0] || {}).text + " ";
+							doc.getElementById('city').innerText =  (items[1] || {}).text + " ";
+							doc.getElementById('area').innerText = (items[2] || {}).text + " ";
+							//返回 false 可以阻止选择框的关闭
+							//return false;
+						});
+					}, false);
+				});
+			})(mui, document);
+		</script>
+		<!--默认按钮-->
+		<script type="text/javascript">
+			$('.toggle').click(function(e){
+				var toggle = this;
+				e.preventDefault();
+				$(toggle).toggleClass('toggle--on').toggleClass('toggle--off').addClass('toggle--moving');
+				setTimeout(function(){
+					$(toggle).removeClass('toggle--moving');
+				}, 200)
+			});
+		</script>
+		<script type="text/javascript" charset="utf-8">
+
+			mui.plusReady(function(){
+				//获取缓存
+				var oldToken = plus.storage.getItem('oldToken');
+				var userId = plus.storage.getItem('$userId');
+				alert(userId)
+				var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
+				//点击保存新增地址
+				window.save = function(){
+					var newPerson = document.getElementById('person').value;
+					var newPhone = '';
+						newPhone = document.getElementById('phone').value;
+					var newAddress = '';
+						newAddress = document.getElementById('address').value;
+					var newProvince = document.getElementById('province').innerHTML;
+					var newCity = document.getElementById('city').innerHTML;
+					var newArea = document.getElementById('area').innerHTML;
+					//默认状态判断
+					if($('#acquiescence').hasClass('toggle--off')){
+						var newState = 0;
+					}else{
+						var newState = 1;
+					}
+					var reg_phone = /^1((3|4|5|8|7){1}\d{1}|70)\d{8}$/;//手机号正则
+					if(newPerson == ''){
+						$('#person').focus();
+						mui.toast('收货人不能为空!');
+					}else if(!reg_phone.test(newPhone)){
+						$('#phone').focus();
+						mui.toast('请输入正确的手机号码 !');
+					}else if(newProvince.indexOf('点击选择')>-1){
+						mui.toast('所在地区不能为空!');
+					}else if(newAddress == ''){
+						mui.toast('详细地址不能为空!');
+						$('#newAddress').focus();
+					}else{
+
+						mui.ajax(serverUrl+'/app/user/setting/deliveryAddress/add',{
+							data:{
+								'userId': userId,
+								'identityType': identityT,
+								'deliveryName':newPerson,
+								'deliveryPhone':newPhone,
+								'deliveryProvince':newProvince,
+								'deliveryCity':newCity,
+								'deliveryCounty':newArea,
+								'detailedAddress':newAddress,
+								'deliveryStreet':' '
+							},
+							dataType:'json',
+							type:'post',
+							timeout:1000,
+							headers:{"Authorization":oldToken},
+							success:function(data,type,xhr){
+								if(data.code == 0){
+									plus.nativeUI.alert("添加地址成功");
+									mui.fire(plus.webview.getWebviewById('address'),'refreshAd');
+									plus.webview.currentWebview().close();
+								}else{
+									mui.toast(data.message);
+								}
+
+//								var newId = data.data;
+								//修改地址默认状态
+//								mui.ajax(serverUrl+'/api/useraccount/stateaddress',{
+//									data:{userid:userId,address_id:newId,state:newState},
+//									dataType:'json',
+//									type:'post',
+//									timeout:1000,
+//									headers:{"token":oldToken},
+//									success:function(data,type,xhr){
+//										mui.toast("保存成功！");
+//										 if(plus.webview.getWebviewById('personal/address.html')){
+//										 	mui.fire(plus.webview.getWebviewById('personal/address.html'),'refreshAd');//打开指定页面
+//										 }
+//										 if(plus.webview.getWebviewById('../personal/address.html')){
+//										 	mui.fire(plus.webview.getWebviewById('../personal/address.html'),'refreshAd');//打开指定页面
+//										 }
+//
+//										plus.webview.currentWebview().close();//关闭当前页面
+//
+//	//									mui.fire(plus.webview.getWebviewById('personal/address.html'),'refreshAdo');//打开指定页面
+//									},
+//									error:function(xhr,type,errorThrown){
+//										console.log('响应失败  !');
+//									}
+//								});
+							},
+							error:function(xhr,type,errorThrown){
+								console.log('响应失败  !');
+							}
+						});
+					}
+				}
+			})();
+    		</script>
+	</body>
+
+</html>

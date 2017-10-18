@@ -46,7 +46,7 @@
 			.mui-bar .mui-icon{
 				padding: 0;
 			}
-			
+
 			/*消息提示框*/
 			dialog{
 				background-color: #fff !important;
@@ -61,10 +61,11 @@
 			}
 			.addlist .top{
 				border-bottom: 1px solid #efeff4 !important;
-			} 
+			}
 			.adhover:hover{
-				background-color: #eee; 
-			.exterminate,.exterminate i,.editAd,.editAd i{
+				background-color: #eee;
+			}
+			.exterminate, .exterminate i, .editAd, .editAd i{
 				color: #999 !important;
 			}
 			.addlist .bottom .right a:first-child{
@@ -77,7 +78,7 @@
 				margin-top: 0.1rem;
 			}
 			.shopcar{
-				padding-bottom: 01px !important; 
+				padding-bottom: 01px !important;
 			}
 			.nothing{
 				display: block;
@@ -96,15 +97,15 @@
 		</style>
 	</head>
 	<body>
-		 
+
 		<header class="mui-bar mui-bar-nav">
 		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left bigSize"></a>
-		    <h1 class="mui-title">地址管理</h1>  
-		    <a href="javascript:;" style="line-height: 50px;color:white;font-size: 15px;" class="fr baocun" onclick="addAd()">新增</a>
+		    <h1 class="mui-title">地址管理</h1>
+		    <a href="javascript:;" style="line-height: 50px;color:#555;font-size: 15px;" class="fr baocun" onclick="addAd()">新增</a>
 		</header>
 		<script src="../../js/statusBar.js"></script><!--状态栏-->
 		<div id="addressList"></div>
-		</div>
+
 	    <!--模板铺数据-->
 		<script id="addressList-detail" type="text/html">
 			<div id="main" class="mui-clearfix contaniner">
@@ -131,7 +132,7 @@
 				    			<section class="shopcar clearfloat">
 				    				<div class="list listtwo clearfloat">
 										<div class="xuan xuantwo clearfloat fl">
-						    				<div class="radio" onclick="changeState(this)"> 
+						    				<div class="radio" onclick="changeState(this)">
 											    <label>
 											    	<% if(addressLi[i].isDefault){ %>
 											        	<input type="checkbox" name="sex" value="" checked id="<%= addressLi[i].id %>" />
@@ -151,7 +152,7 @@
 										<a href="javascript:;" class="fr editAd" onclick="editAd(<%= addressLi[i].id %>)">
 											<i class="iconfont icon-bianji bianjittt"></i>
 											编辑
-										</a>							
+										</a>
 									</div>
 									</div>
 								</section>
@@ -160,16 +161,16 @@
 			    	<% } %>
 			    <% } %>
 		    </div>
-		</script> 
-	    <script type="text/javascript"> 
-		mui.init(); 
+		</script>
+	    <script type="text/javascript">
+		mui.init();
 		mui.plusReady(function(){
 			var userId = plus.storage.getItem('$userId');
 			var oldToken = plus.storage.getItem("oldToken");
 			var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
 			//plus.nativeUI.showWaiting('加载中...',{width:'100px',height:'80px'});
 			//添加刷新监听
-			
+
 			//判断是否登录并获取缓存token
 			/*if(plus.storage.getItem('myToken')){
 				var oldToken = plus.storage.getItem('oldToken');
@@ -185,7 +186,7 @@
 			document.addEventListener('refreshAd', function() {
 				RefreshAd();
 				console.log('刷新数据');
-			}) 
+			})
 			function RefreshAd(){
 				/*我的地址*/
 				mui.ajax(serverUrl+'/app/user/setting/deliveryAddress/list',{
@@ -199,7 +200,7 @@
 						var addressObj = {};
 						addressObj.addressLi = data.content;
 						var html = template('addressList-detail',addressObj);
-						document.getElementById('addressList').innerHTML = html; 
+						document.getElementById('addressList').innerHTML = html;
 						if(data.content==0){
 							document.getElementById('main').innerHTML='<div class="nothing" style="background-color: #EFEFF4;margin-top: 60px;"><img src="../../img/theList/ad.png" style="display: block;margin: 20px auto;width: 80px;"/><p style="text-align: center;">你还没有地址哟！</p></div>';
 						}
@@ -217,23 +218,23 @@
 									defultAddress.city = $(this).attr("data-ct");
 									defultAddress.area = $(this).attr("data-ar");
 									defultAddress.address = $(this).attr("data-adi");
-								
+
 									addressStorage = [defultAddress];
 									plus.storage.setItem('$addressStorage', JSON.stringify(addressStorage));
-								
-									var list = plus.webview.getWebviewById('market-order');   
-									var list2 = plus.webview.getWebviewById('jifen-torder');  
+
+									var list = plus.webview.getWebviewById('market-order');
+									var list2 = plus.webview.getWebviewById('jifen-torder');
  									plus.webview.currentWebview().close();//关闭当前页面
 								 	mui.fire(list,'readdstorage');
 								 	mui.fire(list2,'readdstorage');
 							})
 						}
-						 
+
 						//点击修改默认地址
 						window.changeState = function(thisobj){
 							var checked = $(thisobj).find('input').attr("checked");
 							var thisAdId = $(thisobj).find('input').attr("id");
-							
+
 							if(typeof(checked)=="undefined"){//本来不是默认地址
 								$('.radio').find('input').removeAttr('checked');//移除其他勾选
 								$(thisobj).find('input').prop('checked',true);//勾选当前
@@ -242,7 +243,7 @@
 									dataType:'json',
 									type:'post',
 									timeout:1000,
-									headers:{"token":oldToken},	 
+									headers:{"token":oldToken},
 									success:function(data,type,xhr){
 									},
 									error:function(xhr,type,errorThrown){
@@ -256,7 +257,7 @@
 									dataType:'json',
 									type:'post',
 									timeout:1000,
-									headers:{"token":oldToken},	 
+									headers:{"token":oldToken},
 									success:function(data,type,xhr){
 									},
 									error:function(xhr,type,errorThrown){
@@ -277,13 +278,13 @@
 						var exterminate = document.getElementsByClassName('exterminate');
 						window.deleteAd = function(AdIdD){
 							mui.confirm('确认删除该地址？','',['取消','确认'],function (e) {
-								if(e.index == 1) { 
+								if(e.index == 1) {
 									mui.ajax(serverUrl+'/app/user/setting/deliveryAddress/delete',{
 										data:{'deliveryAddressId':AdIdD,'identityType':identityT,'userId':userId},
 										dataType:'json',
 										type:'post',
 										timeout:1000,
-										headers:{"Authorization":oldToken},	 
+										headers:{"Authorization":oldToken},
 										success:function(data,type,xhr){
 											plus.nativeUI.alert("删除成功！");
 											mui.fire(plus.webview.getWebviewById('address'),'refreshAd');//打开指定页面
@@ -298,7 +299,8 @@
 						//点击添加地址跳转
 						window.addAd = function(){
 							openview({
-								view:'add-address.html'
+								view:'add-address.html',
+								id:'add-address'
 							});
 						}
 					},
@@ -310,5 +312,5 @@
 			}
 		})();
 	</script>
-	</body>	
+	</body>
 </html>
