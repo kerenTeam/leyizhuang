@@ -344,18 +344,18 @@
 				"ios": {
 					"iphone": {
 						"default": "", /*iPhone3启动图片选，分辨率：320x480*/
-						"retina35": "C:/Users/yuoxd/Desktop/st.png",/*3.5英寸设备(iPhone4)启动图片，分辨率：640x960*/
-						"retina40": "C:/Users/yuoxd/Desktop/st.png","retina55":"C:/Users/yuoxd/Desktop/st.png","retina47":"C:/Users/yuoxd/Desktop/st.png","retina55l":"C:/Users/yuoxd/Desktop/st.png"
+						"retina35": "/Users/wangfei/Downloads/st.png",/*3.5英寸设备(iPhone4)启动图片，分辨率：640x960*/
+						"retina40": "/Users/wangfei/Downloads/st.png","retina55":"/Users/wangfei/Downloads/st.png","retina47":"/Users/wangfei/Downloads/st.png","retina55l":"/Users/wangfei/Downloads/st.png"
 					},
 					"ipad": {
-						"portrait": "C:/Users/yuoxd/Desktop/st.png", /*iPad竖屏启动图片，分辨率：768x1004*/
-						"portrait-retina": "C:/Users/yuoxd/Desktop/st.png",/*iPad高分屏竖屏图片，分辨率：1536x2008*/
-						"landscape": "C:/Users/yuoxd/Desktop/st.png", /*iPad横屏启动图片，分辨率：1024x748*/
-						"landscape-retina": "C:/Users/yuoxd/Desktop/st.png", /*iPad高分屏横屏启动图片，分辨率：2048x1496*/
-						"portrait7": "C:/Users/yuoxd/Desktop/st.png", /*iPad iOS7竖屏启动图片，分辨率：768x1024*/
-						"portrait-retina7": "C:/Users/yuoxd/Desktop/st.png",/*iPad iOS7高分屏竖屏图片，分辨率：1536x2048*/
-						"landscape7": "C:/Users/yuoxd/Desktop/st.png", /*iPad iOS7横屏启动图片，分辨率：1024x768*/
-						"landscape-retina7": "C:/Users/yuoxd/Desktop/st.png"
+						"portrait": "/Users/wangfei/Downloads/st.png", /*iPad竖屏启动图片，分辨率：768x1004*/
+						"portrait-retina": "/Users/wangfei/Downloads/st.png",/*iPad高分屏竖屏图片，分辨率：1536x2008*/
+						"landscape": "/Users/wangfei/Downloads/st.png", /*iPad横屏启动图片，分辨率：1024x748*/
+						"landscape-retina": "/Users/wangfei/Downloads/st.png", /*iPad高分屏横屏启动图片，分辨率：2048x1496*/
+						"portrait7": "/Users/wangfei/Downloads/st.png", /*iPad iOS7竖屏启动图片，分辨率：768x1024*/
+						"portrait-retina7": "/Users/wangfei/Downloads/st.png",/*iPad iOS7高分屏竖屏图片，分辨率：1536x2048*/
+						"landscape7": "/Users/wangfei/Downloads/st.png", /*iPad iOS7横屏启动图片，分辨率：1024x768*/
+						"landscape-retina7": "/Users/wangfei/Downloads/st.png"
 					}
 				},
 				"android": {
@@ -726,7 +726,9 @@
 					"fonts/mui.ttf",
 					"js/artTemplate-native.js"
 				],
-				"refer": [],
+				"refer": [
+					"page/goodsInfo.html"
+				],
 				"priority": 0
 			},
 			"center.html": {
@@ -883,7 +885,14 @@
 				"resources": [
 					"js/statusBar.js",
 					"css/mui.min.css",
-					"css/configW.css"
+					"css/configW.css",
+					"js/app.js",
+					"js/jquery.min.js",
+					"js/mui.min.js",
+					"fonts/mui.ttf",
+					"js/artTemplate-native.js",
+					"js/default.js",
+					"images/img.svg"
 				],
 				"refer": [],
 				"priority": 0

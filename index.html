@@ -126,6 +126,7 @@
 			
 			<!--商品列表-->
 		    <div class="goodsList" id="goodsList"></div>
+			<div style="height: 50px;width: 100%;clear: both;"></div>
 		    
 		    <script type="text/html" id="goodsTpl">
 		    	<ul class="mui-table-view">
@@ -137,7 +138,7 @@
 					            <div class="mui-media-body" style="font-size:12px">
 					                <%=list[i].goodsName%>
 					                <p class='mui-ellipsis'>规格:<%=list[i].goodsSpecification%> &nbsp;单位:<%=list[i].goodsUnit%></p>
-						            <span>￥<%=list[i].memberPrice%></span>
+						            <span>￥<%=list[i].vipPrice%></span>
 									<img style="display:inline-block;float:right;margin-left:5px;vertical-align:middle;width:20px" src="images/addcart.svg"/>
 						            
 					            </div>
@@ -165,7 +166,7 @@
 					            <div class="mui-media-body" style="font-size:12px">
 					                <%=list[i].goodsName%>
 					                <p class='mui-ellipsis'>规格:<%=list[i].goodsSpecification%> &nbsp;单位:<%=list[i].goodsUnit%></p>
-						            <span>￥<%=list[i].memberPrice%></span>
+						            <span>￥<%=list[i].vipPrice%></span>
 									<img style="display:inline-block;float:right;margin-left:5px;vertical-align:middle;width:20px" src="images/addcart.svg"/>
 						            
 					            </div>
