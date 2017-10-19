@@ -132,7 +132,7 @@
 						<a href="#">
 							<p class="fl">性别</p>
 			    				<select class="mui-btn mui-btn-block selectbtn" id="Nextbtn" dir="rtl">
-								<option value="item-1">保密</option>
+								<option value="item-1">点击设置</option>
 								<option value="item-2">男</option>
 								<option value="item-2">女</option>
 							</select>
@@ -142,7 +142,7 @@
 						<a href="#">
 							<p class="fl">出生日期</p>
 							<label>
-								<span class="fr" style="color: #888;" onclick="openTime(this)">
+								<span class="fr" id="shengri" style="color: #888;" onclick="openTime(this)">
 									点击编辑
 								</span>
 							</label>
@@ -151,7 +151,7 @@
 					<li class="clearfloat">
 						<a href="#">
 							<p class="fl">所属城市</p>
-							<input type="text" class="fr shuru" name="" id="isCity" placeholder="点击编辑" />
+							<input type="text" class="fr shuru" disabled name="" id="isCity" />
 						</a>
 					</li>
 					<li class="clearfloat">
@@ -188,6 +188,14 @@
 		    		nowthis.innerHTML = selectItems.value;
 		    })
 		}
+		/*时间戳转换*/
+		function fmtDate(obj){
+		    var date =  new Date(obj);
+		    var y = 1900+date.getYear();
+		    var m = "0"+(date.getMonth()+1);
+		    var d = "0"+date.getDate();
+		    return y+"-"+m.substring(m.length-2,m.length)+"-"+d.substring(d.length-2,d.length);
+		}
 
 		var idnum = 0;
 		mui.plusReady(function(){
@@ -197,7 +205,7 @@
 			var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
 
 			//显示既有信息
-			mui.ajax(serverUrl+'/app/user/homepage',{
+			mui.ajax(serverUrl+'/app/user/setting/get/information',{
 				data:{"userId":userId,'identityType':identityT},
 				type:'post',
 				timeout:10000,
@@ -205,7 +213,8 @@
 				success:function(data){
 					console.log('用户资料',data);
 					if(data.code == 0){
-						if(data.content.picUrl){ //显示头像
+						//显示头像
+						if(data.content.picUrl){
 							if(JSON.parse(data.content.avatar)[0].picImg.indexOf('http')>-1){
 								var imgurl = JSON.parse(data.content.avatar)[0].picImg;
 							}else{
@@ -218,17 +227,28 @@
 							mui('#mynickname')[0].value =data.content.name;
 						}
 						//显示性别
-						switch (data.content.gender){//Nextbtn
-							case '1':
+						if(data.content.sex == '男'){
 							mui('#Nextbtn')[0].getElementsByTagName('option')[1].selected = true;
-							break;
-							case '2':
+						}else if(data.content.sex == '女'){
 							mui('#Nextbtn')[0].getElementsByTagName('option')[2].selected = true;
-							break;
-							case '4'|| null:
+						}else{
 							mui('#Nextbtn')[0].getElementsByTagName('option')[0].selected = true;
-							break;
 						}
+						/*显示城市*/
+						if(data.content.cityName){
+							mui('#isCity')[0].value = data.content.cityName;
+						}else{
+							mui('#isCity')[0].value = '暂无';
+						}
+						/*显示电话*/
+						if(data.content.mobile){
+							mui('#IDcard')[0].value = data.content.mobile;
+						}
+						/*显示生日*/
+						if(data.content.birthday){
+							mui('#shengri')[0].innerHTML = fmtDate(data.content.birthday);
+						}
+
 					}else{
 						mui.toast(data.message);
 						console.log(data.message);
@@ -241,35 +261,100 @@
 				}
 			});
 		})
-		var filepic = {};
 
-		var Apic ='';
+//		var filepic = {};
+//		var Apic ='';
+//		function galleryImgsSelected(){//从相册中选择图片
+//		    plus.gallery.pick( function(e){
+//		    	for(var i in e.files){
+//		    		if(0!=e.files[i].indexOf("file://")){
+//					e.files[i]="file://"+e.files[i];
+//				}
+//
+//		    		var nowpic = Math.random().toString(36).substr(2) + '.jpg';
+//		    		var endpic = e.files[i].split('.')[0]+"/"+nowpic;
+//
+//		    		console.log(e.files[i])
+//		    		console.log(endpic)
+//		    		mui('#imghead')[0].src = e.files[0];
+//
+//		    		plus.zip.compressImage({//压缩操作
+//						src:e.files[i],
+//						dst:endpic,
+//						overwrite:true,
+//						quality:30
+//					},
+//					function(obj) {
+//						if(!obj.target.indexOf("file://")>-1){obj.target="file://"+obj.target;}
+//						Apic = obj.target
+////						mui('#imghead')[0].src = obj.target;
+//					},function(error) {
+//						mui.toast('图片获取错误，请重试');
+//				});
+//	    		}
+//		    }, function ( e ) {
+//		    },{filter:"image",multiple:true,maximum:1,system:false,onmaxed:function(){
+//		    }});
+//		}
+
+		/*选择图片*/
+		var Apic = [];//图片存放数组
+		var lfs=null;// 保留上次选择图片列表
+		var time1 = null;
 		function galleryImgsSelected(){//从相册中选择图片
-		    plus.gallery.pick( function(e){
-		    	for(var i in e.files){
-		    		if(0!=e.files[i].indexOf("file://")){
-						e.files[i]="file://"+e.files[i];
+			mui.plusReady(function(){
+			    plus.gallery.pick( function(e){
+			    	Apic = [];
+			    	lfs=e.files;
+			    	clearInterval(time1);
+			    	var indexNum = 0;
+			    	var indexMax = e.files.length - 1;
+			    	e.files.forEach(function(){
+			    		mui('#imghead')[0].src  = '../../img/Spinner.svg';
+			    	})
+			    	time1 = setInterval(function(){
+			    		console.log(time1);
+			    		if(0!=e.files[indexNum].indexOf("file://")){
+							e.files[indexNum]="file://"+e.files[indexNum];//图片地址
+						}
+			    		if(indexNum == indexMax){//全部压缩完毕
+			    			clearInterval(time1);
+							time1 = null;
+			    		}
+			    		var nowpic = Math.random().toString(36).substr(2) + '.jpg';//随机字符串
+			    		var endpic = e.files[indexNum].split('.')[0]+"/" +nowpic;
+			    		//压缩方法
+		    			plus.zip.compressImage({
+							src:e.files[indexNum],
+							dst:endpic,
+							overwrite:true,
+							quality:30
+						},
+						function(obj) {
+							console.log(obj)
+							Apic.push(endpic);
+							showImg(endpic,indexNum);
+						},function(error) {
+							mui.toast('图片获取错误，请重试');
+						});
+			    		indexNum ++;
+
+			    	},800)
+			    }, function ( e ) {
+			    },{filter:"image",multiple:true,maximum:1,selected:lfs,system:false,onmaxed:function(){//保存选择记录
+	    		//},{filter:"image",multiple:true,maximum:10,system:false,onmaxed:function(){
+//					plus.nativeUI.alert('最多上传9张图片');
+			    }});
+				function showImg(url,indexNum){//显示图片
+					if(0!=url.indexOf("file://")){
+						url="file://"+url;
 					}
-		    		var nowpic = Math.random().toString(36).substr(2) + '.jpg';
-		    		var endpic = e.files[i].split('.')[0]+"/"+nowpic;
-		    		plus.zip.compressImage({//压缩操作
-						src:e.files[i],
-						dst:endpic,
-						overwrite:true,
-						quality:30
-					},
-					function(obj) {
-						if(!obj.target.indexOf("file://")>-1){obj.target="file://"+obj.target;}
-						Apic = obj.target
-						mui('#imghead')[0].src = obj.target;
-					},function(error) {
-						mui.toast('图片获取错误，请重试');
-				});
-	    		}
-		    }, function ( e ) {
-		    },{filter:"image",multiple:true,maximum:1,system:false,onmaxed:function(){
-		    }});
+					mui('#imghead')[0].src  = url;
+
+				}
+			})
 		}
+		//从相册中选择图片结束
 
 		//保存数据
 		mui('#Preservation')[0].addEventListener('tap',function(){
