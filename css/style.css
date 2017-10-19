@@ -27,7 +27,6 @@ body {
 .mui-numbox [class*=btn-numbox], .mui-numbox [class*=numbox-btn]{
 	width: 30px;
 	font-size:14px;
-	z-index:99;
 }
 .mui-numbox .mui-input-numbox, .mui-numbox .mui-numbox-input{
 	border:none!important;

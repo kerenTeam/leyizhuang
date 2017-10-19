@@ -93,6 +93,7 @@
 		<script src="js/mui.min.js"></script>
 		<script src="js/mui.enterfocus.js"></script>
 		<script src="js/app.js"></script>
+		<script src="js/default.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/base64.js" type="text/javascript" charset="utf-8"></script>
 		<script>
 			(function($, doc) {
@@ -148,10 +149,9 @@
 										}
 										mui.fire(plus.webview.getWebviewById('page/goodList.html'),'refresh');
 										mui.fire(plus.webview.getWebviewById('center.html'),'refresh');
-										
-										var time2 = setTimeout(function(){
-											var index = plus.webview.getLaunchWebview();
+										var index = plus.webview.getLaunchWebview();
 											mui.fire(index,'refresh');
+										var time2 = setTimeout(function(){
 											plus.webview.currentWebview().close(); 
 											plus.nativeUI.closeWaiting();
 											mui.toast('登录成功');

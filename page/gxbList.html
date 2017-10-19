@@ -10,6 +10,10 @@
 	</head>
 	<style type="text/css"> 
 		.gxbList{padding:20px;width: calc((100vw - 50px) / 2);float: left;text-align: center;background-color: #FF5053;margin: 5px;}
+		.categray div{
+ 			width: 80%;
+ 			vertical-align: top;
+ 		}
 	</style>
 	<body>
 		<header class="mui-bar mui-bar-nav">
@@ -47,7 +51,7 @@
 					            <div class="mui-media-body">
 					                <%=list[i].goodsName%>
 					                <p class='mui-ellipsis'>规格:<%=list[i].goodsSpecification%> &nbsp;单位:<%=list[i].goodsUnit%></p>
-						            <span>￥<%=list[i].memberPrice%></span>
+						            <span>￥<%=list[i].retailPrice%></span>
 									<img style="display:inline-block;float:right;margin-left:5px;vertical-align:middle" src="../images/addcart.svg"/>
 						            <div style="display:inline-block;float:right;" class="mui-numbox" data-numbox-step='1' data-numbox-min='0' data-numbox-max='100'>
 									  <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
@@ -76,7 +80,118 @@
 				var gName = plus.webview.currentWebview().gname;
 				$('#gName').html(gName)
 				plus.nativeUI.showWaiting();
-				mui.ajax('http://119.23.149.7:9999/app/process/processGoods/list',{
+//				全部分类
+//				mui.ajax(serverUrl+'/app/goods/category/list',{
+//					data:{
+//						categoryCode:categoryCode,
+//						userId:userId,
+//						identityType:identityT
+//					},
+//					dataType:'json',
+//					headers: {"Authorization": oldToken},
+//					type:'post',
+//					timeout:10000,
+//					success:function(data,type,xhr){ 
+//						plus.nativeUI.closeWaiting();
+//						console.log('列表',data);
+//						if(data.code == 0 ){
+//							plus.nativeUI.closeWaiting();
+//							if(data.content.length){
+//								for(var i = 0;i<data.content.length;i++){
+//									$('.categraya').html('<span data-id="'+data.content[i].categoryId+'">'+data.content[i].categoryName+'</span>')
+//								}
+//							}else{
+//								$('.categraya').html('无')
+//							}
+//						}
+//						if(data.code == 1000 ){
+//							mui.toast(data.message)
+//						}else if(data.code == -1 ){
+//							mui.toast(data.message)
+//						}
+//						 
+//					},
+//					error:function(xhr,type,errorThrown){
+//						plus.nativeUI.closeWaiting();
+//						mui.toast(type)
+//						console.log('登录响应失败');
+//					}
+//				});
+//				//品牌
+//					mui.ajax(serverUrl+'/app/goods/brand/list',{
+//						data:{
+//							categoryCode:categoryCode,
+//							userId:userId,
+//							identityType:identityT
+//						},
+//						dataType:'json',
+//						headers: {"Authorization": oldToken},
+//						type:'post',
+//						timeout:10000,
+//						success:function(data,type,xhr){ 
+//							console.log('列表'+JSON.stringify(data));
+//							if(data.code == 0 ){
+//								plus.nativeUI.closeWaiting();
+//								if(data.content.length){
+//									for(var i = 0;i<data.content.length;i++){
+//										$('.categrayb').html('<span data-id="'+data.content[i].brandId+'">'+data.content[i].brandName+'</span>')
+//									}
+//								}else{
+//									$('.categrayb').html('无')
+//								}
+//							}
+//							if(data.code == 1000 ){
+//								mui.toast(data.message)
+//							}else if(data.code == -1 ){
+//								mui.toast(data.message)
+//							}
+//							 
+//						},
+//						error:function(xhr,type,errorThrown){
+//							plus.nativeUI.closeWaiting();
+//							mui.toast(type)
+//							console.log('登录响应失败');
+//						}
+//					});
+//					//类型
+//					mui.ajax(serverUrl+'/app/goods/type/list',{
+//						data:{
+//							categoryCode:categoryCode,
+//							userId:userId,
+//							identityType:identityT
+//						},
+//						dataType:'json',
+//						headers: {"Authorization": oldToken},
+//						type:'post',
+//						timeout:10000,
+//						success:function(data,type,xhr){ 
+//							console.log('列表',data);
+//							if(data.code == 0 ){
+//								plus.nativeUI.closeWaiting();
+//								if(data.content.length){
+//									for(var i = 0;i<data.content.length;i++){
+//										$('.categrayd').html('<span data-id="'+data.content[i].typeId+'">'+data.content[i].typeName+'</span>')
+//									}
+//								}else{
+//									$('.categrayd').html('无')
+//								}
+//							}
+//							if(data.code == 1000 ){
+//								mui.toast(data.message)
+//							}else if(data.code == -1 ){
+//								mui.toast(data.message)
+//							}
+//							 
+//						},
+//						error:function(xhr,type,errorThrown){
+//							plus.nativeUI.closeWaiting();
+//							mui.toast(type)
+//							console.log('登录响应失败');
+//						}
+//					}); 
+//					
+				
+				mui.ajax(serverUrl+'/app/process/processGoods/list',{
 					data:{
 						userId:userId,identityType:identityT,processId:gxId
 					},
@@ -89,7 +204,24 @@
 						if(data.code == 0 ){
 							plus.nativeUI.closeWaiting();
 							if(data.content.length){
+								//规格
+								var spec = [];
+								for(var i in data.content){
+									if(data.content[i].goodsSpecification){
+										spec.push(data.content[i].goodsSpecification)
+									}
+								}
+								console.log('spec',spec);
+								//去重
+								spec = spec.unique1();
+								console.log('spec',spec);
+								var str='';
+								for(var i = 0;i<spec.length;i++){
+									str+='<span data-id="'+i+'">'+spec[i]+'</span>';
+								}
+								$('.categrayc').html(str)
 								$('#goodsList').html(template('goodsTpl',{list:data.content}));
+								mui('.mui-numbox').numbox()
 							}else{
 								$('#goodsList').html('<div style="text-align:center;padding:15px">暂无工序包列表</div>') 
 							}
@@ -112,6 +244,24 @@
 					id:'gxblist',
 					extras:{gid:id}
 				})
+			}
+			
+			//数组去重
+			Array.prototype.unique1 = function() {
+				var res = [this[0]];
+				for(var i = 1; i < this.length; i++) {
+					var repeat = false;
+					for(var j = 0; j < res.length; j++) {
+						if(this[i] == res[j]) {
+							repeat = true;
+							break;
+						}
+					}
+					if(!repeat) {
+						res.push(this[i]);
+					}
+				}
+				return res;
 			}
 		</script>
 	</body>

@@ -47,7 +47,8 @@
       "images/qq.png",
       "js/mui.enterfocus.js",
       "fonts/mui.ttf",
-      "js/base64.js"
+      "js/base64.js",
+      "js/default.js"
     ],
     "refer": [
       "main.html",
@@ -96,9 +97,12 @@
       "js/app.js",
       "js/jquery.min.js",
       "js/mui.min.js",
-      "fonts/mui.ttf"
+      "fonts/mui.ttf",
+      "js/default.js"
     ],
-    "refer": []
+    "refer": [
+      "bindGuide.html"
+    ]
   },
   "forget_password.html": {
     "resources": [
@@ -255,7 +259,8 @@
       "js/mui.min.js",
       "fonts/mui.ttf",
       "css/mui.min.css",
-      "js/artTemplate-native.js"
+      "js/artTemplate-native.js",
+      "js/default.js"
     ],
     "refer": [
       "page/gxbList.html"
@@ -309,9 +314,13 @@
       "js/mui.min.js",
       "fonts/mui.ttf",
       "js/artTemplate-native.js",
-      "images/delet.svg"
+      "images/delet.svg",
+      "js/default.js",
+      "css/style.css"
     ],
-    "refer": []
+    "refer": [
+      "page/goodsInfo.html"
+    ]
   },
   "page/goodList.html": {
     "resources": [
@@ -321,7 +330,8 @@
       "js/jquery.min.js",
       "js/mui.min.js",
       "fonts/mui.ttf",
-      "js/artTemplate-native.js"
+      "js/artTemplate-native.js",
+      "js/default.js"
     ],
     "refer": [
       "page/goodsInfo.html"
@@ -345,7 +355,9 @@
       "page/personal/collect.html",
       "page/guide/myCustomer.html",
       "page/manager/workerList.html",
-      "page/personal/myCoupon.html"
+      "page/personal/myCoupon.html",
+      "page/personal/shezhi.html",
+      "page/personal/productCoupon.html"
     ]
   },
   "cart.html": {
@@ -372,9 +384,15 @@
       "js/jquery.min.js",
       "js/mui.min.js",
       "fonts/mui.ttf",
-      "js/artTemplate-native.js"
+      "js/artTemplate-native.js",
+      "images/center/uncheck.svg",
+      "images/center/checked.svg",
+      "css/configW.css",
+      "js/default.js"
     ],
-    "refer": []
+    "refer": [
+      "page/goodsInfo.html"
+    ]
   },
   "page/personal/message.html": {
     "resources": [
@@ -481,6 +499,89 @@
       "js/artTemplate-native.js",
       "js/default.js",
       "images/img.svg"
+    ],
+    "refer": [
+      "login.html"
+    ]
+  },
+  "page/personal/shezhi.html": {
+    "resources": [
+      "js/statusBar.js",
+      "css/mui.min.css",
+      "css/commonY.css",
+      "js/app.js",
+      "js/mui.min.js",
+      "fonts/mui.ttf"
+    ],
+    "refer": [
+      "page/personal/address.html",
+      "identify.html"
+    ]
+  },
+  "page/personal/address-edit.html": {
+    "resources": [
+      "css/resetY.css",
+      "js/mui.picker.minY.js",
+      "css/mui.min.css",
+      "css/indexY.css",
+      "css/mui.picker.minY.css",
+      "css/commonY.css",
+      "js/city.data-3Y.js",
+      "js/app.js",
+      "js/jquery.min.js",
+      "js/mui.min.js",
+      "js/statusBar.js",
+      "fonts/mui.ttf",
+      "js/default.js",
+      "js/artTemplate-native.js"
+    ],
+    "refer": []
+  },
+  "page/personal/address.html": {
+    "resources": [
+      "css/resetY.css",
+      "js/jquery.min.js",
+      "img/check1.png",
+      "css/mui.min.css",
+      "css/indexY.css",
+      "iconfont/iconfont.woff",
+      "js/default.js",
+      "css/commonY.css",
+      "js/artTemplate-native.js",
+      "js/mui.min.js",
+      "js/statusBar.js",
+      "fonts/mui.ttf"
+    ],
+    "refer": [
+      "page/personal/address-edit.html",
+      "page/personal/add-address.html"
+    ]
+  },
+  "page/personal/add-address.html": {
+    "resources": [
+      "css/resetY.css",
+      "js/mui.picker.minY.js",
+      "css/mui.min.css",
+      "css/indexY.css",
+      "css/mui.picker.minY.css",
+      "css/commonY.css",
+      "js/city.data-3Y.js"
+    ],
+    "refer": []
+  },
+  "page/personal/productCoupon.html": {
+    "resources": [
+      "images/center/uncheck.svg",
+      "css/mui.min.css",
+      "css/style.css",
+      "css/configW.css"
+    ],
+    "refer": []
+  },
+  "bindGuide.html": {
+    "resources": [
+      "css/mui.min.css",
+      "css/configW.css"
     ],
     "refer": []
   }

@@ -1,6 +1,5 @@
 <!doctype html>
 <html>
-
 	<head>
 		<meta charset="UTF-8">
 		<title>商品列表</title>
@@ -63,13 +62,13 @@
 	    <script type="text/html" id="goodsTpl">
 	    	<ul class="mui-table-view">
 	    		<%for(var i = 0 ;i<list.length;i++){%>
-		    		<li class="mui-table-view-cell mui-media" id="<%=list[i].id%>" onclick="goodsInfo()">
+		    		<li class="mui-table-view-cell mui-media" id="<%=list[i].id%>" onclick="goodsInfo(<%=list[i].id%>)">
 				        <a href="javascript:;">
 				            <img class="mui-media-object mui-pull-left" src="<%=list[i].coverImageUri%>">
 				            <div class="mui-media-body">
 				                <%=list[i].goodsName%>
 				                <p class='mui-ellipsis'>规格:<%=list[i].goodsSpecification%> &nbsp;单位:<%=list[i].goodsUnit%></p>
-					            <span>￥<%=list[i].vipPrice%></span>
+					            <span>￥<%=list[i].retailPrice%></span>
 								<img style="display:inline-block;float:right;margin-left:5px;vertical-align:middle" src="../images/addcart.svg"/>
 					            <div style="display:inline-block;float:right;" class="mui-numbox" data-numbox-step='1' data-numbox-min='0' data-numbox-max='100'>
 								  <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
@@ -85,7 +84,7 @@
 		<script src="../js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../js/mui.min.js"></script>
 		<script src="../js/artTemplate-native.js" type="text/javascript" charset="utf-8"></script>
-		<!--<script src="../js/default.js" type="text/javascript" charset="utf-8"></script>-->
+		<script src="../js/default.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
 			mui.init();
 			function goodsInfo(id){
@@ -117,7 +116,7 @@
 					var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
 					var userId = plus.storage.getItem('$userId'); 
 					var oldToken = plus.storage.getItem('oldToken');
-					mui.ajax('http://119.23.149.7:9999/app/goods/category/list',{
+					mui.ajax(serverUrl+'/app/goods/category/list',{
 						data:{
 							categoryCode:categoryCode,
 							userId:userId,
@@ -154,7 +153,7 @@
 						}
 					});
 					//品牌
-					mui.ajax('http://119.23.149.7:9999/app/goods/brand/list',{
+					mui.ajax(serverUrl+'/app/goods/brand/list',{
 						data:{
 							categoryCode:categoryCode,
 							userId:userId,
@@ -190,7 +189,7 @@
 						}
 					});
 					//类型
-					mui.ajax('http://119.23.149.7:9999/app/goods/type/list',{
+					mui.ajax(serverUrl+'/app/goods/type/list',{
 						data:{
 							categoryCode:categoryCode,
 							userId:userId,
@@ -226,7 +225,7 @@
 						}
 					}); 
 					//商品列表
-					mui.ajax('http://119.23.149.7:9999/app/goods/list',{
+					mui.ajax(serverUrl+'/app/goods/list',{
 						data:{
 							categoryCode:categoryCode,
 							userId:userId,
