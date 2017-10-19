@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<title>功能反馈</title>
+		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, width=device-width">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-touch-fullscreen" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="format-detection" content="telephone=no">
+		<meta name="format-detection" content="address=no">
+		<link rel="stylesheet" type="text/css" href="../../css/commonY.css">
+		<link rel="stylesheet" type="text/css" href="../../css/mui.min.css" />
+		<script type="text/javascript" src="../../js/jquery.min.js"></script>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/default.js"></script>
+		<!--引入模板引擎-->
+		<script src="../../js/artTemplate-native.js"></script>
+		 <style type="text/css">
+		 	#header{position: fixed!important; top: 0; left: 0; }
+		 	#main textarea{margin: 2%;width: 96%;}
+		 	.sublimeBtn{color: #666 !important;font-size: 15px;}
+		 </style>
+	</head>
+
+	<body style="background-color: white;">
+		<header class="mui-bar mui-bar-nav" id="header">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left bigSize"></a>
+			<h1 class="mui-title findUser">功能反馈</h1>
+			<a href="javascript:;" style="line-height: 50px;" class="fr baocun sublimeBtn">提交</a>
+		</header>
+		<script src="../../js/statusBar.js"></script>
+		<!--状态栏-->
+		<div id="main">
+	 		<textarea name="" rows="10" cols="" style="font-size: 16px;border: 1;" placeholder="点击输入反馈内容"></textarea>
+		</div>
+	</body>
+
+	<script type="text/javascript">
+		mui.plusReady(function(){
+			//自动弹出输入法
+		  	var nativeWebview, imm, InputMethodManager;
+			var initNativeObjects = function() {
+			    if (mui.os.android) {
+			        var main = plus.android.runtimeMainActivity();
+			        var Context = plus.android.importClass("android.content.Context");
+			        InputMethodManager = plus.android.importClass("android.view.inputmethod.InputMethodManager");
+			        imm = main.getSystemService(Context.INPUT_METHOD_SERVICE);
+			    } else {
+			        nativeWebview = plus.webview.currentWebview().nativeInstanceObject();
+			    }
+			};
+			var showSoftInput = function() {
+			    if (mui.os.android) {
+			        imm.toggleSoftInput(0, InputMethodManager.SHOW_FORCED);
+			    } else {
+			        nativeWebview.plusCallMethod({
+			            "setKeyboardDisplayRequiresUserAction": false
+			        });
+			    }
+		        //此处可写具体逻辑设置获取焦点的input
+		        setTimeout(function() {
+			       var inputElem = document.getElementsByTagName('textarea')[0];
+	               inputElem.focus();
+	            }, 0);
+			};
+		    	initNativeObjects();
+		    	showSoftInput();
+
+
+
+        		var myuserid = plus.storage.getItem('$userId');
+			var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
+			var oldtoken = plus.storage.getItem('oldToken');
+
+		    $(".baocun").on("click",function(){
+		    		var content = $("textarea").val();
+				if(!content){
+			    	   mui.toast("还未填写内容呢！")
+			    	}else{
+			    		plus.nativeUI.showWaiting();
+			    		mui.ajax(serverUrl+'/app/user/setting/functionalFeedback/add',{
+//			    			data:{'userId':myuserid,'content':content,'phone':17781694509,'identityType':identityT,'type':1},
+			        		dataType:'json',
+							type:'post',
+							timeout:10000,
+							headers:{"Authorization":oldtoken},
+							success:function(data,type,xhr){
+								console.log('反馈',JSON.stringify(data));
+								plus.nativeUI.closeWaiting(); //关闭等待框
+								if(data.errno == 0){
+									mui.toast("反馈成功！");
+									mui.back();
+								}
+							},
+							error:function(xhr,type,errorThrown){
+								plus.nativeUI.closeWaiting();
+								mui.toast("当前网络不好，请重试！");
+								console.log('响应失败  !');
+							}
+
+			        	})
+			    	}
+		    })
+
+		})
+	</script>
+</html>

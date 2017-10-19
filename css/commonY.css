@@ -64,7 +64,11 @@ ul {
 	list-style-type: none;
 }
 
-
+/*自定义游向前*/
+.fr{
+	float: right;
+}
+/*自定义结束*/
 /* 图标 */
 
 .icon-goback {
@@ -697,9 +701,9 @@ a {
 	width: 1rem;
 	height: 1rem;
 	overflow: hidden;
-	margin-right: 10px; 
+	margin-right: 10px;
 	position: relative;
-	
+
 }
 
 #index .limit_buy .list_box li .img img {
@@ -715,7 +719,7 @@ a {
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
-	display: inline-block!important;  
+	display: inline-block!important;
 	color: #333;
 }
 
@@ -763,10 +767,10 @@ color: #f53c42;
 	line-height: 0.2rem;
 	overflow: hidden;
 	font-size: 0.1rem;
-	color: #666; 
+	color: #666;
 }
 .limitright{
-	
+
 	padding: 10px;
 }
 #index .limit_buy .list_box .state p {
@@ -1444,7 +1448,7 @@ dl.list dd>.btn {
 .dealcard .dealcard-brand,
 .cinemacard .cinemacard-brand {
 	/*padding-top: .1rem;*/
-	margin-bottom: .12rem; 
+	margin-bottom: .12rem;
 	font-size: .12rem;
 	font-weight: 400;
 	color: #333;
@@ -3268,7 +3272,7 @@ footer {
 	padding: 80px 30px;
 	background-color: #f53c42;
 	height: 170px;
-	position: absolute;  
+	position: absolute;
 	width: 100%;
 }
 
@@ -5342,11 +5346,11 @@ label {
 	line-height: .2rem;
 }
 
- {
+ /*{
 	width: 100%;
 	background-color: #fff;
 	margin-bottom: 4%;
-}
+}*/
 
 .cash-tit {
 	width: 100%;
@@ -5782,15 +5786,15 @@ header h1,.mui-bar-nav.mui-bar .mui-icon, .mui-title, #theSearch{
 	margin-top: 50px;
 }
 
-.mui-bar-nav { 
-    background-color: white !important; 
+.mui-bar-nav {
+    background-color: white !important;
     -webkit-box-shadow: 0 0 2px rgba(175, 166, 166, 0.85) !important;
-    box-shadow: 0 0 2px rgba(175, 166, 166, 0.85) !important; 
+    box-shadow: 0 0 2px rgba(175, 166, 166, 0.85) !important;
 }
-.mui-bar-nav.mui-bar .mui-icon,.mui-title,#theSearch{ 
-	color: #555!important; 
+.mui-bar-nav.mui-bar .mui-icon,.mui-title,#theSearch{
+	color: #555!important;
 }
-#upload{ 
+#upload{
 	text-align: center;font-size: 15px;line-height: 30px;min-height: 40px;color: #999;padding-top: 5px;
 }
 #upload img{width: 60px;margin-top: -10px;
@@ -5800,7 +5804,7 @@ header h1,.mui-bar-nav.mui-bar .mui-icon, .mui-title, #theSearch{
 	display: block;
 	width: 100%!important;
 	margin: auto;
-	
+
 }
 #textInfo table{
 	overflow: scroll!important;
@@ -5815,7 +5819,7 @@ header h1,.mui-bar-nav.mui-bar .mui-icon, .mui-title, #theSearch{
 header{
 
 	background-size:100%;
-	background-color: #ff5248; 
+	background-color: #ff5248;
 
 }
 
