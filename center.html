@@ -37,12 +37,12 @@
 			}
 			
 			.denlu {
-				font-size: 17px;
+				font-size: 15px;
 			}
 			
 			/*修改*/
 			.denlu {
-				padding-left: 20px;
+				/*padding-left: 20px;*/
 				color: #fff;
 				line-height: 25px;
 			}
@@ -143,10 +143,12 @@
 			<div class="content clearfloat fl mui-row white">
 				<div class="mui-col-sm-4 mui-col-xs-4" style="padding-top: 18px;position: relative;left: 3px;"><img src="https://b-ssl.duitang.com/uploads/item/201710/12/20171012232816_GX5iw.thumb.224_0.jpeg" class="myInfo" id="mypic" /></div>
 				<div class="mui-col-sm-8 mui-col-xs-8 writing">
-					<p class="centop customerN">
-						<span class="denlu denluzhuce" >用户名：<span id="userName" style="z-index: 99;"></span></span><br />
-						<span class="denlu denluzhuce" >手机号：<span id="guidesPhone" style="z-index: 99;"></span></span> <span id='bindPhone' style="background-color: orange;color: white;font-size: 10px;padding: 2px;border-radius: 3px;display: none;">绑定手机号</span><br />
-						<span class="denlu denluzhuce" style="display: inline-block;min-height: 20px;" id="coin">乐币:<span></span> 账户:<span id="accoutoney"></span><br />灯号:<span id="dengh"></span> 导购:<span id="guideName"></span><a id="guideMobile" style="display: none;" href=""><img style="width: 15px;margin-left: 5px;" src="images/center/phone.svg"/></a></span>
+					<p class="centop">
+						<div class="denlu">用户名：<span id="userName" style="z-index: 99;"></span></div>
+						<div class="denlu" id="onlyPs">配送数量：<span id="psNumber" style="z-index: 99;"></span></div>
+						<div class="denlu" id="onlyGuide">手机号：<span id="guidesPhone"></span> <span id='bindPhone' style="background-color: orange;color: white;font-size: 10px;padding: 2px;border-radius: 3px;display: none;">绑定手机号</span></div> 
+						<div class="denlu" id="onlyCust">乐币:<span id="coin"></span> 账户:<span id="accoutMoney"></span><br />灯号:<span id="dengh"></span> 导购:<span id="guideName"></span><a id="guideMobile" style="display: none;" href=""><img style="width: 15px;margin-left: 5px;" src="images/center/phone.svg"/></a></div>
+						<div class="denlu" id="onlymange">账户:<span id="manageMoney"></span></div>
 					</p>
 				</div>
 				<img class="dao shezhi" style="top: 8px;width: 30px;" src="images/center/shizhi.png" />
@@ -308,7 +310,7 @@
 			<!--配送员-->
 			<div class="centerList distributionN"  style="display: none;">
 				<div class="flexRow2">
-					<div class="" onclick="goCollect()">
+					<div class="">
 						代收款
 					</div>
 					<div class="">
@@ -365,14 +367,14 @@
 					id: 'message', 
 				}) 
 			}
-//			导购->我的导购
+            //导购->我的导购
 			function toMyCustomer(){
 				openview({
 					view:'page/guide/myCustomer.html',
 					id: 'myCustomer', 
 				}) 
 			}
-//			经理-> 工人列表
+			//经理-> 工人列表
 			function goworker(){
 				openview({
 					view:'page/manager/workerList.html',
@@ -391,30 +393,21 @@
 					var userId = plus.storage.getItem('$userId'); 
 					var oldToken = plus.storage.getItem('oldToken');
 					loadmyinfo();
-					if(identityT == 0 || identityT == 4 || identityT == 5){
-						$('.orderType').css('display','');
-						$('.centerList').css('display','none');
-						$('.guiderN').css('display','block');
-						$('#dengh,#guideMobile,#guideName,#dengh,#coin').css('display','none')
-					}else if(identityT == 6){
-						$('.orderType').css('display','');
-						$('.centerList').css('display','none');
-						$('.customerN').css('display','block')
-						
-					}else if(identityT == 3){
-						$('.centerList').css('display','none');
-						$('.workerN').css('display','block');
-						$('.orderType').css('display','none');
-						
-					}else if(identityT == 2){
-						$('.orderType').css('display','');
-						$('.centerList').css('display','none');
-						$('.manageN').css('display','block')
-						
-					}else{
-						$('.centerList').css('display','none');
-						$('.distributionN').css('display','block');
-						$('.orderType').css('display','none');
+					if(identityT == 0 || identityT == 4 || identityT == 5){//导购
+						$('#onlyCust,.qiandao,.centerList,#onlyPs,#onlymange').css('display','none')
+						$('#onlyGuide.orderType,.guiderN').css('display','');
+					}else if(identityT == 6){//顾客
+						$('#onlyGuide,#onlymange,.centerList,.qiandao,.centerList,#onlyPs').css('display','none');
+						$('#onlyCust,.orderType,.customerN,.qiandao').css('display','')						
+					}else if(identityT == 3){//工人
+						$('#onlyGuide,#onlyCust,.centerList,.orderType,#onlymange,.qiandao,#onlyPs').css('display','none');
+						$('.workerN').css('display','block'); 
+					}else if(identityT == 2){//项目经理
+						$('.centerList,#onlyGuide,#onlyCust,#onlyPs').css('display','none');
+						$('.orderType,.manageN,#onlymange').css('display','');
+					}else{//配送员
+						$('.centerList,.orderType,#onlymange,#onlyCust').css('display','none');
+						$('.distributionN,#onlyPs,#onlyGuide').css('display','');
 					}
 					
 					/*设置*/
@@ -470,13 +463,24 @@
 										} else {
 											$('#dengh').html('无')
 										}
+										if(data.content.balance){
+											$('#accoutMoney').html('¥'+data.content.balance)
+											$('#manageMoney').html('¥'+data.content.balance)
+										}else{
+											$('#accoutMoney').html(0)
+										}
+										if(data.content.lb){
+											$('#coin').html(data.content.lb)
+										}else{
+											$('#coin').html(0)
+										}
 										if(identityT == 0){
 											if(data.content.guideMobile) {
 												$('#bindPhone').css('display','none')
 												$('#guidesPhone').html(data.content.guideMobile);
 											}else{
-												$('#guidesPhone').html('无')
-												$('#bindPhone').css('display','inline-block')
+												$('#guidesPhone').css('display','inline-block')
+												$('#guidesPhone').html('未填写')
 											}
 										}
 									}
@@ -491,34 +495,7 @@
 								console.log('登录响应失败');
 							}
 						});
-						//乐币
-						mui.ajax('http://119.23.149.7:9999/app/customer/lebi/balance', {
-							data: {
-								userId: userId,
-								identityType: identityT
-							},
-							dataType: 'json',
-							headers: {
-								"Authorization": oldToken
-							},
-							type: 'post',
-							timeout: 10000,
-							success: function(data, type, xhr) {
-								console.log('乐币', data);
-								if(data.code == 0) {
-									plus.nativeUI.closeWaiting();
-									if(data.content) {}
-								} else {
-									mui.toast(data.message)
-								}
-
-							},
-							error: function(xhr, type, errorThrown) {
-								plus.nativeUI.closeWaiting();
-								mui.toast(type)
-								console.log('登录响应失败');
-							}
-						});
+						
 
 					}
 				} //刷新	

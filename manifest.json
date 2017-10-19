@@ -733,7 +733,8 @@
 					"js/mui.min.js",
 					"fonts/mui.ttf",
 					"js/artTemplate-native.js",
-					"js/default.js"
+					"js/default.js",
+					"css/configW.css"
 				],
 				"refer": [
 					"page/goodsInfo.html"

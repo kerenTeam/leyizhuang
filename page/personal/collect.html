@@ -111,7 +111,7 @@
 							console.log('商品收藏列表', data);
 							if(data.code == 0) {
 								plus.nativeUI.closeWaiting();
-								if(data.content.length) {
+								if(data.content && data.content.length) {
 									$('#goodsList').html(template('goodsTpl', {
 										list: data.content
 									}));
