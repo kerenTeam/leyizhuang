@@ -14,7 +14,7 @@
 		<link rel="stylesheet" type="text/css" href="../../css/mui.min.css"/>
 		<link rel="stylesheet" href="../../css/resetY.css">
 		<script type="text/javascript" src="../../js/jquery.min.js"></script>
-		<script src="../../js/hmt.js" type="text/javascript"></script>
+
 		<script src="../../js/mui.min.js" type="text/javascript"></script>
 		<script src="../../js/default.js" type="text/javascript"></script>
 		<!--引入模板引擎-->
@@ -23,7 +23,7 @@
 			.radio .option{
 				width: .26rem !important;
 				height: .26rem !important;
-				margin-top: -.08rem;
+				margin-top: -.02rem;
 			}
 			.shopcar .list{
 				padding: .05rem 0rem;
@@ -66,7 +66,7 @@
 				background-color: #eee;
 			}
 			.exterminate, .exterminate i, .editAd, .editAd i{
-				color: #999 !important;
+				color: #666 !important;
 			}
 			.addlist .bottom .right a:first-child{
 				margin-left: 13%;
@@ -165,6 +165,8 @@
 	    <script type="text/javascript">
 		mui.init();
 		mui.plusReady(function(){
+
+
 			var userId = plus.storage.getItem('$userId');
 			var oldToken = plus.storage.getItem("oldToken");
 			var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
