@@ -3,7 +3,7 @@
 
 	<head>
 		<meta charset="UTF-8">
-		<title></title>
+		<title>产品券</title>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="../../css/mui.min.css" rel="stylesheet" />
 		<link rel="stylesheet" href="../../css/style.css" />
@@ -24,7 +24,7 @@
 			top: 50%;
 			-webkit-transform: translateY(-50%);
 			width: 25px;
-			right: 20px;
+			left: 20px;
 		}
 		
 		#deleteCollect {
@@ -39,8 +39,9 @@
 	<body>
 		<header class="mui-bar mui-bar-nav" style="padding-right: 15px;">
 			<a id="leftbtn" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-			<h1 class="mui-title">商品收藏</h1>
-			<a class="mui-pull-right" style="line-height: 42px;" id="edit">编辑</a>
+			<h1 class="mui-title">产品券</h1>
+			<a class="mui-pull-right" style="line-height: 42px;" id="edit">使用</a>
+			
 		</header>
 
 		<div class="mui-content" style="height: 20px;">
@@ -59,8 +60,12 @@
 									<%=list[i].goodsSpecification%> &nbsp;单位:
 									<%=list[i].goodsUnit%>
 								</p>
-								<span>￥<%=list[i].retailPrice%></span>
-
+								<span class="ft14 activecl">剩余:<%=list[i].leftNumber%>张</span>
+								<div style="display:inline-block;display: none;margin-left: 15px;" class="mui-numbox" data-numbox-step='1' data-numbox-min='0' data-numbox-max='100'>
+								  <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+								  <input class="mui-numbox-input" type="number" value="1"/>
+								  <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+								</div>
 							</div>
 						</a>
 						<img style="display: none;" data-id="<%=list[i].id%>" class="check" src="../../images/center/uncheck.svg" alt="" />
@@ -69,21 +74,20 @@
 				</ul>
 			</script>
 		</div>
-		<button id="deleteCollect" class="mui-btn-danger" disabled="" style="display: none;">删除</button>
+		<button id="deleteCollect" class="mui-btn-danger" disabled="" style="display: none;">使用</button>
 		<script src="../../js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../../js/mui.min.js"></script>
 		<script src="../../js/artTemplate-native.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../../js/default.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
 			mui.init();
-			function goodsInfo(id){
-				openview({
-					view:'../goodsInfo.html',
-					id: 'goodsInfo', 
-					extrasobj:{goodId:id}
-				}) 
+			$('#edit').click(function(){
+				$('.mui-numbox,.check').css('display','');
+				$('.mui-media a').css('-webkit-transform','translateX(40px)');
+				$('#deleteCollect').css('display', 'block');
 				
-			}
+			})
+			
 			mui.plusReady(function() {
 				var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
 				var userId = plus.storage.getItem('$userId');
@@ -95,8 +99,8 @@
 
 				function kindType() {
 
-					//商品收藏列表
-					mui.ajax(serverUrl + '/app/user/collect/list', {
+					//产品券列表
+					mui.ajax(serverUrl + '/app/customer/productCoupon/list', {
 						data: {
 							userId: userId,
 							identityType: identityT
@@ -108,32 +112,15 @@
 						type: 'post',
 						timeout: 10000,
 						success: function(data, type, xhr) {
-							console.log('商品收藏列表', data);
+							console.log('产品券列表', data);
 							if(data.code == 0) {
 								plus.nativeUI.closeWaiting();
-								if(data.content.length) {
+								if(data.content && data.content.length) {
 									$('#goodsList').html(template('goodsTpl', {
 										list: data.content
 									}));
-									//编辑
-									$('#edit').click(function() {
-										if($(this).html() == '编辑') {
-											$(this).html('取消');
-											$('.check').css('display', 'block');
-											$('#deleteCollect').css('display', 'block');
-
-										} else {
-											$(this).html('编辑')
-											$('.check').css('display', 'none');
-											$('#deleteCollect').css('display', 'none');
-											$('#deleteCollect').attr('disabled', true);
-											$('.check').attr('src', '../../images/center/uncheck.svg');
-
-										}
-
-									})
-
-									//选择移除收藏
+									mui('.mui-numbox').numbox();
+									//使用选择
 									$('.check').click(function() {
 										event.stopPropagation();
 										if($(this).attr('src') == '../../images/center/uncheck.svg') {
@@ -149,66 +136,8 @@
 											$('#deleteCollect').attr('disabled', true)
 										}
 									})
-
-									//执行删除
-									$('#deleteCollect').click(function() {
-										if(!$('.choosed').length) {
-											mui.toast('还未选择要移除的商品哦')
-										} else {
-											mui.confirm('null', '确认删除吗', ['确认', '取消'], function(e) {
-												if(e.index == 0) {
-													$('.choosed').each(function() {
-														var cur = $(this);
-														var gdid = $(this).attr('data-id');
-														mui.ajax(serverUrl + '/app/user/collect/remove', {
-															data: {
-																goodsId: gdid,
-																userId: userId,
-																identityType: identityT
-															},
-															dataType: 'json',
-															headers: {
-																"Authorization": oldToken
-															},
-															type: 'post',
-															timeout: 10000,
-															success: function(data, type, xhr) {
-																plus.nativeUI.closeWaiting();
-																console.log('收藏返回', data);
-																if(data.code == 0) {
-																	plus.nativeUI.closeWaiting();
-																	mui.toast('移除收藏成功');
-																	cur.parent().remove();
-																	if(!$('.check').length) {
-																		$('#edit').html('编辑');
-																		kindType();
-																		$('#deleteCollect').css('display', 'none');
-
-																	}
-
-																}
-																if(data.code == 1000) {
-																	mui.toast(data.message)
-																} else if(data.code == -1) {
-																	mui.toast(data.message)
-																}
-
-															},
-															error: function(xhr, type, errorThrown) {
-																plus.nativeUI.closeWaiting();
-																mui.toast(type)
-															}
-														});
-
-													})
-												}
-											}, '')
-										}
-									})
-
 								} else {
-									$('#edit').css('display', 'none')
-									$('#goodsList').html('<div style="text-align:center;padding:15px">暂无收藏商品</div>')
+									$('#goodsList').html('<div style="text-align:center;padding:15px">暂无产品券</div>')
 								}
 							} else {
 								mui.toast(data.message)

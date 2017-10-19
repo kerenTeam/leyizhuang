@@ -70,45 +70,46 @@
 				</div>
 			</div>
 	    		<div class="bottomop flexr" style="position: fixed;">
-				<div class="ft14 active">红灯</div> 
-					<div class="ft14">绿灯</div>
-					<div class="ft14">黄灯</div>
-					<div class="ft14">熄灯</div>
-			 	</div>  
+				<div class="ft14 active">全部</div> 
+				<div class="ft14">红灯</div> 
+				<div class="ft14">绿灯</div>
+				<div class="ft14">黄灯</div>
+				<div class="ft14">熄灯</div>
+		 	</div>  
 			 	
-				<div id="QA"><!--大盒子-->
-					<div class="QA qative dyCon" id="questions" style="display: block;"></div><!--盒子一-->
-					<div class="QA dyCon" id="answers" style="display: none;"> </div><!--盒子二-->
-					<div class="QA dyCon" id="toanswers" style="display: none;"></div><!--盒子三-->
-					<div class="QA dyCon" id="allanswers" style="display: none;"></div><!--盒子四-->
+			<div id="QA"><!--大盒子-->
+				<div class="QA qative dyCon" id="questions" style="display: block;"></div><!--盒子一-->
+				<div class="QA dyCon" id="answers" style="display: none;"> </div><!--盒子二-->
+				<div class="QA dyCon" id="toanswers" style="display: none;"></div><!--盒子三-->
+				<div class="QA dyCon" id="allanswers" style="display: none;"></div><!--盒子四-->
+				
+				<script type="text/html" id="listDataS">
+				<%for(var i=0;i<dataList.length;i++){%>
 					
-					<script type="text/html" id="listDataS">
-					<%for(var i=0;i<dataList.length;i++){%>
-						
-						<div class="qashadow" data-id="<%=dataList[i].light%>" onclick="openDetail()">
-							<div class="qtop flexr">
-								<div class="ft14" style="display: flex;align-items: center;">
-									<img class="Avator loadPics" data-src="" src="<%=dataList[i].picUrl%>"/>
-									
-									<div style="flex: 1;margin-left: 10px;">
-										<div class="maincl ft14">
-											<span class="disablecl"><%=dataList[i].name%></span>
-											<span class="disablecl"><%=dataList[i].mobile%></span>
-										</div>
-										<div class="ft12">
-											<span class="disablecl">注册时间：<%=dataList[i].createTime%></span>
-										</div>
+					<div class="qashadow" data-id="<%=dataList[i].light%>" onclick="openDetail()">
+						<div class="qtop flexr">
+							<div class="ft14" style="display: flex;align-items: center;">
+								<img class="Avator loadPics" data-src="" src="<%=dataList[i].picUrl%>"/>
+								
+								<div style="flex: 1;margin-left: 10px;">
+									<div class="maincl ft14">
+										<span class="disablecl"><%=dataList[i].name%></span>
+										<span class="disablecl"><%=dataList[i].mobile%></span>
+									</div>
+									<div class="ft12">
+										<span class="disablecl">注册时间：<%=dataList[i].createTime%></span>
 									</div>
 								</div>
-								<div class="">
-										<img src="../../images/center/right.svg" alt="" />
-								</div>
+							</div>
+							<div class="">
+									<img src="../../images/center/right.svg" alt="" />
 							</div>
 						</div>
-					<%}%>
-					</script>	
-					<div class="upload text-center text-xs gray" id="upload"><img src='../../images/balls.svg' /></div><!--加载中-->
-				</div><!--大盒子-->
+					</div>
+				<%}%>
+				</script>	
+				<div class="upload text-center text-xs gray" id="upload"><img src='../../images/balls.svg' /></div><!--加载中-->
+			</div><!--大盒子-->
 				
 			</div>
 		</div>
@@ -137,7 +138,11 @@
 				if($(this).attr('data-id') == innerText){
 						$(this).css('display','');
 					}else{
-						$(this).css('display','none');
+						if(innerText == '全部'){
+							$('.qashadow').css('display','block');
+						}else{
+							$(this).css('display','none');
+						}
 						
 					}
 				})

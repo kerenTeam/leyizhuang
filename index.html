@@ -505,6 +505,19 @@
 					var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
 					var userId = plus.storage.getItem('$userId'); 
 					var oldToken = plus.storage.getItem('oldToken');
+					//切换板块
+					if(identityT == 0 || identityT == 4 || identityT == 5){//导购
+						 
+					}else if(identityT == 6){//顾客
+						 				
+					}else if(identityT == 3){//工人
+					 
+					}else if(identityT == 2){//项目经理
+						 
+					}else{//配送员
+						 
+					}
+					
 					//常购商品列表
 					mui.ajax(serverUrl+'/app/goods/often/list',{
 						data:{ 
