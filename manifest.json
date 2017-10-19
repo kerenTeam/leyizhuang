@@ -991,7 +991,13 @@
 					"images/center/uncheck.svg",
 					"css/mui.min.css",
 					"css/style.css",
-					"css/configW.css"
+					"css/configW.css",
+					"js/jquery.min.js",
+					"js/mui.min.js",
+					"fonts/mui.ttf",
+					"js/default.js",
+					"js/artTemplate-native.js",
+					"images/center/checked.svg"
 				],
 				"refer": [],
 				"priority": 0

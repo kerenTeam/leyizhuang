@@ -32,12 +32,4 @@ body {
 	border:none!important;
 	width: 90%!important;
 }
-.mui-media>*{
-	word-wrap: break-word!important;
-}
-.mui-table-view .mui-media, .mui-table-view .mui-media-body{
-	overflow:auto !important;
-}
-.mui-table-view-cell>a:not(.mui-btn){
-	word-break: break-all!important;
-}
+

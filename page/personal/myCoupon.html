@@ -23,9 +23,9 @@
 			<script type="text/html" id="couponTpl">
 				<%for(var i=0;i<dataList.length;i++){%>
 					<div class="coupon">
-						<div class="ft20"><span class="activecl"><%=dataList[i].denomination%>元</span> <span>优惠券</span></div>
+						<div class="ft20"><span class="activecl"><%=dataList[i].denomination%>元</span> <small><%=dataList[i].title%></small></div>
 						<div class="ft14">有效期：<%=dataList[i].effectiveStartTime%> 至 <%=dataList[i].effectiveEndTime%></div>
-						<div class="ft12 disablecl"><%=dataList[i].description%></div>
+						<div class="ft12 disablecl">使用条件：<%=dataList[i].description%></div>
 					</div>
 				<%}%>
 			</script>

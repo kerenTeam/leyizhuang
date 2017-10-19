@@ -62,6 +62,7 @@
 		<script src="js/mui.min.js"></script>
 		<script src="js/app.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/base64.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/default.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
 			mui.init();
 			$('.employee').click(function(){ 
@@ -76,103 +77,7 @@
 				if(plus.webview.getWebviewById('shezhi')){
 					plus.webview.getWebviewById('shezhi').close();
 				}
-				
-//				//判断是否登陆
-//				plus.storage.removeItem('oldToken');
-//				Sign();
-//				var timeSign = null;
-//				var loadNum = 0;
-//				var loadNum2 = 0;
-//				clearInterval(timeSign);
-//				timeSign = setInterval(Sign,5000000);//两小时自动更新一次token
-//				var timeSign2  =  setInterval(function(){
-//					loadNum2++;
-//					if(plus.storage.getItem('oldToken') || loadNum2==10){
-//						clearInterval(timeSign2);
-//					}else{
-//						Sign();
-//					}
-//				},1000)
-//				function Sign(){//登录方法 
-//					if(plus.storage.getItem('oldToken')){
-//						var Acc_pass = JSON.parse(plus.storage.getItem("Acc_pass"));//员工登陆
-//						var openid = plus.storage.getItem("openId");//顾客登录
-//						//根据缓存密码自动登录, 重新获取Token
-//						if(Acc_pass){
-//							mui.ajax('http://119.23.149.7:9999/app/employee/login',{
-//								data:{"name":Acc_pass[0],"password":Acc_pass[1]},
-//								dataType:'json',
-//								type:'post',
-//								timeout:10000,
-//								success:function(data,type,xhr){ 
-//									console.log('登录返回',data);
-//									if(data.code == -1){
-//									 
-//									}else{  
-//										plus.nativeUI.closeWaiting();
-//										console.log('默认账号登录返回'+JSON.stringify(data)); 
-//										plus.storage.setItem("oldToken",xhr.getResponseHeader('token'));
-//										//alert(plus.storage.getItem("oldToken"))
-//										openview({
-//											view:'index.html',
-//											id:'index'
-//										})
-//									}
-//								},
-//								error:function(xhr,type,errorThrown){
-//									plus.nativeUI.closeWaiting();
-//									console.log('登录响应失败');
-//									loadNum ++;
-//									if(loadNum<3){
-//										mui.toast('当前网络不好,再次连接');
-//									}
-//									console.log('获取默认token响应失败');
-//								}
-//							}); 
-//						}
-//						if(openid){
-//							mui.ajax('http://119.23.149.7:9999/app/customer/login',{
-//								data:{"openId":openID},
-//								dataType:'json',
-//								type:'post',
-//								timeout:10000,
-//								success:function(data,type,xhr){ 
-//									console.log('登录返回',data);
-//									if(data.code == 0 && data.content.isExist){
-//										plus.nativeUI.closeWaiting();
-//										plus.storage.setItem('$userId',JSON.stringify(data.content.userId))
-//										plus.storage.setItem("oldToken",xhr.getResponseHeader('token'));
-//										plus.storage.setItem("openId",openID);
-//		 								plus.storage.removeItem('Acc_pass');
-//										
-//										openview({
-//											view:'index.html',
-//											id:'index'
-//										})
-//									}else if(data.code == -1){ 
-//										plus.nativeUI.closeWaiting();
-//										mui.toast(data.message);
-//										openview({
-//											view:'reg.html',
-//											id:'reg',
-//											extrasobj:{openid:openID},
-//										})  
-//									}
-//									
-//								},
-//								error:function(xhr,type,errorThrown){
-//									plus.nativeUI.closeWaiting();
-//									console.log('登录响应失败');
-//								}
-//								
-//							});
-//						} 
-//					}	
-//				 
-//				}//登录方法结束
-				
-				
-				
+			
 				//第三方登录
 				var authBtns = ['weixin']; //配置业务支持的第三方登录
 				var auths = {};
@@ -212,7 +117,7 @@
 								phone,
 								cityId = 1;
 								console.log(openID);
-								mui.ajax('http://119.23.149.7:9999/app/customer/login',{
+								mui.ajax(serverUrl+'/app/customer/login',{
 									data:{"openId":openID},
 									dataType:'json',
 									type:'post',

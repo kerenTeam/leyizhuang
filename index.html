@@ -89,7 +89,9 @@
 			<div style="text-align:center;padding:20px 10px 0">
 				<img style="vertical-align:middle;margin:0 5px;width:25px" src="images/activity.svg"/>最新活动
 			</div>
-			<div class="mui-content flexws ltac">
+			
+			<!--顾客 和 项目经理-->
+			<div class="mui-content flexws ltac cusMan">
 			     <div id="">
 			     	<div class="imgb" style="background-color:#7dc5eb"><img src="images/1.svg" alt="" /></div>快捷下单
 			     </div>
@@ -103,11 +105,11 @@
 			     	<div class="imgb" style="background-color:#ea986c"><img src="images/4.svg" alt="" /></div>我的收藏
 			     </div>
 			</div>
-			<div class="mui-content flexw ltac">
-			     <div id="">
+			<div class="mui-content flexw ltac cusMan">
+			     <div>
 			     	<div class="imgb" style="background-color:#e8989a"><img src="images/5.svg" alt="" /></div>物流
 			     </div>
-			     <div id="">
+			     <div>
 			     	<div class="imgb" style="background-color:#8992c8"><img src="images/6.svg" alt="" /></div>签到
 			     </div>
 			     <div id="">
@@ -115,6 +117,61 @@
 			     </div>
 			     <div id="">
 			     	<div class="imgb" style="background-color:#e15d4b"><img src="images/8.svg" alt="" /></div>咨询
+			     </div>
+			</div>
+			<!--工人-->
+			<div class="mui-content flexws ltac worker" style="display: ;">
+			     <div id="">
+			     	<div class="imgb" style="background-color:#7dc5eb"><img src="images/1.svg" alt="" /></div>快捷下单
+			     </div>
+			     <div class="gxb">
+			     	<div class="imgb" style="background-color:#be8dbd"><img src="images/2.svg" alt="" /></div>工序包下单
+			     </div>
+			     <div id="">
+			     	<div class="imgb" style="background-color:#7cba59"><img src="images/3.svg" alt="" /></div>拍照下单
+			     </div>
+			     
+			</div>
+			<div class="mui-content flexw ltac worker" style="display: ;">
+				<div onclick="goCollect()">
+			     	<div class="imgb" style="background-color:#ea986c"><img src="images/4.svg" alt="" /></div>我的收藏
+			     </div>
+			     <div>
+			     	<div class="imgb" style="background-color:#e8989a"><img src="images/5.svg" alt="" /></div>物流
+			     </div>
+			     <div id="">
+			     	<div class="imgb" style="background-color:#e15d4b"><img src="images/8.svg" alt="" /></div>咨询
+			     </div>
+			</div>
+			
+			<!--导购-->
+			<div class="mui-content flexws ltac guides" style="display: ;">
+			     <div id="">
+			     	<div class="imgb" style="background-color:#7dc5eb"><img src="images/1.svg" alt="" /></div>快捷下单
+			     </div>
+			     <div class="gxb">
+			     	<div class="imgb" style="background-color:#be8dbd"><img src="images/2.svg" alt="" /></div>工序包下单
+			     </div>
+			     <div id="">
+			     	<div class="imgb" style="background-color:#7cba59"><img src="images/3.svg" alt="" /></div>我常购买
+			     </div>
+			      <div>
+			     	<div class="imgb" style="background-color:#e8989a"><img src="images/5.svg" alt="" /></div>物流
+			     </div>
+			     
+			</div>
+			<div class="mui-content flexw ltac guides" style="display: ;">
+			     <div>
+			     	<div class="imgb" style="background-color:#8992c8"><img src="images/6.svg" alt="" /></div>未提货
+			     </div>
+			     <div>
+			     	<div class="imgb" style="background-color:#8992c8"><img src="images/6.svg" alt="" /></div>信用额度
+			     </div>
+			     <div id="">
+			     	<div class="imgb" style="background-color:#199f97"><img src="images/7.svg" alt="" /></div>欠款查询
+			     </div>
+			     <div id="">
+			     	<div class="imgb" style="background-color:#e15d4b"><img src="images/8.svg" alt="" /></div>欠款审核
 			     </div>
 			</div>
 			
@@ -507,13 +564,15 @@
 					var oldToken = plus.storage.getItem('oldToken');
 					//切换板块
 					if(identityT == 0 || identityT == 4 || identityT == 5){//导购
+						 $('.guides').css('display','')	
+						 $('.cusMan,.worker').css('display','none')	
+					}else if(identityT == 6 || identityT == 2){//顾客 项目经理
+						 $('.cusMan').css('display','')	
+						 $('.guides,.worker').css('display','none')	
 						 
-					}else if(identityT == 6){//顾客
-						 				
 					}else if(identityT == 3){//工人
-					 
-					}else if(identityT == 2){//项目经理
-						 
+						 $('.guides,.worker').css('display','')	
+						 $('.cusMan,.guides').css('display','none')	
 					}else{//配送员
 						 
 					}
