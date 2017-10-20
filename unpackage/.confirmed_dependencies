@@ -226,7 +226,8 @@
 			"page/collect.html",
 			"page/personal/collect.html",
 			"page/goodsInfo.html",
-			"page/wallet.html"
+			"page/wallet.html",
+			"reg.html"
 		]
 	},
 	"page/gxbList.html": {
@@ -604,7 +605,10 @@
 	"bindGuide.html": {
 		"resources": [
 			"css/mui.min.css",
-			"css/configW.css"
+			"css/configW.css",
+			"js/jquery.min.js",
+			"js/mui.min.js",
+			"js/default.js"
 		],
 		"refer": []
 	},

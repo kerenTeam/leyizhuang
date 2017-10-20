@@ -90,6 +90,15 @@
 					var openId = plus.webview.currentWebview().openid;
 					var picUrl = plus.webview.currentWebview().picurl;
 					var sex = plus.webview.currentWebview().sex;
+					alert((sex))
+					if(sex == 1){
+						sex = true;
+					}else if(sex == 2){
+						sex = false 
+					}else{
+						sex = null
+						
+					}
 					var nick = plus.webview.currentWebview().nick;
 					console.log(openId);
 					
@@ -133,8 +142,10 @@
 							mui.toast('请重新获取验证码')
 						}else{
 								plus.nativeUI.showWaiting();
+								var cityId = $('#city').val();
+								alert(picUrl)
 								mui.ajax(serverUrl+'/app/customer/registry',{//改密
-								data:{"phone":account.value,"openId":openId,'cityId':$('#city').val(),"picUrl":picUrl,"nickName":nick,"sex":sex},
+								data:{"phone":account.value,"openId":openId,'cityId':cityId,"picUrl":picUrl,"nickName":nick,"sex":sex},
 								dataType:'json',
 								type:'post',
 								timeout:10000,
@@ -177,12 +188,13 @@
 															view:'bindGuide.html',
 															id:'bindGuide'
 														})
-													},500)
+													},100)
 												 
 												}
 												
 											},
 											error:function(xhr,type,errorThrown){
+												console.log(xhr)
 												plus.nativeUI.closeWaiting();
 												console.log('登录响应失败');
 											}
