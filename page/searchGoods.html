@@ -140,9 +140,6 @@
 
 		<!--tab-->
 		<div id="tab">
-
-			<!--<div class="goodsList" id="goodsList"></div>-->
-
 			<div class="goodsList" id="searchOut" style="margin-top: 50px;"></div>
 
 			<script type="text/html" id="searchOutTpl">
@@ -186,34 +183,33 @@
 		}
 		mui.plusReady(function() {
 			//自动弹出输入法
-			var nativeWebview, imm, InputMethodManager;
-			var initNativeObjects = function() {
-				if(mui.os.android) {
-					var main = plus.android.runtimeMainActivity();
-					var Context = plus.android.importClass("android.content.Context");
-					InputMethodManager = plus.android.importClass("android.view.inputmethod.InputMethodManager");
-					imm = main.getSystemService(Context.INPUT_METHOD_SERVICE);
-				} else {
-					nativeWebview = plus.webview.currentWebview().nativeInstanceObject();
-				}
-			};
-			var showSoftInput = function() {
-				if(mui.os.android) {
-					imm.toggleSoftInput(0, InputMethodManager.SHOW_FORCED);
-				} else {
-					nativeWebview.plusCallMethod({
-						"setKeyboardDisplayRequiresUserAction": false
-					});
-				}
-				//此处可写具体逻辑设置获取焦点的input
-				setTimeout(function() {
-					var inputElem = document.getElementsByClassName('fsearch')[0];
-					inputElem.focus();
-				}, 0);
-			};
-			initNativeObjects();
-			showSoftInput();
-
+//			var nativeWebview, imm, InputMethodManager;
+//			var initNativeObjects = function() {
+//				if(mui.os.android) {
+//					var main = plus.android.runtimeMainActivity();
+//					var Context = plus.android.importClass("android.content.Context");
+//					InputMethodManager = plus.android.importClass("android.view.inputmethod.InputMethodManager");
+//					imm = main.getSystemService(Context.INPUT_METHOD_SERVICE);
+//				} else {
+//					nativeWebview = plus.webview.currentWebview().nativeInstanceObject();
+//				}
+//			};
+//			var showSoftInput = function() {
+//				if(mui.os.android) {
+//					imm.toggleSoftInput(0, InputMethodManager.SHOW_FORCED);
+//				} else {
+//					nativeWebview.plusCallMethod({
+//						"setKeyboardDisplayRequiresUserAction": false
+//					});
+//				}
+//				//此处可写具体逻辑设置获取焦点的input
+//				setTimeout(function() {
+//					var inputElem = document.getElementsByClassName('fsearch')[0];
+//					inputElem.focus();
+//				}, 0);
+//			};
+//			initNativeObjects();
+//			showSoftInput();
 			//缓存记录
 			var searchCircleStorage = JSON.parse(plus.storage.getItem("$searchCircleStorage") || '[]');
 			//缓存记录 渲染

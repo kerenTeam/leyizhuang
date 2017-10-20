@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<title>设置</title>
+		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, width=device-width">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-touch-fullscreen" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="format-detection" content="telephone=no">
+		<meta name="format-detection" content="address=no">
+		<link rel="stylesheet" type="text/css" href="../../css/commonY.css">
+		<link rel="stylesheet" type="text/css" href="../../css/index.css">
+		<link rel="stylesheet" type="text/css" href="../../css/mui.min.css"/>
+		<link rel="stylesheet" href="../../css/reset.css">
+		<style type="text/css">
+			.mui-bar-nav{box-shadow: none !important;}
+			body{background-color: #f3f3f3;}
+			.liafter:after{
+				content: '';
+				display: block;
+				height: 1px;
+				background-color: rgba(0,0,0,0.1);
+				-webkit-transform: scaleY(.5);
+			}
+			#main li{height: 50px;line-height: 50px;padding-left: 20px; background-color: #fff;font-size: 15px;color: #333;}
+			#main li span{font-size: 20px;color: #999;float: right;margin: 18px 10px 0;}
+			.aClick:active{background-color: #eee !important;}
+			#xieyi{text-align: center;margin-top: 60px;color: #e21919;font-size: 13px;}
+		</style>
+	</head>
+	<body>
+		<header class="mui-bar mui-bar-nav fineB">
+		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left bigSize"></a>
+		    <h1 class="mui-title">设置</h1>
+		</header>
+		<script src="../../js/statusBar.js"></script><!--状态栏-->
+		<div id="main">
+			<ul>
+				<li class="aClick" id="editPhone" style="margin-top: 62px;">修改手机号<span class="mui-icon mui-icon-arrowright"></span></li>
+				
+			</ul>
+		
+	    </div>
+	</body>
+	<script src="../../js/mui.min.js"></script>
+	<script src="../../js/app.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../js/update.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		mui.plusReady(function(){
+		 
+		
+			//修改手机号
+			mui('#editPhone')[0].addEventListener('tap',function(){
+				openview({
+					view:'editPhone.html',
+					id:'editPhone'
+				});
+			})
+			
+
+		});
+
+	</script>
+
+
+</html>

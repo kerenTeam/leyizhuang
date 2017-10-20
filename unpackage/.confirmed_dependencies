@@ -225,7 +225,8 @@
 			"cart.html",
 			"page/collect.html",
 			"page/personal/collect.html",
-			"page/goodsInfo.html"
+			"page/goodsInfo.html",
+			"page/wallet.html"
 		]
 	},
 	"page/gxbList.html": {
@@ -520,7 +521,10 @@
 			"page/personal/address.html",
 			"identify.html",
 			"page/personal/oneSetup.html",
-			"page/personal/teasing.html"
+			"page/personal/teasing.html",
+			"forget_password.html",
+			"page/personal/editPhone.html",
+			"page/personal/accountSafe.html"
 		]
 	},
 	"page/personal/address-edit.html": {
@@ -633,5 +637,39 @@
 			"js/artTemplate-native.js"
 		],
 		"refer": []
+	},
+	"page/personal/editPhone.html": {
+		"resources": [
+			"js/base64.js",
+			"css/mui.min.css",
+			"css/style.css",
+			"js/default.js",
+			"js/mui.min.js",
+			"fonts/mui.ttf"
+		]
+	},
+	"page/personal/accountSafe.html": {
+		"resources": [
+			"css/mui.min.css",
+			"css/commonY.css",
+			"js/app.js",
+			"js/mui.min.js",
+			"js/statusBar.js",
+			"fonts/mui.ttf"
+		],
+		"refer": [
+			"page/personal/editPhone.html"
+		]
+	},
+	"page/wallet.html": {
+		"resources": [
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css",
+			"css/configW.css",
+			"js/jquery.citys.js",
+			"js/default.js",
+			"js/jquery.min.js"
+		]
 	}
 }
