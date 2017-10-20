@@ -357,10 +357,10 @@
 					);
 
 					task.setRequestHeader('Authorization',oldToken);
-
 					if(Apic){task.addFile(Apic[0], {key:'headPic'})};/*头像*/
+
 					task.addData('userId',userId);
-					task.addData('identityType',identityT);
+					task.addData('identityType',identityT.toString());
 			        task.addData('name',mynickname);
 			        task.addData('nikeName',mynickname);
 			        if(Nextbtnval.indexOf('男')>-1 || Nextbtnval.indexOf('女')>-1){
