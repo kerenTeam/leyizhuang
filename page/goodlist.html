@@ -17,7 +17,7 @@
  	</style>
 	<body>
 		<header class="mui-bar mui-bar-nav" style="padding-right: 15px;">
-			<a id="leftbtn" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<a id="leftbtn" style="display: none;" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<h1 class="mui-title">商品列表</h1>
 		</header>
 		
@@ -99,6 +99,10 @@
 			mui.plusReady(function(){
 				
 				var categoryCode = plus.webview.currentWebview().ctid;
+				var pageFrom = plus.webview.currentWebview().page;
+				if(pageFrom == 1){
+					$('#leftbtn').css('display','block')
+				}
 				if(!categoryCode){
 					categoryCode = 'water';
 				}

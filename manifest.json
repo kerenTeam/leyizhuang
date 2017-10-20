@@ -509,7 +509,8 @@
 					"js/jquery.min.js",
 					"js/app.js",
 					"images/weixin.png",
-					"js/base64.js"
+					"js/base64.js",
+					"js/default.js"
 				],
 				"refer": [
 					"login.html",
@@ -717,7 +718,8 @@
 					"js/artTemplate-native.js",
 					"images/delet.svg",
 					"js/default.js",
-					"css/style.css"
+					"css/style.css",
+					"images/addcart.svg"
 				],
 				"refer": [
 					"page/goodsInfo.html"
@@ -949,7 +951,9 @@
 				],
 				"refer": [
 					"page/personal/address.html",
-					"identify.html"
+					"identify.html",
+					"page/personal/oneSetup.html",
+					"page/personal/teasing.html"
 				],
 				"priority": 0
 			},
@@ -968,7 +972,8 @@
 					"js/statusBar.js",
 					"fonts/mui.ttf",
 					"js/default.js",
-					"js/artTemplate-native.js"
+					"js/artTemplate-native.js",
+					"js/jquery.citys.js"
 				],
 				"refer": [],
 				"priority": 0
@@ -981,7 +986,14 @@
 					"css/indexY.css",
 					"css/mui.picker.minY.css",
 					"css/commonY.css",
-					"js/city.data-3Y.js"
+					"js/city.data-3Y.js",
+					"js/app.js",
+					"js/jquery.min.js",
+					"js/statusBar.js",
+					"fonts/mui.ttf",
+					"js/artTemplate-native.js",
+					"js/mui.min.js",
+					"js/default.js"
 				],
 				"refer": [],
 				"priority": 0
@@ -1006,6 +1018,38 @@
 				"resources": [
 					"css/mui.min.css",
 					"css/configW.css"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"page/personal/oneSetup.html": {
+				"resources": [
+					"img/editset.png",
+					"css/resetY.css",
+					"js/mui.picker.min.js",
+					"js/mui.min.js",
+					"js/statusBar.js",
+					"fonts/mui.ttf",
+					"css/mui.min.css",
+					"css/indexY.css",
+					"css/mui.picker.minY.css",
+					"js/default.js",
+					"css/commonY.css",
+					"js/artTemplate-native.js"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"page/personal/teasing.html": {
+				"resources": [
+					"js/jquery.min.js",
+					"js/mui.min.js",
+					"js/statusBar.js",
+					"fonts/mui.ttf",
+					"css/mui.min.css",
+					"js/default.js",
+					"css/commonY.css",
+					"js/artTemplate-native.js"
 				],
 				"refer": [],
 				"priority": 0

@@ -7,16 +7,14 @@
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="css/mui.min.css" rel="stylesheet" />
 	</head>
-	
+
 	<body>
 		<style type="text/css">
-			
-			#identy{
-				margin-top:55%;
+			#identy {
+				margin-top: 55%;
 			}
-				
+			
 			.oauth-area {
-			 
 				text-align: center;
 				width: 100%;
 				padding: 0px;
@@ -30,9 +28,9 @@
 				background-size: 30px 30px;
 				background-position: center center;
 				background-repeat: no-repeat;
-				vertical-align:middle;
+				vertical-align: middle;
 				border: solid 1px #aaa;
-				border-radius:50%;
+				border-radius: 50%;
 			}
 			
 			.oauth-area .oauth-btn:active {
@@ -42,15 +40,17 @@
 			.oauth-area .oauth-btn.disabled {
 				background-color: #ddd;
 			}
-			.mui-btn{
-				width:90%;
-				margin:20px auto;
-				padding:10px; 
+			
+			.mui-btn {
+				width: 90%;
+				margin: 20px auto;
+				padding: 10px;
 			}
-			.custom{
-				text-align:center;
-				padding:20px;
-				font-size:12px;
+			
+			.custom {
+				text-align: center;
+				padding: 20px;
+				font-size: 12px;
 			}
 		</style>
 		<div id="identy">
@@ -65,28 +65,28 @@
 		<script src="js/default.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
 			mui.init();
-			$('.employee').click(function(){ 
+			$('.employee').click(function() {
 				openview({
-					view:'login.html',
-					id:'login'
+					view: 'login.html',
+					id: 'login'
 				})
-				
+
 			})
-			
-			mui.plusReady(function(){
-				if(plus.webview.getWebviewById('shezhi')){
+
+			mui.plusReady(function() {
+				if(plus.webview.getWebviewById('shezhi')) {
 					plus.webview.getWebviewById('shezhi').close();
 				}
-			
+
 				//第三方登录
 				var authBtns = ['weixin']; //配置业务支持的第三方登录
 				var auths = {};
 				var oauthArea = document.querySelector('.oauth-area');
 				plus.oauth.getServices(function(services) {
-					for (var i in services) {
+					for(var i in services) {
 						var service = services[i];
 						auths[service.id] = service;
-						if (~authBtns.indexOf(service.id)) {
+						if(~authBtns.indexOf(service.id)) {
 							var isInstalled = app.isInstalled(service.id);
 							var btn = document.createElement('div');
 							//如果微信未安装，则为不启用状态
@@ -97,7 +97,7 @@
 						}
 					}
 					mui(oauthArea).on('tap', '.oauth-btn', function() {
-						if (this.classList.contains('disabled')) {
+						if(this.classList.contains('disabled')) {
 							plus.nativeUI.toast('您尚未安装微信客户端');
 							return;
 						}
@@ -105,68 +105,71 @@
 						var waiting = plus.nativeUI.showWaiting();
 						auth.login(function() {
 							waiting.close();
-							plus.nativeUI.toast("登录认证成功");
-						 
-							auth.getUserInfo(function() { 
-								plus.nativeUI.toast("获取用户信息成功");
+							auth.getUserInfo(function() {
 								var name = auth.userInfo.nickname || auth.userInfo.name;
 								var openID = auth.userInfo.openid;
 								var picUrl = auth.userInfo.headimgurl,
-								nickName = auth.userInfo.nickname,
-								sex = auth.userInfo.sex,
-								phone,
-								cityId = 1;
+									nickName = auth.userInfo.nickname,
+									sex = auth.userInfo.sex;
 								console.log(openID);
-								mui.ajax(serverUrl+'/app/customer/login',{
-									data:{"openId":openID},
-									dataType:'json',
-									type:'post',
-									timeout:10000,
-									success:function(data,type,xhr){ 
-										console.log('登录返回',data);
-										if(data.code == 0 && data.content.isExist){
+								mui.ajax(serverUrl + '/app/customer/login', {
+									data: {
+										"openId": openID
+									},
+									dataType: 'json',
+									type: 'post',
+									timeout: 10000,
+									success: function(data, type, xhr) {
+										console.log('登录返回', data);
+										if(data.code == 0 && data.content.isExist) {
 											plus.nativeUI.closeWaiting();
-//											plus.storage.setItem('$userId',JSON.stringify(data.content.userId))
-											plus.storage.setItem('$userId','1');
-//											plus.storage.setItem("$identityType",JSON.stringify({'identityType':data.content.type}));
-											plus.storage.setItem("$identityType",JSON.stringify({'identityType':'6'}));
-											plus.storage.setItem("oldToken",xhr.getResponseHeader('token'));
-											plus.storage.setItem("openId",openID);
-			 								plus.storage.removeItem('Acc_pass');
-											mui.fire(plus.webview.getWebviewById('page/goodList.html'),'refresh');
-											mui.fire(plus.webview.getWebviewById('center.html'),'refresh');
+											//plus.storage.setItem('$userId',JSON.stringify(data.content.userId))
+											plus.storage.setItem('$userId', '1');
+											//plus.storage.setItem("$identityType",JSON.stringify({'identityType':data.content.type}));
+											plus.storage.setItem("$identityType", JSON.stringify({
+												'identityType': '6'
+											}));
+											plus.storage.setItem("oldToken", xhr.getResponseHeader('token'));
+											plus.storage.setItem("openId", openID);
+											plus.storage.removeItem('Acc_pass');
+											mui.fire(plus.webview.getWebviewById('page/goodList.html'), 'refresh');
+											mui.fire(plus.webview.getWebviewById('center.html'), 'refresh');
 											var index = plus.webview.getLaunchWebview();
-												mui.fire(index,'refresh');
-											if(plus.webview.getWebviewById('reg')){
+											mui.fire(index, 'refresh');
+											if(plus.webview.getWebviewById('reg')) {
 												plus.webview.getWebviewById('reg').close();
 											}
-										 
-											var time2 = setTimeout(function(){
-												plus.nativeUI.closeWaiting();
-												mui.toast('登录成功'); 
-												plus.webview.currentWebview().close();
-											},500)
 											
-										}else if(data.code == -1){ 
+											var time2 = setTimeout(function() {
+												plus.nativeUI.closeWaiting();
+												mui.toast('登录成功');
+												plus.webview.currentWebview().close();
+											}, 500)
+
+										} else if(data.code == -1) {
 											plus.nativeUI.closeWaiting();
-											mui.toast(data.message) ;
+											mui.toast(data.message);
 											//去注册
 											openview({
-												view:'reg.html',
-												id:'reg',
-												extrasobj:{openid:openID},
-											})  
-//											 
+												view: 'reg.html',
+												id: 'reg',
+												extrasobj: {
+													openid: openID,
+													picurl: picUrl,
+													sex: sex,
+													nick: name
+												},
+											})
 										}
-										
+
 									},
-									error:function(xhr,type,errorThrown){
+									error: function(xhr, type, errorThrown) {
 										plus.nativeUI.closeWaiting();
 										console.log('登录响应失败');
 									}
-									
+
 								});
-								 
+
 							}, function(e) {
 								plus.nativeUI.toast("获取用户信息失败：" + e.message);
 							});
@@ -180,11 +183,11 @@
 					plus.nativeUI.toast("获取登录认证失败：" + e.message);
 				});
 			})
-			
+
 			var backButtonPress = 0;
 			mui.back = function(event) {
 				backButtonPress++;
-				if (backButtonPress > 1) {
+				if(backButtonPress > 1) {
 					plus.runtime.quit();
 				} else {
 					plus.nativeUI.toast('再按一次退出应用');
