@@ -1,0 +1,68 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../css/configW.css"/>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav" style="padding-right: 15px;">
+			<a id="leftbtn" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">钱包</h1>
+		</header>
+		<div class="mui-content">
+			<div style="background: white;padding: 15px;">当前余额：<span id='balance'></span> <span class="mui-pull-right ft14 activecl">我要充值</span></div>
+		</div>
+		<script src="../js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/default.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			mui.init();
+			mui.plusReady(function(){
+				//获取缓存 
+				var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
+				var userId = plus.storage.getItem('$userId'); 
+				var oldToken = plus.storage.getItem('oldToken');
+				plus.nativeUI.showWaiting();
+				//商品详情
+				mui.ajax(serverUrl+'/app/customer/deposit/balance',{
+					data:{
+						userId:userId,
+						identityType:identityT
+					},
+					dataType:'json',
+					headers: {"Authorization": oldToken},
+					type:'post',
+					timeout:10000,
+					success:function(data,type,xhr){ 
+						plus.nativeUI.closeWaiting();
+						console.log('账户余额',data);
+						if(data.code == 0 ){
+							plus.nativeUI.closeWaiting();
+								if(data.content){
+									$('#balance').html('¥'+data.content);
+								}
+								
+						}
+						if(data.code == 1000 ){
+							mui.toast(data.message)
+						}else if(data.code == -1 ){
+							mui.toast(data.message)
+						}
+						 
+					},
+					error:function(xhr,type,errorThrown){
+						plus.nativeUI.closeWaiting();
+						mui.toast(type)
+						console.log('登录响应失败');
+					}
+				});
+			})
+		</script>
+	</body>
+
+</html>

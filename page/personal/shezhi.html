@@ -40,7 +40,7 @@
 				<li class="aClick" id="dizhiGuan" style="margin-top: 62px;">地址管理<span class="mui-icon mui-icon-arrowright"></span></li>
 
 				<li class="aClick" id="editdata" style="margin-top: 12px;">编辑资料<span class="mui-icon mui-icon-arrowright"></span></li>
-				<li class="aClick" id="editpw" style="margin-top: 12px;">修改密码<span class="mui-icon mui-icon-arrowright"></span></li>
+				<li class="aClick" id="editPhone" style="margin-top: 12px;">账户安全<span class="mui-icon mui-icon-arrowright"></span></li>
 				<li class="aClick" id="appupgrade" style="display: none;">检查更新</li>
 				<li class="aClick liafter" id="tucao" style="margin-top: 12px;">反馈<span class="mui-icon mui-icon-arrowright"></span></li>
 				<li class="aClick" id="aboutme">关于<span class="mui-icon mui-icon-arrowright"></span></li>
@@ -66,7 +66,7 @@
 //		        	mui('#version')[0].innerHTML = inf.version;
 			    });
 				if(/android/i.test(navigator.userAgent)){
-					mui('#editpw')[0].className += ' liafter';
+					mui('#editPhone')[0].className += ' liafter';
 					mui('#appupgrade')[0].style.display = 'block';
 					mui('#appupgrade')[0].addEventListener('tap',function(){
 						checkUpdate(false);
@@ -103,6 +103,13 @@
 //					view:'../agreement.html'
 //				});
 //			})
+			//修改手机号
+			mui('#editPhone')[0].addEventListener('tap',function(){
+				openview({
+					view:'accountSafe.html',
+					id:'accountSafe'
+				});
+			})
 			//编辑资料
 			mui('#editdata')[0].addEventListener('tap',function(){
 				openview({
@@ -110,13 +117,7 @@
 					id:'oneSetup'
 				});
 			})
-			//修改密码
-			mui('#editpw')[0].addEventListener('tap',function(){
-				openview({
-					view:'../forgetpw.html',
-					id:'forgetpw'
-				});
-			})
+			
 			//退出登录
 			mui('#Signout')[0].addEventListener('tap',function(){
 		        mui.confirm('确认退出登录？', '提示', ['取消', '确定'], function(e) {

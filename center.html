@@ -395,7 +395,7 @@
 					loadmyinfo();
 					if(identityT == 0 || identityT == 4 || identityT == 5){//导购
 						$('#onlyCust,.qiandao,.centerList,#onlyPs,#onlymange').css('display','none')
-						$('#onlyGuide.orderType,.guiderN').css('display','');
+						$('#onlyGuide,.orderType,.guiderN').css('display','');
 					}else if(identityT == 6){//顾客
 						$('#onlyGuide,#onlymange,.centerList,.qiandao,.centerList,#onlyPs').css('display','none');
 						$('#onlyCust,.orderType,.customerN,.qiandao').css('display','')						
@@ -436,12 +436,16 @@
 								if(data.code == 0) {
 									plus.nativeUI.closeWaiting();
 									if(data.content) {
-										if(data.content.name) {
-											$('#userName').html(data.content.name)
-										} else {
-											$('#userName').html('匿名')
-
+										if(identityT == 6){
+											if(data.content.name) {
+												$('#userName').html(data.content.name)
+											} else {
+												$('#userName').html('未填写')
+											}
+										}else{
+											$('#userName').html(data.content.number)
 										}
+										
 										if(data.content.picUrl) {
 											$('#mypic').attr('src', data.content.picUrl)
 										}
