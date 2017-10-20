@@ -94,7 +94,7 @@
 			.data ul li .shuru::placeholder{
 				padding-top:4px;
 			}
-			.mui-bar-nav{box-shadow: none !important;}
+			/*.mui-bar-nav{box-shadow: none !important;}*/
 		</style>
 	</head>
 	<body>
@@ -154,12 +154,12 @@
 							<input type="text" class="fr shuru" disabled name="" id="isCity" />
 						</a>
 					</li>
-					<li class="clearfloat">
+					<!--<li class="clearfloat">
 						<a href="#">
 							<p class="fl">手机号</p>
 							<input type="number" class="fr shuru" name="" id="IDcard" placeholder="点击编辑" />
 						</a>
-					</li>
+					</li>-->
 				</ul>
 			</div>
 	    </div>
@@ -197,9 +197,7 @@
 		    return y+"-"+m.substring(m.length-2,m.length)+"-"+d.substring(d.length-2,d.length);
 		}
 
-		var idnum = 0;
 		mui.plusReady(function(){
-
 			var userId = plus.storage.getItem('$userId');
 			var oldToken = plus.storage.getItem("oldToken");
 			var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
@@ -215,12 +213,7 @@
 					if(data.code == 0){
 						//显示头像
 						if(data.content.picUrl){
-							if(JSON.parse(data.content.avatar)[0].picImg.indexOf('http')>-1){
-								var imgurl = JSON.parse(data.content.avatar)[0].picImg;
-							}else{
-								var imgurl = serverimgUrl + JSON.parse(data.content.avatar)[0].picImg;
-							}
-							mui('#imghead')[0].src = imgurl;
+							mui('#imghead')[0].src = data.content.picUrl;
 						}
 						//显示昵称
 						if(data.content.name){
@@ -240,13 +233,9 @@
 						}else{
 							mui('#isCity')[0].value = '暂无';
 						}
-						/*显示电话*/
-						if(data.content.mobile){
-							mui('#IDcard')[0].value = data.content.mobile;
-						}
 						/*显示生日*/
 						if(data.content.birthday){
-							mui('#shengri')[0].innerHTML = fmtDate(data.content.birthday);
+							mui('#shengri')[0].innerHTML = data.content.birthday;
 						}
 
 					}else{
@@ -261,41 +250,6 @@
 				}
 			});
 		})
-
-//		var filepic = {};
-//		var Apic ='';
-//		function galleryImgsSelected(){//从相册中选择图片
-//		    plus.gallery.pick( function(e){
-//		    	for(var i in e.files){
-//		    		if(0!=e.files[i].indexOf("file://")){
-//					e.files[i]="file://"+e.files[i];
-//				}
-//
-//		    		var nowpic = Math.random().toString(36).substr(2) + '.jpg';
-//		    		var endpic = e.files[i].split('.')[0]+"/"+nowpic;
-//
-//		    		console.log(e.files[i])
-//		    		console.log(endpic)
-//		    		mui('#imghead')[0].src = e.files[0];
-//
-//		    		plus.zip.compressImage({//压缩操作
-//						src:e.files[i],
-//						dst:endpic,
-//						overwrite:true,
-//						quality:30
-//					},
-//					function(obj) {
-//						if(!obj.target.indexOf("file://")>-1){obj.target="file://"+obj.target;}
-//						Apic = obj.target
-////						mui('#imghead')[0].src = obj.target;
-//					},function(error) {
-//						mui.toast('图片获取错误，请重试');
-//				});
-//	    		}
-//		    }, function ( e ) {
-//		    },{filter:"image",multiple:true,maximum:1,system:false,onmaxed:function(){
-//		    }});
-//		}
 
 		/*选择图片*/
 		var Apic = [];//图片存放数组
@@ -363,36 +317,20 @@
 			var Nextbtnval = document.getElementById("Nextbtn").options[window.document.getElementById("Nextbtn").selectedIndex].text;
 
 			mui.plusReady(function(){
-				var myuserid = plus.storage.getItem('userid');
-				var oldToken = plus.storage.getItem('oldToken');
-				var cityNum = plus.storage.getItem('cityNum');
-				if(mui('#IDcard')[0].value.indexOf('****')>-1){
-					var IDnum = idnum;
-				}else{
-					var IDnum = mui('#IDcard')[0].value;
-				}
+				var userId = plus.storage.getItem('$userId');
+				var oldToken = plus.storage.getItem("oldToken");
+				var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
 
-				var reg_ID = /^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$|^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X)$/;
-				if(IDnum == ''){
-					releaseData();
-				}else{
-					if(reg_ID.test(IDnum)){
-						releaseData();
-					}else{
-						plus.nativeUI.closeWaiting();//关闭等待框
-						mui.toast('请输入合法证件号');
-					}
-				}
-
+				releaseData();
 				//发送数据
 			 	function releaseData(){
-					var task = plus.uploader.createUpload(serverUrl+'/api/useraccount/updateuserdata',
+					var task = plus.uploader.createUpload(serverUrl+'/app/user/setting/set/information',
 						{ method:"POST"},
 						function(back,status){
 							if(status == 200){
 								console.log(back.responseText);
 								var dataobj = JSON.parse(back.responseText);
-								if(dataobj.errno == 0){
+								if(dataobj.code == 0){
 									mui.toast('修改成功');
 	    							//触发跳转页面刷新
 									mui.fire(plus.webview.getWebviewById('center.html'),'refresh');
@@ -405,11 +343,11 @@
 									var time2 = setTimeout(function(){
 										plus.webview.currentWebview().close();
 									},500)
-	    						}else{
-	    							plus.nativeUI.closeWaiting();//关闭等待框
-	    							mui.toast('发布失败，请重试！');
-	    							plus.nativeUI.closeWaiting();
-	    						}
+		    						}else{
+		    							plus.nativeUI.closeWaiting();//关闭等待框
+		    							mui.toast(dataobj.message);
+		    							plus.nativeUI.closeWaiting();
+		    						}
 							}else{
 								plus.nativeUI.closeWaiting();//关闭等待框
 								mui.toast('当前网络不好，请重试！');
@@ -417,18 +355,17 @@
 
 						}
 					);
-					var hanziX = ['男','女','密'];
-					var shuziX = [1,2,4];
-					task.setRequestHeader('token',oldToken);
-					task.setRequestHeader('city',cityNum);
 
-					if(Apic){task.addFile(Apic, {key:'avatar'})}
+					task.setRequestHeader('Authorization',oldToken);
 
-					task.addData('userid',myuserid);
-			        task.addData('nickname',mynickname);
-			        task.addData('gender',shuziX[hanziX.indexOf(Nextbtnval[Nextbtnval.length-1])].toString());
-			        task.addData('IDCard',IDnum);
-
+					if(Apic){task.addFile(Apic[0], {key:'headPic'})};/*头像*/
+					task.addData('userId',userId);
+					task.addData('identityType',identityT);
+			        task.addData('name',mynickname);
+			        task.addData('nikeName',mynickname);
+			        if(Nextbtnval.indexOf('男')>-1 || Nextbtnval.indexOf('女')>-1){
+			        		task.addData('sex',Nextbtnval);
+			        }
 					task.start();
 
 			 	}
