@@ -309,7 +309,7 @@
 
 							//根据缓存密码自动登录, 重新获取Token 
 							if(Acc_pass) {
-								mui.ajax('http://119.23.149.7:9999/app/employee/login', {
+								mui.ajax(serverUrl+'/app/employee/login', {
 									data: {
 										"name": Acc_pass[0],
 										"password": Acc_pass[1]
@@ -345,7 +345,7 @@
 								});
 							}
 							if(openid) {
-								mui.ajax('http://119.23.149.7:9999/app/customer/login', {
+								mui.ajax(serverUrl+'/app/customer/login', {
 									data: {
 										"openId": openid
 									},
@@ -357,11 +357,6 @@
 										if(data.code == 0 && data.content.isExist) {
 											plus.nativeUI.closeWaiting();
 											plus.storage.setItem("oldToken", xhr.getResponseHeader('token'));
-											//											plus.storage.setItem("openId",openid);
-											//			 								plus.storage.removeItem('Acc_pass');
-											////											plus.storage.setItem('$userId',JSON.stringify(data.content.userId));
-											//											plus.storage.setItem('$userId','1');
-											//											plus.storage.setItem("$identityType",JSON.stringify({'identityType':'6'}));
 											mui.fire(plus.webview.getWebviewById('page/goodList.html'), 'refresh');
 											mui.fire(plus.webview.getWebviewById('center.html'), 'refresh');
 											util.initSubpage();
