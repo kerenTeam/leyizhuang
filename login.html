@@ -156,7 +156,7 @@
 											plus.webview.currentWebview().close(); 
 											plus.nativeUI.closeWaiting();
 											mui.toast('登录成功');
-										},500) 
+										},100) 
 									}
 								},
 								error:function(xhr,type,errorThrown){
@@ -171,30 +171,6 @@
 					$.enterfocus('#login-form input', function() {
 						$.trigger(loginButton, 'tap');
 					});
-//					autoLoginButton.classList[settings.autoLogin ? 'add' : 'remove']('mui-active')
-//					autoLoginButton.addEventListener('toggle', function(event) {
-//						setTimeout(function() {
-//							var isActive = event.detail.isActive;
-//							settings.autoLogin = isActive;
-//							app.setSettings(settings);
-//						}, 50);
-//					}, false);
-//					regButton.addEventListener('tap', function(event) {
-//						$.openWindow({
-//							url: 'reg.html',
-//							id: 'reg',
-//							preload: true,
-//							show: {
-//								aniShow: 'pop-in'
-//							},
-//							styles: {
-//								popGesture: 'hide'
-//							},
-//							waiting: {
-//								autoShow: false
-//							}
-//						});
-//					}, false);
 					forgetButton.addEventListener('tap', function(event) {
 						$.openWindow({
 							url: 'forget_password.html',

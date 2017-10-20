@@ -139,12 +139,21 @@
 											if(plus.webview.getWebviewById('reg')) {
 												plus.webview.getWebviewById('reg').close();
 											}
-											
-											var time2 = setTimeout(function() {
-												plus.nativeUI.closeWaiting();
-												mui.toast('登录成功');
-												plus.webview.currentWebview().close();
-											}, 500)
+											openview({
+												view: 'reg.html',
+												id: 'reg',
+												extrasobj: {
+													openid: openID,
+													picurl: picUrl,
+													sex: sex,
+													nick: name
+												},
+											})
+//											var time2 = setTimeout(function() {
+//												plus.nativeUI.closeWaiting();
+//												mui.toast('登录成功');
+//												plus.webview.currentWebview().close();
+//											}, 500)
 
 										} else if(data.code == -1) {
 											plus.nativeUI.closeWaiting();
