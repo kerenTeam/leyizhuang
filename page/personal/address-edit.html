@@ -124,21 +124,20 @@
 							.dizhiX select option{display: inline-block;width: auto;}
 
 						</style>
-						<li class="clearfloat dizhiX">
+						<!--<li class="clearfloat dizhiX">
 								<div id="" class="DZp">
-									<p>111</p>
-								</div>
-								<!--<button id='showCityPicker3' type='button'><span class="mui-icon mui-icon-arrowdown"></span></button>
-								<div id='cityResult3' class="ui-alert"><span id="province"></span><span id="city"></span><span id="area"></span></div>-->
-								<div id="demo3" class="citys">
+									<p>所在地址</p>
+								</div>-->
+								<!--<div id='cityResult3' class="ui-alert"><span id="province"></span><span id="city"></span><span id="area"></span></div>-->
+								<!--<div id="demo3" class="citys">
 						            <p>
-						                <select name="province"></select>
-						                <select name="city"></select>
-						                <select name="area"></select>
-						                <select name="town"></select>
+						                <select class="provinces1" name="province"></select>
+					                    <select class="citys1" name="city"></select>
+					                    <select class="areas1" name="area"></select>
+					                    <select class="towns1" name="town"></select>
 						            </p>
-						        </div>
-						</li>
+						        </div>-->
+						<!--</li>-->
 						<li class="clearfloat">
 							<a href="#">
 								<p class="fl">所在地区</p>
@@ -158,34 +157,7 @@
 	    </div>
 
         <script type="text/javascript">
-        		var $town = $('#demo3 select[name="town"]');
-        		var townFormat = function(info){
-        			$town.hide().empty();
-        			if(info['code']%1e4&&info['code']<7e5){	//是否为“区”且不是港澳台地区
-        				$.ajax({
-        					url:'http://passer-by.com/data_location/town/'+info['code']+'.json',
-        					dataType:'json',
-        					success:function(town){
-        						$town.show();
-        						for(i in town){
-        								$town.append('<option value="'+i+'">'+town[i]+'</option>');
-        						}
-        					}
-        				});
-        			}
-        		};
-            $('#demo3').citys({
-        			province:'福建',
-        			city:'厦门',
-        			area:'思明',
-        			onChange:function(info){
-        				townFormat(info);
-        			}
-        		},function(api){
-        			var info = api.getInfo();
-        			alert(info)
-        			townFormat(info);
-        		});
+
         </script>
 
 	</body>
@@ -217,6 +189,7 @@
 						if(thisAddArray[k].id == adId){
 							$('#person').attr('value',thisAddArray[k].deliveryName);
 							$('#phone').attr('value',thisAddArray[k].deliveryPhone);
+//							$('.provinces1').prepend('<option selected>四川省</option>')
 							$('#province').html(thisAddArray[k].deliveryProvince + " "); /*省*/
 							$('#city').html(thisAddArray[k].deliveryCity + " "); /*市*/
 							$('#area').html(thisAddArray[k].deliveryCounty); /*区*/
@@ -225,6 +198,67 @@
 								$('#acquiescence').removeClass('toggle--on');
 								$('#acquiescence').addClass('toggle--off');
 							}
+							/*地址*/
+							var $town = $('#demo3 select[name="town"]');
+					    		var flag1 = true; flag2 = 0;
+					    		var townFormat = function(info){
+					            if (flag1) {
+					                $('.citys1').prepend("<option selected>请选择市/区</option>");
+					                flag1 = false;
+					            }
+					            $('.provinces1').change(function(){
+					                if($('.citys1').html().indexOf('请选择') == -1){
+					                  $('.citys1').prepend("<option selected>请选择市/区</option>");
+					                }
+					            })
+					            $('.citys1').change(function(){
+					                if($('.areas1').html().indexOf('请选择') == -1){
+					                  $('.areas1').prepend("<option selected>请选择区/镇</option>");
+					                }
+					            })
+					            $('.areas1').change(function(){
+					                if(flag2 == 0){
+					                    $('.towns1').prepend("<option selected>请选择街道</option>");
+					                }
+					                flag2 ++;
+					            })
+					            $('.towns1').change(function(){
+					                flag2 = 0;
+					            })
+					    			$town.hide().empty();
+					    			if(info['code']%1e4&&info['code']<7e5){	//是否为“区”且不是港澳台地区
+					    				$.ajax({
+					    					url:'http://passer-by.com/data_location/town/'+info['code']+'.json',
+					    					dataType:'json',
+					    					success:function(town){
+					    						$town.show();
+					    						for(i in town){
+					    								$town.append('<option value="'+i+'">'+town[i]+'</option>');
+					    						}
+					    					}
+					    				});
+					    			}
+					    		};
+					    		var shengfen1 = thisAddArray[k].deliveryProvince.replace(/(^\s*)|(\s*$)/g, "");
+//							$('#city').html(thisAddArray[k].deliveryCity + " "); /*市*/
+//							$('#area').html(thisAddArray[k].deliveryCounty); /*区*/
+//							$('#address').html(thisAddArray[k].detailedAddress); /*详细地址*/
+
+				    			$('#demo3').citys({
+					    			province:shengfen1,
+					    			city:thisAddArray[k].deliveryCity.replace(/(^\s*)|(\s*$)/g, ""),
+					    			area:thisAddArray[k].detailedAddress.replace(/(^\s*)|(\s*$)/g, ""),
+					    			onChange:function(info){
+					    				townFormat(info);
+					    			}
+					    		},function(api){
+					    			var info = api.getInfo();
+								//townFormat(info);
+					    		});
+
+
+					    		/*地址结束*/
+
 							//点击保存修改地址
 							window.save = function(){
 								var newPerson = document.getElementById('person').value;
