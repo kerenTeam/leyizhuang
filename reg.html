@@ -166,9 +166,7 @@
 												console.log('登录返回',data);
 												if(data.code == 0 && data.content.isExist){
 													plus.nativeUI.closeWaiting();
-	//													plus.storage.setItem('$userId',JSON.stringify(data.content.userId))
-													plus.storage.setItem('$userId','1');
-	//													plus.storage.setItem("$identityType",JSON.stringify({'identityType':data.content.type}));
+													plus.storage.setItem('$userId',JSON.stringify(data.content.userId))
 													plus.storage.setItem("$identityType",JSON.stringify({'identityType':'6'}));
 													if(plus.webview.getWebviewById('identify')){
 														plus.webview.getWebviewById('identify').close();
