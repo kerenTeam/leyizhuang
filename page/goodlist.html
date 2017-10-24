@@ -169,12 +169,19 @@
 						type:'post',
 						timeout:10000,
 						success:function(data,type,xhr){ 
-							console.log('列表'+JSON.stringify(data));
+							console.log('品牌列表'+JSON.stringify(data));
 							if(data.code == 0 ){
 								plus.nativeUI.closeWaiting();
+								var j = 0;
 								if(data.content.length){
 									for(var i = 0;i<data.content.length;i++){
-										$('.categrayb').html('<span data-id="'+data.content[i].brandId+'">'+data.content[i].brandName+'</span>')
+										if(data.content[i].typeName){
+											j++;
+											$('.categrayb').html('<span data-id="'+data.content[i].brandId+'">'+data.content[i].brandName+'</span>')
+										}
+									}
+									if(j == 0){
+									 	$('.categrayd').html('无')
 									}
 								}else{
 									$('.categrayb').html('无')
@@ -205,15 +212,17 @@
 						type:'post',
 						timeout:10000,
 						success:function(data,type,xhr){ 
-							console.log('列表',data);
+							console.log('类型列表',data);
 							if(data.code == 0 ){
 								plus.nativeUI.closeWaiting();
+								
 								if(data.content.length){
 									for(var i = 0;i<data.content.length;i++){
 										$('.categrayd').html('<span data-id="'+data.content[i].typeId+'">'+data.content[i].typeName+'</span>')
 									}
+									
 								}else{
-									$('.categrayd').html('无')
+									 $('.categrayd').html('无')
 								}
 							}
 							if(data.code == 1000 ){

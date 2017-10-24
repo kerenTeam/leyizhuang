@@ -755,7 +755,8 @@
 					"js/artTemplate-native.js",
 					"images/center/phone.svg",
 					"css/center.css",
-					"js/jquery.min.js"
+					"js/jquery.min.js",
+					"js/default.js"
 				],
 				"refer": [
 					"page/collect.html",
@@ -765,13 +766,23 @@
 					"page/manager/workerList.html",
 					"page/personal/myCoupon.html",
 					"page/personal/shezhi.html",
-					"page/personal/productCoupon.html"
+					"page/personal/productCoupon.html",
+					"page/manager/backMoney.html"
 				],
 				"priority": 0
 			},
 			"cart.html": {
 				"resources": [
-					"css/mui.min.css"
+					"css/mui.min.css",
+					"js/app.js",
+					"js/mui.min.js",
+					"js/statusBar.js",
+					"js/artTemplate-native.js",
+					"css/cart.css",
+					"css/resetY.css",
+					"css/indexY.css",
+					"css/commonY.css",
+					"js/jquery_cart.js"
 				],
 				"refer": [],
 				"priority": 0
@@ -914,7 +925,12 @@
 					"fonts/mui.ttf",
 					"js/artTemplate-native.js",
 					"js/default.js",
-					"images/img.svg"
+					"images/img.svg",
+					"css/resetY.css",
+					"css/indexY.css",
+					"css/commonY.css",
+					"images/chahao.png",
+					"css/style.css"
 				],
 				"refer": [
 					"login.html"
@@ -1097,6 +1113,18 @@
 					"js/jquery.citys.js",
 					"js/default.js",
 					"js/jquery.min.js"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"page/manager/backMoney.html": {
+				"resources": [
+					"fonts/mui.ttf",
+					"css/mui.min.css",
+					"css/configW.css",
+					"js/jquery.min.js",
+					"js/mui.min.js",
+					"js/default.js"
 				],
 				"refer": [],
 				"priority": 0

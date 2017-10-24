@@ -152,7 +152,7 @@
 					</p>
 				</div>
 				<img class="dao shezhi" style="top: 8px;width: 30px;" src="images/center/shizhi.png" />
-				<div class="qiandao">签到</div>
+				<div class="qiandao" onclick="qian()">签到</div>
 			</div>
 		</div>
 		<div id="customar">
@@ -279,7 +279,7 @@
 					<div class="">
 						信用金
 					</div>
-					<div >
+					<div onclick="backMoney()">
 						现金返利
 					</div>
 					<div>
@@ -335,6 +335,7 @@
 		<script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/app.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/artTemplate-native.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/default.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
 			//分类订单
 			function typeOrder(type) {
@@ -381,7 +382,14 @@
 					id: 'workerList', 
 				})
 			}
-
+			//经理 现金返利
+			function backMoney(){
+				openview({
+					view:'page/manager/backMoney.html',
+					id: 'backMoney', 
+				})
+			}
+			
 			mui.plusReady(function() {
 				document.addEventListener('refresh', function() {
 					Refresh();
@@ -392,6 +400,41 @@
 					var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
 					var userId = plus.storage.getItem('$userId'); 
 					var oldToken = plus.storage.getItem('oldToken');
+					//签到
+					window.qian = function(){
+						mui.ajax(serverUrl+'/app/customer/sign',{
+							data:{
+								userId:userId,
+								identityType:identityT
+							},
+							dataType:'json',
+							headers: {"Authorization": oldToken},
+							type:'post',
+							timeout:10000,
+							success:function(data,type,xhr){ 
+								plus.nativeUI.closeWaiting();
+								console.log('列表',data);
+								if(data.code == 0 ){
+									plus.nativeUI.closeWaiting();
+									plus.nativeUI.toast('签到成功，增加5乐币');
+									$('.qiandao').html('已签到');
+									Refresh();
+								}
+								if(data.code == 1000 ){
+									mui.toast(data.message)
+								}else if(data.code == -1 ){
+									mui.toast(data.message)
+								}
+								 
+							},
+							error:function(xhr,type,errorThrown){
+								plus.nativeUI.closeWaiting();
+								mui.toast(type)
+								console.log('登录响应失败');
+							}
+						});
+					}
+					
 					loadmyinfo();
 					if(identityT == 0 || identityT == 4 || identityT == 5){//导购
 						$('#onlyCust,.qiandao,.centerList,#onlyPs,#onlymange').css('display','none')
@@ -420,7 +463,7 @@
 
 					function loadmyinfo() {
 						//个人信息
-						mui.ajax('http://119.23.149.7:9999/app/user/homepage', {
+						mui.ajax(serverUrl+'/app/user/homepage', {
 							data: {
 								userId: userId,
 								identityType: identityT

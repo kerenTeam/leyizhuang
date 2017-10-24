@@ -10,14 +10,6 @@ html {
 	font-size: 6.25em;
 }
 
-body {
-	font-family: "MICROSOFT YAHEI";
-	font-size: 0.12rem;
-	line-height: 1;
-	background: #f3f3f3;
-	margin: 0;
-	padding: 0;
-}
 a {
 	color: #f53c42;
 	text-decoration: none;
@@ -514,7 +506,7 @@ p.form {
 	padding:8px;
 }
 .verticalAlign:before,.cart-left:before,.indexbf:before{
-	 content: '';
+	content: '';
     display: inline-block;
     height: 100%;
     vertical-align: middle;

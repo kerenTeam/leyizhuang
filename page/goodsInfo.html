@@ -10,10 +10,11 @@
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
 		<meta name="format-detection" content="telephone=no">
 		<meta name="format-detection" content="address=no">  
-		<link rel="stylesheet" type="text/css" href="../css/common.css"> 
 		<link rel="stylesheet" type="text/css" href="../css/mui.min.css"/> 
+		<link rel="stylesheet" type="text/css" href="../css/commonY.css"> 
+		<link rel="stylesheet" href="../css/resetY.css" />
 		<link rel="stylesheet" type="text/css" href="../css/configW.css"/> 
-		 
+		 <link rel="stylesheet" type="text/css" href="../css/style.css"/>
 	</head>
 	<style type="text/css">
 		.baocun{text-align:right;}
@@ -206,10 +207,55 @@
 					评论
 				</div>
 			</div>
-			<a href="" class="opbb">
+			<a href="javascript:;" class="opbb" onclick="toshare()">
 				加入下料清单
 			</a> 
 		</div>
+		
+		<!--购物车弹出内容-->
+		
+		<div class="am-share">
+				
+			<div class="am-share-footer">
+				<span class="share_btn">
+					<img src="../images/chahao.png"/>
+				</span>
+			</div>
+			<div class="am-share-sns box-s">
+				<div class="sdetail clearfloat">
+					<div class="top clearfloat">
+						<div class="tu clearfloat fl">
+							<img src="https://b-ssl.duitang.com/uploads/item/201710/18/20171018141101_kQPR8.thumb.700_0.jpeg" data-preview-src="" /> 
+						</div>
+						<div class="you clearfloat fl">
+							<div class="tit overflow_clear">
+								纯纯粹粹纯纯粹粹纯纯粹粹吃
+							</div>
+							<div>规格：<em>5L</em> 单位：<em>桶</em></div>
+							<span>
+								<b id="priceChange">¥ 200</b> 
+							</span>
+						</div>
+					</div>
+					<div class="Mscroll">
+						<div id="parBox"></div>
+						<div class="bottom clearfloat">
+							<p class="fl">购买数量</p>
+							<div class="you clearfloat fr">
+								<div class="mui-numbox margin-top" data-numbox-min="1">
+									<button class="mui-btn mui-btn-numbox-minus" type="button" disabled="">-</button>
+									<input id="test" class="mui-input-numbox" type="number" readonly="" value="" />
+									<button id="upup" class="mui-btn mui-btn-numbox-plus add" type="button">+</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<a class="shop-btn db">确定</a>
+			<a class="shop-btn" style="display: none;">敬请期待</a>
+		</div>
+		
 	 </body>
 	<script type="text/javascript" src="../js/jquery.min.js"></script>
 	<script src="../js/mui.min.js"></script>
@@ -217,6 +263,26 @@
 	<script src="../js/mui.previewimage.js"></script>
 	<script src="../js/artTemplate-native.js"></script>
 	<script src="../js/default.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		//购物车弹出 关闭
+		function toshare(){
+			
+			$(".am-share").addClass("am-modal-active");	
+			if($(".sharebg").length>0){
+				$(".sharebg").addClass("sharebg-active");
+			}else{
+				$("body").append('<div class="sharebg"></div>');
+				$(".sharebg").addClass("sharebg-active");
+			}
+			$(".sharebg-active,.share_btn").click(function(){
+				$(".am-share").removeClass("am-modal-active");	
+				setTimeout(function(){
+					$(".sharebg-active").removeClass("sharebg-active");	
+					$(".sharebg").remove();	
+				},300);
+			})
+		}
+	</script>
 	<script type="text/javascript">
 		mui.plusReady(function(){
 			var goodid = plus.webview.currentWebview().goodId;
