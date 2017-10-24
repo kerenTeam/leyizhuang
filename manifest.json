@@ -10,7 +10,7 @@
 		"name": "1.0.0",/*应用版本名称*/
 		"code": "83"
 	},
-	"description": "",/*应用描述信息*/
+	"description": "室内设计APP",/*应用描述信息*/
 	"icons": {
 		"72": "icon.png"
 	},
@@ -453,7 +453,8 @@
 					"js/mui.min.js",
 					"js/app.js",
 					"forget_password.html",
-					"js/base64.js"
+					"js/base64.js",
+					"js/default.js"
 				],
 				"priority": 1,
 				"refer": [
@@ -473,7 +474,9 @@
 				],
 				"refer": [
 					"login.html",
-					"bindGuide.html"
+					"bindGuide.html",
+					"page/goodList.html",
+					"center.html"
 				],
 				"priority": 3
 			},
@@ -497,7 +500,9 @@
 					"unlock.html",
 					"forget_password.html",
 					"main.html",
-					"reg.html"
+					"reg.html",
+					"page/goodList.html",
+					"center.html"
 				],
 				"priority": 0
 			},
@@ -510,12 +515,15 @@
 					"js/app.js",
 					"images/weixin.png",
 					"js/base64.js",
-					"js/default.js"
+					"js/default.js",
+					"fonts/mui.ttf"
 				],
 				"refer": [
 					"login.html",
 					"main.html",
-					"reg.html"
+					"reg.html",
+					"page/goodList.html",
+					"center.html"
 				],
 				"priority": 0
 			},
@@ -613,7 +621,8 @@
 					"page/personal/collect.html",
 					"page/goodsInfo.html",
 					"page/wallet.html",
-					"reg.html"
+					"reg.html",
+					"page/guide/guideCredit.html"
 				],
 				"priority": 0
 			},
@@ -767,7 +776,8 @@
 					"page/personal/myCoupon.html",
 					"page/personal/shezhi.html",
 					"page/personal/productCoupon.html",
-					"page/manager/backMoney.html"
+					"page/manager/backMoney.html",
+					"page/guide/guideCredit.html"
 				],
 				"priority": 0
 			},
@@ -782,9 +792,19 @@
 					"css/resetY.css",
 					"css/indexY.css",
 					"css/commonY.css",
-					"js/jquery_cart.js"
+					"js/jquery_cart.js",
+					"fonts/mui.ttf",
+					"img/check1.png",
+					"img/check2.png",
+					"iconfont/iconfont.eot",
+					"iconfont/iconfont.woff",
+					"iconfont/iconfont.ttf",
+					"iconfont/iconfont.svg",
+					"js/default.js"
 				],
-				"refer": [],
+				"refer": [
+					"login.html"
+				],
 				"priority": 0
 			},
 			"page/collect.html": {
@@ -930,7 +950,13 @@
 					"css/indexY.css",
 					"css/commonY.css",
 					"images/chahao.png",
-					"css/style.css"
+					"css/style.css",
+					"img/check1.png",
+					"img/check2.png",
+					"iconfont/iconfont.eot",
+					"iconfont/iconfont.woff",
+					"iconfont/iconfont.ttf",
+					"iconfont/iconfont.svg"
 				],
 				"refer": [
 					"login.html"
@@ -950,7 +976,11 @@
 					"js/artTemplate-native.js",
 					"js/mui.min.js",
 					"js/statusBar.js",
-					"fonts/mui.ttf"
+					"fonts/mui.ttf",
+					"img/check2.png",
+					"iconfont/iconfont.eot",
+					"iconfont/iconfont.ttf",
+					"iconfont/iconfont.svg"
 				],
 				"refer": [
 					"page/personal/address-edit.html",
@@ -965,7 +995,9 @@
 					"css/commonY.css",
 					"js/app.js",
 					"js/mui.min.js",
-					"fonts/mui.ttf"
+					"fonts/mui.ttf",
+					"img/check1.png",
+					"img/check2.png"
 				],
 				"refer": [
 					"page/personal/address.html",
@@ -974,7 +1006,8 @@
 					"page/personal/teasing.html",
 					"forget_password.html",
 					"page/personal/editPhone.html",
-					"page/personal/accountSafe.html"
+					"page/personal/accountSafe.html",
+					"page/goodList.html"
 				],
 				"priority": 0
 			},
@@ -994,7 +1027,13 @@
 					"fonts/mui.ttf",
 					"js/default.js",
 					"js/artTemplate-native.js",
-					"js/jquery.citys.js"
+					"js/jquery.citys.js",
+					"img/check1.png",
+					"img/check2.png",
+					"iconfont/iconfont.eot",
+					"iconfont/iconfont.woff",
+					"iconfont/iconfont.ttf",
+					"iconfont/iconfont.svg"
 				],
 				"refer": [],
 				"priority": 0
@@ -1014,7 +1053,13 @@
 					"fonts/mui.ttf",
 					"js/artTemplate-native.js",
 					"js/mui.min.js",
-					"js/default.js"
+					"js/default.js",
+					"img/check1.png",
+					"img/check2.png",
+					"iconfont/iconfont.eot",
+					"iconfont/iconfont.woff",
+					"iconfont/iconfont.ttf",
+					"iconfont/iconfont.svg"
 				],
 				"refer": [],
 				"priority": 0
@@ -1041,7 +1086,8 @@
 					"css/configW.css",
 					"js/jquery.min.js",
 					"js/mui.min.js",
-					"js/default.js"
+					"js/default.js",
+					"fonts/mui.ttf"
 				],
 				"refer": [],
 				"priority": 0
@@ -1059,7 +1105,14 @@
 					"css/mui.picker.minY.css",
 					"js/default.js",
 					"css/commonY.css",
-					"js/artTemplate-native.js"
+					"js/artTemplate-native.js",
+					"img/Spinner.svg",
+					"img/check1.png",
+					"img/check2.png",
+					"iconfont/iconfont.eot",
+					"iconfont/iconfont.woff",
+					"iconfont/iconfont.ttf",
+					"iconfont/iconfont.svg"
 				],
 				"refer": [],
 				"priority": 0
@@ -1073,7 +1126,11 @@
 					"css/mui.min.css",
 					"js/default.js",
 					"css/commonY.css",
-					"js/artTemplate-native.js"
+					"js/artTemplate-native.js",
+					"img/Spinner.svg",
+					"img/check1.png",
+					"img/check2.png",
+					"img/zhaoxiangji.svg"
 				],
 				"refer": [],
 				"priority": 0
@@ -1097,7 +1154,9 @@
 					"js/app.js",
 					"js/mui.min.js",
 					"js/statusBar.js",
-					"fonts/mui.ttf"
+					"fonts/mui.ttf",
+					"img/check1.png",
+					"img/check2.png"
 				],
 				"refer": [
 					"page/personal/editPhone.html"
@@ -1128,12 +1187,24 @@
 				],
 				"refer": [],
 				"priority": 0
+			},
+			"page/guide/guideCredit.html": {
+				"resources": [
+					"css/mui.min.css",
+					"css/configW.css",
+					"fonts/mui.ttf"
+				],
+				"refer": [],
+				"priority": 0
 			}
 		},
 		"idle": {
 			"resources": [
-				"js/service.js",
+				"css/cssreset-minDZ.css",
 				"libs/easymob-webim-sdk/quickstart.md",
+				"css/commonDZ.css",
+				"fonts/iconfont.ttf",
+				"fonts/fontawesome-webfont.ttf",
 				"images/user-photo.png",
 				"README.md"
 			]

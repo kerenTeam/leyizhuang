@@ -53,7 +53,9 @@
     "refer": [
       "main.html",
       "reg.html",
-      "forget_password.html"
+      "forget_password.html",
+      "page/goodList.html",
+      "center.html"
     ]
   },
   "setting.html": {
@@ -88,7 +90,9 @@
     "refer": [
       "login.html",
       "main.html",
-      "reg.html"
+      "reg.html",
+      "page/goodList.html",
+      "center.html"
     ]
   },
   "reg.html": {
@@ -102,7 +106,9 @@
       "js/default.js"
     ],
     "refer": [
-      "bindGuide.html"
+      "bindGuide.html",
+      "page/goodList.html",
+      "center.html"
     ]
   },
   "forget_password.html": {
@@ -112,7 +118,8 @@
       "forget_password.html",
       "fonts/mui.ttf",
       "js/mui.min.js",
-      "js/base64.js"
+      "js/base64.js",
+      "js/default.js"
     ],
     "refer": [
       "main.html"
@@ -227,7 +234,8 @@
       "page/personal/collect.html",
       "page/goodsInfo.html",
       "page/wallet.html",
-      "reg.html"
+      "reg.html",
+      "page/guide/guideCredit.html"
     ]
   },
   "page/gxbList.html": {
@@ -364,7 +372,8 @@
       "page/personal/myCoupon.html",
       "page/personal/shezhi.html",
       "page/personal/productCoupon.html",
-      "page/manager/backMoney.html"
+      "page/manager/backMoney.html",
+      "page/guide/guideCredit.html"
     ]
   },
   "cart.html": {
@@ -378,9 +387,13 @@
       "css/resetY.css",
       "css/indexY.css",
       "css/commonY.css",
-      "js/jquery_cart.js"
+      "js/jquery_cart.js",
+      "js/default.js",
+      "fonts/mui.ttf"
     ],
-    "refer": []
+    "refer": [
+      "login.html"
+    ]
   },
   "page/collect.html": {
     "resources": [
@@ -541,7 +554,8 @@
       "page/personal/teasing.html",
       "forget_password.html",
       "page/personal/editPhone.html",
-      "page/personal/accountSafe.html"
+      "page/personal/accountSafe.html",
+      "page/goodList.html"
     ]
   },
   "page/personal/address-edit.html": {
@@ -641,7 +655,8 @@
       "css/mui.picker.minY.css",
       "js/default.js",
       "css/commonY.css",
-      "js/artTemplate-native.js"
+      "js/artTemplate-native.js",
+      "img/Spinner.svg"
     ],
     "refer": []
   },
@@ -654,7 +669,9 @@
       "css/mui.min.css",
       "js/default.js",
       "css/commonY.css",
-      "js/artTemplate-native.js"
+      "js/artTemplate-native.js",
+      "img/Spinner.svg",
+      "img/zhaoxiangji.svg"
     ],
     "refer": []
   },
@@ -666,7 +683,8 @@
       "js/default.js",
       "js/mui.min.js",
       "fonts/mui.ttf"
-    ]
+    ],
+    "refer": []
   },
   "page/personal/accountSafe.html": {
     "resources": [
@@ -690,7 +708,8 @@
       "js/jquery.citys.js",
       "js/default.js",
       "js/jquery.min.js"
-    ]
+    ],
+    "refer": []
   },
   "page/manager/backMoney.html": {
     "resources": [
@@ -700,6 +719,15 @@
       "js/jquery.min.js",
       "js/mui.min.js",
       "js/default.js"
-    ]
+    ],
+    "refer": []
+  },
+  "page/guide/guideCredit.html": {
+    "resources": [
+      "css/mui.min.css",
+      "css/configW.css",
+      "fonts/mui.ttf"
+    ],
+    "refer": []
   }
 }

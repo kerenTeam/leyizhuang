@@ -124,10 +124,6 @@
 				    <% } %>
 				</div>
 			</script>
- 
-    			
-    				
-    				
     			<!--留言--> 
 			<div class="follow cmtflex">
 				<div style="text-align: center;line-height: 0.8;"> 
@@ -215,45 +211,47 @@
 		<!--购物车弹出内容-->
 		
 		<div class="am-share">
-				
-			<div class="am-share-footer">
-				<span class="share_btn">
-					<img src="../images/chahao.png"/>
-				</span>
-			</div>
-			<div class="am-share-sns box-s">
-				<div class="sdetail clearfloat">
-					<div class="top clearfloat">
-						<div class="tu clearfloat fl">
-							<img src="https://b-ssl.duitang.com/uploads/item/201710/18/20171018141101_kQPR8.thumb.700_0.jpeg" data-preview-src="" /> 
-						</div>
-						<div class="you clearfloat fl">
-							<div class="tit overflow_clear">
-								纯纯粹粹纯纯粹粹纯纯粹粹吃
+			<div id="cartObj"></div>	
+			<script type="text/html" id="cartTpl">
+				<div class="am-share-footer">
+					<span class="share_btn">
+						<img src="../images/chahao.png"/>
+					</span>
+				</div>
+				<div class="am-share-sns box-s">
+					<div class="sdetail clearfloat">
+						<div class="top clearfloat">
+							<div class="tu clearfloat fl">
+								<img src="<%=dataobj.rotationImageUriList[0] %>" data-preview-src="" /> 
 							</div>
-							<div>规格：<em>5L</em> 单位：<em>桶</em></div>
-							<span>
-								<b id="priceChange">¥ 200</b> 
-							</span>
+							<div class="you clearfloat fl">
+								<div class="tit overflow_clear">
+									<%=dataobj.skuName%>
+								</div>
+								<div>规格：<em><%=dataobj.goodsSpecification%></em> 单位：<em><%=dataobj.goodsUnit%></em></div>
+								<span>
+									<b id="priceChange">¥ <%=dataobj.price%></b> 
+								</span>
+							</div>
 						</div>
-					</div>
-					<div class="Mscroll">
-						<div id="parBox"></div>
-						<div class="bottom clearfloat">
-							<p class="fl">购买数量</p>
-							<div class="you clearfloat fr">
-								<div class="mui-numbox margin-top" data-numbox-min="1">
-									<button class="mui-btn mui-btn-numbox-minus" type="button" disabled="">-</button>
-									<input id="test" class="mui-input-numbox" type="number" readonly="" value="" />
-									<button id="upup" class="mui-btn mui-btn-numbox-plus add" type="button">+</button>
+						<div class="Mscroll">
+							<div id="parBox"></div>
+							<div class="bottom clearfloat">
+								<p class="fl">购买数量</p>
+								<div class="you clearfloat fr">
+									<div class="mui-numbox margin-top" data-numbox-min="1">
+										<button class="mui-btn mui-btn-numbox-minus" type="button" disabled="">-</button>
+										<input id="test" class="mui-input-numbox" type="number" readonly="" value="" />
+										<button id="upup" class="mui-btn mui-btn-numbox-plus add" type="button">+</button>
+									</div>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-			</div>
+			</script>
+			
 			<a class="shop-btn db">确定</a>
-			<a class="shop-btn" style="display: none;">敬请期待</a>
 		</div>
 		
 	 </body>
@@ -323,6 +321,8 @@
 										 
 							}
 							document.getElementById("moll_info").innerHTML = template("infoTpl", {dataobj:data.content});
+							document.getElementById("cartObj").innerHTML = template("cartTpl", {dataobj:data.content});
+							mui('.mui-numbox').numbox()
 							var gallery = mui(".mui-slider");
 							gallery.slider({
 								interval: 3000 //设置自动轮播周期为3s
@@ -447,7 +447,39 @@
 		    		
 		    	})
 	    
-		
+			//加入购物车
+			$('.shop-btn').click(function(){
+				
+				mui.ajax(serverUrl+'/app/materialList/add',{
+					data:{
+						userId:userId,
+						identityType:identityT,
+						params:goodid+'-'+$('#test').val()
+					},
+					dataType:'json',
+					headers: {"Authorization": oldToken},
+					type:'post',
+					timeout:10000,
+					success:function(data,type,xhr){ 
+						plus.nativeUI.closeWaiting();
+						console.log('加入购物车',data);
+						if(data.code == 0 ){
+							plus.nativeUI.toast('加入成功')
+							$(".am-share").removeClass("am-modal-active");
+							$(".sharebg ").removeClass("sharebg-active");							
+							 
+						}else{
+							mui.toast(data.message)
+						}
+						 
+					},
+					error:function(xhr,type,errorThrown){
+						plus.nativeUI.closeWaiting();
+						mui.toast(type)
+						console.log('登录响应失败');
+					}
+				});
+			})
 		}) 
 		
 		//发布时间判断 

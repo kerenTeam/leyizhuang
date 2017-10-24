@@ -229,7 +229,7 @@
 					<div onclick="toMyCustomer()">
 						我的顾客
 					</div>
-					<div class="">
+					<div onclick="guideCredit()">
 						信用额度
 					</div>
 					<div class="">
@@ -389,7 +389,13 @@
 					id: 'backMoney', 
 				})
 			}
-			
+			//导购 信用额度
+			function guideCredit(){
+				openview({
+					view: 'page/guide/guideCredit.html',
+					id: 'guideCredit',
+				})
+			}
 			mui.plusReady(function() {
 				document.addEventListener('refresh', function() {
 					Refresh();

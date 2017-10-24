@@ -195,7 +195,7 @@
 				<div>
 					<div class="imgb" style="background-color:#8992c8"><img src="images/6.svg" alt="" /></div>未提货
 				</div>
-				<div>
+				<div onclick="guideCredit()">
 					<div class="imgb" style="background-color:#8992c8"><img src="images/6.svg" alt="" /></div>信用额度
 				</div>
 				<div id="">
@@ -557,6 +557,7 @@
 					id: 'collect',
 				})
 			}
+			//钱包
 			function wallet(){
 				openview({
 					view: 'page/wallet.html',
@@ -581,7 +582,12 @@
 				})
 
 			}
-
+			function guideCredit(){
+				openview({
+					view: 'page/guide/guideCredit.html',
+					id: 'guideCredit',
+				})
+			}
 			//获得slider插件对象
 			var gallery = mui('.mui-slider');
 			gallery.slider({
