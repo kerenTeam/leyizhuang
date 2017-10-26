@@ -148,6 +148,7 @@
 										if(plus.webview.getWebviewById('identify')){
 											plus.webview.getWebviewById('identify').close();
 										}
+										mui.fire(plus.webview.getWebviewById('cart.html'), 'refresh');
 										mui.fire(plus.webview.getWebviewById('page/goodList.html'),'refresh');
 										mui.fire(plus.webview.getWebviewById('center.html'),'refresh');
 										var index = plus.webview.getLaunchWebview();

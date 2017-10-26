@@ -1,0 +1,102 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>绑定导购</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/configW.css"/>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav" style="padding-right: 15px;">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">选择顾客</h1>
+		</header>
+		<div class="mui-content" >
+			<div style="padding: 15px;">请输入会员手机号 <button>导入通讯录</button><br />
+			<input type="text" id="bindPhone" style="display: inline-block;width: 100%;" placeholder="输入导购电话号码" /></div>
+			<div style="text-align: center;">
+				<button class="mui-btn-danger" id="bindGuide">为改顾客代购</button>
+			</div>
+		</div>
+		<script src="../../js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/default.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			mui.init();
+			mui.plusReady(function(){
+				var reg_phone = /^1((3|4|5|8|7){1}\d{1}|70)\d{8}$/;//手机号正则;
+				var account = $('#bindPhone');
+				//获取缓存 
+				var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
+				var userId = plus.storage.getItem('$userId'); 
+				var oldToken = plus.storage.getItem('oldToken');
+				
+				$('#bindGuide').click(function(){
+					
+					if(!account.val() || !reg_phone.test(account.val())){
+							mui.toast('请输入正确的手机号')
+						
+					}else{
+						openview({
+							view:'chooseGift.html',
+							id:'chooseGift'
+						})
+						mui.ajax(serverUrl + 'r', {
+							data: {
+								userId: userId,
+								guidePhone: account.val(),
+								identityType:identityT
+							},
+							dataType: 'json',
+							headers: {
+								"Authorization": oldToken
+							},
+							type: 'post',
+							timeout: 10000,
+							success: function(data, type, xhr) {
+								plus.nativeUI.closeWaiting();
+								console.log('绑定返回', data);
+								if(data.code == 0) {
+									if(data.content.isExist){
+											mui.confirm('null', '绑定成功，你的导购是'+data.content.guideName, ['确认'], function(e) {
+												if(e.index == 0) {
+													if(plus.webview.getWebviewById('reg')){
+														plus.webview.getWebviewById('reg').close();
+													}
+													plus.webview.currentWebview().close();
+													
+												}
+												return;
+											},'')
+										
+									}else{
+										plus.nativeUI.alert('导购不存在')
+									}
+									plus.nativeUI.closeWaiting();
+								}
+								if(data.code == 1000) {
+									mui.toast(data.message)
+								} else if(data.code == -1) {
+									mui.toast(data.message)
+								}
+	
+							},
+							error: function(xhr, type, errorThrown) {
+								plus.nativeUI.closeWaiting();
+								mui.toast(type)
+							}
+						});
+					}
+					
+				})
+				
+			})
+			
+			
+		</script>
+	</body>
+
+</html>

@@ -32,4 +32,38 @@ body {
 	border:none!important;
 	width: 90%!important;
 }
+.flexwc{
+	background: white;
+	padding: 10px;
+	display: flex;
+	justify-content: space-between;
+	font-size: 14px;
+	text-align: center;
+}
+.flexwc img{
+	margin: auto;
+	display: block;
+	width: 35px;
+}
+.cartSecond{
+	position: relative;
+}
+.cartSecond:before{
+	position: absolute;
+	top: 23px;
+	height: 1px;
+	background-color: #EEEEEE;
+	right: 50px;
+	width: 80px;
+	content: '';
+}
+.cartSecond:after{
+	position: absolute;
+	top: 23px;
+	height: 1px;
+	background-color: #EEEEEE;
+	left: 50px;
+	width: 90px;
+	content: '';
+}
 

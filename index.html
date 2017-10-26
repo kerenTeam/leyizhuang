@@ -195,7 +195,7 @@
 				<div>
 					<div class="imgb" style="background-color:#8992c8"><img src="images/6.svg" alt="" /></div>未提货
 				</div>
-				<div>
+				<div onclick="guideCredit()">
 					<div class="imgb" style="background-color:#8992c8"><img src="images/6.svg" alt="" /></div>信用额度
 				</div>
 				<div id="">
@@ -330,6 +330,8 @@
 											plus.storage.setItem("oldToken", xhr.getResponseHeader('token'));
 											mui.fire(plus.webview.getWebviewById('page/goodList.html'), 'refresh');
 											mui.fire(plus.webview.getWebviewById('center.html'), 'refresh');
+											mui.fire(plus.webview.getWebviewById('cart.html'), 'refresh');
+											
 											util.initSubpage();
 										}
 									},
@@ -357,6 +359,7 @@
 										if(data.code == 0 && data.content.isExist) {
 											plus.nativeUI.closeWaiting();
 											plus.storage.setItem("oldToken", xhr.getResponseHeader('token'));
+											mui.fire(plus.webview.getWebviewById('cart.html'), 'refresh');
 											mui.fire(plus.webview.getWebviewById('page/goodList.html'), 'refresh');
 											mui.fire(plus.webview.getWebviewById('center.html'), 'refresh');
 											util.initSubpage();
@@ -563,6 +566,7 @@
 					id: 'collect',
 				})
 			}
+			//钱包
 			function wallet(){
 				openview({
 					view: 'page/wallet.html',
@@ -587,7 +591,12 @@
 				})
 
 			}
-
+			function guideCredit(){
+				openview({
+					view: 'page/guide/guideCredit.html',
+					id: 'guideCredit',
+				})
+			}
 			//获得slider插件对象
 			var gallery = mui('.mui-slider');
 			gallery.slider({
@@ -650,7 +659,7 @@
 							console.log('常购商品列表', data);
 							if(data.code == 0) {
 								plus.nativeUI.closeWaiting();
-								if(data.content.length) {
+								if(data.content && data.content.length) {
 									$('#goodsList').html(template('goodsTpl', {
 										list: data.content
 									}));
@@ -684,7 +693,7 @@
 							console.log('热门商品列表' + JSON.stringify(data));
 							if(data.code == 0) {
 								plus.nativeUI.closeWaiting();
-								if(data.content.length) {
+								if(data.content && data.content.length) {
 									$('#goodsListHot').html(template('goodsHotTpl', {
 										list: data.content
 									}));
