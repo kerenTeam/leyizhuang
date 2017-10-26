@@ -19,7 +19,7 @@
 		<link rel="stylesheet" type="text/css" href="../../css/cssreset-minDZ.css"/>-->
 
 		<script type="text/javascript" src="../../js/jquery.min.js"></script>
-		<script type="text/javascript" src="../../js/jquery.citys.js"></script>
+		<!--<script type="text/javascript" src="../../js/jquery.citysYF.js"></script>-->
 		<script src="../../js/hmt.js" type="text/javascript"></script>
 		<script src="../../js/app.js" type="text/javascript"></script>
 		<script src="../../js/default.js" type="text/javascript"></script>
@@ -117,27 +117,27 @@
 						</li>
 						<style type="text/css">
 							.dizhiX{display: flex;height: auto !important;}
+							.dizhiX .fl{width: 64px;}
 
 							.dizhiX .DZp{width: 100px;}
 							.dizhiX .citys{flex: 1;}
-							.dizhiX select{display: inline-block;width: auto;}
-							.dizhiX select option{display: inline-block;width: auto;}
+							.dizhiX select{border-bottom: 1px solid #efeff4 !important;border-radius: 0px;font-size: .15rem;color: #666;line-height: 28px;}
+							#demo3 div p{position: relative;}
+							#demo3 div p:after{content: '∨';position: absolute;right: 10px;color: #666;}
 
 						</style>
 						<!--<li class="clearfloat dizhiX">
-								<div id="" class="DZp">
-									<p>所在地址</p>
-								</div>-->
-								<!--<div id='cityResult3' class="ui-alert"><span id="province"></span><span id="city"></span><span id="area"></span></div>-->
-								<!--<div id="demo3" class="citys">
-						            <p>
-						                <select class="provinces1" name="province"></select>
-					                    <select class="citys1" name="city"></select>
-					                    <select class="areas1" name="area"></select>
-					                    <select class="towns1" name="town"></select>
-						            </p>
-						        </div>-->
-						<!--</li>-->
+							<p class="fl">所在地区 </p>
+					        <div id="demo3" class="citys">
+				                <div>
+				                		<p><select class="provinces1" name="province"></select></p>
+				                		<p><select class="citys1" name="city"></select></p>
+				                		<p><select class="areas1" name="area"></select></p>
+				                		<p class="townsPP" style="display: none;"><select style="border: none !important;" class="towns1" name="town"></select></p>
+				                </div>
+				            </div>
+						</li>-->
+
 						<li class="clearfloat">
 							<a href="#">
 								<p class="fl">所在地区</p>
@@ -145,9 +145,15 @@
 								<div id='cityResult3' class="ui-alert"><span id="province"></span><span id="city"></span><span id="area"></span></div>
 							</a>
 						</li>
+						<li class="clearfloat">
+							<a>
+								<p class="fl">所在小区</p>
+								<input type="text" class="fr shuru" name="" id="xiaoquIn" value="" placeholder="请输入所在小区" />
+							</a>
+						</li>
 					</ul>
 				</div>
-				<!--<textarea id="address" rows="4" cols="" class="textare box-s"></textarea>-->
+				<textarea id="address" rows="4" cols="" class="textare box-s"></textarea><!--详细地址-->
  			</div>
 		    	<!--<div class="address-btn clearfloat">
 		    		<span class="szwmr fl">设为默认</span>
@@ -189,84 +195,35 @@
 						if(thisAddArray[k].id == adId){
 							$('#person').attr('value',thisAddArray[k].deliveryName);
 							$('#phone').attr('value',thisAddArray[k].deliveryPhone);
-//							$('.provinces1').prepend('<option selected>四川省</option>')
-							$('#province').html(thisAddArray[k].deliveryProvince + " "); /*省*/
-							$('#city').html(thisAddArray[k].deliveryCity + " "); /*市*/
-							$('#area').html(thisAddArray[k].deliveryCounty); /*区*/
+
+							$('#province').html(thisAddArray[k].deliveryCity + " "); /*市*/
+							$('#city').html(thisAddArray[k].deliveryCounty + " "); /*区*/
+							$('#area').html(thisAddArray[k].deliveryStreet); /*街道*/
+
+							$('#xiaoquIn').attr('value',thisAddArray[k].villageName); /*小区*/
 							$('#address').html(thisAddArray[k].detailedAddress); /*详细地址*/
 							if(thisAddArray[k].state==1){ /*默认地址*/
 								$('#acquiescence').removeClass('toggle--on');
 								$('#acquiescence').addClass('toggle--off');
 							}
-							/*地址*/
-							var $town = $('#demo3 select[name="town"]');
-					    		var flag1 = true; flag2 = 0;
-					    		var townFormat = function(info){
-					            if (flag1) {
-					                $('.citys1').prepend("<option selected>请选择市/区</option>");
-					                flag1 = false;
-					            }
-					            $('.provinces1').change(function(){
-					                if($('.citys1').html().indexOf('请选择') == -1){
-					                  $('.citys1').prepend("<option selected>请选择市/区</option>");
-					                }
-					            })
-					            $('.citys1').change(function(){
-					                if($('.areas1').html().indexOf('请选择') == -1){
-					                  $('.areas1').prepend("<option selected>请选择区/镇</option>");
-					                }
-					            })
-					            $('.areas1').change(function(){
-					                if(flag2 == 0){
-					                    $('.towns1').prepend("<option selected>请选择街道</option>");
-					                }
-					                flag2 ++;
-					            })
-					            $('.towns1').change(function(){
-					                flag2 = 0;
-					            })
-					    			$town.hide().empty();
-					    			if(info['code']%1e4&&info['code']<7e5){	//是否为“区”且不是港澳台地区
-					    				$.ajax({
-					    					url:'http://passer-by.com/data_location/town/'+info['code']+'.json',
-					    					dataType:'json',
-					    					success:function(town){
-					    						$town.show();
-					    						for(i in town){
-					    								$town.append('<option value="'+i+'">'+town[i]+'</option>');
-					    						}
-					    					}
-					    				});
-					    			}
-					    		};
-					    		var shengfen1 = thisAddArray[k].deliveryProvince.replace(/(^\s*)|(\s*$)/g, "");
-//							$('#city').html(thisAddArray[k].deliveryCity + " "); /*市*/
-//							$('#area').html(thisAddArray[k].deliveryCounty); /*区*/
-//							$('#address').html(thisAddArray[k].detailedAddress); /*详细地址*/
 
-				    			$('#demo3').citys({
-					    			province:shengfen1,
-					    			city:thisAddArray[k].deliveryCity.replace(/(^\s*)|(\s*$)/g, ""),
-					    			area:thisAddArray[k].detailedAddress.replace(/(^\s*)|(\s*$)/g, ""),
-					    			onChange:function(info){
-					    				townFormat(info);
-					    			}
-					    		},function(api){
-					    			var info = api.getInfo();
-								//townFormat(info);
-					    		});
-
-
-					    		/*地址结束*/
 
 							//点击保存修改地址
 							window.save = function(){
 								var newPerson = document.getElementById('person').value;
 								var newPhone = document.getElementById('phone').value;
 								var newAddress = document.getElementById('address').value;
-								var newProvince = document.getElementById('province').innerHTML;
-								var newCity = document.getElementById('city').innerHTML;
-								var newArea = document.getElementById('area').innerHTML;
+//								var newProvince = $('.provinces1 option:selected').html();/*省*/
+//								var newCity = $('.citys1 option:selected').html(); /*市*/
+//								var newArea = $('.areas1 option:selected').html();/*区*/
+//								var newStreet = $('.towns1 option:selected').html();/*街道*/
+
+								var newProvince = ' ';
+								var newCity = document.getElementById('province').innerHTML;
+								var newArea = document.getElementById('city').innerHTML;
+								var newStreet = document.getElementById('area').innerHTML;/*街道*/
+
+								var xiaoquIn = document.getElementById('xiaoquIn').value;
 								//默认状态判断
 								if($('#acquiescence').hasClass('toggle--off')){
 									var newState = 1;
@@ -277,13 +234,32 @@
 								if(!reg_phone.test(newPhone)){
 									$('#phone').focus();
 									mui.toast('请输入正确的手机号码 !');
+								}else if(!newPerson){
+									$('#person').focus();
+									mui.toast('收货人不能为空!');
+								}else if(xiaoquIn == ''){
+									mui.toast('所在小区不能为空!');
+									$('#xiaoquIn').focus();
+								}else if(!newStreet){
+									mui.toast('所在地区不能为空!');
 								}else if(newAddress == ''){
 									$('#newAddress').focus();
 									mui.toast('详细地址不能为空!');
 								}else{
 									//修改地址
 									mui.ajax(serverUrl+'/app/user/setting/deliveryAddress/edit',{
-										data:{'userId':userId,'identityType':identityT,'id':adId, 'deliveryName': newPerson,'deliveryPhone': newPhone,'deliveryProvince':newProvince,'deliveryCity':newCity,'deliveryCounty':newArea,'detailedAddress': newAddress,'deliveryStreet':' ',},
+										data:{'userId':userId,
+											'identityType':identityT,
+											'id':adId,
+											'deliveryName': newPerson,
+											'deliveryPhone': newPhone,
+											'deliveryProvince':newProvince,
+											'deliveryCity':newCity,
+											'deliveryCounty':newArea,
+											'detailedAddress':newAddress,
+											'deliveryStreet':newStreet,
+											'villageName':xiaoquIn
+										},
 										dataType:'json',
 										type:'post',
 										timeout:1000,
@@ -317,27 +293,26 @@
     </script>
     <!--地址三级联动-->
     <script>
-//		(function($, doc) {
-//			$.init();
-//			$.ready(function() {
-//				//地址选择三级联动
-//				var cityPicker3 = new $.PopPicker({
-//					layer: 3
-//				});
-//				cityPicker3.setData(cityData3);
-//				var showCityPickerButton = doc.getElementById('showCityPicker3');
-//				var cityResult3 = doc.getElementById('cityResult3');
-//				showCityPickerButton.addEventListener('tap', function(event) {
-//					cityPicker3.show(function(items) {
-//						doc.getElementById('province').innerText = (items[0] || {}).text + " ";
-//						doc.getElementById('city').innerText =  (items[1] || {}).text + " ";
-//						doc.getElementById('area').innerText = (items[2] || {}).text + " ";
-//						//返回 false 可以阻止选择框的关闭
-//						//return false;
-//					});
-//				}, false);
-//			});
-//		})(mui, document);
+		(function($, doc) {
+			$.init();
+			$.ready(function() {
+				//地址选择三级联动
+				var cityPicker3 = new $.PopPicker({
+					layer: 3
+				});
+				cityPicker3.setData(cityData3);
+				var showCityPickerButton = doc.getElementById('showCityPicker3');
+				var cityResult3 = doc.getElementById('cityResult3');
+				showCityPickerButton.addEventListener('tap', function(event) {
+					cityPicker3.show(function(items) {
+						doc.getElementById('province').innerText = (items[0] || {}).text + " ";
+						doc.getElementById('city').innerText =  (items[1] || {}).text + " ";
+						doc.getElementById('area').innerText = (items[2] || {}).text + " ";
+						//return false;
+					});
+				}, false);
+			});
+		})(mui, document);
 	</script>
 	<!--默认按钮-->
 	<script type="text/javascript">

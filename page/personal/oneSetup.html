@@ -178,7 +178,7 @@
 	<script src="../../js/mui.picker.min.js"></script>
 	<script src="../../js/default.js" type="text/javascript" charset="utf-8"></script>
 	<script src="../../js/artTemplate-native.js"></script>
-	<!--<script src="../../js/jquery.min.js"></script>-->
+	<script src="../../js/jquery.min.js"></script>
 	<script type="text/javascript">
 		//选择日期
 		function openTime(nowthis){
@@ -315,6 +315,8 @@
 			plus.nativeUI.showWaiting('保存中 ...',{width:'100px',height:'80px'});
 			var mynickname = mui('#mynickname')[0].value || null;
 			var Nextbtnval = document.getElementById("Nextbtn").options[window.document.getElementById("Nextbtn").selectedIndex].text;
+			var shengri = $('#shengri').html();
+			alert(shengri)
 
 			mui.plusReady(function(){
 				var userId = plus.storage.getItem('$userId');
@@ -358,11 +360,13 @@
 
 					task.setRequestHeader('Authorization',oldToken);
 					if(Apic){task.addFile(Apic[0], {key:'headPic'})};/*头像*/
+					alert(identityT.toString())
 
 					task.addData('userId',userId);
 					task.addData('identityType',identityT.toString());
 			        task.addData('name',mynickname);
 			        task.addData('nikeName',mynickname);
+			        task.addData('birthday',shengri);
 			        if(Nextbtnval.indexOf('男')>-1 || Nextbtnval.indexOf('女')>-1){
 			        		task.addData('sex',Nextbtnval);
 			        }
