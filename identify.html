@@ -132,6 +132,8 @@
 											plus.storage.removeItem('Acc_pass');
 											mui.fire(plus.webview.getWebviewById('page/goodList.html'), 'refresh');
 											mui.fire(plus.webview.getWebviewById('center.html'), 'refresh');
+											mui.fire(plus.webview.getWebviewById('cart.html'), 'refresh');
+											
 											var index = plus.webview.getLaunchWebview();
 											mui.fire(index, 'refresh');
 											if(plus.webview.getWebviewById('reg')) {

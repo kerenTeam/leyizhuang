@@ -330,6 +330,8 @@
 											plus.storage.setItem("oldToken", xhr.getResponseHeader('token'));
 											mui.fire(plus.webview.getWebviewById('page/goodList.html'), 'refresh');
 											mui.fire(plus.webview.getWebviewById('center.html'), 'refresh');
+											mui.fire(plus.webview.getWebviewById('cart.html'), 'refresh');
+											
 											util.initSubpage();
 										}
 									},
@@ -357,6 +359,7 @@
 										if(data.code == 0 && data.content.isExist) {
 											plus.nativeUI.closeWaiting();
 											plus.storage.setItem("oldToken", xhr.getResponseHeader('token'));
+											mui.fire(plus.webview.getWebviewById('cart.html'), 'refresh');
 											mui.fire(plus.webview.getWebviewById('page/goodList.html'), 'refresh');
 											mui.fire(plus.webview.getWebviewById('center.html'), 'refresh');
 											util.initSubpage();
@@ -650,7 +653,7 @@
 							console.log('常购商品列表', data);
 							if(data.code == 0) {
 								plus.nativeUI.closeWaiting();
-								if(data.content.length) {
+								if(data.content && data.content.length) {
 									$('#goodsList').html(template('goodsTpl', {
 										list: data.content
 									}));
@@ -684,7 +687,7 @@
 							console.log('热门商品列表' + JSON.stringify(data));
 							if(data.code == 0) {
 								plus.nativeUI.closeWaiting();
-								if(data.content.length) {
+								if(data.content && data.content.length) {
 									$('#goodsListHot').html(template('goodsHotTpl', {
 										list: data.content
 									}));

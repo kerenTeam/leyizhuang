@@ -304,7 +304,9 @@
 										list: data.content
 									}));
 									mui('.mui-numbox').numbox()
-									
+									$('.numberWidget,.mui-numbox button,.mui-numbox input').click(function() {
+										event.stopPropagation()
+									})
 								} else {
 									$('#searchOut').html('<div style="text-align:center;padding:15px;font-size: 12px;">暂无商品</div>')
 								}

@@ -848,10 +848,7 @@ nav .userIcon:before {
 	content: "x";
 }
 
-.cart dd .goodsInfor .numberWidget {
-	display: none; 
-}
-
+.numberWidget{float: right;margin-top: -5px;}
 .cart dd .goodsInfor .numberWidget input[type="button"] {
 	width: .5rem;
 	height: .5rem;

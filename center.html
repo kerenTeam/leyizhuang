@@ -213,7 +213,7 @@
 				<div class="flexRow2">
 					<div class="" onclick="goCollect()">
 						商品收藏
-					</div>
+					</div> 
 					<div class="">
 						客服
 					</div>
@@ -276,11 +276,9 @@
 					<div class="">
 						我的钱包
 					</div>
-					<div class="">
-						信用金
-					</div>
+					 
 					<div onclick="backMoney()">
-						现金返利
+						信用额度
 					</div>
 					<div>
 						拍照下单
@@ -422,7 +420,7 @@
 								console.log('列表',data);
 								if(data.code == 0 ){
 									plus.nativeUI.closeWaiting();
-									plus.nativeUI.toast('签到成功，增加5乐币');
+									plus.nativeUI.toast('签到成功，增加10乐币');
 									$('.qiandao').html('已签到');
 									Refresh();
 								}
@@ -446,16 +444,16 @@
 						$('#onlyCust,.qiandao,.centerList,#onlyPs,#onlymange').css('display','none')
 						$('#onlyGuide,.orderType,.guiderN').css('display','');
 					}else if(identityT == 6){//顾客
-						$('#onlyGuide,#onlymange,.centerList,.qiandao,.centerList,#onlyPs').css('display','none');
+						$('#onlyGuide,#onlymange,.centerList,.centerList,#onlyPs').css('display','none');
 						$('#onlyCust,.orderType,.customerN,.qiandao').css('display','')						
 					}else if(identityT == 3){//工人
 						$('#onlyGuide,#onlyCust,.centerList,.orderType,#onlymange,.qiandao,#onlyPs').css('display','none');
 						$('.workerN').css('display','block'); 
 					}else if(identityT == 2){//项目经理
-						$('.centerList,#onlyGuide,#onlyCust,#onlyPs').css('display','none');
+						$('.centerList,#onlyGuide,#onlyCust,#onlyPs,.qiandao').css('display','none');
 						$('.orderType,.manageN,#onlymange').css('display','');
 					}else{//配送员
-						$('.centerList,.orderType,#onlymange,#onlyCust').css('display','none');
+						$('.centerList,.orderType,#onlymange,#onlyCust,.qiandao').css('display','none');
 						$('.distributionN,#onlyPs,#onlyGuide').css('display','');
 					}
 					
@@ -485,6 +483,9 @@
 								if(data.code == 0) {
 									plus.nativeUI.closeWaiting();
 									if(data.content) {
+										if(!data.content.canSign){
+											$('.qiandao').removeAttr('onclick').html('已签到');
+										}
 										if(identityT == 6){
 											if(data.content.name) {
 												$('#userName').html(data.content.name)
@@ -498,8 +499,8 @@
 										if(data.content.picUrl) {
 											$('#mypic').attr('src', data.content.picUrl)
 										}
-										if(data.content.picUrl) {
-											$('#mypic').attr('src', data.content.picUrl)
+										if(data.content.mobile) {
+											plus.storage.setItem('mobile',data.content.mobile);
 										}
 										if(data.content.guideName) {
 											$('#guideName').html(data.content.guideName)
@@ -528,9 +529,9 @@
 											$('#coin').html(0)
 										}
 										if(identityT == 0){
-											if(data.content.guideMobile) {
+											if(data.content.mobile) {
 												$('#bindPhone').css('display','none')
-												$('#guidesPhone').html(data.content.guideMobile);
+												$('#guidesPhone').html(data.content.mobile);
 											}else{
 												$('#guidesPhone').css('display','inline-block')
 												$('#guidesPhone').html('未填写')

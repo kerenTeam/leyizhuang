@@ -800,10 +800,14 @@
 					"iconfont/iconfont.woff",
 					"iconfont/iconfont.ttf",
 					"iconfont/iconfont.svg",
-					"js/default.js"
+					"js/default.js",
+					"css/style.css"
 				],
 				"refer": [
-					"login.html"
+					"login.html",
+					"page/order/chooseGift.html",
+					"page/order/order.html",
+					"page/order/chooseCustom.html"
 				],
 				"priority": 0
 			},
@@ -898,7 +902,8 @@
 					"fonts/mui.ttf",
 					"images/delet.svg",
 					"js/artTemplate-native.js",
-					"css/configW.css"
+					"css/configW.css",
+					"images/center/right.svg"
 				],
 				"refer": [],
 				"priority": 0
@@ -1192,9 +1197,62 @@
 				"resources": [
 					"css/mui.min.css",
 					"css/configW.css",
-					"fonts/mui.ttf"
+					"fonts/mui.ttf",
+					"js/jquery.min.js",
+					"js/mui.min.js",
+					"js/default.js"
 				],
 				"refer": [],
+				"priority": 0
+			},
+			"page/order/chooseGift.html": {
+				"resources": [
+					"css/resetY.css",
+					"js/mui.min.js",
+					"fonts/mui.ttf",
+					"img/check1.png",
+					"css/mui.min.css",
+					"js/jquery_cart.js",
+					"css/style.css",
+					"css/cart.css",
+					"js/default.js",
+					"img/check2.png",
+					"js/artTemplate-native.js"
+				],
+				"refer": [
+					"page/order/order.html"
+				],
+				"priority": 0
+			},
+			"page/order/order.html": {
+				"resources": [
+					"css/resetY.css",
+					"css/mui.min.css",
+					"css/style.css",
+					"css/cart.css",
+					"js/mui.min.js",
+					"fonts/mui.ttf",
+					"img/check1.png",
+					"js/jquery_cart.js",
+					"js/default.js",
+					"img/check2.png",
+					"js/artTemplate-native.js"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"page/order/chooseCustom.html": {
+				"resources": [
+					"css/mui.min.css",
+					"css/configW.css",
+					"js/jquery.min.js",
+					"js/mui.min.js",
+					"fonts/mui.ttf",
+					"js/default.js"
+				],
+				"refer": [
+					"page/order/chooseGift.html"
+				],
 				"priority": 0
 			}
 		},
