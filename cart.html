@@ -9,6 +9,7 @@
 		<link rel="stylesheet" href="css/resetY.css">
 		<link rel="stylesheet" type="text/css" href="css/cart.css" />
 		<link rel="stylesheet" type="text/css" href="css/style.css"/>
+		<link rel="stylesheet" type="text/css" href="css/configW.css"/>
 	</head>
 
 	<body>
@@ -36,68 +37,46 @@
 			</div>
 		</div>
 		<div id="cartData"></div>
-		<!--<script type="text/html" id="cartTpl">-->
-			<!--<%if(goodsList.length==0){%>
-			<div onclick="hangout()">
-				<img src="img/market/blankCart.png" style="width:30%;margin: auto;display: block;margin-top: 40%;" alt="" />
-				<div style="color: #666;text-align: center;margin-top: 30px;font-size: 14px;">你的购物车还是空的哦</div>
-			</div>
-
-			<%}else{%> -->
-			<dl class="cart">
+		<script type="text/html" id="cartTpl">
 			 
-				<dd>
-					<div class="mui-checkbox" style="top: 30%;">
-					<input name="checkbox" type="checkbox"></div>
-					<a class="goodsPic"><img src="https://b-ssl.duitang.com/uploads/item/201710/18/20171018141101_kQPR8.thumb.700_0.jpeg" onerror="javascript:this.src='img/market/none.png';" /></a>
-					<div class="goodsInfor">
-						<h2>  
-						    <a>休闲鞋</a>
-						   </h2>
-						<div class="priceArea">
-							<div class="extraBrief">
-								ccccc
-							</div>
-							<strong>¥<span class="price">30</span></strong>
-							<div class="numberWidget">
-								<div class="mui-numbox" data-numbox-min='1'>
-									<button class="mui-btn mui-btn-numbox-minus" type="button">-</button>
-									<input class="mui-input-numbox" data-id="<%=goodsList[j].goodsId%>" data-goodstext="<%=goodsList[j].goodText%>" value="<%=goodsList[j].goodsnum%>" readonly="" type="number" />
-									<button class="mui-btn mui-btn-numbox-plus" type="button">+</button>
+			<%if(list.length == 0){%>
+				<div>
+					<img src="img/market/blankCart.png" style="width:30%;margin: auto;display: block;margin-top: 40%;" alt="" />
+					<div style="color: #666;text-align: center;margin-top: 30px;font-size: 14px;">你的购物车还是空的哦</div>
+				</div>
+	
+				<%}else{%> 
+					<dl class="cart">
+						<%for(var i = 0 ;i < list.length ; i++){%>
+							<dd>
+								<div class="mui-checkbox" style="top: 30%;">
+								<input name="checkbox" type="checkbox"></div>
+								<a class="goodsPic"><img src="<%=list[i].coverImageUri%>" onerror="javascript:this.src='img/editset.png';" /></a>
+								<div class="goodsInfor">
+									<h2 class="ft14">  
+									    <a><%=list[i].skuName%></a>
+									   </h2>
+									<div class="priceArea">
+										<div class="extraBrief ft13">
+											单位：<%=list[i].goodsUnit%>；规格：<%=list[i].goodsSpecification%>
+										</div>
+										<strong>¥<span class="price"><%=list[i].retailPrice%></span></strong>
+										<div class="numberWidget">
+											<div class="mui-numbox" data-numbox-min='1'>
+												<button class="mui-btn mui-btn-numbox-minus" type="button">-</button>
+												<input class="mui-input-numbox" value="<%=list[i].qty%>" readonly="" type="number" />
+												<button class="mui-btn mui-btn-numbox-plus" type="button">+</button>
+											</div>
+										</div>
+									</div>
+									
 								</div>
-							</div>
-						</div>
+								<a class="delBtn">删除</a>
+							</dd>
+						<%}%>
 						
-					</div>
-					<a class="delBtn" data-id="<%=goodsList[j].goodsId%>" data-goodstext="<%=goodsList[j].goodText%>">删除</a>
-				</dd>
-				<dd>
-					<div class="mui-checkbox" style="top: 30%;">
-					<input name="checkbox" type="checkbox"></div>
-					<a class="goodsPic"><img src="https://b-ssl.duitang.com/uploads/item/201710/18/20171018141101_kQPR8.thumb.700_0.jpeg" onerror="javascript:this.src='img/market/none.png';" /></a>
-					<div class="goodsInfor">
-						<h2>  
-						    <a>休闲鞋</a>
-						</h2>
-						<div class="priceArea">
-							<div class="extraBrief">
-								ccccc
-							</div>
-							<strong>¥<span class="price">30</span></strong>
-							<div class="numberWidget">
-								<div class="mui-numbox" data-numbox-min='1'>
-									<button class="mui-btn mui-btn-numbox-minus" type="button">-</button>
-									<input class="mui-input-numbox" data-id="<%=goodsList[j].goodsId%>" data-goodstext="<%=goodsList[j].goodText%>" value="<%=goodsList[j].goodsnum%>" readonly="" type="number" />
-									<button class="mui-btn mui-btn-numbox-plus" type="button">+</button>
-								</div>
-							</div>
-						</div>
-						
-					</div>
-					<a class="delBtn" data-id="<%=goodsList[j].goodsId%>" data-goodstext="<%=goodsList[j].goodText%>">删除</a>
-				</dd> 
-			</dl>
-			<!--<%}%>-->
+					</dl>
+			<%}%>
 			<!--bottom nav-->
 			<div style="height:1rem;"></div>
 			<aside class="btmNav" id="dibu">
@@ -109,8 +88,7 @@
 				<a class="delBtnAll" style="background:#ff6910;color:white;text-shadow:none;display: none;">删除
 				</a>
 			</aside>
-			<!--<%}%>-->
-		<!--</script>-->
+		</script>
 
 		<script type="text/javascript" src="js/jquery_cart.js"></script>
 		<script src="js/mui.min.js"></script> 
@@ -132,97 +110,171 @@
 				var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
 				var userId = plus.storage.getItem('$userId'); 
 				var oldToken = plus.storage.getItem('oldToken');
-				
-				//编辑所有
-				$(".editAll").toggle(function() {
-					$(".delBtn").css("display", "block");
-					$(".delBtnAll").css("display", "block");
-					$("#cartData").find("h2").css("visibility", "visible");
-					$(".goOrder").css("display", "none");
-					$(this).html("完成");
-					$(".numberWidget").hide();
-				}, function() {
-					$(".delBtn").css("display", "none");
-					$(".delBtnAll").css("display", "none");
-					$("#cartData").find("h2").css("visibility", "visible");
-					$(".goOrder").css("display", "block");
-					$(this).html("编辑");
-					$(".numberWidget").show();
-				});
-
-				//删除 单个
-				$(".delBtn").click(function() {
-					var delThis = $(this);
-					var delID = $(this).attr("data-id");
-					var deltext = $(this).attr("data-goodstext");
-					mui.confirm('确认删除这件商品吗？', '提示', ['取消', '确定'], function(e) {
-						if(e.index == 1) {
-							alert('执行删除')
-						}
-
-					})
-				});
-				//删除选中的全部 
-				$(".delBtnAll")[0].onclick = function() {
-					var ALLcheckLength = $("dd").find("input[type='checkbox']:checked").length;
-					if(ALLcheckLength == 0) {
-						mui.toast("您还未选择要删除的商品哦！")
-					} else {
-						mui.confirm('确认删除这' + ALLcheckLength + '件商品吗？', '提示', ['取消', '确定'], function(e) {
-							if(e.index == 1) {
-								alert('执行删除')
+				//获取购物车数据
+				plus.nativeUI.showWaiting();
+				mui.ajax(serverUrl + '/app/materialList/list', {
+					data: {
+						userId: userId,
+						identityType:identityT
+					},
+					dataType: 'json',
+					headers: {
+						"Authorization": oldToken
+					},
+					type: 'post',
+					timeout: 10000,
+					success: function(data, type, xhr) {
+						plus.nativeUI.closeWaiting();
+						console.log('下料清单返回', data);
+						if(data.code == 0) {
+							if(data.content){
+								for(var i in data.content){
+									if(!data.content[i].retailPrice){
+										data.content[i].retailPrice = 1;
+									}
+								}
+								 $('#cartData').html(template('cartTpl',{list:data.content}));
 							}
-
-						})
-					}
-
-				};
-				//遍历 单组下面的商品
-				function allCart() {
-					$(".cart").each(function() {
-						if($(this).find("dd").length == 0) {
-							$(this).remove()
+							plus.nativeUI.closeWaiting();
+							mui('.mui-numbox').numbox()
+							$('.numberWidget,.mui-numbox button,.mui-numbox input').click(function() {
+								event.stopPropagation()
+							})
+							//编辑所有
+							$(".editAll").toggle(function() {
+								$(".delBtn").css("display", "block");
+								$(".delBtnAll").css("display", "block");
+								$("#cartData").find("h2").css("visibility", "visible");
+								$(".goOrder").css("display", "none");
+								$(this).html("完成");
+								$(".numberWidget").hide();
+							}, function() {
+								$(".delBtn").css("display", "none");
+								$(".delBtnAll").css("display", "none");
+								$("#cartData").find("h2").css("visibility", "visible");
+								$(".goOrder").css("display", "block");
+								$(this).html("编辑");
+								$(".numberWidget").show();
+							});
+			
+							//删除 单个
+							$(".delBtn").click(function() {
+								var delThis = $(this);
+								var delID = $(this).attr("data-id");
+								var deltext = $(this).attr("data-goodstext");
+								mui.confirm('确认删除这件商品吗？', '提示', ['取消', '确定'], function(e) {
+									if(e.index == 1) {
+										alert('执行删除')
+									}
+			
+								})
+							});
+							//删除选中的全部 
+							$(".delBtnAll").click(function(){
+								var ALLcheckLength = $("dd").find("input[type='checkbox']:checked").length;
+									if(ALLcheckLength == 0) {
+										mui.toast("您还未选择要删除的商品哦！")
+									} else {
+										mui.confirm('确认删除这' + ALLcheckLength + '件商品吗？', '提示', ['取消', '确定'], function(e) {
+											if(e.index == 1) {
+												alert('执行删除')
+											}
+				
+										})
+									}
+							});
+							//遍历 单组下面的商品
+							function allCart() {
+								$(".cart").each(function() {
+									if($(this).find("dd").length == 0) {
+										$(this).remove()
+									}
+								})
+							}
+							//单个 选择
+							$('dl dd .mui-checkbox').click(function() {
+								var allLength = $("dd").length;
+								var length = $(this).parentsUntil("#cartData").find("dd").length;
+								var checkLength = $(this).parentsUntil("#cartData").find("input[type='checkbox']:checked").length;
+								var ALLcheckLength = $("dd").find("input[type='checkbox']:checked").length;
+								if($(this).find("input").prop('checked') == false) {
+									$(this).parentsUntil("#cartData").find(".groupCheck").attr("checked", false);
+									$('aside input').attr("checked", false);
+									countFuc();
+								} else {
+									if(length == checkLength) {
+										$(this).parentsUntil("#cartData").find(".groupCheck").attr("checked", true);
+									}
+									if(ALLcheckLength == allLength) {
+										$('aside input').attr("checked", true);
+									}
+									countFuc();
+								}
+			
+							})
+							//总选
+							$('aside .mui-checkbox').click(function() {
+								if($(this).find("input").prop('checked') == false) {
+									$("dl input").attr("checked", false);
+									$(".totalNum").html(0);
+									$(".totalMoney").html(0);
+								} else {
+									$("dl input").attr("checked", true);
+									countFuc();
+								}
+			
+							})
+							//数量选择 
+							$('.mui-numbox input').on('change', function() {
+								countFuc();
+			
+							})
+							
+							//下单
+							$('.goOrder').click(function(){
+								var ALLcheckLength = $("dd").find("input[type='checkbox']:checked").length;
+								if(ALLcheckLength == 0) {
+									mui.toast("您还未选择要购买的商品哦！")
+								} else {
+									if(plus.storage.getItem('oldToken')) {
+										if(identityT == 0){
+											openview({
+												view:'page/order/chooseCustom.html',
+												id:'chooseCustom'
+											})
+										}else if(identityT == 2){
+											openview({
+												view:'page/order/order.html',
+												id:'order'
+											})
+										}else{
+											openview({
+												view:'page/order/chooseGift.html',
+												id:'chooseGift'
+											})
+										}
+										
+										
+									} else { //没登陆直接打开登录页面
+										mui.toast('请登录');
+										openview({
+											view: 'login.html'
+										});
+									}
+			
+								}
+							})
+						}else{
+							mui.toast(data.message)
 						}
-					})
-				}
-				//单个 选择
-				$('dl dd .mui-checkbox').click(function() {
-					var allLength = $("dd").length;
-					var length = $(this).parentsUntil("#cartData").find("dd").length;
-					var checkLength = $(this).parentsUntil("#cartData").find("input[type='checkbox']:checked").length;
-					var ALLcheckLength = $("dd").find("input[type='checkbox']:checked").length;
-					if($(this).find("input").prop('checked') == false) {
-						$(this).parentsUntil("#cartData").find(".groupCheck").attr("checked", false);
-						$('aside input').attr("checked", false);
-						countFuc();
-					} else {
-						if(length == checkLength) {
-							$(this).parentsUntil("#cartData").find(".groupCheck").attr("checked", true);
-						}
-						if(ALLcheckLength == allLength) {
-							$('aside input').attr("checked", true);
-						}
-						countFuc();
+
+					},
+					error: function(xhr, type, errorThrown) {
+						plus.nativeUI.closeWaiting();
+						mui.toast(type)
 					}
-
-				})
-				//总选
-				$('aside .mui-checkbox').click(function() {
-					if($(this).find("input").prop('checked') == false) {
-						$("dl input").attr("checked", false);
-						$(".totalNum").html(0);
-						$(".totalMoney").html(0);
-					} else {
-						$("dl input").attr("checked", true);
-						countFuc();
-					}
-
-				})
-				//数量选择 
-				$('.mui-numbox input').on('change', function() {
-					countFuc();
-
-				})
+				});
+				
 				//计算总价和总数量
 				function countFuc() {
 					var fen = 0; //总份数
@@ -239,50 +291,13 @@
 					$(".totalNum").html(fen);
 					$(".totalMoney").html(parseFloat(pay).toFixed(2));
 				}
-				//下单
-				var goOrder = mui(".goOrder")[0];
-				goOrder.addEventListener("tap", function() {
-
-					var ALLcheckLength = $("dd").find("input[type='checkbox']:checked").length;
-					if(ALLcheckLength == 0) {
-						mui.toast("您还未选择要购买的商品哦！")
-					} else {
-						if(plus.storage.getItem('oldToken')) {
-							if(identityT == 0){
-								openview({
-									view:'page/order/chooseCustom.html',
-									id:'chooseCustom'
-								})
-							}else if(identityT == 2){
-								openview({
-									view:'page/order/order.html',
-									id:'order'
-								})
-							}else{
-								openview({
-									view:'page/order/chooseGift.html',
-									id:'chooseGift'
-								})
-							}
-							
-							
-						} else { //没登陆直接打开登录页面
-							mui.toast('请登录');
-							openview({
-								view: 'login.html'
-							});
-						}
-
-					}
-				})
+				
 				
 			}
 
 		})
 		
-		$('.numberWidget,.mui-numbox button,.mui-numbox input').click(function() {
-			event.stopPropagation()
-		})
+		
 		Array.prototype.unique1 = function() {
 			var res = [this[0]];
 			for(var i = 1; i < this.length; i++) {

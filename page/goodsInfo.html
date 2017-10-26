@@ -466,7 +466,9 @@
 						if(data.code == 0 ){
 							plus.nativeUI.toast('加入成功')
 							$(".am-share").removeClass("am-modal-active");
-							$(".sharebg ").removeClass("sharebg-active");							
+							$(".sharebg ").removeClass("sharebg-active");	
+							alert(plus.webview.getWebviewById('cart.html'))
+							mui.fire(plus.webview.getWebviewById('cart.html'), 'refresh');
 							 
 						}else{
 							mui.toast(data.message)
