@@ -11,26 +11,26 @@
 			body {
 				background-color: #efeff4;
 			}
-			
+
 			.title {
 				margin: 20px 15px 10px;
 				color: #6d6d72;
 				font-size: 15px;
 			}
-			
+
 			ul {
 				font-size: 14px;
 				color: #8f8f94;
 			}
-			
+
 			.mui-btn {
 				padding: 10px;
 			}
-			
+
 			.mui-placeholder span {
 				color: #333333;
 			}
-			
+
 			.flexw,
 			.flexws {
 				display: flex;
@@ -40,7 +40,7 @@
 				margin-top: 15px;
 				font-size: 14px
 			}
-			
+
 			.flexw img,
 			.flexws img {
 				display: block;
@@ -48,7 +48,7 @@
 				height: 30px;
 				margin: auto;
 			}
-			
+
 			.ltac .imgb {
 				margin: 5px auto;
 				width: 60px;
@@ -56,7 +56,7 @@
 				padding: 15px;
 				border-radius: 50%;
 			}
-			
+
 			.mui-table-view:after,
 			.mui-table-view:before,
 			.mui-table-view-cell:after,
@@ -129,7 +129,7 @@
 				<div class="gxb">
 					<div class="imgb" style="background-color:#be8dbd"><img src="images/2.svg" alt="" /></div>工序包下单
 				</div>
-				<div id="">
+				<div id="paizhaoOrder" onclick="paizhaoOrder()">
 					<div class="imgb" style="background-color:#7cba59"><img src="images/3.svg" alt="" /></div>拍照下单
 				</div>
 				<div onclick="goCollect()">
@@ -307,7 +307,7 @@
 							var openid = plus.storage.getItem("openId"); //顾客登录
 							console.log(openid);
 
-							//根据缓存密码自动登录, 重新获取Token 
+							//根据缓存密码自动登录, 重新获取Token
 							if(Acc_pass) {
 								mui.ajax(serverUrl+'/app/employee/login', {
 									data: {
@@ -399,7 +399,7 @@
 					subpages = util.options.subpages,
 					leftPos = Math.ceil((window.innerWidth - 60) / 2); // 设置凸起大图标为水平居中
 
-				/**	
+				/**
 				 * drawNativeIconBg 绘制带边框的半圆，
 				 * 实现原理：
 				 *   id为bg的tag 创建带边框的圆
@@ -445,7 +445,7 @@
 				 * 凸起图标最后创建  浮在最顶层
 				 *	id为iconBg的红色背景图
 				 * 	id为icon的字体图标
-				 * 	
+				 *
 				 */
 				var drawNativeIcon = util.drawNative('tabIcon', {
 					bottom: '10px',
@@ -512,7 +512,7 @@
 					var currId = e.target.id,
 						currIndex = parseInt(currId.substr(currId.length - 1, 1) - 1),
 						currView = self.getStyle().subNViews[currIndex];
-					// 匹配对应tab窗口	
+					// 匹配对应tab窗口
 					if(currIndex > 0) {
 						targetPage = plus.webview.getWebviewById(subpages[currIndex - 1]);
 					} else {
@@ -533,6 +533,12 @@
 			});
 		</script>
 		<script>
+			function paizhaoOrder(){
+				openview({
+					view: 'page/order/pzOrder.html',
+					id: 'pzOrder',
+				})
+			}
 			function goSearch() {
 				openview({
 					view: 'page/searchGoods.html',
@@ -618,7 +624,7 @@
 				loadIndex();
 
 				function loadIndex() {
-					//获取缓存 
+					//获取缓存
 					var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
 					var userId = plus.storage.getItem('$userId');
 					var oldToken = plus.storage.getItem('oldToken');

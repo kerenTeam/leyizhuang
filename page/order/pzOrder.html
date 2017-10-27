@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<title>拍照下单</title>
+		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, width=device-width">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-touch-fullscreen" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="format-detection" content="telephone=no">
+		<meta name="format-detection" content="address=no">
+		<link rel="stylesheet" type="text/css" href="../../css/commonY.css">
+		<link rel="stylesheet" type="text/css" href="../../css/mui.min.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/config.css"/>
+	</head>
+	<style type="text/css">
+		.disbg{border:none}
+		.uppics{padding:15px}
+		.uppics div.onepic img{width:4.5rem;height:4.5rem;display:inline-block;margin:0 5px;}
+		.uppics div.onepic input{width:0;height:0;position:absolute;outline:0}
+		#fangshi{background-color: #eee;padding-top: 8px;}
+		.mui-checkbox, .mui-radio { display: inline-block;}
+		#fangshi span{line-height: 40px;float: left;}
+		.dizhis{padding: 10px;background-color: #ccc;}
+		.dizhis div{padding:  5px 0;}
+		.isYezhu{background-color: #eee;}
+		.isYezhu .tishi{color: red;}
+		.beizhu{margin-top: 30px;}
+
+	</style>
+
+	<body style="background-color: white;">
+		<header class="mui-bar mui-bar-nav" id="header">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left bigSize back"></a>
+			<h1 class="mui-title findUser">拍照下单</h1>
+		</header>
+		<script src="../../js/statusBar.js"></script><!--状态栏-->
+
+		<div id="main">
+			<div class="publishf">
+				<div class="apsan"></div>
+				<textarea style="display: none;" id="textCon" maxlength="150" class="disbg ft14" rows="4" placeholder="发布的信息如果违反规定，将被管理员删帖"></textarea>
+			</div>
+			<div id="mainpic" class="biaoqian"></div>
+			<div class="uppics clearfix" id="uppics2">
+		        <div class="onepic">
+		            <img id="nowpic" onclick="galleryImgsSelected()" src="../../img/addpic.png">
+		            <p style="padding-left: 5px;">添加照片</p>
+		        </div>
+		    </div>
+		    <div id="fangshi">
+		    		<span id="">
+		    			配送方式
+		    		</span>
+				<div class="mui-input-row mui-radio mui-left">
+					<label>送货上门</label>
+					<input name="radio1" checked type="radio">
+				</div>
+		    </div>
+		    <div class="dizhis">
+		    		<div>张亮 18878788788878</div>
+				<div> 地址 地址 地址 地址 地址</div>
+		    </div>
+		    <div class="isYezhu">
+				<div class="mui-input-row mui-checkbox mui-left">
+				  <label>是否业主收货</label>
+				  <input name="checkbox1" value="Item 1" type="checkbox">
+				</div>
+				<div class="tishi">
+					温馨提示：若收货人为主家，系统将在出货打印单中自动隐藏折扣信息
+				</div>
+		    </div>
+		    <div class="beizhu">
+		    		<h5>备注</h5>
+				<textarea name="" rows="" placeholder="备注请输入备注信息" cols=""></textarea>
+		    </div>
+		    <div id="" style="text-align: center;">
+		    		<button type="button" class="mui-btn  mui-btn-primary baocun">保存</button>
+		    </div>
+
+
+		</div>
+
+		<div id='container' style="display:none"></div>
+	</body>
+<script type="text/javascript" src="../../js/jquery.min.js"></script>
+<script src="../../js/mui.min.js"></script>
+<script src="../../js/default.js"></script>
+<script src="../../js/common.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/image-new.js" type="text/javascript" charset="utf-8"></script>
+
+<!--引入模板引擎-->
+<script src="../../js/artTemplate-native.js"></script>
+<script type="text/javascript">
+	//从相册中选择图片 开始
+	var Apic = [];//图片存放数组
+	var lfs=null;// 保留上次选择图片列表
+	var time1 = null;
+	function galleryImgsSelected(){//从相册中选择图片
+		mui.plusReady(function(){
+		    plus.gallery.pick( function(e){
+		    	//初始化
+		    	mui('.onepic')[0].innerHTML = '<img id="nowpic" onclick="galleryImgsSelected()" src="../../img/addpic.png">';
+		    	Apic = [];
+		    	//初始化结束
+		    	lfs=e.files;
+		    	clearInterval(time1);
+		    	var indexNum = 0;
+		    	var indexMax = e.files.length - 1;
+		    	e.files.forEach(function(){
+		    		$('.onepic').prepend('<img onclick="galleryImgsSelected()" style="width：4.5rem;height:4.5rem;display:inline" src="../../img/Spinner.svg"/>')
+		    	})
+		    	time1 = setInterval(function(){
+		    		console.log(time1);
+		    		if(0!=e.files[indexNum].indexOf("file://")){
+						e.files[indexNum]="file://"+e.files[indexNum];//图片地址
+					}
+		    		if(indexNum == indexMax){//全部压缩完毕
+		    			clearInterval(time1);
+						time1 = null;
+		    		}
+		    		var nowpic = Math.random().toString(36).substr(2) + '.jpg';//随机字符串
+		    		var endpic = e.files[indexNum].split('.')[0]+"/" +nowpic;
+	    			plus.zip.compressImage({
+						src:e.files[indexNum],
+						dst:endpic,
+						overwrite:true,
+						quality:30
+					},
+					function(obj) {
+						console.log(obj)
+						Apic.push(endpic);
+						showImg(endpic,indexNum);
+					},function(error) {
+						mui.toast('图片获取错误，请重试');
+					});
+		    		indexNum ++;
+
+		    	},500)
+		   }, function ( e ) {
+		    },{filter:"image",multiple:true,maximum:3,selected:lfs,system:false,onmaxed:function(){//保存选择记录
+				plus.nativeUI.alert('最多选择3张图片');
+		    }});
+			function showImg(url,indexNum){//显示图片
+				if(0!=url.indexOf("file://")){
+					url="file://"+url;
+				}
+				document.getElementsByClassName('onepic')[0].getElementsByTagName('img')[indexNum-1].src = url;
+				$('.onepic p').css('display','none');
+			}
+		})
+	}
+	//从相册中选择图片结束
+
+	//发送 发布
+	mui('.baocun')[0].addEventListener('tap',function(){
+		mui.plusReady(function(){
+
+		 	var textCon = mui('#textCon')[0];//备注
+		 	var userId = plus.storage.getItem('$userId');
+			var oldToken = plus.storage.getItem("oldToken");
+			var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
+		 	if(Apic.length){//要传图片
+			 	if(time1 == null){//必须要图片全部处理完毕  才行    (开始发布)
+			 		plus.nativeUI.showWaiting();
+			 		var content = mui('#textCon')[0].value;
+			 		releaseData();
+			 	}else{
+			 		mui.toast('图片还在处理中');
+			 	}
+		 	}else{//不传图片
+			 	if(!textCon.value){
+			 		mui.toast('请选择至少一张图片');
+			 	}else{//(开始发布)
+			 		plus.nativeUI.showWaiting();
+			 		var content = mui('#textCon')[0].value;
+			 		releaseData();
+			 	}
+		 	}
+
+		 	//发送数据
+		 	function releaseData(){
+				var task = plus.uploader.createUpload(serverUrl+'/app/photoOrder/add',
+					{ method:"POST"},
+					function(back,status){
+						if(status == 200){
+							console.log("发送返回",back.responseText);
+							var dataobj = JSON.parse(back.responseText);
+							if(dataobj.code == 0){
+								alert('您的订单已提交，客服会尽快跟您联系！')
+								plus.webview.currentWebview().close();
+	    						}else{
+	    							mui.toast(dataobj.message);
+	    							plus.nativeUI.closeWaiting();
+	    						}
+	    						plus.nativeUI.closeWaiting();//关闭等待框
+						}else{
+							plus.nativeUI.closeWaiting();//关闭等待框
+							mui.toast('当前网络不好，请重试！');
+						}
+
+					}
+				);
+
+				task.setRequestHeader('Authorization',oldToken);
+				task.addData("userId",userId);
+				task.addData("identityType",identityT);
+				task.addData("deliveryId",'1');//地址
+				task.addData("isOwnerReceiving",'1');//是否主家
+				task.addData("remark",'备注');//备注
+				task.addData("customerId",'1');//导购的 客户id
+
+				if(Apic.length){
+					console.log(Apic);
+					[].forEach.call(Apic,function(ele,index){
+						//task.addFile(ele, {key:index.toString()});
+						task.addFile(ele, {key:'myfiles'});
+						if(index == Apic.length-1){
+							task.start();
+						}
+					})
+				}else{
+					task.start();
+				}
+
+		 	}
+		 	//发送数据结束
+		})
+	})
+
+
+</script>
+
+<!--弃用js(还有参考价值)-->
+<script type="text/javascript">
+	//plus.nativeUI.actionSheet({
+	//	cancel: "取消",
+	//	buttons: [{
+	//		title: "相册选择"
+	//	}, {
+	//		title: '拍照'
+	//	}]
+	//},
+	//function(e) {
+	//	if (e.index == 1) { //点击从相册选择
+	//		galleryImgsSelected();
+	//	} else if (e.index == 2) {
+	//		getImage();
+	//	}
+	//})
+	function getImage(){//拍照并保存(暂时搁置)
+		var cmr = plus.camera.getCamera();
+		cmr.captureImage( function ( path ) {
+			plus.io.resolveLocalFileSystemURL(path,function(entry){
+				//把拍摄图片的路径转化成 本地文件url
+				path = plus.io.convertLocalFileSystemURL(path);
+				if(0!=path.indexOf("file://")){
+					path="file://"+path;
+				}
+	    		var nowpic = Math.random().toString(36).substr(2) + '.jpg';
+	    		var endpic = path.split('.')[0]+"/"+nowpic;
+				plus.zip.compressImage({//压缩方法
+					src:path,
+					dst:endpic,
+					overwrite:true,
+					quality:30
+				},
+				function() {
+					showImg(endpic);
+					Apic = [];
+					Apic.push(endpic);
+				},function(error) {
+					mui.toast('图片获取错误，请重试');
+				});
+			});
+		}, function ( e ) {
+		}, {filename:"_doc/gallery/",index:1} );
+	}
+
+</script>
+</html>

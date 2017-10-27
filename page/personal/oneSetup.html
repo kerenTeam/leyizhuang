@@ -326,6 +326,7 @@
 				releaseData();
 				//发送数据
 			 	function releaseData(){
+			 		//发送数据开始
 					var task = plus.uploader.createUpload(serverUrl+'/app/user/setting/set/information',
 						{ method:"POST"},
 						function(back,status){
@@ -354,13 +355,11 @@
 								plus.nativeUI.closeWaiting();//关闭等待框
 								mui.toast('当前网络不好，请重试！');
 							}
-
 						}
 					);
 
 					task.setRequestHeader('Authorization',oldToken);
 					if(Apic){task.addFile(Apic[0], {key:'headPic'})};/*头像*/
-					alert(identityT.toString())
 
 					task.addData('userId',userId);
 					task.addData('identityType',identityT.toString());

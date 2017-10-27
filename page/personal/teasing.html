@@ -147,29 +147,64 @@
 			    	}else if(!reg_phone.test(mui('#phoneNum1')[0].value)){
 			    		mui.toast("请填写正确的电话号码！");
 			    		mui('#phoneNum1')[0].focus();
+			    	}else if(!Apic.length){
+			    		mui.toast("请添加图片");
 			    	}else{
 			    		plus.nativeUI.showWaiting();
-			    		mui.ajax(serverUrl+'/app/user/setting/feedback/add',{
-			    			data:{'userId':myuserid,'content':content,'phone':mui('#phoneNum1')[0].value,'identityType':identityT,'type':1},
-			        		dataType:'json',
-							type:'post',
-							timeout:10000,
-							headers:{"Authorization":oldtoken},
-							success:function(data,type,xhr){
-								console.log('反馈',JSON.stringify(data));
+					//发送数据开始
+					var task = plus.uploader.createUpload(serverUrl+'/app/user/setting/feedback/add',
+						{ method:"POST"},
+						function(back,status){
+							if(status == 200){
+								console.log(back.responseText);
+								var dataobj = JSON.parse(back.responseText);
+								console.log('反馈',JSON.stringify(dataobj));
 								plus.nativeUI.closeWaiting(); //关闭等待框
-								if(data.code == 0){
+								if(dataobj.code == 0){
 									mui.toast("反馈成功！");
 									mui.back();
 								}
-							},
-							error:function(xhr,type,errorThrown){
+							}else{
 								plus.nativeUI.closeWaiting();
 								mui.toast("当前网络不好，请重试！");
 								console.log('响应失败  !');
 							}
+						}
+					);
 
-			        	})
+					task.setRequestHeader('Authorization',oldtoken);
+					alert(Apic[0]);
+					if(Apic){task.addFile(Apic[0], {key:'myfiles'})};/*头像*/
+
+					task.addData('userId',myuserid);
+					task.addData('identityType',identityT.toString());
+			        task.addData('type','1');
+			        task.addData('phone',mui('#phoneNum1')[0].value);
+			        task.addData('content',content);
+					task.start();
+
+			 	//发送数据结束
+//			    		mui.ajax(serverUrl+'/app/user/setting/feedback/add',{
+//			    			data:{'userId':myuserid,'content':content,'phone':mui('#phoneNum1')[0].value,'identityType':identityT,'type':1},
+//			        		dataType:'json',
+//							type:'post',
+//							timeout:10000,
+//							headers:{"Authorization":oldtoken},
+//							success:function(data,type,xhr){
+//								console.log('反馈',JSON.stringify(data));
+//								plus.nativeUI.closeWaiting(); //关闭等待框
+//								if(data.code == 0){
+//									mui.toast("反馈成功！");
+//									mui.back();
+//								}
+//							},
+//							error:function(xhr,type,errorThrown){
+//								plus.nativeUI.closeWaiting();
+//								mui.toast("当前网络不好，请重试！");
+//								console.log('响应失败  !');
+//							}
+//
+//			        	})
 			    	}
 		    })
 
