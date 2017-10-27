@@ -285,112 +285,7 @@
 
 			mui.plusReady(function() {
 //				plus.storage.clear();
-				//判断是否登陆
-				Sign();
-				var timeSign = null;
-				var loadNum = 0;
-				var loadNum2 = 0;
-				clearInterval(timeSign);
-				timeSign = setInterval(Sign, 5000000); //两小时自动更新一次token
-
-				function Sign() { //登录方法
-					//设置默认token
-					if(!plus.storage.getItem('oldToken')) { //没有用户token
-						openview({
-							view: 'identify.html',
-							id: 'identify'
-						})
-
-					} else {
-						if(plus.storage.getItem("Acc_pass") || plus.storage.getItem("openId")) {
-							var Acc_pass = JSON.parse(plus.storage.getItem("Acc_pass")); //员工登陆
-							var openid = plus.storage.getItem("openId"); //顾客登录
-							console.log(openid);
-
-							//根据缓存密码自动登录, 重新获取Token
-							if(Acc_pass) {
-								mui.ajax(serverUrl+'/app/employee/login', {
-									data: {
-										"name": Acc_pass[0],
-										"password": Acc_pass[1]
-									},
-									dataType: 'json',
-									type: 'post',
-									timeout: 10000,
-									success: function(data, type, xhr) {
-										console.log('登录返回', data);
-										if(data.code == -1) {
-											openview({
-												view: 'identify.html',
-												id: 'identify'
-											})
-										} else {
-											plus.nativeUI.closeWaiting();
-											console.log('默认账号登录返回' + JSON.stringify(data));
-											plus.storage.setItem("oldToken", xhr.getResponseHeader('token'));
-											mui.fire(plus.webview.getWebviewById('page/goodList.html'), 'refresh');
-											mui.fire(plus.webview.getWebviewById('center.html'), 'refresh');
-											mui.fire(plus.webview.getWebviewById('cart.html'), 'refresh');
-											
-											util.initSubpage();
-										}
-									},
-									error: function(xhr, type, errorThrown) {
-										plus.nativeUI.closeWaiting();
-										console.log('登录响应失败');
-										loadNum++;
-										if(loadNum < 3) {
-											mui.toast('当前网络不好,再次连接');
-										}
-										console.log('获取默认token响应失败');
-									}
-								});
-							}
-							if(openid) {
-								mui.ajax(serverUrl+'/app/customer/login', {
-									data: {
-										"openId": openid
-									},
-									dataType: 'json',
-									type: 'post',
-									timeout: 10000,
-									success: function(data, type, xhr) {
-										console.log('登录返回', data);
-										if(data.code == 0 && data.content.isExist) {
-											plus.nativeUI.closeWaiting();
-											plus.storage.setItem("oldToken", xhr.getResponseHeader('token'));
-											mui.fire(plus.webview.getWebviewById('cart.html'), 'refresh');
-											mui.fire(plus.webview.getWebviewById('page/goodList.html'), 'refresh');
-											mui.fire(plus.webview.getWebviewById('center.html'), 'refresh');
-											util.initSubpage();
-										} else if(data.code == -1) {
-											plus.nativeUI.closeWaiting();
-											mui.toast(data.message);
-											openview({
-												view: 'identify.html',
-												id: 'identify'
-											})
-										}
-
-									},
-									error: function(xhr, type, errorThrown) {
-										plus.nativeUI.closeWaiting();
-										console.log('登录响应失败');
-									}
-
-								});
-							}
-						} else {
-							openview({
-								view: 'identify.html',
-								id: 'identify'
-							})
-						}
-
-					}
-
-				} //登录方法结束
-
+				 
 				document.addEventListener('refresh', function() {
 					util.initSubpage();
 				})
@@ -617,7 +512,112 @@
 				}
 			})
 			mui.plusReady(function() {
+				//判断是否登陆
+				Sign();
+				var timeSign = null;
+				var loadNum = 0;
+				var loadNum2 = 0;
+				clearInterval(timeSign);
+				timeSign = setInterval(Sign, 5000000); //两小时自动更新一次token
+				
+				
+				function Sign() { //登录方法
+					//设置默认token
+					if(!plus.storage.getItem('oldToken')) { //没有用户token
+						openview({
+							view: 'identify.html',
+							id: 'identify'
+						})
 
+					} else {
+						if(plus.storage.getItem("Acc_pass") || plus.storage.getItem("openId")) {
+							var Acc_pass = JSON.parse(plus.storage.getItem("Acc_pass")); //员工登陆
+							var openid = plus.storage.getItem("openId"); //顾客登录
+							console.log(openid);
+
+							//根据缓存密码自动登录, 重新获取Token
+							if(Acc_pass) {
+								mui.ajax(serverUrl+'/app/employee/login', {
+									data: {
+										"name": Acc_pass[0],
+										"password": Acc_pass[1]
+									},
+									dataType: 'json',
+									type: 'post',
+									timeout: 10000,
+									success: function(data, type, xhr) {
+										console.log('登录返回', data);
+										if(data.code == -1) {
+											openview({
+												view: 'identify.html',
+												id: 'identify'
+											})
+										} else {
+											plus.nativeUI.closeWaiting();
+											console.log('默认账号登录返回' + JSON.stringify(data));
+											plus.storage.setItem("oldToken", xhr.getResponseHeader('token'));
+											mui.fire(plus.webview.getWebviewById('page/goodList.html'), 'refresh');
+											mui.fire(plus.webview.getWebviewById('center.html'), 'refresh');
+											mui.fire(plus.webview.getWebviewById('cart.html'), 'refresh');
+											
+											util.initSubpage();
+										}
+									},
+									error: function(xhr, type, errorThrown) {
+										plus.nativeUI.closeWaiting();
+										console.log('登录响应失败');
+										loadNum++;
+										if(loadNum < 3) {
+											mui.toast('当前网络不好,再次连接');
+										}
+										console.log('获取默认token响应失败');
+									}
+								});
+							}
+							if(openid) {
+								mui.ajax(serverUrl+'/app/customer/login', {
+									data: {
+										"openId": openid
+									},
+									dataType: 'json',
+									type: 'post',
+									timeout: 10000,
+									success: function(data, type, xhr) {
+										console.log('登录返回', data);
+										if(data.code == 0 && data.content.isExist) {
+											plus.nativeUI.closeWaiting();
+											plus.storage.setItem("oldToken", xhr.getResponseHeader('token'));
+											mui.fire(plus.webview.getWebviewById('cart.html'), 'refresh');
+											mui.fire(plus.webview.getWebviewById('page/goodList.html'), 'refresh');
+											mui.fire(plus.webview.getWebviewById('center.html'), 'refresh');
+											util.initSubpage();
+										} else if(data.code == -1) {
+											plus.nativeUI.closeWaiting();
+											mui.toast(data.message);
+											openview({
+												view: 'identify.html',
+												id: 'identify'
+											})
+										}
+
+									},
+									error: function(xhr, type, errorThrown) {
+										plus.nativeUI.closeWaiting();
+										console.log('登录响应失败');
+									}
+
+								});
+							}
+						} else {
+							openview({
+								view: 'identify.html',
+								id: 'identify'
+							})
+						}
+
+					}
+					loadIndex();
+				} //登录方法结束
 				document.addEventListener('refresh', function() {
 					loadIndex();
 				})

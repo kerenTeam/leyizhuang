@@ -1224,7 +1224,8 @@
 					"js/artTemplate-native.js"
 				],
 				"refer": [
-					"page/order/order.html"
+					"page/order/order.html",
+					"page/order/workerMaterial.html"
 				],
 				"priority": 0
 			},
@@ -1287,6 +1288,30 @@
 					"css/configW.css",
 					"img/check2.png",
 					"js/artTemplate-native.js"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"page/order/workerMaterial.html": {
+				"resources": [
+					"css/resetY.css",
+					"js/mui.picker.min.js",
+					"js/jquery.min.js",
+					"js/mui.poppicker.js",
+					"images/center/right.svg",
+					"css/mui.min.css",
+					"css/mui.picker.minY.css",
+					"css/style.css",
+					"css/cart.css",
+					"css/mui.poppicker.css",
+					"css/configW.css",
+					"css/commonY.css",
+					"fonts/mui.ttf",
+					"img/check1.png",
+					"js/artTemplate-native.js",
+					"js/mui.min.js",
+					"js/default.js",
+					"img/check2.png"
 				],
 				"refer": [],
 				"priority": 0

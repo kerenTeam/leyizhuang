@@ -1,0 +1,227 @@
+<!doctype html>
+
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>确认订单</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="../../css/mui.min.css" />
+		<link rel="stylesheet" href="../../css/resetY.css">
+		<link rel="stylesheet" type="text/css" href="../../css/commonY.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/cart.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/style.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/configW.css" />
+		<link href="../../css/mui.picker.minY.css" rel="stylesheet" />
+		<link href="../../css/mui.poppicker.css" rel="stylesheet" />
+	</head>
+
+	<body>
+
+		<header class="mui-bar mui-bar-nav">
+			<a class="headbar mui-action-back mui-icon mui-icon-left-nav mui-pull-left normalSize"></a>
+			<h1 class="mui-title">确认订单</h1>
+		</header>
+		<script src="js/statusBar.js"></script>
+		<!--状态栏-->
+		<div style="height:50px;"></div>
+		<div class="flexwc">
+			<div class="cartOne">
+				<img src="../../img/check1.png" /> 下料清单
+			</div>
+			<div class="cartSecond">
+				<img src="../../img/check1.png" /> 选赠品
+			</div>
+			<div class="cartOne">
+				<img src="../../img/check2.png" /> 结算
+			</div>
+		</div>
+		<div style="background-color: white;margin: 5px 0;">
+			<div class="qtop flexr pad10" onclick="address()">
+				<div style="flex: 1;margin-left: 10px;">
+					<div class="maincl ft16">
+						<span class="disablecl">xxxx</span>
+						<span class="disablecl">123456666</span>
+					</div>
+					<div class="ft16">
+						<span class="disablecl">xxxxsdfsfjkdfgdajsdfdd</span>
+					</div>
+				</div>
+				<div class="">
+					<img src="../../images/center/right.svg" alt="" />
+				</div>
+			</div>
+		</div>
+		<div id="cartData"></div>
+		<!--<script type="text/html" id="cartTpl">-->
+		<!--<%if(goodsList.length==0){%>
+			<div onclick="hangout()">
+				<img src="img/market/blankCart.png" style="width:30%;margin: auto;display: block;margin-top: 40%;" alt="" />
+				<div style="color: #666;text-align: center;margin-top: 30px;font-size: 14px;">你的购物车还是空的哦</div>
+			</div>
+
+			<%}else{%> -->
+		<dl class="cart">
+			<dd>
+				<a class="goodsPic" style="margin-left: auto;"><img src="https://b-ssl.duitang.com/uploads/item/201710/18/20171018141101_kQPR8.thumb.700_0.jpeg" onerror="javascript:this.src='img/market/none.png';" /></a>
+				<div class="goodsInfor" style="margin-left: 0.9rem!important;">
+					<h2>  
+				    		<a>休闲鞋</a>
+				   	</h2>
+					<div class="priceArea">
+						<div class="extraBrief">
+							ccccc
+						</div>
+						<strong>¥<span class="price">30</span></strong>
+						<div class="numberWidget">
+							<span class="num">x5</span>
+						</div>
+					</div>
+
+				</div>
+				<a class="delBtn" data-id="<%=goodsList[j].goodsId%>" data-goodstext="<%=goodsList[j].goodText%>">删除</a>
+			</dd>
+			<dd>
+				<a class="goodsPic" style="margin-left: auto;"><img src="https://b-ssl.duitang.com/uploads/item/201710/18/20171018141101_kQPR8.thumb.700_0.jpeg" onerror="javascript:this.src='img/market/none.png';" /></a>
+				<div class="goodsInfor" style="margin-left: 0.9rem!important;">
+					<h2>  
+						    <a>休闲鞋</a>
+
+						   </h2>
+					<div class="priceArea">
+						<div class="extraBrief">
+							ccccc
+						</div>
+						<strong>¥<span class="price">30</span></strong>
+						<div class="numberWidget">
+							<span class="num">x5</span>
+						</div>
+					</div>
+
+				</div>
+			</dd>
+
+			<div class="pad10 ft15">
+				共10件商品 <span>订单总金额：¥45000</span> <span class="mui-pull-right activecl" onclick="materialList()">查看全部</span>
+			</div>
+			<div style="clear: both;"></div>
+		</dl>
+		<!--<%}%>-->
+		<div style="background: white;">
+			<div class="pad10 ft15 afterBorder">
+				<em>配送方式 </em>
+				<div class="mui-input-row mui-radio mui-left mui-pull-right" style="margin-top: -8px;">
+					<label>自体</label>
+					<input name="peis" type="radio">
+				</div>
+				<div class="mui-input-row mui-radio mui-left mui-pull-right" style="margin-top: -8px;">
+					<label>送货上门</label>
+					<input name="peis" type="radio" checked="">
+				</div>
+			</div>
+			<div style="clear: both;"></div>
+			<div id='cityResult' class="ui-alert pad10 afterBorder">配送时间 <span class="mui-pull-right">选择</span></div>
+			<div class="mui-input-row mui-checkbox mui-left afterBorder">
+				<label>是否业主收货</label>
+				<input name="checkbox1" value="Item 1" type="checkbox" checked>
+			</div>
+			<div class="pad10 activecl ft13 afterBorder">
+				温馨提示：若收货人为主家，系统将在出货打印单中自动隐藏折扣信息
+			</div>
+			<div>
+				备注：<textarea name="" id="" maxlength="100" cols="30" rows="4"></textarea>
+			</div>
+		</div>
+		
+		<!--bottom nav-->
+		<div style="height:1rem;"></div>
+		<aside class="btmNav" id="dibu">
+			<a class="goOrder dp" style="background:#f53c42;color:white;text-shadow:none;">提交审核</a>
+		</aside>
+		<!--<button class="mui-btn-danger">提交审核</button>-->
+		<!--<%}%>-->
+		<!--</script>-->
+
+		<script type="text/javascript" src="../../js/jquery.min.js"></script>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/mui.picker.min.js"></script>
+		<script src="../../js/mui.poppicker.js"></script>
+		<script src="../../js/artTemplate-native.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/default.js" type="text/javascript" charset="utf-8"></script>
+	</body>
+
+	<script>
+		function materialList() {
+			openview({
+				view: 'materialList.html',
+				id: 'materialList'
+			})
+		}
+
+		function address() {
+			openview({
+				view: '../personal/address.html',
+				id: 'address',
+				extrasobj: {
+					page: 'order'
+				}
+			})
+		}
+		mui.plusReady(function() {
+
+			//级联示例
+			var cityData = [{
+				value: '110000',
+				text: '9月1号(周五)',
+				children: [{
+					value: "1",
+					text: "7:00-8:00"
+				}, {
+					value: "2",
+					text: "8:00-9:00"
+				}, {
+					value: "3",
+					text: "9:00-10:00"
+				}]
+			}, {
+				value: '110000',
+				text: '9月2号(周六)',
+				children: [{
+					value: "1",
+					text: "7:00-8:00"
+				}, {
+					value: "2",
+					text: "10:00-11:00"
+				}, {
+					value: "3",
+					text: "13:00-20:00"
+				}]
+			}]
+			var cityPicker = new mui.PopPicker({
+				layer: 2
+			});
+			cityPicker.setData(cityData);
+			var cityResult = document.getElementById('cityResult');
+			cityResult.addEventListener('tap', function(event) {
+				cityPicker.show(function(items) {
+					$('#cityResult span').html(items[0].text + " " + items[1].text)
+					//返回 false 可以阻止选择框的关闭
+					//return false;
+				});
+			}, false);
+			//-----------------------------------------
+
+			window.addEventListener('refresh', function(event) {
+				cartload();
+			});
+
+			cartload();
+
+			function cartload() {
+
+			}
+
+		})
+	</script>
+
+</html>
