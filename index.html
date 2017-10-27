@@ -584,6 +584,9 @@
 			})
 			mui.plusReady(function() {
 				//判断是否登陆
+				document.addEventListener('refresh', function() {
+					loadIndex();
+				})
 				Sign();
 				var timeSign = null;
 				var loadNum = 0;
@@ -689,11 +692,8 @@
 					}
 					loadIndex();
 				} //登录方法结束
-				document.addEventListener('refresh', function() {
-					loadIndex();
-				})
+				
 				loadIndex();
-
 				function loadIndex() {
 					//获取缓存
 					var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;

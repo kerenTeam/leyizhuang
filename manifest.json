@@ -58,7 +58,7 @@
 		"Webview": {},
 		"NativeUI": {},
 		"Navigator": {},
-		"NativeObj": {},"OAuth":{},"Device":{},"Maps":{},"Audio":{},"Speech":{},"Camera":{},"Barcode":{},"Contacts":{},"Messaging":{},"Geolocation":{}
+		"NativeObj": {},"OAuth":{},"Device":{},"Maps":{},"Audio":{},"Speech":{},"Camera":{},"Barcode":{},"Contacts":{},"Messaging":{},"Geolocation":{},"Share":{}
 	},
 	"plus": {
 		"launchwebview": {
