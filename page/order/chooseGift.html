@@ -187,20 +187,12 @@
 					if(ALLcheckLength == 0) {
 						mui.toast("您还未选择要赠送商品哦！")
 					} else {
-
-						if(plus.storage.getItem('oldToken')) {
+//						if(identityT == 3){
 							openview({
-								view:'order.html',
-								id:'order'
+								view:'workerMaterial.html',
+								id:'workerMaterial'
 							})
-							
-						} else { //没登陆直接打开登录页面
-							mui.toast('请登录');
-							openview({
-								view: 'login.html'
-							});
-						}
-
+//					 	}
 					}
 				})
 			 

@@ -41,8 +41,8 @@
 			 
 			<%if(list.length == 0){%>
 				<div>
-					<img src="img/market/blankCart.png" style="width:30%;margin: auto;display: block;margin-top: 40%;" alt="" />
-					<div style="color: #666;text-align: center;margin-top: 30px;font-size: 14px;">你的购物车还是空的哦</div>
+					<img src="images/blankCart.png" style="width:30%;margin: auto;display: block;margin-top: 40%;" alt="" />
+					<div style="color: #666;text-align: center;margin-top: 30px;font-size: 14px;">你的下料清单还是空的哦</div>
 				</div>
 	
 				<%}else{%> 
@@ -50,7 +50,7 @@
 						<%for(var i = 0 ;i < list.length ; i++){%>
 							<dd>
 								<div class="mui-checkbox" style="top: 30%;">
-								<input name="checkbox" type="checkbox"></div>
+								<input name="checkbox" type="checkbox" data-id='<%=list[i].id%>'></div>
 								<a class="goodsPic"><img src="<%=list[i].coverImageUri%>" onerror="javascript:this.src='img/editset.png';" /></a>
 								<div class="goodsInfor">
 									<h2 class="ft14">  
@@ -64,14 +64,14 @@
 										<div class="numberWidget">
 											<div class="mui-numbox" data-numbox-min='1'>
 												<button class="mui-btn mui-btn-numbox-minus" type="button">-</button>
-												<input class="mui-input-numbox" value="<%=list[i].qty%>" readonly="" type="number" />
+												<input class="mui-input-numbox" data-id="<%=list[i].id%>" value="<%=list[i].qty%>" readonly="" type="number" />
 												<button class="mui-btn mui-btn-numbox-plus" type="button">+</button>
 											</div>
 										</div>
 									</div>
 									
 								</div>
-								<a class="delBtn">删除</a>
+								<a class="delBtn" data-id="<%=list[i].id%>">删除</a>
 							</dd>
 						<%}%>
 						
@@ -85,8 +85,8 @@
 				</a>
 				<a class="goOrder dp" style="background:#f53c42;color:white;text-shadow:none;">下一步<span class="totalVisi">(<span class="totalNum">0</span>)</span>
 				</a>
-				<a class="delBtnAll" style="background:#ff6910;color:white;text-shadow:none;display: none;">删除
-				</a>
+				<!--<a class="delBtnAll" style="background:#ff6910;color:white;text-shadow:none;display: none;">删除
+				</a>-->
 			</aside>
 		</script>
 
@@ -145,12 +145,10 @@
 								$(".delBtn").css("display", "block");
 								$(".delBtnAll").css("display", "block");
 								$("#cartData").find("h2").css("visibility", "visible");
-								$(".goOrder").css("display", "none");
 								$(this).html("完成");
 								$(".numberWidget").hide();
 							}, function() {
 								$(".delBtn").css("display", "none");
-								$(".delBtnAll").css("display", "none");
 								$("#cartData").find("h2").css("visibility", "visible");
 								$(".goOrder").css("display", "block");
 								$(this).html("编辑");
@@ -161,28 +159,50 @@
 							$(".delBtn").click(function() {
 								var delThis = $(this);
 								var delID = $(this).attr("data-id");
-								var deltext = $(this).attr("data-goodstext");
 								mui.confirm('确认删除这件商品吗？', '提示', ['取消', '确定'], function(e) {
 									if(e.index == 1) {
-										alert('执行删除')
+										mui.ajax(serverUrl+'/app/materialList/delete',{
+											data:{
+												userId:userId,
+												identityType:identityT,
+												materialListIds:delID,
+											},
+											dataType:'json',
+											headers: {"Authorization": oldToken},
+											type:'post',
+											timeout:10000,
+											success:function(data,type,xhr){ 
+												plus.nativeUI.closeWaiting();
+												console.log('删除',data);
+												if(data.code == 0 ){
+													var curCart = delThis.parentsUntil("#cartData");
+													delThis.parent().remove(); 
+													//判断该组商品是否删除完 
+													if(curCart.find("dd").length == 0) {
+														 curCart.remove(); 
+														if($('.cart').length==0) {
+															$('aside input').attr("checked", false);
+															mui('#bianji')[0].style.display = 'none';
+						        							mui('#dibu')[0].style.display = 'none';
+															mui('#cartData')[0].innerHTML = tipsCont;
+														}
+													}
+													 
+												}else{
+													mui.toast(data.message)
+												}
+												 
+											},
+											error:function(xhr,type,errorThrown){
+												plus.nativeUI.closeWaiting();
+												mui.toast(type)
+											}
+										});
 									}
 			
 								})
 							});
-							//删除选中的全部 
-							$(".delBtnAll").click(function(){
-								var ALLcheckLength = $("dd").find("input[type='checkbox']:checked").length;
-									if(ALLcheckLength == 0) {
-										mui.toast("您还未选择要删除的商品哦！")
-									} else {
-										mui.confirm('确认删除这' + ALLcheckLength + '件商品吗？', '提示', ['取消', '确定'], function(e) {
-											if(e.index == 1) {
-												alert('执行删除')
-											}
-				
-										})
-									}
-							});
+							
 							//遍历 单组下面的商品
 							function allCart() {
 								$(".cart").each(function() {
@@ -226,6 +246,35 @@
 							})
 							//数量选择 
 							$('.mui-numbox input').on('change', function() {
+								var number = $(this).val(); //当前数量
+								var goodsid = $(this).attr("data-id");//当前商品id
+								mui.ajax(serverUrl+'/app/materialList/edit/number',{
+									data:{
+										userId:userId,
+										identityType:identityT,
+										materialListId:goodsid,
+										qty:number,
+									},
+									dataType:'json',
+									headers: {"Authorization": oldToken},
+									type:'post',
+									timeout:10000,
+									success:function(data,type,xhr){ 
+										plus.nativeUI.closeWaiting();
+										console.log('加入购物车',data);
+										if(data.code == 0 ){
+											 
+										}else{
+											mui.toast(data.message)
+										}
+										 
+									},
+									error:function(xhr,type,errorThrown){
+										plus.nativeUI.closeWaiting();
+										mui.toast(type)
+										console.log('登录响应失败');
+									}
+								});
 								countFuc();
 			
 							})
@@ -236,16 +285,20 @@
 								if(ALLcheckLength == 0) {
 									mui.toast("您还未选择要购买的商品哦！")
 								} else {
+									var materialList = []
+									//存缓存
+									$("dd").find("input[type='checkbox']:checked").each(function(){
+										materialList.push({id:$(this).attr('data-id'),num:$(this).parent().parent().find('.mui-input-numbox').val(),isGift:false})
+									})
+
+									plus.storage.setItem('materialList',JSON.stringify(materialList));
+									console.log(plus.storage.getItem('materialList'));
+									
 									if(plus.storage.getItem('oldToken')) {
 										if(identityT == 0){
 											openview({
 												view:'page/order/chooseCustom.html',
 												id:'chooseCustom'
-											})
-										}else if(identityT == 2){
-											openview({
-												view:'page/order/order.html',
-												id:'order'
 											})
 										}else{
 											openview({

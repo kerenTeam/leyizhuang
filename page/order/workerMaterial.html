@@ -8,98 +8,13 @@
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link rel="stylesheet" type="text/css" href="../../css/mui.min.css" />
 		<link rel="stylesheet" href="../../css/resetY.css">
-		<link rel="stylesheet" type="text/css" href="../../css/commonY.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/commonY.css" />
 		<link rel="stylesheet" type="text/css" href="../../css/cart.css" />
 		<link rel="stylesheet" type="text/css" href="../../css/style.css" />
 		<link rel="stylesheet" type="text/css" href="../../css/configW.css" />
 		<link href="../../css/mui.picker.minY.css" rel="stylesheet" />
 		<link href="../../css/mui.poppicker.css" rel="stylesheet" />
 	</head>
-	<style type="text/css">
-			
-		#coupon .mui-checkbox,
-		.checkQuan .mui-checkbox,
-		.waypay .mui-checkbox {
-			position: absolute;
-			top: 50%;
-			margin-top: -18px;
-			right: 0;
-		}
-		
-		.mui-checkbox input[type=checkbox]:checked:before,
-		.mui-radio input[type=radio]:checked:before {
-			color: rgb(245, 60, 66);
-		}
-		
-		.mui-card {
-			border: 0;
-			margin: 0!important;
-		}
-		
-		.checkQuan {
-			padding: 2px 15px;
-			border: 1px solid #f53c42;
-			border-radius: 5px;
-			line-height: 18px;
-			margin: 5px 0;
-			position: relative;
-		}
-		
-		.checkQuan .mui-col-sm-3 {
-			width: 28%;
-			padding: 12px 5px;
-			border-right: 1px dotted #f53c42;
-		}
-		
-		.checkQuan .mui-col-sm-9 {
-			width: 72%;
-			padding: 12px 15px;
-		}
-		
-		.cred {
-			color: #f53c42;
-		}
-		
-		.dateLimit {
-			font-size: 12px;
-		}
-		
-		#sfzin {
-			width: -moz-calc(100% - 70px)!important;
-			width: -webkit-calc(100% - 70px)!important;
-			width: calc(100% - 70px)!important;
-			font-size: 12px;
-			padding: 0;
-			text-align: right;
-			background: none;
-			height: auto;
-			margin: 0;
-			line-height: 12px;
-			border: none;
-		}
-		
-		.sf:after {
-			height: 0px!important;
-		}
-		
-		
-		.mui-radio input[type=radio]:before {
-			font-size: 20px;
-		}
-		
-		.mui-radio input[type=radio] {
-			top: 8px;
-		}
-		
-		.charge {
-			color: coral;
-		}
-		.quanc{display: none;
-				width: 0.3rem;
-				margin-right: 0.1rem;
-				display: none;
-			}
-	</style>
 
 	<body>
 
@@ -205,7 +120,7 @@
 				</div>
 			</div>
 			<div style="clear: both;"></div>
-			<div id='cityResult' class="ui-alert pad10 afterBorder">配送时间</div>
+			<div id='cityResult' class="ui-alert pad10 afterBorder">配送时间 <span class="mui-pull-right">选择</span></div>
 			<div class="mui-input-row mui-checkbox mui-left afterBorder">
 				<label>是否业主收货</label>
 				<input name="checkbox1" value="Item 1" type="checkbox" checked>
@@ -213,87 +128,17 @@
 			<div class="pad10 activecl ft13 afterBorder">
 				温馨提示：若收货人为主家，系统将在出货打印单中自动隐藏折扣信息
 			</div>
-			<div class="pad_5 ft16 afterBorder">订单金额:<span class='mui-pull-right pad_r10'>¥500</span> </div>
-			<div class="pad_5 ft16 afterBorder">会员折扣:<span class='mui-pull-right pad_r10'>¥500</span></div>
-			<div class="pad_5 ft16 afterBorder">订单折扣:<span class='mui-pull-right pad_r10'>¥500</span></div>
-			<div class="pad_5 ft16 afterBorder">运费:<span class='mui-pull-right pad_r10'>¥500</span></div>
-			<div class="pad_5 ft16">上楼费:<span class='mui-pull-right pad_r10'>¥500</span></div>
-
+			<div>
+				备注：<textarea name="" id="" maxlength="100" cols="30" rows="4"></textarea>
+			</div>
 		</div>
-		<dl class="list">
-
-			<div id="quanData">
-			 
-					<div class="mui-card afterBorder" style="border: none!important;">
-						<ul class="mui-table-view">
-
-							<li class="mui-table-view-cell mui-collapse">
-								<a class="mui-navigate-right" style="padding: 10px;" href="#">抵用券 <b class="minuMoney cred" style="display: none;">-￥<span id="minuMoney"></span></b><span class="fr" style="margin-right: 15px;">选择</span></a>
-								<div class="mui-collapse-content">
-
-									<div class="checkQuan mui-row">
-										<div class="mui-col-sm-3">
-											<div>￥<big><b>100</b></big></div>
-											<div><small>全场通用</small></div>
-										</div>
-										<div class="mui-col-sm-9">
-											<div class="cred"><big>满减券</big> <span>全场通用减¥100</span>
-											</div>
-											<div class="dateLimit">
-												2016-09-10 ~ 2017-09-10内有效
-											</div>
-										</div>
-										<div class="mui-checkbox"><img src="../../images/xuanze.png" class="quanc" alt="" /></div>
-									</div>
-
-									<div class="checkQuan mui-row">
-										<div class="mui-col-sm-3">
-											<div><big><b>9</b></big>折</div>
-											<div><small>满300通用</small></div>
-										</div>
-										<div class="mui-col-sm-9">
-											<div class="cred"><big>折扣券</big> <span>8</span>折</div>
-											<div class="dateLimit">
-												2016-09-10 ~ 2017-09-10内有效
-											</div>
-
-										</div>
-										<div class="mui-checkbox"><img src="../../images/xuanze.png" class="quanc" alt="" /></div>
-									</div>
-
-								</div>
-							</li>
-						</ul>
-					</div>
-			<div class="pad10 ft14 afterBorder">产品券<span class='mui-pull-right pad_r10' onclick="productCoupon()">选择></span></div>
-				 
-				
-			</div>
-
-			<div id="coupon">
-				<dd class="dd-padding kv-line-r">
-					<h6>可以<span id="totalJfen" style="color: #F14A43;" id="totalJfen">111</span>乐币,抵用<span id="itMinus" style="color: #ff5f32;"><span>￥11</span></span></h6>
-					<div id="changeJf" class="mui-checkbox"><input name="checkbox" class="groupCheck" type="checkbox"></div>
-				</dd>
-
-				<dd class="dd-padding kv-line-r">
-					<h6>无可用HI豆</h6>
-					<div class="mui-checkbox"><input name="checkbox" disabled class="groupCheck" type="checkbox"></div>
-				</dd>
-			</div>
-
-		</dl>
-
+		
 		<!--bottom nav-->
 		<div style="height:1rem;"></div>
 		<aside class="btmNav" id="dibu">
-			<a class="dp" style="position: relative;color: #f63d43;">
-				<span style="color: #333333;">应付款：</span>¥<span class="totalMoney">0</span>元
-			</a>
-			<a class="goOrder dp" style="background:#f53c42;color:white;text-shadow:none;">去支付</a>
-
+			<a class="goOrder dp" style="background:#f53c42;color:white;text-shadow:none;">提交审核</a>
 		</aside>
-
+		<!--<button class="mui-btn-danger">提交审核</button>-->
 		<!--<%}%>-->
 		<!--</script>-->
 
@@ -322,17 +167,6 @@
 				}
 			})
 		}
-		
-		function productCoupon(){
-			openview({
-				view: '../personal/productCoupon.html',
-				id: 'productCoupon',
-				extrasobj: {
-					page: 'order'
-				}
-			})
-		}
-
 		mui.plusReady(function() {
 
 			//级联示例
@@ -370,40 +204,13 @@
 			var cityResult = document.getElementById('cityResult');
 			cityResult.addEventListener('tap', function(event) {
 				cityPicker.show(function(items) {
-					cityResult.innerText = "配送时间:" + items[0].text + " " + items[1].text;
+					$('#cityResult span').html(items[0].text + " " + items[1].text)
 					//返回 false 可以阻止选择框的关闭
 					//return false;
 				});
 			}, false);
 			//-----------------------------------------
-			
-			//券
-			$(".checkQuan").click(function() {
-					  
-				var qid = $(this).attr("data-id");
-				var qminus = $(this).attr("data-minus");
-				$(this).siblings().find(".quanc").css("display", "none");
-				quan = 0;
-				if($(this).find(".quanc").css("display") == "block") {
-					$(this).find(".quanc").css("display", "none");
-					$("#minuMoney").html(0);
-					$(".minuMoney").css("display", "none");
 
-				} else {
-					$(this).find(".quanc").css("display", "block");
-					if(qid == 1) {
-						quan = parseFloat(qminus)
-					}
-					if(qid == 2) {
-						quan = parseFloat(allGroup * (1 - parseFloat(qminus))).toFixed(2);
-					}
-					$("#minuMoney").html(quan);
-					$(".minuMoney").css("display", "inline-block");
-
-				};
-				calculate();
-			})
-			
 			window.addEventListener('refresh', function(event) {
 				cartload();
 			});
@@ -415,23 +222,6 @@
 			}
 
 		})
-
-		Array.prototype.unique1 = function() {
-			var res = [this[0]];
-			for(var i = 1; i < this.length; i++) {
-				var repeat = false;
-				for(var j = 0; j < res.length; j++) {
-					if(this[i] == res[j]) {
-						repeat = true;
-						break;
-					}
-				}
-				if(!repeat) {
-					res.push(this[i]);
-				}
-			}
-			return res;
-		}
 	</script>
 
 </html>

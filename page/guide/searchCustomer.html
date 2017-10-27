@@ -15,6 +15,7 @@
 		<link rel="stylesheet" type="text/css" href="../../css/configW.css" />
 		<script type="text/javascript" src="../../js/jquery.min.js"></script>
 		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/default.js" type="text/javascript" charset="utf-8"></script>
 		<!--引入模板引擎-->
 		<script src="../../js/artTemplate-native.js"></script>
 	</head>
@@ -389,7 +390,7 @@
 				var oldToken = plus.storage.getItem("oldToken");
 				var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
 
-				mui.ajax('http://119.23.149.7:9999/app/user/search/customer', {
+				mui.ajax(serverUrl+'/app/user/search/customer', {
 					data: {
 						identityType: identityT,
 						keywords: words,

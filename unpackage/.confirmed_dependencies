@@ -361,7 +361,8 @@
 			"images/center/phone.svg",
 			"css/center.css",
 			"js/jquery.min.js",
-			"js/default.js"
+			"js/default.js",
+			"img/editset.png"
 		],
 		"refer": [
 			"page/collect.html",
@@ -392,7 +393,9 @@
 			"fonts/mui.ttf",
 			"img/check1.png",
 			"img/check2.png",
-			"css/style.css"
+			"css/style.css",
+			"css/configW.css",
+			"images/blankCart.png"
 		],
 		"refer": [
 			"login.html",
@@ -598,7 +601,8 @@
 			"js/artTemplate-native.js",
 			"js/mui.min.js",
 			"js/statusBar.js",
-			"fonts/mui.ttf"
+			"fonts/mui.ttf",
+			"img/check2.png"
 		],
 		"refer": [
 			"page/personal/address-edit.html",
@@ -663,7 +667,8 @@
 			"js/default.js",
 			"css/commonY.css",
 			"js/artTemplate-native.js",
-			"img/Spinner.svg"
+			"img/Spinner.svg",
+			"js/jquery.min.js"
 		],
 		"refer": []
 	},
@@ -755,7 +760,8 @@
 			"js/artTemplate-native.js"
 		],
 		"refer": [
-			"page/order/order.html"
+			"page/order/order.html",
+			"page/order/workerMaterial.html"
 		]
 	},
 	"page/order/order.html": {
@@ -770,7 +776,22 @@
 			"js/jquery_cart.js",
 			"js/default.js",
 			"img/check2.png",
-			"js/artTemplate-native.js"
+			"js/artTemplate-native.js",
+			"css/configW.css",
+			"images/center/right.svg",
+			"page/order/%3C%\u003ddataList[i].picUrl%%3E",
+			"js/jquery.min.js",
+			"js/mui.picker.min.js",
+			"js/mui.poppicker.js",
+			"css/mui.picker.minY.css",
+			"css/mui.poppicker.css",
+			"css/commonY.css",
+			"images/xuanze.png"
+		],
+		"refer": [
+			"page/order/materialList.html",
+			"page/personal/address.html",
+			"page/personal/productCoupon.html"
 		]
 	},
 	"page/order/chooseCustom.html": {
@@ -784,6 +805,44 @@
 		],
 		"refer": [
 			"page/order/chooseGift.html"
+		]
+	},
+	"page/order/materialList.html": {
+		"resources": [
+			"css/resetY.css",
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"img/check1.png",
+			"css/mui.min.css",
+			"js/jquery_cart.js",
+			"css/style.css",
+			"css/cart.css",
+			"js/default.js",
+			"css/configW.css",
+			"img/check2.png",
+			"js/artTemplate-native.js"
+		]
+	},
+	"page/order/workerMaterial.html": {
+		"resources": [
+			"css/resetY.css",
+			"js/mui.picker.min.js",
+			"js/jquery.min.js",
+			"js/mui.poppicker.js",
+			"images/center/right.svg",
+			"css/mui.min.css",
+			"css/mui.picker.minY.css",
+			"css/style.css",
+			"css/cart.css",
+			"css/mui.poppicker.css",
+			"css/configW.css",
+			"css/commonY.css",
+			"fonts/mui.ttf",
+			"img/check1.png",
+			"js/artTemplate-native.js",
+			"js/mui.min.js",
+			"js/default.js",
+			"img/check2.png"
 		]
 	}
 }
