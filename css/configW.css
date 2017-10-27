@@ -25,7 +25,9 @@
 .pad_t10 {
 	padding-top: 0.1rem;
 }
-
+.pad_5{
+	padding: 10px 0 10px 10px !important;
+}
 .pad_b10 {
 	padding-bottom: 0.1rem;
 }
@@ -33,7 +35,9 @@
 .pad_l10 {
 	padding-left: 0.1rem;
 }
-
+.pad20 {
+	padding-left: 0.1rem;
+}
 .pad_r10 {
 	padding-right: 0.1rem;
 }

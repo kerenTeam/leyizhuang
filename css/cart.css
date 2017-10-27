@@ -1726,7 +1726,7 @@ dt .mui-checkbox {
 }
 .cart{
 	border-top: 1px #eee solid;
-	margin-bottom: 0.1rem;
+	margin-bottom: 5px;
 }
 .botCheck{
 	position: absolute;

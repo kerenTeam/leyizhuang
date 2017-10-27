@@ -765,7 +765,8 @@
 					"images/center/phone.svg",
 					"css/center.css",
 					"js/jquery.min.js",
-					"js/default.js"
+					"js/default.js",
+					"img/editset.png"
 				],
 				"refer": [
 					"page/collect.html",
@@ -801,7 +802,9 @@
 					"iconfont/iconfont.ttf",
 					"iconfont/iconfont.svg",
 					"js/default.js",
-					"css/style.css"
+					"css/style.css",
+					"css/configW.css",
+					"images/blankCart.png"
 				],
 				"refer": [
 					"login.html",
@@ -1117,7 +1120,8 @@
 					"iconfont/iconfont.eot",
 					"iconfont/iconfont.woff",
 					"iconfont/iconfont.ttf",
-					"iconfont/iconfont.svg"
+					"iconfont/iconfont.svg",
+					"js/jquery.min.js"
 				],
 				"refer": [],
 				"priority": 0
@@ -1236,9 +1240,23 @@
 					"js/jquery_cart.js",
 					"js/default.js",
 					"img/check2.png",
-					"js/artTemplate-native.js"
+					"js/artTemplate-native.js",
+					"css/configW.css",
+					"images/center/right.svg",
+					"page/order/%3C%\u003ddataList[i].picUrl%%3E",
+					"js/jquery.min.js",
+					"js/mui.picker.min.js",
+					"js/mui.poppicker.js",
+					"css/mui.picker.minY.css",
+					"css/mui.poppicker.css",
+					"css/commonY.css",
+					"images/xuanze.png"
 				],
-				"refer": [],
+				"refer": [
+					"page/order/materialList.html",
+					"page/personal/address.html",
+					"page/personal/productCoupon.html"
+				],
 				"priority": 0
 			},
 			"page/order/chooseCustom.html": {
@@ -1253,6 +1271,24 @@
 				"refer": [
 					"page/order/chooseGift.html"
 				],
+				"priority": 0
+			},
+			"page/order/materialList.html": {
+				"resources": [
+					"css/resetY.css",
+					"js/mui.min.js",
+					"fonts/mui.ttf",
+					"img/check1.png",
+					"css/mui.min.css",
+					"js/jquery_cart.js",
+					"css/style.css",
+					"css/cart.css",
+					"js/default.js",
+					"css/configW.css",
+					"img/check2.png",
+					"js/artTemplate-native.js"
+				],
+				"refer": [],
 				"priority": 0
 			}
 		},

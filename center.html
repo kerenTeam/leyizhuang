@@ -137,7 +137,7 @@
 	<body>
 		<div class="clearfloat box-s box-ss" id="userBox">
 			<!--src="img/morentouxiang.jpg"/-->
-			<div id="beijing"><img id="mypic1" src="https://b-ssl.duitang.com/uploads/item/201710/12/20171012232816_GX5iw.thumb.224_0.jpeg"></div>
+			<div id="beijing"><img id="mypic1" src="img/editset.png"></div>
 			<div id="beijing2"></div>
 			<div id="fixdtop"></div>
 			<div class="content clearfloat fl mui-row white">
@@ -498,6 +498,9 @@
 										
 										if(data.content.picUrl) {
 											$('#mypic').attr('src', data.content.picUrl)
+										}else{
+											$('#mypic').attr('src', 'img/editset.png')
+											
 										}
 										if(data.content.mobile) {
 											plus.storage.setItem('mobile',data.content.mobile);
