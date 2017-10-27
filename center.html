@@ -16,7 +16,7 @@
 			body {
 				margin: 0;
 			}
-			
+
 			body::-webkit-scrollbar {
 				/*滚动条*/
 				width: 0!important;
@@ -27,7 +27,7 @@
 				color: #FFFFFF !important;
 				width: 100%;
 			}
-			
+
 			.myInfo {
 				width: 85px;
 				height: 85px;
@@ -35,11 +35,11 @@
 				border-radius: 50%;
 				border: 2px solid #fff;
 			}
-			
+
 			.denlu {
 				font-size: 15px;
 			}
-			
+
 			/*修改*/
 			.denlu {
 				/*padding-left: 20px;*/
@@ -79,7 +79,7 @@
 				padding: 4px 0;
 				font-size: 14px;
 			}
-			
+
 			#beijing {
 				position: absolute;
 				z-index: 10;
@@ -89,13 +89,13 @@
 				overflow: hidden;
 				-webkit-filter: blur(5px);
 			}
-			
+
 			#beijing img {
 				width: 100%;
 				position: relative;
 				top: -40%;
 			}
-			
+
 			#beijing2 {
 				position: absolute;
 				z-index: 20;
@@ -104,12 +104,12 @@
 				top: 0;
 				background-color: rgba(241, 63, 63, 0.76);
 			}
-			
+
 			#userBox .content {
 				position: relative;
 				z-index: 30;
 			}
-			
+
 			#numjifen {
 				z-index: 99;
 				font-weight: 500;
@@ -117,7 +117,7 @@
 				line-height: 20px;
 				font-size: 14px;
 			}
-			
+
 			body {
 				background-color: #f8f8f8 !important;
 				width: 100%;
@@ -146,7 +146,7 @@
 					<p class="centop">
 						<div class="denlu">用户名：<span id="userName" style="z-index: 99;"></span></div>
 						<div class="denlu" id="onlyPs">配送数量：<span id="psNumber" style="z-index: 99;"></span></div>
-						<div class="denlu" id="onlyGuide">手机号：<span id="guidesPhone"></span> <span id='bindPhone' style="background-color: orange;color: white;font-size: 10px;padding: 2px;border-radius: 3px;display: none;">绑定手机号</span></div> 
+						<div class="denlu" id="onlyGuide">手机号：<span id="guidesPhone"></span> <span id='bindPhone' style="background-color: orange;color: white;font-size: 10px;padding: 2px;border-radius: 3px;display: none;">绑定手机号</span></div>
 						<div class="denlu" id="onlyCust">乐币:<span id="coin"></span> 账户:<span id="accoutMoney"></span><br />灯号:<span id="dengh"></span> 导购:<span id="guideName"></span><a id="guideMobile" style="display: none;" href=""><img style="width: 15px;margin-left: 5px;" src="images/center/phone.svg"/></a></div>
 						<div class="denlu" id="onlymange">账户:<span id="manageMoney"></span></div>
 					</p>
@@ -190,7 +190,7 @@
 					</div>
 					<div class="">
 						设置
-					</div> 
+					</div>
 					<div onclick="myCoupon()">
 						优惠券
 					</div>
@@ -213,7 +213,7 @@
 				<div class="flexRow2">
 					<div class="" onclick="goCollect()">
 						商品收藏
-					</div> 
+					</div>
 					<div class="">
 						客服
 					</div>
@@ -225,7 +225,7 @@
 					</div>
 					<div class="">
 						设置
-					</div> 
+					</div>
 					<div onclick="toMyCustomer()">
 						我的顾客
 					</div>
@@ -266,8 +266,8 @@
 					</div>
 					<div class="">
 						设置
-					</div> 
-					<div onclick="">
+					</div>
+					<div onclick="listCheck()">
 						料单审核
 					</div>
 					<div onclick="goworker()">
@@ -276,7 +276,7 @@
 					<div class="">
 						我的钱包
 					</div>
-					 
+
 					<div onclick="backMoney()">
 						信用额度
 					</div>
@@ -317,9 +317,9 @@
 				</div>
 			</div>
 		</div>
-		
-		
-		
+
+
+
 		<script type="text/javascript">
 			window.onscroll = function() {
 				if(document.body.scrollTop > 25) {
@@ -342,49 +342,56 @@
 			function goCollect(){
 				openview({
 					view:'page/personal/collect.html',
-					id: 'collect', 
-				}) 
+					id: 'collect',
+				})
+			}
+			//料单审核
+			function listCheck(){
+				openview({
+					view:'page/manager/listCheck.html',
+					id: 'listCheck',
+				})
 			}
 			//顾客 优惠券
 			function myCoupon(){
 				openview({
 					view:'page/personal/myCoupon.html',
-					id: 'myCoupon', 
+					id: 'myCoupon',
 				})
 			}
 			// 产品券
 			function productCoupon(){
 				openview({
 					view:'page/personal/productCoupon.html',
-					id: 'productCoupon', 
+					id: 'productCoupon',
 				})
 			}
 			//消息
 			function goMessage(){
 				openview({
 					view:'page/personal/message.html',
-					id: 'message', 
-				}) 
+					id: 'message',
+				})
 			}
             //导购->我的导购
 			function toMyCustomer(){
 				openview({
 					view:'page/guide/myCustomer.html',
-					id: 'myCustomer', 
-				}) 
+					id: 'myCustomer',
+				})
 			}
 			//经理-> 工人列表
 			function goworker(){
 				openview({
 					view:'page/manager/workerList.html',
-					id: 'workerList', 
+					id: 'workerList',
 				})
 			}
 			//经理 现金返利
 			function backMoney(){
 				openview({
 					view:'page/manager/backMoney.html',
-					id: 'backMoney', 
+					id: 'backMoney',
 				})
 			}
 			//导购 信用额度
@@ -397,12 +404,12 @@
 			mui.plusReady(function() {
 				document.addEventListener('refresh', function() {
 					Refresh();
-				}) 
+				})
 				Refresh();
 				function Refresh() { //刷新
-					//获取缓存 
+					//获取缓存
 					var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
-					var userId = plus.storage.getItem('$userId'); 
+					var userId = plus.storage.getItem('$userId');
 					var oldToken = plus.storage.getItem('oldToken');
 					//签到
 					window.qian = function(){
@@ -415,7 +422,7 @@
 							headers: {"Authorization": oldToken},
 							type:'post',
 							timeout:10000,
-							success:function(data,type,xhr){ 
+							success:function(data,type,xhr){
 								plus.nativeUI.closeWaiting();
 								console.log('列表',data);
 								if(data.code == 0 ){
@@ -429,7 +436,7 @@
 								}else if(data.code == -1 ){
 									mui.toast(data.message)
 								}
-								 
+
 							},
 							error:function(xhr,type,errorThrown){
 								plus.nativeUI.closeWaiting();
@@ -438,17 +445,17 @@
 							}
 						});
 					}
-					
+
 					loadmyinfo();
 					if(identityT == 0 || identityT == 4 || identityT == 5){//导购
 						$('#onlyCust,.qiandao,.centerList,#onlyPs,#onlymange').css('display','none')
 						$('#onlyGuide,.orderType,.guiderN').css('display','');
 					}else if(identityT == 6){//顾客
 						$('#onlyGuide,#onlymange,.centerList,.centerList,#onlyPs').css('display','none');
-						$('#onlyCust,.orderType,.customerN,.qiandao').css('display','')						
+						$('#onlyCust,.orderType,.customerN,.qiandao').css('display','')
 					}else if(identityT == 3){//工人
 						$('#onlyGuide,#onlyCust,.centerList,.orderType,#onlymange,.qiandao,#onlyPs').css('display','none');
-						$('.workerN').css('display','block'); 
+						$('.workerN').css('display','block');
 					}else if(identityT == 2){//项目经理
 						$('.centerList,#onlyGuide,#onlyCust,#onlyPs,.qiandao').css('display','none');
 						$('.orderType,.manageN,#onlymange').css('display','');
@@ -456,7 +463,7 @@
 						$('.centerList,.orderType,#onlymange,#onlyCust,.qiandao').css('display','none');
 						$('.distributionN,#onlyPs,#onlyGuide').css('display','');
 					}
-					
+
 					/*设置*/
 					mui('.shezhi')[0].addEventListener('tap',function(){
 						openview({
@@ -495,7 +502,7 @@
 										}else{
 											$('#userName').html(data.content.number)
 										}
-										
+
 										if(data.content.picUrl) {
 											$('#mypic').attr('src', data.content.picUrl)
 										}
@@ -549,10 +556,10 @@
 								console.log('登录响应失败');
 							}
 						});
-						
+
 
 					}
-				} //刷新	
+				} //刷新
 			});
 		</script>
 

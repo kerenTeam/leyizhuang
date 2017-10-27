@@ -1,0 +1,81 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>选择顾客2</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<script src="../../js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/mui.min.js"></script>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav" style="padding-right: 15px;">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">选择顾客</h1>
+		</header>
+		<div class="mui-content" >
+			<div style="padding: 15px;">请输入会员手机号 <button>导入通讯录</button><br />
+			<input type="text" id="bindPhone" value="17781697856" style="display: inline-block;width: 100%;" placeholder="输入导购电话号码" /></div>
+			<div style="text-align: center;">
+				<button type="button" data-loading-icon-position="right" id="bindGuide" class="mui-btn mui-btn-primary mui-btn-outlined">为改顾客代购</button>
+			</div>
+		</div>
+
+
+		<script src="../../js/default.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			mui.init();
+			mui.plusReady(function(){
+				var reg_phone = /^1((3|4|5|8|7){1}\d{1}|70)\d{8}$/;//手机号正则;
+				var account = $('#bindPhone');
+				//获取缓存
+				var userId = plus.storage.getItem('$userId');
+				var oldToken = plus.storage.getItem("oldToken");
+				var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
+
+				$('#bindGuide').click(function(){
+					if(!reg_phone.test(account.val())){
+						mui.toast('请输入正确的手机号');
+					}else{
+						console.log(mui('#bindGuide'));
+						mui('#bindGuide').button('loading');
+						mui.ajax(serverUrl+'/app/user/search/customer',{
+							data:{'userId':1,'keywords':'18160010728','identityType':0},
+							dataType:'json',
+							type:'post',
+							timeout:1000,
+							headers:{"Authorization":oldToken},
+							success:function(data,type,xhr){
+								console.log(data);
+								var timeLoad = setInterval(function(){
+									clearTimeout(timeLoad),timeLoad = null;
+									mui('#bindGuide').button('reset');
+									if(data.code == 0){
+										openview({
+											view: 'pzOrder.html',
+											id: 'pzOrder',
+											extrasobj:{oneId:1}
+										})
+									}else{
+										mui.toast(data.message);
+									}
+								},500)
+							},
+							error:function(xhr,type,errorThrown){
+								console.log('响应失败  !');
+							}
+						});
+
+					}
+
+				})
+
+			})
+
+
+		</script>
+	</body>
+
+</html>

@@ -331,7 +331,7 @@
 											mui.fire(plus.webview.getWebviewById('page/goodList.html'), 'refresh');
 											mui.fire(plus.webview.getWebviewById('center.html'), 'refresh');
 											mui.fire(plus.webview.getWebviewById('cart.html'), 'refresh');
-											
+
 											util.initSubpage();
 										}
 									},
@@ -533,11 +533,23 @@
 			});
 		</script>
 		<script>
-			function paizhaoOrder(){
-				openview({
-					view: 'page/order/pzOrder.html',
-					id: 'pzOrder',
+			function paizhaoOrder(){//拍照下单
+				mui.plusReady(function(){
+					var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
+					if(identityT == 6){//导购
+						openview({
+							view: 'page/order/chooseCustom2.html',
+							id: 'chooseCustom2',
+						})
+					}else{
+						openview({
+							view: 'page/order/pzOrder.html',
+							id: 'pzOrder',
+						})
+					}
 				})
+
+
 			}
 			function goSearch() {
 				openview({

@@ -71,6 +71,9 @@
 					温馨提示：若收货人为主家，系统将在出货打印单中自动隐藏折扣信息
 				</div>
 		    </div>
+		    <div id="">
+
+		    </div>
 		    <div class="beizhu">
 		    		<h5>备注</h5>
 				<textarea name="" rows="" placeholder="备注请输入备注信息" cols=""></textarea>
@@ -161,22 +164,15 @@
 		 	var userId = plus.storage.getItem('$userId');
 			var oldToken = plus.storage.getItem("oldToken");
 			var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
-		 	if(Apic.length){//要传图片
-			 	if(time1 == null){//必须要图片全部处理完毕  才行    (开始发布)
-			 		plus.nativeUI.showWaiting();
-			 		var content = mui('#textCon')[0].value;
-			 		releaseData();
-			 	}else{
-			 		mui.toast('图片还在处理中');
-			 	}
-		 	}else{//不传图片
-			 	if(!textCon.value){
-			 		mui.toast('请选择至少一张图片');
-			 	}else{//(开始发布)
-			 		plus.nativeUI.showWaiting();
-			 		var content = mui('#textCon')[0].value;
-			 		releaseData();
-			 	}
+			var oneId = plus.webview.currentWebview().oneId;//导购的 客户id
+
+
+		 	if(!Apic.length){
+		 		mui.toast('请选择至少一张图片');
+		 	}else if(time1 != null){
+		 		mui.toast('图片还在处理中');
+		 	}else{
+		 		releaseData();
 		 	}
 
 		 	//发送数据
@@ -202,14 +198,13 @@
 
 					}
 				);
-
 				task.setRequestHeader('Authorization',oldToken);
 				task.addData("userId",userId);
 				task.addData("identityType",identityT);
 				task.addData("deliveryId",'1');//地址
 				task.addData("isOwnerReceiving",'1');//是否主家
 				task.addData("remark",'备注');//备注
-				task.addData("customerId",'1');//导购的 客户id
+				task.addData("customerId",oneId);//导购的 客户id
 
 				if(Apic.length){
 					console.log(Apic);
