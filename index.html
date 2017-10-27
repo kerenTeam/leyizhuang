@@ -123,7 +123,7 @@
 					<img src="images/y.svg" alt="" />油
 				</div>
 			</div>
-			<div style="text-align:center;padding:20px 10px 0">
+			<div style="text-align:center;padding:20px 10px 0" onclick="pzPrderTest()">
 				<img style="vertical-align:middle;margin:0 5px;width:25px" src="images/activity.svg" />最新活动
 			</div>
 
@@ -164,7 +164,7 @@
 				<div class="gxb">
 					<div class="imgb" style="background-color:#be8dbd"><img src="images/2.svg" alt="" /></div>工序包下单
 				</div>
-				<div id="">
+				<div id="paizhaoOrder" onclick="paizhaoOrder()">
 					<div class="imgb" style="background-color:#7cba59"><img src="images/3.svg" alt="" /></div>拍照下单
 				</div>
 
@@ -189,7 +189,7 @@
 				<div class="gxb">
 					<div class="imgb" style="background-color:#be8dbd"><img src="images/2.svg" alt="" /></div>工序包下单
 				</div>
-				<div id="">
+				<div id="paizhaoOrder" onclick="paizhaoOrder()">
 					<div class="imgb" style="background-color:#7cba59"><img src="images/3.svg" alt="" /></div>拍照下单
 				</div>
 				<div>
@@ -464,12 +464,17 @@
 			});
 		</script>
 		<script>
-			var Spagenum = 2; //实到页数
+	        var Spagenum = 2; //实到页数
 			var Ypagenum = 1; //应到页数
+			function pzPrderTest(){
+				openview({
+					view: 'page/order/pzOrderTest.html',
+				})
+			}
 			function paizhaoOrder(){//拍照下单
 				mui.plusReady(function(){
 					var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
-					if(identityT == 6){//导购
+					if(identityT == 0){//导购
 						openview({
 							view: 'page/order/chooseCustom2.html',
 							id: 'chooseCustom2',
@@ -585,8 +590,8 @@
 				var loadNum2 = 0;
 				clearInterval(timeSign);
 				timeSign = setInterval(Sign, 5000000); //两小时自动更新一次token
-				
-				
+
+
 				function Sign() { //登录方法
 					//设置默认token
 					if(!plus.storage.getItem('oldToken')) { //没有用户token
@@ -625,7 +630,7 @@
 											mui.fire(plus.webview.getWebviewById('page/goodList.html'), 'refresh');
 											mui.fire(plus.webview.getWebviewById('center.html'), 'refresh');
 											mui.fire(plus.webview.getWebviewById('cart.html'), 'refresh');
-											
+
 											util.initSubpage();
 										}
 									},

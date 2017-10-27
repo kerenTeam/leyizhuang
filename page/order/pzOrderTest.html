@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<title>拍照下单</title>
+		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, width=device-width">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-touch-fullscreen" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="format-detection" content="telephone=no">
+		<meta name="format-detection" content="address=no">
+		<link rel="stylesheet" type="text/css" href="../../css/commonY.css">
+		<link rel="stylesheet" type="text/css" href="../../css/mui.min.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/config.css"/>
+	</head>
+	<style type="text/css">
+		.disbg{border:none}
+		.uppics{padding:15px}
+		.uppics div.onepic img{width:4.5rem;height:4.5rem;display:inline-block;margin:0 5px;}
+		.uppics div.onepic input{width:0;height:0;position:absolute;outline:0}
+		#fangshi{background-color: #eee;padding-top: 8px;}
+		.mui-checkbox, .mui-radio { display: inline-block;}
+		#fangshi span{line-height: 40px;float: left;}
+		.dizhis{padding: 10px;background-color: #ccc;}
+		.dizhis div{padding:  5px 0;}
+		.isYezhu{background-color: #eee;}
+		.isYezhu .tishi{color: red;}
+		.beizhu{margin-top: 30px;}
+
+	</style>
+
+	<body style="background-color: white;">
+		<header class="mui-bar mui-bar-nav" id="header">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left bigSize back"></a>
+			<h1 class="mui-title findUser">拍照下单</h1>
+		</header>
+		<script src="../../js/statusBar.js"></script><!--状态栏-->
+
+		<div id="main">
+
+			<div class="uppics clearfix" id="uppics2">
+		        <div class="onepic">
+		            <img id="nowpic" onclick="showAction()" src="../../img/addpic.png">
+		            <p style="padding-left: 5px;">添加照片</p>
+		        </div>
+		    </div>
+
+		    <div id="" style="text-align: center;">
+		    		<button type="button" class="mui-btn  mui-btn-primary baocun">保存</button>
+		    </div>
+
+
+		</div>
+
+		<div id='container' style="display:none"></div>
+	</body>
+<script type="text/javascript" src="../../js/jquery.min.js"></script>
+<script src="../../js/mui.min.js"></script>
+<script src="../../js/default.js"></script>
+<script src="../../js/common.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/image-new.js" type="text/javascript" charset="utf-8"></script>
+
+<!--引入模板引擎-->
+<script src="../../js/artTemplate-native.js"></script>
+<script type="text/javascript">
+	//从相册中选择图片 开始
+	var Apic = [];//图片存放数组
+	var lfs=null;// 保留上次选择图片列表
+	var time1 = null;
+
+	function getImage(){//拍照并保存(暂时搁置)
+		var cmr = plus.camera.getCamera();
+		cmr.captureImage( function ( path ) {
+			plus.io.resolveLocalFileSystemURL(path,function(entry){
+				//把拍摄图片的路径转化成 本地文件url
+				path = plus.io.convertLocalFileSystemURL(path);
+				if(0!=path.indexOf("file://")){
+					path="file://"+path;
+				}
+	    		var nowpic = Math.random().toString(36).substr(2) + '.jpg';
+	    		var endpic = path.split('.')[0]+"/"+nowpic;
+				plus.zip.compressImage({//压缩方法
+					src:path,
+					dst:endpic,
+					overwrite:true,
+					quality:30
+				},
+				function() {
+					showImg(endpic);
+					Apic = [];
+					Apic.push(endpic);
+				},function(error) {
+					mui.toast('图片获取错误，请重试');
+				});
+			});
+		}, function ( e ) {
+		}, {filename:"_doc/gallery/",index:1} );
+	}
+
+	function galleryImgsSelected(){//从相册中选择图片
+		mui.plusReady(function(){
+		    plus.gallery.pick( function(e){
+		    	//初始化
+		    	mui('.onepic')[0].innerHTML = '<img id="nowpic" onclick="showAction()" src="../../img/addpic.png">';
+		    	Apic = [];
+		    	//初始化结束
+		    	lfs=e.files;
+		    	clearInterval(time1);
+		    	var indexNum = 0;
+		    	var indexMax = e.files.length - 1;
+		    	e.files.forEach(function(){
+		    		$('.onepic').prepend('<img onclick="showAction()" style="width：4.5rem;height:4.5rem;display:inline" src="../../img/Spinner.svg"/>')
+		    	})
+		    	time1 = setInterval(function(){
+		    		console.log(time1);
+		    		if(0!=e.files[indexNum].indexOf("file://")){
+						e.files[indexNum]="file://"+e.files[indexNum];//图片地址
+					}
+		    		if(indexNum == indexMax){//全部压缩完毕
+		    			clearInterval(time1);
+						time1 = null;
+		    		}
+		    		var nowpic = Math.random().toString(36).substr(2) + '.jpg';//随机字符串
+		    		var endpic = e.files[indexNum].split('.')[0]+"/" +nowpic;
+	    			plus.zip.compressImage({
+						src:e.files[indexNum],
+						dst:endpic,
+						overwrite:true,
+						quality:30
+					},
+					function(obj) {
+						console.log(obj)
+						Apic.push(endpic);
+						showImg(endpic,indexNum);
+					},function(error) {
+						mui.toast('图片获取错误，请重试');
+					});
+		    		indexNum ++;
+
+		    	},500)
+		   }, function ( e ) {
+		    },{filter:"image",multiple:true,maximum:3,selected:lfs,system:false,onmaxed:function(){//保存选择记录
+				plus.nativeUI.alert('最多选择3张图片');
+		    }});
+			function showImg(url,indexNum){//显示图片
+				if(0!=url.indexOf("file://")){
+					url="file://"+url;
+				}
+				document.getElementsByClassName('onepic')[0].getElementsByTagName('img')[indexNum-1].src = url;
+				$('.onepic p').css('display','none');
+			}
+		})
+	}
+	//从相册中选择图片结束
+
+
+	//发送 发布
+	mui('.baocun')[0].addEventListener('tap',function(){
+
+	})
+	function showAction(){
+		mui.plusReady(function(){
+			plus.nativeUI.actionSheet({
+				cancel: "取消",
+				buttons: [{
+					title: "相册选择"
+				}, {
+					title: '拍照'
+				}]
+			},
+			function(e) {
+				if (e.index == 1) { //点击从相册选择
+					galleryImgsSelected();
+				} else if (e.index == 2) {
+					getImage();
+				}
+			})
+
+		})
+	}
+
+
+
+</script>
+
+<!--弃用js(还有参考价值)-->
+<script type="text/javascript">
+
+
+
+</script>
+</html>
