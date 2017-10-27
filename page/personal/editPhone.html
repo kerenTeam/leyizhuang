@@ -104,6 +104,7 @@
 											 mui.toast(data.message); 
 										}else if(data.code == 0){
 											plus.nativeUI.closeWaiting();
+											mui.fire(plus.webview.getWebviewById('center.html'),'refresh');
 											mui.toast('修改成功'); 
 											mui.back();
 										}else{

@@ -205,7 +205,7 @@
 				</div>
 			</div>
 			<div style="clear: both;"></div>
-			<div id='cityResult' class="ui-alert pad10 afterBorder">配送时间</div>
+			<div id='cityResult' class="ui-alert pad10 afterBorder">配送时间 <span class="mui-pull-right">选择</span></div>
 			<div class="mui-input-row mui-checkbox mui-left afterBorder">
 				<label>是否业主收货</label>
 				<input name="checkbox1" value="Item 1" type="checkbox" checked>
@@ -370,7 +370,7 @@
 			var cityResult = document.getElementById('cityResult');
 			cityResult.addEventListener('tap', function(event) {
 				cityPicker.show(function(items) {
-					cityResult.innerText = "配送时间:" + items[0].text + " " + items[1].text;
+					$('#cityResult span').html(items[0].text + " " + items[1].text)
 					//返回 false 可以阻止选择框的关闭
 					//return false;
 				});

@@ -214,7 +214,9 @@
       "page/goodList.html",
       "js/app.js",
       "page/tab-webview-subpage-contact.html",
-      "js/default.js"
+      "js/default.js",
+      "css/configW.css",
+      "img/balls.svg"
     ],
     "refer": [
       "html/tab-webview-subpage-chat.html",
@@ -235,7 +237,9 @@
       "page/goodsInfo.html",
       "page/wallet.html",
       "reg.html",
-      "page/guide/guideCredit.html"
+      "page/guide/guideCredit.html",
+      "page/tradeList.html",
+      "page/tradeSchoolLnfo.html"
     ]
   },
   "page/gxbList.html": {
@@ -843,6 +847,33 @@
       "js/mui.min.js",
       "js/default.js",
       "img/check2.png"
+    ]
+  },
+  "page/tradeList.html": {
+    "resources": [
+      "js/mui.min.js",
+      "css/mui.min.css",
+      "js/jquery.citys.js",
+      "img/balls.svg",
+      "js/jquery.min.js",
+      "fonts/mui.ttf",
+      "js/default.js",
+      "js/artTemplate-native.js",
+      "css/configW.css"
+    ],
+    "refer": [
+      "page/tradeSchoolLnfo.html"
+    ]
+  },
+  "page/tradeSchoolLnfo.html": {
+    "resources": [
+      "css/mui.min.css",
+      "js/jquery.min.js",
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "js/default.js",
+      "js/artTemplate-native.js",
+      "css/configW.css"
     ]
   }
 }
