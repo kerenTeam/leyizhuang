@@ -1,10 +1,32 @@
 /*自定义部分*/
 /*选择图片*/
+.newActionWrap{overflow: hidden;position: relative;
+    left: -2%;}
+.newAction, .newAction2{    display: inline-block;
+    width: 33%;
+    height: calc(100vw * 0.33);
+    float: left;
+    position: relative;}
+.newAction img, .newAction2 img{
+	width: 93%;
+    height: 93%;
+    display: inline-block;
+    margin-top: 11%;
+    margin-left: 11%;}
+ .newAction span{
+ 	position: absolute;
+    right: -4%;
+    top: 11%;
+    font-size: 32px;
+    background-color: rgba(0, 0, 0, 0.4);
+    color: #fff;
+    font-weight: 500;
+ }
 /* 清浮动 */
 .clearfix:after {content: "."; display: block; height:0; clear:both; visibility: hidden;}
 .clearfix { *zoom:1;}
 .uppics div.onepic input{width: 0;height: 0;position: relative !important;top:15px;left:28px;outline: none;z-index: 5;}
-.uppics div.onepic img{position: relative;right: 3px;z-index: 1;}
+/*.uppics div.onepic img{position: relative;right: 3px;z-index: 1;}*/
 .aClick,.aClick2{ transition: all .1s}
 .aClick:active{background-color: rgba(0,0,0,0.05) !important;}
 .aClick2:active{background-color: rgba(0,0,0,0.1) !important;}

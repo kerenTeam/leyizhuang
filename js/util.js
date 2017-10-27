@@ -2,7 +2,7 @@ var util = {
 	options: {
 		active_color:'#007aff',
 		normal_color:'#000',
-		subpages:['page/goodList.html', 'cart.html','center.html']
+		subpages:['page/goodList.html','cart.html','center.html']
 	},
 	/**
 	 *  简单封装了绘制原生view控件的方法
@@ -13,7 +13,7 @@ var util = {
 		return view;
 	},
 	/**
-	 * 初始化首个tab窗口 和 创建子webview窗口 
+	 * 初始化首个tab窗口 和 创建子webview窗口
 	 */
 	initSubpage: function() {
 		var subpage_style = {
@@ -26,11 +26,11 @@ var util = {
 			// 初始化第一个tab项为首次显示
 			temp[self.id] = "true";
 			mui.extend(aniShow, temp);
-			// 初始化绘制首个tab按钮 
+			// 初始化绘制首个tab按钮
 			util.toggleNview(self.getStyle().subNViews[0], 0);
-			
+
 		for(var i = 0, len = subpages.length; i < len; i++) {
-			
+
 			if(!plus.webview.getWebviewById(subpages[i])) {
 				var sub = plus.webview.create(subpages[i], subpages[i], subpage_style);
 				//初始化隐藏
@@ -40,8 +40,8 @@ var util = {
 			}
 		}
 	},
-	/**	
-	 * 点击切换tab窗口 
+	/**
+	 * 点击切换tab窗口
 	 */
 	changeSubpage: function(targetPage, activePage) {
 		//若为iOS平台或非首次显示，则直接显示
@@ -56,7 +56,7 @@ var util = {
 		}
 		//隐藏当前 除了第一个父窗口
 		if(activePage !== plus.webview.getLaunchWebview()){
-			plus.webview.hide(activePage);			
+			plus.webview.hide(activePage);
 		}
 	},
 	/**
