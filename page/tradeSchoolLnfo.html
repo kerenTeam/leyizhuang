@@ -1,0 +1,62 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../css/configW.css" />
+	</head>
+	<style type="text/css">
+		#title,#content{padding: 10px;}
+	</style>
+	<body>
+		<header class="mui-bar mui-bar-nav" style="padding-right: 15px;">
+			<a id="leftbtn" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title"></h1>
+		</header>
+		<div class="mui-content">
+		<div id="title" style="text-align: center;"> 
+			
+		</div>	
+		<div id="content">
+			
+		</div>
+		</div>
+		<div class="upload text-center text-xs gray" id="upload"></div>
+		<script src="../js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/artTemplate-native.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/default.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			mui.init();
+			mui.plusReady(function(){
+				
+				mui.ajax('http://hiji.hifete.com:6789/index.php/Api_goods/lyzNewsInfo', {
+				data: {
+					newId: plus.webview.currentWebview().tradeId
+				},
+				dataType: 'json', //服务器返回json格式数据
+				type: 'post', //HTTP请求类型
+				timeout: 10000, //超时时间设置为10秒；
+				success: function(data) {
+					console.log('trade', data)
+					if(data) {
+						$('#title,.mui-title').html(data.title)
+						$('#content').html(data.content)
+					} else {
+						document.getElementById("tradeList").innerHTML = '<div style="text-align:center;padding:15px;font-size: 12px;">暂无数据</div>'
+					}
+					
+				},
+				error: function(xhr, type, errorThrown) {
+					mui.toast("当前网络不好请重试");
+				}
+			});
+			})
+			
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,140 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../css/config.css" />
+	</head>
+<style type="text/css">
+	.qashadow{margin-bottom: 5px;background-color: white;padding:10px}
+		.qbot{margin-top: 10px;line-height: 1.3;}
+		.Avator{width: 70px!important;height: 70px!important;}
+		.qaimg img{margin-right:5px;width:0.6rem;height:0.6rem;border-radius:3px;margin-top: 10px;}
+		.upload{padding: 20px;text-align: center;}
+</style>
+	<body>
+		<header class="mui-bar mui-bar-nav" style="padding-right: 15px;">
+			<a id="leftbtn" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">乐易装商学院</h1>
+		</header>
+		<div class="mui-content">
+			<div id="tradeList"></div>
+			<script type="text/html" id="tradeTpl">
+				<%for(var i=0;i<dataList.length;i++){%>
+				<div class="qashadow" data-id="<%=dataList[i].id%>" onclick="openDetail(<%=dataList[i].id%>)">
+					<div class="qtop flexr">
+						<div class="ft16" style="display: flex;align-items: center;">
+							<img class="Avator" src="<%=dataList[i].pic%>" />
+
+							<div style="flex: 1;margin-left: 10px;">
+								<div class="maincl ft16">
+									<span class=""><%=dataList[i].title%></span>
+								</div>
+								<div class="ft12">
+									<span class="disablecl">阅读量：<%=dataList[i].read%> 时间：<%=dataList[i].createTime%></span>
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+				<%}%>
+			</script>
+		</div>
+		<div class="upload text-center text-xs gray" id="upload"></div>
+		<script src="../js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/artTemplate-native.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/default.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			mui.init();
+			function openDetail(id){
+				openview({
+					view: 'tradeSchoolLnfo.html',
+					id: 'tradeSchoolLnfo',
+					extrasobj: {
+						tradeId: id
+					}
+				})
+			}
+			var Spagenum = 2; //实到页数
+			var Ypagenum = 1; //应到页数
+			var currentPage = 1,
+				numsPerPage = 6,
+				endPage = 0;
+			mui.ajax('http://hiji.hifete.com:6789/index.php/Api_goods/lyzNews', {
+				data: {
+					page: currentPage,
+					size: numsPerPage
+				},
+				dataType: 'json', //服务器返回json格式数据
+				type: 'post', //HTTP请求类型
+				timeout: 10000, //超时时间设置为10秒；
+				success: function(data) {
+					console.log('trade', data);
+
+					if(data && data.data.length) {
+						document.getElementById("tradeList").innerHTML = template("tradeTpl", {
+							dataList: data.data
+						});
+						mui("#upload")[0].innerHTML = "";
+
+						//上滑加载
+						$(window).scroll(function() {
+							var scrollTop = $(this).scrollTop();
+							var scrollHeight = $(document).height();
+							var windowHeight = $(this).height();
+							if(Spagenum <= data.pageNum && scrollTop + windowHeight == scrollHeight) {
+								if(Spagenum == Ypagenum + 1) { //当前页小于等于总页数时请求下一页
+									mui("#upload")[0].innerHTML = "<img src='../img/balls.svg' />";
+									Ypagenum++; //满足加载情况,应到页数+1
+									console.log('发起请求,实到' + Spagenum + '页');
+									console.log('发起请求,应到' + Ypagenum + '页');
+									mui.ajax('http://hiji.hifete.com:6789/index.php/Api_goods/lyzNews', {
+										data: {
+											page: Spagenum,
+											size: numsPerPage,
+										},
+										dataType: 'json', //服务器返回json格式数据
+										type: 'post', //HTTP请求类型
+										timeout: 10000, //超时时间设置为10秒；
+										success: function(data) {
+											console.log('trade续', data)
+											if(data && data.data.length) {
+												document.getElementById("tradeList").innerHTML += template("tradeTpl", {
+													dataList: data.data
+												});
+											}
+											mui("#upload")[0].innerHTML = " ";
+											Spagenum++; //加载成功,当前页+1
+											console.log('成功+1,实到' + Spagenum);
+											console.log('成功+1,应到' + Spagenum);
+										},
+										error: function(xhr, type, errorThrown) {
+											Ypagenum--; //失败是应到-1
+											mui.toast("当前网络不好请重试");
+											mui("#upload")[0].innerHTML = "";
+										}
+									});
+								}
+							} else { //当前页不小于等于总页数时请求下一页
+								mui("#upload")[0].innerHTML = "到底了";
+							}
+						});
+					} else {
+						mui("#upload")[0].innerHTML = "";
+					}
+					plus.nativeUI.closeWaiting(); //关闭等待框
+				},
+				error: function(xhr, type, errorThrown) {
+					plus.nativeUI.closeWaiting(); //关闭等待框
+					mui("#upload")[0].innerHTML = "";
+				}
+			});
+		</script>
+	</body>
+
+</html>
