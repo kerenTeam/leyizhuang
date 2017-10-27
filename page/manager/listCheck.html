@@ -104,7 +104,7 @@
 			var userId = plus.storage.getItem('$userId');
 			var oldToken = plus.storage.getItem("oldToken");
 			var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
-
+			alert(userId);
 			$('#tabLink li').click(function(){
 				$('#tabLink li').removeClass('active');
 				$(this).addClass('active');

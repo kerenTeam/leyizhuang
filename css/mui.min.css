@@ -45,7 +45,7 @@
 .activeS{color: #555;border-bottom: 2px solid #666;}
 
 .paytip{display: none !important;}
-.fr, .baocun, .findhd>div{color: #666 !important;}
+/*.fr, .baocun, .findhd>div{color: #666 !important;}*/
 .redDot{
     position: absolute;
     width: 7px;
