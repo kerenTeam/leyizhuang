@@ -58,7 +58,7 @@
 		"Webview": {},
 		"NativeUI": {},
 		"Navigator": {},
-		"NativeObj": {},"OAuth":{},"Device":{},"Maps":{},"Audio":{},"Speech":{},"Camera":{},"Barcode":{},"Contacts":{},"Messaging":{},"Geolocation":{},"Share":{}
+		"NativeObj": {},"OAuth":{},"Device":{},"Maps":{},"Audio":{},"Speech":{},"Camera":{},"Barcode":{},"Contacts":{},"Messaging":{},"Geolocation":{}
 	},
 	"plus": {
 		"launchwebview": {
@@ -602,7 +602,9 @@
 					"reg.html",
 					"page/guide/guideCredit.html",
 					"page/tradeList.html",
-					"page/tradeSchoolLnfo.html"
+					"page/tradeSchoolLnfo.html",
+					"page/order/pzOrder.html",
+					"page/order/pzOrderTest.html"
 				],
 				"priority": 0
 			},
@@ -1322,6 +1324,40 @@
 					"js/default.js",
 					"js/artTemplate-native.js",
 					"css/configW.css"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"page/order/pzOrder.html": {
+				"resources": [
+					"css/mui.min.css",
+					"img/addpic.png",
+					"css/commonY.css",
+					"img/Spinner.svg",
+					"js/jquery.min.js",
+					"js/mui.min.js",
+					"js/statusBar.js",
+					"fonts/mui.ttf",
+					"js/default.js",
+					"js/artTemplate-native.js"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"page/order/pzOrderTest.html": {
+				"resources": [
+					"js/mui.zoom.js",
+					"js/jquery.min.js",
+					"js/mui.min.js",
+					"js/statusBar.js",
+					"fonts/mui.ttf",
+					"css/mui.min.css",
+					"js/mui.previewimage.js",
+					"img/addpic.png",
+					"js/default.js",
+					"css/configW.css",
+					"css/commonY.css",
+					"js/artTemplate-native.js"
 				],
 				"refer": [],
 				"priority": 0
