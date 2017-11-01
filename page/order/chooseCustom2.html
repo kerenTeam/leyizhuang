@@ -1,6 +1,5 @@
 <!doctype html>
 <html>
-
 	<head>
 		<meta charset="UTF-8">
 		<title>选择顾客2</title>
@@ -16,8 +15,8 @@
 			<h1 class="mui-title">选择顾客</h1>
 		</header>
 		<div class="mui-content" >
-			<div style="padding: 15px;">请输入会员手机号 <button>导入通讯录</button><br />
-			<input type="text" id="bindPhone" value="18160010728" style="display: inline-block;width: 100%;" placeholder="输入导购电话号码" /></div>
+			<div style="padding: 15px;">请输入会员手机号 <button onclick="openMail()">导入通讯录</button><br />
+			<input type="text" id="bindPhone" value="12345678912" style="display: inline-block;width: 100%;" placeholder="输入导购电话号码" /></div>
 			<div style="text-align: center;">
 				<button type="button" data-loading-icon-position="right" id="bindGuide" class="mui-btn mui-btn-primary mui-btn-outlined">为该顾客下单</button>
 			</div>
@@ -27,6 +26,13 @@
 		<script src="../../js/default.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
 			mui.init();
+			function openMail(){
+				openview({
+					view: '../mailList.html',
+					id: 'mailList'
+				})
+			}
+
 			mui.plusReady(function(){
 				var reg_phone = /^1((3|4|5|8|7){1}\d{1}|70)\d{8}$/;//手机号正则;
 				var account = $('#bindPhone');
@@ -36,7 +42,9 @@
 				var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
 
 				$('#bindGuide').click(function(){
-					if(!reg_phone.test(account.val())){
+					//if(!reg_phone.test(account.val())){
+					if(0){
+
 						mui.toast('请输入正确的手机号');
 					}else{
 						console.log(mui('#bindGuide'));
@@ -49,19 +57,26 @@
 							headers:{"Authorization":oldToken},
 							success:function(data,type,xhr){
 								console.log(data);
-								var timeLoad = setInterval(function(){
-									clearTimeout(timeLoad),timeLoad = null;
+								if(data.content && data.content[0].cusId){
+									var cusId = data.content[0].cusId;
+									var timeLoad = setInterval(function(){
+										clearTimeout(timeLoad),timeLoad = null;
+										mui('#bindGuide').button('reset');
+										if(data.code == 0){
+											openview({
+												view: 'pzOrder.html',
+												id: 'pzOrder',
+												extrasobj:{oneId:cusId}
+											})
+										}else{
+											mui.toast(data.message);
+										}
+									},500)
+								}else{
+									mui.toast('顾客信息错误！');
 									mui('#bindGuide').button('reset');
-									if(data.code == 0){
-										openview({
-											view: 'pzOrder.html',
-											id: 'pzOrder',
-											extrasobj:{oneId:1}
-										})
-									}else{
-										mui.toast(data.message);
-									}
-								},500)
+								}
+
 							},
 							error:function(xhr,type,errorThrown){
 								console.log('响应失败  !');
