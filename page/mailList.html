@@ -1,0 +1,54 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>通讯录</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<script src="../js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/default.js" type="text/javascript" charset="utf-8"></script>
+		<style type="text/css">
+			.mailList{margin-top: 50px;}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav" style="padding-right: 15px;">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">通讯录</h1>
+		</header>
+		<div id="" class="mailList">
+			内容
+		</div>
+
+		<script type="text/javascript">
+			document.addEventListener( "plusready", function(){
+				plus.contacts.getAddressBook(plus.contacts.ADDRESSBOOK_PHONE, function (addressbook) {
+					addressbook.find(["displayName","phoneNumbers"],function(contacts){
+						var oneMail = contacts;
+						//筛选有电话的数据
+						var twoMail = oneMail.filter(function(item){
+						  return item.phoneNumbers.length > 0;
+						});
+						console.log(twoMail);
+
+						var thereMail = twoMail.sort(function(aaa,bbb){
+//							console.log('aaa'+ aaa.displayName)
+//							console.log('bbb'+ bbb.displayName)
+//							if(aaa.displayName && bbb.displayName){
+								return aaa.displayName.localeCompare(bbb.displayName);
+//							}
+						});
+						console.log(thereMail)
+					}, function () {
+						alert("error");
+					},{multiple:true});
+				},function(e){
+					alert("Get address book failed: " + e.message);
+				});
+			}, false );
+		</script>
+	</body>
+
+</html>

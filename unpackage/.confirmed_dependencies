@@ -216,7 +216,8 @@
       "page/tab-webview-subpage-contact.html",
       "js/default.js",
       "css/configW.css",
-      "img/balls.svg"
+      "img/balls.svg",
+      "cart.html"
     ],
     "refer": [
       "html/tab-webview-subpage-chat.html",
@@ -239,7 +240,10 @@
       "reg.html",
       "page/guide/guideCredit.html",
       "page/tradeList.html",
-      "page/tradeSchoolLnfo.html"
+      "page/tradeSchoolLnfo.html",
+      "page/order/pzOrder.html",
+      "page/order/pzOrderTest.html",
+      "page/order/chooseCustom2.html"
     ]
   },
   "page/gxbList.html": {
@@ -874,6 +878,57 @@
       "js/default.js",
       "js/artTemplate-native.js",
       "css/configW.css"
+    ]
+  },
+  "page/order/pzOrder.html": {
+    "resources": [
+      "js/jquery.min.js",
+      "js/mui.min.js",
+      "js/statusBar.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "img/addpic.png",
+      "js/default.js",
+      "css/commonY.css",
+      "js/artTemplate-native.js"
+    ]
+  },
+  "page/order/pzOrderTest.html": {
+    "resources": [
+      "js/mui.zoom.js",
+      "js/jquery.min.js",
+      "js/mui.min.js",
+      "js/statusBar.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "js/mui.previewimage.js",
+      "img/addpic.png",
+      "js/default.js",
+      "css/configW.css",
+      "css/commonY.css",
+      "js/artTemplate-native.js"
+    ]
+  },
+  "page/order/chooseCustom2.html": {
+    "resources": [
+      "css/mui.min.css",
+      "js/jquery.min.js",
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "js/default.js"
+    ],
+    "refer": [
+      "page/order/pzOrder.html",
+      "page/mailList.html"
+    ]
+  },
+  "page/mailList.html": {
+    "resources": [
+      "css/mui.min.css",
+      "js/jquery.min.js",
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "js/default.js"
     ]
   }
 }
