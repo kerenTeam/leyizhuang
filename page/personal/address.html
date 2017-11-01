@@ -116,7 +116,7 @@
 					</div>
 				<%}else{%>
 				 	<% for(var i=0;i<addressLi.length;i++){ %>
-				    	<div class="addlist clearfloat"data-addid="<%= addressLi[i].id %>" data-person="<%= addressLi[i].person %>" data-phone="<%= addressLi[i].phone %>" data-pv="<%= addressLi[i].province %>" data-ct="<%= addressLi[i].city %>" data-ar="<%= addressLi[i].area %>" data-adi="<%= addressLi[i].address %>">
+				    	<div class="addlist clearfloat"data-addid="<%= addressLi[i].id %>" data-person="<%= addressLi[i].deliveryName %>" data-phone="<%= addressLi[i].deliveryPhone %>" data-pv="<%= addressLi[i].deliveryProvince %>" data-ct="<%= addressLi[i].deliveryCity %>" data-cty="<%= addressLi[i].deliveryCounty %>" data-st="<%= addressLi[i].deliveryStreet %>" data-villageName="<%= addressLi[i].villageName %>" data-adi="<%= addressLi[i].detailedAddress %>">
 				    		<div class="top clearfloat box-s">
 				    			<ul>
 				    				<li>
@@ -170,6 +170,8 @@
 			var userId = plus.storage.getItem('$userId');
 			var oldToken = plus.storage.getItem("oldToken");
 			var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
+			var pageid = plus.webview.currentWebview().page;
+			
 			//plus.nativeUI.showWaiting('加载中...',{width:'100px',height:'80px'});
 			//添加刷新监听
 
@@ -183,7 +185,6 @@
 				})
 			}*/
 
-			var pageid = plus.webview.currentWebview().pageid;
 			RefreshAd();
 			document.addEventListener('refreshAd', function() {
 				RefreshAd();
@@ -218,17 +219,17 @@
 									defultAddress.phone = $(this).attr("data-phone");
 									defultAddress.province = $(this).attr("data-pv");
 									defultAddress.city = $(this).attr("data-ct");
-									defultAddress.area = $(this).attr("data-ar");
+									defultAddress.country = $(this).attr("data-cty");
+									defultAddress.street = $(this).attr("data-st");
+									defultAddress.villageName = $(this).attr("data-villageName");
 									defultAddress.address = $(this).attr("data-adi");
 
 									addressStorage = [defultAddress];
 									plus.storage.setItem('$addressStorage', JSON.stringify(addressStorage));
 
-									var list = plus.webview.getWebviewById('market-order');
-									var list2 = plus.webview.getWebviewById('jifen-torder');
+									var list = plus.webview.getWebviewById('order');
  									plus.webview.currentWebview().close();//关闭当前页面
 								 	mui.fire(list,'readdstorage');
-								 	mui.fire(list2,'readdstorage');
 							})
 						}
 

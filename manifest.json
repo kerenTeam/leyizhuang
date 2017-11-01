@@ -66,23 +66,23 @@
 			"background": "#fff",
 			"subNViews": [
 				{
-					"id": "tabBar1",
+					"id": "tabBar",
 					"styles": {
 						"bottom": "0px",
 						"left": "0",
 						"height": "50px",
-						"width": "26%",
+						"width": "100%",
 						"backgroundColor": "#fff"
 					},
 					"tags": [
 						{
 							"tag": "font",
-							"id": "tabBar11",
+							"id": "indexIcon",
 							"text": "\uf015",
 							"position": {
 								"top": "4px",
 								"left": "0",
-								"width": "100%",
+								"width": "25%",
 								"height": "24px"
 							},
 							"textStyles": {
@@ -92,38 +92,26 @@
 							}
 						}, {
 							"tag": "font",
-							"id": "tabBar12",
+							"id": "indexText",
 							"text": "首页",
 							"position": {
 								"top": "23px",
 								"left": "0",
-								"width": "100%",
+								"width": "25%",
 								"height": "24px"
 							},
 							"textStyles": {
 								"align": "center",
 								"size": "10px"
 							}
-						}
-					]
-				}, {
-					"id": "tabBar2",
-					"styles": {
-						"bottom": "0px",
-						"left": "25%",
-						"height": "50px",
-						"width": "26%",
-						"backgroundColor": "#fff"
-					},
-					"tags": [
-						{
+						},{
 							"tag": "font",
-							"id": "tabBar21",
+							"id": "newsIcon",
 							"text": "\uf0c9",
 							"position": {
 								"top": "4px",
-								"left": "-20px",
-								"width": "100%",
+								"left": "20%",
+								"width": "25%",
 								"height": "24px"
 							},
 							"textStyles": {
@@ -133,38 +121,26 @@
 							}
 						}, {
 							"tag": "font",
-							"id": "tabBar22",
+							"id": "newsText",
 							"text": "商品",
 							"position": {
 								"top": "23px",
-								"left": "-20px",
-								"width": "100%",
+								"left": "20%",
+								"width": "25%",
 								"height": "24px"
 							},
 							"textStyles": {
 								"align": "center",
 								"size": "10px"
 							}
-						}
-					]
-				}, {
-					"id": "tabBar3",
-					"styles": {
-						"bottom": "0px",
-						"left": "50%",
-						"height": "50px",
-						"width": "26%",
-						"backgroundColor": "#fff"
-					},
-					"tags": [
-						{
+						},{
 							"tag": "font",
-							"id": "tabBar31",
+							"id": "contactIcon",
 							"text": "\uf217",
 							"position": {
 								"top": "4px",
-								"left": "20px",
-								"width": "100%",
+								"left": "55%",
+								"width": "25%",
 								"height": "24px"
 							},
 							"textStyles": {
@@ -174,38 +150,26 @@
 							}
 						}, {
 							"tag": "font",
-							"id": "tabBar32",
+							"id": "contactText",
 							"text": "下料清单",
 							"position": {
 								"top": "24px",
-								"left": "20px",
-								"width": "100%",
+								"left": "55%",
+								"width": "25%",
 								"height": "24px"
 							},
 							"textStyles": {
 								"align": "center",
 								"size": "10px"
 							}
-						}
-					]
-				}, {
-					"id": "tabBar4",
-					"styles": {
-						"bottom": "0px",
-						"left": "75%",
-						"height": "50px",
-						"width": "26%",
-						"backgroundColor": "#fff"
-					},
-					"tags": [
-						{
+						},{
 							"tag": "font",
-							"id": "tabBar41",
+							"id": "newwindowIcon",
 							"text": "\uf007",
 							"position": {
 								"top": "4px",
-								"left": "0",
-								"width": "100%",
+								"left": "75%",
+								"width": "25%",
 								"height": "24px"
 							},
 							"textStyles": {
@@ -215,30 +179,19 @@
 							}
 						}, {
 							"tag": "font",
-							"id": "tabBar42",
+							"id": "newwindowText",
 							"text": "我的",
 							"position": {
 								"top": "24px",
-								"left": "0",
-								"width": "100%",
+								"left": "75%",
+								"width": "25%",
 								"height": "24px"
 							},
 							"textStyles": {
 								"align": "center",
 								"size": "10px"
 							}
-						}
-					]
-				}, {
-					"id": "tabBar5",
-					"styles": {
-						"bottom": "50px",
-						"left": "0",
-						"height": "1px",
-						"width": "100%",
-						"backgroundColor": "#ccc"
-					},
-					"tags": [
+						},
 						{
 							"tag": "rect",
 							"id": "tabBorder",
@@ -255,7 +208,8 @@
 					]
 				}
 			]
-		},
+		}
+		,
 		"splashscreen": {
 			"autoclose": true,/*是否自动关闭程序启动界面，true表示应用加载应用入口页面后自动关闭；false则需调plus.navigator.closeSplashscreen()关闭*/
 			"waiting": false,"delay":"0"
@@ -604,7 +558,8 @@
 					"page/tradeList.html",
 					"page/tradeSchoolLnfo.html",
 					"page/order/pzOrder.html",
-					"page/order/pzOrderTest.html"
+					"page/order/pzOrderTest.html",
+					"page/order/chooseCustom2.html"
 				],
 				"priority": 0
 			},
@@ -626,7 +581,9 @@
 					"js/artTemplate-native.js",
 					"images/addcart.svg"
 				],
-				"refer": [],
+				"refer": [
+					"page/goodsInfo.html"
+				],
 				"priority": 0
 			},
 			"page/goodlist.html": {
@@ -760,7 +717,10 @@
 					"page/personal/shezhi.html",
 					"page/personal/productCoupon.html",
 					"page/manager/backMoney.html",
-					"page/guide/guideCredit.html"
+					"page/guide/guideCredit.html",
+					"page/manager/listCheck.html",
+					"page/worker/wmaterialCheckList.html",
+					"page/worker/workerlistCheck.html"
 				],
 				"priority": 0
 			},
@@ -792,7 +752,8 @@
 					"login.html",
 					"page/order/chooseGift.html",
 					"page/order/order.html",
-					"page/order/chooseCustom.html"
+					"page/order/chooseCustom.html",
+					"page/order/workerMaterial.html"
 				],
 				"priority": 0
 			},
@@ -946,7 +907,9 @@
 					"iconfont/iconfont.eot",
 					"iconfont/iconfont.woff",
 					"iconfont/iconfont.ttf",
-					"iconfont/iconfont.svg"
+					"iconfont/iconfont.svg",
+					"js/mui.zoom.js",
+					"js/mui.previewimage.js"
 				],
 				"refer": [
 					"login.html"
@@ -1049,7 +1012,8 @@
 					"iconfont/iconfont.eot",
 					"iconfont/iconfont.woff",
 					"iconfont/iconfont.ttf",
-					"iconfont/iconfont.svg"
+					"iconfont/iconfont.svg",
+					"js/jquery.citysYF.js"
 				],
 				"refer": [],
 				"priority": 0
@@ -1295,7 +1259,10 @@
 					"js/default.js",
 					"img/check2.png"
 				],
-				"refer": [],
+				"refer": [
+					"page/personal/address.html",
+					"page/order/materialList.html"
+				],
 				"priority": 0
 			},
 			"page/tradeList.html": {
@@ -1360,6 +1327,142 @@
 					"js/artTemplate-native.js"
 				],
 				"refer": [],
+				"priority": 0
+			},
+			"page/order/chooseCustom2.html": {
+				"resources": [
+					"js/jquery.min.js",
+					"js/mui.min.js",
+					"fonts/mui.ttf",
+					"css/mui.min.css",
+					"js/default.js"
+				],
+				"refer": [
+					"page/order/pzOrder.html"
+				],
+				"priority": 0
+			},
+			"page/manager/listCheck.html": {
+				"resources": [
+					"css/resetY.css",
+					"js/jquery.min.js",
+					"js/mui.min.js",
+					"js/statusBar.js",
+					"fonts/mui.ttf",
+					"img/Rolling.svg",
+					"css/mui.min.css",
+					"css/indexY.css",
+					"js/default.js",
+					"css/commonY.css",
+					"js/artTemplate-native.js",
+					"images/order/order.png",
+					"css/configW.css",
+					"images/img.svg"
+				],
+				"refer": [
+					"page/manager/listCheckInfo.html"
+				],
+				"priority": 0
+			},
+			"page/manager/listCheckInfo.html": {
+				"resources": [
+					"js/mui.picker.min.js",
+					"js/mui.poppicker.js",
+					"images/center/right.svg",
+					"img/check1.png",
+					"css/mui.picker.minY.css",
+					"css/style.css",
+					"css/cart.css",
+					"css/mui.poppicker.css",
+					"img/check2.png",
+					"css/mui.min.css",
+					"css/commonY.css",
+					"css/resetY.css",
+					"css/configW.css",
+					"js/jquery.min.js",
+					"fonts/mui.ttf",
+					"js/artTemplate-native.js",
+					"js/mui.min.js",
+					"js/default.js"
+				],
+				"refer": [
+					"page/personal/address.html",
+					"page/order/materialList.html",
+					"page/manager/materialCheckList.html",
+					"cart.html"
+				],
+				"priority": 0
+			},
+			"page/manager/materialCheckList.html": {
+				"resources": [
+					"css/mui.min.css",
+					"css/cart.css",
+					"css/resetY.css",
+					"js/mui.min.js",
+					"fonts/mui.ttf",
+					"js/jquery_cart.js",
+					"css/style.css",
+					"js/default.js",
+					"css/configW.css",
+					"js/artTemplate-native.js"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"page/worker/wmaterialCheckList.html": {
+				"resources": [
+					"css/resetY.css",
+					"js/mui.min.js",
+					"fonts/mui.ttf",
+					"css/mui.min.css",
+					"js/jquery_cart.js",
+					"css/style.css",
+					"css/cart.css",
+					"js/default.js",
+					"css/configW.css",
+					"js/artTemplate-native.js"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"page/worker/workerlistCheck.html": {
+				"resources": [
+					"css/resetY.css",
+					"images/order/order.png",
+					"js/jquery.min.js",
+					"js/mui.min.js",
+					"js/statusBar.js",
+					"fonts/mui.ttf",
+					"img/Rolling.svg",
+					"css/mui.min.css",
+					"css/indexY.css",
+					"js/default.js",
+					"css/configW.css",
+					"css/commonY.css",
+					"js/artTemplate-native.js"
+				],
+				"refer": [
+					"page/worker/workerCheckInfo.html"
+				],
+				"priority": 0
+			},
+			"page/worker/workerCheckInfo.html": {
+				"resources": [
+					"css/style.css",
+					"css/cart.css",
+					"css/mui.min.css",
+					"css/commonY.css",
+					"css/resetY.css",
+					"js/jquery.min.js",
+					"js/mui.min.js",
+					"fonts/mui.ttf",
+					"js/default.js",
+					"css/configW.css",
+					"js/artTemplate-native.js"
+				],
+				"refer": [
+					"page/worker/wmaterialCheckList.html"
+				],
 				"priority": 0
 			}
 		},

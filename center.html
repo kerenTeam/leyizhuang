@@ -295,10 +295,16 @@
 						商品收藏
 					</div>
 					<div class="">
-						调色板
+						客服
+					</div>
+					<div class="" onclick="goMessage()">
+						消息
 					</div>
 					<div class="">
-						科单申请
+						调色板
+					</div>
+					<div onclick="goworkerMaterial()">
+						料单申请
 					</div>
 					<div class="">
 						拍照下单
@@ -350,6 +356,13 @@
 				openview({
 					view:'page/manager/listCheck.html',
 					id: 'listCheck',
+				})
+			}
+			//料单申请
+			function goworkerMaterial(){
+				openview({
+					view:'page/worker/workerlistCheck.html',
+					id: 'workerlistCheck',
 				})
 			}
 			//顾客 优惠券
@@ -440,7 +453,6 @@
 							},
 							error:function(xhr,type,errorThrown){
 								plus.nativeUI.closeWaiting();
-								mui.toast(type)
 								console.log('登录响应失败');
 							}
 						});
@@ -555,7 +567,6 @@
 							},
 							error: function(xhr, type, errorThrown) {
 								plus.nativeUI.closeWaiting();
-								mui.toast(type)
 								console.log('登录响应失败');
 							}
 						});

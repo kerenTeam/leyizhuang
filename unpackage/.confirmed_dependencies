@@ -241,7 +241,8 @@
       "page/tradeList.html",
       "page/tradeSchoolLnfo.html",
       "page/order/pzOrder.html",
-      "page/order/pzOrderTest.html"
+      "page/order/pzOrderTest.html",
+      "page/order/chooseCustom2.html"
     ]
   },
   "page/gxbList.html": {
@@ -255,7 +256,9 @@
       "js/artTemplate-native.js",
       "images/addcart.svg"
     ],
-    "refer": []
+    "refer": [
+      "page/goodsInfo.html"
+    ]
   },
   "page/goodlist.html": {
     "resources": [
@@ -380,7 +383,10 @@
       "page/personal/shezhi.html",
       "page/personal/productCoupon.html",
       "page/manager/backMoney.html",
-      "page/guide/guideCredit.html"
+      "page/guide/guideCredit.html",
+      "page/manager/listCheck.html",
+      "page/worker/wmaterialCheckList.html",
+      "page/worker/workerlistCheck.html"
     ]
   },
   "cart.html": {
@@ -407,7 +413,8 @@
       "login.html",
       "page/order/chooseGift.html",
       "page/order/order.html",
-      "page/order/chooseCustom.html"
+      "page/order/chooseCustom.html",
+      "page/order/workerMaterial.html"
     ]
   },
   "page/collect.html": {
@@ -548,7 +555,9 @@
       "css/indexY.css",
       "css/commonY.css",
       "images/chahao.png",
-      "css/style.css"
+      "css/style.css",
+      "js/mui.zoom.js",
+      "js/mui.previewimage.js"
     ],
     "refer": [
       "login.html"
@@ -630,7 +639,8 @@
       "fonts/mui.ttf",
       "js/artTemplate-native.js",
       "js/mui.min.js",
-      "js/default.js"
+      "js/default.js",
+      "js/jquery.citysYF.js"
     ],
     "refer": []
   },
@@ -851,7 +861,10 @@
       "js/default.js",
       "img/check2.png"
     ],
-    "refer": []
+    "refer": [
+      "page/personal/address.html",
+      "page/order/materialList.html"
+    ]
   },
   "page/tradeList.html": {
     "resources": [
@@ -912,5 +925,132 @@
       "js/artTemplate-native.js"
     ],
     "refer": []
+  },
+  "page/order/chooseCustom2.html": {
+    "resources": [
+      "js/jquery.min.js",
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "js/default.js"
+    ],
+    "refer": [
+      "page/order/pzOrder.html"
+    ]
+  },
+  "page/manager/listCheck.html": {
+    "resources": [
+      "css/resetY.css",
+      "js/jquery.min.js",
+      "js/mui.min.js",
+      "js/statusBar.js",
+      "fonts/mui.ttf",
+      "img/Rolling.svg",
+      "css/mui.min.css",
+      "css/indexY.css",
+      "js/default.js",
+      "css/commonY.css",
+      "js/artTemplate-native.js",
+      "images/order/order.png",
+      "css/configW.css",
+      "images/img.svg"
+    ],
+    "refer": [
+      "page/manager/listCheckInfo.html"
+    ]
+  },
+  "page/manager/listCheckInfo.html": {
+    "resources": [
+      "js/mui.picker.min.js",
+      "js/mui.poppicker.js",
+      "images/center/right.svg",
+      "img/check1.png",
+      "css/mui.picker.minY.css",
+      "css/style.css",
+      "css/cart.css",
+      "css/mui.poppicker.css",
+      "img/check2.png",
+      "css/mui.min.css",
+      "css/commonY.css",
+      "css/resetY.css",
+      "css/configW.css",
+      "js/jquery.min.js",
+      "fonts/mui.ttf",
+      "js/artTemplate-native.js",
+      "js/mui.min.js",
+      "js/default.js"
+    ],
+    "refer": [
+      "page/personal/address.html",
+      "page/order/materialList.html",
+      "page/manager/materialCheckList.html",
+      "cart.html"
+    ]
+  },
+  "page/manager/materialCheckList.html": {
+    "resources": [
+      "css/mui.min.css",
+      "css/cart.css",
+      "css/resetY.css",
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "js/jquery_cart.js",
+      "css/style.css",
+      "js/default.js",
+      "css/configW.css",
+      "js/artTemplate-native.js"
+    ]
+  },
+  "page/worker/wmaterialCheckList.html": {
+    "resources": [
+      "css/resetY.css",
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "js/jquery_cart.js",
+      "css/style.css",
+      "css/cart.css",
+      "js/default.js",
+      "css/configW.css",
+      "js/artTemplate-native.js"
+    ]
+  },
+  "page/worker/workerlistCheck.html": {
+    "resources": [
+      "css/resetY.css",
+      "images/order/order.png",
+      "js/jquery.min.js",
+      "js/mui.min.js",
+      "js/statusBar.js",
+      "fonts/mui.ttf",
+      "img/Rolling.svg",
+      "css/mui.min.css",
+      "css/indexY.css",
+      "js/default.js",
+      "css/configW.css",
+      "css/commonY.css",
+      "js/artTemplate-native.js"
+    ],
+    "refer": [
+      "page/worker/workerCheckInfo.html"
+    ]
+  },
+  "page/worker/workerCheckInfo.html": {
+    "resources": [
+      "css/style.css",
+      "css/cart.css",
+      "css/mui.min.css",
+      "css/commonY.css",
+      "css/resetY.css",
+      "js/jquery.min.js",
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "js/default.js",
+      "css/configW.css",
+      "js/artTemplate-native.js"
+    ],
+    "refer": [
+      "page/worker/wmaterialCheckList.html"
+    ]
   }
 }

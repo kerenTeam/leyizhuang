@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-		<title>料单审核</title>
+		<title>料单申请</title>
 		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, width=device-width">
 		<meta name="apple-mobile-web-app-capable" content="yes">
 		<meta name="apple-touch-fullscreen" content="yes">
@@ -38,7 +38,7 @@
 	<body>
 		<header class="mui-bar mui-bar-nav fineB fineB1">
 		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left bigSize"></a>
-		    <h1 class="mui-title">料单审核</h1>
+		    <h1 class="mui-title">料单申请</h1>
 		</header>
 		<script src="../../js/statusBar.js"></script><!--状态栏-->
 		<div id="main" style="padding-top: 0!important;">
@@ -64,7 +64,7 @@
 						<div class="checkList" onclick="goInfo('<%=list[i].auditNo%>',<%=list[i].status%>)">
 							<h4 class="fineB">
 								<span>料单编号：<%=list[i].auditNo%></span>
-								<span class="h4span2">提交人：
+								<span class="h4span2">提交人:
 									<%if(list[i].worker){%>
 										<%=list[i].worker%>
 									<%}else{%>
@@ -91,8 +91,7 @@
 							<p class="checkListDZ fineT fineB">收货地址：<%=list[i].deliveryCity%><%=list[i].deliveryCounty%><%=list[i].deliveryStreet%><%=list[i].residenceName%><%=list[i].detailedAddress%></p>
 							<div class="checkListB">
 								<%if(list[i].status == 1){%>
-									<!--<button type="button" class="mui-btn mui-btn">取消</button>-->
-									<button type="button" class="mui-btn mui-btn-warning mui-btn-outlined" onclick="">审核</button>
+									<button type="button" class="mui-btn mui-btn" onclick="delet('<%=list[i].auditNo%>')">取消</button>
 								<%}else if(list[i].status == 2){%>
 									<%if(list[i].isAudited){%>
 										<button type="button" class="mui-btn mui-btn-warning mui-btn-outlined">审核通过</button>
@@ -100,6 +99,8 @@
 										<button type="button" class="mui-btn mui-btn-danger mui-btn-outlined">未通过</button>
 									<%}%>
 								<%}else if(list[i].status == 3){%>
+									<button type="button" class="mui-btn mui-btn">已取消</button>
+									
 								<%}%>
 								
 							</div>
@@ -115,8 +116,8 @@
 	<script type="text/javascript">
 		function goInfo(audi,status){
 			openview({
-				view:'listCheckInfo.html',
-				id:'listCheckInfo',
+				view:'workerCheckInfo.html',
+				id:'workerCheckInfo',
 				extrasobj:{audioNo:audi,audioStatus:status}
 			})
 		}
@@ -137,7 +138,7 @@
 			})
 			loadFun('');
 			function loadFun(index){
-				mui.ajax(serverUrl+'/app/material/audit/manager/list',{
+				mui.ajax(serverUrl+'/app/material/audit/list',{
 					data:{'userID':userId,'status':index,'identityType':identityT},
 					dataType:'json',
 					type:'post',
@@ -166,6 +167,28 @@
 				});
 			}
 			
+			//工人取消
+			window.delet = function(auditNo){
+				event.stopPropagation();
+				mui.ajax(serverUrl+'/app/material/audit/modify',{
+					data:{'auditNo':auditNo},
+					dataType:'json',
+					type:'post',
+					timeout:1000,
+					headers:{"Authorization":oldToken},
+					success:function(data,type,xhr){
+						console.log('取消反馈',data);
+						if(data.code == 0){
+						 	mui.toast('取消成功')
+						}else{
+							mui.toast(data.message);
+						}
+					},
+					error:function(xhr,type,errorThrown){
+						console.log('响应失败  !');
+					}
+				});
+			}
 		})
 
 

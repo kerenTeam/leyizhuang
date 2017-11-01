@@ -121,7 +121,11 @@
 
 	<script>
 		mui.plusReady(function() {
-			//		plus.storage.removeItem('$cartStorage')
+			//获取缓存
+			var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
+			var userId = plus.storage.getItem('$userId'); 
+			var oldToken = plus.storage.getItem('oldToken');
+			
 			window.addEventListener('refresh', function(event) {
 				cartload();
 			});
@@ -187,12 +191,17 @@
 					if(ALLcheckLength == 0) {
 						mui.toast("您还未选择要赠送商品哦！")
 					} else {
-//						if(identityT == 3){
+						if(identityT == 3){
 							openview({
 								view:'workerMaterial.html',
 								id:'workerMaterial'
 							})
-//					 	}
+					 	}else{
+					 		openview({
+								view:'order.html',
+								id:'order'
+							})
+					 	}
 					}
 				})
 			 

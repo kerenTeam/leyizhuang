@@ -1,0 +1,232 @@
+<!doctype html>
+
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>料单详情</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="../../css/mui.min.css" />
+		<link rel="stylesheet" href="../../css/resetY.css">
+		<link rel="stylesheet" type="text/css" href="../../css/commonY.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/cart.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/style.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/configW.css" />
+		 
+	</head>
+	<style type="text/css">
+		.btmNav{display: flex;width:100vw;text-align: center;justify-content: space-around;align-items: center;padding: 15px 0;}
+		.btmNav button{width: 80px;height: 35px;}
+	</style>
+	<body>
+
+		<header class="mui-bar mui-bar-nav">
+			<a class="headbar mui-action-back mui-icon mui-icon-left-nav mui-pull-left normalSize"></a>
+			<h1 class="mui-title">料单详情</h1>
+		</header>
+		<script src="js/statusBar.js"></script>
+		<!--状态栏-->
+		<div style="height:50px;"></div>
+		
+		<div style="background-color: white;margin: 5px 0;">
+			<div class="qtop flexr pad10" onclick="address()">
+				<div style="flex: 1;margin-left: 10px;">
+					<div class="maincl ft16">
+						<span class="maincl">料单编号：</span>
+						<span class="maincl auditNo"></span>
+					</div>
+					<div class="ft16">
+						<span class="maincl">提交时间：</span>
+						<span class="maincl createTime"></span>
+					</div>
+				</div>
+				<div class="activecl status"></div>
+			</div>
+		</div>
+		<div id="cartData" data-id=""></div>
+		<script type="text/html" id="cartTpl">
+		 
+			<dl class="cart">
+				<%for(var i=0;i<list.length;i++){%>
+					<dd>
+						<a class="goodsPic" style="margin-left: auto;"><img src="<%=list[i].coverImageUri%>" onerror="javascript:this.src='../../images/img.svg';" /></a>
+						<div class="goodsInfor" style="margin-left: 0.9rem!important;">
+							<h2>  
+						    		<a><%=list[i].skuName%></a>
+						    		<%if(list[i].isGift){%>
+						    			<em class="mui-badge mui-badge-danger mui-pull-right" style="color: white;">赠品</em>
+						    		<%}%>
+						   	</h2>
+							<div class="priceArea">
+								<div class="extraBrief">
+									单位：<%=list[i].goodsUnit%>；规格：<%=list[i].goodsSpecification%>
+								</div>
+								<strong>¥<span class="price"><%=list[i].retailPrice%></span></strong>
+								<div class="numberWidget">
+									<span class="num">x<%=list[i].qty%></span>
+								</div>
+							</div>
+		
+						</div>
+					</dd>
+				<%}%>
+				
+	
+				<div class="pad10 ft15">
+					共10件商品 订单总金额：<span id="totalPrice"></span> <span class="mui-pull-right activecl" onclick="materialList()">查看全部</span>
+				</div>
+				<div style="clear: both;"></div>
+			</dl>
+		</script>
+		<div style="background: white;">
+			<div class="pad10 ft15 afterBorder">
+				<em>配送方式 </em>
+				<div class="mui-input-row mui-radio mui-left mui-pull-right" style="margin-top: -8px;">
+					<label>自体</label>
+					<input name="peis" type="radio">
+				</div>
+				<div class="mui-input-row mui-radio mui-left mui-pull-right" style="margin-top: -8px;">
+					<label>送货上门</label>
+					<input name="peis" type="radio" checked="">
+				</div>
+			</div>
+			<div style="clear: both;"></div>
+			<div style="background-color: white;margin: 5px 0;">
+				<div class="qtop flexr pad10" onclick="address()">
+					<div style="flex: 1;margin-left: 10px;">
+						<div class="maincl ft16">
+							<span class="disablecl receiver">---</span>
+							<span class="disablecl receiverPhone">---</span>
+						</div>
+						<div class="ft16">
+							<span class="disablecl address">-----</span>
+						</div>
+					</div>
+					 
+				</div>
+			</div>
+			<div id='cityResult' class="ui-alert pad10 afterBorder">配送时间 <span class="mui-pull-right" id="reservationDeliveryTime"></span></div>
+			<div class="mui-input-row mui-checkbox mui-left afterBorder">
+				<label>是否业主收货</label>
+				<input name="checkbox1" id="isOwnerReceiving" value="1" type="checkbox">
+			</div>
+			<div class="pad10 activecl ft13 afterBorder">
+				温馨提示：若收货人为主家，系统将在出货打印单中自动隐藏折扣信息
+			</div>
+			<div>
+				备注：<textarea name="" id="notice" maxlength="100" cols="30" rows="4"></textarea>
+			</div>
+		</div>
+		
+		<!--bottom nav-->
+		<div style="height:1rem;"></div>
+		<aside class="btmNav" id="dibu" style="display: none;">
+			<button class="mui-btn mui-btn-danger" onclick="delet()">取消</button> 
+		</aside> 
+
+		<script type="text/javascript" src="../../js/jquery.min.js"></script>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/artTemplate-native.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/default.js" type="text/javascript" charset="utf-8"></script>
+	</body>
+
+	<script>
+		function materialList() {
+			openview({
+				view: 'wmaterialCheckList.html',
+				id: 'wmaterialCheckList',
+				extrasobj:{audioNo:$('#cartData').attr('data-id')}
+			})
+		}
+ 
+		mui.plusReady(function() {
+			var audiono = plus.webview.currentWebview().audioNo;
+			var audiostatus = plus.webview.currentWebview().audioStatus;
+			var userId = plus.storage.getItem('$userId');;
+			var oldToken = plus.storage.getItem("oldToken");
+			$('#cartData').attr('data-id',audiono)
+			if(audiostatus == 1){
+				$('#dibu').css('display','block')
+				$('.status').html('待审核')
+			}else if(audiostatus == 2){
+				$('.status').html('已审核')
+			}else if(audiostatus == 3){
+				$('.status').html('已取消')
+			}
+			//料单详情
+			mui.ajax(serverUrl+'/app/material/audit/details',{
+				data:{'auditNo':audiono},
+				dataType:'json',
+				type:'post',
+				timeout:1000,
+				headers:{"Authorization":oldToken},
+				success:function(data,type,xhr){
+					console.log('料单详情',data);
+					var timeLoad = setInterval(function(){
+						clearTimeout(timeLoad),timeLoad = null;
+						if(data.code == 0){
+							if(data.content){ 
+								$('.auditNo').html(data.content.auditNo)
+								$('.createTime').html(data.content.createTime)
+								if(data.content.goodsList && data.content.goodsList.length){
+									var goodsList = [];
+									if(data.content.goodsList.length > 5){
+										for(var i = 0 ;i<5;i++){
+											goodsList.push(data.content.goodsList[i])
+										}
+									}else{
+										goodsList = data.content.goodsList;
+									}
+									document.getElementById('cartData').innerHTML = template('cartTpl',{list:goodsList});
+								}
+								if(!data.content.totalPrice){
+									data.content.totalPrice = '待计算'
+								}
+								$('#totalPrice').html(data.content.totalPrice)
+								if(data.content.isOwnerReceiving){
+									$('#isOwnerReceiving').attr('checked',true)
+								}
+								$('#notice').val(data.content.remark)
+								$('.receiver').html(data.content.receiver)
+								$('.receiverPhone').html(data.content.receiverPhone)
+								$('.address').html(data.content.deliveryCity+data.content.deliveryCounty+data.content.deliveryStreet+data.content.residenceName+data.content.detailedAddress)
+								$('#reservationDeliveryTime').html(data.content.reservationDeliveryTime)
+							}else{
+								mui.toast(data.message)
+							}
+							
+						}else{
+							mui.toast(data.message);
+						}
+					},500)
+				},
+				error:function(xhr,type,errorThrown){
+					console.log('响应失败  !');
+				}
+			});
+		
+			//工人取消
+			window.delet = function(){
+				mui.ajax(serverUrl+'/app/material/audit/modify',{
+					data:{'auditNo':audiono},
+					dataType:'json',
+					type:'post',
+					timeout:1000,
+					headers:{"Authorization":oldToken},
+					success:function(data,type,xhr){
+						console.log('取消反馈',data);
+						if(data.code == 0){
+						 	mui.toast('取消成功')
+						}else{
+							mui.toast(data.message);
+						}
+					},
+					error:function(xhr,type,errorThrown){
+						console.log('响应失败  !');
+					}
+				});
+			}
+		})
+	</script>
+
+</html>

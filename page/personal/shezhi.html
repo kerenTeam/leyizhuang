@@ -144,6 +144,7 @@
 					plus.storage.removeItem("oldToken");
 					plus.storage.removeItem('$userId');
 					plus.storage.removeItem("$identityType");
+					plus.storage.removeItem('materialList');
 					plus.storage.removeItem("Acc_pass");//保存账号密码,用于自动登录
 					mui.fire(plus.webview.getWebviewById('../goodList.html'),'refresh');
 					mui.fire(plus.webview.getWebviewById('center.html'),'refresh');

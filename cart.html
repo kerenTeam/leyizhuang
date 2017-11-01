@@ -38,45 +38,38 @@
 		</div>
 		<div id="cartData"></div>
 		<script type="text/html" id="cartTpl">
-			 
-			<%if(list.length == 0){%>
-				<div>
-					<img src="images/blankCart.png" style="width:30%;margin: auto;display: block;margin-top: 40%;" alt="" />
-					<div style="color: #666;text-align: center;margin-top: 30px;font-size: 14px;">你的下料清单还是空的哦</div>
-				</div>
-	
-				<%}else{%> 
-					<dl class="cart">
-						<%for(var i = 0 ;i < list.length ; i++){%>
-							<dd>
-								<div class="mui-checkbox" style="top: 30%;">
-								<input name="checkbox" type="checkbox" data-id='<%=list[i].id%>'></div>
-								<a class="goodsPic"><img src="<%=list[i].coverImageUri%>" onerror="javascript:this.src='img/editset.png';" /></a>
-								<div class="goodsInfor">
-									<h2 class="ft14">  
-									    <a><%=list[i].skuName%></a>
-									   </h2>
-									<div class="priceArea">
-										<div class="extraBrief ft13">
-											单位：<%=list[i].goodsUnit%>；规格：<%=list[i].goodsSpecification%>
-										</div>
-										<strong>¥<span class="price"><%=list[i].retailPrice%></span></strong>
-										<div class="numberWidget">
-											<div class="mui-numbox" data-numbox-min='1'>
-												<button class="mui-btn mui-btn-numbox-minus" type="button">-</button>
-												<input class="mui-input-numbox" data-id="<%=list[i].id%>" value="<%=list[i].qty%>" readonly="" type="number" />
-												<button class="mui-btn mui-btn-numbox-plus" type="button">+</button>
-											</div>
-										</div>
-									</div>
-									
+			  
+			<dl class="cart">
+				<%for(var i = 0 ;i < list.length ; i++){%>
+					<dd>
+						<div class="mui-checkbox" style="top: 30%;">
+						<input name="checkbox" type="checkbox" data-id='<%=list[i].id%>'></div>
+						<a class="goodsPic"><img src="<%=list[i].coverImageUri%>" onerror="javascript:this.src='img/editset.png';" /></a>
+						<div class="goodsInfor">
+							<h2 class="ft14">  
+							    <a><%=list[i].skuName%></a>
+							    
+							   </h2>
+							<div class="priceArea">
+								<div class="extraBrief ft13">
+									单位：<%=list[i].goodsUnit%>；规格：<%=list[i].goodsSpecification%>
 								</div>
-								<a class="delBtn" data-id="<%=list[i].id%>">删除</a>
-							</dd>
-						<%}%>
-						
-					</dl>
-			<%}%>
+								<strong>¥<span class="price"><%=list[i].retailPrice%></span></strong>
+								<div class="numberWidget">
+									<div class="mui-numbox" data-numbox-min='1'>
+										<button class="mui-btn mui-btn-numbox-minus" type="button">-</button>
+										<input class="mui-input-numbox" data-id="<%=list[i].id%>" value="<%=list[i].qty%>" readonly="" type="number" />
+										<button class="mui-btn mui-btn-numbox-plus" type="button">+</button>
+									</div>
+								</div>
+							</div>
+							
+						</div>
+						<a class="delBtn" data-id="<%=list[i].id%>">删除</a>
+					</dd>
+				<%}%>
+				
+			</dl> 
 			<!--bottom nav-->
 			<div style="height:1rem;"></div>
 			<aside class="btmNav" id="dibu">
@@ -98,6 +91,10 @@
 
 	<script>
 		mui.plusReady(function() {
+			var page = plus.webview.currentWebview().page;
+			if(page == 1){
+				$('#fanhui').show()
+			}
 			//		plus.storage.removeItem('$cartStorage')
 			window.addEventListener('refresh', function(event) {
 				cartload();
@@ -127,13 +124,20 @@
 						plus.nativeUI.closeWaiting();
 						console.log('下料清单返回', data);
 						if(data.code == 0) {
-							if(data.content){
+							if(data.content && data.content.length){
 								for(var i in data.content){
 									if(!data.content[i].retailPrice){
 										data.content[i].retailPrice = 1;
 									}
 								}
 								 $('#cartData').html(template('cartTpl',{list:data.content}));
+								 $('.mui-checkbox input').attr('checked',true);
+								 countFuc();
+							}else{
+								var html = '<div><img src="images/blankCart.png" style="width:30%;margin: auto;display: block;margin-top: 40%;" alt="" /><div style="color: #666;text-align: center;margin-top: 30px;font-size: 14px;">你的下料清单还是空的哦</div></div>'
+								 $('#cartData').html(html);
+								
+								
 							}
 							plus.nativeUI.closeWaiting();
 							mui('.mui-numbox').numbox()
@@ -183,7 +187,7 @@
 														if($('.cart').length==0) {
 															$('aside input').attr("checked", false);
 															mui('#bianji')[0].style.display = 'none';
-						        							mui('#dibu')[0].style.display = 'none';
+						        								mui('#dibu')[0].style.display = 'none';
 															mui('#cartData')[0].innerHTML = tipsCont;
 														}
 													}
@@ -195,7 +199,6 @@
 											},
 											error:function(xhr,type,errorThrown){
 												plus.nativeUI.closeWaiting();
-												mui.toast(type)
 											}
 										});
 									}
@@ -271,7 +274,6 @@
 									},
 									error:function(xhr,type,errorThrown){
 										plus.nativeUI.closeWaiting();
-										mui.toast(type)
 										console.log('登录响应失败');
 									}
 								});
@@ -285,20 +287,31 @@
 								if(ALLcheckLength == 0) {
 									mui.toast("您还未选择要购买的商品哦！")
 								} else {
-									var materialList = []
+									var materialList = [];
+									var cartObj = [];
 									//存缓存
-									$("dd").find("input[type='checkbox']:checked").each(function(){
+									$("dd").find("input[type='checkbox']:checked").each(function(index){
+										if($(this).attr('data-id') == data.content[index].id){
+											cartObj.push(data.content[index])
+										}
 										materialList.push({id:$(this).attr('data-id'),num:$(this).parent().parent().find('.mui-input-numbox').val(),isGift:false})
 									})
 
 									plus.storage.setItem('materialList',JSON.stringify(materialList));
+									plus.storage.setItem('cartObj',JSON.stringify(cartObj));
 									console.log(plus.storage.getItem('materialList'));
+									console.log(plus.storage.getItem('cartObj'));
 									
 									if(plus.storage.getItem('oldToken')) {
 										if(identityT == 0){
 											openview({
 												view:'page/order/chooseCustom.html',
 												id:'chooseCustom'
+											})
+										}else if(identityT == 3){
+											openview({
+												view:'page/order/workerMaterial.html',
+												id:'workerMaterial'
 											})
 										}else{
 											openview({
@@ -324,7 +337,6 @@
 					},
 					error: function(xhr, type, errorThrown) {
 						plus.nativeUI.closeWaiting();
-						mui.toast(type)
 					}
 				});
 				

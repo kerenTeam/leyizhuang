@@ -41,19 +41,19 @@
 		</div>
 		
 		<!--小分类-->
-		<div style="background-color:white;padding:15px;font-size:14px">
+		<div class="filter" style="background-color:white;padding:15px;font-size:14px">
 	     	<div class="categray">
-	     		<span class="mui-badge mui-badge-danger">全部</span><div class="categraya"></div>
+	     		<span class="mui-badge mui-badge-danger" data-id = '' data-name = 'category'>全部</span><div class="categraya"></div>
 	     		 
 	     	</div>
 	     	<div class="categray">
-	     		<span class="mui-badge mui-badge-danger">品牌</span><div class="categrayb"></div>
+	     		<span class="mui-badge mui-badge-danger" data-id = '' data-name = 'brand'>品牌</span><div class="categrayb"></div>
 	     	</div>
 	     	<div class="categray">
-	     		<span class="mui-badge mui-badge-danger">规格</span><div class="categrayc"></div>
+	     		<span class="mui-badge mui-badge-danger" data-id = '' data-name = 'specification'>规格</span><div class="categrayc"></div>
 	     	</div>
 	     	<div class="categray">
-	     		<span class="mui-badge mui-badge-danger">类型</span><div class="categrayd"></div>
+	     		<span class="mui-badge mui-badge-danger" data-id = '' data-name = 'type'>类型</span><div class="categrayd"></div>
 	     	</div>
 	     </div>
 	     
@@ -61,24 +61,24 @@
 	    <div class="goodsList" id="goodsList"></div>
 	    
 	    <script type="text/html" id="goodsTpl">
-	    	<ul class="mui-table-view">
+	    	<ul class="mui-table-view allList">
 	    		<%for(var i = 0 ;i<list.length;i++){%>
-		    		<li class="mui-table-view-cell mui-media" id="<%=list[i].id%>" onclick="goodsInfo(<%=list[i].id%>)">
-				        <a href="javascript:;">
-				            <img class="mui-media-object mui-pull-left" src="<%=list[i].coverImageUri%>">
-				            <div class="mui-media-body">
-				                <%=list[i].goodsName%>
-				                <p class='mui-ellipsis'>规格:<%=list[i].goodsSpecification%> &nbsp;单位:<%=list[i].goodsUnit%></p>
-					            <span class="ft12 activecl">￥<%=list[i].retailPrice%></span>
-								<img style="display:inline-block;float:right;margin-left:5px;vertical-align:middle" src="../images/addcart.svg"/>
-					            <div style="display:inline-block;float:right;" class="mui-numbox" data-numbox-step='1' data-numbox-min='0' data-numbox-max='100'>
-								  <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
-								  <input class="mui-numbox-input" type="number" />
-								  <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
-								</div>
-				            </div>
-				        </a>
-				    </li>
+		    		<li class="mui-table-view-cell mui-media" data-id="<%=list[i].id%>" onclick="goodsInfo(<%=list[i].id%>)">
+			        <a href="javascript:;">
+			            <img class="mui-media-object mui-pull-left" src="<%=list[i].coverImageUri%>">
+			            <div class="mui-media-body">
+			                <%=list[i].goodsName%>
+			                <p class='mui-ellipsis'>规格:<%=list[i].goodsSpecification%> &nbsp;单位:<%=list[i].goodsUnit%></p>
+				            <span class="ft12 activecl">￥<%=list[i].retailPrice%></span>
+							<img style="display:inline-block;float:right;margin-left:5px;vertical-align:middle" data-id="<%=list[i].id%>" class="toCart" src="../images/addcart.svg"/>
+				            <div style="display:inline-block;float:right;" class="mui-numbox" data-numbox-step='1' data-numbox-min='0'>
+							  <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+							  <input class="mui-numbox-input" type="number" />
+							  <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+							</div>
+			            </div>
+			        </a>
+			    </li>
 	    		<%}%> 
 			</ul>
 	    </script> 
@@ -136,9 +136,9 @@
 							console.log('列表',data);
 							if(data.code == 0 ){
 								plus.nativeUI.closeWaiting();
-								if(data.content.length){
+								if(data.content && data.content.length){
 									for(var i = 0;i<data.content.length;i++){
-										$('.categraya').html('<span data-id="'+data.content[i].categoryId+'">'+data.content[i].categoryName+'</span>')
+										$('.categraya').html('<span data-name = "category" data-id="'+data.content[i].categoryId+'">'+data.content[i].categoryName+'</span>')
 									}
 								}else{
 									$('.categraya').html('无')
@@ -153,7 +153,6 @@
 						},
 						error:function(xhr,type,errorThrown){
 							plus.nativeUI.closeWaiting();
-							mui.toast(type)
 							console.log('登录响应失败');
 						}
 					});
@@ -172,17 +171,11 @@
 							console.log('品牌列表'+JSON.stringify(data));
 							if(data.code == 0 ){
 								plus.nativeUI.closeWaiting();
-								var j = 0;
-								if(data.content.length){
+								if(data.content && data.content.length){
 									for(var i = 0;i<data.content.length;i++){
-										if(data.content[i].typeName){
-											j++;
-											$('.categrayb').html('<span data-id="'+data.content[i].brandId+'">'+data.content[i].brandName+'</span>')
-										}
+											$('.categrayb').html('<span data-name = "brand" data-id="'+data.content[i].brandId+'">'+data.content[i].brandName+'</span>')
 									}
-									if(j == 0){
-									 	$('.categrayd').html('无')
-									}
+									 
 								}else{
 									$('.categrayb').html('无')
 								}
@@ -196,7 +189,6 @@
 						},
 						error:function(xhr,type,errorThrown){
 							plus.nativeUI.closeWaiting();
-							mui.toast(type)
 							console.log('登录响应失败');
 						}
 					});
@@ -216,9 +208,9 @@
 							if(data.code == 0 ){
 								plus.nativeUI.closeWaiting();
 								
-								if(data.content.length){
+								if(data.content && data.content.length){
 									for(var i = 0;i<data.content.length;i++){
-										$('.categrayd').html('<span data-id="'+data.content[i].typeId+'">'+data.content[i].typeName+'</span>')
+										$('.categrayd').html('<span data-name = "type" data-id="'+data.content[i].typeId+'">'+data.content[i].typeName+'</span>')
 									}
 									
 								}else{
@@ -234,66 +226,148 @@
 						},
 						error:function(xhr,type,errorThrown){
 							plus.nativeUI.closeWaiting();
-							mui.toast(type)
 							console.log('登录响应失败');
 						}
 					}); 
 					//商品列表
-					mui.ajax(serverUrl+'/app/goods/list',{
-						data:{
-							categoryCode:categoryCode,
-							userId:userId,
-							identityType:identityT
-						},
-						dataType:'json',
-						headers: {"Authorization": oldToken},
-						type:'post',
-						timeout:10000,
-						success:function(data,type,xhr){ 
-							console.log('商品列表',data);
-							if(data.code == 0 ){
-								plus.nativeUI.closeWaiting();
-								if(data.content.length){
-									//规格
-									var spec = [];
-									for(var i in data.content){
-										if(data.content[i].goodsSpecification){
-											spec.push(data.content[i].goodsSpecification)
+					var categoryId='',brandId='',typeId='',specification='';
+					goodsList(categoryId,brandId,typeId,specification,0);
+					function goodsList(categoryId,brandId,typeId,specification,nosp){
+						plus.nativeUI.showWaiting();
+						mui.ajax(serverUrl+'/app/goods/filter',{
+							data:{
+								firstCategoryCode:categoryCode,
+								categoryId:categoryId,
+								brandId:brandId,
+								typeId:typeId,
+								specification:specification,
+								userId:userId,
+								identityType:6
+							},
+							dataType:'json',
+							headers: {"Authorization": oldToken},
+							type:'post',
+							timeout:10000,
+							success:function(data,type,xhr){ 
+								console.log('商品列表',data);
+								if(data.code == 0 ){
+									plus.nativeUI.closeWaiting();
+									if(data.content && data.content.length){
+										//规格
+										var spec = [];
+										for(var i in data.content){
+											if(data.content[i].goodsSpecification){
+												spec.push(data.content[i].goodsSpecification)
+											}
 										}
+										console.log('spec',spec);
+										//去重
+										spec = spec.unique1();
+										console.log('spec',spec);
+										var str='';
+										if(!nosp){
+											for(var i = 0;i<spec.length;i++){
+												str+='<span data-name = "specification" data-id="'+spec[i]+'">'+spec[i]+'</span>';
+											}
+										}else{
+											str = plus.storage.getItem('specification');
+										}
+										plus.storage.setItem('specification',str)
+										$('.categrayc').html(str);
+										if(specification){
+											$('.categrayc span').each(function(){
+												if($(this).html() == specification){
+													$(this).addClass('mui-badge mui-badge-danger')
+												}
+											})
+										}
+										$('#goodsList').html(template('goodsTpl',{list:data.content}));
+										mui('.mui-numbox').numbox();
+										$('.toCart,.mui-numbox button,.mui-numbox input').click(function() {
+											event.stopPropagation()
+										})
+										
+										//商品 筛选
+										$('.categray span').click(function(){
+											$(this).parentsUntil('.filter').find('span').removeClass('mui-badge mui-badge-danger')
+											$(this).addClass('mui-badge mui-badge-danger');
+											if($(this).attr('data-name') == 'category'){
+												categoryId = $(this).attr('data-id')
+											}else if($(this).attr('data-name') == 'brand'){
+												brandId = $(this).attr('data-id')
+											}else if($(this).attr('data-name') == 'specification'){
+												specification = $(this).attr('data-id')
+											}else if($(this).attr('data-name') == 'type'){
+												typeId = $(this).attr('data-id')
+											}
+											goodsList(categoryId,brandId,typeId,specification,1);
+										})
+										
+										//加入购物车
+										$('.toCart').click(function(){
+											var goodid = $(this).attr('data-id');
+											var num = $(this).next().find('input').val();
+											if(num > 0){
+												mui.ajax(serverUrl+'/app/materialList/add',{
+													data:{
+														userId:userId,
+														identityType:identityT,
+														params:goodid+'-'+num
+													},
+													dataType:'json',
+													headers: {"Authorization": oldToken},
+													type:'post',
+													timeout:10000,
+													success:function(data,type,xhr){ 
+														plus.nativeUI.closeWaiting();
+														console.log('加入购物车',data);
+														if(data.code == 0 ){
+															plus.nativeUI.toast('加入成功')
+															$(".am-share").removeClass("am-modal-active");
+															$(".sharebg ").removeClass("sharebg-active");							
+															mui.fire(plus.webview.getWebviewById('cart.html'), 'refresh');
+															 
+														}else{
+															mui.toast(data.message)
+														}
+														 
+													},
+													error:function(xhr,type,errorThrown){
+														plus.nativeUI.closeWaiting();
+														console.log('登录响应失败');
+													}
+												});
+											}else{
+												plus.nativeUI.toast('请选择商品数量')
+											}
+											
+										})
+									}else{
+										$('#goodsList').html('<div style="text-align:center;padding:15px">暂无商品</div>') 
 									}
-									console.log('spec',spec);
-									//去重
-									spec = spec.unique1();
-									console.log('spec',spec);
-									var str='';
-									for(var i = 0;i<spec.length;i++){
-										str+='<span data-id="'+i+'">'+spec[i]+'</span>';
-									}
-									$('.categrayc').html(str)
-									
-									$('#goodsList').html(template('goodsTpl',{list:data.content}));
-									mui('.mui-numbox').numbox()
 								}else{
-									$('#goodsList').html('<div style="text-align:center;padding:15px">暂无商品</div>') 
+									plus.nativeUI.closeWaiting();
+									mui.toast(data.message)
 								}
-							}else{
-								mui.toast(data.message)
+								 
+							},
+							error:function(xhr,type,errorThrown){
+								plus.nativeUI.closeWaiting();
+								console.log('登录响应失败');
 							}
-							 
-						},
-						error:function(xhr,type,errorThrown){
-							plus.nativeUI.closeWaiting();
-							mui.toast(type)
-							console.log('登录响应失败');
-						}
-					}); 
+						}); 
+					}
+					
 				 }
-				 
+				//一级分类切换 
 				$('.flexw div').click(function(){
 					$(this).siblings().removeClass('curActive')
 					$(this).addClass('curActive'); 
+					$('.categray>span').addClass('mui-badge mui-badge-danger')
 					kindType($(this).attr('data-id'));
 				})
+				
+				
 			})
 			//数组去重
 			Array.prototype.unique1 = function() {
