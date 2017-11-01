@@ -216,8 +216,7 @@
       "page/tab-webview-subpage-contact.html",
       "js/default.js",
       "css/configW.css",
-      "img/balls.svg",
-      "cart.html"
+      "img/balls.svg"
     ],
     "refer": [
       "html/tab-webview-subpage-chat.html",
@@ -242,8 +241,7 @@
       "page/tradeList.html",
       "page/tradeSchoolLnfo.html",
       "page/order/pzOrder.html",
-      "page/order/pzOrderTest.html",
-      "page/order/chooseCustom2.html"
+      "page/order/pzOrderTest.html"
     ]
   },
   "page/gxbList.html": {
@@ -829,7 +827,8 @@
       "css/configW.css",
       "img/check2.png",
       "js/artTemplate-native.js"
-    ]
+    ],
+    "refer": []
   },
   "page/order/workerMaterial.html": {
     "resources": [
@@ -851,7 +850,8 @@
       "js/mui.min.js",
       "js/default.js",
       "img/check2.png"
-    ]
+    ],
+    "refer": []
   },
   "page/tradeList.html": {
     "resources": [
@@ -878,20 +878,23 @@
       "js/default.js",
       "js/artTemplate-native.js",
       "css/configW.css"
-    ]
+    ],
+    "refer": []
   },
   "page/order/pzOrder.html": {
     "resources": [
+      "css/mui.min.css",
+      "img/addpic.png",
+      "css/commonY.css",
+      "img/Spinner.svg",
       "js/jquery.min.js",
       "js/mui.min.js",
       "js/statusBar.js",
       "fonts/mui.ttf",
-      "css/mui.min.css",
-      "img/addpic.png",
       "js/default.js",
-      "css/commonY.css",
       "js/artTemplate-native.js"
-    ]
+    ],
+    "refer": []
   },
   "page/order/pzOrderTest.html": {
     "resources": [
@@ -907,28 +910,7 @@
       "css/configW.css",
       "css/commonY.css",
       "js/artTemplate-native.js"
-    ]
-  },
-  "page/order/chooseCustom2.html": {
-    "resources": [
-      "css/mui.min.css",
-      "js/jquery.min.js",
-      "js/mui.min.js",
-      "fonts/mui.ttf",
-      "js/default.js"
     ],
-    "refer": [
-      "page/order/pzOrder.html",
-      "page/mailList.html"
-    ]
-  },
-  "page/mailList.html": {
-    "resources": [
-      "css/mui.min.css",
-      "js/jquery.min.js",
-      "js/mui.min.js",
-      "fonts/mui.ttf",
-      "js/default.js"
-    ]
+    "refer": []
   }
 }
