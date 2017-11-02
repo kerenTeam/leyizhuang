@@ -43,10 +43,10 @@
 			<div id="fankui">
 				<h4>反馈类型</h4>
 				<div id="fankuiSpan">
-					<span id="" class="active">功能异常</span>
-					<span id="">体验问题</span>
-					<span id="">新功能建议</span>
-					<span id="">其他</span>
+					<span typeid='FE' class="active">功能异常</span>
+					<span typeid='EP'>体验问题</span>
+					<span typeid='FS'>新功能建议</span>
+					<span typeid='OT'>其他</span>
 				</div>
 				<script type="text/javascript">
 					var fankuiSpan = document.getElementById('fankuiSpan').getElementsByTagName('span');
@@ -141,6 +141,8 @@
 
 		    $(".baocun").on("click",function(){
 		    		var content = $("textarea").val();
+		    		var typeid = $('#fankuiSpan .active').attr('typeid');
+
 				if(!content){
 			    	   mui.toast("还未填写内容呢！");
 			    	   mui('#con1')[0].focus();
@@ -173,12 +175,11 @@
 					);
 
 					task.setRequestHeader('Authorization',oldtoken);
-					alert(Apic[0]);
-					if(Apic){task.addFile(Apic[0], {key:'myfiles'})};/*头像*/
 
+					if(Apic){task.addFile(Apic[0], {key:'myfiles'})};/*头像*/
 					task.addData('userId',myuserid);
 					task.addData('identityType',identityT.toString());
-			        task.addData('type','1');
+			        task.addData('type',typeid);
 			        task.addData('phone',mui('#phoneNum1')[0].value);
 			        task.addData('content',content);
 					task.start();
