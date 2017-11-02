@@ -242,7 +242,8 @@
       "page/tradeSchoolLnfo.html",
       "page/order/pzOrder.html",
       "page/order/pzOrderTest.html",
-      "page/order/chooseCustom2.html"
+      "page/order/chooseCustom2.html",
+      "nview.html"
     ]
   },
   "page/gxbList.html": {
@@ -999,7 +1000,8 @@
       "js/default.js",
       "css/configW.css",
       "js/artTemplate-native.js"
-    ]
+    ],
+    "refer": []
   },
   "page/worker/wmaterialCheckList.html": {
     "resources": [
@@ -1013,7 +1015,8 @@
       "js/default.js",
       "css/configW.css",
       "js/artTemplate-native.js"
-    ]
+    ],
+    "refer": []
   },
   "page/worker/workerlistCheck.html": {
     "resources": [

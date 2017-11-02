@@ -559,7 +559,8 @@
 					"page/tradeSchoolLnfo.html",
 					"page/order/pzOrder.html",
 					"page/order/pzOrderTest.html",
-					"page/order/chooseCustom2.html"
+					"page/order/chooseCustom2.html",
+					"nview.html"
 				],
 				"priority": 0
 			},

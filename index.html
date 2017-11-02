@@ -123,7 +123,7 @@
 					<img src="images/y.svg" alt="" />油
 				</div>
 			</div>
-			<div style="text-align:center;padding:20px 10px 0" onclick="pzPrderTest()">
+			<div style="text-align:center;padding:20px 10px 0" onclick="tonview()">
 				<img style="vertical-align:middle;margin:0 5px;width:25px" src="images/activity.svg" />最新活动
 			</div>
 
@@ -379,7 +379,7 @@
 							height: '50px'
 						},
 						rectStyles: {
-							color: '#d74b28',
+							color: '#DA635D',
 							radius: '50%'
 						}
 					}, {
@@ -400,7 +400,43 @@
 					}]);
 					// append 到父webview中
 					self.append(drawNativeIcon);
-
+					var cartNum = 3
+					//绘制角标
+					var badge = util.drawNative('icon', {
+						bottom: '30px',
+						left: '68%',
+						width: '15px',
+						height: '15px'
+					}, [{
+						tag: 'rect',
+						id: 'iconBg',
+						position: {
+							top: '0px',
+							left: '0px',
+							width: '15px',
+							height: '15px'
+						},
+						rectStyles: {
+							color: '#E73A38',
+							radius: '50%'
+						}
+					}, {
+						tag: 'font',
+						id: 'icon',
+						text: cartNum, //此为字体图标Unicode码'\e600'转换为'\ue600'
+						position: {
+							top: '0px',
+							left: '0px',
+							width: '100%',
+							height: '100%'
+						},
+						textStyles: {
+							align: 'center',
+							color: '#fff',
+							size: '10px'
+						}
+					}]);
+					badge.show();
 					//自定义监听图标点击事件
 					var active_color = '#fff';
 					drawNativeIcon.addEventListener('click', function(e) {
@@ -475,11 +511,11 @@
 		<script>
 	        var Spagenum = 2; //实到页数
 			var Ypagenum = 1; //应到页数
-//			function pzPrderTest(){
-//				openview({
-//					view: 'page/order/pzOrderTest.html',
-//				})
-//			}
+			function tonview(){
+				openview({
+					view: 'nview.html',
+				})
+			}
 			function paizhaoOrder(){//拍照下单
 				mui.plusReady(function(){
 					var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
