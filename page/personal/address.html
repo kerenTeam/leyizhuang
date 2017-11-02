@@ -225,20 +225,20 @@
 									defultAddress.address = $(this).attr("data-adi");
 
 									addressStorage = [defultAddress];
-									plus.storage.setItem('$addressStorage', JSON.stringify(addressStorage));
+									
 
 									if(goType == 'pzOrder'){//拍照下单
 										plus.storage.setItem('$addressStorageY2', JSON.stringify(addressStorage));
 										mui.fire(plus.webview.getWebviewById('pzOrder'),'readdstorage');//拍照下单
 									}
-
-									var list = plus.webview.getWebviewById('order');
-									mui.fire(list,'readdstorage');
-
+									if(order == 'order'){
+										plus.storage.setItem('$addressStorage', JSON.stringify(addressStorage));
+										var list = plus.webview.getWebviewById('order');
+										mui.fire(list,'readdstorage');
+									}
+ 
  									plus.webview.currentWebview().close();//关闭当前页面
-
-
-
+ 
 							})
 						}
 
