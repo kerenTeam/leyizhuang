@@ -58,7 +58,7 @@
 								<div class="numberWidget">
 									<div class="mui-numbox" data-numbox-min='1'>
 										<button class="mui-btn mui-btn-numbox-minus" type="button">-</button>
-										<input class="mui-input-numbox" data-id="<%=list[i].id%>" value="<%=list[i].qty%>" readonly="" type="number" />
+										<input class="mui-input-numbox" data-id="<%=list[i].id%>" value="<%=list[i].qty%>" type="number" />
 										<button class="mui-btn mui-btn-numbox-plus" type="button">+</button>
 									</div>
 								</div>
@@ -191,6 +191,7 @@
 															mui('#cartData')[0].innerHTML = tipsCont;
 														}
 													}
+													countFuc();
 													 
 												}else{
 													mui.toast(data.message)
@@ -339,7 +340,7 @@
 						plus.nativeUI.closeWaiting();
 					}
 				});
-				
+				 
 				//计算总价和总数量
 				function countFuc() {
 					var fen = 0; //总份数

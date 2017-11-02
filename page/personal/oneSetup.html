@@ -127,14 +127,20 @@
 							<input type="text" class="fr shuru" name="" id="mynickname" placeholder="点击编辑" />
 						</a>
 					</li>
-
+					<li class="clearfloat">
+						<a href="#">
+							<p class="fl">姓名</p>
+							<input type="text" class="fr shuru" name="" id="myname" placeholder="点击编辑" />
+						</a>
+					</li>
 					<li class="clearfloat">
 						<a href="#">
 							<p class="fl">性别</p>
 			    				<select class="mui-btn mui-btn-block selectbtn" id="Nextbtn" dir="rtl">
 								<option value="item-1">点击设置</option>
 								<option value="item-2">男</option>
-								<option value="item-2">女</option>
+								<option value="item-3">女</option>
+								<option value="item-4">保密</option>
 							</select>
 						</a>
 					</li>
@@ -216,8 +222,12 @@
 							mui('#imghead')[0].src = data.content.picUrl;
 						}
 						//显示昵称
+						if(data.content.nikeName){
+							mui('#mynickname')[0].value =data.content.nikeName;
+						}
+						//显示姓名
 						if(data.content.name){
-							mui('#mynickname')[0].value =data.content.name;
+							mui('#myname')[0].value =data.content.name;
 						}
 						//显示性别
 						if(data.content.sex == '男'){
@@ -225,7 +235,7 @@
 						}else if(data.content.sex == '女'){
 							mui('#Nextbtn')[0].getElementsByTagName('option')[2].selected = true;
 						}else{
-							mui('#Nextbtn')[0].getElementsByTagName('option')[0].selected = true;
+							mui('#Nextbtn')[0].getElementsByTagName('option')[3].selected = true;
 						}
 						/*显示城市*/
 						if(data.content.cityName){
@@ -314,9 +324,9 @@
 		mui('#Preservation')[0].addEventListener('tap',function(){
 			plus.nativeUI.showWaiting('保存中 ...',{width:'100px',height:'80px'});
 			var mynickname = mui('#mynickname')[0].value || null;
+			var myname = mui('#myname')[0].value || null;
 			var Nextbtnval = document.getElementById("Nextbtn").options[window.document.getElementById("Nextbtn").selectedIndex].text;
 			var shengri = $('#shengri').html();
-			alert(shengri)
 
 			mui.plusReady(function(){
 				var userId = plus.storage.getItem('$userId');
@@ -363,7 +373,7 @@
 
 					task.addData('userId',userId);
 					task.addData('identityType',identityT.toString());
-			        task.addData('name',mynickname);
+			        task.addData('name',myname);
 			        task.addData('nikeName',mynickname);
 			        task.addData('birthday',shengri);
 			        if(Nextbtnval.indexOf('男')>-1 || Nextbtnval.indexOf('女')>-1){

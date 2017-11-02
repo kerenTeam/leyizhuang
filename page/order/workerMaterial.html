@@ -283,6 +283,7 @@
 				var receiver = $('#addid').attr('data-receiver')
 				var pstime = $('#cityResult span').html();//配送时间
 				var isOwnerReceive = $('#isOwner').attr('checked');
+				var idobj = plus.storage.getItem('cartObj');
 				if($('#cityResult').attr('data-id') == 0){
 					mui.toast('请选择配送时间')
 				}else{
@@ -290,21 +291,21 @@
 						data:{
 							userID:userId,
 							identityType:identityT,
-							ids:plus.storage.getItem('cartObj'),
-							receiver:receiver,
-							receiverPhone:receiverPhone,
-							deliveryCity:deliveryCity,
-							deliveryCounty:deliveryCounty,
-							deliveryStreet:deliveryStreet,
-							residenceName:residenceName,
-							detailedAddress:detad,
-							reservationDeliveryTime:pstime,
-							isOwnerReceiving:isOwnerReceive,
+//							ids:idobj,
+//							receiver:receiver,
+//							receiverPhone:receiverPhone,
+//							deliveryCity:deliveryCity,
+//							deliveryCounty:deliveryCounty,
+//							deliveryStreet:deliveryStreet, 
+//							residenceName:residenceName,
+//							detailedAddress:detad,
+//							reservationDeliveryTime:pstime,
+//							isOwnerReceiving:isOwnerReceive,
 							remark:$('#other').val(),
 						},
 						dataType:'json',
 						type:'post',
-						timeout:1000,
+						timeout:10000,
 						headers:{"Authorization":oldToken},
 						success:function(data,type,xhr){
 							console.log('提交审核',data);

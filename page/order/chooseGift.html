@@ -187,10 +187,10 @@
 				var goOrder = mui(".goOrder")[0];
 				goOrder.addEventListener("tap", function() {
 
-					var ALLcheckLength = $("dd").find("input[type='checkbox']:checked").length;
-					if(ALLcheckLength == 0) {
-						mui.toast("您还未选择要赠送商品哦！")
-					} else {
+//					var ALLcheckLength = $("dd").find("input[type='checkbox']:checked").length;
+//					if(ALLcheckLength == 0) {
+//						mui.toast("您还未选择要赠送商品哦！")
+//					} else {
 						if(identityT == 3){
 							openview({
 								view:'workerMaterial.html',
@@ -202,7 +202,7 @@
 								id:'order'
 							})
 					 	}
-					}
+//					}
 				})
 			 
 			}

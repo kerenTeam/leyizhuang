@@ -28,8 +28,13 @@
 				var userId = plus.storage.getItem('$userId'); 
 				var oldToken = plus.storage.getItem('oldToken');
 				plus.nativeUI.showWaiting();
-				//商品详情
-				mui.ajax(serverUrl+'/app/customer/deposit/balance',{
+				if(identityT == 2){
+					var api = '/app/store/preDeposit/balance'
+				}else{
+					var api = '/app/customer/preDeposit/balance'
+				}
+				//顾客余额
+				mui.ajax(serverUrl+api,{
 					data:{
 						userId:userId,
 						identityType:identityT
@@ -45,6 +50,8 @@
 							plus.nativeUI.closeWaiting();
 								if(data.content){
 									$('#balance').html('¥'+data.content);
+								}else{
+									$('#balance').html('¥'+0);
 								}
 								
 						}
@@ -58,7 +65,7 @@
 					error:function(xhr,type,errorThrown){
 						plus.nativeUI.closeWaiting();
 						mui.toast(type)
-						console.log('登录响应失败');
+						console.log('响应失败');
 					}
 				});
 			})

@@ -51,7 +51,7 @@
 		<script src="../js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../js/mui.min.js"></script>
 		<script src="../js/artTemplate-native.js" type="text/javascript" charset="utf-8"></script>
-		<!--<script src="../js/default.js" type="text/javascript" charset="utf-8"></script>-->
+		<script src="../js/default.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
 			mui.init();
 			mui.plusReady(function(){
@@ -68,7 +68,7 @@
 				 kindType(categoryCode);
 				 function kindType(categoryCode){
 					//商品列表
-					mui.ajax('http://119.23.149.7:9999/app/goods/often/list',{
+					mui.ajax(serverUrl+'/app/goods/often/list',{
 						data:{
 							categoryCode:categoryCode,
 							userId:userId,
