@@ -131,19 +131,19 @@
 				    		<div class="bottom clearfloat box-s">
 				    			<section class="shopcar clearfloat">
 				    				<div class="list listtwo clearfloat">
-										<div class="xuan xuantwo clearfloat fl">
-						    				<div class="radio" onclick="changeState(this)">
+									<div class="xuan xuantwo clearfloat fl" onclick="editAd(<%= addressLi[i].id %>)">
+						    				<div class="radio">
 											    <label>
 											    	<% if(addressLi[i].isDefault){ %>
-											        	<input type="checkbox" name="sex" value="" checked id="<%= addressLi[i].id %>" />
+											        	<input type="checkbox" disabled name="sex" value="" checked  id="<%= addressLi[i].id %>" />
 											        <% }else{ %>
-														<input type="checkbox" name="sex" value="" id="<%= addressLi[i].id %>" />
+														<input type="checkbox" disabled name="sex" value="" id="<%= addressLi[i].id %>" />
 													<% } %>
 											        <div class="option"></div>
 											    </label>
 											</div>
 						    			</div>
-						    			<span class="mradd fl">默认地址</span>
+						    			<span class="mradd fl" onclick="editAd(<%= addressLi[i].id %>)">默认地址</span>
 									<div class="right fr clearfloat">
 										<a href="javascript:;" class="fr exterminate" onclick="deleteAd(<%= addressLi[i].id %>)">
 											<i class="iconfont icon-lajixiang icon-shanchutwo"></i>
@@ -166,12 +166,12 @@
 		mui.init();
 		mui.plusReady(function(){
 
-
-			var userId = plus.storage.getItem('$userId');
+			var userId = plus.webview.currentWebview().ConeId || plus.storage.getItem('$userId');
 			var oldToken = plus.storage.getItem("oldToken");
-			var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
+			var identityT = plus.webview.currentWebview().CidentityT || JSON.parse(plus.storage.getItem("$identityType")).identityType;
 			var pageid = plus.webview.currentWebview().page;
-			
+			var goType = plus.webview.currentWebview().goType;
+
 			//plus.nativeUI.showWaiting('加载中...',{width:'100px',height:'80px'});
 			//添加刷新监听
 
@@ -227,9 +227,18 @@
 									addressStorage = [defultAddress];
 									plus.storage.setItem('$addressStorage', JSON.stringify(addressStorage));
 
+									if(goType == 'pzOrder'){//拍照下单
+										plus.storage.setItem('$addressStorageY2', JSON.stringify(addressStorage));
+										mui.fire(plus.webview.getWebviewById('pzOrder'),'readdstorage');//拍照下单
+									}
+
 									var list = plus.webview.getWebviewById('order');
+									mui.fire(list,'readdstorage');
+
  									plus.webview.currentWebview().close();//关闭当前页面
-								 	mui.fire(list,'readdstorage');
+
+
+
 							})
 						}
 
@@ -303,7 +312,13 @@
 						window.addAd = function(){
 							openview({
 								view:'add-address.html',
-								id:'add-address'
+								id:'add-address',
+								extrasobj: {
+									page: 'order',
+									ConeId:userId,
+									CidentityT:identityT,
+
+								}
 							});
 						}
 					},

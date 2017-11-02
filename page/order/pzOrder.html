@@ -40,7 +40,7 @@
 		<div id="main">
 			<div class="publishf">
 				<div class="apsan"></div>
-				<textarea style="display: none;" id="textCon" maxlength="150" class="disbg ft14" rows="4" placeholder="发布的信息如果违反规定，将被管理员删帖"></textarea>
+				<textarea style="display: none;"  maxlength="150" class="disbg ft14" rows="4" placeholder="发布的信息如果违反规定，将被管理员删帖"></textarea>
 			</div>
 			<div id="mainpic" class="biaoqian"></div>
 			<div class="uppics clearfix" id="uppics2">
@@ -58,10 +58,46 @@
 					<input name="radio1" checked type="radio">
 				</div>
 		    </div>
-		    <div class="dizhis">
-		    		<div>张亮 18878788788878</div>
-				<div> 地址 地址 地址 地址 地址</div>
-		    </div>
+
+
+		    <!--地址-->
+		    <div id="add_info" class="dizhis"></div>
+			<script type="text/html" id="addrTpl">
+				<%if(obj.length==0){%>
+				<div class="qtop flexr pad10" onclick="addAddress()">
+					<div style="flex: 1;margin-left: 10px;">
+						<div class="maincl ft16">
+							<span class="disablecl"></span>
+							<span class="disablecl"></span>
+						</div>
+						<div class="ft16">
+							<span class="disablecl">请选择收获地址</span>
+						</div>
+					</div>
+					<div class="">
+						<img src="../../images/center/right.svg" alt="" />
+					</div>
+				</div>
+				<%}else{%>
+					<div class="qtop flexr pad10" onclick="addAddress()" id="addid" data-id="<%=obj[0].id%>" data-receiver="<%=obj[0].person%>" data-receiverPhone="<%=obj[0].phone%>" data-deliveryCity="<%=obj[0].city%>" data-deliveryCounty="<%=obj[0].country%>" data-deliveryStreet="<%=obj[0].street%>" data-residenceName="<%=obj[0].villageName%>" data-detailedAddress="<%=obj[0].address%>">
+						<div style="flex: 1;margin-left: 10px;">
+							<div class="maincl ft16">
+								<span class="disablecl"><%=obj[0].person%></span>
+								<span class="disablecl"><%=obj[0].phone%></span>
+							</div>
+							<div class="ft16">
+								<span class="disablecl"><%=obj[0].province%><%=obj[0].city%><%=obj[0].country%><%=obj[0].street%><%=obj[0].villageName%><%=obj[0].address%></span>
+							</div>
+						</div>
+						<div class="">
+							<img src="../../images/center/right.svg" alt="" />
+						</div>
+					</div>
+
+				<%}%>
+			</script>
+			<!--地址结束-->
+
 		    <div class="isYezhu">
 				<div class="mui-input-row mui-checkbox mui-left">
 				  <label>是否业主收货</label>
@@ -76,7 +112,7 @@
 		    </div>
 		    <div class="beizhu">
 		    		<h5>备注</h5>
-				<textarea name="" rows="" placeholder="备注请输入备注信息" cols=""></textarea>
+				<textarea id="BZCon" name="" rows="" placeholder="备注请输入备注信息" cols=""></textarea>
 		    </div>
 		    <div id="" style="text-align: center;">
 		    		<button type="button" class="mui-btn  mui-btn-primary baocun">保存</button>
@@ -155,21 +191,95 @@
 		})
 	}
 	//从相册中选择图片结束
-
-	//发送 发布
-	mui('.baocun')[0].addEventListener('tap',function(){
+	function addAddress() {
 		mui.plusReady(function(){
-
-		 	var textCon = mui('#textCon')[0];//备注
-		 	var userId = plus.storage.getItem('$userId');
-			var oldToken = plus.storage.getItem("oldToken");
-			var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
 			var oneId = plus.webview.currentWebview().oneId;//导购的 客户id
+
+			openview({
+				view: '../personal/address.html',
+				id: 'address',
+				extrasobj: {
+					page: 'order',
+					ConeId:oneId,
+					CidentityT:6,
+					goType:'pzOrder'
+				}
+			})
+		})
+
+	}
+
+	mui.plusReady(function(){
+		var userId = plus.storage.getItem('$userId');
+		var oldToken = plus.storage.getItem("oldToken");
+		var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
+		var oneId = plus.webview.currentWebview().oneId;//导购的 客户id
+
+		//选择后 刷新地址
+		window.addEventListener('readdstorage', function(event) {
+			orderAdd();
+		});
+		//显示地址 与 选择地址
+		orderAdd();
+		function orderAdd(){
+			mui.ajax(serverUrl+'/app/user/deliveryAddress/default',{
+				data:{
+					userId:oneId,
+					identityType:6
+				},
+				dataType:'json',
+				type:'post',
+				timeout:1000,
+				headers:{"Authorization":oldToken},
+				success:function(data,type,xhr){
+					console.log('默认地址',data);
+					var addrObj = {};
+					if(data.code == 0){
+						if(plus.storage.getItem("$addressStorageY2") != null) {
+							addrObj.obj = JSON.parse(plus.storage.getItem("$addressStorageY2"));
+						}else{
+							if(data.content){
+								var defultAddress ={};
+									defultAddress.id = data.content.id;
+									defultAddress.person = data.content.deliveryName;
+									defultAddress.phone = data.content.deliveryPhone;
+									defultAddress.province = data.content.deliveryProvince;
+									defultAddress.city = data.content.deliveryCity;
+									defultAddress.country = data.content.deliveryCounty;
+									defultAddress.street = data.content.deliveryStreet;
+									defultAddress.villageName = data.content.villageName;
+									defultAddress.address = data.content.detailedAddress;
+									addrObj.obj = [defultAddress];
+							}else{
+								//没有默认地址,就去添加
+								addrObj.obj = [];
+							}
+						}
+						document.getElementById("add_info").innerHTML = template("addrTpl", addrObj);
+						plus.storage.removeItem("$addressStorageY2");
+
+					}else{
+						mui.toast(data.message);
+					}
+				},
+				error:function(xhr,type,errorThrown){
+					console.log('响应失败  !');
+				}
+			});
+
+		}
+
+		//发送 发布
+		mui('.baocun')[0].addEventListener('tap',function(){
+		 	var BZCon = mui('#BZCon')[0].value;//备注
+			var deliveryId = $('#addid').attr('data-id');
 
 		 	if(!Apic.length){
 		 		mui.toast('请选择至少一张图片');
 		 	}else if(time1 != null){
 		 		mui.toast('图片还在处理中');
+		 	}else if(!deliveryId){
+		 		mui.toast('请添加一个地址');
 		 	}else{
 		 		releaseData();
 		 	}
@@ -198,12 +308,12 @@
 					}
 				);
 				task.setRequestHeader('Authorization',oldToken);
-				task.addData("userId",userId);
-				task.addData("identityType",identityT);
-				task.addData("deliveryId",'1');//地址
+				task.addData("userId",userId.toString());
+				task.addData("identityType",identityT.toString());
+				task.addData("deliveryId",deliveryId.toString());//地址id
 				task.addData("isOwnerReceiving",'1');//是否主家
-				task.addData("remark",'备注');//备注
-				task.addData("customerId",oneId);//导购的 客户id
+				task.addData("remark",BZCon);//备注
+				task.addData("customerId",oneId.toString());//导购的 客户id
 
 				if(Apic.length){
 					console.log(Apic);
@@ -219,58 +329,12 @@
 				}
 
 		 	}
-		 	//发送数据结束
-		})
+
+		})//发送数据结束
+
 	})
 
 
 </script>
 
-<!--弃用js(还有参考价值)-->
-<script type="text/javascript">
-	//plus.nativeUI.actionSheet({
-	//	cancel: "取消",
-	//	buttons: [{
-	//		title: "相册选择"
-	//	}, {
-	//		title: '拍照'
-	//	}]
-	//},
-	//function(e) {
-	//	if (e.index == 1) { //点击从相册选择
-	//		galleryImgsSelected();
-	//	} else if (e.index == 2) {
-	//		getImage();
-	//	}
-	//})
-	function getImage(){//拍照并保存(暂时搁置)
-		var cmr = plus.camera.getCamera();
-		cmr.captureImage( function ( path ) {
-			plus.io.resolveLocalFileSystemURL(path,function(entry){
-				//把拍摄图片的路径转化成 本地文件url
-				path = plus.io.convertLocalFileSystemURL(path);
-				if(0!=path.indexOf("file://")){
-					path="file://"+path;
-				}
-	    		var nowpic = Math.random().toString(36).substr(2) + '.jpg';
-	    		var endpic = path.split('.')[0]+"/"+nowpic;
-				plus.zip.compressImage({//压缩方法
-					src:path,
-					dst:endpic,
-					overwrite:true,
-					quality:30
-				},
-				function() {
-					showImg(endpic);
-					Apic = [];
-					Apic.push(endpic);
-				},function(error) {
-					mui.toast('图片获取错误，请重试');
-				});
-			});
-		}, function ( e ) {
-		}, {filename:"_doc/gallery/",index:1} );
-	}
-
-</script>
 </html>

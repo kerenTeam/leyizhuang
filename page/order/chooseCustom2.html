@@ -80,6 +80,8 @@
 							},
 							error:function(xhr,type,errorThrown){
 								console.log('响应失败  !');
+								mui('#bindGuide').button('reset');
+								mui.toast('网络不好，请重试！');
 							}
 						});
 
