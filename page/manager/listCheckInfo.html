@@ -15,8 +15,7 @@
 		 
 	</head>
 	<style type="text/css">
-		.btmNav{display: flex;width:100vw;text-align: center;justify-content: space-around;align-items: center;padding: 15px 0;}
-		.btmNav button{width: 80px;height: 35px;}
+		#dibu{padding: 20px;text-align: center;}
 	</style>
 	<body>
 
@@ -30,7 +29,7 @@
 		
 		<div style="background-color: white;margin: 5px 0;">
 			<div class="qtop flexr pad10" onclick="address()">
-				<div style="flex: 1;margin-left: 10px;">
+				<div style="flex: 1;">
 					<div class="maincl ft16">
 						<span class="maincl">料单编号：</span>
 						<span class="maincl auditNo"></span>
@@ -73,7 +72,7 @@
 				
 	
 				<div class="pad10 ft15">
-					共10件商品 订单总金额：<span id="totalPrice"></span> <span class="mui-pull-right activecl" onclick="materialList()">查看全部</span>
+					共<span id='totalGoods'><%=list.length%></span>件商品 订单总金额：<span id="totalPrice"></span> <span class="mui-pull-right activecl" onclick="materialList()">查看全部</span>
 				</div>
 				<div style="clear: both;"></div>
 			</dl>
@@ -82,14 +81,9 @@
 			<div class="pad10 ft15 afterBorder">
 				<em>配送方式 </em>
 				<div class="mui-input-row mui-radio mui-left mui-pull-right" style="margin-top: -8px;">
-					<label>自体</label>
-					<input name="peis" type="radio">
-				</div>
-				<div class="mui-input-row mui-radio mui-left mui-pull-right" style="margin-top: -8px;">
 					<label>送货上门</label>
-					<input name="peis" type="radio" checked="">
 				</div>
-			</div>
+			</div> 
 			<div style="clear: both;"></div>
 			<div style="background-color: white;margin: 5px 0;">
 				<div class="qtop flexr pad10" onclick="address()">
@@ -107,20 +101,17 @@
 			</div>
 			<div id='cityResult' class="ui-alert pad10 afterBorder">配送时间 <span class="mui-pull-right" id="reservationDeliveryTime"></span></div>
 			<div class="mui-input-row mui-checkbox mui-left afterBorder">
-				<label>是否业主收货</label>
-				<input name="checkbox1" id="isOwnerReceiving" value="1" type="checkbox">
+				<label>业主收货</label>
+				<input name="checkbox1" id="isOwnerReceiving" value="1" type="checkbox" disabled="">
 			</div>
-			<div class="pad10 activecl ft13 afterBorder">
-				温馨提示：若收货人为主家，系统将在出货打印单中自动隐藏折扣信息
-			</div>
-			<div>
-				备注：<textarea name="" id="notice" maxlength="100" cols="30" rows="4"></textarea>
+			
+			<div style="padding: 10px;">
+				<div id="notice"></div>
 			</div>
 		</div>
 		
 		<!--bottom nav-->
-		<div style="height:1rem;"></div>
-		<aside class="btmNav" id="dibu">
+		<aside id="dibu">
 			<button class="mui-btn" onclick="manageCheck(false)">不通过</button>
 			<button class="mui-btn mui-btn-danger" onclick="manageCheck(true)">通过</button> 
 		</aside> 
@@ -157,6 +148,7 @@
 				$('#dibu').css('display','none')
 			}
 			//料单详情
+			plus.nativeUI.showWaiting();
 			mui.ajax(serverUrl+'/app/material/audit/details',{
 				data:{'auditNo':audiono},
 				dataType:'json',
@@ -181,7 +173,9 @@
 										goodsList = data.content.goodsList;
 									}
 									document.getElementById('cartData').innerHTML = template('cartTpl',{list:goodsList});
+									plus.nativeUI.closeWaiting();
 								}
+								plus.nativeUI.closeWaiting();
 								if(!data.content.totalPrice){
 									data.content.totalPrice = '待计算'
 								}
@@ -189,21 +183,28 @@
 								if(data.content.isOwnerReceiving){
 									$('#isOwnerReceiving').attr('checked',true)
 								}
-								$('#notice').val(data.content.remark)
+								if(data.content.remark){
+									$('#notice').html('备注:'+data.content.remark)
+								}else{
+									$('#notice').html('备注:无备注')
+								}
 								$('.receiver').html(data.content.receiver)
 								$('.receiverPhone').html(data.content.receiverPhone)
 								$('.address').html(data.content.deliveryCity+data.content.deliveryCounty+data.content.deliveryStreet+data.content.residenceName+data.content.detailedAddress)
 								$('#reservationDeliveryTime').html(data.content.reservationDeliveryTime)
 							}else{
+								plus.nativeUI.closeWaiting();
 								mui.toast(data.message)
 							}
 							
 						}else{
+							plus.nativeUI.closeWaiting();
 							mui.toast(data.message);
 						}
 					},500)
 				},
 				error:function(xhr,type,errorThrown){
+					plus.nativeUI.closeWaiting();
 					console.log('响应失败  !');
 				}
 			});
@@ -222,15 +223,23 @@
 						if(data.code == 0){
 						 	mui.toast('审核成功')
 							mui.fire(plus.webview.getWebviewById('cart.html'), 'refresh');
-						 	
+						 	mui.fire(plus.webview.getWebviewById('listCheck'), 'refresh');
+							
+						 	if(isAudited){
+								openview({
+							 		view:'../../cart.html',
+							 		id:'cart',
+							 		extrasobj:{page:'listCheckInfo'}
+							 	})
+							}else{
+								setTimeout(function() {
+									plus.webview.currentWebview().close();
+								}, 500)
+							}
 						}else{
 							mui.toast(data.message);
 						}
-						openview({
-					 		view:'../../cart.html',
-					 		id:'cart',
-					 		extrasobj:{page:1}
-					 	})
+						
 					},
 					error:function(xhr,type,errorThrown){
 						console.log('响应失败  !');

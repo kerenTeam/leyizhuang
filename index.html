@@ -320,13 +320,21 @@
 
 			mui.plusReady(function() {
 //				plus.storage.clear();
-
+				//获取购物车数量
+				var cartNum = plus.storage.getItem('cartNums') || 0;
+				
+				document.addEventListener('cart_refresh', function() {
+					//获取购物车数量
+					cartNum = plus.storage.getItem('cartNums');
+					drawBadge();
+				})
 				document.addEventListener('refresh', function() {
-					util.initSubpage();
+					//底部选项卡切换
+					util.toggleNview(3);
 				})
 				
 				var self = plus.webview.currentWebview(),
-						leftPos = Math.ceil((window.innerWidth - 60) / 2); // 设置凸起大图标为水平居中
+					leftPos = Math.ceil((window.innerWidth - 60) / 2); // 设置凸起大图标为水平居中
 
 					/**	
 					 * drawNativeIcon 绘制带边框的半圆，
@@ -400,43 +408,52 @@
 					}]);
 					// append 到父webview中
 					self.append(drawNativeIcon);
-					var cartNum = 3
-					//绘制角标
-					var badge = util.drawNative('icon', {
-						bottom: '30px',
-						left: '68%',
-						width: '15px',
-						height: '15px'
-					}, [{
-						tag: 'rect',
-						id: 'iconBg',
-						position: {
-							top: '0px',
-							left: '0px',
-							width: '15px',
+					drawBadge();
+					function drawBadge(){
+						//绘制角标
+						var badge = util.drawNative('icon', {
+							bottom: '30px',
+							left: '68%',
+							width: '20px',
 							height: '15px'
-						},
-						rectStyles: {
-							color: '#E73A38',
-							radius: '50%'
-						}
-					}, {
-						tag: 'font',
-						id: 'icon',
-						text: cartNum, //此为字体图标Unicode码'\e600'转换为'\ue600'
-						position: {
-							top: '0px',
-							left: '0px',
-							width: '100%',
-							height: '100%'
-						},
-						textStyles: {
-							align: 'center',
-							color: '#fff',
-							size: '10px'
-						}
-					}]);
-					badge.show();
+						}, [{
+							tag: 'rect',
+							id: 'iconBg',
+							position: {
+								top: '0px',
+								left: '0px',
+								width: '20px',
+								height: '15px'
+							},
+							rectStyles: {
+								color: '#E73A38',
+								radius: '50%'
+							}
+						}, {
+							tag: 'font',
+							id: 'icon',
+							text: cartNum, //此为字体图标Unicode码'\e600'转换为'\ue600'
+							position: {
+								top: '0px',
+								left: '0px',
+								width: '100%',
+								height: '100%'
+							},
+							textStyles: {
+								align: 'center',
+								color: '#fff',
+								size: '10px'
+							}
+						}]);
+						// append 到父webview中
+//						if(cartNum>0){
+							self.append(badge);
+//						}else{
+//							badge.hide();
+//						}
+						
+					}
+					
 					//自定义监听图标点击事件
 					var active_color = '#fff';
 					drawNativeIcon.addEventListener('click', function(e) {
@@ -511,11 +528,7 @@
 		<script>
 	        var Spagenum = 2; //实到页数
 			var Ypagenum = 1; //应到页数
-			function tonview(){
-				openview({
-					view: 'nview.html',
-				})
-			}
+		 
 			function paizhaoOrder(){//拍照下单
 				mui.plusReady(function(){
 					var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
@@ -896,6 +909,7 @@
 					//加入购物车
 					window.addcart = function(goodid){
 						event.stopPropagation();
+						plus.nativeUI.showWaiting();
 						mui.ajax(serverUrl+'/app/materialList/add',{
 							data:{
 								userId:userId,

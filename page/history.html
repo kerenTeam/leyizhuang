@@ -1,0 +1,178 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>浏览记录</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../css/style.css" />
+		<link rel="stylesheet" type="text/css" href="../css/configW.css"/>
+	</head>
+	<style type="text/css"> 
+		.gxbList{padding:20px;width: calc((100vw - 50px) / 2);float: left;text-align: center;background-color: #FF5053;margin: 5px;}
+		.categray div{
+ 			width: 80%;
+ 			vertical-align: top;
+ 		}
+	</style>
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">浏览记录</h1>
+		</header>
+		<div class="mui-content">
+		
+		    <!--浏览商品列表-->
+		    <div class="goodsList" id="goodsList"></div>
+		    
+		    <script type="text/html" id="goodsTpl">
+		    	<ul class="mui-table-view">
+		    		<%for(var j = 0 ;j<dateArray.length;j++){%>
+		    			<div class="pad10 afterBorder">
+		    				<%=dateArray[j]%>
+		    			</div>
+			    		<%for(var i = list.length-1 ;i>=0;i--){%>
+			    			<%if(list[i].createTime == dateArray[j]){%>
+			    				<li class="mui-table-view-cell mui-media" id="<%=list[i].id%>" onclick="goodsInfo(<%=list[i].goodsId%>)">
+						        <a href="javascript:;">
+						            <img class="mui-media-object mui-pull-left" src="<%=list[i].coverImageUri%>">
+						            <div class="mui-media-body">
+						                <%=list[i].goodsName%>
+						                <p class='mui-ellipsis'>规格:<%=list[i].goodsSpecification%> &nbsp;单位:<%=list[i].goodsUnit%></p>
+							            <span>￥<%=list[i].retailPrice%></span>
+										<img style="display:inline-block;float:right;margin-left:5px;vertical-align:middle" data-id="<%=list[i].goodsId%>" class="toCart" src="../images/addcart.svg"/>
+						            </div>
+						        </a>
+						    </li>
+			    			<%}%>
+			    		<%}%>
+		    		<%}%>
+				</ul>
+		    </script>  
+		</div>
+		<script src="../js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/artTemplate-native.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/default.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			mui.init();
+			function goodsInfo(id){
+				openview({
+					view:'goodsInfo.html',
+					id: 'goodsInfo', 
+					extrasobj:{goodId:id}
+				}) 
+				
+			}
+			mui.plusReady(function(){
+				//获取缓存 
+				var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
+				var userId = plus.storage.getItem('$userId'); 
+				var oldToken = plus.storage.getItem('oldToken');
+				plus.nativeUI.showWaiting();
+				mui.ajax(serverUrl+'/app/user/browseHistory/show',{
+					data:{
+						userId:userId,identityType:identityT
+					},
+					dataType:'json',
+					headers: {"Authorization": oldToken},
+					type:'post',
+					timeout:10000,
+					success:function(data,type,xhr){ 
+						console.log('浏览商品列表',data);
+						if(data.code == 0 ){
+							plus.nativeUI.closeWaiting();
+							if(data.content && data.content.length){
+								//日期
+								var timeArray = [];
+								for(var i = 0; i <data.content.length;i++){
+									if(data.content[i].createTime){
+										//格式化时间
+										var dt = new Date(data.content[i].createTime);
+										var date = [[dt.getFullYear(), dt.getMonth() + 1, dt.getDate()].join('-')].join(' ').replace(/(?=\b\d\b)/g, '0'); // 正则补零 
+										data.content[i].createTime = date;
+										timeArray.push(data.content[i].createTime)
+									}
+								}
+								console.log('timeArray',timeArray);
+								//去重
+								timeArray = timeArray.unique1();
+								console.log('timeArray',timeArray);
+								$('#goodsList').html(template('goodsTpl',{list:data.content,dateArray:timeArray}));
+								//加入购物车
+								$('.toCart').click(function(){
+									event.stopPropagation();
+									var goodid = $(this).attr('data-id');
+									var cur = $(this);
+									plus.nativeUI.showWaiting();
+									addCart(goodid,1,cur);
+								})
+								
+								function addCart(goodid,num,cur){
+									mui.ajax(serverUrl+'/app/materialList/add',{
+										data:{
+											userId:userId,
+											identityType:identityT,
+											params:goodid+'-'+num
+										},
+										dataType:'json',
+										headers: {"Authorization": oldToken},
+										type:'post',
+										timeout:10000,
+										success:function(data,type,xhr){ 
+											plus.nativeUI.closeWaiting();
+											console.log('加入购物车',data);
+											if(data.code == 0 ){
+												plus.nativeUI.toast('加入成功')							
+												mui.fire(plus.webview.getWebviewById('cart.html'), 'refresh');
+												hadCart(goodid,cur);
+											}else{
+												mui.toast(data.message)
+											}
+											 
+										},
+										error:function(xhr,type,errorThrown){
+											plus.nativeUI.closeWaiting();
+											console.log('登录响应失败');
+										}
+									});
+								}
+								
+							}else{
+								$('#goodsList').html('<div style="text-align:center;padding:15px">暂无浏览记录</div>') 
+							}
+						}else{
+							mui.toast(data.message)
+						}
+						 
+					},
+					error:function(xhr,type,errorThrown){
+						plus.nativeUI.closeWaiting();
+						mui.toast(type)
+						console.log('登录响应失败');
+					}
+				}); 
+			})
+			
+			//数组去重
+			Array.prototype.unique1 = function() {
+				var res = [this[0]];
+				for(var i = 1; i < this.length; i++) {
+					var repeat = false;
+					for(var j = 0; j < res.length; j++) {
+						if(this[i] == res[j]) {
+							repeat = true;
+							break;
+						}
+					}
+					if(!repeat) {
+						res.push(this[i]);
+					}
+				}
+				return res;
+			}
+		</script>
+	</body>
+
+</html>

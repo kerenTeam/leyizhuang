@@ -46,9 +46,9 @@
 						<a class="goodsPic" style="margin-left: auto;"><img src="<%=list[i].coverImageUri%>" onerror="javascript:this.src='../../images/img.svg';" /></a>
 						<div class="goodsInfor" style="margin-left: 0.9rem!important;">
 							<h2>  
-						    		<a><%=list[i].skuName%></a>
-						    		<%if(list[i].isGift){%>
-						    			<em class="mui-badge mui-badge-danger mui-pull-right" style="color: white;">赠品</em>
+						    		<a><%=list[i].goodsName%></a>
+						    		<%if(list[i].hasGift){%>
+						    			<em class="mui-badge mui-badge-danger mui-pull-right" style="color: white;">包含赠品</em>
 						    		<%}%>
 						   	</h2>
 							<div class="priceArea">
@@ -57,7 +57,7 @@
 								</div>
 								<strong>¥<span class="price"><%=list[i].retailPrice%></span></strong>
 								<div class="numberWidget">
-									<span class="num">x<%=list[i].qty%></span>
+									<span class="num">x<%=list[i].goodsQty%></span>
 								</div>
 							</div>
 		
@@ -67,7 +67,7 @@
 				
 	
 				<div class="pad10 ft15">
-					共10件商品 订单总金额：<span id="totalPrice"></span> <span class="mui-pull-right activecl" onclick="materialList()">查看全部</span>
+					共<span id='totalGoods' class="activecl"><%=totalQty%></span>件商品 订单总金额：<span class="activecl" id="totalPrice">¥<%=totalPrice%></span> <span class="mui-pull-right activecl" onclick="materialList()">查看全部</span>
 				</div>
 				<div style="clear: both;"></div>
 			</dl>
@@ -98,7 +98,7 @@
 						<img src="../../images/center/right.svg" alt="" />
 					</div>
 				</div>
-				<%}else{%>
+				<%}else{%> 
 					<div class="qtop flexr pad10" onclick="address()" id="addid" data-id="<%=obj[0].id%>" data-receiver="<%=obj[0].person%>" data-receiverPhone="<%=obj[0].phone%>" data-deliveryCity="<%=obj[0].city%>" data-deliveryCounty="<%=obj[0].country%>" data-deliveryStreet="<%=obj[0].street%>" data-residenceName="<%=obj[0].villageName%>" data-detailedAddress="<%=obj[0].address%>">
 						<div style="flex: 1;margin-left: 10px;">
 							<div class="maincl ft16">
@@ -171,16 +171,47 @@
 			var userId = plus.storage.getItem('$userId');
 			var oldToken = plus.storage.getItem("oldToken");
 			var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
-			
-			//显示商品
-			var goods = JSON.parse(plus.storage.getItem('cartObj')) ||'[]' ;
-			document.getElementById('cartData').innerHTML = template('cartTpl',{list:goods});
+			var idobj = plus.storage.getItem('materialList');
+			plus.nativeUI.showWaiting();
+			//获取料单商品
+			mui.ajax(serverUrl+'/app/goodsMoney/worker',{
+				data:{
+					userId:userId,
+					identityType:identityT,
+					goodsList:JSON.parse(idobj)
+				},
+				dataType:'json',
+				type:'post',
+				timeout:1000,
+				headers:{"Authorization":oldToken,'Content-Type':'application/json'},
+				success:function(data,type,xhr){
+					console.log('获取料单商品',data);
+					var dataObj = {};
+					if(data.code == 0){
+						//显示商品
+						var goods = data.content.totalGoodsInfo ;
+						dataObj.totalQty = data.content.totalQty;
+						dataObj.totalPrice = data.content.totalPrice;
+						dataObj.list = goods;
+						
+						document.getElementById('cartData').innerHTML = template('cartTpl',dataObj);
+						plus.nativeUI.closeWaiting();
+					}else{
+						mui.toast(data.message);
+						plus.nativeUI.closeWaiting();
+						
+					}
+				},
+				error:function(xhr,type,errorThrown){
+					console.log('响应失败  !');
+					plus.nativeUI.closeWaiting();
+					
+				}
+			});
 			//刷新地址
-			window.addEventListener('readdstorage', function(event) {
-				alert(1 )
+			document.addEventListener('readdstorage', function(event) {
 				orderAdd()
 			});
-			
 			orderAdd();
 			//显示地址
 			function orderAdd(){
@@ -197,7 +228,7 @@
 					success:function(data,type,xhr){
 						console.log('默认地址',data);
 						var addrObj = {};
-						if(data.code == 0){
+						if(data.code == 0 && data.content){ 
 							if(plus.storage.getItem("$addressStorage") != null) {
 								addrObj.obj = JSON.parse(plus.storage.getItem("$addressStorage"));
 							}else{
@@ -217,7 +248,10 @@
 							plus.storage.removeItem("$addressStorage")
 							
 						}else{
-							mui.toast(data.message);
+								console.log('缓存地址',data);
+								addrObj.obj = JSON.parse(plus.storage.getItem("$addressStorage")) || [];
+								document.getElementById("add_info").innerHTML = template("addrTpl", addrObj);
+							 
 						}
 					},
 					error:function(xhr,type,errorThrown){
@@ -228,50 +262,64 @@
 //				plus.storage.removeItem("$addressStorage")
 			}
 			//获取金额
-			
-			
-			//级联示例
-			var cityData = [{
-				value: '110000',
-				text: '9月1号(周五)',
-				children: [{
-					value: "1",
-					text: "7:00-8:00"
-				}, {
-					value: "2",
-					text: "8:00-9:00"
-				}, {
-					value: "3",
-					text: "9:00-10:00"
-				}]
-			}, {
-				value: '110000',
-				text: '9月2号(周六)',
-				children: [{
-					value: "1",
-					text: "7:00-8:00"
-				}, {
-					value: "2",
-					text: "10:00-11:00"
-				}, {
-					value: "3",
-					text: "13:00-20:00"
-				}]
-			}]
-			var cityPicker = new mui.PopPicker({
-				layer: 2
-			});
-			cityPicker.setData(cityData);
-			var cityResult = document.getElementById('cityResult');
-			cityResult.addEventListener('tap', function(event) {
-				cityPicker.show(function(items) {
-					$('#cityResult').attr('data-id','1')
-					$('#cityResult span').html(items[0].text + " " + items[1].text)
-					//返回 false 可以阻止选择框的关闭
-					//return false;
+			var cityId = plus.storage.getItem('userCity');
+			//获取时间段
+			timeRanges();
+			function timeRanges(){
+				mui.ajax(serverUrl+'/app/city/get/deliveryTime',{
+					data:{
+						cityId:cityId
+					},
+					dataType:'json',
+					type:'post',
+					timeout:1000,
+					headers:{"Authorization":oldToken},
+					success:function(data,type,xhr){
+						console.log('获取时间段',data);
+						var dataObj = {};
+						if(data.code == 0){
+							if(data.content && data.content.length){
+								var cityData = [];
+								mui.each(data.content,function(index,item){
+									var  eachday = {};
+									eachday.children = [];
+									eachday.text = item.day;
+									mui.each(item.deliveryTime,function(index2,item2){
+										eachday.children.push({'text':item2})
+									})
+									cityData.push(eachday)
+	                        		})
+								console.log('cityData ',cityData);
+								var cityPicker = new mui.PopPicker({
+									layer: 2
+								});
+								cityPicker.setData(cityData);
+								var cityResult = document.getElementById('cityResult');
+								cityResult.addEventListener('tap', function(event) {
+									cityPicker.show(function(items) {
+										$('#cityResult').attr('data-id','1')
+										$('#cityResult span').html(items[0].text + " " + items[1].text)
+										//返回 false 可以阻止选择框的关闭
+										//return false;
+									});
+								}, false);
+								//-----------------------------------------
+							}
+							plus.nativeUI.closeWaiting();
+						}else{
+							mui.toast(data.message);
+							plus.nativeUI.closeWaiting();
+							
+						}
+					},
+					error:function(xhr,type,errorThrown){
+						console.log('响应失败  !');
+						plus.nativeUI.closeWaiting();
+						
+					}
 				});
-			}, false);
-			//-----------------------------------------
+			}
+		
 			//工人提交物料审核单
 			$('#dibu').click(function(){
 				var receiver = $('#addid').attr('data-receiver')
@@ -283,9 +331,14 @@
 				var detad = $('#addid').attr('data-detailedAddress')
 				var receiver = $('#addid').attr('data-receiver')
 				var pstime = $('#cityResult span').html();//配送时间
-				var isOwnerReceive = $('#isOwner').attr('checked');
-				var idobj = plus.storage.getItem('materialList');
-				alert(idobj)
+				var isOwner= $('#isOwner').attr('checked');
+				
+				console.log('idobj ',idobj)
+				if(isOwner == 'checked'){
+					isOwnerReceive = 1
+				}else{
+					isOwnerReceive = 0
+				}
 				if($('#cityResult').attr('data-id') == 0){
 					mui.toast('请选择配送时间')
 				}else{
@@ -293,16 +346,16 @@
 						data:{
 							userID:userId,
 							identityType:identityT,
-							ids:idobj,
-//							receiver:receiver,
-//							receiverPhone:receiverPhone,
-//							deliveryCity:deliveryCity,
-//							deliveryCounty:deliveryCounty,
-//							deliveryStreet:deliveryStreet, 
-//							residenceName:residenceName,
-//							detailedAddress:detad,
-//							reservationDeliveryTime:pstime,
-//							isOwnerReceiving:isOwnerReceive,
+							goodsList:idobj,
+							receiver:receiver,
+							receiverPhone:receiverPhone,
+							deliveryCity:deliveryCity,
+							deliveryCounty:deliveryCounty,
+							deliveryStreet:deliveryStreet, 
+							residenceName:residenceName,
+							detailedAddress:detad,
+							reservationDeliveryTime:pstime,
+							isOwnerReceiving:isOwnerReceive,
 							remark:$('#other').val(),
 						},
 						dataType:'json',
@@ -313,7 +366,16 @@
 							console.log('提交审核',data);
 							var addrObj = {};
 							if(data.code == 0){
+								mui.toast('提交成功');
 								
+								mui.fire(plus.webview.getWebviewById('cart.html'), 'refresh');
+								openview({
+									view:'../worker/workerlistCheck.html',
+									id:'workerlistCheck'
+								})
+								setTimeout(function() {
+									plus.webview.currentWebview().close();
+								}, 500)
 							}else{
 								mui.toast(data.message);
 							}
@@ -326,8 +388,6 @@
 				
 			})
 			
-
 		})
 	</script>
-
 </html>

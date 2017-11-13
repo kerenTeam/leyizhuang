@@ -1,0 +1,170 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">修改门店</h1>
+			<div class="mui-pull-right" onclick="save()" style="line-height: 50px;font-size: 14px">确定</div>
+			
+		</header>
+		<div class="mui-content">
+			<div id="">
+				<label class="mui-pull-left">门店</label>
+				<select class="mui-pull-right" id = "store">
+					<option value="">未绑定,请选择</option>
+				</select>
+			</div>
+			<div id="">
+				<label class="mui-pull-left">导购</label>
+				<select class="mui-pull-right" id = "guide">
+					<option value="">未绑定,请选择</option>
+				</select>
+			</div>
+		</div>
+		<script src="../../js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/default.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			mui.init();
+			mui.plusReady(function(){
+				var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
+				var userId = plus.storage.getItem('$userId');
+				var oldToken = plus.storage.getItem('oldToken');
+				var cityId = plus.storage.getItem('userCity');
+				if(identityT == 0 || identityT == 4 || identityT == 5){
+					$('#store').attr('disabled',true)
+					$('#guide').attr('disabled',true)
+				}
+				//门店
+				mui.ajax(serverUrl+'/app/user/setting/storeSeller/get', {
+					data: {
+						"userId": userId,
+						"identityType": identityT,
+						"cityId": cityId,
+					},
+					dataType: 'json',
+					type: 'post',
+					timeout: 10000,
+					headers: {
+						"Authorization": oldToken
+					},
+					success: function(data) {
+						console.log('门店导购',data);
+						if(data.code == 0 && data.content) {
+							if(data.content.storeList && data.content.storeList.length){
+								var storeStr = '<option value="">未绑定,请选择</option>';
+								var curstore = 0;
+								for (var i = 0;i<data.content.storeList.length;i++) {
+									storeStr += '<option value="'+data.content.storeList[i].storeId+'">'+data.content.storeList[i].storeName+'</option>'
+									if(data.content.storeList[i].storeId == data.content.storeId){
+										curstore = i;
+									}
+								}
+								$('#store').html(storeStr);
+								$('#store option').eq(curstore).attr('selected',true);
+								//导购
+								getGuide(data.content.storeId,data.content.sellerId);
+								$('#store').change(function(){
+									getGuide($(this).val(),0);
+									
+								})
+							}else{
+								$('#store').html('<option value="">无门店</option>');
+								
+							}
+						}else{
+							mui.toast(data.message)
+						}
+					},
+					error: function(xhr, type, errorThrown) {
+						plus.nativeUI.closeWaiting();
+						console.log('门店响应失败');
+					}
+				});
+				//导购
+				function getGuide(storeid,curguide){
+					mui.ajax(serverUrl+'/app/user/setting/seller/get', {
+						data: {
+							"userId": userId,
+							"identityType": identityT,
+							"storeId": storeid,
+						},
+						dataType: 'json',
+						type: 'post',
+						timeout: 10000,
+						headers: {
+							"Authorization": oldToken
+						},
+						success: function(data) {
+							console.log('导购',data);
+							if(data.code == 0 && data.content) {
+								if(data.content && data.content.length){
+									var guideStr = '<option value="">未绑定,请选择</option>'; 
+									for (var i = 0;i<data.content.length;i++) {
+										guideStr += '<option value="'+data.content[i].sellerId+'">'+data.content[i].sellerName+'</option>'
+										if(data.content[i].sellerId == curguide){
+											curguide = i;
+										}
+									}
+									$('#guide').html(guideStr);
+									$('#guide option').eq(curguide).attr('selected',true);
+								}else{
+									$('#guide').html('<option value="">无导购</option>');
+									
+								}
+							}else{
+								mui.toast(data.message)
+							}
+						},
+						error: function(xhr, type, errorThrown) {
+							plus.nativeUI.closeWaiting();
+							console.log('导购响应失败');
+						}
+					});
+				}
+				
+				//保存
+				window.save = function(){
+					var storeid = $('#store').val();
+					var sellerId = $('#guide').val();
+					
+					mui.ajax(serverUrl+'/app/user/setting/binding/seller', {
+						data: {
+							"userId": userId,
+							"identityType": identityT,
+							"storeId": storeid,
+							"sellerId":sellerId
+						},
+						dataType: 'json',
+						type: 'post',
+						timeout: 10000,
+						headers: {
+							"Authorization": oldToken
+						},
+						success: function(data) {
+							console.log('修改导购',data);
+							if(data.code == 0) {
+								mui.toast('修改成功')
+							}else{
+								mui.toast(data.message)
+							}
+						},
+						error: function(xhr, type, errorThrown) {
+							plus.nativeUI.closeWaiting();
+							console.log('修改导购响应失败');
+						}
+					});
+				}
+			})
+		</script>
+	</body>
+
+</html>

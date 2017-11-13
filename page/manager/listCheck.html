@@ -64,13 +64,6 @@
 						<div class="checkList" onclick="goInfo('<%=list[i].auditNo%>',<%=list[i].status%>)">
 							<h4 class="fineB">
 								<span>料单编号：<%=list[i].auditNo%></span>
-								<span class="h4span2">提交人：
-									<%if(list[i].worker){%>
-										<%=list[i].worker%>
-									<%}else{%>
-										匿名
-									<%}%>
-								</span>
 								<span class="h4span3">
 									<%if(list[i].status == 1){%>
 										待审核
@@ -90,6 +83,13 @@
 							</div>
 							<p class="checkListDZ fineT fineB">收货地址：<%=list[i].deliveryCity%><%=list[i].deliveryCounty%><%=list[i].deliveryStreet%><%=list[i].residenceName%><%=list[i].detailedAddress%></p>
 							<div class="checkListB">
+								<span class="h4span2 fl ft14 activecl">提交人：
+									<%if(list[i].worker){%>
+										<%=list[i].worker%>
+									<%}else{%>
+										匿名
+									<%}%>
+								</span>
 								<%if(list[i].status == 1){%>
 									<!--<button type="button" class="mui-btn mui-btn">取消</button>-->
 									<button type="button" class="mui-btn mui-btn-warning mui-btn-outlined" onclick="">审核</button>
@@ -100,6 +100,8 @@
 										<button type="button" class="mui-btn mui-btn-danger mui-btn-outlined">未通过</button>
 									<%}%>
 								<%}else if(list[i].status == 3){%>
+										<button type="button" class="mui-btn mui-btn-danger mui-btn-outlined">已取消</button>
+									
 								<%}%>
 								
 							</div>
@@ -135,6 +137,9 @@
 				}
 				
 			})
+			document.addEventListener('refresh', function(event) {
+				loadFun('');
+			});
 			loadFun('');
 			function loadFun(index){
 				mui.ajax(serverUrl+'/app/material/audit/manager/list',{

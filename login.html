@@ -148,15 +148,16 @@
 										if(plus.webview.getWebviewById('identify')){
 											plus.webview.getWebviewById('identify').close();
 										}
+										var index = plus.webview.getLaunchWebview();
+										mui.fire(index,'refresh');
 										mui.fire(plus.webview.getWebviewById('cart.html'), 'refresh');
 										mui.fire(plus.webview.getWebviewById('page/goodList.html'),'refresh');
 										mui.fire(plus.webview.getWebviewById('center.html'),'refresh');
-										var index = plus.webview.getLaunchWebview();
-											mui.fire(index,'refresh');
+										
 										var time2 = setTimeout(function(){
-											plus.webview.currentWebview().close(); 
 											plus.nativeUI.closeWaiting();
 											mui.toast('登录成功');
+											plus.webview.currentWebview().close(); 
 										},100) 
 									}
 								},
@@ -188,24 +189,6 @@
 							}
 						});
 					}, false);
-					//
-//					window.addEventListener('resize', function() {
-//						oauthArea.style.display = document.body.clientHeight > 400 ? 'block' : 'none';
-//					}, false);
-					//
-//					var backButtonPress = 0;
-//					$.back = function(event) {
-//						backButtonPress++;
-//						if (backButtonPress > 1) {
-//							plus.runtime.quit();
-//						} else {
-//							plus.nativeUI.toast('再按一次退出应用');
-//						}
-//						setTimeout(function() {
-//							backButtonPress = 0;
-//						}, 1000);
-//						return false;
-//					};
 				});
 			}(mui, document));
 		</script>

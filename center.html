@@ -197,14 +197,17 @@
 					<div onclick="productCoupon()">
 						产品券
 					</div>
-					<div class="">
+					<div onclick="wallet()">
 						我的钱包
 					</div>
 					<div class="">
 						我的乐豆
 					</div>
-					<div >
+					<div onclick="paizhaoOrder()">
 						拍照下单
+					</div>
+					<div onclick="lookHistory()">
+						浏览记录
 					</div>
 				</div>
 			</div>
@@ -241,11 +244,11 @@
 					<div >
 						欠款审核
 					</div>
-					<div>
+					<div onclick="paizhaoOrder()">
 						拍照下单
 					</div>
-					<div style="visibility: hidden;">
-						ccc
+					<div onclick="lookHistory()">
+						浏览记录
 					</div>
 				</div>
 			</div>
@@ -280,11 +283,11 @@
 					<div onclick="backMoney()">
 						信用额度
 					</div>
-					<div>
+					<div onclick="paizhaoOrder()">
 						拍照下单
 					</div>
-					<div style="visibility: hidden;">
-						ccc
+					<div onclick="lookHistory()">
+						浏览记录
 					</div>
 				</div>
 			</div>
@@ -306,10 +309,14 @@
 					<div onclick="goworkerMaterial()">
 						料单申请
 					</div>
-					<div class="">
+					<div onclick="paizhaoOrder()">
 						拍照下单
 					</div>
+					<div onclick="lookHistory()">
+						浏览记录
+					</div>
 				</div>
+				
 			</div>
 			<!--配送员-->
 			<div class="centerList distributionN"  style="display: none;">
@@ -407,6 +414,13 @@
 					id: 'backMoney',
 				})
 			}
+			//钱包
+			function wallet(){
+				openview({
+					view: 'page/wallet.html',
+					id: 'wallet',
+				})
+			}
 			//导购 信用额度
 			function guideCredit(){
 				openview({
@@ -414,6 +428,30 @@
 					id: 'guideCredit',
 				})
 			}
+			function paizhaoOrder(){//拍照下单
+				mui.plusReady(function(){
+					var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
+					if(identityT == 0){//导购
+						openview({
+							view: 'page/order/chooseCustom2.html',
+							id: 'chooseCustom2',
+						})
+					}else{
+						openview({
+							view: 'page/order/pzOrder.html',
+							id: 'pzOrder',
+						})
+					}
+				})
+			}
+			//浏览记录
+			function lookHistory(){
+				openview({
+					view: 'page/history.html',
+					id: 'history',
+				})
+			}
+			
 			mui.plusReady(function() {
 				document.addEventListener('refresh', function() {
 					Refresh();
@@ -424,6 +462,7 @@
 					var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
 					var userId = plus.storage.getItem('$userId');
 					var oldToken = plus.storage.getItem('oldToken');
+					$('.qiandao').html('签到')
 					//签到
 					window.qian = function(){
 						mui.ajax(serverUrl+'/app/customer/sign',{
@@ -502,6 +541,7 @@
 								if(data.code == 0) {
 									plus.nativeUI.closeWaiting();
 									if(data.content) {
+										plus.storage.setItem('userCity',data.content.cityId.toString())
 										if(!data.content.canSign){
 											$('.qiandao').removeAttr('onclick').html('已签到');
 										}

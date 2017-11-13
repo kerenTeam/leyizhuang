@@ -291,6 +291,34 @@
 			var userId = plus.storage.getItem('$userId'); 
 			var oldToken = plus.storage.getItem('oldToken');
 			plus.nativeUI.showWaiting();
+//			alert(goodid+' '+identityT+' '+userId)
+			
+			//增加浏览记录
+			mui.ajax(serverUrl+'/app/user/browseHistory/add',{
+				data:{
+					goodsId:goodid,
+					userId:userId,
+					identityType:identityT
+				},
+				dataType:'json',
+				headers: {"Authorization": oldToken},
+				type:'post',
+				timeout:10000,
+				success:function(data,type,xhr){ 
+					plus.nativeUI.closeWaiting();
+					plus.nativeUI.closeWaiting();
+					console.log('增加浏览记录',data);
+					if(data.code == 0 ){
+						console.log('增加成功')
+					}
+				},
+				error:function(xhr,type,errorThrown){
+					plus.nativeUI.closeWaiting();
+					mui.toast(type)
+					console.log('响应失败');
+				}
+			});
+			
 			//商品详情
 			mui.ajax(serverUrl+'/app/goods/get/goodsDetail',{
 				data:{
@@ -340,7 +368,7 @@
 				error:function(xhr,type,errorThrown){
 					plus.nativeUI.closeWaiting();
 					mui.toast(type)
-					console.log('登录响应失败');
+					console.log('响应失败');
 				}
 			});
 			$('#cmtedup').click(function(){

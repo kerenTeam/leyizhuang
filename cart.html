@@ -8,8 +8,8 @@
 		<link rel="stylesheet" type="text/css" href="css/mui.min.css" />
 		<link rel="stylesheet" href="css/resetY.css">
 		<link rel="stylesheet" type="text/css" href="css/cart.css" />
-		<link rel="stylesheet" type="text/css" href="css/style.css"/>
-		<link rel="stylesheet" type="text/css" href="css/configW.css"/>
+		<link rel="stylesheet" type="text/css" href="css/style.css" />
+		<link rel="stylesheet" type="text/css" href="css/configW.css" />
 	</head>
 
 	<body>
@@ -24,52 +24,51 @@
 		<div style="height:50px;"></div>
 		<div class="flexwc">
 			<div class="cartOne">
-				<img src="img/check2.png"/>
-				下料清单
+				<img src="img/check2.png" /> 下料清单
 			</div>
 			<div class="cartSecond">
-				<img src="img/check1.png"/>
-				选赠品
+				<img src="img/check1.png" /> 选赠品
 			</div>
 			<div class="cartOne">
-				<img src="img/check1.png"/>
-				结算
+				<img src="img/check1.png" /> 结算
 			</div>
 		</div>
 		<div id="cartData"></div>
 		<script type="text/html" id="cartTpl">
-			  
+
 			<dl class="cart">
 				<%for(var i = 0 ;i < list.length ; i++){%>
-					<dd>
-						<div class="mui-checkbox" style="top: 30%;">
-						<input name="checkbox" type="checkbox" data-id='<%=list[i].id%>'></div>
-						<a class="goodsPic"><img src="<%=list[i].coverImageUri%>" onerror="javascript:this.src='img/editset.png';" /></a>
-						<div class="goodsInfor">
-							<h2 class="ft14">  
+				<dd>
+					<div class="mui-checkbox" style="top: 30%;">
+						<input name="checkbox" type="checkbox" data-id='<%=list[i].goodsId%>'></div>
+					<a class="goodsPic"><img src="<%=list[i].coverImageUri%>" onerror="javascript:this.src='img/editset.png';" /></a>
+					<div class="goodsInfor">
+						<h2 class="ft14">  
 							    <a><%=list[i].skuName%></a>
 							    
 							   </h2>
-							<div class="priceArea">
-								<div class="extraBrief ft13">
-									单位：<%=list[i].goodsUnit%>；规格：<%=list[i].goodsSpecification%>
-								</div>
-								<strong>¥<span class="price"><%=list[i].retailPrice%></span></strong>
-								<div class="numberWidget">
-									<div class="mui-numbox" data-numbox-min='1'>
-										<button class="mui-btn mui-btn-numbox-minus" type="button">-</button>
-										<input class="mui-input-numbox" data-id="<%=list[i].id%>" value="<%=list[i].qty%>" type="number" />
-										<button class="mui-btn mui-btn-numbox-plus" type="button">+</button>
-									</div>
+						<div class="priceArea">
+							<div class="extraBrief ft13">
+								单位：
+								<%=list[i].goodsUnit%>；规格：
+								<%=list[i].goodsSpecification%>
+							</div>
+							<strong>¥<span class="price"><%=list[i].retailPrice%></span></strong>
+							<div class="numberWidget">
+								<div class="mui-numbox" data-numbox-min='1'>
+									<button class="mui-btn mui-btn-numbox-minus" type="button">-</button>
+									<input class="mui-input-numbox" data-id="<%=list[i].id%>" value="<%=list[i].qty%>" type="number" />
+									<button class="mui-btn mui-btn-numbox-plus" type="button">+</button>
 								</div>
 							</div>
-							
 						</div>
-						<a class="delBtn" data-id="<%=list[i].id%>">删除</a>
-					</dd>
+
+					</div>
+					<a class="delBtn" data-id="<%=list[i].id%>">删除</a>
+				</dd>
 				<%}%>
-				
-			</dl> 
+
+			</dl>
 			<!--bottom nav-->
 			<div style="height:1rem;"></div>
 			<aside class="btmNav" id="dibu">
@@ -84,7 +83,7 @@
 		</script>
 
 		<script type="text/javascript" src="js/jquery_cart.js"></script>
-		<script src="js/mui.min.js"></script> 
+		<script src="js/mui.min.js"></script>
 		<script src="js/artTemplate-native.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/default.js" type="text/javascript" charset="utf-8"></script>
 	</body>
@@ -92,27 +91,28 @@
 	<script>
 		mui.plusReady(function() {
 			var page = plus.webview.currentWebview().page;
-			if(page == 1){
+			if(page == 1) {
 				$('#fanhui').show()
 			}
 			//		plus.storage.removeItem('$cartStorage')
 			window.addEventListener('refresh', function(event) {
 				cartload();
 			});
-
+			var tipsCont = '<div><img src="images/blankCart.png" style="width:30%;margin: auto;display: block;margin-top: 40%;" alt="" /><div style="color: #666;text-align: center;margin-top: 30px;font-size: 14px;">你的下料清单还是空的哦</div></div>';
 			cartload();
-			
+
 			function cartload() {
+				$('.editAll').show().html('编辑');
 				//获取缓存
 				var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
-				var userId = plus.storage.getItem('$userId'); 
+				var userId = plus.storage.getItem('$userId');
 				var oldToken = plus.storage.getItem('oldToken');
 				//获取购物车数据
 				plus.nativeUI.showWaiting();
 				mui.ajax(serverUrl + '/app/materialList/list', {
 					data: {
 						userId: userId,
-						identityType:identityT
+						identityType: identityT
 					},
 					dataType: 'json',
 					headers: {
@@ -124,21 +124,26 @@
 						plus.nativeUI.closeWaiting();
 						console.log('下料清单返回', data);
 						if(data.code == 0) {
-							if(data.content && data.content.length){
-								for(var i in data.content){
-									if(!data.content[i].retailPrice){
+							if(data.content && data.content.length) {
+								for(var i in data.content) {
+									if(!data.content[i].retailPrice) {
 										data.content[i].retailPrice = 1;
 									}
 								}
-								 $('#cartData').html(template('cartTpl',{list:data.content}));
-								 $('.mui-checkbox input').attr('checked',true);
-								 countFuc();
-							}else{
-								var html = '<div><img src="images/blankCart.png" style="width:30%;margin: auto;display: block;margin-top: 40%;" alt="" /><div style="color: #666;text-align: center;margin-top: 30px;font-size: 14px;">你的下料清单还是空的哦</div></div>'
-								 $('#cartData').html(html);
+								$('#cartData').html(template('cartTpl', {
+									list: data.content
+								}));
+								$('.mui-checkbox input').attr('checked', true);
+								countFuc();
+								plus.storage.setItem('cartNums', $(".totalNum").html());
 								
-								
+							} else {
+								var html = tipsCont;
+								$('#cartData').html(html);
+								plus.storage.setItem('cartNums', '0');
 							}
+							var index = plus.webview.getLaunchWebview();
+								mui.fire(index, 'cart_refresh');
 							plus.nativeUI.closeWaiting();
 							mui('.mui-numbox').numbox()
 							$('.numberWidget,.mui-numbox button,.mui-numbox input').click(function() {
@@ -158,55 +163,65 @@
 								$(this).html("编辑");
 								$(".numberWidget").show();
 							});
-			
+
 							//删除 单个
 							$(".delBtn").click(function() {
 								var delThis = $(this);
 								var delID = $(this).attr("data-id");
 								mui.confirm('确认删除这件商品吗？', '提示', ['取消', '确定'], function(e) {
 									if(e.index == 1) {
-										mui.ajax(serverUrl+'/app/materialList/delete',{
-											data:{
-												userId:userId,
-												identityType:identityT,
-												materialListIds:delID,
+										mui.ajax(serverUrl + '/app/materialList/delete', {
+											data: {
+												userId: userId,
+												identityType: identityT,
+												materialListIds: delID,
 											},
-											dataType:'json',
-											headers: {"Authorization": oldToken},
-											type:'post',
-											timeout:10000,
-											success:function(data,type,xhr){ 
+											dataType: 'json',
+											headers: {
+												"Authorization": oldToken
+											},
+											type: 'post',
+											timeout: 10000,
+											success: function(data, type, xhr) {
 												plus.nativeUI.closeWaiting();
-												console.log('删除',data);
-												if(data.code == 0 ){
+												console.log('删除', data);
+												if(data.code == 0) {
 													var curCart = delThis.parentsUntil("#cartData");
-													delThis.parent().remove(); 
+													delThis.parent().remove();
 													//判断该组商品是否删除完 
 													if(curCart.find("dd").length == 0) {
-														 curCart.remove(); 
-														if($('.cart').length==0) {
+														curCart.remove();
+														if($('.cart').length == 0) {
 															$('aside input').attr("checked", false);
 															mui('#bianji')[0].style.display = 'none';
-						        								mui('#dibu')[0].style.display = 'none';
+															mui('#dibu')[0].style.display = 'none';
 															mui('#cartData')[0].innerHTML = tipsCont;
 														}
 													}
 													countFuc();
-													 
-												}else{
+													if(!$(".totalNum").html()) {
+														plus.storage.setItem('cartNums', '0');
+													} else {
+														plus.storage.setItem('cartNums', $(".totalNum").html());
+													}
+
+													var index = plus.webview.getLaunchWebview();
+													mui.fire(index, 'cart_refresh');
+
+												} else {
 													mui.toast(data.message)
 												}
-												 
+
 											},
-											error:function(xhr,type,errorThrown){
+											error: function(xhr, type, errorThrown) {
 												plus.nativeUI.closeWaiting();
 											}
 										});
 									}
-			
+
 								})
 							});
-							
+
 							//遍历 单组下面的商品
 							function allCart() {
 								$(".cart").each(function() {
@@ -234,7 +249,7 @@
 									}
 									countFuc();
 								}
-			
+
 							})
 							//总选
 							$('aside .mui-checkbox').click(function() {
@@ -246,44 +261,50 @@
 									$("dl input").attr("checked", true);
 									countFuc();
 								}
-			
+
 							})
 							//数量选择 
 							$('.mui-numbox input').on('change', function() {
+								plus.nativeUI.showWaiting();
 								var number = $(this).val(); //当前数量
-								var goodsid = $(this).attr("data-id");//当前商品id
-								mui.ajax(serverUrl+'/app/materialList/edit/number',{
-									data:{
-										userId:userId,
-										identityType:identityT,
-										materialListId:goodsid,
-										qty:number,
+								var goodsid = $(this).attr("data-id"); //当前商品id
+								mui.ajax(serverUrl + '/app/materialList/edit/number', {
+									data: {
+										userId: userId,
+										identityType: identityT,
+										materialListId: goodsid,
+										qty: number,
 									},
-									dataType:'json',
-									headers: {"Authorization": oldToken},
-									type:'post',
-									timeout:10000,
-									success:function(data,type,xhr){ 
+									dataType: 'json',
+									headers: {
+										"Authorization": oldToken
+									},
+									type: 'post',
+									timeout: 10000,
+									success: function(data, type, xhr) {
 										plus.nativeUI.closeWaiting();
-										console.log('加入购物车',data);
-										if(data.code == 0 ){
-											 
-										}else{
+										console.log('加入购物车', data);
+										if(data.code == 0) {
+
+										} else {
 											mui.toast(data.message)
 										}
-										 
+
 									},
-									error:function(xhr,type,errorThrown){
+									error: function(xhr, type, errorThrown) {
 										plus.nativeUI.closeWaiting();
 										console.log('登录响应失败');
 									}
 								});
 								countFuc();
-			
+								plus.storage.setItem('cartNums', $(".totalNum").html());
+
+								var index = plus.webview.getLaunchWebview();
+								mui.fire(index, 'cart_refresh');
 							})
-							
+
 							//下单
-							$('.goOrder').click(function(){
+							$('.goOrder').click(function() {
 								var ALLcheckLength = $("dd").find("input[type='checkbox']:checked").length;
 								if(ALLcheckLength == 0) {
 									mui.toast("您还未选择要购买的商品哦！")
@@ -291,47 +312,50 @@
 									var materialList = [];
 									var cartObj = [];
 									//存缓存
-									$("dd").find("input[type='checkbox']:checked").each(function(index){
-										if($(this).attr('data-id') == data.content[index].id){
+									$("dd").find("input[type='checkbox']:checked").each(function(index) {
+										if($(this).attr('data-id') == data.content[index].goodsId) {
 											cartObj.push(data.content[index])
 										}
-										materialList.push({id:$(this).attr('data-id'),num:$(this).parent().parent().find('.mui-input-numbox').val(),isGift:false})
+										materialList.push({
+											id: $(this).attr('data-id'),
+											num: $(this).parent().parent().find('.mui-input-numbox').val(),
+											isGift: false
+										})
 									})
 
-									plus.storage.setItem('materialList',JSON.stringify(materialList));
-									plus.storage.setItem('cartObj',JSON.stringify(cartObj));
+									plus.storage.setItem('materialList', JSON.stringify(materialList));
+									plus.storage.setItem('cartObj', JSON.stringify(cartObj));
 									console.log(plus.storage.getItem('materialList'));
 									console.log(plus.storage.getItem('cartObj'));
-									
+
 									if(plus.storage.getItem('oldToken')) {
-										if(identityT == 0){
+										if(identityT == 0) {
 											openview({
-												view:'page/order/chooseCustom.html',
-												id:'chooseCustom'
+												view: 'page/order/chooseCustom.html',
+												id: 'chooseCustom'
 											})
-										}else if(identityT == 3){
+										} else if(identityT == 3) {
 											openview({
-												view:'page/order/workerMaterial.html',
-												id:'workerMaterial'
+												view: 'page/order/workerMaterial.html',
+												id: 'workerMaterial'
 											})
-										}else{
+										} else {
 											openview({
-												view:'page/order/chooseGift.html',
-												id:'chooseGift'
+												view: 'page/order/chooseGift.html',
+												id: 'chooseGift'
 											})
 										}
-										
-										
+
 									} else { //没登陆直接打开登录页面
 										mui.toast('请登录');
 										openview({
 											view: 'login.html'
 										});
 									}
-			
+
 								}
 							})
-						}else{
+						} else {
 							mui.toast(data.message)
 						}
 
@@ -340,7 +364,7 @@
 						plus.nativeUI.closeWaiting();
 					}
 				});
-				 
+
 				//计算总价和总数量
 				function countFuc() {
 					var fen = 0; //总份数
@@ -357,13 +381,11 @@
 					$(".totalNum").html(fen);
 					$(".totalMoney").html(parseFloat(pay).toFixed(2));
 				}
-				
-				
+
 			}
 
 		})
-		
-		
+
 		Array.prototype.unique1 = function() {
 			var res = [this[0]];
 			for(var i = 1; i < this.length; i++) {

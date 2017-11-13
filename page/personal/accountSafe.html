@@ -38,6 +38,7 @@
 		<div id="main">
 			<ul>
 				<li class="aClick" id="editPhone" style="margin-top: 62px;">修改手机号<span class="mui-icon mui-icon-arrowright"></span><em style="font-size: 14px;float: right;color: gray;" id="modile"></em></li>
+				<li class="aClick" id="editPsw" onclick="changePsw()" style="margin-top: 5px;display: none;">修改密码<span class="mui-icon mui-icon-arrowright"></span><em style="font-size: 14px;float: right;color: gray;" id="modile"></em></li>
 				
 			</ul>
 		
@@ -48,8 +49,19 @@
 	<script src="../../js/update.js" type="text/javascript" charset="utf-8"></script>
 	<script type="text/javascript">
 		mui.plusReady(function(){
+			var myuserid = plus.storage.getItem('$userId');
+			var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
+			var oldtoken = plus.storage.getItem('oldToken');
+			
 		 	var modile = plus.storage.getItem('mobile');
 			mui('#modile')[0].innerHTML = modile;
+			
+			if(identityT == 6){
+				mui('#editPsw')[0].style.display = 'none';
+			}else{
+				mui('#editPsw')[0].style.display = 'block';
+			}
+			
 			//修改手机号
 			mui('#editPhone')[0].addEventListener('tap',function(){
 				openview({
@@ -57,7 +69,13 @@
 					id:'editPhone'
 				});
 			})
-			
+			//修改密码
+			window.changePsw = function(){
+				openview({
+					view:'edit_password.html',
+					id:'edit_password'
+				})
+			}
 
 		});
 

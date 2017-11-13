@@ -64,13 +64,13 @@
 						<div class="checkList" onclick="goInfo('<%=list[i].auditNo%>',<%=list[i].status%>)">
 							<h4 class="fineB">
 								<span>料单编号：<%=list[i].auditNo%></span>
-								<span class="h4span2">提交人:
+								<!--<span class="h4span2">提交人:
 									<%if(list[i].worker){%>
 										<%=list[i].worker%>
 									<%}else{%>
 										匿名
 									<%}%>
-								</span>
+								</span>-->
 								<span class="h4span3">
 									<%if(list[i].status == 1){%>
 										待审核
@@ -136,6 +136,9 @@
 				}
 				
 			})
+			document.addEventListener('refresh', function(event) {
+				loadFun('');
+			});
 			loadFun('');
 			function loadFun(index){
 				mui.ajax(serverUrl+'/app/material/audit/list',{
@@ -179,7 +182,8 @@
 					success:function(data,type,xhr){
 						console.log('取消反馈',data);
 						if(data.code == 0){
-						 	mui.toast('取消成功')
+						 	mui.toast('取消成功');
+						 	loadFun('');
 						}else{
 							mui.toast(data.message);
 						}

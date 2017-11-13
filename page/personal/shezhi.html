@@ -38,6 +38,7 @@
 		<div id="main">
 			<ul>
 				<li class="aClick" id="dizhiGuan" style="margin-top: 62px;">地址管理<span class="mui-icon mui-icon-arrowright"></span></li>
+				<li class="aClick" id="storedata" style="margin-top: 12px;display: none;">门店归属<span class="mui-icon mui-icon-arrowright"></span></li>
 				<li class="aClick" id="editdata" style="margin-top: 12px;">编辑资料<span class="mui-icon mui-icon-arrowright"></span></li>
 				<li class="aClick" id="editPhone" style="margin-top: 12px;">账户安全<span class="mui-icon mui-icon-arrowright"></span></li>
 				<li class="aClick" id="appupgrade" style="display: none;">检查更新</li>
@@ -59,6 +60,13 @@
 	<script src="../../js/update.js" type="text/javascript" charset="utf-8"></script>
 	<script type="text/javascript">
 		mui.plusReady(function(){
+			var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
+			if(identityT == 6){
+				mui('#storedata')[0].style.display = 'block'
+			}else{
+				mui('#storedata')[0].style.display = 'none'
+			}
+			
 			//检测设备信息
 			!function(){
 				plus.runtime.getProperty(plus.runtime.appid,function(inf){//显示当前版本号
@@ -72,14 +80,20 @@
 					})
 				}
 			}();
-			 /*地址*/
+			/*地址*/
 			mui('#dizhiGuan')[0].onclick = function(){
 				openview({
 					view: "address.html",
 					id: "address",
 				})
 			}
-
+			//门店 
+			mui('#storedata')[0].onclick = function(){
+				openview({
+					view: "storeBelong.html",
+					id: "storeBelong",
+				})
+			}
 			//吐槽
 			mui('#tucao')[0].onclick = function(){
 				openview({
