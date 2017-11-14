@@ -213,7 +213,7 @@
 		var userId = plus.storage.getItem('$userId');
 		var oldToken = plus.storage.getItem("oldToken");
 		var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
-		var oneId = plus.webview.currentWebview().oneId;//导购的 客户id
+		var oneId = plus.webview.currentWebview().oneId || userId;//导购的 客户id(如果没有就是直接打开页面，不是由导购帮助顾客下单。)
 
 		//选择后 刷新地址
 		window.addEventListener('readdstorage', function(event) {
@@ -290,6 +290,9 @@
 					{ method:"POST"},
 					function(back,status){
 						if(status == 200){
+							if(plus.webview.getWebviewById('chooseCustom2')){
+								plus.webview.getWebviewById('chooseCustom2').close();
+							}
 							console.log("发送返回",back.responseText);
 							var dataobj = JSON.parse(back.responseText);
 							if(dataobj.code == 0){
