@@ -778,7 +778,8 @@
 			"css/cart.css",
 			"js/default.js",
 			"img/check2.png",
-			"js/artTemplate-native.js"
+			"js/artTemplate-native.js",
+			"page/order/%3C%\u003dlist[i].coverImageUri%%3E"
 		],
 		"refer": [
 			"page/order/order.html",
@@ -812,7 +813,8 @@
 		"refer": [
 			"page/order/materialList.html",
 			"page/personal/address.html",
-			"page/personal/productCoupon.html"
+			"page/personal/productCoupon.html",
+			"page/order/elseMaterialList.html"
 		]
 	},
 	"page/order/chooseCustom.html": {

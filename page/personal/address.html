@@ -236,7 +236,11 @@
 										var list = plus.webview.getWebviewById('workerMaterial');
 										mui.fire(list,'readdstorage');
 									}
- 
+ 									if(goType == 'gorder'){
+										plus.storage.setItem('$addressStorageOrder', JSON.stringify(addressStorage));
+										var list = plus.webview.getWebviewById('order');
+										mui.fire(list,'readdstorage');
+									}
  									plus.webview.currentWebview().close();//关闭当前页面
  
 							})

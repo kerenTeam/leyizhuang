@@ -1,0 +1,111 @@
+<!doctype html>
+
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>确认订单</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="../../css/mui.min.css" />
+		<link rel="stylesheet" href="../../css/resetY.css">
+		<link rel="stylesheet" type="text/css" href="../../css/cart.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/style.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/configW.css" />
+	</head>
+
+	<body>
+
+		<header class="mui-bar mui-bar-nav">
+			<a class="headbar mui-action-back mui-icon mui-icon-left-nav mui-pull-left normalSize"></a>
+			<h1 class="mui-title">确认订单</h1>
+		</header>
+		<!--状态栏-->
+		<div style="height:44px;"></div>
+		
+		<div id="cartData" data-id=""></div>
+		<script type="text/html" id="cartTpl">
+		 
+			<dl class="cart">
+				<%for(var i=0;i<list.length;i++){%>
+					<dd>
+						<a class="goodsPic" style="margin-left: auto;"><img src="<%=list[i].coverImageUri%>" onerror="javascript:this.src='../../images/img.svg';" /></a>
+						<div class="goodsInfor" style="margin-left: 0.9rem!important;">
+							<h2>  
+						    		<a><%=list[i].goodsName%></a>
+						    		<%if(list[i].hasGift){%>
+						    			<em class="mui-badge mui-badge-danger mui-pull-right" style="color: white;">包含赠品</em>
+						    		<%}%>
+						   	</h2>
+							<div class="priceArea">
+								<div class="extraBrief">
+									单位：<%=list[i].goodsUnit%>；规格：<%=list[i].goodsSpecification%>
+								</div>
+								<strong>¥<span class="price"><%=list[i].retailPrice%></span></strong>
+								<div class="numberWidget">
+									<span class="num">x<%=list[i].goodsQty%></span>
+								</div>
+							</div>
+		
+						</div>
+					</dd>
+				<%}%>
+				 
+				<div style="clear: both;"></div>
+			</dl>
+		</script>
+
+		<script type="text/javascript" src="../../js/jquery_cart.js"></script>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/artTemplate-native.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/default.js" type="text/javascript" charset="utf-8"></script>
+	</body>
+
+	<script>
+		mui.plusReady(function() {
+		 //显示商品
+		plus.nativeUI.showWaiting();
+		var userId = plus.storage.getItem('$userId');
+		var oldToken = plus.storage.getItem("oldToken");
+		var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
+		var idobj = plus.storage.getItem('orderGoodsList');
+		//获取料单商品
+		mui.ajax(serverUrl+'/app/order/enter',{
+			data:{
+				userId:userId,
+				identityType:identityT,
+				goodsList:JSON.parse(idobj)
+			},
+			dataType:'json',
+			type:'post',
+			timeout:1000,
+			headers:{"Authorization":oldToken,'Content-Type':'application/json'},
+			success:function(data,type,xhr){
+				console.log('获取料单商品',data);
+				var dataObj = {};
+				if(data.code == 0){
+					//显示商品
+					var goods = data.content.totalGoodsInfo ;
+					dataObj.totalQty = data.content.totalQty;
+					dataObj.totalPrice = data.content.totalPrice;
+					dataObj.list = goods;
+					
+					document.getElementById('cartData').innerHTML = template('cartTpl',dataObj);
+					plus.nativeUI.closeWaiting();
+				}else{
+					mui.toast(data.message);
+					plus.nativeUI.closeWaiting();
+					
+				}
+			},
+			error:function(xhr,type,errorThrown){
+				console.log('响应失败  !');
+				plus.nativeUI.closeWaiting();
+				
+			}
+		});
+
+		})
+
+	</script>
+
+</html>

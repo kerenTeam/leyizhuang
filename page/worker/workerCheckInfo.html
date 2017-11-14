@@ -175,7 +175,9 @@
 								}
 								plus.nativeUI.closeWaiting();
 								if(!data.content.totalPrice){
-									data.content.totalPrice = '待计算'
+									$('#totalPrice').html('待计算')
+								}else{
+									$('#totalPrice').html('¥'+data.content.totalPrice)
 								}
 								$('#totalPrice').html(data.content.totalPrice)
 								if(data.content.isOwnerReceiving){

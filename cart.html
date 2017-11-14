@@ -77,8 +77,6 @@
 				</a>
 				<a class="goOrder dp" style="background:#f53c42;color:white;text-shadow:none;">下一步<span class="totalVisi">(<span class="totalNum">0</span>)</span>
 				</a>
-				<!--<a class="delBtnAll" style="background:#ff6910;color:white;text-shadow:none;display: none;">删除
-				</a>-->
 			</aside>
 		</script>
 
@@ -310,12 +308,8 @@
 									mui.toast("您还未选择要购买的商品哦！")
 								} else {
 									var materialList = [];
-									var cartObj = [];
 									//存缓存
 									$("dd").find("input[type='checkbox']:checked").each(function(index) {
-										if($(this).attr('data-id') == data.content[index].goodsId) {
-											cartObj.push(data.content[index])
-										}
 										materialList.push({
 											id: $(this).attr('data-id'),
 											num: $(this).parent().parent().find('.mui-input-numbox').val(),
@@ -324,9 +318,7 @@
 									})
 
 									plus.storage.setItem('materialList', JSON.stringify(materialList));
-									plus.storage.setItem('cartObj', JSON.stringify(cartObj));
 									console.log(plus.storage.getItem('materialList'));
-									console.log(plus.storage.getItem('cartObj'));
 
 									if(plus.storage.getItem('oldToken')) {
 										if(identityT == 0) {

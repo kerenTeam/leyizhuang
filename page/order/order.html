@@ -121,77 +121,68 @@
 				<img src="../../img/check2.png" /> 结算
 			</div>
 		</div>
-		<div style="background-color: white;margin: 5px 0;">
-			<div class="qtop flexr pad10" onclick="address()">
-				<div style="flex: 1;margin-left: 10px;">
-					<div class="maincl ft16">
-						<span class="disablecl">xxxx</span>
-						<span class="disablecl">123456666</span>
-					</div>
-					<div class="ft16">
-						<span class="disablecl">xxxxsdfsfjkdfgdajsdfdd</span>
-					</div>
+		<div id="cartData" data-id=""></div>
+		<script type="text/html" id="cartTpl">
+		 
+			<dl class="cart">
+				<%if(list.length>5){%>
+					<%for(var i=0;i<5;i++){%>
+						<dd>
+							<a class="goodsPic" style="margin-left: auto;"><img src="<%=list[i].coverImageUri%>" onerror="javascript:this.src='../../images/img.svg';" /></a>
+							<div class="goodsInfor" style="margin-left: 0.9rem!important;">
+								<h2>  
+							    		<a><%=list[i].goodsName%></a>
+							    		<%if(list[i].hasGift){%>
+							    			<em class="mui-badge mui-badge-danger mui-pull-right" style="color: white;">包含赠品</em>
+							    		<%}%>
+							   	</h2>
+								<div class="priceArea">
+									<div class="extraBrief">
+										单位：<%=list[i].goodsUnit%>；规格：<%=list[i].goodsSpecification%>
+									</div>
+									<strong>¥<span class="price"><%=list[i].retailPrice%></span></strong>
+									<div class="numberWidget">
+										<span class="num">x<%=list[i].goodsQty%></span>
+									</div>
+								</div>
+			
+							</div>
+						</dd>
+					<%}%>
+				<%}else{%>
+					<%for(var i=0;i<list.length;i++){%>
+						<dd>
+							<a class="goodsPic" style="margin-left: auto;"><img src="<%=list[i].coverImageUri%>" onerror="javascript:this.src='../../images/img.svg';" /></a>
+							<div class="goodsInfor" style="margin-left: 0.9rem!important;">
+								<h2>  
+							    		<a><%=list[i].goodsName%></a>
+							    		<%if(list[i].hasGift){%>
+							    			<em class="mui-badge mui-badge-danger mui-pull-right" style="color: white;">包含赠品</em>
+							    		<%}%>
+							   	</h2>
+								<div class="priceArea">
+									<div class="extraBrief">
+										单位：<%=list[i].goodsUnit%>；规格：<%=list[i].goodsSpecification%>
+									</div>
+									<strong>¥<span class="price"><%=list[i].retailPrice%></span></strong>
+									<div class="numberWidget">
+										<span class="num">x<%=list[i].goodsQty%></span>
+									</div>
+								</div>
+			
+							</div>
+						</dd>
+					<%}%>
+				<%}%>
+				
+				
+	
+				<div class="pad10 ft15">
+					共<span id='totalGoods' class="activecl"><%=totalQty%></span>件商品 订单总金额：<span class="activecl" id="totalPrice">¥<%=totalPrice%></span> <span class="mui-pull-right activecl" onclick="materialList()">查看全部</span>
 				</div>
-				<div class="">
-					<img src="../../images/center/right.svg" alt="" />
-				</div>
-			</div>
-		</div>
-		<div id="cartData"></div>
-		<!--<script type="text/html" id="cartTpl">-->
-		<!--<%if(goodsList.length==0){%>
-			<div onclick="hangout()">
-				<img src="img/market/blankCart.png" style="width:30%;margin: auto;display: block;margin-top: 40%;" alt="" />
-				<div style="color: #666;text-align: center;margin-top: 30px;font-size: 14px;">你的购物车还是空的哦</div>
-			</div>
-
-			<%}else{%> -->
-		<dl class="cart">
-			<dd>
-				<a class="goodsPic" style="margin-left: auto;"><img src="https://b-ssl.duitang.com/uploads/item/201710/18/20171018141101_kQPR8.thumb.700_0.jpeg" onerror="javascript:this.src='img/market/none.png';" /></a>
-				<div class="goodsInfor" style="margin-left: 0.9rem!important;">
-					<h2>  
-				    		<a>休闲鞋</a>
-				   	</h2>
-					<div class="priceArea">
-						<div class="extraBrief">
-							ccccc
-						</div>
-						<strong>¥<span class="price">30</span></strong>
-						<div class="numberWidget">
-							<span class="num">x5</span>
-						</div>
-					</div>
-
-				</div>
-				<a class="delBtn" data-id="<%=goodsList[j].goodsId%>" data-goodstext="<%=goodsList[j].goodText%>">删除</a>
-			</dd>
-			<dd>
-				<a class="goodsPic" style="margin-left: auto;"><img src="https://b-ssl.duitang.com/uploads/item/201710/18/20171018141101_kQPR8.thumb.700_0.jpeg" onerror="javascript:this.src='img/market/none.png';" /></a>
-				<div class="goodsInfor" style="margin-left: 0.9rem!important;">
-					<h2>  
-						    <a>休闲鞋</a>
-
-						   </h2>
-					<div class="priceArea">
-						<div class="extraBrief">
-							ccccc
-						</div>
-						<strong>¥<span class="price">30</span></strong>
-						<div class="numberWidget">
-							<span class="num">x5</span>
-						</div>
-					</div>
-
-				</div>
-			</dd>
-
-			<div class="pad10 ft15">
-				共10件商品 <span>订单总金额：¥45000</span> <span class="mui-pull-right activecl" onclick="materialList()">查看全部</span>
-			</div>
-			<div style="clear: both;"></div>
-		</dl>
-		<!--<%}%>-->
+				<div style="clear: both;"></div>
+			</dl>
+		</script>
 		<div style="background: white;">
 			<div class="pad10 ft15 afterBorder">
 				<em>配送方式 </em>
@@ -205,6 +196,44 @@
 				</div>
 			</div>
 			<div style="clear: both;"></div>
+			<div style="background-color: white;margin: 5px 0;">
+			<div id="add_info"></div>
+			<script type="text/html" id="addrTpl">
+				<%if(obj.length==0){%>
+				<div class="qtop flexr pad10" onclick="address()">
+					<div style="flex: 1;margin-left: 10px;">
+						<div class="maincl ft16">
+							<span class="disablecl"></span>
+							<span class="disablecl"></span>
+						</div>
+						<div class="ft16">
+							<span class="disablecl">请选择收获地址</span>
+						</div>
+					</div>
+					<div class="">
+						<img src="../../images/center/right.svg" alt="" />
+					</div>
+				</div>
+				<%}else{%> 
+					<div class="qtop flexr pad10" onclick="address()" id="addid" data-id="<%=obj[0].id%>" data-receiver="<%=obj[0].person%>" data-receiverPhone="<%=obj[0].phone%>" data-deliveryCity="<%=obj[0].city%>" data-deliveryCounty="<%=obj[0].country%>" data-deliveryStreet="<%=obj[0].street%>" data-residenceName="<%=obj[0].villageName%>" data-detailedAddress="<%=obj[0].address%>">
+						<div style="flex: 1;margin-left: 10px;">
+							<div class="maincl ft16">
+								<span class="disablecl"><%=obj[0].person%></span>
+								<span class="disablecl"><%=obj[0].phone%></span>
+							</div>
+							<div class="ft16">
+								<span class="disablecl"><%=obj[0].province%><%=obj[0].city%><%=obj[0].country%><%=obj[0].street%><%=obj[0].villageName%><%=obj[0].address%></span>
+							</div>
+						</div>
+						<div class="">
+							<img src="../../images/center/right.svg" alt="" />
+						</div>
+					</div>
+				
+				<%}%>
+			</script>
+			
+			</div>
 			<div id='cityResult' class="ui-alert pad10 afterBorder">配送时间 <span class="mui-pull-right">选择</span></div>
 			<div class="mui-input-row mui-checkbox mui-left afterBorder">
 				<label>是否业主收货</label>
@@ -308,8 +337,8 @@
 	<script>
 		function materialList() {
 			openview({
-				view: 'materialList.html',
-				id: 'materialList'
+				view: 'elseMaterialList.html',
+				id: 'elseMaterialList',
 			})
 		}
 
@@ -318,7 +347,8 @@
 				view: '../personal/address.html',
 				id: 'address',
 				extrasobj: {
-					page: 'order'
+					page: 'gorder',
+					goType:'gorder'
 				}
 			})
 		}
@@ -334,49 +364,160 @@
 		}
 
 		mui.plusReady(function() {
-
-			//级联示例
-			var cityData = [{
-				value: '110000',
-				text: '9月1号(周五)',
-				children: [{
-					value: "1",
-					text: "7:00-8:00"
-				}, {
-					value: "2",
-					text: "8:00-9:00"
-				}, {
-					value: "3",
-					text: "9:00-10:00"
-				}]
-			}, {
-				value: '110000',
-				text: '9月2号(周六)',
-				children: [{
-					value: "1",
-					text: "7:00-8:00"
-				}, {
-					value: "2",
-					text: "10:00-11:00"
-				}, {
-					value: "3",
-					text: "13:00-20:00"
-				}]
-			}]
-			var cityPicker = new mui.PopPicker({
-				layer: 2
+			var userId = plus.storage.getItem('$userId');
+			var oldToken = plus.storage.getItem("oldToken");
+			var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
+			var idobj = plus.storage.getItem('orderGoodsList');
+			plus.nativeUI.showWaiting();
+			//获取料单商品
+			mui.ajax(serverUrl+'/app/order/enter',{
+				data:{
+					userId:userId,
+					identityType:identityT,
+					goodsList:JSON.parse(idobj)
+				},
+				dataType:'json',
+				type:'post',
+				timeout:1000,
+				headers:{"Authorization":oldToken,'Content-Type':'application/json'},
+				success:function(data,type,xhr){
+					console.log('获取料单商品',data);
+					var dataObj = {};
+					if(data.code == 0){
+						//显示商品
+						var goods = data.content.totalGoodsInfo ;
+						dataObj.totalQty = data.content.totalQty;
+						dataObj.totalPrice = data.content.totalPrice;
+						dataObj.list = goods;
+						
+						document.getElementById('cartData').innerHTML = template('cartTpl',dataObj);
+						plus.nativeUI.closeWaiting();
+					}else{
+						mui.toast(data.message);
+						plus.nativeUI.closeWaiting();
+						
+					}
+				},
+				error:function(xhr,type,errorThrown){
+					console.log('响应失败  !');
+					plus.nativeUI.closeWaiting();
+					
+				}
 			});
-			cityPicker.setData(cityData);
-			var cityResult = document.getElementById('cityResult');
-			cityResult.addEventListener('tap', function(event) {
-				cityPicker.show(function(items) {
-					$('#cityResult span').html(items[0].text + " " + items[1].text)
-					//返回 false 可以阻止选择框的关闭
-					//return false;
-				});
-			}, false);
-			//-----------------------------------------
 			
+			//刷新地址
+			document.addEventListener('readdstorage', function(event) {
+				orderAdd()
+			});
+			orderAdd();
+			//显示地址
+			function orderAdd(){
+				//默认地址
+				mui.ajax(serverUrl+'/app/user/deliveryAddress/default',{
+					data:{
+						userId:userId,
+						identityType:identityT
+					},
+					dataType:'json',
+					type:'post',
+					timeout:1000,
+					headers:{"Authorization":oldToken},
+					success:function(data,type,xhr){
+						console.log('默认地址',data);
+						var addrObj = {};
+						if(data.code == 0 && data.content){ 
+							if(plus.storage.getItem("$addressStorageOrder") != null) {
+								addrObj.obj = JSON.parse(plus.storage.getItem("$addressStorageOrder"));
+							}else{
+								var defultAddress ={};
+									defultAddress.id = data.content.id;
+									defultAddress.person = data.content.deliveryName;
+									defultAddress.phone = data.content.deliveryPhone;
+									defultAddress.province = data.content.deliveryProvince;
+									defultAddress.city = data.content.deliveryCity;
+									defultAddress.country = data.content.deliveryCounty;
+									defultAddress.street = data.content.deliveryStreet;
+									defultAddress.villageName = data.content.villageName;
+									defultAddress.address = data.content.detailedAddress;
+									addrObj.obj = [defultAddress];
+							}
+							document.getElementById("add_info").innerHTML = template("addrTpl", addrObj);
+							plus.storage.removeItem("$addressStorageOrder")
+							
+						}else{
+								console.log('缓存地址',data);
+								addrObj.obj = JSON.parse(plus.storage.getItem("$addressStorageOrder")) || [];
+								document.getElementById("add_info").innerHTML = template("addrTpl", addrObj);
+							 
+						}
+					},
+					error:function(xhr,type,errorThrown){
+						console.log('响应失败  !');
+					}
+				});
+				
+//				plus.storage.removeItem("$addressStorage")
+			}
+			
+			//获取城市
+			var cityId = plus.storage.getItem('userCity');
+			//获取时间段
+			timeRanges();
+			function timeRanges(){
+				mui.ajax(serverUrl+'/app/city/get/deliveryTime',{
+					data:{
+						cityId:cityId
+					},
+					dataType:'json',
+					type:'post',
+					timeout:1000,
+					headers:{"Authorization":oldToken},
+					success:function(data,type,xhr){
+						console.log('获取时间段',data);
+						var dataObj = {};
+						if(data.code == 0){
+							if(data.content && data.content.length){
+								var cityData = [];
+								mui.each(data.content,function(index,item){
+									var  eachday = {};
+									eachday.children = [];
+									eachday.text = item.day;
+									mui.each(item.deliveryTime,function(index2,item2){
+										eachday.children.push({'text':item2})
+									})
+									cityData.push(eachday)
+	                        		})
+								console.log('cityData ',cityData);
+								var cityPicker = new mui.PopPicker({
+									layer: 2
+								});
+								cityPicker.setData(cityData);
+								var cityResult = document.getElementById('cityResult');
+								cityResult.addEventListener('tap', function(event) {
+									cityPicker.show(function(items) {
+										$('#cityResult').attr('data-id','1')
+										$('#cityResult span').html(items[0].text + " " + items[1].text)
+										//返回 false 可以阻止选择框的关闭
+										//return false;
+									});
+								}, false);
+								//-----------------------------------------
+							}
+							plus.nativeUI.closeWaiting();
+						}else{
+							mui.toast(data.message);
+							plus.nativeUI.closeWaiting();
+							
+						}
+					},
+					error:function(xhr,type,errorThrown){
+						console.log('响应失败  !');
+						plus.nativeUI.closeWaiting();
+						
+					}
+				});
+			}
+		
 			//券
 			$(".checkQuan").click(function() {
 					  
@@ -401,7 +542,6 @@
 					$(".minuMoney").css("display", "inline-block");
 
 				};
-				calculate();
 			})
 			
 			window.addEventListener('refresh', function(event) {
