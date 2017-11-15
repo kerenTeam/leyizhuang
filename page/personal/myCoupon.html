@@ -33,6 +33,7 @@
 		<script src="../../js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../../js/mui.min.js"></script>
 		<script src="../../js/artTemplate-native.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/default.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
 			mui.init();
 			mui.plusReady(function(){
@@ -41,7 +42,7 @@
 				var oldToken = plus.storage.getItem('oldToken');
 				
 				plus.nativeUI.showWaiting();//显示等待框
-				mui.ajax('http:119.23.149.7:9999/app/customer/cashCoupon/list',{
+				mui.ajax(serverUrl+'/app/customer/cashCoupon/list',{
 					data:{
 						userId:userId,
 						identityType:identityT
@@ -61,14 +62,6 @@
 											Y = date.getFullYear() + '-';
 											M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
 											D = date.getDate() + ' ';
-											h = date.getHours()-8;
-											if(h<0){
-												h = h+24
-											}
-											h = h + ':';
-											m = date.getMinutes();
-											s = date.getSeconds(); 
-											console.log(Y+M+D+h+m+s);
 											data.content[i].effectiveStartTime = Y+M+D;
 					       			}
 					       			if(data.content[i].effectiveEndTime){
@@ -76,14 +69,6 @@
 											Y = date.getFullYear() + '-';
 											M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
 											D = date.getDate() + ' ';
-											h = date.getHours()-8;
-											if(h<0){
-												h = h+24
-											}
-											h = h + ':';
-											m = date.getMinutes();
-											s = date.getSeconds(); 
-											console.log(Y+M+D+h+m+s);
 											data.content[i].effectiveEndTime = Y+M+D;
 					       			}
 					       		}

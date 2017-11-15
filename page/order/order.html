@@ -8,7 +8,7 @@
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link rel="stylesheet" type="text/css" href="../../css/mui.min.css" />
 		<link rel="stylesheet" href="../../css/resetY.css">
-		<link rel="stylesheet" type="text/css" href="../../css/commonY.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/commonY.css" />
 		<link rel="stylesheet" type="text/css" href="../../css/cart.css" />
 		<link rel="stylesheet" type="text/css" href="../../css/style.css" />
 		<link rel="stylesheet" type="text/css" href="../../css/configW.css" />
@@ -16,7 +16,6 @@
 		<link href="../../css/mui.poppicker.css" rel="stylesheet" />
 	</head>
 	<style type="text/css">
-			
 		#coupon .mui-checkbox,
 		.checkQuan .mui-checkbox,
 		.waypay .mui-checkbox {
@@ -82,7 +81,6 @@
 			height: 0px!important;
 		}
 		
-		
 		.mui-radio input[type=radio]:before {
 			font-size: 20px;
 		}
@@ -94,11 +92,13 @@
 		.charge {
 			color: coral;
 		}
-		.quanc{display: none;
-				width: 0.3rem;
-				margin-right: 0.1rem;
-				display: none;
-			}
+		
+		.quanc {
+			display: none;
+			width: 0.3rem;
+			margin-right: 0.1rem;
+			display: none;
+		}
 	</style>
 
 	<body>
@@ -123,60 +123,62 @@
 		</div>
 		<div id="cartData" data-id=""></div>
 		<script type="text/html" id="cartTpl">
-		 
+
 			<dl class="cart">
 				<%if(list.length>5){%>
-					<%for(var i=0;i<5;i++){%>
-						<dd>
-							<a class="goodsPic" style="margin-left: auto;"><img src="<%=list[i].coverImageUri%>" onerror="javascript:this.src='../../images/img.svg';" /></a>
-							<div class="goodsInfor" style="margin-left: 0.9rem!important;">
-								<h2>  
-							    		<a><%=list[i].goodsName%></a>
-							    		<%if(list[i].hasGift){%>
-							    			<em class="mui-badge mui-badge-danger mui-pull-right" style="color: white;">包含赠品</em>
-							    		<%}%>
-							   	</h2>
-								<div class="priceArea">
-									<div class="extraBrief">
-										单位：<%=list[i].goodsUnit%>；规格：<%=list[i].goodsSpecification%>
-									</div>
-									<strong>¥<span class="price"><%=list[i].retailPrice%></span></strong>
-									<div class="numberWidget">
-										<span class="num">x<%=list[i].goodsQty%></span>
-									</div>
-								</div>
-			
+				<%for(var i=0;i<5;i++){%>
+				<dd>
+					<a class="goodsPic" style="margin-left: auto;"><img src="<%=list[i].coverImageUri%>" onerror="javascript:this.src='../../images/img.svg';" /></a>
+					<div class="goodsInfor" style="margin-left: 0.9rem!important;">
+						<h2>  
+					    		<a><%=list[i].goodsName%></a>
+					    		<%if(list[i].hasGift){%>
+					    			<em class="mui-badge mui-badge-danger mui-pull-right" style="color: white;">包含赠品</em>
+					    		<%}%>
+					   	</h2>
+						<div class="priceArea">
+							<div class="extraBrief">
+								单位：
+								<%=list[i].goodsUnit%>；规格：
+								<%=list[i].goodsSpecification%>
 							</div>
-						</dd>
-					<%}%>
-				<%}else{%>
-					<%for(var i=0;i<list.length;i++){%>
-						<dd>
-							<a class="goodsPic" style="margin-left: auto;"><img src="<%=list[i].coverImageUri%>" onerror="javascript:this.src='../../images/img.svg';" /></a>
-							<div class="goodsInfor" style="margin-left: 0.9rem!important;">
-								<h2>  
-							    		<a><%=list[i].goodsName%></a>
-							    		<%if(list[i].hasGift){%>
-							    			<em class="mui-badge mui-badge-danger mui-pull-right" style="color: white;">包含赠品</em>
-							    		<%}%>
-							   	</h2>
-								<div class="priceArea">
-									<div class="extraBrief">
-										单位：<%=list[i].goodsUnit%>；规格：<%=list[i].goodsSpecification%>
-									</div>
-									<strong>¥<span class="price"><%=list[i].retailPrice%></span></strong>
-									<div class="numberWidget">
-										<span class="num">x<%=list[i].goodsQty%></span>
-									</div>
-								</div>
-			
+							<strong>¥<span class="price"><%=list[i].retailPrice%></span></strong>
+							<div class="numberWidget">
+								<span class="num">x<%=list[i].goodsQty%></span>
 							</div>
-						</dd>
-					<%}%>
+						</div>
+
+					</div>
+				</dd>
 				<%}%>
-				
-				
-	
+				<%}else{%>
+				<%for(var i=0;i<list.length;i++){%>
+				<dd>
+					<a class="goodsPic" style="margin-left: auto;"><img src="<%=list[i].coverImageUri%>" onerror="javascript:this.src='../../images/img.svg';" /></a>
+					<div class="goodsInfor" style="margin-left: 0.9rem!important;">
+						<h2>  
+					    		<a><%=list[i].goodsName%></a>
+					    		<%if(list[i].hasGift){%>
+					    			<em class="mui-badge mui-badge-danger mui-pull-right" style="color: white;">包含赠品</em>
+					    		<%}%>
+					   	</h2>
+						<div class="priceArea">
+							<div class="extraBrief">
+								单位：
+								<%=list[i].goodsUnit%>；规格：
+								<%=list[i].goodsSpecification%>
+							</div>
+							<strong>¥<span class="price"><%=list[i].retailPrice%></span></strong>
+							<div class="numberWidget">
+								<span class="num">x<%=list[i].goodsQty%></span>
+							</div>
+						</div>
+
+					</div>
+				</dd>
+				<%}%>
+				<%}%>
+
 				<div class="pad10 ft15">
 					共<span id='totalGoods' class="activecl"><%=totalQty%></span>件商品 订单总金额：<span class="activecl" id="totalPrice">¥<%=totalPrice%></span> <span class="mui-pull-right activecl" onclick="materialList()">查看全部</span>
 				</div>
@@ -197,24 +199,24 @@
 			</div>
 			<div style="clear: both;"></div>
 			<div style="background-color: white;margin: 5px 0;">
-			<div id="add_info"></div>
-			<script type="text/html" id="addrTpl">
-				<%if(obj.length==0){%>
-				<div class="qtop flexr pad10" onclick="address()">
-					<div style="flex: 1;margin-left: 10px;">
-						<div class="maincl ft16">
-							<span class="disablecl"></span>
-							<span class="disablecl"></span>
+				<div id="add_info"></div>
+				<script type="text/html" id="addrTpl">
+					<%if(obj.length==0){%>
+					<div class="qtop flexr pad10" onclick="address()">
+						<div style="flex: 1;margin-left: 10px;">
+							<div class="maincl ft16">
+								<span class="disablecl"></span>
+								<span class="disablecl"></span>
+							</div>
+							<div class="ft16">
+								<span class="disablecl">请选择收获地址</span>
+							</div>
 						</div>
-						<div class="ft16">
-							<span class="disablecl">请选择收获地址</span>
+						<div class="">
+							<img src="../../images/center/right.svg" alt="" />
 						</div>
 					</div>
-					<div class="">
-						<img src="../../images/center/right.svg" alt="" />
-					</div>
-				</div>
-				<%}else{%> 
+					<%}else{%>
 					<div class="qtop flexr pad10" onclick="address()" id="addid" data-id="<%=obj[0].id%>" data-receiver="<%=obj[0].person%>" data-receiverPhone="<%=obj[0].phone%>" data-deliveryCity="<%=obj[0].city%>" data-deliveryCounty="<%=obj[0].country%>" data-deliveryStreet="<%=obj[0].street%>" data-residenceName="<%=obj[0].villageName%>" data-detailedAddress="<%=obj[0].address%>">
 						<div style="flex: 1;margin-left: 10px;">
 							<div class="maincl ft16">
@@ -229,89 +231,91 @@
 							<img src="../../images/center/right.svg" alt="" />
 						</div>
 					</div>
-				
-				<%}%>
-			</script>
-			
+
+					<%}%>
+				</script>
+
 			</div>
 			<div id='cityResult' class="ui-alert pad10 afterBorder">配送时间 <span class="mui-pull-right">选择</span></div>
 			<div class="mui-input-row mui-checkbox mui-left afterBorder">
 				<label>是否业主收货</label>
 				<input name="checkbox1" value="Item 1" type="checkbox" checked>
 			</div>
-			<div class="pad10 activecl ft13 afterBorder">
+			<div class="pad10 activecl ft13">
 				温馨提示：若收货人为主家，系统将在出货打印单中自动隐藏折扣信息
 			</div>
-			<div class="pad_5 ft16 afterBorder">订单金额:<span class='mui-pull-right pad_r10'>¥500</span> </div>
-			<div class="pad_5 ft16 afterBorder">会员折扣:<span class='mui-pull-right pad_r10'>¥500</span></div>
-			<div class="pad_5 ft16 afterBorder">订单折扣:<span class='mui-pull-right pad_r10'>¥500</span></div>
-			<div class="pad_5 ft16 afterBorder">运费:<span class='mui-pull-right pad_r10'>¥500</span></div>
-			<div class="pad_5 ft16">上楼费:<span class='mui-pull-right pad_r10'>¥500</span></div>
+			
+		</div>
+		<div style="background-color: white;margin-top: 5px;">
+			<div class="pad_5 ft16 afterBorder">订单金额:<span class='mui-pull-right pad_r10' id="totalOrderAmount">¥--</span> </div>
+			<div class="pad_5 ft16 afterBorder">会员折扣:<span class='mui-pull-right pad_r10' id="memberDiscount">¥--</span></div>
+			<div class="pad_5 ft16 afterBorder">订单折扣:<span class='mui-pull-right pad_r10' id="orderDiscount">¥--</span></div>
+			<div class="pad_5 ft16 afterBorder">运费:<span class='mui-pull-right pad_r10' id="freight">¥--</span></div>
+			<div class="pad_5 ft16">上楼费:<span class='mui-pull-right pad_r10' id="totalOrderAmount">依现实情况收取</span></div>
 
 		</div>
-		<dl class="list">
+		<div id="elseDiscount" style="margin-top: 5px;"></div>
+		<script type="text/html" id="elseDiscountTpl">
+			<dl class="list">
 
-			<div id="quanData">
-			 
+				<div id="quanData">
+		
 					<div class="mui-card afterBorder" style="border: none!important;box-shadow: none;">
 						<ul class="mui-table-view">
-
-							<li class="mui-table-view-cell mui-collapse">
-								<a class="mui-navigate-right" style="padding: 10px;" href="#">抵用券 <b class="minuMoney cred" style="display: none;">-￥<span id="minuMoney"></span></b><span class="fr" style="margin-right: 15px;">选择</span></a>
-								<div class="mui-collapse-content">
-
-									<div class="checkQuan mui-row">
-										<div class="mui-col-sm-3">
-											<div>￥<big><b>100</b></big></div>
-											<div><small>全场通用</small></div>
-										</div>
-										<div class="mui-col-sm-9">
-											<div class="cred"><big>满减券</big> <span>全场通用减¥100</span>
+							<%if(cashCouponList && cashCouponList.length){%>
+								<li class="mui-table-view-cell mui-collapse">
+									<a class="mui-navigate-right" style="padding: 10px;" href="#">优惠券 <b class="minuMoney cred" style="display: none;">-￥<span id="minuMoney"></span></b><span class="fr" style="margin-right: 15px;">选择</span></a>
+									<div class="mui-collapse-content">
+										<%for(var j = 0; j<cashCouponList.length;j++){%>
+											<div class="checkQuan mui-row">
+												<div class="mui-col-sm-3">
+													<div>￥<big><b><%=cashCouponList[j].denomination%></b></big></div>
+													<div><small><%=cashCouponList[j].description%></small></div>
+												</div>
+												<div class="mui-col-sm-9">
+													<div class="cred"><big><%=cashCouponList[j].title%></big>
+													</div>
+													<div class="dateLimit">
+														<%=cashCouponList[j].effectiveStartTime%> ~ <%=cashCouponList[j].effectiveEndTime%>内有效
+													</div>
+												</div>
+												<div class="mui-checkbox"><img src="../../images/xuanze.png" class="quanc" data-id="<%=j%>" alt="" /></div>
 											</div>
-											<div class="dateLimit">
-												2016-09-10 ~ 2017-09-10内有效
-											</div>
-										</div>
-										<div class="mui-checkbox"><img src="../../images/xuanze.png" class="quanc" alt="" /></div>
+										<%}%>
+										
 									</div>
-
-									<div class="checkQuan mui-row">
-										<div class="mui-col-sm-3">
-											<div><big><b>9</b></big>折</div>
-											<div><small>满300通用</small></div>
-										</div>
-										<div class="mui-col-sm-9">
-											<div class="cred"><big>折扣券</big> <span>8</span>折</div>
-											<div class="dateLimit">
-												2016-09-10 ~ 2017-09-10内有效
-											</div>
-
-										</div>
-										<div class="mui-checkbox"><img src="../../images/xuanze.png" class="quanc" alt="" /></div>
-									</div>
-
-								</div>
-							</li>
+								</li>
+							<%}else{%>
+								<div class="pad10 ft14 afterBorder">优惠券<span class='mui-pull-right pad_r10'>无</span></div>
+							<%}%>
+							
 						</ul>
 					</div>
-			<div class="pad10 ft14 afterBorder">产品券<span class='mui-pull-right pad_r10' onclick="productCoupon()">选择></span></div>
-				 
+					<%if(productCouponList && productCouponList.length){%>
+						<div class="pad10 ft14 afterBorder">产品券<span class='mui-pull-right pad_r10' onclick="productCoupon()">选择></span></div>
+					<%}else{%>
+						<div class="pad10 ft14 afterBorder">产品券<span class='mui-pull-right pad_r10'>无</span></div>
+					<%}%>
+				</div>
+				<%if(lebi && lebi.quantity && lebi.rebate){%>
+					<div id="coupon">
+						<dd class="dd-padding kv-line-r">
+							<h6>一共<span id="totalJfen" style="color: #F14A43;" id="totalJfen"><%=lebi.quantity%></span>乐币,抵用<span id="itMinus" style="color: #ff5f32;"><span>￥<%=lebi.rebate%></span></span></h6>
+							<div id="changeJf" class="mui-checkbox"><input name="checkbox" class="groupCheck" type="checkbox"></div>
+						</dd>
+					</div>
+				<%}else{%>
+					<div id="coupon">
+						<dd class="dd-padding kv-line-r">
+							<h6>无乐币</h6>
+							<div class="mui-checkbox"><input name="checkbox" class="groupCheck" type="checkbox" disabled=""></div>
+						</dd>
+					</div>
+				<%}%>
 				
-			</div>
-
-			<div id="coupon">
-				<dd class="dd-padding kv-line-r">
-					<h6>可以<span id="totalJfen" style="color: #F14A43;" id="totalJfen">111</span>乐币,抵用<span id="itMinus" style="color: #ff5f32;"><span>￥11</span></span></h6>
-					<div id="changeJf" class="mui-checkbox"><input name="checkbox" class="groupCheck" type="checkbox"></div>
-				</dd>
-
-				<dd class="dd-padding kv-line-r">
-					<h6>无可用HI豆</h6>
-					<div class="mui-checkbox"><input name="checkbox" disabled class="groupCheck" type="checkbox"></div>
-				</dd>
-			</div>
-
-		</dl>
+		
+			</dl>
+		</script>
 
 		<!--bottom nav-->
 		<div style="height:1rem;"></div>
@@ -348,12 +352,12 @@
 				id: 'address',
 				extrasobj: {
 					page: 'gorder',
-					goType:'gorder'
+					goType: 'gorder'
 				}
 			})
 		}
-		
-		function productCoupon(){
+
+		function productCoupon() {
 			openview({
 				view: '../personal/productCoupon.html',
 				id: 'productCoupon',
@@ -370,124 +374,204 @@
 			var idobj = plus.storage.getItem('orderGoodsList');
 			plus.nativeUI.showWaiting();
 			//获取料单商品
-			mui.ajax(serverUrl+'/app/order/enter',{
-				data:{
-					userId:userId,
-					identityType:identityT,
-					goodsList:JSON.parse(idobj)
+			mui.ajax(serverUrl + '/app/order/enter', {
+				data: {
+					userId: userId,
+					identityType: identityT,
+					goodsList: JSON.parse(idobj)
 				},
-				dataType:'json',
-				type:'post',
-				timeout:1000,
-				headers:{"Authorization":oldToken,'Content-Type':'application/json'},
-				success:function(data,type,xhr){
-					console.log('获取料单商品',data);
+				dataType: 'json',
+				type: 'post',
+				timeout: 1000,
+				headers: {
+					"Authorization": oldToken,
+					'Content-Type': 'application/json'
+				},
+				success: function(data, type, xhr) {
+					console.log('获取料单商品', data);
 					var dataObj = {};
-					if(data.code == 0){
+					if(data.code == 0 && data.content) {
 						//显示商品
-						var goods = data.content.totalGoodsInfo ;
+						var goods = data.content.totalGoodsInfo;
 						dataObj.totalQty = data.content.totalQty;
 						dataObj.totalPrice = data.content.totalPrice;
 						dataObj.list = goods;
+
+						document.getElementById('cartData').innerHTML = template('cartTpl', dataObj);
 						
-						document.getElementById('cartData').innerHTML = template('cartTpl',dataObj);
+						if(data.content.totalOrderAmount) {
+							$('#totalOrderAmount').html('¥' + data.content.totalOrderAmount)
+						} else {
+							$('#totalOrderAmount').html('0')
+						}
+						if(data.content.memberDiscount) {
+							$('#memberDiscount').html('¥' + data.content.memberDiscount)
+						} else {
+							$('#memberDiscount').html('¥0')
+						}
+						if(data.content.orderDiscount) {
+							$('#orderDiscount').html('¥' + data.content.orderDiscount)
+						} else {
+							$('#orderDiscount').html('0')
+						}
+						if(data.content.freight) {
+							$('#freight').html('¥' + data.content.freight)
+						} else {
+							$('#freight').html('0')
+						}
+						
+						if(data.content.cashCouponList && data.content.cashCouponList.length){
+							for(var i in data.content.cashCouponList){
+				       			if(data.content.cashCouponList[i].effectiveStartTime){
+				       				var date = new Date(data.content.cashCouponList[i].effectiveStartTime/1000 *1000);
+										Y = date.getFullYear() + '-';
+										M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
+										D = date.getDate() + ' ';
+										data.content.cashCouponList[i].effectiveStartTime = Y+M+D;
+				       			}
+				       			if(data.content.cashCouponList[i].effectiveEndTime){
+				       				var date = new Date(data.content.cashCouponList[i].effectiveEndTime/1000 *1000);
+										Y = date.getFullYear() + '-';
+										M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
+										D = date.getDate() + ' ';
+										data.content.cashCouponList[i].effectiveEndTime = Y+M+D;
+				       			}
+				       		}
+						}
+						var discount = {};
+							discount.lebi = data.content.lebi;
+							discount.cashCouponList = data.content.cashCouponList;
+							discount.productCouponList = data.content.productCouponList;
+						document.getElementById('elseDiscount').innerHTML = template('elseDiscountTpl', discount);
 						plus.nativeUI.closeWaiting();
-					}else{
+						
+						//券
+						$(".checkQuan").click(function() {
+							var qid = $(this).attr("data-id");
+							var qminus = $(this).attr("data-minus");
+							$(this).siblings().find(".quanc").css("display", "none");
+							quan = 0;
+							if($(this).find(".quanc").css("display") == "block") {
+								$(this).find(".quanc").css("display", "none");
+								$("#minuMoney").html(0);
+								$(".minuMoney").css("display", "none");
+			
+							} else {
+								$(this).find(".quanc").css("display", "block");
+								if(qid == 1) {
+									quan = parseFloat(qminus)
+								}
+								if(qid == 2) {
+									quan = parseFloat(allGroup * (1 - parseFloat(qminus))).toFixed(2);
+								}
+								$("#minuMoney").html(quan);
+								$(".minuMoney").css("display", "inline-block");
+			
+							};
+						})
+					} else {
 						mui.toast(data.message);
 						plus.nativeUI.closeWaiting();
-						
+
 					}
 				},
-				error:function(xhr,type,errorThrown){
+				error: function(xhr, type, errorThrown) {
 					console.log('响应失败  !');
 					plus.nativeUI.closeWaiting();
-					
+
 				}
 			});
-			
+
 			//刷新地址
 			document.addEventListener('readdstorage', function(event) {
 				orderAdd()
 			});
 			orderAdd();
 			//显示地址
-			function orderAdd(){
+			function orderAdd() {
 				//默认地址
-				mui.ajax(serverUrl+'/app/user/deliveryAddress/default',{
-					data:{
-						userId:userId,
-						identityType:identityT
+				mui.ajax(serverUrl + '/app/user/deliveryAddress/default', {
+					data: {
+						userId: userId,
+						identityType: identityT
 					},
-					dataType:'json',
-					type:'post',
-					timeout:1000,
-					headers:{"Authorization":oldToken},
-					success:function(data,type,xhr){
-						console.log('默认地址',data);
+					dataType: 'json',
+					type: 'post',
+					timeout: 1000,
+					headers: {
+						"Authorization": oldToken
+					},
+					success: function(data, type, xhr) {
+						console.log('默认地址', data);
 						var addrObj = {};
-						if(data.code == 0 && data.content){ 
+						if(data.code == 0 && data.content) {
 							if(plus.storage.getItem("$addressStorageOrder") != null) {
 								addrObj.obj = JSON.parse(plus.storage.getItem("$addressStorageOrder"));
-							}else{
-								var defultAddress ={};
-									defultAddress.id = data.content.id;
-									defultAddress.person = data.content.deliveryName;
-									defultAddress.phone = data.content.deliveryPhone;
-									defultAddress.province = data.content.deliveryProvince;
-									defultAddress.city = data.content.deliveryCity;
-									defultAddress.country = data.content.deliveryCounty;
-									defultAddress.street = data.content.deliveryStreet;
-									defultAddress.villageName = data.content.villageName;
-									defultAddress.address = data.content.detailedAddress;
-									addrObj.obj = [defultAddress];
+							} else {
+								var defultAddress = {};
+								defultAddress.id = data.content.id;
+								defultAddress.person = data.content.deliveryName;
+								defultAddress.phone = data.content.deliveryPhone;
+								defultAddress.province = data.content.deliveryProvince;
+								defultAddress.city = data.content.deliveryCity;
+								defultAddress.country = data.content.deliveryCounty;
+								defultAddress.street = data.content.deliveryStreet;
+								defultAddress.villageName = data.content.villageName;
+								defultAddress.address = data.content.detailedAddress;
+								addrObj.obj = [defultAddress];
 							}
 							document.getElementById("add_info").innerHTML = template("addrTpl", addrObj);
 							plus.storage.removeItem("$addressStorageOrder")
-							
-						}else{
-								console.log('缓存地址',data);
-								addrObj.obj = JSON.parse(plus.storage.getItem("$addressStorageOrder")) || [];
-								document.getElementById("add_info").innerHTML = template("addrTpl", addrObj);
-							 
+
+						} else {
+							console.log('缓存地址', data);
+							addrObj.obj = JSON.parse(plus.storage.getItem("$addressStorageOrder")) || [];
+							document.getElementById("add_info").innerHTML = template("addrTpl", addrObj);
+
 						}
 					},
-					error:function(xhr,type,errorThrown){
+					error: function(xhr, type, errorThrown) {
 						console.log('响应失败  !');
 					}
 				});
-				
-//				plus.storage.removeItem("$addressStorage")
+
+				//				plus.storage.removeItem("$addressStorage")
 			}
-			
+
 			//获取城市
 			var cityId = plus.storage.getItem('userCity');
 			//获取时间段
 			timeRanges();
-			function timeRanges(){
-				mui.ajax(serverUrl+'/app/city/get/deliveryTime',{
-					data:{
-						cityId:cityId
+
+			function timeRanges() {
+				mui.ajax(serverUrl + '/app/city/get/deliveryTime', {
+					data: {
+						cityId: cityId
 					},
-					dataType:'json',
-					type:'post',
-					timeout:1000,
-					headers:{"Authorization":oldToken},
-					success:function(data,type,xhr){
-						console.log('获取时间段',data);
+					dataType: 'json',
+					type: 'post',
+					timeout: 1000,
+					headers: {
+						"Authorization": oldToken
+					},
+					success: function(data, type, xhr) {
+						console.log('获取时间段', data);
 						var dataObj = {};
-						if(data.code == 0){
-							if(data.content && data.content.length){
+						if(data.code == 0) {
+							if(data.content && data.content.length) {
 								var cityData = [];
-								mui.each(data.content,function(index,item){
-									var  eachday = {};
+								mui.each(data.content, function(index, item) {
+									var eachday = {};
 									eachday.children = [];
 									eachday.text = item.day;
-									mui.each(item.deliveryTime,function(index2,item2){
-										eachday.children.push({'text':item2})
+									mui.each(item.deliveryTime, function(index2, item2) {
+										eachday.children.push({
+											'text': item2
+										})
 									})
 									cityData.push(eachday)
-	                        		})
-								console.log('cityData ',cityData);
+								})
+								console.log('cityData ', cityData);
 								var cityPicker = new mui.PopPicker({
 									layer: 2
 								});
@@ -495,7 +579,7 @@
 								var cityResult = document.getElementById('cityResult');
 								cityResult.addEventListener('tap', function(event) {
 									cityPicker.show(function(items) {
-										$('#cityResult').attr('data-id','1')
+										$('#cityResult').attr('data-id', '1')
 										$('#cityResult span').html(items[0].text + " " + items[1].text)
 										//返回 false 可以阻止选择框的关闭
 										//return false;
@@ -504,56 +588,19 @@
 								//-----------------------------------------
 							}
 							plus.nativeUI.closeWaiting();
-						}else{
+						} else {
 							mui.toast(data.message);
 							plus.nativeUI.closeWaiting();
-							
+
 						}
 					},
-					error:function(xhr,type,errorThrown){
+					error: function(xhr, type, errorThrown) {
 						console.log('响应失败  !');
 						plus.nativeUI.closeWaiting();
-						
+
 					}
 				});
 			}
-		
-			//券
-			$(".checkQuan").click(function() {
-					  
-				var qid = $(this).attr("data-id");
-				var qminus = $(this).attr("data-minus");
-				$(this).siblings().find(".quanc").css("display", "none");
-				quan = 0;
-				if($(this).find(".quanc").css("display") == "block") {
-					$(this).find(".quanc").css("display", "none");
-					$("#minuMoney").html(0);
-					$(".minuMoney").css("display", "none");
-
-				} else {
-					$(this).find(".quanc").css("display", "block");
-					if(qid == 1) {
-						quan = parseFloat(qminus)
-					}
-					if(qid == 2) {
-						quan = parseFloat(allGroup * (1 - parseFloat(qminus))).toFixed(2);
-					}
-					$("#minuMoney").html(quan);
-					$(".minuMoney").css("display", "inline-block");
-
-				};
-			})
-			
-			window.addEventListener('refresh', function(event) {
-				cartload();
-			});
-
-			cartload();
-
-			function cartload() {
-
-			}
-
 		})
 
 		Array.prototype.unique1 = function() {
