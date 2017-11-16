@@ -63,10 +63,9 @@
 	"plus": {
 		"launchwebview": {
 			"statusbar":{
-			"background":"#fff",
-			"immersed": true
-			}
-			,
+				"immersed": true,
+				"style": "dark"
+			},
 			"bottom": "0px",
 			"background": "#fff",
 			"subNViews": [
@@ -565,7 +564,8 @@
 					"page/order/pzOrder.html",
 					"page/order/pzOrderTest.html",
 					"page/order/chooseCustom2.html",
-					"nview.html"
+					"nview.html",
+					"quicklyOrder.html"
 				],
 				"priority": 0
 			},
@@ -728,7 +728,9 @@
 					"page/worker/wmaterialCheckList.html",
 					"page/worker/workerlistCheck.html",
 					"page/history.html",
-					"page/order/pzOrder.html"
+					"page/order/pzOrder.html",
+					"page/wallet.html",
+					"page/personal/lebi.html"
 				],
 				"priority": 0
 			},
@@ -1321,7 +1323,9 @@
 					"js/default.js",
 					"js/artTemplate-native.js"
 				],
-				"refer": [],
+				"refer": [
+					"page/personal/address.html"
+				],
 				"priority": 0
 			},
 			"page/order/pzOrderTest.html": {
@@ -1482,6 +1486,15 @@
 				"resources": [],
 				"refer": [
 					"page/goodsInfo.html"
+				],
+				"priority": 0
+			},
+			"quicklyOrder.html": {
+				"resources": [],
+				"refer": [
+					"page/ofenBuy.html",
+					"page/personal/collect.html",
+					"page/order/pzOrder.html"
 				],
 				"priority": 0
 			}

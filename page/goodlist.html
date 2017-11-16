@@ -97,7 +97,6 @@
 				
 			}
 			mui.plusReady(function(){
-				
 				var categoryCode = plus.webview.currentWebview().ctid;
 				var pageFrom = plus.webview.currentWebview().page;
 				if(pageFrom == 1){
@@ -349,13 +348,13 @@
 													}
 												});
 											}else{
-												mui.confirm('确认删除这件商品吗？', '提示', ['取消', '确定'], function(e) {
+												mui.confirm('狠心不要了咩？', '提示', ['取消', '确定'], function(e) {
 													if(e.index == 1) {
-														mui.ajax(serverUrl + '/app/materialList/delete', {
+														mui.ajax(serverUrl + '/app/materialList/goods/delete', {
 															data: {
 																userId: userId,
 																identityType: identityT,
-																materialListIds: goodsid,
+																goodsIdArray: goodsid,
 															},
 															dataType: 'json',
 															headers: {
@@ -367,7 +366,6 @@
 																plus.nativeUI.closeWaiting();
 																console.log('删除', data);
 																if(data.code == 0) {
-																	alert(1)
 																	mui.fire(plus.webview.getWebviewById('cart.html'), 'refresh');
 																} else {
 																	mui.toast(data.message)

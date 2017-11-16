@@ -182,34 +182,6 @@
 			
 		}
 		mui.plusReady(function() {
-			//自动弹出输入法
-//			var nativeWebview, imm, InputMethodManager;
-//			var initNativeObjects = function() {
-//				if(mui.os.android) {
-//					var main = plus.android.runtimeMainActivity();
-//					var Context = plus.android.importClass("android.content.Context");
-//					InputMethodManager = plus.android.importClass("android.view.inputmethod.InputMethodManager");
-//					imm = main.getSystemService(Context.INPUT_METHOD_SERVICE);
-//				} else {
-//					nativeWebview = plus.webview.currentWebview().nativeInstanceObject();
-//				}
-//			};
-//			var showSoftInput = function() {
-//				if(mui.os.android) {
-//					imm.toggleSoftInput(0, InputMethodManager.SHOW_FORCED);
-//				} else {
-//					nativeWebview.plusCallMethod({
-//						"setKeyboardDisplayRequiresUserAction": false
-//					});
-//				}
-//				//此处可写具体逻辑设置获取焦点的input
-//				setTimeout(function() {
-//					var inputElem = document.getElementsByClassName('fsearch')[0];
-//					inputElem.focus();
-//				}, 0);
-//			};
-//			initNativeObjects();
-//			showSoftInput();
 			//缓存记录
 			var searchCircleStorage = JSON.parse(plus.storage.getItem("$searchCircleStorage") || '[]');
 			//缓存记录 渲染
@@ -319,38 +291,77 @@
 									//数量选择 -> 加入购物车
 									$('.mui-numbox input').on('change', function() {
 										plus.nativeUI.showWaiting();
+										var cur = $(this);
 										var number = $(this).val(); //当前数量
 										var goodsid = $(this).attr("data-id"); //当前商品id
-										var goodsList = [{'id':goodsid,'qty':number}];
-										
-										mui.ajax(serverUrl + '/app/materialList/edit/batch', {
-											data: {
-												userId: userId,
-												identityType: identityT,
-												goodsList: JSON.stringify(goodsList),
-											},
-											dataType: 'json',
-											headers: {
-												"Authorization": oldToken
-											},
-											type: 'post',
-											timeout: 10000,
-											success: function(data, type, xhr) {
-												plus.nativeUI.closeWaiting();
-												console.log('加入购物车', data);
-												if(data.code == 0) {
-													plus.nativeUI.toast('加入成功')			
-													mui.fire(plus.webview.getWebviewById('cart.html'), 'refresh');
-												} else {
-													mui.toast(data.message)
+										if(number>0){
+											var goodsList = [{'id':goodsid,'qty':number}];
+											mui.ajax(serverUrl + '/app/materialList/edit/batch', {
+												data: {
+													userId: userId,
+													identityType: identityT,
+													goodsList: JSON.stringify(goodsList),
+												},
+												dataType: 'json',
+												headers: {
+													"Authorization": oldToken
+												},
+												type: 'post',
+												timeout: 10000,
+												success: function(data, type, xhr) {
+													plus.nativeUI.closeWaiting();
+													console.log('加入购物车', data);
+													if(data.code == 0) {
+														plus.nativeUI.toast('加入成功')			
+														mui.fire(plus.webview.getWebviewById('cart.html'), 'refresh');
+													} else {
+														mui.toast(data.message)
+													}
+			
+												},
+												error: function(xhr, type, errorThrown) {
+													plus.nativeUI.closeWaiting();
+													console.log('登录响应失败');
 												}
-		
-											},
-											error: function(xhr, type, errorThrown) {
-												plus.nativeUI.closeWaiting();
-												console.log('登录响应失败');
-											}
-										});
+											});
+										}else{
+											mui.confirm('狠心不要了咩？', '提示', ['取消', '确定'], function(e) {
+												if(e.index == 1) {
+													mui.ajax(serverUrl + '/app/materialList/goods/delete', {
+														data: {
+															userId: userId,
+															identityType: identityT,
+															goodsIdArray: goodsid,
+														},
+														dataType: 'json',
+														headers: {
+															"Authorization": oldToken
+														},
+														type: 'post',
+														timeout: 10000,
+														success: function(data, type, xhr) {
+															plus.nativeUI.closeWaiting();
+															console.log('删除', data);
+															if(data.code == 0) {
+																mui.fire(plus.webview.getWebviewById('cart.html'), 'refresh');
+															} else {
+																mui.toast(data.message)
+															}
+			
+														},
+														error: function(xhr, type, errorThrown) {
+															plus.nativeUI.closeWaiting();
+														}
+													});
+												}else{
+													plus.nativeUI.closeWaiting();
+													cur.val(1);	
+													cur.siblings().removeAttr('disabled'); 
+												}
+			
+											})
+										}
+										
 									})
 									
 									function addCart(goodid,num,cur){

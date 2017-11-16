@@ -6,32 +6,35 @@
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<title>首页</title>
 		<link href="css/mui.min.css" rel="stylesheet" />
-		<link rel="stylesheet" type="text/css" href="css/configW.css"/>
+		<link rel="stylesheet" type="text/css" href="css/configW.css" />
+		<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/mui.min.js"></script>
+		<script src="js/util.js"></script>
 		<style>
 			html,
 			body {
 				background-color: #efeff4;
 			}
-
+			
 			.title {
 				margin: 20px 15px 10px;
 				color: #6d6d72;
 				font-size: 15px;
 			}
-
+			
 			ul {
 				font-size: 14px;
 				color: #8f8f94;
 			}
-
+			
 			.mui-btn {
 				padding: 10px;
 			}
-
+			
 			.mui-placeholder span {
 				color: #333333;
 			}
-
+			
 			.flexw,
 			.flexws {
 				display: flex;
@@ -41,7 +44,7 @@
 				margin-top: 15px;
 				font-size: 14px
 			}
-
+			
 			.flexw img,
 			.flexws img {
 				display: block;
@@ -49,7 +52,7 @@
 				height: 30px;
 				margin: auto;
 			}
-
+			
 			.ltac .imgb {
 				margin: 5px auto;
 				width: 60px;
@@ -57,258 +60,294 @@
 				padding: 15px;
 				border-radius: 50%;
 			}
-
+			
 			.mui-table-view:after,
 			.mui-table-view:before,
 			.mui-table-view-cell:after,
 			.mui-table-view-cell:before {
 				height: 0!important;
 			}
-		.qashadow{margin-bottom: 5px;background-color: white;padding:10px}
-		.qbot{margin-top: 10px;line-height: 1.3;}
-		.Avator{width: 70px!important;height: 70px!important;}
-		.qaimg img{margin-right:5px;width:0.6rem;height:0.6rem;border-radius:3px;margin-top: 10px;}
-		.upload{padding: 20px;text-align: center;}
+			
+			.qashadow {
+				margin-bottom: 5px;
+				background-color: white;
+				padding: 10px
+			}
+			
+			.qbot {
+				margin-top: 10px;
+				line-height: 1.3;
+			}
+			
+			.Avator {
+				width: 70px!important;
+				height: 70px!important;
+			}
+			
+			.qaimg img {
+				margin-right: 5px;
+				width: 0.6rem;
+				height: 0.6rem;
+				border-radius: 3px;
+				margin-top: 10px;
+			}
+			
+			.upload {
+				padding: 20px;
+				text-align: center;
+			}
 		</style>
 	</head>
 
 	<body>
-
-			<div style="position: relative;">
-				<div class="mui-slider">
-					<div class="mui-slider-group mui-slider-loop">
-						<!--支持循环，需要重复图片节点-->
-						<div class="mui-slider-item mui-slider-item-duplicate">
-							<a href="#"><img src="https://b-ssl.duitang.com/uploads/item/201610/11/20161011213437_HeKXZ.thumb.700_0.jpeg" /></a>
-						</div>
-						<div class="mui-slider-item">
-							<a href="#"><img src="https://b-ssl.duitang.com/uploads/item/201610/11/20161011213437_HeKXZ.thumb.700_0.jpeg" /></a>
-						</div>
-						<div class="mui-slider-item">
-							<a href="#"><img src="https://b-ssl.duitang.com/uploads/item/201610/11/20161011213437_HeKXZ.thumb.700_0.jpeg" /></a>
-						</div>
-						<div class="mui-slider-item">
-							<a href="#"><img src="https://b-ssl.duitang.com/uploads/item/201610/11/20161011213437_HeKXZ.thumb.700_0.jpeg" /></a>
-						</div>
-						<div class="mui-slider-item">
-							<a href="#"><img src="https://b-ssl.duitang.com/uploads/item/201610/11/20161011213437_HeKXZ.thumb.700_0.jpeg" /></a>
-						</div>
-						<!--支持循环，需要重复图片节点-->
-						<div class="mui-slider-item mui-slider-item-duplicate">
-							<a href="#"><img src="https://b-ssl.duitang.com/uploads/item/201610/11/20161011213437_HeKXZ.thumb.700_0.jpeg" /></a>
-						</div>
+		<header class="mui-row mui-bar mui-bar-transparent hasManyCity" id="header" style="z-index: 200;">
+			<div class="searchBox" onclick="goSearch()" style="z-index:1;position: absolute;top: 7px;left: 20px;right: 20px;">
+				<div style="background-color: rgba(0,0,0,0.1);font-size: 12px;height: 30px;width: 100%;border-radius: 5px;text-align: center;line-height: 30px;">
+					<span class="mui-icon mui-icon-search" style="vertical-align: middle;font-size:20px;padding-top: 7px;"></span>
+				</div>
+			</div>
+		</header>
+		<!--状态栏开始-->
+		<style type="text/css" id="headStyle"></style>
+		<div id="sBar" style="background-color: #FFFFFF;position: fixed;width:100%;top: 0;z-index: 9999"></div>
+		<script type="text/javascript">
+			var immersed = 0;
+			var ms = (/Html5Plus\/.+\s\(.*(Immersed\/(\d+\.?\d*).*)\)/gi).exec(navigator.userAgent);
+			if(ms && ms.length >= 3) { // 当前环境为沉浸式状态栏模式
+				immersed = parseFloat(ms[2]); // 获取状态栏的高度
+			}
+			var headdiv = document.getElementById('header'); //这是现有的header
+			var headH = parseInt(immersed) + parseInt(headdiv.offsetHeight);
+			document.getElementById('headStyle').innerHTML = '.headI{height: ' + headH + 'px !important;} .hasManyCity .searchBox{top:' + immersed + 'px} .qrcodeBtn{top:' + immersed + 'px}';
+			headdiv.className += " headI";
+			headdiv.style.paddingTop = immersed + "px";
+		</script>
+		<div style="position: relative;">
+			<div class="mui-slider">
+				<div class="mui-slider-group mui-slider-loop">
+					<!--支持循环，需要重复图片节点-->
+					<div class="mui-slider-item mui-slider-item-duplicate">
+						<a href="#"><img src="https://b-ssl.duitang.com/uploads/item/201610/11/20161011213437_HeKXZ.thumb.700_0.jpeg" /></a>
+					</div>
+					<div class="mui-slider-item">
+						<a href="#"><img src="https://b-ssl.duitang.com/uploads/item/201610/11/20161011213437_HeKXZ.thumb.700_0.jpeg" /></a>
+					</div>
+					<div class="mui-slider-item">
+						<a href="#"><img src="https://b-ssl.duitang.com/uploads/item/201610/11/20161011213437_HeKXZ.thumb.700_0.jpeg" /></a>
+					</div>
+					<div class="mui-slider-item">
+						<a href="#"><img src="https://b-ssl.duitang.com/uploads/item/201610/11/20161011213437_HeKXZ.thumb.700_0.jpeg" /></a>
+					</div>
+					<div class="mui-slider-item">
+						<a href="#"><img src="https://b-ssl.duitang.com/uploads/item/201610/11/20161011213437_HeKXZ.thumb.700_0.jpeg" /></a>
+					</div>
+					<!--支持循环，需要重复图片节点-->
+					<div class="mui-slider-item mui-slider-item-duplicate">
+						<a href="#"><img src="https://b-ssl.duitang.com/uploads/item/201610/11/20161011213437_HeKXZ.thumb.700_0.jpeg" /></a>
 					</div>
 				</div>
-				<div class="" onclick="goSearch()" style="z-index:1;position: absolute;top: 10px;left: 20px;right: 20px;">
-					<div style="background-color: rgba(0,0,0,0.1);font-size: 12px;height: 30px;width: 100%;border-radius: 5px;text-align: center;line-height: 30px;">
-						<span class="mui-icon mui-icon-search" style="vertical-align: middle;font-size:20px;"></span><span>搜索</span>
-					</div>
-					<!--<input type="search" readonly="" class="mui-input-clear" placeholder="搜索" style="color:#333333;font-size: 12px;">-->
-				</div>
 			</div>
-			<div class="mui-content flexw">
-				<div data-id="water">
-					<img src="images/s.svg" alt="" /> 水
-				</div>
-				<div data-id="electric">
-					<img src="images/d.svg" alt="" />电
-				</div>
-				<div data-id="wood">
-					<img src="images/m.svg" alt="" />木
-				</div>
-				<div data-id="tile">
-					<img src="images/w.svg" alt="" />瓦
-				</div>
-				<div data-id="oil">
-					<img src="images/y.svg" alt="" />油
-				</div>
+		</div>
+		<div class="mui-content flexw">
+			<div data-id="water">
+				<img src="images/s.svg" alt="" /> 水
 			</div>
-			<div style="text-align:center;padding:20px 10px 0" onclick="tonview()">
-				<img style="vertical-align:middle;margin:0 5px;width:25px" src="images/activity.svg" />最新活动
+			<div data-id="electric">
+				<img src="images/d.svg" alt="" />电
 			</div>
+			<div data-id="wood">
+				<img src="images/m.svg" alt="" />木
+			</div>
+			<div data-id="tile">
+				<img src="images/w.svg" alt="" />瓦
+			</div>
+			<div data-id="oil">
+				<img src="images/y.svg" alt="" />油
+			</div>
+		</div>
+		<div style="text-align:center;padding:20px 10px 0">
+			<img style="vertical-align:middle;margin:0 5px;width:25px" src="images/activity.svg" />最新活动
+		</div>
 
-			<!--顾客 和 项目经理-->
-			<div class="mui-content flexws ltac cusMan">
-				<div id="">
-					<div class="imgb" style="background-color:#7dc5eb"><img src="images/1.svg" alt="" /></div>快捷下单
-				</div>
-				<div class="gxb">
-					<div class="imgb" style="background-color:#be8dbd"><img src="images/2.svg" alt="" /></div>工序包下单
-				</div>
-				<div id="paizhaoOrder" onclick="paizhaoOrder()">
-					<div class="imgb" style="background-color:#7cba59"><img src="images/3.svg" alt="" /></div>拍照下单
-				</div>
-				<div onclick="goCollect()">
-					<div class="imgb" style="background-color:#ea986c"><img src="images/4.svg" alt="" /></div>我的收藏
-				</div>
+		<!--顾客 和 项目经理-->
+		<div class="mui-content flexws ltac cusMan">
+			<div id="">
+				<div class="imgb" style="background-color:#7dc5eb"><img src="images/1.svg" alt="" /></div>快捷下单
 			</div>
-			<div class="mui-content flexws ltac cusMan">
-				<div>
-					<div class="imgb" style="background-color:#e8989a"><img src="images/5.svg" alt="" /></div>物流
-				</div>
-				<div>
-					<div class="imgb" style="background-color:#8992c8"><img src="images/6.svg" alt="" /></div>签到
-				</div>
-				<div onclick="wallet()">
-					<div class="imgb" style="background-color:#199f97"><img src="images/7.svg" alt="" /></div>钱包
-				</div>
-				<div id="">
-					<div class="imgb" style="background-color:#e15d4b"><img src="images/8.svg" alt="" /></div>咨询
-				</div>
+			<div class="gxb">
+				<div class="imgb" style="background-color:#be8dbd"><img src="images/2.svg" alt="" /></div>工序包下单
 			</div>
-			<!--工人-->
-			<div class="mui-content flexws ltac worker" style="display: ;">
-				<div id="">
-					<div class="imgb" style="background-color:#7dc5eb"><img src="images/1.svg" alt="" /></div>快捷下单
-				</div>
-				<div class="gxb">
-					<div class="imgb" style="background-color:#be8dbd"><img src="images/2.svg" alt="" /></div>工序包下单
-				</div>
-				<div id="paizhaoOrder" onclick="paizhaoOrder()">
-					<div class="imgb" style="background-color:#7cba59"><img src="images/3.svg" alt="" /></div>拍照下单
-				</div>
-
+			<div id="paizhaoOrder" onclick="paizhaoOrder()">
+				<div class="imgb" style="background-color:#7cba59"><img src="images/3.svg" alt="" /></div>拍照下单
 			</div>
-			<div class="mui-content flexws ltac worker" style="display: ;">
-				<div onclick="goCollect()">
-					<div class="imgb" style="background-color:#ea986c"><img src="images/4.svg" alt="" /></div>我的收藏
-				</div>
-				<div>
-					<div class="imgb" style="background-color:#e8989a"><img src="images/5.svg" alt="" /></div>物流
-				</div>
-				<div id="">
-					<div class="imgb" style="background-color:#e15d4b"><img src="images/8.svg" alt="" /></div>咨询
-				</div>
+			<div onclick="goCollect()">
+				<div class="imgb" style="background-color:#ea986c"><img src="images/4.svg" alt="" /></div>我的收藏
+			</div>
+		</div>
+		<div class="mui-content flexws ltac cusMan">
+			<div>
+				<div class="imgb" style="background-color:#e8989a"><img src="images/5.svg" alt="" /></div>物流
+			</div>
+			<div>
+				<div class="imgb" style="background-color:#8992c8"><img src="images/6.svg" alt="" /></div>签到
+			</div>
+			<div onclick="wallet()">
+				<div class="imgb" style="background-color:#199f97"><img src="images/7.svg" alt="" /></div>钱包
+			</div>
+			<div id="">
+				<div class="imgb" style="background-color:#e15d4b"><img src="images/8.svg" alt="" /></div>咨询
+			</div>
+		</div>
+		<!--工人-->
+		<div class="mui-content flexws ltac worker" style="display: ;">
+			<div id="">
+				<div class="imgb" style="background-color:#7dc5eb"><img src="images/1.svg" alt="" /></div>快捷下单
+			</div>
+			<div class="gxb">
+				<div class="imgb" style="background-color:#be8dbd"><img src="images/2.svg" alt="" /></div>工序包下单
+			</div>
+			<div id="paizhaoOrder" onclick="paizhaoOrder()">
+				<div class="imgb" style="background-color:#7cba59"><img src="images/3.svg" alt="" /></div>拍照下单
 			</div>
 
-			<!--导购-->
-			<div class="mui-content flexws ltac guides" style="display: ;">
-				<div id="">
-					<div class="imgb" style="background-color:#7dc5eb"><img src="images/1.svg" alt="" /></div>快捷下单
-				</div>
-				<div class="gxb">
-					<div class="imgb" style="background-color:#be8dbd"><img src="images/2.svg" alt="" /></div>工序包下单
-				</div>
-				<div id="paizhaoOrder" onclick="paizhaoOrder()">
-					<div class="imgb" style="background-color:#7cba59"><img src="images/3.svg" alt="" /></div>拍照下单
-				</div>
-				<div>
-					<div class="imgb" style="background-color:#e8989a"><img src="images/5.svg" alt="" /></div>物流
-				</div>
-
+		</div>
+		<div class="mui-content flexws ltac worker" style="display: ;">
+			<div onclick="goCollect()">
+				<div class="imgb" style="background-color:#ea986c"><img src="images/4.svg" alt="" /></div>我的收藏
 			</div>
-			<div class="mui-content flexws ltac guides" style="display: ;">
-				<div>
-					<div class="imgb" style="background-color:#8992c8"><img src="images/6.svg" alt="" /></div>未提货
-				</div>
-				<div onclick="guideCredit()">
-					<div class="imgb" style="background-color:#8992c8"><img src="images/6.svg" alt="" /></div>信用额度
-				</div>
-				<div id="">
-					<div class="imgb" style="background-color:#199f97"><img src="images/7.svg" alt="" /></div>欠款查询
-				</div>
-				<div id="">
-					<div class="imgb" style="background-color:#e15d4b"><img src="images/8.svg" alt="" /></div>欠款审核
-				</div>
+			<div>
+				<div class="imgb" style="background-color:#e8989a"><img src="images/5.svg" alt="" /></div>物流
+			</div>
+			<div id="">
+				<div class="imgb" style="background-color:#e15d4b"><img src="images/8.svg" alt="" /></div>咨询
+			</div>
+		</div>
+
+		<!--导购-->
+		<div class="mui-content flexws ltac guides" style="display: ;">
+			<div id="">
+				<div class="imgb" style="background-color:#7dc5eb"><img src="images/1.svg" alt="" /></div>快捷下单
+			</div>
+			<div class="gxb">
+				<div class="imgb" style="background-color:#be8dbd"><img src="images/2.svg" alt="" /></div>工序包下单
+			</div>
+			<div id="paizhaoOrder" onclick="paizhaoOrder()">
+				<div class="imgb" style="background-color:#7cba59"><img src="images/3.svg" alt="" /></div>拍照下单
+			</div>
+			<div>
+				<div class="imgb" style="background-color:#e8989a"><img src="images/5.svg" alt="" /></div>物流
 			</div>
 
-			<!--常购清单-->
-			<div style="text-align:center;padding:20px 10px" id='oftenbuy'>
-				常购清单
-				<span style="float:right;font-size:12px" onclick="goOftenList()">更多</span>
+		</div>
+		<div class="mui-content flexws ltac guides" style="display: ;">
+			<div>
+				<div class="imgb" style="background-color:#8992c8"><img src="images/6.svg" alt="" /></div>未提货
 			</div>
-
-			<!--商品列表-->
-			<div class="goodsList" id="goodsList"></div>
-			<div style="height: 50px;width: 100%;clear: both;"></div>
-
-			<script type="text/html" id="goodsTpl">
-				<ul class="mui-table-view">
-					<%for(var i = 0 ;i<list.length;i++){%>
-					<li style="width:50%!important;float:left;border:none" class="mui-table-view-cell mui-media" id="<%=list[i].id%>" onclick="goodsInfo(<%=list[i].id%>)">
-						<a href="javascript:;">
-							<img class="mui-media-object" style="display:block!important;width:100%!important;max-width:none;height:auto" src="<%=list[i].coverImageUri%>">
-							<br>
-							<div class="mui-media-body" style="font-size:12px">
-								<%=list[i].goodsName%>
-								<p class='mui-ellipsis'>规格:
-									<%=list[i].goodsSpecification%> &nbsp;单位:
-									<%=list[i].goodsUnit%>
-								</p>
-								<span>￥<%=list[i].retailPrice%></span>
-								<img style="display:inline-block;float:right;margin-left:5px;vertical-align:middle;width:20px" onclick="addcart(<%=list[i].id%>)" src="images/addcart.svg" />
-
-							</div>
-						</a>
-					</li>
-					<%}%>
-				</ul>
-			</script>
-
-			<div style="text-align:center;padding:20px 10px">
-				热门商品
-				<span style="float:right;font-size:12px" onclick="goHotList()">更多</span>
+			<div onclick="guideCredit()">
+				<div class="imgb" style="background-color:#8992c8"><img src="images/6.svg" alt="" /></div>信用额度
 			</div>
-			<!--商品列表-->
-			<div class="goodsList" id="goodsListHot"></div>
-			<div style="height: 50px;width: 100%;clear: both;"></div>
-
-			<script type="text/html" id="goodsHotTpl">
-				<ul class="mui-table-view" style="border-top: none!important;">
-					<%for(var i = 0 ;i<list.length;i++){%>
-					<li class="mui-table-view-cell mui-media" id="<%=list[i].id%>" onclick="goodsInfo(<%=list[i].id%>)" style="width:50%!important;float:left;border:none!important">
-						<a href="javascript:;" style="border-top: none!important;">
-							<img class="mui-media-object" style="display:block!important;width:100%!important;max-width:none;height:auto" src="<%=list[i].coverImageUri%>">
-							<br>
-							<div class="mui-media-body" style="font-size:12px">
-								<%=list[i].goodsName%>
-								<p class='mui-ellipsis'>规格:
-									<%=list[i].goodsSpecification%> &nbsp;单位:
-									<%=list[i].goodsUnit%>
-								</p>
-								<span>￥<%=list[i].retailPrice%></span>
-								<img style="display:inline-block;float:right;margin-left:5px;vertical-align:middle;width:20px" onclick="addcart(<%=list[i].id%>)" src="images/addcart.svg" />
-
-							</div>
-						</a>
-					</li>
-
-					<%}%>
-				</ul>
-			</script>
-
-			<div style="text-align:center;padding:20px 10px">
-				乐易装商学院
-				<span style="float:right;font-size:12px" onclick="tradeLists()">更多</span>
+			<div id="">
+				<div class="imgb" style="background-color:#199f97"><img src="images/7.svg" alt="" /></div>欠款查询
 			</div>
-			<div id="tradeList"></div>
-			<script type="text/html" id="tradeTpl">
-				<%for(var i=0;i<dataList.length;i++){%>
-					<div class="qashadow" data-id="<%=dataList[i].id%>" onclick="openDetail(<%=dataList[i].id%>)">
-						<div class="qtop flexr">
-							<div class="ft16" style="display: flex;align-items: center;">
-								<img class="Avator" src="<%=dataList[i].pic%>"/>
+			<div id="">
+				<div class="imgb" style="background-color:#e15d4b"><img src="images/8.svg" alt="" /></div>欠款审核
+			</div>
+		</div>
 
-								<div style="flex: 1;margin-left: 10px;">
-									<div class="maincl ft16">
-										<span class=""><%=dataList[i].title%></span>
-									</div>
-									<div class="ft12">
-										<span class="disablecl">阅读量：<%=dataList[i].read%> 时间：<%=dataList[i].createTime%></span>
-									</div>
-								</div>
-							</div>
+		<!--常购清单-->
+		<div style="text-align:center;padding:20px 10px" id='oftenbuy'>
+			常购清单
+			<span style="float:right;font-size:12px" onclick="goOftenList()">更多</span>
+		</div>
 
-						</div>
-					</div>
-				<%}%>
-			</script>
-		<div class="upload text-center text-xs gray" id="upload"></div>
-
+		<!--商品列表-->
+		<div class="goodsList" id="goodsList"></div>
 		<div style="height: 50px;width: 100%;clear: both;"></div>
-		<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
-		<script src="js/mui.min.js"></script>
-		<script src="js/util.js"></script>
+
+		<script type="text/html" id="goodsTpl">
+			<ul class="mui-table-view">
+				<%for(var i = 0 ;i<list.length;i++){%>
+				<li style="width:50%!important;float:left;border:none" class="mui-table-view-cell mui-media" id="<%=list[i].id%>" onclick="goodsInfo(<%=list[i].id%>)">
+					<a href="javascript:;">
+						<img class="mui-media-object" style="display:block!important;width:100%!important;max-width:none;height:auto" src="<%=list[i].coverImageUri%>">
+						<br>
+						<div class="mui-media-body" style="font-size:12px">
+							<%=list[i].goodsName%>
+							<p class='mui-ellipsis'>规格:
+								<%=list[i].goodsSpecification%> &nbsp;单位:
+								<%=list[i].goodsUnit%>
+							</p>
+							<span>￥<%=list[i].retailPrice%></span>
+							<img style="display:inline-block;float:right;margin-left:5px;vertical-align:middle;width:20px" onclick="addcart(<%=list[i].id%>)" src="images/addcart.svg" />
+
+						</div>
+					</a>
+				</li>
+				<%}%>
+			</ul>
+		</script>
+
+		<div style="text-align:center;padding:20px 10px">
+			热门商品
+			<span style="float:right;font-size:12px" onclick="goHotList()">更多</span>
+		</div>
+		<!--商品列表-->
+		<div class="goodsList" id="goodsListHot"></div>
+		<div style="height: 50px;width: 100%;clear: both;"></div>
+
+		<script type="text/html" id="goodsHotTpl">
+			<ul class="mui-table-view" style="border-top: none!important;">
+				<%for(var i = 0 ;i<list.length;i++){%>
+				<li class="mui-table-view-cell mui-media" id="<%=list[i].id%>" onclick="goodsInfo(<%=list[i].id%>)" style="width:50%!important;float:left;border:none!important">
+					<a href="javascript:;" style="border-top: none!important;">
+						<img class="mui-media-object" style="display:block!important;width:100%!important;max-width:none;height:auto" src="<%=list[i].coverImageUri%>">
+						<br>
+						<div class="mui-media-body" style="font-size:12px">
+							<%=list[i].goodsName%>
+							<p class='mui-ellipsis'>规格:
+								<%=list[i].goodsSpecification%> &nbsp;单位:
+								<%=list[i].goodsUnit%>
+							</p>
+							<span>￥<%=list[i].retailPrice%></span>
+							<img style="display:inline-block;float:right;margin-left:5px;vertical-align:middle;width:20px" onclick="addcart(<%=list[i].id%>)" src="images/addcart.svg" />
+
+						</div>
+					</a>
+				</li>
+
+				<%}%>
+			</ul>
+		</script>
+
+		<div style="text-align:center;padding:20px 10px">
+			乐易装商学院
+			<span style="float:right;font-size:12px" onclick="tradeLists()">更多</span>
+		</div>
+		<div id="tradeList"></div>
+		<script type="text/html" id="tradeTpl">
+			<%for(var i=0;i<dataList.length;i++){%>
+			<div class="qashadow" data-id="<%=dataList[i].id%>" onclick="openDetail(<%=dataList[i].id%>)">
+				<div class="qtop flexr">
+					<div class="ft16" style="display: flex;align-items: center;">
+						<img class="Avator" src="<%=dataList[i].pic%>" />
+
+						<div style="flex: 1;margin-left: 10px;">
+							<div class="maincl ft16">
+								<span class=""><%=dataList[i].title%></span>
+							</div>
+							<div class="ft12">
+								<span class="disablecl">阅读量：<%=dataList[i].read%> 时间：<%=dataList[i].createTime%></span>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+			<%}%>
+		</script>
+		<div class="upload text-center text-xs gray" id="upload"></div>
+		<div style="height: 50px;width: 100%;clear: both;"></div>
+		
 		<script src="js/artTemplate-native.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/app.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/default.js" type="text/javascript" charset="utf-8"></script>
@@ -319,10 +358,13 @@
 			});
 
 			mui.plusReady(function() {
-//				plus.storage.clear();
+				plus.navigator.setStatusBarBackground('#f7f7f7');
+				// 设置系统状态栏样式为深色前景色样式
+				plus.navigator.setStatusBarStyle('dark');
+				//				plus.storage.clear();
 				//获取购物车数量
 				var cartNum = plus.storage.getItem('cartNums') || 0;
-				
+
 				document.addEventListener('cart_refresh', function() {
 					//获取购物车数量
 					cartNum = plus.storage.getItem('cartNums');
@@ -332,72 +374,112 @@
 					//底部选项卡切换
 					util.toggleNview(3);
 				})
-				
+
 				var self = plus.webview.currentWebview(),
 					leftPos = Math.ceil((window.innerWidth - 60) / 2); // 设置凸起大图标为水平居中
 
-					/**	
-					 * drawNativeIcon 绘制带边框的半圆，
-					 * 实现原理：
-					 *   id为bg的tag 创建带边框的圆
-					 *   id为bg2的tag 创建白色矩形遮住圆下半部分，只显示凸起带边框部分
-					 * 	 id为iconBg的红色背景图
-					 *   id为icon的字体图标
-					 *   注意创建先后顺序，创建越晚的层级越高
-					 */
-					var drawNativeIcon = util.drawNative('icon', {
-						bottom: '5px',
-						left: leftPos + 'px',
-						width: '60px',
-						height: '60px'
+				/**	
+				 * drawNativeIcon 绘制带边框的半圆，
+				 * 实现原理：
+				 *   id为bg的tag 创建带边框的圆
+				 *   id为bg2的tag 创建白色矩形遮住圆下半部分，只显示凸起带边框部分
+				 * 	 id为iconBg的红色背景图
+				 *   id为icon的字体图标
+				 *   注意创建先后顺序，创建越晚的层级越高
+				 */
+				var drawNativeIcon = util.drawNative('icon', {
+					bottom: '5px',
+					left: leftPos + 'px',
+					width: '60px',
+					height: '60px'
+				}, [{
+					tag: 'rect',
+					id: 'bg',
+					position: {
+						top: '1px',
+						left: '0px',
+						width: '100%',
+						height: '100%'
+					},
+					rectStyles: {
+						color: '#fff',
+						radius: '50%',
+						borderColor: '#ccc',
+						borderWidth: '1px'
+					}
+				}, {
+					tag: 'rect',
+					id: 'bg2',
+					position: {
+						bottom: '-0.5px',
+						left: '0px',
+						width: '100%',
+						height: '45px'
+					},
+					rectStyles: {
+						color: '#fff'
+					}
+				}, {
+					tag: 'rect',
+					id: 'iconBg',
+					position: {
+						top: '5px',
+						left: '5px',
+						width: '50px',
+						height: '50px'
+					},
+					rectStyles: {
+						color: '#DA635D',
+						radius: '50%'
+					}
+				}, {
+					tag: 'font',
+					id: 'icon',
+					text: '去下单', //此为字体图标Unicode码'\e600'转换为'\ue600'
+					position: {
+						top: '0px',
+						left: '5px',
+						width: '50px',
+						height: '100%'
+					},
+					textStyles: {
+						align: 'center',
+						color: '#fff',
+						size: '10px'
+					}
+				}]);
+				// append 到父webview中
+				self.append(drawNativeIcon);
+				drawBadge();
+
+				function drawBadge() {
+					//绘制角标
+					var badge = util.drawNative('icon', {
+						bottom: '30px',
+						left: '68%',
+						width: '20px',
+						height: '15px'
 					}, [{
-						tag: 'rect',
-						id: 'bg',
-						position: {
-							top: '1px',
-							left: '0px',
-							width: '100%',
-							height: '100%'
-						},
-						rectStyles: {
-							color: '#fff',
-							radius: '50%',
-							borderColor: '#ccc',
-							borderWidth: '1px'
-						}
-					}, {
-						tag: 'rect',
-						id: 'bg2',
-						position: {
-							bottom: '-0.5px',
-							left: '0px',
-							width: '100%',
-							height: '45px'
-						},
-						rectStyles: {
-							color: '#fff'
-						}
-					}, {
 						tag: 'rect',
 						id: 'iconBg',
 						position: {
-							top: '5px',
-							left: '5px',
-							width: '50px',
-							height: '50px'
+							top: '0px',
+							left: '0px',
+							width: '20px',
+							height: '15px'
 						},
 						rectStyles: {
-							color: '#DA635D',
+							color: '#E73A38',
 							radius: '50%'
 						}
 					}, {
 						tag: 'font',
 						id: 'icon',
-						text: '去下单', //此为字体图标Unicode码'\e600'转换为'\ue600'
+						text: cartNum, //此为字体图标Unicode码'\e600'转换为'\ue600'
 						position: {
 							top: '0px',
-							left: '5px',
-							width: '50px',
+							left: '0px',
+							width: '100%',
 							height: '100%'
 						},
 						textStyles: {
@@ -407,137 +489,90 @@
 						}
 					}]);
 					// append 到父webview中
-					self.append(drawNativeIcon);
-					drawBadge();
-					function drawBadge(){
-						//绘制角标
-						var badge = util.drawNative('icon', {
-							bottom: '30px',
-							left: '68%',
-							width: '20px',
-							height: '15px'
-						}, [{
-							tag: 'rect',
-							id: 'iconBg',
-							position: {
-								top: '0px',
-								left: '0px',
-								width: '20px',
-								height: '15px'
-							},
-							rectStyles: {
-								color: '#E73A38',
-								radius: '50%'
-							}
-						}, {
-							tag: 'font',
-							id: 'icon',
-							text: cartNum, //此为字体图标Unicode码'\e600'转换为'\ue600'
-							position: {
-								top: '0px',
-								left: '0px',
-								width: '100%',
-								height: '100%'
-							},
-							textStyles: {
-								align: 'center',
-								color: '#fff',
-								size: '10px'
-							}
-						}]);
-						// append 到父webview中
-//						if(cartNum>0){
-							self.append(badge);
-//						}else{
-//							badge.hide();
-//						}
-						
-					}
-					
-					//自定义监听图标点击事件
-					var active_color = '#fff';
-					drawNativeIcon.addEventListener('click', function(e) {
-						// 重绘字体颜色
-						if(active_color == '#fff') {
-							drawNativeIcon.drawText('去下单', {}, {
-								align: 'center',
-								color: '#000',
-								size: '10px'
-							}, 'icon');
-							active_color = '#000';
-						} else {
-							drawNativeIcon.drawText('去下单', {}, {
-								align: 'center',
-								color: '#fff',
-								size: '10px'
-							}, 'icon');
-							active_color = '#fff';
-						}
+					//						if(cartNum>0){
+					self.append(badge);
+					//						}else{
+					//							badge.hide();
+					//						}
 
-					});
-					// 中间凸起图标绘制及监听点击完毕
+				}
 
-					// 创建子webview窗口 并初始化
-					var aniShow = {};
-					util.initSubpage(aniShow);
-					
-					var 	nview = plus.nativeObj.View.getViewById('tabBar'),
-						activePage = plus.webview.currentWebview(),
-						targetPage,
-						subpages = util.options.subpages,
-						pageW = window.innerWidth,
+				//自定义监听图标点击事件
+				var active_color = '#fff';
+				drawNativeIcon.addEventListener('click', function(e) {
+					mui.openWindow({
+					    url:'quicklyOrder.html',
+					    id:'quicklyOrder',
+					    styles:{
+					  	  	background:'transparent',
+					    },
+					    show:{
+					      aniShow:'slide-in-bottom',//页面显示动画，默认为”slide-in-right“；
+					    }
+					})
+				});
+				// 中间凸起图标绘制及监听点击完毕
+
+				// 创建子webview窗口 并初始化
+				var aniShow = {};
+				util.initSubpage(aniShow);
+
+				var nview = plus.nativeObj.View.getViewById('tabBar'),
+					activePage = plus.webview.currentWebview(),
+					targetPage,
+					subpages = util.options.subpages,
+					pageW = window.innerWidth,
+					currIndex = 0;
+
+				/**
+				 * 根据判断view控件点击位置判断切换的tab
+				 */
+				nview.addEventListener('click', function(e) {
+					var clientX = e.clientX;
+					if(clientX > 0 && clientX <= parseInt(pageW * 0.25)) {
 						currIndex = 0;
-					
-						
-					/**
-					 * 根据判断view控件点击位置判断切换的tab
-					 */
-					nview.addEventListener('click', function(e) {
-						var clientX = e.clientX;
-						if(clientX > 0 && clientX <= parseInt(pageW * 0.25)) {
-							currIndex = 0;
-						} else if(clientX > parseInt(pageW * 0.25) && clientX <= parseInt(pageW * 0.45)) {
-							currIndex = 1;
-						} else if(clientX > parseInt(pageW * 0.45) && clientX <= parseInt(pageW * 0.8)) {
-							currIndex = 2;
-						} else {
-							currIndex = 3;
-						}
-						// 匹配对应tab窗口	
-						if(currIndex > 0) {
-							targetPage = plus.webview.getWebviewById(subpages[currIndex - 1]);
-						} else {
-							targetPage = plus.webview.currentWebview();
-						}
+					} else if(clientX > parseInt(pageW * 0.25) && clientX <= parseInt(pageW * 0.45)) {
+						currIndex = 1;
+					} else if(clientX > parseInt(pageW * 0.45) && clientX <= parseInt(pageW * 0.8)) {
+						currIndex = 2;
+					} else {
+						currIndex = 3;
+					}
+					// 匹配对应tab窗口	
+					if(currIndex > 0) {
+						targetPage = plus.webview.getWebviewById(subpages[currIndex - 1]);
+					} else {
+						targetPage = plus.webview.currentWebview();
+					}
 
-						if(targetPage == activePage) {
-							return;
-						}
+					if(targetPage == activePage) {
+						return;
+					}
 
-						//底部选项卡切换
-						util.toggleNview(currIndex);
-						// 子页面切换
-						util.changeSubpage(targetPage, activePage, aniShow);
-						//更新当前活跃的页面
-						activePage = targetPage;
-					 
-					});
-		
+					//底部选项卡切换
+					util.toggleNview(currIndex);
+					// 子页面切换
+					util.changeSubpage(targetPage, activePage, aniShow);
+					//更新当前活跃的页面
+					activePage = targetPage;
+
+				});
+
 			});
 		</script>
 		<script>
-	        var Spagenum = 2; //实到页数
+			var Spagenum = 2; //实到页数
 			var Ypagenum = 1; //应到页数
-		 
-			function paizhaoOrder(){//拍照下单
-				mui.plusReady(function(){
+
+			function paizhaoOrder() { //拍照下单
+				mui.plusReady(function() {
 					var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
-					if(identityT == 0){//导购
+					if(identityT == 0) { //导购
 						openview({
 							view: 'page/order/chooseCustom2.html',
 							id: 'chooseCustom2',
 						})
-					}else{
+					} else {
 						openview({
 							view: 'page/order/pzOrder.html',
 							id: 'pzOrder',
@@ -545,8 +580,8 @@
 					}
 				})
 
-
 			}
+
 			function goSearch() {
 				openview({
 					view: 'page/searchGoods.html',
@@ -568,7 +603,7 @@
 				})
 			}
 
-			function tradeLists(){
+			function tradeLists() {
 				openview({
 					view: 'page/tradeList.html',
 					id: 'tradeList',
@@ -582,7 +617,7 @@
 				})
 			}
 			//钱包
-			function wallet(){
+			function wallet() {
 				openview({
 					view: 'page/wallet.html',
 					id: 'wallet',
@@ -606,7 +641,8 @@
 				})
 
 			}
-			function openDetail(id){
+
+			function openDetail(id) {
 				openview({
 					view: 'page/tradeSchoolLnfo.html',
 					id: 'tradeSchoolLnfo',
@@ -615,7 +651,8 @@
 					}
 				})
 			}
-			function guideCredit(){
+
+			function guideCredit() {
 				openview({
 					view: 'page/guide/guideCredit.html',
 					id: 'guideCredit',
@@ -635,7 +672,7 @@
 						id: 'goodList',
 						extrasobj: {
 							ctid: ele.getAttribute('data-id'),
-							page:1
+							page: 1
 						}
 					})
 				}
@@ -651,7 +688,6 @@
 				var loadNum2 = 0;
 				clearInterval(timeSign);
 				timeSign = setInterval(Sign, 5000000); //两小时自动更新一次token
-
 
 				function Sign() { //登录方法
 					//设置默认token
@@ -669,7 +705,7 @@
 
 							//根据缓存密码自动登录, 重新获取Token
 							if(Acc_pass) {
-								mui.ajax(serverUrl+'/app/employee/login', {
+								mui.ajax(serverUrl + '/app/employee/login', {
 									data: {
 										"name": Acc_pass[0],
 										"password": Acc_pass[1]
@@ -707,7 +743,7 @@
 								});
 							}
 							if(openid) {
-								mui.ajax(serverUrl+'/app/customer/login', {
+								mui.ajax(serverUrl + '/app/customer/login', {
 									data: {
 										"openId": openid
 									},
@@ -752,6 +788,7 @@
 				} //登录方法结束
 
 				loadIndex();
+
 				function loadIndex() {
 					//获取缓存
 					var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
@@ -794,7 +831,7 @@
 									}));
 								} else {
 									$('#goodsList,#oftenbuy').hide()
-//									$('#goodsList').html('<div style="text-align:center;padding:15px;font-size: 12px">暂无商品</div>')
+									//									$('#goodsList').html('<div style="text-align:center;padding:15px;font-size: 12px">暂无商品</div>')
 								}
 							} else {
 								mui.toast(data.message)
@@ -819,7 +856,7 @@
 						type: 'post',
 						timeout: 10000,
 						success: function(data, type, xhr) {
-							console.log('热门商品列表' + JSON.stringify(data));
+							console.log('热门商品列表', data);
 							if(data.code == 0) {
 								plus.nativeUI.closeWaiting();
 								if(data.content && data.content.length) {
@@ -844,57 +881,62 @@
 						numsPerPage = 2,
 						endPage = 0;
 					mui.ajax('http://hiji.hifete.com:6789/index.php/Api_goods/lyzNews', {
-						data: {page:currentPage,size:numsPerPage},
+						data: {
+							page: currentPage,
+							size: numsPerPage
+						},
 						dataType: 'json', //服务器返回json格式数据
 						type: 'post', //HTTP请求类型
 						timeout: 10000, //超时时间设置为10秒；
 						success: function(data) {
-							console.log('trade',data);
+							console.log('trade', data);
 
 							if(data && data.data.length) {
-								document.getElementById("tradeList").innerHTML = template("tradeTpl", {dataList:data.data});
+								document.getElementById("tradeList").innerHTML = template("tradeTpl", {
+									dataList: data.data
+								});
 								mui("#upload")[0].innerHTML = "";
 
 								//上滑加载
-//								$(window).scroll(function() {
-//									var scrollTop = $(this).scrollTop();
-//									var scrollHeight = $(document).height();
-//									var windowHeight = $(this).height();
-//									if(Spagenum<=data.pageNum && scrollTop + windowHeight == scrollHeight) {
-//										if(Spagenum == Ypagenum + 1) { //当前页小于等于总页数时请求下一页
-//											mui("#upload")[0].innerHTML = "<img src='img/balls.svg' />";
-//											Ypagenum++; //满足加载情况,应到页数+1
-//											console.log('发起请求,实到' + Spagenum + '页');
-//											console.log('发起请求,应到' + Ypagenum + '页');
-//											mui.ajax('http://hiji.hifete.com:6789/index.php/Api_goods/lyzNews', {
-//												data: {
-//													page: Spagenum,
-//													size: numsPerPage,
-//												},
-//												dataType: 'json', //服务器返回json格式数据
-//												type: 'post', //HTTP请求类型
-//												timeout: 10000, //超时时间设置为10秒；
-//												success: function(data) {
-//													console.log('trade续',data)
-//													if(data && data.data.length) {
-//														document.getElementById("tradeList").innerHTML += template("tradeTpl", {dataList:data.data});
-//													}
-//													mui("#upload")[0].innerHTML = " ";
-//													Spagenum++; //加载成功,当前页+1
-//													console.log('成功+1,实到' + Spagenum);
-//													console.log('成功+1,应到' + Spagenum);
-//												},
-//												error: function(xhr, type, errorThrown) {
-//													Ypagenum--; //失败是应到-1
-//													mui.toast("当前网络不好请重试");
-//													mui("#upload")[0].innerHTML = "";
-//												}
-//											});
-//										}
-//									} else { //当前页不小于等于总页数时请求下一页
-//											mui("#upload")[0].innerHTML = "到底了";
-//										}
-//								});
+								//								$(window).scroll(function() {
+								//									var scrollTop = $(this).scrollTop();
+								//									var scrollHeight = $(document).height();
+								//									var windowHeight = $(this).height();
+								//									if(Spagenum<=data.pageNum && scrollTop + windowHeight == scrollHeight) {
+								//										if(Spagenum == Ypagenum + 1) { //当前页小于等于总页数时请求下一页
+								//											mui("#upload")[0].innerHTML = "<img src='img/balls.svg' />";
+								//											Ypagenum++; //满足加载情况,应到页数+1
+								//											console.log('发起请求,实到' + Spagenum + '页');
+								//											console.log('发起请求,应到' + Ypagenum + '页');
+								//											mui.ajax('http://hiji.hifete.com:6789/index.php/Api_goods/lyzNews', {
+								//												data: {
+								//													page: Spagenum,
+								//													size: numsPerPage,
+								//												},
+								//												dataType: 'json', //服务器返回json格式数据
+								//												type: 'post', //HTTP请求类型
+								//												timeout: 10000, //超时时间设置为10秒；
+								//												success: function(data) {
+								//													console.log('trade续',data)
+								//													if(data && data.data.length) {
+								//														document.getElementById("tradeList").innerHTML += template("tradeTpl", {dataList:data.data});
+								//													}
+								//													mui("#upload")[0].innerHTML = " ";
+								//													Spagenum++; //加载成功,当前页+1
+								//													console.log('成功+1,实到' + Spagenum);
+								//													console.log('成功+1,应到' + Spagenum);
+								//												},
+								//												error: function(xhr, type, errorThrown) {
+								//													Ypagenum--; //失败是应到-1
+								//													mui.toast("当前网络不好请重试");
+								//													mui("#upload")[0].innerHTML = "";
+								//												}
+								//											});
+								//										}
+								//									} else { //当前页不小于等于总页数时请求下一页
+								//											mui("#upload")[0].innerHTML = "到底了";
+								//										}
+								//								});
 							} else {
 								mui("#upload")[0].innerHTML = "";
 							}
@@ -907,32 +949,34 @@
 					});
 
 					//加入购物车
-					window.addcart = function(goodid){
+					window.addcart = function(goodid) {
 						event.stopPropagation();
 						plus.nativeUI.showWaiting();
-						mui.ajax(serverUrl+'/app/materialList/add',{
-							data:{
-								userId:userId,
-								identityType:identityT,
-								params:goodid+'-'+1
+						mui.ajax(serverUrl + '/app/materialList/add', {
+							data: {
+								userId: userId,
+								identityType: identityT,
+								params: goodid + '-' + 1
 							},
-							dataType:'json',
-							headers: {"Authorization": oldToken},
-							type:'post',
-							timeout:10000,
-							success:function(data,type,xhr){ 
+							dataType: 'json',
+							headers: {
+								"Authorization": oldToken
+							},
+							type: 'post',
+							timeout: 10000,
+							success: function(data, type, xhr) {
 								plus.nativeUI.closeWaiting();
-								console.log('加入购物车',data);
-								if(data.code == 0 ){
-									plus.nativeUI.toast('加入成功')						
+								console.log('加入购物车', data);
+								if(data.code == 0) {
+									plus.nativeUI.toast('加入成功')
 									mui.fire(plus.webview.getWebviewById('cart.html'), 'refresh');
-									 
-								}else{
+
+								} else {
 									mui.toast(data.message)
 								}
-								 
+
 							},
-							error:function(xhr,type,errorThrown){
+							error: function(xhr, type, errorThrown) {
 								plus.nativeUI.closeWaiting();
 								mui.toast(type)
 								console.log('响应失败');

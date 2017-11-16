@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<title>我的乐币</title>
+		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, width=device-width">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-touch-fullscreen" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="format-detection" content="telephone=no">
+		<meta name="format-detection" content="address=no">
+		<link rel="stylesheet" type="text/css" href="../../css/commonY.css">
+		<link rel="stylesheet" type="text/css" href="../../css/indexY.css">
+		<link rel="stylesheet" type="text/css" href="../../css/mui.min.css"/>
+		<link rel="stylesheet" href="../../css/resetY.css">
+		<link rel="stylesheet" type="text/css" href="../../css/configW.css"/>
+		<script type="text/javascript" src="../../js/jquery.min.js"></script>
+		<script src="../../js/mui.min.js" type="text/javascript"></script>
+		<style type="text/css">
+			.notice li.active{border-bottom: 2px solid #f63d41;box-sizing: border-box;color: #f63d41;}
+			.tab-hd{height: 45px !important;border-bottom: 1px solid #EFEFF4 !important;}
+			.tab-nav li{height: 45px !important;}
+			body{background-color: #f3f3f3;}
+			.mui-bar-nav{box-shadow: none !important;}
+			header.mui-bar{z-index: 200;}
+			.notice .tab-hdtwo li {width: 50%;}
+			.checkList{background-color: #fff;margin-top: 10px;}
+			.checkList h4{font-size: 14px;padding: 12px 10px;}
+			.checkList h4 .h4span3{float: right;color: red;}
+			.checkList h4 .h4span2{margin-left: 3%;}
+			.checkListCon{padding: 10px;}
+			.checkListCon img{width: 23%;float: left;margin-left: 1.6%;}
+			.checkListDZ{padding: 10px;color: #757575;}
+			.checkListB{padding: 10px 20px;text-align: right;}
+			#infoListDiv{transition: all .3s;}
+		</style>
+	</head>
+	<body>
+		<header class="mui-bar mui-bar-nav fineB fineB1">
+		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left bigSize"></a>
+		    <h1 class="mui-title">我的乐币</h1>
+		</header>
+		<script src="../../js/statusBar.js"></script><!--状态栏-->
+		<div id="main" style="padding-top: 0!important;">
+			<div class="notice">
+				<div class="tab-hd tab-hdtwo" id="tabLink">
+					<ul class="tab-nav">
+					  <li class="active aClick " data-statusId="1">获取记录</li>
+					  <li class="aClick" data-statusId="2">消费记录</li>
+					</ul>
+				</div>
+				<!--列表loading-->
+				<div id="loadingdiv" style="text-align: center;font-size: 14px;height:32px;
+					line-height: 30px;color: #666;-webkit-transition: all .3s;overflow: hidden;">
+					<img style="width: 30px;margin-top:5px;" src="../../img/Rolling.svg"/>
+				</div>
+				<!--列表loading结束-->
+				<div id="infoListDiv"><!--内容-->
+				</div>
+				<script id="infoList" type="text/html">
+					<%for(var i=0;i<list.length;i++){%>
+						<div class="checkList afterBorder">
+							<div class="checkListCon clearfix">
+								<%if(showType == 1){%>
+							 		乐币获取：+<%=list[i].variationQuantity%><br />
+							 		获取方式：<%=list[i].leBiVariationType%><br />
+							 		时间：<%=list[i].variationTime%>
+								<%}else{%>
+							 		乐币获取：-<%=list[i].variationQuantity%><br />
+							 		获取方式：<%=list[i].leBiVariationType%><br />
+							 		订单号：<%=list[i].orderNum%><br />
+							 		时间：<%=list[i].variationTime%>
+								<%}%>
+							 	
+							</div>
+							<div class="checkListB">
+							   乐币剩余：
+								
+							</div>
+						</div>
+					<%}%>
+					 
+				</script>
+			</div>
+		</div>
+	</body>
+	<script src="../../js/default.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../js/artTemplate-native.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		
+		mui.plusReady(function(){
+			var userId = plus.storage.getItem('$userId');
+			var oldToken = plus.storage.getItem("oldToken");
+			var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
+			$('#tabLink li').click(function(){
+				$('#tabLink li').removeClass('active');
+				$(this).addClass('active');
+				$('#loadingdiv').css('height','32px');
+					loadFun($(this).index()+1);
+				
+			})
+		 
+			loadFun(1);
+			function loadFun(index){
+				mui.ajax(serverUrl+'/app/lebi/variation/list',{
+					data:{'userID':userId,'identityType':identityT,'showType':index},
+					dataType:'json',
+					type:'post',
+					timeout:1000,
+					headers:{"Authorization":oldToken},
+					success:function(data,type,xhr){
+						console.log(data);
+						var timeLoad = setInterval(function(){
+							clearTimeout(timeLoad),timeLoad = null;
+							if(data.code == 0){
+								$('#loadingdiv').css('height','0px');
+								if(data.content && data.content.length){
+									for(var i in data.content){
+										data.content[i].showType = index;
+									}
+									document.getElementById('infoListDiv').innerHTML = template('infoList',{list:data.content});
+								}else{
+									document.getElementById('infoListDiv').innerHTML = '<div style="text-align: center;padding: 50px;"><div class="ft13 disablecl">暂无数据</div></div>';
+								}
+								
+							}else{
+								mui.toast(data.message);
+							}
+						},500)
+					},
+					error:function(xhr,type,errorThrown){
+						console.log('响应失败  !');
+					}
+				});
+			}
+			
+		})
+
+
+	</script>
+</html>

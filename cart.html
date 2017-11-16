@@ -135,6 +135,7 @@
 								countFuc();
 								plus.storage.setItem('cartNums', $(".totalNum").html());
 							} else {
+								$(".editAll").hide();
 								var html = tipsCont;
 								$('#cartData').html(html);
 								plus.storage.setItem('cartNums', '0');
