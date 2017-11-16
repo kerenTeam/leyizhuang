@@ -62,25 +62,7 @@
 		.dateLimit {
 			font-size: 12px;
 		}
-		
-		#sfzin {
-			width: -moz-calc(100% - 70px)!important;
-			width: -webkit-calc(100% - 70px)!important;
-			width: calc(100% - 70px)!important;
-			font-size: 12px;
-			padding: 0;
-			text-align: right;
-			background: none;
-			height: auto;
-			margin: 0;
-			line-height: 12px;
-			border: none;
-		}
-		
-		.sf:after {
-			height: 0px!important;
-		}
-		
+		 
 		.mui-radio input[type=radio]:before {
 			font-size: 20px;
 		}
@@ -88,17 +70,14 @@
 		.mui-radio input[type=radio] {
 			top: 8px;
 		}
-		
-		.charge {
-			color: coral;
-		}
-		
+		 
 		.quanc {
 			display: none;
 			width: 0.3rem;
 			margin-right: 0.1rem;
 			display: none;
 		}
+		.preDeposit{width: 40%!important;margin: 0;height: 18px!important;text-align: right;padding: none!important;}
 	</style>
 
 	<body>
@@ -189,53 +168,58 @@
 			<div class="pad10 ft15 afterBorder">
 				<em>配送方式 </em>
 				<div class="mui-input-row mui-radio mui-left mui-pull-right" style="margin-top: -8px;">
-					<label>自体</label>
-					<input name="peis" type="radio">
+					<label>自提</label>
+					<input name="peis" type="radio" value="1">
 				</div>
 				<div class="mui-input-row mui-radio mui-left mui-pull-right" style="margin-top: -8px;">
 					<label>送货上门</label>
-					<input name="peis" type="radio" checked="">
+					<input name="peis" type="radio" value="2" checked="">
 				</div>
 			</div>
 			<div style="clear: both;"></div>
-			<div style="background-color: white;margin: 5px 0;">
-				<div id="add_info"></div>
-				<script type="text/html" id="addrTpl">
-					<%if(obj.length==0){%>
-					<div class="qtop flexr pad10" onclick="address()">
-						<div style="flex: 1;margin-left: 10px;">
-							<div class="maincl ft16">
-								<span class="disablecl"></span>
-								<span class="disablecl"></span>
-							</div>
-							<div class="ft16">
-								<span class="disablecl">请选择收获地址</span>
-							</div>
-						</div>
-						<div class="">
-							<img src="../../images/center/right.svg" alt="" />
-						</div>
-					</div>
-					<%}else{%>
-					<div class="qtop flexr pad10" onclick="address()" id="addid" data-id="<%=obj[0].id%>" data-receiver="<%=obj[0].person%>" data-receiverPhone="<%=obj[0].phone%>" data-deliveryCity="<%=obj[0].city%>" data-deliveryCounty="<%=obj[0].country%>" data-deliveryStreet="<%=obj[0].street%>" data-residenceName="<%=obj[0].villageName%>" data-detailedAddress="<%=obj[0].address%>">
-						<div style="flex: 1;margin-left: 10px;">
-							<div class="maincl ft16">
-								<span class="disablecl"><%=obj[0].person%></span>
-								<span class="disablecl"><%=obj[0].phone%></span>
-							</div>
-							<div class="ft16">
-								<span class="disablecl"><%=obj[0].province%><%=obj[0].city%><%=obj[0].country%><%=obj[0].street%><%=obj[0].villageName%><%=obj[0].address%></span>
-							</div>
-						</div>
-						<div class="">
-							<img src="../../images/center/right.svg" alt="" />
-						</div>
-					</div>
-
-					<%}%>
-				</script>
-
+			<div class="pad10 ft15 afterBorder" id="chooseStore" style="display: none;">
+				<em>选择门店 </em>
+				<select style="float: right;margin-top: -10px;width: 40%;text-align: right!important;">
+				  <option value="">选择</option>
+				</select>
+				 
 			</div>
+			<div id="add_info"></div>
+			<script type="text/html" id="addrTpl">
+				<%if(obj.length==0){%>
+				<div class="qtop flexr pad10" onclick="address()">
+					<div style="flex: 1;margin-left: 10px;">
+						<div class="maincl ft16">
+							<span class="disablecl"></span>
+							<span class="disablecl"></span>
+						</div>
+						<div class="ft16">
+							<span class="disablecl">请选择收获地址</span>
+						</div>
+					</div>
+					<div class="">
+						<img src="../../images/center/right.svg" alt="" />
+					</div>
+				</div>
+				<%}else{%>
+				<div class="qtop flexr pad10" onclick="address()" id="addid" data-id="<%=obj[0].id%>" data-receiver="<%=obj[0].person%>" data-receiverPhone="<%=obj[0].phone%>" data-deliveryCity="<%=obj[0].city%>" data-deliveryCounty="<%=obj[0].country%>" data-deliveryStreet="<%=obj[0].street%>" data-residenceName="<%=obj[0].villageName%>" data-detailedAddress="<%=obj[0].address%>">
+					<div style="flex: 1;margin-left: 10px;">
+						<div class="maincl ft16">
+							<span class="disablecl"><%=obj[0].person%></span>
+							<span class="disablecl"><%=obj[0].phone%></span>
+						</div>
+						<div class="ft16">
+							<span class="disablecl"><%=obj[0].province%><%=obj[0].city%><%=obj[0].country%><%=obj[0].street%><%=obj[0].villageName%><%=obj[0].address%></span>
+						</div>
+					</div>
+					<div class="">
+						<img src="../../images/center/right.svg" alt="" />
+					</div>
+				</div>
+
+				<%}%>
+			</script>
+
 			<div id='cityResult' class="ui-alert pad10 afterBorder">配送时间 <span class="mui-pull-right">选择</span></div>
 			<div class="mui-input-row mui-checkbox mui-left afterBorder">
 				<label>是否业主收货</label>
@@ -247,7 +231,7 @@
 			
 		</div>
 		<div style="background-color: white;margin-top: 5px;">
-			<div class="pad_5 ft16 afterBorder">订单金额:<span class='mui-pull-right pad_r10' id="totalOrderAmount">¥--</span> </div>
+			<div class="pad_5 ft16 afterBorder">订单金额:<span class='mui-pull-right pad_r10' id="totalPriceb">¥--</span> </div>
 			<div class="pad_5 ft16 afterBorder">会员折扣:<span class='mui-pull-right pad_r10' id="memberDiscount">¥--</span></div>
 			<div class="pad_5 ft16 afterBorder">订单折扣:<span class='mui-pull-right pad_r10' id="orderDiscount">¥--</span></div>
 			<div class="pad_5 ft16 afterBorder">运费:<span class='mui-pull-right pad_r10' id="freight">¥--</span></div>
@@ -256,7 +240,7 @@
 		</div>
 		<div id="elseDiscount" style="margin-top: 5px;"></div>
 		<script type="text/html" id="elseDiscountTpl">
-			<dl class="list">
+			<dl class="list" style="border: none;">
 
 				<div id="quanData">
 		
@@ -264,10 +248,10 @@
 						<ul class="mui-table-view">
 							<%if(cashCouponList && cashCouponList.length){%>
 								<li class="mui-table-view-cell mui-collapse">
-									<a class="mui-navigate-right" style="padding: 10px;" href="#">优惠券 <b class="minuMoney cred" style="display: none;">-￥<span id="minuMoney"></span></b><span class="fr" style="margin-right: 15px;">选择</span></a>
+									<a class="mui-navigate-right" style="padding: 10px;" href="#">优惠券<span class="fr" style="margin-right: 15px;">选择</span></a>
 									<div class="mui-collapse-content">
 										<%for(var j = 0; j<cashCouponList.length;j++){%>
-											<div class="checkQuan mui-row">
+											<div class="checkQuan mui-row" data-id="<%=j+1%>" >
 												<div class="mui-col-sm-3">
 													<div>￥<big><b><%=cashCouponList[j].denomination%></b></big></div>
 													<div><small><%=cashCouponList[j].description%></small></div>
@@ -279,7 +263,7 @@
 														<%=cashCouponList[j].effectiveStartTime%> ~ <%=cashCouponList[j].effectiveEndTime%>内有效
 													</div>
 												</div>
-												<div class="mui-checkbox"><img src="../../images/xuanze.png" class="quanc" data-id="<%=j%>" alt="" /></div>
+												<div class="mui-checkbox"><img src="../../images/xuanze.png" class="quanc" data-id="<%=j+1%>" alt="" /></div>
 											</div>
 										<%}%>
 										
@@ -294,7 +278,7 @@
 					<%if(productCouponList && productCouponList.length){%>
 						<div class="pad10 ft14 afterBorder">产品券<span class='mui-pull-right pad_r10' onclick="productCoupon()">选择></span></div>
 					<%}else{%>
-						<div class="pad10 ft14 afterBorder">产品券<span class='mui-pull-right pad_r10'>无</span></div>
+						<div class="pad10 ft14 afterBorder">产品券<span class='mui-pull-right pad_r10' onclick="productCoupon()">无</span></div>
 					<%}%>
 				</div>
 				<%if(lebi && lebi.quantity && lebi.rebate){%>
@@ -312,11 +296,24 @@
 						</dd>
 					</div>
 				<%}%>
+				<div style="height: 5px;background: #F3F3F3;"></div>
+				<div class="pad10 ft14 afterBorder">订单金额小计<span class='activecl mui-pull-right pad_r10' id="totalOrderAmount">¥--</span></div>
+				<div class="pad10 ft14 afterBorder">预存款<span class='activecl' id="preDepositb">¥--</span><input placeholder="请输入大于0的整数"  onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}"
+				onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'0')}else{this.value=this.value.replace(/\D/g,'')}" class='mui-pull-right preDeposit'/></div>
+				<!--only manager-->
+				<div class="pad10 ft14 afterBorder manager" style="display: none;">信用金<span class='activecl' id="credit">¥--</span><input placeholder="请输入大于0的整数"  onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}"
+				onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'0')}else{this.value=this.value.replace(/\D/g,'')}" class='mui-pull-right preDeposit'/></div>
+				<div class="pad10 ft14 afterBorder manager" style="display: none;">现金返利<span class='activecl' id="cash">¥--</span><input placeholder="请输入大于0的整数"  onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}"
+				onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'0')}else{this.value=this.value.replace(/\D/g,'')}" class='mui-pull-right preDeposit'/></div>
+				<!--only guide-->
+				<div class="pad10 ft14 afterBorder guide" style="display: none;">信用额度<span class='activecl' id="cash">¥--</span><input placeholder="请输入大于0的整数"  onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}"
+				onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'0')}else{this.value=this.value.replace(/\D/g,'')}" class='mui-pull-right preDeposit'/></div>
+				<div class="pad10 ft14 afterBorder guide" style="display: none;">代收金额<span class='activecl' id="cash">¥--</span><input placeholder="请输入大于0的整数"  onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}"
+				onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'0')}else{this.value=this.value.replace(/\D/g,'')}" class='mui-pull-right preDeposit'/></div>
 				
-		
 			</dl>
 		</script>
-
+		<textarea name="" rows="3" cols="" placeholder="备注"></textarea>
 		<!--bottom nav-->
 		<div style="height:1rem;"></div>
 		<aside class="btmNav" id="dibu">
@@ -376,7 +373,7 @@
 			//获取料单商品
 			mui.ajax(serverUrl + '/app/order/enter', {
 				data: {
-					userId: userId,
+					userId: 1,
 					identityType: identityT,
 					goodsList: JSON.parse(idobj)
 				},
@@ -396,13 +393,11 @@
 						dataObj.totalQty = data.content.totalQty;
 						dataObj.totalPrice = data.content.totalPrice;
 						dataObj.list = goods;
-
 						document.getElementById('cartData').innerHTML = template('cartTpl', dataObj);
-						
-						if(data.content.totalOrderAmount) {
-							$('#totalOrderAmount').html('¥' + data.content.totalOrderAmount)
+						if(data.content.totalPrice) {
+							$('#totalPriceb').html('¥' + data.content.totalPrice)
 						} else {
-							$('#totalOrderAmount').html('0')
+							$('#totalPriceb').html('0')
 						}
 						if(data.content.memberDiscount) {
 							$('#memberDiscount').html('¥' + data.content.memberDiscount)
@@ -446,31 +441,73 @@
 							discount.productCouponList = data.content.productCouponList;
 						document.getElementById('elseDiscount').innerHTML = template('elseDiscountTpl', discount);
 						plus.nativeUI.closeWaiting();
-						
+						if(identityT == 0 || identityT == 4 || identityT == 5){
+							$('.guide').show();
+						}
+						if(identityT == 2){
+							$('.manager').show();
+						}
 						//券
 						$(".checkQuan").click(function() {
-							var qid = $(this).attr("data-id");
-							var qminus = $(this).attr("data-minus");
-							$(this).siblings().find(".quanc").css("display", "none");
-							quan = 0;
+							var cashCouponsList = [];	
+							var qid = $(this).attr("data-id"); 
+							alert(qid)
 							if($(this).find(".quanc").css("display") == "block") {
 								$(this).find(".quanc").css("display", "none");
-								$("#minuMoney").html(0);
-								$(".minuMoney").css("display", "none");
-			
 							} else {
 								$(this).find(".quanc").css("display", "block");
-								if(qid == 1) {
-									quan = parseFloat(qminus)
-								}
-								if(qid == 2) {
-									quan = parseFloat(allGroup * (1 - parseFloat(qminus))).toFixed(2);
-								}
-								$("#minuMoney").html(quan);
-								$(".minuMoney").css("display", "inline-block");
-			
+								 
 							};
+							var totalOrderAmount = $('#totalPriceb').text().replace('¥','');
+							var orderDiscount = $("#orderDiscount").text().replace('¥','');
+							$(".quanc").each(function() {
+								if($(this).css("display") == "block") {
+									$("#orderDiscount").html('无')
+									coupon_id = $(this).attr("data-id");
+									cashCouponsList.push({"id":coupon_id,"qty":1})
+								}
+							})
+							
+							//选券 返回金额
+							mui.ajax(serverUrl + '/app/order/reEnter/ccp', {
+								data: {
+									"userId": userId,
+									"identityType": identityT,
+									"customerId": null,
+								    "totalOrderAmount": totalOrderAmount,
+								    "orderDiscount": orderDiscount,
+								    "cashCouponsList":cashCouponsList,
+								},
+								dataType: 'json',
+								type: 'post',
+								timeout: 1000,
+								headers: {
+									"Authorization": oldToken,
+									'Content-Type': 'application/json'
+								},
+								success: function(data, type, xhr) {
+									console.log('选取优惠券返回', data);
+									if(data.code == 0 && data.content) {
+										$("#totalOrderAmount").html('¥'+data.content)
+									}else{
+										mui.toast(data.message);
+									}
+								},
+								error: function(xhr, type, errorThrown) {
+									console.log('响应失败  !');
+								}
+							});
 						})
+						if(data.content.totalOrderAmount) {
+							$('#totalOrderAmount').html('¥' + data.content.totalOrderAmount)
+						} else {
+							$('#totalOrderAmount').html('0')
+						}
+						if(data.content.preDeposit){
+							$('#preDepositb').html('¥'+data.content.preDeposit)
+						}else{
+							$('#preDepositb').hide()
+						}
 					} else {
 						mui.toast(data.message);
 						plus.nativeUI.closeWaiting();
@@ -539,12 +576,54 @@
 
 				//				plus.storage.removeItem("$addressStorage")
 			}
-
+			//自提 获取门店
+			$("input[name='peis']").change(function(){
+				var delivery = $("input[name='peis']:checked").val();
+				if(delivery == 1){
+					//查询门店
+					mui.ajax(serverUrl + '/app/user/deliveryType/selfTake', {
+						data: {
+							userId: userId,
+							identityType: identityT,
+							goodsList: JSON.parse(idobj)
+						},
+						dataType: 'json',
+						type: 'post',
+						timeout: 1000,
+						headers: {
+							"Authorization": oldToken,
+							'Content-Type': 'application/json'
+						},
+						success: function(data, type, xhr) {
+							console.log('获取门店', data);
+							var addrObj = {};
+							if(data.code == 0 && data.content) {
+								$('#chooseStore').show();
+								$('#add_info').hide();
+								var storeStr = '<option value="">选择</option>'; 
+								for (var i = 0;i<data.content.length;i++) {
+									storeStr += '<option value="'+data.content[i].storeId+'">'+data.content[i].storeName+'</option>'
+								}
+								$('#chooseStore select').html(storeStr);
+							}else{
+								mui.toast(data.message);
+								$("input[name='peis']").eq(0).attr('checked',false)
+								$("input[name='peis']").eq(1).prop('checked',true)
+							}
+						},
+						error: function(xhr, type, errorThrown) {
+							console.log('响应失败  !');
+						}
+					});
+				}else{
+					$('#chooseStore').hide();
+					$('#add_info').show();
+				}
+			})
 			//获取城市
 			var cityId = plus.storage.getItem('userCity');
 			//获取时间段
 			timeRanges();
-
 			function timeRanges() {
 				mui.ajax(serverUrl + '/app/city/get/deliveryTime', {
 					data: {
@@ -581,7 +660,10 @@
 								var cityResult = document.getElementById('cityResult');
 								cityResult.addEventListener('tap', function(event) {
 									cityPicker.show(function(items) {
-										$('#cityResult').attr('data-id', '1')
+										$('#cityResult').attr('data-id', '1');
+										if(!items[1].text){
+											items[1].text = '不可选'
+										}
 										$('#cityResult span').html(items[0].text + " " + items[1].text)
 										//返回 false 可以阻止选择框的关闭
 										//return false;
