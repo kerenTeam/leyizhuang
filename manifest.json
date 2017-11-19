@@ -61,11 +61,12 @@
 		"NativeObj": {},"OAuth":{},"Device":{},"Maps":{},"Audio":{},"Speech":{},"Camera":{},"Barcode":{},"Contacts":{},"Messaging":{},"Geolocation":{}
 	},
 	"plus": {
+		"statusbar":{
+			"immersed": true,
+			"style": "dark"
+		},
 		"launchwebview": {
-			"statusbar":{
-				"immersed": true,
-				"style": "dark"
-			},
+			
 			"bottom": "0px",
 			"background": "#fff",
 			"subNViews": [
