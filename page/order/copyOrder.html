@@ -1,0 +1,676 @@
+<!doctype html>
+
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>确认订单</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="../../css/mui.min.css" />
+		<link rel="stylesheet" href="../../css/resetY.css">
+		<link rel="stylesheet" type="text/css" href="../../css/commonY.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/cart.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/style.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/configW.css" />
+		<link href="../../css/mui.picker.minY.css" rel="stylesheet" />
+		<link href="../../css/mui.poppicker.css" rel="stylesheet" />
+	</head>
+	<style type="text/css">
+		#coupon .mui-checkbox,
+		.checkQuan .mui-checkbox,
+		.waypay .mui-checkbox {
+			position: absolute;
+			top: 50%;
+			margin-top: -18px;
+			right: 0;
+		}
+		
+		.mui-checkbox input[type=checkbox]:checked:before,
+		.mui-radio input[type=radio]:checked:before {
+			color: rgb(245, 60, 66);
+		}
+		
+		.mui-card {
+			border: 0;
+			margin: 0!important;
+		}
+		
+		.checkQuan {
+			padding: 2px 15px;
+			border: 1px solid #f53c42;
+			border-radius: 5px;
+			line-height: 18px;
+			margin: 5px 0;
+			position: relative;
+		}
+		
+		.checkQuan .mui-col-sm-3 {
+			width: 28%;
+			padding: 12px 5px;
+			border-right: 1px dotted #f53c42;
+		}
+		
+		.checkQuan .mui-col-sm-9 {
+			width: 72%;
+			padding: 12px 15px;
+		}
+		
+		.cred {
+			color: #f53c42;
+		}
+		
+		.dateLimit {
+			font-size: 12px;
+		}
+		 
+		.mui-radio input[type=radio]:before {
+			font-size: 20px;
+		}
+		
+		.mui-radio input[type=radio] {
+			top: 8px;
+		}
+		 
+		.quanc {
+			display: none;
+			width: 0.3rem;
+			margin-right: 0.1rem;
+			display: none;
+		}
+		.preDeposit{width: 40%!important;margin: 0;height: 18px!important;text-align: right;padding: none!important;}
+	</style>
+
+	<body>
+
+		<header class="mui-bar mui-bar-nav">
+			<a class="headbar mui-action-back mui-icon mui-icon-left-nav mui-pull-left normalSize"></a>
+			<h1 class="mui-title">确认订单</h1>
+		</header>
+		<!--状态栏-->
+	 	<div class="mui-content">
+			<div class="flexwc margBot5">
+				<div class="cartOne">
+					<img src="../../img/check1.png" /> 下料清单
+				</div>
+				<div class="cartSecond">
+					<img src="../../img/check1.png" /> 选赠品
+				</div>
+				<div class="cartOne">
+					<img src="../../img/check2.png" /> 结算
+				</div>
+			</div>
+			<div id="cartData" data-id=""></div>
+			<script type="text/html" id="cartTpl">
+	
+				<dl class="cart">
+					<div class="afterBorder" style="max-height: 300px;overflow-y: scroll;">
+						<%for(var i=0;i<list.length;i++){%>
+							<dd>
+								<a class="goodsPic" style="margin-left: auto;"><img src="<%=list[i].coverImageUri%>" onerror="javascript:this.src='../../images/img.svg';" /></a>
+								<div class="goodsInfor" style="margin-left: 0.9rem!important;">
+							    			<span class="ft16 goodname"><%=list[i].goodsName%></span>
+								    		<%if(list[i].isGift){%>
+								    			<em class="mui-badge mui-badge-danger mui-pull-right" style="color: white;">赠品</em>
+								    		<%}%>
+									<div class="priceArea">
+										<div class="maincl ft14">
+											单位：
+											<%=list[i].goodsUnit%>；规格：
+											<%=list[i].goodsSpecification%>
+										</div>
+										<span class="ft18 activecl2">¥<span class="price"><%=list[i].retailPrice%></span></span>
+										<div class="mui-pull-right">
+											<span class="num">x<%=list[i].goodsQty%></span>
+										</div>
+									</div>
+			
+								</div>
+							</dd>
+							<%}%>
+					</div> 
+					<div class="pad10 ft15">
+						共<span id='totalGoods' class="activecl"><%=totalQty%></span>件商品 订单总金额：<span class="activecl" id="totalPrice">¥<%=totalPrice%></span> <span class="mui-pull-right activecl" onclick="materialList()">查看全部</span>
+					</div>
+					<div style="clear: both;"></div>
+				</dl>
+			</script>
+			<div style="background: white;">
+				<div class="pad10 ft15 afterBorder">
+					<em>配送方式 </em>
+					<div class="mui-input-row mui-radio mui-left mui-pull-right" style="margin-top: -8px;">
+						<label>自提</label>
+						<input name="peis" type="radio" value="1">
+					</div>
+					<div class="mui-input-row mui-radio mui-left mui-pull-right" style="margin-top: -8px;">
+						<label>送货上门</label>
+						<input name="peis" type="radio" value="2" checked="">
+					</div>
+				</div>
+				<div style="clear: both;"></div>
+				<div class="pad10 ft15 afterBorder" id="chooseStore" style="display: none;">
+					<em>选择门店 </em>
+					<select style="float: right;margin-top: -10px;width: 40%;text-align: right!important;">
+					  <option value="">选择</option>
+					</select>
+					 
+				</div>
+				<div id="add_info"></div>
+				<script type="text/html" id="addrTpl">
+					<%if(obj.length==0){%>
+					<div class="qtop flexr pad10" onclick="address()">
+						<div style="flex: 1;margin-left: 10px;">
+							<div class="maincl ft16">
+								<span class="disablecl"></span>
+								<span class="disablecl"></span>
+							</div>
+							<div class="ft16">
+								<span class="disablecl">请选择收获地址</span>
+							</div>
+						</div>
+						<div class="">
+							<img src="../../images/center/right.svg" alt="" />
+						</div>
+					</div>
+					<%}else{%>
+					<div class="qtop flexr pad10" onclick="address()" id="addid" data-id="<%=obj[0].id%>" data-receiver="<%=obj[0].person%>" data-receiverPhone="<%=obj[0].phone%>" data-deliveryCity="<%=obj[0].city%>" data-deliveryCounty="<%=obj[0].country%>" data-deliveryStreet="<%=obj[0].street%>" data-residenceName="<%=obj[0].villageName%>" data-detailedAddress="<%=obj[0].address%>">
+						<div style="flex: 1;margin-left: 10px;">
+							<div class="maincl ft16">
+								<span class="disablecl"><%=obj[0].person%></span>
+								<span class="disablecl"><%=obj[0].phone%></span>
+							</div>
+							<div class="ft16">
+								<span class="disablecl"><%=obj[0].province%><%=obj[0].city%><%=obj[0].country%><%=obj[0].street%><%=obj[0].villageName%><%=obj[0].address%></span>
+							</div>
+						</div>
+						<div class="">
+							<img src="../../images/center/right.svg" alt="" />
+						</div>
+					</div>
+	
+					<%}%>
+				</script>
+	
+				<div id='cityResult' class="ui-alert pad10 afterBorder">配送时间 <span class="mui-pull-right">选择</span></div>
+				<div class="mui-input-row mui-checkbox mui-left afterBorder">
+					<label>是否业主收货</label>
+					<input name="checkbox1" value="Item 1" type="checkbox" checked>
+				</div>
+				<div class="pad10 activecl ft13">
+					温馨提示：若收货人为主家，系统将在出货打印单中自动隐藏折扣信息
+				</div>
+				
+			</div>
+			<div style="background-color: white;margin-top: 5px;">
+				<div class="pad_5 ft16 afterBorder">订单金额:<span class='mui-pull-right pad_r10' id="totalPriceb">¥--</span> </div>
+				<div class="pad_5 ft16 afterBorder">会员折扣:<span class='mui-pull-right pad_r10' id="memberDiscount">¥--</span></div>
+				<div class="pad_5 ft16 afterBorder">订单折扣:<span class='mui-pull-right pad_r10' id="orderDiscount">¥--</span></div>
+				<div class="pad_5 ft16 afterBorder">运费:<span class='mui-pull-right pad_r10' id="freight">¥--</span></div>
+				<div class="pad_5 ft16">上楼费:<span class='mui-pull-right pad_r10' id="upstar">依现实情况收取</span></div>
+	
+			</div>
+			<div id="elseDiscount" style="margin-top: 5px;"></div>
+			<script type="text/html" id="elseDiscountTpl">
+				<dl class="list" style="border: none;">
+	
+					<div id="quanData">
+			
+						<div class="mui-card afterBorder" style="border: none!important;box-shadow: none;">
+							<ul class="mui-table-view">
+								<%if(cashCouponList && cashCouponList.length){%>
+									<li class="mui-table-view-cell mui-collapse">
+										<a class="mui-navigate-right" style="padding: 10px;" href="#">优惠券<span class="fr" style="margin-right: 15px;">选择</span></a>
+										<div class="mui-collapse-content">
+											<%for(var j = 0; j<cashCouponList.length;j++){%>
+												<div class="checkQuan mui-row" data-id="<%=j+1%>" >
+													<div class="mui-col-sm-3">
+														<div>￥<big><b><%=cashCouponList[j].denomination%></b></big></div>
+														<div><small><%=cashCouponList[j].description%></small></div>
+													</div>
+													<div class="mui-col-sm-9">
+														<div class="cred"><big><%=cashCouponList[j].title%></big>
+														</div>
+														<div class="dateLimit">
+															<%=cashCouponList[j].effectiveStartTime%> ~ <%=cashCouponList[j].effectiveEndTime%>内有效
+														</div>
+													</div>
+													<div class="mui-checkbox"><img src="../../images/xuanze.png" class="quanc" data-id="<%=j+1%>" alt="" /></div>
+												</div>
+											<%}%>
+											
+										</div>
+									</li>
+								<%}else{%>
+									<div class="pad10 ft14 afterBorder">优惠券<span class='mui-pull-right pad_r10'>无</span></div>
+								<%}%>
+								
+							</ul>
+						</div>
+						<%if(productCouponList && productCouponList.length){%>
+							<div class="pad10 ft14 afterBorder">产品券<span class='mui-pull-right pad_r10' onclick="productCoupon()">选择></span></div>
+						<%}else{%>
+							<div class="pad10 ft14 afterBorder">产品券<span class='mui-pull-right pad_r10' onclick="productCoupon()">无</span></div>
+						<%}%>
+					</div>
+					<%if(lebi && lebi.quantity && lebi.rebate){%>
+						<div id="coupon">
+							<dd class="dd-padding kv-line-r">
+								<h6>一共<span id="totalJfen" style="color: #F14A43;" id="totalJfen"><%=lebi.quantity%></span>乐币,抵用<span id="itMinus" style="color: #ff5f32;"><span>￥<%=lebi.rebate%></span></span></h6>
+								<div id="changeJf" class="mui-checkbox"><input name="checkbox" class="groupCheck" type="checkbox"></div>
+							</dd>
+						</div>
+					<%}else{%>
+						<div id="coupon">
+							<dd class="dd-padding kv-line-r">
+								<h6>无乐币</h6>
+								<div class="mui-checkbox"><input name="checkbox" class="groupCheck" type="checkbox" disabled=""></div>
+							</dd>
+						</div>
+					<%}%>
+					<div style="height: 5px;background: #F3F3F3;"></div>
+					<div class="pad10 ft14 afterBorder">订单金额小计<span class='activecl mui-pull-right pad_r10' id="totalOrderAmount">¥--</span></div>
+					<div class="pad10 ft14 afterBorder">预存款<span class='activecl' id="preDepositb">¥--</span><input placeholder="请输入大于0的整数"  onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}"
+					onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'0')}else{this.value=this.value.replace(/\D/g,'')}" class='mui-pull-right preDeposit'/></div>
+					<!--only manager-->
+					<div class="pad10 ft14 afterBorder manager" style="display: none;">信用金<span class='activecl' id="credit">¥--</span><input placeholder="请输入大于0的整数"  onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}"
+					onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'0')}else{this.value=this.value.replace(/\D/g,'')}" class='mui-pull-right preDeposit'/></div>
+					<div class="pad10 ft14 afterBorder manager" style="display: none;">现金返利<span class='activecl' id="cash">¥--</span><input placeholder="请输入大于0的整数"  onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}"
+					onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'0')}else{this.value=this.value.replace(/\D/g,'')}" class='mui-pull-right preDeposit'/></div>
+					<!--only guide-->
+					<div class="pad10 ft14 afterBorder guide" style="display: none;">信用额度<span class='activecl' id="cash">¥--</span><input placeholder="请输入大于0的整数"  onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}"
+					onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'0')}else{this.value=this.value.replace(/\D/g,'')}" class='mui-pull-right preDeposit'/></div>
+					<div class="pad10 ft14 afterBorder guide" style="display: none;">代收金额<span class='activecl' id="cash">¥--</span><input placeholder="请输入大于0的整数"  onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}"
+					onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'0')}else{this.value=this.value.replace(/\D/g,'')}" class='mui-pull-right preDeposit'/></div>
+					
+				</dl>
+			</script>
+			<textarea name="" rows="3" cols="" placeholder="备注"></textarea>
+			<!--bottom nav-->
+			<div style="height:1rem;"></div>
+			<aside class="btmNav" id="dibu">
+				<a class="dp" style="position: relative;color: #f63d43;">
+					<span style="color: #333333;">应付款：</span>¥<span class="totalMoney">0</span>元
+				</a>
+				<a class="goOrder dp" style="background:#f53c42;color:white;text-shadow:none;">去支付</a>
+	
+			</aside>
+ 		</div>
+
+		<script type="text/javascript" src="../../js/jquery.min.js"></script>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/mui.picker.min.js"></script>
+		<script src="../../js/mui.poppicker.js"></script>
+		<script src="../../js/artTemplate-native.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/default.js" type="text/javascript" charset="utf-8"></script>
+	</body>
+
+	<script>
+		function materialList() {
+			openview({
+				view: 'elseMaterialList.html',
+				id: 'elseMaterialList',
+			})
+		}
+
+		function address() {
+			openview({
+				view: '../personal/address.html',
+				id: 'address',
+				extrasobj: {
+					page: 'gorder',
+					goType: 'gorder'
+				}
+			})
+		}
+
+		function productCoupon() {
+			openview({
+				view: '../personal/productCoupon.html',
+				id: 'productCoupon',
+				extrasobj: {
+					page: 'order'
+				}
+			})
+		}
+
+		mui.plusReady(function() {
+			var userId = plus.storage.getItem('$userId');
+			var oldToken = plus.storage.getItem("oldToken");
+			var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
+			var idobj = plus.storage.getItem('orderGoodsList');
+			plus.nativeUI.showWaiting();
+			//获取料单商品
+			mui.ajax(serverUrl + '/app/order/enter', {
+				data: {
+					userId: 1,
+					identityType: identityT,
+					goodsList: JSON.parse(idobj)
+				},
+				dataType: 'json',
+				type: 'post',
+				timeout: 1000,
+				headers: {
+					"Authorization": oldToken,
+					'Content-Type': 'application/json'
+				},
+				success: function(data, type, xhr) {
+					console.log('获取料单商品', data);
+					var dataObj = {};
+					if(data.code == 0 && data.content) {
+						//显示商品
+						var goods = data.content.totalGoodsInfo;
+						dataObj.totalQty = data.content.totalQty;
+						dataObj.totalPrice = data.content.totalPrice;
+						dataObj.list = goods;
+						document.getElementById('cartData').innerHTML = template('cartTpl', dataObj);
+						if(data.content.totalPrice) {
+							$('#totalPriceb').html('¥' + data.content.totalPrice)
+						} else {
+							$('#totalPriceb').html('0')
+						}
+						if(data.content.memberDiscount) {
+							$('#memberDiscount').html('¥' + data.content.memberDiscount)
+						} else {
+							$('#memberDiscount').html('¥0')
+						}
+						if(data.content.orderDiscount) {
+							$('#orderDiscount').html('¥' + data.content.orderDiscount)
+						} else {
+							$('#orderDiscount').html('0')
+						}
+						if(data.content.freight) {
+							$('#freight').html('¥' + data.content.freight)
+						} else {
+							$('#freight').html('0')
+						}
+						if(data.content.upstairsFee){
+							$('#upstar').html('¥'+data.content.upstairsFee)
+						}
+						if(data.content.cashCouponList && data.content.cashCouponList.length){
+							for(var i in data.content.cashCouponList){
+				       			if(data.content.cashCouponList[i].effectiveStartTime){
+				       				var date = new Date(data.content.cashCouponList[i].effectiveStartTime/1000 *1000);
+										Y = date.getFullYear() + '-';
+										M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
+										D = date.getDate() + ' ';
+										data.content.cashCouponList[i].effectiveStartTime = Y+M+D;
+				       			}
+				       			if(data.content.cashCouponList[i].effectiveEndTime){
+				       				var date = new Date(data.content.cashCouponList[i].effectiveEndTime/1000 *1000);
+										Y = date.getFullYear() + '-';
+										M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
+										D = date.getDate() + ' ';
+										data.content.cashCouponList[i].effectiveEndTime = Y+M+D;
+				       			}
+				       		}
+						}
+						var discount = {};
+							discount.lebi = data.content.lebi;
+							discount.cashCouponList = data.content.cashCouponList;
+							discount.productCouponList = data.content.productCouponList;
+						document.getElementById('elseDiscount').innerHTML = template('elseDiscountTpl', discount);
+						plus.nativeUI.closeWaiting();
+						if(identityT == 0 || identityT == 4 || identityT == 5){
+							$('.guide').show();
+						}
+						if(identityT == 2){
+							$('.manager').show();
+						}
+						//券
+						$(".checkQuan").click(function() {
+							var cashCouponsList = [];	
+							var qid = $(this).attr("data-id"); 
+							alert(qid)
+							if($(this).find(".quanc").css("display") == "block") {
+								$(this).find(".quanc").css("display", "none");
+							} else {
+								$(this).find(".quanc").css("display", "block");
+								 
+							};
+							var totalOrderAmount = $('#totalPriceb').text().replace('¥','');
+							var orderDiscount = $("#orderDiscount").text().replace('¥','');
+							$(".quanc").each(function() {
+								if($(this).css("display") == "block") {
+									$("#orderDiscount").html('无')
+									coupon_id = $(this).attr("data-id");
+									cashCouponsList.push({"id":coupon_id,"qty":1})
+								}
+							})
+							
+							//选券 返回金额
+							mui.ajax(serverUrl + '/app/order/reEnter/ccp', {
+								data: {
+									"userId": userId,
+									"identityType": identityT,
+									"customerId": null,
+								    "totalOrderAmount": totalOrderAmount,
+								    "orderDiscount": orderDiscount,
+								    "cashCouponsList":cashCouponsList,
+								},
+								dataType: 'json',
+								type: 'post',
+								timeout: 1000,
+								headers: {
+									"Authorization": oldToken,
+									'Content-Type': 'application/json'
+								},
+								success: function(data, type, xhr) {
+									console.log('选取优惠券返回', data);
+									if(data.code == 0 && data.content) {
+										$("#totalOrderAmount").html('¥'+data.content)
+									}else{
+										mui.toast(data.message);
+									}
+								},
+								error: function(xhr, type, errorThrown) {
+									console.log('响应失败  !');
+								}
+							});
+						})
+						if(data.content.totalOrderAmount) {
+							$('#totalOrderAmount').html('¥' + data.content.totalOrderAmount)
+						} else {
+							$('#totalOrderAmount').html('0')
+						}
+						if(data.content.preDeposit){
+							$('#preDepositb').html('¥'+data.content.preDeposit)
+						}else{
+							$('#preDepositb').hide()
+						}
+					} else {
+						mui.toast(data.message);
+						plus.nativeUI.closeWaiting();
+
+					}
+				},
+				error: function(xhr, type, errorThrown) {
+					console.log('响应失败  !');
+					plus.nativeUI.closeWaiting();
+
+				}
+			});
+
+			//刷新地址
+			document.addEventListener('readdstorage', function(event) {
+				orderAdd()
+			});
+			orderAdd();
+			//显示地址
+			function orderAdd() {
+				//默认地址
+				mui.ajax(serverUrl + '/app/user/deliveryAddress/default', {
+					data: {
+						userId: userId,
+						identityType: identityT
+					},
+					dataType: 'json',
+					type: 'post',
+					timeout: 1000,
+					headers: {
+						"Authorization": oldToken
+					},
+					success: function(data, type, xhr) {
+						console.log('默认地址', data);
+						var addrObj = {};
+						if(data.code == 0 && data.content) {
+							if(plus.storage.getItem("$addressStorageOrder") != null) {
+								addrObj.obj = JSON.parse(plus.storage.getItem("$addressStorageOrder"));
+							} else {
+								var defultAddress = {};
+								defultAddress.id = data.content.id;
+								defultAddress.person = data.content.deliveryName;
+								defultAddress.phone = data.content.deliveryPhone;
+								defultAddress.province = data.content.deliveryProvince;
+								defultAddress.city = data.content.deliveryCity;
+								defultAddress.country = data.content.deliveryCounty;
+								defultAddress.street = data.content.deliveryStreet;
+								defultAddress.villageName = data.content.villageName;
+								defultAddress.address = data.content.detailedAddress;
+								addrObj.obj = [defultAddress];
+							}
+							document.getElementById("add_info").innerHTML = template("addrTpl", addrObj);
+							plus.storage.removeItem("$addressStorageOrder")
+
+						} else {
+							console.log('缓存地址', data);
+							addrObj.obj = JSON.parse(plus.storage.getItem("$addressStorageOrder")) || [];
+							document.getElementById("add_info").innerHTML = template("addrTpl", addrObj);
+
+						}
+					},
+					error: function(xhr, type, errorThrown) {
+						console.log('响应失败  !');
+					}
+				});
+
+				//				plus.storage.removeItem("$addressStorage")
+			}
+			//自提 获取门店
+			$("input[name='peis']").change(function(){
+				var delivery = $("input[name='peis']:checked").val();
+				if(delivery == 1){
+					//查询门店
+					mui.ajax(serverUrl + '/app/user/deliveryType/selfTake', {
+						data: {
+							userId: userId,
+							identityType: identityT,
+							goodsList: JSON.parse(idobj)
+						},
+						dataType: 'json',
+						type: 'post',
+						timeout: 1000,
+						headers: {
+							"Authorization": oldToken,
+							'Content-Type': 'application/json'
+						},
+						success: function(data, type, xhr) {
+							console.log('获取门店', data);
+							var addrObj = {};
+							if(data.code == 0 && data.content) {
+								$('#chooseStore').show();
+								$('#add_info').hide();
+								var storeStr = '<option value="">选择</option>'; 
+								for (var i = 0;i<data.content.length;i++) {
+									storeStr += '<option value="'+data.content[i].storeId+'">'+data.content[i].storeName+'</option>'
+								}
+								$('#chooseStore select').html(storeStr);
+							}else{
+								mui.toast(data.message);
+								$("input[name='peis']").eq(0).attr('checked',false)
+								$("input[name='peis']").eq(1).prop('checked',true)
+							}
+						},
+						error: function(xhr, type, errorThrown) {
+							console.log('响应失败  !');
+						}
+					});
+				}else{
+					$('#chooseStore').hide();
+					$('#add_info').show();
+				}
+			})
+			//获取城市
+			var cityId = plus.storage.getItem('userCity');
+			//获取时间段
+			timeRanges();
+			function timeRanges() {
+				mui.ajax(serverUrl + '/app/city/get/deliveryTime', {
+					data: {
+						cityId: cityId
+					},
+					dataType: 'json',
+					type: 'post',
+					timeout: 1000,
+					headers: {
+						"Authorization": oldToken
+					},
+					success: function(data, type, xhr) {
+						console.log('获取时间段', data);
+						var dataObj = {};
+						if(data.code == 0) {
+							if(data.content && data.content.length) {
+								var cityData = [];
+								mui.each(data.content, function(index, item) {
+									var eachday = {};
+									eachday.children = [];
+									eachday.text = item.day;
+									mui.each(item.deliveryTime, function(index2, item2) {
+										eachday.children.push({
+											'text': item2
+										})
+									})
+									cityData.push(eachday)
+								})
+								console.log('cityData ', cityData);
+								var cityPicker = new mui.PopPicker({
+									layer: 2
+								});
+								cityPicker.setData(cityData);
+								var cityResult = document.getElementById('cityResult');
+								cityResult.addEventListener('tap', function(event) {
+									cityPicker.show(function(items) {
+										$('#cityResult').attr('data-id', '1');
+										if(!items[1].text){
+											items[1].text = '不可选'
+										}
+										$('#cityResult span').html(items[0].text + " " + items[1].text)
+										//返回 false 可以阻止选择框的关闭
+										//return false;
+									});
+								}, false);
+								//-----------------------------------------
+							}
+							plus.nativeUI.closeWaiting();
+						} else {
+							mui.toast(data.message);
+							plus.nativeUI.closeWaiting();
+
+						}
+					},
+					error: function(xhr, type, errorThrown) {
+						console.log('响应失败  !');
+						plus.nativeUI.closeWaiting();
+
+					}
+				});
+			}
+		})
+
+		Array.prototype.unique1 = function() {
+			var res = [this[0]];
+			for(var i = 1; i < this.length; i++) {
+				var repeat = false;
+				for(var j = 0; j < res.length; j++) {
+					if(this[i] == res[j]) {
+						repeat = true;
+						break;
+					}
+				}
+				if(!repeat) {
+					res.push(this[i]);
+				}
+			}
+			return res;
+		}
+	</script>
+
+</html>
