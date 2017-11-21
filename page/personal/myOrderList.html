@@ -1,0 +1,164 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>我的订单列表</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/configW.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/commonY.css">
+		<link rel="stylesheet" type="text/css" href="../../css/indexY.css">
+		<link rel="stylesheet" type="text/css" href="../../css/mui.min.css"/>
+		<link rel="stylesheet" href="../../css/resetY.css">
+		<style type="text/css">
+			.notice li.active{border-bottom: 2px solid #f63d41;box-sizing: border-box;color: #f63d41;}
+			.tab-hd{height: 45px !important;border-bottom: 1px solid #EFEFF4 !important;}
+			.tab-nav li{height: 45px !important;}
+			body{background-color: #f3f3f3;}
+			.mui-bar-nav{box-shadow: none !important;}
+			header.mui-bar{z-index: 200;}
+			.notice .tab-hdtwo li {width: 20%;}
+			.checkList{background-color: #fff;margin-top: 10px;}
+			.checkList h4{font-size: 14px;padding: 12px 10px;}
+			.checkList h4 .h4span3{float: right;color: red;}
+			.checkList h4 .h4span2{margin-left: 3%;}
+			.checkListCon{padding: 10px;}
+			.checkListCon img{width: 23%;float: left;margin-left: 1.6%;}
+			.checkListDZ{padding: 10px;color: #757575;}
+			.checkListB{padding: 10px 20px;text-align: right;}
+			#infoListDiv{transition: all .3s;}
+
+			#main{margin-top: 0px;border-top:1px solid #eee }
+			.rechargeConDiv{background-color: #fff;margin-top: 10px;line-height: 26px;padding: 10px;}
+		</style>
+
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav fineB" style="padding-right: 15px;">
+			<a id="leftbtn" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">我的订单</h1>
+		</header>
+		<script src="../../js/statusBar.js"></script>
+		<!--<div class="mui-content">
+			<div style="background: white;padding: 15px;">当前余额：<span id='balance'></span> <span class="mui-pull-right ft14 activecl">我要充值</span></div>
+		</div>-->
+		<div id="main" style="padding-top: 50px !important;">
+			<div class="notice">
+				<div class="tab-hd tab-hdtwo" id="tabLink">
+					<ul class="tab-nav">
+					  <li class="active aClick " data-statusId="">全部</li>
+					  <li class="aClick" data-statusId="1">待付款</li>
+					  <li class="aClick" data-statusId="1">待收货</li>
+					  <li class="aClick" data-statusId="1">已完成</li>
+					  <li class="aClick" data-statusId="1">已取消</li>
+					</ul>
+				</div>
+				<!--列表loading-->
+				<div id="loadingdiv" style="text-align: center;font-size: 14px;height:32px;
+					line-height: 30px;color: #666;-webkit-transition: all .3s;overflow: hidden;">
+					<img style="width: 30px;margin-top:5px;" src="../../img/Rolling.svg"/>
+				</div>
+				<!--列表loading结束-->
+				<div id="infoListDiv"><!--内容-->
+					ss
+				</div>
+				<script id="infoList" type="text/html">
+					<%for(var i=0;i<list.length;i++){%>
+						<div class="rechargeConDiv">
+							<p>充值时间: <%= list[i].createTime%></p>
+							<p>充值金额: <%= list[i].changeMoney%></p>
+							<p>充值方式: <%= list[i].type%></p>
+						</div>
+					<%}%>
+				</script>
+				<script id="infoList2" type="text/html">
+					<%for(var i=0;i<list.length;i++){%>
+						<div class="rechargeConDiv">
+							<p>消费时间: <%= list[i].createTime%></p>
+							<p>订单编号: <%= list[i].orderNumber%></p>
+							<p>消费金额: <%= list[i].changeMoney%></p>
+							<p>消费方式: <%= list[i].type%></p>
+						</div>
+					<%}%>
+				</script>
+			</div>
+		</div>
+		<script src="../../js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/default.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/artTemplate-native.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			mui.init();
+			mui.plusReady(function(){
+				//获取缓存
+				var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
+				var userId = plus.storage.getItem('$userId');
+				var oldToken = plus.storage.getItem('oldToken');
+
+				//tab切换
+				//初始化
+				if(identityT == 6){
+					var url = '/app/customer/PreDeposit/recharge/log';
+				}else if(identityT == 0){
+					var url = '/app/employee/PreDeposit/recharge/log';
+				}
+				loadFun(url,'tab1');
+				$('#tabLink li').click(function(){
+					$('#tabLink li').removeClass('active');
+					$(this).addClass('active');
+					$('#loadingdiv').css('height','32px');
+					if($(this).index() == 0){
+						if(identityT == 6){
+							var url = '/app/customer/PreDeposit/recharge/log';
+						}else if(identityT == 0){
+							var url = '/app/employee/PreDeposit/recharge/log';
+						}
+						loadFun(url,'tab1');
+					}else{
+						if(identityT == 6){
+							var url = '/app/customer/PreDeposit/consumption/log';
+						}else if(identityT == 0){
+							var url = '/app/employee/PreDeposit/consumption/log';
+						}
+						loadFun(url,'tab2');
+					}
+				})
+				function loadFun(url,tabT){
+					mui.ajax(serverUrl + url,{
+						data:{'userId':userId,'identityType':identityT},
+						dataType:'json',
+						type:'post',
+						timeout:1000,
+						headers:{"Authorization":oldToken},
+						success:function(data,type,xhr){
+							console.log(data);
+							var timeLoad = setInterval(function(){
+								clearTimeout(timeLoad),timeLoad = null;
+								if(data.code == 0){
+									$('#loadingdiv').css('height','0px');
+									if(data.content && data.content.length){
+										if(tabT == 'tab1'){
+											//document.getElementById('infoListDiv').innerHTML = template('infoList',{list:data.content});
+										}else if(tabT == 'tab2'){
+											//document.getElementById('infoListDiv').innerHTML = template('infoList2',{list:data.content});
+										}
+									}else{
+										//document.getElementById('infoListDiv').innerHTML = '<div style="text-align: center;padding: 50px;"><img src="../../images/order/order.png" style="width: 100px;" /><div class="ft13 disablecl">暂无数据</div></div>';
+									}
+								}else{
+									mui.toast(data.message);
+								}
+							},500)
+						},
+						error:function(xhr,type,errorThrown){
+							console.log('响应失败  !');
+						}
+					});
+				}
+			})
+		</script>
+	</body>
+
+</html>

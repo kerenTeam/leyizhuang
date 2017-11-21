@@ -169,7 +169,7 @@
 				<div class="">
 					退货
 				</div>
-				<div class="">
+				<div class="" onclick="openOrder()">
 					所有订单
 				</div>
 			</div>
@@ -316,7 +316,7 @@
 						浏览记录
 					</div>
 				</div>
-				
+
 			</div>
 			<!--配送员-->
 			<div class="centerList distributionN"  style="display: none;">
@@ -349,7 +349,11 @@
 		<script src="js/default.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
 			//分类订单
-			function typeOrder(type) {
+			function openOrder(){
+				openview({
+					view:'page/personal/myOrderList.html',
+					id: 'myOrderList',
+				})
 			}
 			//顾客 收藏
 			function goCollect(){
@@ -458,7 +462,7 @@
 					id: 'history',
 				})
 			}
-			
+
 			mui.plusReady(function() {
 				document.addEventListener('refresh', function() {
 					Refresh();
