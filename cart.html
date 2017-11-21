@@ -11,7 +11,9 @@
 		<link rel="stylesheet" type="text/css" href="css/style.css" />
 		<link rel="stylesheet" type="text/css" href="css/configW.css" />
 	</head>
-
+<style type="text/css">
+	 .goodsInfor h2{margin-bottom: 5px!important;}
+</style>
 	<body>
 
 		<header class="mui-bar mui-bar-nav">
@@ -21,7 +23,7 @@
 		</header>
 		<script src="js/statusBar.js"></script>
 		<!--状态栏-->
-		<div style="height:50px;"></div>
+		<div style="height:45px;"></div>
 		<div class="flexwc">
 			<div class="cartOne">
 				<img src="img/check2.png" /> 下料清单
@@ -33,6 +35,43 @@
 				<img src="img/check1.png" /> 结算
 			</div>
 		</div>
+		<div id="auditList"></div>
+		<script type="text/html" id="auditTpl">
+		 
+				<dl class="cart">
+					<dt><div class="mui-checkbox"><input name="checkbox" class="groupCheck" data-id="<%=lists.auditNo%>" checked="true" disabled="" type="checkbox"></div>
+					<div class="shopName" style="white-space: nowrap;overflow: hidden;max-width:2.5rem;"><%=lists.worker%></div>
+					 </dt>
+					<%for(var j=0;j<lists.goodsList.length;j++){%>
+					<dd>
+						<div class="mui-checkbox" style="top: 30%;">
+							<input name="checkbox" data-id="<%=lists.goodsList[j].goodsId%>" checked="true" disabled="" type="checkbox"></div>
+							<a class="goodsPic"><img src="<%=lists.goodsList[j].coverImageUri%>" onerror="javascript:this.src='img/editset.png';" /></a>
+							<div class="goodsInfor">
+								<h2 class="ft16">  
+							     <%=lists.goodsList[j].skuName%>
+							   </h2>
+								<div class="priceArea">
+									<div class="extraBrief ft14">
+										单位：
+										<%=lists.goodsList[j].goodsUnit%>；规格：
+										<%=lists.goodsList[j].goodsSpecification%>
+									</div>
+									<strong>¥<span class="price"><%=lists.goodsList[j].retailPrice%></span></strong>
+									<div class="numberWidget">
+										<div class="mui-numbox" data-numbox-min='1'>
+											<button class="mui-btn mui-btn-numbox-minus" type="button">-</button>
+											<input class="mui-input-numbox" data-id="<%=lists.goodsList[j].id%>" value="<%=lists.goodsList[j].qty%>" type="number" />
+											<button class="mui-btn mui-btn-numbox-plus" type="button">+</button>
+										</div>
+									</div>
+								</div>
+							</div>
+							<a class="delBtn" data-id="<%=lists.goodsList[j].id%>">删除</a>
+					</dd>
+					<%}%>
+				</dl>
+		</script>
 		<div id="cartData"></div>
 		<script type="text/html" id="cartTpl">
 
@@ -43,12 +82,12 @@
 						<input name="checkbox" type="checkbox" data-id='<%=list[i].goodsId%>'></div>
 					<a class="goodsPic"><img src="<%=list[i].coverImageUri%>" onerror="javascript:this.src='img/editset.png';" /></a>
 					<div class="goodsInfor">
-						<h2 class="ft14">  
-							    <a><%=list[i].skuName%></a>
-							    
-							   </h2>
+						<h2 class="ft16">  
+					    <%=list[i].skuName%>
+					    
+					   </h2>
 						<div class="priceArea">
-							<div class="extraBrief ft13">
+							<div class="extraBrief ft14">
 								单位：
 								<%=list[i].goodsUnit%>；规格：
 								<%=list[i].goodsSpecification%>
@@ -92,13 +131,11 @@
 			if(page == 1) {
 				$('#fanhui').show()
 			}
-			//		plus.storage.removeItem('$cartStorage')
 			window.addEventListener('refresh', function(event) {
 				cartload();
 			});
 			var tipsCont = '<div><img src="images/blankCart.png" style="width:30%;margin: auto;display: block;margin-top: 40%;" alt="" /><div style="color: #666;text-align: center;margin-top: 30px;font-size: 14px;">你的下料清单还是空的哦</div></div>';
 			cartload();
-
 			function cartload() {
 				$('.editAll').show().html('编辑');
 				//获取缓存
@@ -122,15 +159,21 @@
 						plus.nativeUI.closeWaiting();
 						console.log('下料清单返回', data);
 						if(data.code == 0) {
-							if(data.content && data.content.length) {
-								for(var i in data.content) {
-									if(!data.content[i].retailPrice) {
-										data.content[i].retailPrice = 1;
-									}
+							if(data.content) {
+								if(data.content.auditListRes && data.content.auditListRes.goodsList && data.content.auditListRes.goodsList.length){
+									$('#auditList').html(template('auditTpl', {lists:data.content.auditListRes}));
 								}
-								$('#cartData').html(template('cartTpl', {
-									list: data.content
-								}));
+								if(data.content.materialListRes && data.content.materialListRes.length){
+									for(var i in data.content.materialListRes) {
+										if(!data.content.materialListRes[i].retailPrice) {
+											data.content.materialListRes[i].retailPrice = 1;
+										}
+									}
+									$('#cartData').html(template('cartTpl', {
+										list: data.content.materialListRes
+									}));
+								}
+								
 								$('.mui-checkbox input').attr('checked', true);
 								countFuc();
 								plus.storage.setItem('cartNums', $(".totalNum").html());

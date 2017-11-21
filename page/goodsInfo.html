@@ -13,8 +13,8 @@
 		<link rel="stylesheet" type="text/css" href="../css/mui.min.css"/> 
 		<link rel="stylesheet" type="text/css" href="../css/commonY.css"> 
 		<link rel="stylesheet" href="../css/resetY.css" />
-		<link rel="stylesheet" type="text/css" href="../css/configW.css"/> 
 		 <link rel="stylesheet" type="text/css" href="../css/style.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/configW.css"/> 
 	</head>
 	<style type="text/css">
 		.baocun{text-align:right;}
@@ -26,28 +26,26 @@
 		.follow:after{position:absolute;right:10px;bottom:0;left:10px;height:1px;background:#cacaca;content:'';-webkit-transform:scaleY(.3);}
 		.follow:last-child:after{height:0;}
 		.fchidl{display:flex;align-items:center;justify-content:space-between;}
-		.userAvator{margin-right:10px;width:2.5rem;height:2.5rem;border-radius:50%;}
-		.userAvator3{margin-right:10px;width:2rem;height:2rem;border-radius:50%;}
+		.userAvator{margin-right:10px;width:45px;height:45px;border-radius:50%;}
 		.fchidl>div{display:flex;vertical-align:middle;text-align:left;font-size:15px;align-items:center;}
 		.text{color:#999;}
   		.flexrr{display: flex;justify-content: space-between;align-items: center;padding: 15px 0;}
   		.flexrr>div img{width: 20px;vertical-align: middle;}
   		.cmtall img{width: 25px;margin-right: 5px;}
   		.cmtflex{display: flex;justify-content: space-between;align-items: center;}
-  		.ctc span{color: #fb7e23;}
+  		.fchidl2 .ctc img{width: 25;}
   		ul{list-style: none;padding: inherit;margin: 0;}
 	   	.diybtn{background: url(../img/makeFriend/follow.png) no-repeat;background-size: 100% 100%;background-position: left top;color: white;padding: 4px 22px;}
   		.diybtn2{background: url(../img/makeFriend/unfollw.png) no-repeat;background-size: 100% 100%;background-position: left top;color: #31c58b;padding: 4px 22px;}
 		.yhm{width:calc((100vw - 50px)/3);width:-webkit-calc((100vw - 50px)/3);width:-moz-calc((100vw - 50px)/3);height: calc((100vw - 20px)/3);height: -webkit-calc((100vw - 20px)/3);height: -moz-calc((100vw - 20px)/3);margin-left: 5px;margin-top:10px ;}
 		.giveBk{background: url(../img/makeFriend/give.png) no-repeat;background-size: 100% 100%;background-position: left top;color: #31c58b;padding: 6px 25px;color: white;}
-		.fchidl2{display: flex;}
+		.fchidl2{display: flex;vertical-align: baseline;}
 		.fchidl2 .butright{flex-grow: 1;}
 		.fchidl2 .btop{display: flex;justify-content: space-between;align-items: center;}
-		.fchidl3 .btop{display: flex;justify-content: flex-start!important;align-items: center;}
 		.opbot{display: flex;height: 50px;align-items:center;position: fixed;bottom: 0;left: 0;right: 0;background-color: white;box-shadow: 0px 1px 1px 1px #EEEEEE;}
 		.opbf{flex-grow: 1;display: flex;justify-content: space-around;align-items: center;}
 		.opbf>div{flex: 1;text-align: center;}
-		.opbb{width: calc(100vw * 0.8);width: -webkit-calc(100vw * 0.8);width: -moz-calc(100vw * 0.8);text-align: center;background-color: #f93a38;color: white!important;height: 100%;line-height: 50px;}
+		.opbb{width: calc(100vw * 0.6);width: -webkit-calc(100vw * 0.6);width: -moz-calc(100vw * 0.6);text-align: center;background-color: #f93a38;color: white!important;height: 100%;line-height: 50px;}
 		.writecmt{flex-grow: 1;background: url(../img/makeFriend/cmtbor.png) no-repeat bottom;padding: 5px;max-height: 80px;overflow-y: scroll;}
 		.opbot img{width: 25px;height:25px;margin: 0 3px;vertical-align: middle;}
 		.follow .maincl{letter-spacing: 0.4px;line-height: 1.5;}
@@ -66,16 +64,22 @@
 		}
 		#goodsInfo{margin: 10px 0;background-color: white;padding: 10px;}
 		#goodsInfo img{width: 100%;}
+		.specif{display: flex;justify-content: space-between;background-color: #F6F7F8;padding: 10px;}
+		.specif div{flex: 1;}
+		.goodstit{padding:0 5px;border-left: 5px solid #AE0100;margin: 5px 0;}
+		#collt img{vertical-align: middle;width: 25px;}
+		.cmtImg{padding: 10px 0;} 
+		.cmtImg img{width: 4em;height: 4em;border-radius: 3px;display: inline-block;}
 	</style>
 
-	<body style="background-color: white;">
+	<body>
 
 		<header class="mui-bar mui-bar-nav" id="header">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left bigSize back"></a>
 			<h1 class="mui-title findUser">商品详情</h1>
 		</header>
 		<script src="../js/statusBar.js"></script><!--状态栏-->
-		<div class="mui-content" style="margin-bottom: 60px;">
+		<div class="mui-content">
 			<div id="moll_info"></div>
 			
 			<script type="text/html" id="infoTpl">
@@ -106,15 +110,21 @@
 					<%}%>
 				</div>
 				<!--轮播图结束-->
-				<div id="brief" style="background: white;padding: 15px;font-size: 14px;">
-					<%=dataobj.skuName%><br/>
-					<span>价格：¥<%=dataobj.price%>  规格：<%=dataobj.goodsSpecification%>  单位：<%=dataobj.goodsUnit%><br/></span>
+				<div id="brief" style="background: white;padding: 10px;">
+					<div class="ft18"><%=dataobj.skuName%></div>
+					<div class="activecl2 ft16"><strong>¥<%=dataobj.price%></strong></div>
+				</div>
+				<div class="ft16 specif">
+					<div>
+						<span class="maincl">规格：</span><%=dataobj.goodsSpecification%>
+					</div>
+					<div>
+						<span class="maincl">单位：</span><%=dataobj.goodsUnit%>
+					</div>  
 				</div>
 				<!--详情-->
 				<div id="goodsInfo">
-					<div style="line-height: 0.8;"> 
-						<div class="ft14">商品详情</div> 
-					</div>
+					<div class="ft16 goodstit">商品详情</div> 
 					<% for(var i=0;i<dataobj.coverImageUriList.length;i++){ %>
 						<%if(dataobj.coverImageUriList[i]){%>
 							<img src="<%=dataobj.coverImageUriList[i]%>" alt="" />
@@ -125,76 +135,54 @@
 				</div>
 			</script>
     			<!--留言--> 
-			<div class="follow cmtflex">
-				<div style="text-align: center;line-height: 0.8;"> 
-					<div class="ft14">评论</div> 
+			<div class="afterBorder" style="padding: 10px;background-color: white;">
+				<div class="ft16 goodstit">商品评价</div> 
+				<div id="curShow" style="padding-bottom:60px;"></div>
+				<div  style="padding-bottom:60px;">
+					<div class="follow"> 
+						<div class="fchidl2">
+							<img src="https://b-ssl.duitang.com/uploads/item/201605/21/20160521214413_LQz2c.thumb.700_0.jpeg" class="userAvator"/>
+							<div class="butright">
+								<div class="btop">
+					            		<b class="ft14">xxx</b> <span class="disablecl">xxxxx</span>
+					            	</div>
+				            	<div class="maincl ft14">xxx</div>
+				            	<div class="cmtImg">
+								<img src="https://b-ssl.duitang.com/uploads/item/201605/21/20160521214413_LQz2c.thumb.700_0.jpeg" alt="" />
+								<img src="https://b-ssl.duitang.com/uploads/item/201605/21/20160521214413_LQz2c.thumb.700_0.jpeg" alt="" />
+							</div>
+				           </div> 
+						</div>
+						
+					</div>
 				</div>
 			</div>
-			<div id="curShow"></div>
 		 	<script type="text/html" id="cmtTpl">
-		 		
 		 		<%for(var i=0;i<list.length;i++){%>
-					<%if(!list[i].commontid){%>
-						<div class="follow ft12"> 
-							<div class="fchidl2">
-								<div class="ctc">
-									<img src="<%=list[i].avatar%>" class="userAvator loadPics"/>
-								</div> 
-								<div class="butright">
-									<div class="ft12 btop">
-					            		<b class="ft14"><%=list[i].nickname%></b> <span class="disablecl"><%=list[i].create_time%></span>
+					<div class="follow"> 
+						<div class="fchidl2">
+							<img src="https://b-ssl.duitang.com/uploads/item/201605/21/20160521214413_LQz2c.thumb.700_0.jpeg" class="userAvator"/>
+							<div class="butright">
+								<div class="btop">
+					            		<b class="ft14">xxx</b> <span class="disablecl">xxxxx</span>
 					            	</div>
-					            	<div class="maincl ft14" data-toName="<%=list[i].nickname%>" data-userId="<%=list[i].userid%>" data-cmtId="<%=list[i].id%>"><%=list[i].commont%></div>
-					           </div> 
-							</div>
+				            	<div class="maincl ft14">xxx</div>
+				           </div> 
 						</div>
-						<%}else{%>
-							 
-							<div class="follow ft12"> 
-	                            <div class="fchidl2">
-	                                <div class="ctc">
-	                                    <img src="<%=list[i].avatar%>" class="userAvator loadPics"/>
-	                                </div> 
-	                                <div class="butright">
-	                                    <div class="ft12 btop">
-	                                        <b class="ft14"><%=list[i].nickname%></b> <span class="disablecl"><%=list[i].create_time%></span>
-	                                    </div>
-	                                    <div class="maincl ft14" data-toName="<%=list[i].nickname%>" data-userId="<%=list[i].userid%>" data-cmtId="<%=list[i].id%>"><%=list[i].commont%></div>
-	                                    <div class="cmtChild" data-toUserId="<%=list[i].touserid%>" data-toCmtId="<%=list[i].commontid%>"></div>
-	                               </div> 
-	                            </div>
-	                        </div>
-							 
-							<%}%> 
+						<div>
+							<img src="https://b-ssl.duitang.com/uploads/item/201605/21/20160521214413_LQz2c.thumb.700_0.jpeg" data-preview-src="" data-preview-group="1" alt="" />
+							<img src="https://b-ssl.duitang.com/uploads/item/201605/21/20160521214413_LQz2c.thumb.700_0.jpeg" data-preview-src="" data-preview-group="1" alt="" />
+						</div>
+					</div>
 					<%}%>
 		 	</script> 
-			 <!--子留言-->
-            <script type="text/html" id="cmtChildTpl">
-                
-                <%for(var i=0;i<list.length;i++){%> 
-                         
-                        <div class="fchidl2 fchidl3">
-                            <div class="ctc">
-                                <img src="<%=list[i].avatar%>" class="userAvator3 loadPics"/>
-                            </div> 
-                            <div class="butright">
-                                <div class="ft12 btop">
-                                    <b><%=list[i].nickname%></b>
-                                </div>
-                                <div class="maincl ft12"><%=list[i].commont%></div>
-                           </div> 
-                        </div>
-                    <%}%>
- 
-            </script>
-			  
 		</div>
 		 
 		<!--底部-->
-		<div class="opbot maincl ft14">
-			<div class="opbf ft12">
+		<div class="opbot maincl ft16">
+			<div class="opbf">
 				<div id='collt' data-id='0'>
-					收藏
+					<img src="../img/weizan.png"/>收藏
 				</div>
 			
 			</div>
@@ -332,7 +320,7 @@
 						plus.nativeUI.closeWaiting();
 						if(data.content){
 							if(data.content.isCollect){
-								$('#collt').html('取消收藏').attr('data-id','1')
+								$('#collt').html('<img src="../img/zan.png"/>取消收藏').attr('data-id','1')
 							}
 							if(data.content.rotationImageUriList){
 								for(var i in data.content.rotationImageUriList){
@@ -366,39 +354,7 @@
 					console.log('响应失败');
 				}
 			});
-			$('#cmtedup').click(function(){
-					mui.prompt('null','请输入留言','留言',['确认','取消'],function(e) {
-						if(e.index == 0) { 
-							if(e.value && e.value!=' '){
-								var commont = e.value; 
-				    			mui.ajax(serverUrl + '/api/friends/newscomment', {
-				    				data:{newsId:infiId,userid:myuserid,commont:commont},
-									dataType: 'json',
-									type: 'POST',
-									timeout: 8000,
-									headers: {"token": oldToken,'city': cityNum},
-									success: function(data, type, xhr) {
-										console.error('留言详情', data);
-										 
-										if(data.errno == 0) { 
-							    			mui.toast('留言成功'); 
-							    			getCmt();
-										}else{
-											mui.toast('当前网络不好,请重试');
-										}
-									},
-									error: function(xhr, type, errorThrown) {
-										console.error('留言列表,响应失败');
-										mui.toast('当前网络不好,请重试');
-									}
-								});
-							}else{
-								mui.toast('留言失败')
-							}
-						} 
-					},'')
-				
-	    		})
+			
 		    	//收藏
 		    	$('#collt').click(function(){
 		    		if($(this).attr('data-id') == 0){
@@ -418,7 +374,7 @@
 							if(data.code == 0 ){
 								plus.nativeUI.closeWaiting();
 								$('#collt').attr('data-id','1');
-								$('#collt').html('取消收藏');
+								$('#collt').html('<img src="../img/zan.png"/>取消收藏');
 								mui.toast('收藏成功');
 							}
 							if(data.code == 1000 ){
@@ -451,7 +407,7 @@
 								plus.nativeUI.closeWaiting();
 								$('#collt').attr('data-id','0');
 								mui.toast('取消成功');
-								$('#collt').html('收藏')
+								$('#collt').html('<img src="../img/weizan.png"/>收藏')
 							}
 							if(data.code == 1000 ){
 								mui.toast(data.message)
@@ -471,7 +427,6 @@
 	    
 			//加入购物车
 			$('.shop-btn').click(function(){
-				
 				mui.ajax(serverUrl+'/app/materialList/add',{
 					data:{
 						userId:userId,
@@ -490,7 +445,6 @@
 							$(".am-share").removeClass("am-modal-active");
 							$(".sharebg ").removeClass("sharebg-active");							
 							mui.fire(plus.webview.getWebviewById('cart.html'), 'refresh');
-							 
 						}else{
 							mui.toast(data.message)
 						}
@@ -499,10 +453,40 @@
 					error:function(xhr,type,errorThrown){
 						plus.nativeUI.closeWaiting();
 						mui.toast(type)
-						console.log('登录响应失败');
+						console.log('响应失败');
 					}
 				});
 			})
+			
+			//获取评论
+			mui.ajax(serverUrl+'/app/order/evaluation/goods/list',{
+				data:{
+					gid:goodid
+				},
+				dataType:'json',
+				headers: {"Authorization": oldToken},
+				type:'post',
+				timeout:10000,
+				success:function(data,type,xhr){ 
+					plus.nativeUI.closeWaiting();
+					console.log('评论列表',data);
+					if(data.code == 0 ){
+					 	if(data.content && data.content.length){
+					 		
+					 	}else{
+					 		mui('#curShow')[0].innerHTML = '<div style="font-size:14px;color:gray;padding:5%;text-align: center;"><img width="60" src="../img/nocmt.svg" /><br/><br/>暂无评论</div>'
+					 	}
+					}else{
+						mui.toast(data.message)
+					}
+					 
+				},
+				error:function(xhr,type,errorThrown){
+					plus.nativeUI.closeWaiting();
+					mui.toast(type)
+					console.log('响应失败');
+				}
+			});
 		}) 
 		
 		//发布时间判断 
@@ -538,7 +522,7 @@
 			 }
 			return result;
 		}
-//		 		mui.previewImage(); 
+		 		mui.previewImage(); 
 		
 	</script>
 
