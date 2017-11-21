@@ -77,14 +77,7 @@
 			margin-right: 0.1rem;
 			display: none;
 		}
-		.preDeposit{width: 38%!important;margin-top: -4px;height: 30px!important;text-align: right;padding: none!important;}
-		.cart dd{border-bottom: none;}
-	    .mui-radio.mui-left label{
-			padding-left: 47px;
-		}
-		.psw{margin-top: -8px;margin-right: -13px;}
-		.mui-table-view-cell.mui-active{background-color: none!important;border-radius:0!important ;}
-		.mui-table-view-cell.mui-collapse .mui-collapse-content{margin: 11px -15px -15px;}
+		.preDeposit{width: 40%!important;margin: 0;height: 18px!important;text-align: right;padding: none!important;}
 	</style>
 
 	<body>
@@ -94,7 +87,6 @@
 			<h1 class="mui-title">确认订单</h1>
 		</header>
 		<!--状态栏-->
-		<script src="../../js/statusBar.js" type="text/javascript" charset="utf-8"></script>
 	 	<div class="mui-content">
 			<div class="flexwc margBot5">
 				<div class="cartOne">
@@ -111,12 +103,12 @@
 			<script type="text/html" id="cartTpl">
 	
 				<dl class="cart">
-					<div style="max-height: 300px;overflow-y: scroll;">
+					<div class="afterBorder" style="max-height: 300px;overflow-y: scroll;">
 						<%for(var i=0;i<list.length;i++){%>
-							<dd class="afterBorder goodsbgc">
+							<dd>
 								<a class="goodsPic" style="margin-left: auto;"><img src="<%=list[i].coverImageUri%>" onerror="javascript:this.src='../../images/img.svg';" /></a>
 								<div class="goodsInfor" style="margin-left: 0.9rem!important;">
-							    			<span class="ft15 goodname"><%=list[i].goodsName%></span>
+							    			<span class="ft16 goodname"><%=list[i].goodsName%></span>
 								    		<%if(list[i].isGift){%>
 								    			<em class="mui-badge mui-badge-danger mui-pull-right" style="color: white;">赠品</em>
 								    		<%}%>
@@ -135,9 +127,9 @@
 								</div>
 							</dd>
 							<%}%>
-					</div>
-					<div class="pad10 ft16">
-						共<span id='totalGoods' class="activecl"><%=totalQty%></span>件商品  <span class="mui-pull-right">商品总金额：<span class="activecl" id="totalPrice">¥<%=totalPrice%></span><span class="mui-icon mui-icon-arrowright maincl ft18" onclick="materialList()"></span></span>
+					</div> 
+					<div class="pad10 ft15">
+						共<span id='totalGoods' class="activecl"><%=totalQty%></span>件商品 订单总金额：<span class="activecl" id="totalPrice">¥<%=totalPrice%></span> <span class="mui-pull-right activecl" onclick="materialList()">查看全部</span>
 					</div>
 					<div style="clear: both;"></div>
 				</dl>
@@ -145,60 +137,63 @@
 			<div style="background: white;">
 				<div class="pad10 ft15 afterBorder">
 					<em>配送方式 </em>
-					<div class="mui-input-row mui-radio mui-left mui-pull-right psw">
+					<div class="mui-input-row mui-radio mui-left mui-pull-right" style="margin-top: -8px;">
 						<label>自提</label>
 						<input name="peis" type="radio" value="1">
 					</div>
-					<div class="mui-input-row mui-radio mui-left mui-pull-right psw">
+					<div class="mui-input-row mui-radio mui-left mui-pull-right" style="margin-top: -8px;">
 						<label>送货上门</label>
 						<input name="peis" type="radio" value="2" checked="">
 					</div>
 				</div>
 				<div style="clear: both;"></div>
-				<div class="pad10 ft15 afterBorder flexr" id="chooseStore" style="display: none;">
+				<div class="pad10 ft15 afterBorder" id="chooseStore" style="display: none;">
 					<em>选择门店 </em>
-					<div style="display: flex;align-items: center;">
-						<select style="padding: 0;direction: rtl!important;">
-						  <option value="">选择</option>
-						</select>
-						<span class="mui-icon mui-icon-arrowdown mui-pull-right ft16"></span> 
-					</div>
+					<select style="float: right;margin-top: -10px;width: 40%;text-align: right!important;">
+					  <option value="">选择</option>
+					</select>
+					 
 				</div>
-				<div id="add_info" class="afterBorder"></div>
+				<div id="add_info"></div>
 				<script type="text/html" id="addrTpl">
 					<%if(obj.length==0){%>
 					<div class="qtop flexr pad10" onclick="address()">
-						<div style="flex: 1;">
-							<div class="maincl ft15">
-								<span class="maincl"></span>
-								<span class="maincl"></span>
+						<div style="flex: 1;margin-left: 10px;">
+							<div class="maincl ft16">
+								<span class="disablecl"></span>
+								<span class="disablecl"></span>
 							</div>
-							<div class="ft15">
-								<span class="maincl">请选择收获地址</span>
+							<div class="ft16">
+								<span class="disablecl">请选择收获地址</span>
 							</div>
 						</div>
-						<span class="mui-icon mui-icon-arrowright maincl ft20"></span>
+						<div class="">
+							<img src="../../images/center/right.svg" alt="" />
+						</div>
 					</div>
 					<%}else{%>
 					<div class="qtop flexr pad10" onclick="address()" id="addid" data-id="<%=obj[0].id%>" data-receiver="<%=obj[0].person%>" data-receiverPhone="<%=obj[0].phone%>" data-deliveryCity="<%=obj[0].city%>" data-deliveryCounty="<%=obj[0].country%>" data-deliveryStreet="<%=obj[0].street%>" data-residenceName="<%=obj[0].villageName%>" data-detailedAddress="<%=obj[0].address%>">
-						<div style="flex: 1;">
-							<div class="ft15">
-								<span class="titcl"><%=obj[0].person%></span>
-								<span class="titcl"><%=obj[0].phone%></span>
+						<div style="flex: 1;margin-left: 10px;">
+							<div class="maincl ft16">
+								<span class="disablecl"><%=obj[0].person%></span>
+								<span class="disablecl"><%=obj[0].phone%></span>
 							</div>
-							<div class="ft15">
-								<span class="titcl"><%=obj[0].province%><%=obj[0].city%><%=obj[0].country%><%=obj[0].street%><%=obj[0].villageName%><%=obj[0].address%></span>
+							<div class="ft16">
+								<span class="disablecl"><%=obj[0].province%><%=obj[0].city%><%=obj[0].country%><%=obj[0].street%><%=obj[0].villageName%><%=obj[0].address%></span>
 							</div>
 						</div>
-						<span class="mui-icon mui-icon-arrowright maincl ft20"></span>
+						<div class="">
+							<img src="../../images/center/right.svg" alt="" />
+						</div>
 					</div>
 	
 					<%}%>
 				</script>
-				<div id='cityResult' class="ui-alert pad10 afterBorder ft15">配送时间<span class="mui-icon mui-icon-arrowdown maincl mui-pull-right ft16"></span><span class="mui-pull-right pstime">选择</span></div>
-				<div class="mui-input-row mui-checkbox afterBorder ft15">
-					<label style="padding: 18px 10px;">是否主家收货</label>
-					<input name="checkbox1" style="top: 12px;right: 12px;" class="mui-pull-right" value="Item 1" type="checkbox" checked>
+	
+				<div id='cityResult' class="ui-alert pad10 afterBorder">配送时间 <span class="mui-pull-right">选择</span></div>
+				<div class="mui-input-row mui-checkbox mui-left afterBorder">
+					<label>是否业主收货</label>
+					<input name="checkbox1" value="Item 1" type="checkbox" checked>
 				</div>
 				<div class="pad10 activecl ft13">
 					温馨提示：若收货人为主家，系统将在出货打印单中自动隐藏折扣信息
@@ -206,12 +201,11 @@
 				
 			</div>
 			<div style="background-color: white;margin-top: 5px;">
-				<div class="pad10 ft16 afterBorder">账单明细<span class="mui-icon mui-icon-arrowdown maincl mui-pull-right"></span> </div>
-				<div class="pad_5 ft15 maincl">订单金额<span class='mui-pull-right pad_r10' id="totalPriceb">¥--</span> </div>
-				<div class="pad_5 ft15 maincl">会员折扣<span class='mui-pull-right pad_r10' id="memberDiscount">¥--</span></div>
-				<div class="pad_5 ft15 maincl">订单折扣<span class='mui-pull-right pad_r10' id="orderDiscount">¥--</span></div>
-				<div class="pad_5 ft15 maincl">运费<span class='mui-pull-right pad_r10' id="freight">¥--</span></div>
-				<div class="pad_5 ft15 maincl">上楼费<span class='mui-pull-right pad_r10' id="upstar">依现实情况收取</span></div>
+				<div class="pad_5 ft16 afterBorder">订单金额:<span class='mui-pull-right pad_r10' id="totalPriceb">¥--</span> </div>
+				<div class="pad_5 ft16 afterBorder">会员折扣:<span class='mui-pull-right pad_r10' id="memberDiscount">¥--</span></div>
+				<div class="pad_5 ft16 afterBorder">订单折扣:<span class='mui-pull-right pad_r10' id="orderDiscount">¥--</span></div>
+				<div class="pad_5 ft16 afterBorder">运费:<span class='mui-pull-right pad_r10' id="freight">¥--</span></div>
+				<div class="pad_5 ft16">上楼费:<span class='mui-pull-right pad_r10' id="upstar">依现实情况收取</span></div>
 	
 			</div>
 			<div id="elseDiscount" style="margin-top: 5px;"></div>
@@ -223,8 +217,8 @@
 						<div class="mui-card afterBorder" style="border: none!important;box-shadow: none;">
 							<ul class="mui-table-view">
 								<%if(cashCouponList && cashCouponList.length){%>
-									<li class="mui-table-view-cell mui-collapse pad10">
-										<a class="mui-navigate-right" style="padding: 10px 15px;" href="#">优惠券<span class="fr" style="margin-right: 15px;">选择</span></a>
+									<li class="mui-table-view-cell mui-collapse">
+										<a class="mui-navigate-right" style="padding: 10px;" href="#">优惠券<span class="fr" style="margin-right: 15px;">选择</span></a>
 										<div class="mui-collapse-content">
 											<%for(var j = 0; j<cashCouponList.length;j++){%>
 												<div class="checkQuan mui-row" data-id="<%=j+1%>" >
@@ -258,35 +252,34 @@
 						<%}%>
 					</div>
 					<%if(lebi && lebi.quantity && lebi.rebate){%>
-						<div id="coupon" class="afterBorder">
-							<dd class="pad10 kv-line-r">
-								<div class="titcl">共<span id="totalJfen" style="color: #ff5f32;" id="totalJfen"><%=lebi.quantity%></span>乐币,抵用<span id="itMinus" style="color: #ff5f32;"><span>￥<%=lebi.rebate%></span></span></div>
+						<div id="coupon">
+							<dd class="dd-padding kv-line-r">
+								<h6>一共<span id="totalJfen" style="color: #F14A43;" id="totalJfen"><%=lebi.quantity%></span>乐币,抵用<span id="itMinus" style="color: #ff5f32;"><span>￥<%=lebi.rebate%></span></span></h6>
 								<div id="changeJf" class="mui-checkbox"><input name="checkbox" class="groupCheck" type="checkbox"></div>
 							</dd>
 						</div>
 					<%}else{%>
-						<div id="coupon" class="afterBorder">
-							<dd class="pad10 kv-line-r">
+						<div id="coupon">
+							<dd class="dd-padding kv-line-r">
 								<h6>无乐币</h6>
-								<div class="mui-checkbox"><input name="checkbox" style="right: 10px;" class="groupCheck" type="checkbox" disabled=""></div>
+								<div class="mui-checkbox"><input name="checkbox" class="groupCheck" type="checkbox" disabled=""></div>
 							</dd>
 						</div>
 					<%}%>
-					<div class="pad10 ft16 activecl" style="text-align: right;">合计：<span id="totalOrderAmount">¥--</span></div>
-					<div style="height: 5px;background: #EEEEEE;"></div>
-
-					<div class="pad10 ft14 afterBorder">预存款<span class='activecl' id="preDepositb">¥--</span><input placeholder="请输入大于0的整数" onchange="maxC(this)" onkeyup="onlyNum(this)"
-					onafterpaste="pastNum(this)" class='mui-pull-right preDeposit'/></div>
+					<div style="height: 5px;background: #F3F3F3;"></div>
+					<div class="pad10 ft14 afterBorder">订单金额小计<span class='activecl mui-pull-right pad_r10' id="totalOrderAmount">¥--</span></div>
+					<div class="pad10 ft14 afterBorder">预存款<span class='activecl' id="preDepositb">¥--</span><input placeholder="请输入大于0的整数"  onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}"
+					onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'0')}else{this.value=this.value.replace(/\D/g,'')}" class='mui-pull-right preDeposit'/></div>
 					<!--only manager-->
-					<div class="pad10 ft14 afterBorder manager" style="display: none;">信用金<span class='activecl' id="credit">¥--</span><input placeholder="请输入大于0的整数"  onchange="maxC(this)" onkeyup="onlyNum(this)"
-					onafterpaste="pastNum(this)" class='mui-pull-right preDeposit'/></div>
-					<div class="pad10 ft14 afterBorder manager" style="display: none;">现金返利<span class='activecl' id="cash">¥--</span><input placeholder="请输入大于0的整数"  onchange="maxC(this)" onkeyup="onlyNum(this)"
-					onafterpaste="pastNum(this)" class='mui-pull-right preDeposit'/></div>
+					<div class="pad10 ft14 afterBorder manager" style="display: none;">信用金<span class='activecl' id="credit">¥--</span><input placeholder="请输入大于0的整数"  onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}"
+					onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'0')}else{this.value=this.value.replace(/\D/g,'')}" class='mui-pull-right preDeposit'/></div>
+					<div class="pad10 ft14 afterBorder manager" style="display: none;">现金返利<span class='activecl' id="cash">¥--</span><input placeholder="请输入大于0的整数"  onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}"
+					onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'0')}else{this.value=this.value.replace(/\D/g,'')}" class='mui-pull-right preDeposit'/></div>
 					<!--only guide-->
-					<div class="pad10 ft14 afterBorder guide" style="display: none;">信用额度<span class='activecl' id="cash">¥--</span><input placeholder="请输入大于0的整数"  onchange="maxC(this)" onkeyup="onlyNum(this)"
-					onafterpaste="pastNum(this)" class='mui-pull-right preDeposit'/></div>
-					<div class="pad10 ft14 afterBorder guide" style="display: none;">代收金额<span class='activecl' id="cash">¥--</span><input placeholder="请输入大于0的整数"  onchange="maxC(this)" onkeyup="onlyNum(this)"
-					onafterpaste="pastNum(this)" class='mui-pull-right preDeposit'/></div>
+					<div class="pad10 ft14 afterBorder guide" style="display: none;">信用额度<span class='activecl' id="cash">¥--</span><input placeholder="请输入大于0的整数"  onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}"
+					onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'0')}else{this.value=this.value.replace(/\D/g,'')}" class='mui-pull-right preDeposit'/></div>
+					<div class="pad10 ft14 afterBorder guide" style="display: none;">代收金额<span class='activecl' id="cash">¥--</span><input placeholder="请输入大于0的整数"  onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}"
+					onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'0')}else{this.value=this.value.replace(/\D/g,'')}" class='mui-pull-right preDeposit'/></div>
 					
 				</dl>
 			</script>
@@ -311,24 +304,6 @@
 	</body>
 
 	<script>
-		function maxC(obj){
-			var cur = $(obj);
-			var maxCh = cur.prev().html().replace('¥','');
-			if(obj.value > maxCh){
-				mui.toast('输入正确的金额')
-				obj.value = '';
-			}
-		}
-		function onlyNum(obj){
-			if(obj.value.length==1){
-				obj.value=obj.value.replace(/[^1-9]/g,'')
-			}else{
-				obj.value=obj.value.replace(/\D/g,'')
-			}
-		}
-		function pastNum(){
-			if(obj.value.length==1){obj.value=obj.value.replace(/[^1-9]/g,'0')}else{obj.value=obj.value.replace(/\D/g,'')}
-		}
 		function materialList() {
 			openview({
 				view: 'elseMaterialList.html',
@@ -654,12 +629,10 @@
 								cityResult.addEventListener('tap', function(event) {
 									cityPicker.show(function(items) {
 										$('#cityResult').attr('data-id', '1');
-										 if(!items[1].text){
-										 	alert('当天无可选时间段')
-										 }else{
-										 	$('#cityResult .pstime').html(items[0].text + " " + items[1].text)
-										 }
-										
+										if(!items[1].text){
+											items[1].text = '不可选'
+										}
+										$('#cityResult span').html(items[0].text + " " + items[1].text)
 										//返回 false 可以阻止选择框的关闭
 										//return false;
 									});

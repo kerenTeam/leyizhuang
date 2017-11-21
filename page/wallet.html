@@ -40,7 +40,7 @@
 			<a id="leftbtn" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<h1 class="mui-title">钱包</h1>
 		</header>
-		<script src="../js/statusBar.js"></script>
+		<script src="../js/statusBar.js" type="text/javascript" charset="utf-8"></script>
 		<div class="mui-content">
 			<div style="background: white;padding: 15px;">当前余额：<span id='balance'></span> <span class="mui-pull-right ft14 activecl">我要充值</span></div>
 		</div>
@@ -138,7 +138,7 @@
 				//初始化
 				if(identityT == 6){
 					var url = '/app/customer/PreDeposit/recharge/log';
-				}else if(identityT == 0){
+				}else if(identityT == 2){
 					var url = '/app/employee/PreDeposit/recharge/log';
 				}
 				loadFun(url,'tab1');
@@ -149,14 +149,14 @@
 					if($(this).index() == 0){
 						if(identityT == 6){
 							var url = '/app/customer/PreDeposit/recharge/log';
-						}else if(identityT == 0){
+						}else if(identityT == 2){
 							var url = '/app/employee/PreDeposit/recharge/log';
 						}
 						loadFun(url,'tab1');
 					}else{
 						if(identityT == 6){
 							var url = '/app/customer/PreDeposit/consumption/log';
-						}else if(identityT == 0){
+						}else if(identityT == 2){
 							var url = '/app/employee/PreDeposit/consumption/log';
 						}
 						loadFun(url,'tab2');

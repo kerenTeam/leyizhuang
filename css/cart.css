@@ -1637,6 +1637,9 @@ nav .userIcon:before {
 	color: #999;
 	display: block;
 }
+.goodsbgc{
+	background-color: #F9F9F9;
+}
 
 .cart-content .mui-card {
 	margin: 0;
@@ -1739,4 +1742,7 @@ dt .mui-checkbox {
 .cartLogo{
 	width: 22px;
 	vertical-align: middle; 
+}
+.goodname{
+	word-break: break-all;
 }

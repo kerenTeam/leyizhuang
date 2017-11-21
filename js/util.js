@@ -25,15 +25,15 @@ var util = {
 			temp = {};
 			
 		//兼容安卓上添加titleNView 和 设置沉浸式模式会遮盖子webview内容
-		if(mui.os.android) {
-			if(plus.navigator.isImmersedStatusbar()) {
-				subpage_style.top += plus.navigator.getStatusbarHeight();
-			}
-			if(self.getTitleNView()) {
-				subpage_style.top += 40;
-			}
-			
-		}
+//		if(mui.os.android) {
+//			if(plus.navigator.isImmersedStatusbar()) {
+//				subpage_style.top += plus.navigator.getStatusbarHeight();
+//			}
+//			if(self.getTitleNView()) {
+//				subpage_style.top += 40;
+//			}
+//			
+//		}
 
 		// 初始化第一个tab项为首次显示
 		temp[self.id] = "true";

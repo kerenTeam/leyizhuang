@@ -101,7 +101,7 @@
 
 	<body>
 		<header class="mui-row mui-bar mui-bar-transparent hasManyCity" id="header" style="z-index: 200;">
-			<div class="searchBox" onclick="goSearch()" style="z-index:1;position: absolute;top: 7px;left: 20px;right: 20px;">
+			<div class="searchBox" onclick="goSearch()" style="z-index:1;position: absolute;top: 27px;left: 20px;right: 20px;">
 				<div style="background-color: rgba(0,0,0,0.1);font-size: 12px;height: 30px;width: 100%;border-radius: 5px;text-align: center;line-height: 30px;">
 					<span class="mui-icon mui-icon-search" style="vertical-align: middle;font-size:20px;padding-top: 7px;"></span>
 				</div>
@@ -330,7 +330,6 @@
 				<div class="qtop flexr">
 					<div class="ft16" style="display: flex;align-items: center;">
 						<img class="Avator" src="<%=dataList[i].pic%>" />
-
 						<div style="flex: 1;margin-left: 10px;">
 							<div class="maincl ft16">
 								<span class=""><%=dataList[i].title%></span>
@@ -340,7 +339,6 @@
 							</div>
 						</div>
 					</div>
-
 				</div>
 			</div>
 			<%}%>
@@ -727,7 +725,7 @@
 											mui.fire(plus.webview.getWebviewById('page/goodList.html'), 'refresh');
 											mui.fire(plus.webview.getWebviewById('center.html'), 'refresh');
 											mui.fire(plus.webview.getWebviewById('cart.html'), 'refresh');
-
+											loadIndex();
 											util.initSubpage();
 										}
 									},
@@ -759,6 +757,7 @@
 											mui.fire(plus.webview.getWebviewById('page/goodList.html'), 'refresh');
 											mui.fire(plus.webview.getWebviewById('center.html'), 'refresh');
 											util.initSubpage();
+											loadIndex();
 										} else if(data.code == -1) {
 											plus.nativeUI.closeWaiting();
 											mui.toast(data.message);
@@ -784,7 +783,7 @@
 						}
 
 					}
-					loadIndex();
+					
 				} //登录方法结束
 
 				loadIndex();

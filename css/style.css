@@ -68,3 +68,5 @@ body {
 }
 .flexr{display:flex;width:100%;background-color:white;justify-content:space-between;color: #303030;align-items: center;}
 .qtop img{width: 20px!important;}
+textarea{border: none;}
+header{background-color: white!important;}
