@@ -1,0 +1,190 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>我的订单列表</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/configW.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/commonY.css">
+		<link rel="stylesheet" type="text/css" href="../../css/indexY.css">
+		<link rel="stylesheet" type="text/css" href="../../css/mui.min.css"/>
+		<link rel="stylesheet" href="../../css/resetY.css">
+		<style type="text/css">
+			.notice .tab-hdtwo li {width: 20%;color: #747474;font-size: 15px;}
+			.notice li.active{border-bottom: 2px solid #c7161e;box-sizing: border-box;color: #c7161e;}
+			.tab-hd{height: 45px !important;border-bottom: 1px solid #EFEFF4 !important;}
+			.tab-nav li{height: 45px !important;}
+			body{background-color: #fff;}
+			.mui-bar-nav{box-shadow: none !important;}
+			header.mui-bar{z-index: 200;}
+			.checkList{background-color: #fff;margin-top: 10px;}
+			.checkList h4{font-size: 14px;padding: 12px 10px;}
+			.checkList h4 .h4span3{float: right;color: red;}
+			.checkList h4 .h4span2{margin-left: 3%;}
+			.checkListCon{padding: 10px;}
+			.checkListCon img{width: 23%;float: left;margin-left: 1.6%;}
+			.checkListDZ{padding: 10px;color: #757575;}
+			.checkListB{padding: 10px 20px;text-align: right;}
+			#infoListDiv{transition: all .3s;}
+
+			#main{margin-top: 0px;border-top:1px solid #eee }
+			.rechargeConDiv{background-color: #fff;margin-top: 10px;line-height: 26px;padding: 10px;}
+			.notice .tab-hd{background-color: #eee;}
+			/*订单*/
+			.orderList{border-top: 8px solid #eee;}
+			.orderList:first-child{border-top: none;}
+			.orderList .h3{font-size: 15px;padding: 15px;}
+			.orderList .h3 span{float: right;color: #c7161e;}
+			.orderList .p1{margin: 0 15px;background-color: #f4f4f4;padding: 8px;position: relative;}
+			.orderList .p1 a{display: inline-block; width: calc(100vw*0.2);height: calc(100vw*0.2);}
+			.orderList .p1 img{width: 100%;height: 100%;}
+			.orderList .p1 span{position: absolute;top: 0;right: 0;background-color: #c7161e;color: #eae4e4;padding: 2px 2px 0 2px;font-size: 14px;}
+			.orderInfo{text-align: right;padding: 12px 15px 0px;color: #848484;font-size: 16px;}
+			.orderInfo span{color: #333;}
+			.orderBtns{text-align: right;padding: 12px 15px;border-bottom: 1px solid #eee;}
+			.orderBtns span{display: inline-block;color: #666;border:1px solid #d2cfcf; border-radius: 2px;width: 82px;text-align: center;padding: 5px 0 4px;font-size: 15px;}
+			.orderBtns span.redC{color: #c7161e;border-color: #c7161e;}
+		</style>
+
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav fineB" style="padding-right: 15px;">
+			<a id="leftbtn" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">我的订单</h1>
+		</header>
+		<script src="../../js/statusBar.js"></script>
+		<!--<div class="mui-content">
+			<div style="background: white;padding: 15px;">当前余额：<span id='balance'></span> <span class="mui-pull-right ft14 activecl">我要充值</span></div>
+		</div>-->
+		<div id="main" style="padding-top: 48px !important;">
+			<div class="notice">
+				<div class="tab-hd tab-hdtwo" id="tabLink">
+					<ul class="tab-nav">
+					  <li class="active aClick " data-statusId="">全部</li>
+					  <li class="aClick" data-statusId="1">待付款</li>
+					  <li class="aClick" data-statusId="1">待收货</li>
+					  <li class="aClick" data-statusId="1">已完成</li>
+					  <li class="aClick" data-statusId="1">已取消</li>
+					</ul>
+				</div>
+				<!--列表loading-->
+				<div id="loadingdiv" style="text-align: center;font-size: 14px;height:32px;
+					line-height: 30px;color: #666;-webkit-transition: all .3s;overflow: hidden;">
+					<img style="width: 30px;margin-top:5px;" src="../../img/Rolling.svg"/>
+				</div>
+				<!--列表loading结束-->
+				<div id="infoListDiv"><!--内容-->
+
+				</div>
+				<script id="infoList" type="text/html">
+					<%for(var i=0;i<list.length;i++){%>
+						<% if(nowState == '全部' || nowState == list[i].status){ %>
+							<div class="orderList">
+								<h3 class="h3" onclick="openDetail()">
+									订单编号：<%= list[i].orderNo%>
+									<span><%= list[i].status%></span>
+								</h3>
+								<p class="p1" onclick="openDetail()">
+									<% if(list[i].goodsImgList && list[i].goodsImgList.length){%>
+										<%for(var j=0; j<list[i].goodsImgList.length; j++){%>
+											<a><img class="loadPics" data-src="<%= list[i].goodsImgList[j]%>"/></a>
+										<%} %>
+									<% }else{%>
+										<a><img class="loadPics" data-src="https://b-ssl.duitang.com/uploads/item/201711/08/20171108102304_FTzw4.thumb.224_224_c.jpeg"/></a>
+									<% }%>
+									<span>10分钟后关闭订单</span>
+								</p>
+								<div class="orderInfo">
+									共<%= list[i].count%>件商品 实付款：<span>¥ <%= list[i].price%></span>
+								</div>
+								<div class="orderBtns">
+									<span>取消订单</span>
+									<span>再来一单</span>
+									<span class="redC">去支付</span>
+								</div>
+							</div>
+						<%}%>
+						<!--没有相关状态-->
+						<% if(i == list.length-1 && nowState != '全部' && nowState != list[i].status){ %>
+							<div style="text-align: center;padding: 50px;">
+								<img src="../../images/order/order.png" style="width: 100px;" />
+								<div class="ft13 disablecl">暂无数据</div>
+							</div>
+						<% } %>
+					<%}%>
+				</script>
+
+			</div>
+		</div>
+		<script src="../../js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/default.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/artTemplate-native.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/youxd.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			//打开详情
+			function openDetail(){
+				openview({
+					view:'myOrderDetail.html',
+					id:'myOrderDetail'
+				})
+			}
+			mui.init();
+			mui.plusReady(function(){
+				//获取缓存
+				var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
+				var userId = plus.storage.getItem('$userId');
+				var oldToken = plus.storage.getItem('oldToken');
+
+				//tab切换
+				loadFun('全部');//初始化
+				$('#tabLink li').click(function(){
+					$('#tabLink li').removeClass('active');
+					$(this).addClass('active');
+					$('#loadingdiv').css('height','32px');
+					if($(this).index() == 0){
+						loadFun('全部');
+					}else if($(this).index() == 1){
+						loadFun('待付款');
+					}else if($(this).index() == 2){
+						loadFun('待收货');
+					}
+				})
+				function loadFun(tabT){
+					mui.ajax(serverUrl + '/app/order/list',{
+						data:{'userID':1,'identityType':identityT},
+						dataType:'json',
+						type:'post',
+						timeout:1000,
+						headers:{"Authorization":oldToken},
+						success:function(data,type,xhr){
+							console.log('订单',data);
+							var timeLoad = setInterval(function(){
+								clearTimeout(timeLoad),timeLoad = null;
+								if(data.code == 0){
+									$('#loadingdiv').css('height','0px');
+									if(data.content && data.content.length){
+										document.getElementById('infoListDiv').innerHTML = template('infoList',{list:data.content,nowState:tabT});
+									}else{
+										document.getElementById('infoListDiv').innerHTML = '<div style="text-align: center;padding: 50px;"><img src="../../images/order/order.png" style="width: 100px;" /><div class="ft13 disablecl">暂无数据</div></div>';
+									}
+									lazyLoad();
+								}else{
+									mui.toast(data.message);
+								}
+							},500)
+						},
+						error:function(xhr,type,errorThrown){
+							console.log('响应失败  !');
+							$('#loadingdiv').css('height','0px');
+						}
+					});
+				}
+			})
+		</script>
+	</body>
+
+</html>

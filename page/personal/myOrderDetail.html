@@ -1,0 +1,158 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>我的订单详情</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/configW.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/commonY.css">
+		<link rel="stylesheet" type="text/css" href="../../css/indexY.css">
+		<link rel="stylesheet" type="text/css" href="../../css/mui.min.css"/>
+		<link rel="stylesheet" href="../../css/resetY.css">
+		<style type="text/css">
+			body{background-color: #F8F9FA;font-size: 15px;}
+			.Dpart1{padding: 15px 15px 5px;background-color: #fff;line-height: 2.5;margin-bottom: 7px;}
+			.Dpart1 h4{font-size: 16px;}
+			.Dpart1 h4 span{color: #AC0100;}
+			.Dpart1 h4 span.span1{text-decoration: underline;margin-left: 10px;}
+			.Dpart1 p span.span2{float: right;}
+			.Dpart2{padding: 2px 15px;}
+			.huiC{color:#8f8f94}
+			.Dpart3{padding: 10px 15px;background-color: #fff;line-height: 1.8;margin-bottom: 7px;}
+			.redC{color: #AC0100;}
+			.floL{float: right;}
+			.proWrapAll{background-color: #fff;margin-bottom: 10px;}
+			.proWrap{display: flex;padding: 15px;}
+			.proLeft{flex: 2;}
+			.proLeft img{width: 100%;height: 100%;}
+			.proRight{flex: 5;padding-left: 20px;}
+			.proRight h4{display: -webkit-box;-webkit-box-orient: vertical;-webkit-line-clamp: 2;overflow: hidden;font-size: 16px;line-height: 1.3;}
+			.proRight p, .proRight div{margin-top: 2%;}
+			.proRight div .span2{float: right;color: #7F8080;}
+			.proRight div .span1{font-size: 18px;color: #EE9000;}
+			.footBtn{text-align: right;padding: 10px 12px;border-bottom: 1px solid #eee;background-color: #fff;position: fixed;bottom: 0;width: 100%;    box-shadow: 0 0 2px rgba(175, 166, 166, 0.85) !important;}
+			.footBtn span{display: inline-block;color: #666;border:1px solid #d2cfcf; border-radius: 2px;width: 82px;text-align: center;padding: 5px 0 4px;font-size: 15px;}
+			.footBtn span.redC{color: #c7161e;border-color: #c7161e;}
+			.Dpart1 h4:after{content: '复制';}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav fineB" style="padding-right: 15px;">
+			<a id="leftbtn" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">订单详情</h1>
+		</header>
+		<script src="../../js/statusBar.js"></script>
+
+		<div id="main">
+			<div class="Dpart1">
+				<h4 style="-webkit-user-select: all;">
+					订单编号：123jbvhbvknsknvk
+					<span style="-webkit-user-select: all;" class="span1">长按复制</span>
+
+				</h4>
+				<p>
+					下单时间：2017年10月14号  20:23:34
+					<span class="span2" style="color: #EE9000;">待付款</span>
+				</p>
+			</div>
+			<div class="Dpart1 Dpart2">
+				<span class="huiC">支付方式：</span> 支付宝
+			</div>
+			<div class="Dpart3">
+				<div>
+					<span class="huiC">收货人：</span>张亮 17781459874
+				</div>
+				<div>
+					<span class="huiC">提货码：</span> <span class="redC">HBGUHB</span>
+				</div>
+				<div>
+					<span class="huiC">配送方式：</span> 送货上门
+				</div>
+				<div>
+					<span class="huiC">配送地址：</span> 地址地址地址地址
+				</div>
+				<div>
+					<span class="huiC">配送时间：</span> 时间时间时间时间
+				</div>
+			</div>
+			<div class="Dpart4 Dpart3">
+				<div>
+					<span class="huiC">商品总额：</span> <span class="floL">¥450</span>
+				</div>
+				<div>
+					<span class="huiC">运费：</span> <span class="floL">¥450</span>
+				</div>
+				<div>
+					<span class="huiC">优惠卷抵扣：</span> <span class="floL">¥450</span>
+				</div>
+				<div>
+					<span class="huiC">乐豆抵扣：</span> <span class="floL">¥450</span>
+				</div>
+				<div>
+					<span class="huiC">产品卷抵扣：</span> <span class="floL">¥450</span>
+				</div>
+				<div>
+					<span class="huiC">预存款抵扣：</span> <span class="floL">¥450</span>
+				</div>
+				<div>
+					<span class="redC">应付金额：</span> <span class="floL redC">¥450</span>
+				</div>
+			</div>
+			<div class="fineT" style="text-align: right;background-color: #fff;margin-top: -7px;padding: 10px 15px;margin-bottom: 7px;">
+				实付款：<span class="redC">¥4000</span>
+			</div>
+			<div class="proWrapAll">
+				<div class="proWrap fineB">
+					<div class="proLeft">
+						<img src="https://b-ssl.duitang.com/uploads/item/201711/08/20171108102304_FTzw4.thumb.224_224_c.jpeg"/>
+					</div>
+					<div class="proRight">
+						<h4>产品产品产品产品产品产品产品产品产品产品产品产品产品产品产品产品产品产品</h4>
+						<p>规格：18ml  单位：桶</p>
+						<div class="">
+							<span class="span1">¥450</span>
+							<span class="span2">x3</span>
+						</div>
+					</div>
+				</div>
+				<div class="proWrap fineB">
+					<div class="proLeft">
+						<img src="https://b-ssl.duitang.com/uploads/item/201711/08/20171108102304_FTzw4.thumb.224_224_c.jpeg"/>
+					</div>
+					<div class="proRight">
+						<h4>产品产品产品产品产品产品产品产品产品产品产品产品产品产品产品产品产品产品</h4>
+						<p>规格：18ml  单位：桶</p>
+						<div class="">
+							<span class="span1">¥450</span>
+							<span class="span2">x3</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="footBtn">
+				<span class="aClick">取消订单</span>
+				<span class="aClick">再来一单</span>
+				<span class="redC aClick">查看物流</span>
+			</div>
+		</div>
+		<script src="../../js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/default.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/artTemplate-native.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+
+			mui.plusReady(function(){
+				var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
+				var userId = plus.storage.getItem('$userId');
+				var oldToken = plus.storage.getItem('oldToken');
+
+
+
+			})
+		</script>
+	</body>
+
+</html>
