@@ -23,10 +23,11 @@ body {
     height: 29px;
     padding:0 25px; 
     font-size:12px;
+    border:none!important; 
 }
 .mui-numbox [class*=btn-numbox], .mui-numbox [class*=numbox-btn]{
 	width: 30px;
-	font-size:14px;
+	font-size:20px;
 }
 .mui-numbox .mui-input-numbox, .mui-numbox .mui-numbox-input{
 	border:none!important;
@@ -34,7 +35,7 @@ body {
 }
 .flexwc{
 	background: white;
-	padding: 10px;
+	padding: 10px 30px;
 	display: flex;
 	justify-content: space-between;
 	font-size: 14px;
@@ -45,28 +46,72 @@ body {
 	display: block;
 	width: 35px;
 }
-.cartSecond{
+.cartSecond,.cartOne,.cartThird{
 	position: relative;
+}
+.cartOne:before{
+	position: absolute;
+	top: 20px;
+	height: 1px;
+	background-color: #EEEEEE;/*B42E28*/
+	right: 40px;
+	width: 60px;
+	content: '';
 }
 .cartSecond:before{
 	position: absolute;
-	top: 23px;
+	top: 20px;
 	height: 1px;
 	background-color: #EEEEEE;
-	right: 50px;
-	width: 80px;
+	right: 32px;
+	width: 108px;
 	content: '';
 }
 .cartSecond:after{
 	position: absolute;
-	top: 23px;
+	top:20px;
 	height: 1px;
 	background-color: #EEEEEE;
-	left: 50px;
-	width: 90px;
+	left: 35px;
+	width: 95px;
 	content: '';
+}
+.cartThird:after{
+	position: absolute;
+	top: 20px;
+	height: 1px;
+	background-color: #EEEEEE;/*B42E28*/
+	left: 30px;
+	width: 32px;
+	content: '';
+}
+.cartAct:after,.cartAct:before{
+	background-color: #B42E28;/*B42E28*/
+	
 }
 .flexr{display:flex;width:100%;background-color:white;justify-content:space-between;color: #303030;align-items: center;}
 .qtop img{width: 20px!important;}
 textarea{border: none;}
 header{background-color: white!important;}
+#phone .mui-input-clear~.mui-icon-clear, #phone .mui-input-password~.mui-icon-eye, #phone .mui-input-speech~.mui-icon-speech{
+	font-size: 20px;
+    position: absolute;
+    z-index: 1;
+    top: 22px;
+    right: 30%!important;
+    width: 38px;
+    height: 38px;
+    text-align: center;
+    color: #999;
+}
+.mui-input-row .mui-input-clear~.mui-icon-clear, .mui-input-row .mui-input-password~.mui-icon-eye, .mui-input-row .mui-input-speech~.mui-icon-speech{
+	font-size: 20px;
+    position: absolute;
+    z-index: 1;
+    top: 22px;
+    right: 0px;
+    width: 38px;
+    height: 38px;
+    text-align: center;
+    color: #999;
+}

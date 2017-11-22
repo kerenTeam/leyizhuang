@@ -25,20 +25,20 @@
 		<!--状态栏-->
 		<div style="height:45px;"></div>
 		<div class="flexwc">
-			<div class="cartOne">
+			<div class="cartOne cartAct">
 				<img src="img/check2.png" /> 下料清单
 			</div>
 			<div class="cartSecond">
 				<img src="img/check1.png" /> 选赠品
 			</div>
-			<div class="cartOne">
+			<div class="cartThird">
 				<img src="img/check1.png" /> 结算
 			</div>
 		</div>
 		<div id="auditList"></div>
 		<script type="text/html" id="auditTpl">
 		 
-				<dl class="cart">
+				<dl class="cart" style="background-color: #F8F8F8!important;">
 					<dt><div class="mui-checkbox"><input name="checkbox" class="groupCheck" data-id="<%=lists.auditNo%>" checked="true" disabled="" type="checkbox"></div>
 					<div class="shopName" style="white-space: nowrap;overflow: hidden;max-width:2.5rem;"><%=lists.worker%></div>
 					 </dt>
@@ -59,9 +59,9 @@
 									</div>
 									<strong>¥<span class="price"><%=lists.goodsList[j].retailPrice%></span></strong>
 									<div class="numberWidget">
-										<div class="mui-numbox" data-numbox-min='1'>
+										<div class="mui-numbox" data-numbox-min='1' style="background-color: #F3F3F3!important;">
 											<button class="mui-btn mui-btn-numbox-minus" type="button">-</button>
-											<input class="mui-input-numbox" data-id="<%=lists.goodsList[j].id%>" value="<%=lists.goodsList[j].qty%>" type="number" />
+											<input class="mui-input-numbox"style="background-color: #F3F3F3!important;" data-id="<%=lists.goodsList[j].id%>" value="<%=lists.goodsList[j].qty%>" type="number" />
 											<button class="mui-btn mui-btn-numbox-plus" type="button">+</button>
 										</div>
 									</div>
@@ -75,7 +75,7 @@
 		<div id="cartData"></div>
 		<script type="text/html" id="cartTpl">
 
-			<dl class="cart">
+			<dl class="cart selfCart">
 				<%for(var i = 0 ;i < list.length ; i++){%>
 				<dd>
 					<div class="mui-checkbox" style="top: 30%;">
@@ -229,6 +229,7 @@
 												if(data.code == 0) {
 													var curCart = delThis.parentsUntil("#cartData");
 													delThis.parent().remove();
+													allCart();
 													//判断该组商品是否删除完 
 													if(curCart.find("dd").length == 0) {
 														curCart.remove();
@@ -295,14 +296,11 @@
 							//总选
 							$('aside .mui-checkbox').click(function() {
 								if($(this).find("input").prop('checked') == false) {
-									$("dl input").attr("checked", false);
-									$(".totalNum").html(0);
-									$(".totalMoney").html(0);
+									$("dl.selfCart input").attr("checked", false);
 								} else {
-									$("dl input").attr("checked", true);
-									countFuc();
+									$("dl.selfCart input").attr("checked", true);
 								}
-
+								countFuc();
 							})
 							//数量选择 
 							$('.mui-numbox input').on('change', function() {

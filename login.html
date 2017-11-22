@@ -6,7 +6,9 @@
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<title></title>
 		<link href="css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="css/commonY.css" />
 		<link href="css/style.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="css/configW.css"/>
 		<style>
 			.area {
 				margin: 20px auto 0px auto;
@@ -22,12 +24,13 @@
 			
 			.mui-input-group label {
 				width: 22%;
+				border-right: 1px solid #EEEEEE;
 			}
 			
 			.mui-input-row label~input,
 			.mui-input-row label~select,
 			.mui-input-row label~textarea {
-				width: 78%;
+				width: 75%;
 			}
 			
 			.mui-checkbox input[type=checkbox],
@@ -53,6 +56,7 @@
 				color: #bbb;
 				padding: 0px 8px;
 			}
+			.mui-input-row{padding: 5px 0!important;height: 60px!important;}
 		
 		</style>
 
@@ -63,30 +67,22 @@
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<h1 class="mui-title">登录</h1>
 		</header>
+		<script src="js/statusBar.js" type="text/javascript" charset="utf-8"></script>
 		<div class="mui-content">
-			<form id='login-form' class="mui-input-group">
-				<div class="mui-input-row">
-					<label>账号</label>
-					<input id='account' type="text" class="mui-input-clear mui-input" placeholder="请输入账号">
+			<form id='login-form' class="mui-input-group ft16" style="margin-top: 7px;">
+				<div class="mui-input-row flexr">
+					<label>用户名</label>
+					<input id='account' type="text" class="mui-input-clear mui-input" placeholder="请输入用户名">
 				</div>
-				<div class="mui-input-row">
+				<div class="mui-input-row flexr">
 					<label>密码</label>
 					<input id='password' type="password" class="mui-input-clear mui-input" placeholder="请输入密码">
 				</div>
 			</form>
-			<!--<form class="mui-input-group">
-				<ul class="mui-table-view mui-table-view-chevron">
-					<li class="mui-table-view-cell">
-						自动登录
-						<div id="autoLogin" class="mui-switch">
-							<div class="mui-switch-handle"></div>
-						</div>
-					</li>
-				</ul>
-			</form>-->
+		 
 			<div class="mui-content-padded">
-				<button id='login' class="mui-btn mui-btn-block mui-btn-primary">登录</button>
-				<div class="link-area"><!--<a id='reg'>注册账号</a> <span class="spliter">|</span>--> <a id='forgetPassword'>忘记密码</a>
+				<button id='login' class="mui-btn mui-btn-block mui-btn-danger">登录</button>
+				<div class="link-area"><a id='forgetPassword'>忘记密码</a>
 				</div>
 			</div>
 			

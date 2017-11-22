@@ -1687,10 +1687,11 @@ dt .mui-checkbox {
 .mui-numbox [class*=numbox-btn] {
 	width: 25px;
 	line-height: 23px;
-    background-color: white;
+    background-color: #EEEEEE;
     color: gray!important;
-    border-radius: 50%;
-    border: 1px solid #d4cdcd;
+    border: none;
+    font-size: 16px;
+    
 }
 .mui-numbox [class*=btn-numbox][disabled], .mui-numbox [class*=numbox-btn][disabled]{
 	opacity: 1;

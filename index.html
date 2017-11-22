@@ -171,7 +171,7 @@
 
 		<!--顾客 和 项目经理-->
 		<div class="mui-content flexws ltac cusMan">
-			<div id="">
+			<div onclick="fastOrder()">
 				<div class="imgb" style="background-color:#7dc5eb"><img src="images/1.svg" alt="" /></div>快捷下单
 			</div>
 			<div class="gxb">
@@ -200,7 +200,7 @@
 		</div>
 		<!--工人-->
 		<div class="mui-content flexws ltac worker" style="display: ;">
-			<div id="">
+			<div onclick="fastOrder()">
 				<div class="imgb" style="background-color:#7dc5eb"><img src="images/1.svg" alt="" /></div>快捷下单
 			</div>
 			<div class="gxb">
@@ -225,7 +225,7 @@
 
 		<!--导购-->
 		<div class="mui-content flexws ltac guides" style="display: ;">
-			<div id="">
+			<div onclick="fastOrder()">
 				<div class="imgb" style="background-color:#7dc5eb"><img src="images/1.svg" alt="" /></div>快捷下单
 			</div>
 			<div class="gxb">
@@ -561,7 +561,12 @@
 		<script>
 			var Spagenum = 2; //实到页数
 			var Ypagenum = 1; //应到页数
-
+			function fastOrder(){
+				openview({
+					view:'page/fastOrder.html',
+					id:'fastOrder'
+				})
+			}
 			function paizhaoOrder() { //拍照下单
 				mui.plusReady(function() {
 					var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;

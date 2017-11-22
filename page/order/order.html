@@ -96,14 +96,14 @@
 		<!--状态栏-->
 		<script src="../../js/statusBar.js" type="text/javascript" charset="utf-8"></script>
 	 	<div class="mui-content">
-			<div class="flexwc margBot5">
-				<div class="cartOne">
-					<img src="../../img/check1.png" /> 下料清单
+			<div class="flexwc">
+				<div class="cartOne cartAct">
+					<img src="../../img/check2.png" /> 下料清单
 				</div>
-				<div class="cartSecond">
-					<img src="../../img/check1.png" /> 选赠品
+				<div class="cartSecond cartAct">
+					<img src="../../img/check2.png" /> 选赠品
 				</div>
-				<div class="cartOne">
+				<div class="cartThird">
 					<img src="../../img/check2.png" /> 结算
 				</div>
 			</div>
@@ -196,11 +196,11 @@
 					<%}%>
 				</script>
 				<div id='cityResult' class="ui-alert pad10 afterBorder ft15">配送时间<span class="mui-icon mui-icon-arrowdown maincl mui-pull-right ft16"></span><span class="mui-pull-right pstime">选择</span></div>
-				<div class="mui-input-row mui-checkbox afterBorder ft15">
+				<div class="mui-input-row mui-checkbox afterBorder ft15 isowndis">
 					<label style="padding: 18px 10px;">是否主家收货</label>
 					<input name="checkbox1" style="top: 12px;right: 12px;" class="mui-pull-right" value="Item 1" type="checkbox" checked>
 				</div>
-				<div class="pad10 activecl ft13">
+				<div class="pad10 activecl ft13 isowndis">
 					温馨提示：若收货人为主家，系统将在出货打印单中自动隐藏折扣信息
 				</div>
 				
@@ -251,11 +251,6 @@
 								
 							</ul>
 						</div>
-						<%if(productCouponList && productCouponList.length){%>
-							<div class="pad10 ft14 afterBorder">产品券<span class='mui-pull-right pad_r10' onclick="productCoupon()">选择></span></div>
-						<%}else{%>
-							<div class="pad10 ft14 afterBorder">产品券<span class='mui-pull-right pad_r10' onclick="productCoupon()">无</span></div>
-						<%}%>
 					</div>
 					<%if(lebi && lebi.quantity && lebi.rebate){%>
 						<div id="coupon" class="afterBorder">
@@ -283,9 +278,9 @@
 					<div class="pad10 ft14 afterBorder manager" style="display: none;">现金返利<span class='activecl' id="cash">¥--</span><input placeholder="请输入大于0的整数"  onchange="maxC(this)" onkeyup="onlyNum(this)"
 					onafterpaste="pastNum(this)" class='mui-pull-right preDeposit'/></div>
 					<!--only guide-->
-					<div class="pad10 ft14 afterBorder guide" style="display: none;">信用额度<span class='activecl' id="cash">¥--</span><input placeholder="请输入大于0的整数"  onchange="maxC(this)" onkeyup="onlyNum(this)"
+					<div class="pad10 ft14 afterBorder guide" style="display: none;">信用额度<span class='activecl' id="creditVal">¥--</span><input placeholder="请输入大于0的整数"  onchange="maxC(this)" onkeyup="onlyNum(this)"
 					onafterpaste="pastNum(this)" class='mui-pull-right preDeposit'/></div>
-					<div class="pad10 ft14 afterBorder guide" style="display: none;">代收金额<span class='activecl' id="cash">¥--</span><input placeholder="请输入大于0的整数"  onchange="maxC(this)" onkeyup="onlyNum(this)"
+					<div class="pad10 ft14 afterBorder guide" style="display: none;">代收金额<span class='activecl' id="cashHelp">¥--</span><input placeholder="请输入大于0的整数"  onchange="maxC(this)" onkeyup="onlyNum(this)"
 					onafterpaste="pastNum(this)" class='mui-pull-right preDeposit'/></div>
 					
 				</dl>
@@ -347,16 +342,6 @@
 			})
 		}
 
-		function productCoupon() {
-			openview({
-				view: '../personal/productCoupon.html',
-				id: 'productCoupon',
-				extrasobj: {
-					page: 'order'
-				}
-			})
-		}
-
 		mui.plusReady(function() {
 			var userId = plus.storage.getItem('$userId');
 			var oldToken = plus.storage.getItem("oldToken");
@@ -366,7 +351,7 @@
 			//获取料单商品
 			mui.ajax(serverUrl + '/app/order/enter', {
 				data: {
-					userId: 1,
+					userId: userId,
 					identityType: identityT,
 					goodsList: JSON.parse(idobj)
 				},
@@ -499,8 +484,25 @@
 						if(data.content.preDeposit){
 							$('#preDepositb').html('¥'+data.content.preDeposit)
 						}else{
-							$('#preDepositb').hide()
+							$('#preDepositb').html(0)
 						}
+						if(data.content.storePreDeposit){
+							$('#preDepositb').html('¥'+data.content.storePreDeposit)
+						}else{
+							$('#preDepositb').html(0)
+						}
+						if(data.content.storeCreditMoney){
+							$('#credit').html('¥'+data.content.storeCreditMoney)
+						}else{
+							$('#credit').html(0)
+						}
+						if(data.content.storeSubvention){
+							$('#cash').html('¥'+data.content.storeSubvention)
+						}else{
+							$('#cash').html(0);
+							$(this).next().attr('disabled',true)
+						}
+						
 					} else {
 						mui.toast(data.message);
 						plus.nativeUI.closeWaiting();
@@ -592,7 +594,7 @@
 							var addrObj = {};
 							if(data.code == 0 && data.content) {
 								$('#chooseStore').show();
-								$('#add_info').hide();
+								$('#add_info,.isowndis').hide();
 								var storeStr = '<option value="">选择</option>'; 
 								for (var i = 0;i<data.content.length;i++) {
 									storeStr += '<option value="'+data.content[i].storeId+'">'+data.content[i].storeName+'</option>'

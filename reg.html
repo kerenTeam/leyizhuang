@@ -6,35 +6,53 @@
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<title></title>
 		<link href="css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="css/commonY.css" />
 		<link href="css/style.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="css/configW.css" />
 		<style>
 			.area {
 				margin: 20px auto 0px auto;
 			}
+			
 			.mui-input-group:first-child {
 				margin-top: 20px;
 			}
+			
 			.mui-input-group label {
-				width: 32%;
+				width: 30%;
 			}
+			
 			.mui-input-row label~input,
 			.mui-input-row label~select,
 			.mui-input-row label~textarea {
-				width: 68%;
+				width: 65%;
 			}
+			
 			.mui-checkbox input[type=checkbox],
 			.mui-radio input[type=radio] {
 				top: 6px;
 			}
+			
 			.mui-content-padded {
 				margin-top: 25px;
 			}
+			
 			.mui-btn {
 				padding: 10px;
 			}
-			.mui-input-row label~input, .mui-input-row label~select, .mui-input-row label~textarea{
+			
+			.mui-input-row label~input,
+			.mui-input-row label~select,
+			.mui-input-row label~textarea {
 				margin-top: 1px;
 			}
+			
+			#getCode {
+				border: none;
+				border-left: 1px solid #eee;
+				font-size: 16px;
+			}
+			.mui-input-row{padding: 10px 0!important;height: 60px!important;}
 		</style>
 	</head>
 
@@ -43,31 +61,34 @@
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<h1 class="mui-title">注册</h1>
 		</header>
+		<script src="js/statusBar.js" type="text/javascript" charset="utf-8"></script>
 		<div class="mui-content">
-			<form class="mui-input-group">
-				
-				<div class="mui-input-row">
-					<label>手机号</label>
+			<form class="mui-input-group ft16" style="margin-top: 7px;">
+				<div class="mui-input-row flexr" id="phone">
 					<input id='account' type="text" class="mui-input-clear mui-input" placeholder="请输入手机号">
-					 
-				</div>             	
-                <div class="mui-input-row">
 					<label style="padding:4px 12px"><button type="button" id="getCode">获取验证码</button></label>
+				</div>
+				<div class="mui-input-row flexr">
 					<input id='checkcode' type="text" class="mui-input-clear mui-input" placeholder="请输入验证码">
-					 
-				</div> 
-				<div class="mui-input-row">
-					<label>城市选择</label>
+				</div>
+				<div class="mui-input-row flexr">
+					<label style="border-right: 1px solid #EEEEEE;width: 25%;">城市</label>
 					<select name="city" id="city">
+						<option value="">选择</option>
 					</select>
+					<span class="mui-icon mui-icon-arrowdown"></span>
+				</div>
+				<div class="mui-input-row flexr">
+					<label style="border-right: 1px solid #EEEEEE;width: 25%;">服务导购</label>
+					<input type="text" class="mui-input-clear mui-input" placeholder="请输入导购手机号（选填）">
 				</div>
 			</form>
-				<div style="color:#FF5053;padding: 15px;font-size: 12px;">
-					<div>温馨提示：城市选定后无法更改！</div>
-					<input type="checkbox" name="" id="protocol" value=""  style="vertical-align: middle;" checked=""/><span style="color: gray;">《用户注册协议》</span>
-				</div>
+			<div style="color:#FF5053;padding: 15px;font-size: 14px;">
+				<div>温馨提示：城市选定后无法更改！</div>
+				<input type="checkbox" name="" id="protocol" value="" style="vertical-align: middle;" checked="" /><span style="color: gray;">《用户注册协议》</span>
+			</div>
 			<div class="mui-content-padded">
-				<button id='sendMail' class="mui-btn mui-btn-block mui-btn-primary">注册</button>
+				<button id='sendMail' class="mui-btn mui-btn-block mui-btn-danger">注册</button>
 			</div>
 		</div>
 		<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
@@ -75,188 +96,201 @@
 		<script src="js/app.js"></script>
 		<script src="js/default.js" type="text/javascript" charset="utf-8"></script>
 		<script>
-			 
-				mui.init(); 
-				mui.plusReady(function() {
-					var reg_phone = /^1((3|4|5|8|7){1}\d{1}|70)\d{8}$/;//手机号正则;
-					var sendButton = document.getElementById('sendMail');
-					var account = document.getElementById('account');
-					var checkcode = document.getElementById('checkcode');
-					var getCode = document.getElementById('getCode');
-					var cityId = $('select option:selected').val() 
-					var newpsd = document.getElementById('newpsd');
-					var VerCode;
-					var codePhone = '';
-					var openId = plus.webview.currentWebview().openid;
-					var picUrl = plus.webview.currentWebview().picurl;
-					var sex = plus.webview.currentWebview().sex;
-					
-					if(sex == 1){
-						sex = true;
-					}else if(sex == 2){
-						sex = false 
-					}else{
-						sex = ''
-						
-					}
-					var nick = plus.webview.currentWebview().nick;
-					console.log(openId);
-					
-					//获取城市
-					mui.ajax(serverUrl+'/app/city/list',{
-						dataType:'json',
-						type:'post',
-						timeout:10000,
-						success:function(data,type,xhr){ 
-							console.log('城市列表返回',data);
-							if(data.content && data.content.length){
-								var cityStr = '';
-								for (var i = 0;i<data.content.length;i++) {
-									cityStr += '<option value="'+data.content[i].cityId+'">'+data.content[i].cityName+'</option>'
-									
-								}
-								$('#city').html(cityStr);
-								$('#city option').eq(0).attr('selected',true)
-								
+			mui.init();
+			mui.plusReady(function() {
+				var reg_phone = /^1((3|4|5|8|7){1}\d{1}|70)\d{8}$/; //手机号正则;
+				var sendButton = document.getElementById('sendMail');
+				var account = document.getElementById('account');
+				var checkcode = document.getElementById('checkcode');
+				var getCode = document.getElementById('getCode');
+				var cityId = $('select option:selected').val()
+				var newpsd = document.getElementById('newpsd');
+				var VerCode;
+				var codePhone = '';
+				var openId = plus.webview.currentWebview().openid;
+				var picUrl = plus.webview.currentWebview().picurl;
+				var sex = plus.webview.currentWebview().sex;
+
+				if(sex == 1) {
+					sex = true;
+				} else if(sex == 2) {
+					sex = false
+				} else {
+					sex = ''
+
+				}
+				var nick = plus.webview.currentWebview().nick;
+				console.log(openId);
+
+				//获取城市
+				mui.ajax(serverUrl + '/app/city/list', {
+					dataType: 'json',
+					type: 'post',
+					timeout: 10000,
+					success: function(data, type, xhr) {
+						console.log('城市列表返回', data);
+						if(data.content && data.content.length) {
+							var cityStr = '<option value="">选择</option>';
+							for(var i = 0; i < data.content.length; i++) {
+								cityStr += '<option value="' + data.content[i].cityId + '">' + data.content[i].cityName + '</option>'
+
 							}
-						},
-						error:function(xhr,type,errorThrown){
-						 
+							$('#city').html(cityStr);
+							$('#city option').eq(0).attr('selected', true)
+
 						}
-						
-					});
-					
-					account.addEventListener('input', function() {
-						if(reg_phone.test(account.value)){
-							getCode.removeAttribute('disabled')
-						}
-						
-					}, false);
-					
-					sendButton.addEventListener('tap', function() {
-						if(!account.value || !reg_phone.test(account.value)){
-							mui.toast('请输入正确的手机号')
-						}else if(!checkcode.value){
-							mui.toast('请输入验证码')
-						}else if(account.value != codePhone){
-							mui.toast('请重新获取验证码')
-						}else{
-								plus.nativeUI.showWaiting();
-								var cityId = $('#city').val();
-								mui.ajax(serverUrl+'/app/customer/registry',{//改密
-								data:{"phone":account.value,"openId":openId,'cityId':cityId,"picUrl":picUrl,"nickName":nick,"sex":sex},
-								dataType:'json',
-								type:'post',
-								timeout:10000,
-	//								headers: {"Authorization": plus.storage.getItem("oldToken")},
-								success:function(data){
-									console.log('注册返回',data);
-									if(data.code==1000){//
-										plus.nativeUI.closeWaiting();
-										 mui.toast(data.message);
-										 plus.webview.currentWebview().close(); 
-									}else if(data.code == 0){
-										plus.nativeUI.closeWaiting();
-										mui.toast('注册成功'); 
-										mui.ajax(serverUrl+'/app/customer/login',{
-											data:{"openId":openId},
-											dataType:'json',
-											type:'post',
-											timeout:10000,
-											success:function(data,type,xhr){ 
-												console.log('登录返回',data);
-												if(data.code == 0 && data.content.isExist){
-													plus.nativeUI.closeWaiting();
-													plus.storage.setItem('$userId',JSON.stringify(data.content.userId))
-													plus.storage.setItem("$identityType",JSON.stringify({'identityType':'6'}));
-													if(plus.webview.getWebviewById('identify')){
-														plus.webview.getWebviewById('identify').close();
-													}
-													plus.storage.setItem("oldToken",xhr.getResponseHeader('token'));
-													plus.storage.setItem("openId",openId);
-													plus.storage.removeItem('Acc_pass');
-													mui.fire(plus.webview.getWebviewById('page/goodList.html'),'refresh');
-													mui.fire(plus.webview.getWebviewById('center.html'),'refresh');	
-													mui.fire(plus.webview.getWebviewById('cart.html'), 'refresh');
-													
-													var index = plus.webview.getLaunchWebview();
-														mui.fire(index,'refresh');
-													var time2 = setTimeout(function(){
-														plus.nativeUI.closeWaiting();
-														openview({
-															view:'bindGuide.html',
-															id:'bindGuide'
-														})
-													},100)
-												 
-												}
-												
-											},
-											error:function(xhr,type,errorThrown){
-												console.log(xhr)
-												plus.nativeUI.closeWaiting();
-												console.log('登录响应失败');
-											}
-											
-										});
-							  
-									}else{
-										plus.nativeUI.closeWaiting();
-										mui.toast(data.message); 
-										plus.webview.currentWebview().close(); 
-										
-									}
-								},
-								error:function(xhr,type,errorThrown){
+					},
+					error: function(xhr, type, errorThrown) {
+
+					}
+
+				});
+
+				account.addEventListener('input', function() {
+					if(reg_phone.test(account.value)) {
+						getCode.removeAttribute('disabled')
+					}
+
+				}, false);
+
+				sendButton.addEventListener('tap', function() {
+					if(!account.value || !reg_phone.test(account.value)) {
+						mui.toast('请输入正确的手机号')
+					} else if(!checkcode.value) {
+						mui.toast('请输入验证码')
+					} else if(account.value != codePhone) {
+						mui.toast('请重新获取验证码')
+					} else {
+						plus.nativeUI.showWaiting();
+						var cityId = $('#city').val();
+						mui.ajax(serverUrl + '/app/customer/registry', { //改密
+							data: {
+								"phone": account.value,
+								"openId": openId,
+								'cityId': cityId,
+								"picUrl": picUrl,
+								"nickName": nick,
+								"sex": sex
+							},
+							dataType: 'json',
+							type: 'post',
+							timeout: 10000,
+							//								headers: {"Authorization": plus.storage.getItem("oldToken")},
+							success: function(data) {
+								console.log('注册返回', data);
+								if(data.code == 1000) { //
 									plus.nativeUI.closeWaiting();
-									mui.toast('注册失败');
+									mui.toast(data.message);
+									plus.webview.currentWebview().close();
+								} else if(data.code == 0) {
+									plus.nativeUI.closeWaiting();
+									mui.toast('注册成功');
+									mui.ajax(serverUrl + '/app/customer/login', {
+										data: {
+											"openId": openId
+										},
+										dataType: 'json',
+										type: 'post',
+										timeout: 10000,
+										success: function(data, type, xhr) {
+											console.log('登录返回', data);
+											if(data.code == 0 && data.content.isExist) {
+												plus.nativeUI.closeWaiting();
+												plus.storage.setItem('$userId', JSON.stringify(data.content.userId))
+												plus.storage.setItem("$identityType", JSON.stringify({
+													'identityType': '6'
+												}));
+												if(plus.webview.getWebviewById('identify')) {
+													plus.webview.getWebviewById('identify').close();
+												}
+												plus.storage.setItem("oldToken", xhr.getResponseHeader('token'));
+												plus.storage.setItem("openId", openId);
+												plus.storage.removeItem('Acc_pass');
+												mui.fire(plus.webview.getWebviewById('page/goodList.html'), 'refresh');
+												mui.fire(plus.webview.getWebviewById('center.html'), 'refresh');
+												mui.fire(plus.webview.getWebviewById('cart.html'), 'refresh');
+
+												var index = plus.webview.getLaunchWebview();
+												mui.fire(index, 'refresh');
+												var time2 = setTimeout(function() {
+													plus.nativeUI.closeWaiting();
+													openview({
+														view: 'bindGuide.html',
+														id: 'bindGuide'
+													})
+												}, 100)
+
+											}
+
+										},
+										error: function(xhr, type, errorThrown) {
+											console.log(xhr)
+											plus.nativeUI.closeWaiting();
+											console.log('登录响应失败');
+										}
+
+									});
+
+								} else {
+									plus.nativeUI.closeWaiting();
+									mui.toast(data.message);
+									plus.webview.currentWebview().close();
+
 								}
-							});
-						}
-						
-					}, false);
-					//获取验证码
-					getCode.addEventListener('tap',function(){
-						if(!account.value || !reg_phone.test(account.value)){
-							mui.toast('请输入正确的手机号')
-						}else{
-							 
-							getCode.setAttribute('disabled',true);
-							var time = 60,djs = null;
-							getCode.innerHTML = '倒计时'+time+'s';
-							djs = setInterval(function(){
-								if(time>0){
-									time--;
-									getCode.innerHTML = '倒计时'+time+'s';
-								}else{
-									getCode.innerHTML = '获取验证码';
-									getCode.removeAttribute('disabled');
-									time = 60;
-									clearInterval(djs)
-									djs = null;
-								}
-							},1000)
-							
-							//发送验证码 
-							mui.ajax('http://119.23.149.7:9999/app/qrcode/send',{
-								data:{mobile:account.value}, 
-								dataType:'json',
-								type:'post',
-								timeout:10000,
-								success:function(data){
-									codePhone = account.value;
-									console.log('发送验证码返回'+JSON.stringify(data));
-									mui.toast('验证码已发送');
-									VerCode = data.content.smsCode; 
-								}, 
-								error:function(xhr,type,errorThrown){
-									mui.toast('发送验证码失败');
-								}
-							});
-						}
-						
-					})
-				}); 
+							},
+							error: function(xhr, type, errorThrown) {
+								plus.nativeUI.closeWaiting();
+								mui.toast('注册失败');
+							}
+						});
+					}
+
+				}, false);
+				//获取验证码
+				getCode.addEventListener('tap', function() {
+					if(!account.value || !reg_phone.test(account.value)) {
+						mui.toast('请输入正确的手机号')
+					} else {
+
+						getCode.setAttribute('disabled', true);
+						var time = 60,
+							djs = null;
+						getCode.innerHTML = '倒计时' + time + 's';
+						djs = setInterval(function() {
+							if(time > 0) {
+								time--;
+								getCode.innerHTML = '倒计时' + time + 's';
+							} else {
+								getCode.innerHTML = '获取验证码';
+								getCode.removeAttribute('disabled');
+								time = 60;
+								clearInterval(djs)
+								djs = null;
+							}
+						}, 1000)
+
+						//发送验证码 
+						mui.ajax('http://119.23.149.7:9999/app/qrcode/send', {
+							data: {
+								mobile: account.value
+							},
+							dataType: 'json',
+							type: 'post',
+							timeout: 10000,
+							success: function(data) {
+								codePhone = account.value;
+								console.log('发送验证码返回' + JSON.stringify(data));
+								mui.toast('验证码已发送');
+								VerCode = data.content.smsCode;
+							},
+							error: function(xhr, type, errorThrown) {
+								mui.toast('发送验证码失败');
+							}
+						});
+					}
+
+				})
+			});
 		</script>
 	</body>
 

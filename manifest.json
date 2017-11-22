@@ -458,7 +458,8 @@
 					"main.html",
 					"reg.html",
 					"page/goodList.html",
-					"center.html"
+					"center.html",
+					"page/fastOrder.html"
 				],
 				"priority": 0
 			},
@@ -566,7 +567,8 @@
 					"page/order/pzOrderTest.html",
 					"page/order/chooseCustom2.html",
 					"nview.html",
-					"quicklyOrder.html"
+					"quicklyOrder.html",
+					"page/fastOrder.html"
 				],
 				"priority": 0
 			},
@@ -880,7 +882,9 @@
 					"images/10.png",
 					"js/artTemplate-native.js"
 				],
-				"refer": [],
+				"refer": [
+					"page/manager/searchWorker.html"
+				],
 				"priority": 0
 			},
 			"page/personal/myCoupon.html": {
@@ -1496,6 +1500,23 @@
 					"page/ofenBuy.html",
 					"page/personal/collect.html",
 					"page/order/pzOrder.html"
+				],
+				"priority": 0
+			},
+			"page/fastOrder.html": {
+				"resources": [
+					"page/tab-top-subpage-1.html",
+					"page/waterFast.html"
+				],
+				"refer": [
+					"page/tab-top-subpage-3.html",
+					"page/tab-top-subpage-4.html",
+					"page/tab-top-subpage-2.html",
+					"page/tab-top-subpage-5.html",
+					"page/electricFast.html",
+					"page/woodFast.html",
+					"page/oilFast.html",
+					"page/tileFast.html"
 				],
 				"priority": 0
 			}
