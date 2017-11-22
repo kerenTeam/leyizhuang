@@ -3,7 +3,7 @@
 
 	<head>
 		<meta charset="UTF-8">
-		<title></title>
+		<title>我的钱包</title>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="../css/mui.min.css" rel="stylesheet" />
 		<link rel="stylesheet" type="text/css" href="../css/configW.css"/>
@@ -11,14 +11,15 @@
 		<link rel="stylesheet" type="text/css" href="../css/indexY.css">
 		<link rel="stylesheet" type="text/css" href="../css/mui.min.css"/>
 		<link rel="stylesheet" href="../css/resetY.css">
+		<link rel="stylesheet" href="../css/youxd.css">
 		<style type="text/css">
-			.notice li.active{border-bottom: 2px solid #f63d41;box-sizing: border-box;color: #f63d41;}
+			/*.notice li.active{border-bottom: 2px solid #f63d41;box-sizing: border-box;color: #f63d41;}*/
 			.tab-hd{height: 45px !important;border-bottom: 1px solid #EFEFF4 !important;}
 			.tab-nav li{height: 45px !important;}
 			body{background-color: #f3f3f3;}
 			.mui-bar-nav{box-shadow: none !important;}
 			header.mui-bar{z-index: 200;}
-			.notice .tab-hdtwo li {width: 50%;}
+			.notice .tab-hdtwo li {width: 50%;border: 1px solid #CECFCF;border-radius: 3px;}
 			.checkList{background-color: #fff;margin-top: 10px;}
 			.checkList h4{font-size: 14px;padding: 12px 10px;}
 			.checkList h4 .h4span3{float: right;color: red;}
@@ -30,7 +31,16 @@
 			#infoListDiv{transition: all .3s;}
 
 			#main{margin-top: 0px;border-top:1px solid #eee }
-			.rechargeConDiv{background-color: #fff;margin-top: 10px;line-height: 26px;padding: 10px;}
+			.rechargeConDiv{background-color: #fff;margin-top: 5px;line-height: 28px;padding: 10px;}
+			.rechargeConDiv p{font-size: 16px;}
+			.activecl{background-color: #FEFFFF; border: 1px solid #c7161e; color: #c7161e; border-radius: 3px; font-size: 15px;
+                      padding: 4px 10px; margin-top: -4px;}
+  	  		#tabLink{padding: 14px;height: 66px !important;}
+  	  		.notice li.active { box-sizing: border-box; background-color: #c7161e; color: #fff;
+  	  			border: 1px solid #c7161e;}
+			.notice li:first-child{border-radius: 3px 0 0 3px;font-size: 16px;}
+			.notice li:last-child{border-radius: 0 3px 3px 0;font-size: 16px;}
+			.notice .tab-hd li {height: 38px !important;line-height: 38px !important;}
 		</style>
 
 	</head>
@@ -42,7 +52,10 @@
 		</header>
 		<script src="../js/statusBar.js" type="text/javascript" charset="utf-8"></script>
 		<div class="mui-content">
-			<div style="background: white;padding: 15px;">当前余额：<span id='balance'></span> <span class="mui-pull-right ft14 activecl">我要充值</span></div>
+			<div class="huiZ f17" style="background: #eee;padding: 15px;line-height: 20px;">
+				当前余额：<span class="f17 huiZ" id='balance'></span>
+				<span class="mui-pull-right activecl aClick">我要充值</span>
+			</div>
 		</div>
 		<div id="main" style="padding-top: 0!important;">
 			<div class="notice">
@@ -164,7 +177,7 @@
 				})
 				function loadFun(url,tabT){
 					mui.ajax(serverUrl + url,{
-						data:{'userId':userId,'identityType':identityT},
+						data:{'userId':1,'identityType':identityT},
 						dataType:'json',
 						type:'post',
 						timeout:1000,
