@@ -26,7 +26,7 @@
 				<img src="../../img/check2.png" /> 下料清单
 			</div>
 			<div class="cartSecond cartAct">
-				<img src="../../img/check1.png" /> 选赠品
+				<img src="../../img/check2.png" /> 选赠品
 			</div>
 			<div class="cartThird">
 				<img src="../../img/check1.png" /> 结算
@@ -105,6 +105,7 @@
 			var userId = plus.storage.getItem('$userId'); 
 			var oldToken = plus.storage.getItem('oldToken');
 			var idobj = plus.storage.getItem('materialList') || '[]';
+			var cusId = plus.webview.currentWebview().cusId;
 			window.addEventListener('refresh', function(event) {
 				cartload();
 			});
@@ -182,10 +183,18 @@
 											id:'workerMaterial'
 										})
 								 	}else{
-								 		openview({
-											view:'order.html',
-											id:'order',
-										})
+								 		if(identityT == 0 || identityT == 4 || identityT == 5){
+								 			openview({
+												view:'order.html',
+												id:'order',
+												extrasobj:{customerId:cusId}
+											})
+								 		}else{
+								 			openview({
+												view:'order.html',
+												id:'order',
+											})
+								 		}
 								 	}
 								})
 							}else{

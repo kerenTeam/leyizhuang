@@ -437,7 +437,8 @@
 					"main.html",
 					"reg.html",
 					"page/goodList.html",
-					"center.html"
+					"center.html",
+					"page/dispatching/dispatching.html"
 				],
 				"priority": 0
 			},
@@ -568,7 +569,8 @@
 					"page/order/chooseCustom2.html",
 					"nview.html",
 					"quicklyOrder.html",
-					"page/fastOrder.html"
+					"page/fastOrder.html",
+					"page/dispatching/dispatching.html"
 				],
 				"priority": 0
 			},
@@ -733,7 +735,8 @@
 					"page/history.html",
 					"page/order/pzOrder.html",
 					"page/wallet.html",
-					"page/personal/lebi.html"
+					"page/personal/lebi.html",
+					"page/personal/myOrderList.html"
 				],
 				"priority": 0
 			},
@@ -1047,7 +1050,9 @@
 					"js/artTemplate-native.js",
 					"images/center/checked.svg"
 				],
-				"refer": [],
+				"refer": [
+					"cart.html"
+				],
 				"priority": 0
 			},
 			"bindGuide.html": {
@@ -1517,6 +1522,19 @@
 					"page/woodFast.html",
 					"page/oilFast.html",
 					"page/tileFast.html"
+				],
+				"priority": 0
+			},
+			"page/dispatching/dispatching.html": {
+				"resources": [
+					"page/dispatching/waterFast.html"
+				],
+				"refer": [
+					"center.html",
+					"page/dispatching/woodFast.html",
+					"page/dispatching/tileFast.html",
+					"page/dispatching/electricFast.html",
+					"page/dispatching/oilFast.html"
 				],
 				"priority": 0
 			}

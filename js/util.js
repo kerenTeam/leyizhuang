@@ -18,7 +18,7 @@ var util = {
 	initSubpage: function(aniShow) {
 		var subpage_style = {
 				top: 0,
-				bottom: 51
+				bottom: 50
 			},
 			subpages = util.options.subpages,
 			self = plus.webview.currentWebview(),

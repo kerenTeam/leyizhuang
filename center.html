@@ -12,6 +12,7 @@
 		<meta name="format-detection" content="address=no">
 		<link rel="stylesheet" type="text/css" href="css/mui.min.css" />
 		<link rel="stylesheet" type="text/css" href="css/center.css"/>
+		<link rel="stylesheet" type="text/css" href="css/configW.css"/>
 		<style type="text/css">
 			body {
 				margin: 0;
@@ -29,11 +30,11 @@
 			}
 
 			.myInfo {
-				width: 85px;
-				height: 85px;
-				margin: 0 6%;
+				width: 70px;
+			    height: 70px;
+			    margin: 4% 6%;
 				border-radius: 50%;
-				border: 2px solid #fff;
+				border: 2px solid rgba(255, 255, 255, 0.7);
 			}
 
 			.denlu {
@@ -47,12 +48,13 @@
 				line-height: 25px;
 			}
 			.writing {
-				padding: 5px 0;
+				padding: 12px 0 5px;
 				padding-bottom: 5px;
+				margin-left: -25px;
 			}
 			#userBox {
 				background-color: #eca4a6;
-				padding: 35px 0 12px;
+				padding: 35px 0 35px;
 				position: relative;
 			}
 			.dao {
@@ -87,13 +89,13 @@
 				height: 100%;
 				top: 0;
 				overflow: hidden;
-				-webkit-filter: blur(5px);
+				/*-webkit-filter: blur(5px);*/
 			}
 
 			#beijing img {
 				width: 100%;
 				position: relative;
-				top: -40%;
+				/*top: -40%;*/
 			}
 
 			#beijing2 {
@@ -130,191 +132,236 @@
 				width: 100%;
 				z-index: 100;
 			}
+			 
 		</style>
 
 	</head>
 
 	<body>
 		<div class="clearfloat box-s box-ss" id="userBox">
-			<!--src="img/morentouxiang.jpg"/-->
-			<div id="beijing"><img id="mypic1" src="img/editset.png"></div>
-			<div id="beijing2"></div>
+			<div id="beijing"><img id="mypic1" src="images/center/centerBg.png"></div>
+			<!--<div id="beijing2"></div>-->
 			<div id="fixdtop"></div>
 			<div class="content clearfloat fl mui-row white">
 				<div class="mui-col-sm-4 mui-col-xs-4" style="padding-top: 18px;position: relative;left: 3px;"><img src="https://b-ssl.duitang.com/uploads/item/201710/12/20171012232816_GX5iw.thumb.224_0.jpeg" class="myInfo" id="mypic" /></div>
 				<div class="mui-col-sm-8 mui-col-xs-8 writing">
 					<p class="centop">
-						<div class="denlu">用户名：<span id="userName" style="z-index: 99;"></span></div>
+						<div class="denlu">用户名:<span id="userName" style="z-index: 99;"></span></div>
 						<div class="denlu" id="onlyPs">配送数量：<span id="psNumber" style="z-index: 99;"></span></div>
 						<div class="denlu" id="onlyGuide">手机号：<span id="guidesPhone"></span> <span id='bindPhone' style="background-color: orange;color: white;font-size: 10px;padding: 2px;border-radius: 3px;display: none;">绑定手机号</span></div>
-						<div class="denlu" id="onlyCust">乐币:<span id="coin"></span> 账户:<span id="accoutMoney"></span><br />灯号:<span id="dengh"></span> 导购:<span id="guideName"></span><a id="guideMobile" style="display: none;" href=""><img style="width: 15px;margin-left: 5px;" src="images/center/phone.svg"/></a></div>
+						<div class="denlu" id="onlyCust">乐币:<span id="coin"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 账户:<span id="accoutMoney"></span><br />灯号:<span id="dengh"></span>&nbsp;&nbsp; 导购:<span id="guideName"></span><a id="guideMobile" style="display: none;" href=""><img style="width: 15px;margin-left: 5px;" src="images/center/phone.svg"/></a></div>
 						<div class="denlu" id="onlymange">账户:<span id="manageMoney"></span></div>
 					</p>
 				</div>
 				<img class="dao shezhi" style="top: 8px;width: 30px;" src="images/center/shizhi.png" />
+				<div onclick="goMessage()">
+					<img class="dao" style="top: 8px;width: 30px;right: 50px;" src="images/center/message.svg" />
+					<span class="mui-badge mui-badge-green" style="right: 54px;position: absolute;padding: 4px;top: 6px;"></span>
+				</div>
+
 				<div class="qiandao" onclick="qian()">签到</div>
 			</div>
 		</div>
 		<div id="customar">
-			<div class="orderType flexRow">
-				<div class="">
-					待付款
-				</div>
-				<div class="">
-					待收货
-				</div>
-				<div class="">
-					待评价
-				</div>
-				<div class="">
-					退货
-				</div>
-				<div class="" onclick="openOrder()">
+			<div class="orderType">
+				<div class="afterBorder bgcwt ft14" style="padding: 15px;" onclick="openOrder()">
 					所有订单
+					<span class="mui-icon mui-icon-arrowright mui-pull-right maincl ft20 activecl" style="font-weight: 800;"></span>
+				</div>
+				<div class="flexRow ft14">
+					<div class="">
+						<img src="images/center/waitPay.png"/>
+						待付款
+					</div>
+					<div class="">
+						<img src="images/center/take.png"/>
+						待收货
+					</div>
+					<div class="">
+						<img src="images/center/cmt.png"/>
+						待评价
+					</div>
+					<div class="">
+						<img src="images/center/backT.png"/>
+						退货
+					</div>
 				</div>
 			</div>
+			
 			<!--顾客-->
 			<div class="centerList customerN" style="display: none;">
-				<div class="flexRow2">
-					<div class="" onclick="goCollect()">
-						商品收藏
-					</div>
-					<div class="">
-						客服
-					</div>
-					<div class="">
-						调色板
-					</div>
-					<div class="" onclick="goMessage()">
-						消息
-					</div>
-					<div class="">
-						设置
-					</div>
-					<div onclick="myCoupon()">
-						优惠券
-					</div>
-					<div onclick="productCoupon()">
-						产品券
-					</div>
-					<div onclick="wallet()">
+				<div class="walletG">
+					<div class="afterBorder bgcwt ft14" style="padding: 15px;" onclick="wallet()">
 						我的钱包
+						<b><span class="mui-icon mui-icon-arrowright mui-pull-right maincl ft20 activecl" style="font-weight: 800;"></span></b>
 					</div>
-					<div onclick="lebi()">
-						我的乐币
+					<div class="flexRow ft14">
+						<div class="">
+							<div onclick="myCoupon()">
+								优惠券
+							</div>
+						</div>
+						<div class="">
+							<div onclick="productCoupon()">
+								产品券
+							</div>
+						</div>
+						<div class="">
+							<div onclick="wallet()">
+								账户余额
+							</div>
+						</div>
+						<div class="">
+							<div onclick="lebi()">
+								我的乐币
+							</div>
+						</div>
+						 
 					</div>
-					<div onclick="paizhaoOrder()">
-						拍照下单
+				</div>
+				
+				<div class="flexRow2">
+					<div class="afterBorder" onclick="goCollect()">
+						<img src="images/center/collect.svg"/>商品收藏
+						<span class="mui-icon mui-icon-arrowright mui-pull-right maincl ft20 maincl"></span>
 					</div>
-					<div onclick="lookHistory()">
-						浏览记录
+					
+					<div class="afterBorder">
+						<img src="images/center/color.svg"/>调色板
+						<span class="mui-icon mui-icon-arrowright mui-pull-right maincl ft20 maincl"></span>
+					</div>
+					<div class="afterBorder" onclick="paizhaoOrder()">
+						<img src="images/center/camer.svg"/>拍照下单
+						<span class="mui-icon mui-icon-arrowright mui-pull-right maincl ft20 maincl"></span>
+					</div>
+					<div class="" onclick="lookHistory()">
+						<img src="images/center/look.svg"/>浏览记录
+						<span class="mui-icon mui-icon-arrowright mui-pull-right maincl ft20 maincl"></span>
 					</div>
 				</div>
 			</div>
 			<!--导购-->
 			<div class="centerList guiderN"  style="display: none;">
-				<div class="flexRow2">
-					<div class="" onclick="goCollect()">
-						商品收藏
-					</div>
-					<div class="">
-						客服
-					</div>
-					<div class="">
-						调色板
-					</div>
-					<div class="" onclick="goMessage()">
-						消息
-					</div>
-					<div class="">
-						设置
-					</div>
-					<div onclick="toMyCustomer()">
-						我的顾客
-					</div>
-					<div onclick="guideCredit()">
+				<div class="walletG">
+					<div class="afterBorder bgcwt ft14" style="padding: 15px;" onclick="guideCredit()">
 						信用额度
+						<b><span class="mui-icon mui-icon-arrowright mui-pull-right maincl ft20 activecl" style="font-weight: 800;"></span></b>
 					</div>
-					<div class="">
-						欠款查询
+					<div class="flexRow ft14">
+						<div class="">
+							<div class="">
+								欠款查询
+							</div>
+						</div>
+						<div class="">
+							<div >
+								欠款审核
+							</div>
+						</div>
+						<div class="">
+							<div class="">
+								我的二维码
+							</div>
+						</div>
+						<div class="">
+							<div onclick="toMyCustomer()">
+								我的顾客
+							</div>
+						</div>
+						 
 					</div>
-					<div class="">
-						我的二维码
+				</div>
+				<div class="flexRow2">
+					<div class="afterBorder" onclick="goCollect()">
+						<img src="images/center/collect.svg"/>商品收藏
+						<span class="mui-icon mui-icon-arrowright mui-pull-right maincl ft20 maincl"></span>
 					</div>
-					<div >
-						欠款审核
+					
+					<div class="afterBorder">
+						<img src="images/center/color.svg"/>调色板
+						<span class="mui-icon mui-icon-arrowright mui-pull-right maincl ft20 maincl"></span>
 					</div>
-					<div onclick="paizhaoOrder()">
-						拍照下单
+					<div class="afterBorder" onclick="paizhaoOrder()">
+						<img src="images/center/camer.svg"/>拍照下单
+						<span class="mui-icon mui-icon-arrowright mui-pull-right maincl ft20 maincl"></span>
 					</div>
-					<div onclick="lookHistory()">
-						浏览记录
+					<div class="" onclick="lookHistory()">
+						<img src="images/center/look.svg"/>浏览记录
+						<span class="mui-icon mui-icon-arrowright mui-pull-right maincl ft20 maincl"></span>
 					</div>
 				</div>
 			</div>
 			<!--项目经理-->
 			<div class="centerList manageN"  style="display: none;">
-				<div class="flexRow2">
-					<div class="" onclick="goCollect()">
-						商品收藏
-					</div>
-					<div class="">
-						客服
-					</div>
-					<div class="">
-						调色板
-					</div>
-					<div class="" onclick="goMessage()">
-						消息
-					</div>
-					<div class="">
-						设置
-					</div>
-					<div onclick="listCheck()">
-						料单审核
-					</div>
-					<div onclick="goworker()">
-						工人
-					</div>
-					<div class="">
+				<div class="walletG">
+					<div class="afterBorder bgcwt ft14" style="padding: 15px;" onclick="wallet()">
 						我的钱包
+						<b><span class="mui-icon mui-icon-arrowright mui-pull-right maincl ft20 activecl" style="font-weight: 800;"></span></b>
 					</div>
-
-					<div onclick="backMoney()">
-						信用额度
+					<div class="flexRow ft14">
+						<div class="">
+							<div onclick="backMoney()">
+								信用额度
+							</div>
+						</div>
+						<div class="">
+							<div onclick="goworker()">
+								工人
+							</div>
+						</div>
+						<div class="">
+							<div onclick="listCheck()">
+								料单审核
+							</div>
+						</div>
 					</div>
-					<div onclick="paizhaoOrder()">
-						拍照下单
+				</div>
+				
+				<div class="flexRow2">
+					<div class="afterBorder" onclick="goCollect()">
+						<img src="images/center/collect.svg"/>商品收藏
+						<span class="mui-icon mui-icon-arrowright mui-pull-right maincl ft20 maincl"></span>
 					</div>
-					<div onclick="lookHistory()">
-						浏览记录
+					
+					<div class="afterBorder">
+						<img src="images/center/color.svg"/>调色板
+						<span class="mui-icon mui-icon-arrowright mui-pull-right maincl ft20 maincl"></span>
+					</div>
+					<div class="afterBorder" onclick="paizhaoOrder()">
+						<img src="images/center/camer.svg"/>拍照下单
+						<span class="mui-icon mui-icon-arrowright mui-pull-right maincl ft20 maincl"></span>
+					</div>
+					<div class="" onclick="lookHistory()">
+						<img src="images/center/look.svg"/>浏览记录
+						<span class="mui-icon mui-icon-arrowright mui-pull-right maincl ft20 maincl"></span>
 					</div>
 				</div>
 			</div>
 			<!--工人-->
 			<div class="centerList workerN"  style="display: none;">
 				<div class="flexRow2">
-					<div class="" onclick="goCollect()">
-						商品收藏
+					<div class="afterBorder" onclick="goCollect()">
+						<img src="images/center/collect.svg"/>商品收藏
+						<span class="mui-icon mui-icon-arrowright mui-pull-right maincl ft20 maincl"></span>
 					</div>
-					<div class="">
-						客服
+					<div class="afterBorder" onclick="goworkerMaterial()">
+						<img src="images/center/material.svg"/>料单申请
+						<span class="mui-icon mui-icon-arrowright mui-pull-right maincl ft20 maincl"></span>
 					</div>
-					<div class="" onclick="goMessage()">
-						消息
+					<div class="afterBorder">
+						<img src="images/center/color.svg"/>调色板
+						<span class="mui-icon mui-icon-arrowright mui-pull-right maincl ft20 maincl"></span>
 					</div>
-					<div class="">
-						调色板
+					<div class="afterBorder" onclick="paizhaoOrder()">
+						<img src="images/center/camer.svg"/>拍照下单
+						<span class="mui-icon mui-icon-arrowright mui-pull-right maincl ft20 maincl"></span>
 					</div>
-					<div onclick="goworkerMaterial()">
-						料单申请
+					<div class="" onclick="lookHistory()">
+						<img src="images/center/look.svg"/>浏览记录
+						<span class="mui-icon mui-icon-arrowright mui-pull-right maincl ft20 maincl"></span>
 					</div>
-					<div onclick="paizhaoOrder()">
-						拍照下单
-					</div>
-					<div onclick="lookHistory()">
-						浏览记录
-					</div>
+					
+					
 				</div>
 
 			</div>

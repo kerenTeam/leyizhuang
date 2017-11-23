@@ -66,7 +66,7 @@
 		#goodsInfo img{width: 100%;}
 		.specif{display: flex;justify-content: space-between;background-color: #F6F7F8;padding: 10px;}
 		.specif div{flex: 1;}
-		.goodstit{padding:0 5px;border-left: 5px solid #AE0100;margin: 5px 0;}
+		.goodstit{padding:0 10px;border-left: 5px solid #AE0100;margin: 5px 0;}
 		#collt img{vertical-align: middle;width: 25px;}
 		.cmtImg{padding: 10px 0;} 
 		.cmtImg img{width: 4em;height: 4em;border-radius: 3px;display: inline-block;}
@@ -138,7 +138,7 @@
     			<!--留言--> 
 		 	<script type="text/html" id="cmtTpl">
 		 		<div class="afterBorder" style="padding: 10px;background-color: white;">
-					<div class="ft16 goodstit">商品评价 <span class="mui-pull-right maincl ft14"><%=list.length%></span></div> 
+					<div class="ft16 goodstit">商品评价 <span class="mui-pull-right maincl ft14"><%=list.length%>条</span></div> 
 					
 				</div>
 		 		<%for(var i=0;i<list.length;i++){%>
@@ -148,7 +148,7 @@
 								<img src="<%=list[i].picUrl%>" class="userAvator"/>
 								<div class="butright">
 									<div class="btop">
-						            		<b class="ft14"><%=list[i].evaluationName%></b> <span class="disablecl">xxxxx</span>
+						            		<b class="ft14"><%=list[i].evaluationName%></b> <span class="disablecl"><!--xxxxx--></span>
 						            	</div>
 					            	<div class="maincl ft14"><%=list[i].commentContent%></div>
 					            	<%if(list[i].evaluationPictures && list[i].evaluationPictures.length){%>

@@ -53,7 +53,7 @@
 			<script type="text/html" id="goodsTpl">
 				<ul class="mui-table-view">
 					<%for(var i = 0 ;i<list.length;i++){%>
-					<li class="mui-table-view-cell mui-media" id="<%=list[i].goodsCode%>">
+					<li class="mui-table-view-cell mui-media" id="<%=list[i].id%>">
 						<a href="javascript:;">
 							<img class="mui-media-object mui-pull-left" src="<%=list[i].coverImageUri%>">
 							<div class="mui-media-body">
@@ -70,7 +70,7 @@
 								</div>
 							</div>
 						</a>
-						<img data-id="<%=list[i].goodsCode%>" class="check" src="../../images/center/uncheck.svg" alt="" />
+						<img data-id="<%=list[i].id%>" class="check" src="../../images/center/uncheck.svg" alt="" />
 					</li>
 					<%}%>
 				</ul>
@@ -93,15 +93,12 @@
 				var oldToken = plus.storage.getItem('oldToken')
 				var page = plus.webview.currentWebview().page;
 				plus.nativeUI.showWaiting();
-
 				kindType();
-
 				function kindType() {
-
 					//产品券列表
 					mui.ajax(serverUrl + '/app/customer/productCoupon/list', {
 						data: {
-							userId: userId,
+							userId:userId,
 							identityType: identityT
 						},
 						dataType: 'json',
@@ -119,7 +116,6 @@
 										list: data.content
 									}));
 									mui('.mui-numbox').numbox();
-								
 									//使用选择
 									$('.check').click(function() {
 										event.stopPropagation();
@@ -143,24 +139,29 @@
 											var qty =$(this).prev().find('.mui-numbox-input').val();
 											productCouponList.push({"id":id,"qty":qty})
 										})
-										mui.ajax(serverUrl+'/app/product/transform/materialist',{
-											data:{
+										mui.ajax(serverUrl+'/app/productCoupon/transform/materialList',{
+											data: {
 												customerId:'',
-												userId:userId,
-												identityType:identityT,
-												productCouponList:JSON.stringify(productCouponList)
+												userId: userId,
+												identityType: identityT,
+												productCouponList:productCouponList
 											},
-											dataType:'json',
-											headers: {"Authorization": oldToken},
-											type:'post',
-											timeout:10000,
+											dataType: 'json',
+											type: 'post',
+											timeout: 1000,
+											headers: {
+												"Authorization": oldToken,
+												'Content-Type': 'application/json'
+											},
 											success:function(data,type,xhr){ 
 												plus.nativeUI.closeWaiting();
 												console.log('产品券使用',data);
 												if(data.code == 0 ){
+													mui.fire(plus.webview.getWebviewById('cart.html'), 'refresh');
 													openview({
 														view:'../../cart.html',
-														id:'cart'
+														id:'cart',
+														extrasobj:{page:1}
 													})
 												}else{
 													mui.toast(data.message)
@@ -174,9 +175,11 @@
 										});
 									})
 								} else {
+									$('#useCoupon').hide();
 									$('#goodsList').html('<div style="text-align:center;padding:15px">暂无产品券</div>')
 								}
 							} else {
+								$('#useCoupon').hide();
 								mui.toast(data.message)
 							}
 

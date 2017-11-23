@@ -6,6 +6,7 @@
 		<title>购物车</title>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link rel="stylesheet" type="text/css" href="css/mui.min.css" />
+		<link rel="stylesheet" type="text/css" href="css/commonY.css"/>
 		<link rel="stylesheet" href="css/resetY.css">
 		<link rel="stylesheet" type="text/css" href="css/cart.css" />
 		<link rel="stylesheet" type="text/css" href="css/style.css" />
@@ -40,7 +41,13 @@
 		 
 				<dl class="cart" style="background-color: #F8F8F8!important;">
 					<dt><div class="mui-checkbox"><input name="checkbox" class="groupCheck" data-id="<%=lists.auditNo%>" checked="true" disabled="" type="checkbox"></div>
-					<div class="shopName" style="white-space: nowrap;overflow: hidden;max-width:2.5rem;"><%=lists.worker%></div>
+					<div class="shopName" style="white-space: nowrap;overflow: hidden;max-width:2.5rem;">
+						<%if(lists.worker){%>
+							<%=lists.worker%>
+						<%}else{%>
+							产品券
+						<%}%>
+					</div>
 					 </dt>
 					<%for(var j=0;j<lists.goodsList.length;j++){%>
 					<dd>
