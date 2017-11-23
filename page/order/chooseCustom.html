@@ -1,22 +1,28 @@
 <!doctype html>
 <html>
-
 	<head>
 		<meta charset="UTF-8">
-		<title>绑定导购</title>
+		<title>选择顾客</title>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/commonY.css"/>
 		<link rel="stylesheet" type="text/css" href="../../css/configW.css"/>
 	</head>
-
+	<style type="text/css">
+		#bindPhone{border: none;}
+		
+	</style>
 	<body>
 		<header class="mui-bar mui-bar-nav" style="padding-right: 15px;">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<h1 class="mui-title">选择顾客</h1>
 		</header>
+		<script src="../../js/statusBar.js" type="text/javascript" charset="utf-8"></script>
 		<div class="mui-content" >
-			<div style="padding: 15px;">请输入会员手机号 <button>导入通讯录</button><br />
-			<input type="text" id="bindPhone" style="display: inline-block;width: 100%;" placeholder="输入导购电话号码" /></div>
+			<div style="padding:10px 0;display: flex;align-items: center;justify-content: space-between;margin: 10px 0;" class="bgcwt">
+				<input type="text" id="bindPhone" style="width: 80%;margin: 0;" placeholder="请输入会员手机号" />
+				<!--<div style="border-left: 1px solid #EEEEEE;padding: 0 10px;">通讯录</div>-->
+			</div>
 			<div style="text-align: center;">
 				<button class="mui-btn-danger" id="bindGuide">为该顾客代购</button>
 			</div>
@@ -63,7 +69,8 @@
 												if(e.index == 1) {
 													openview({
 														view:'chooseGift.html',
-														id:'chooseGift'
+														id:'chooseGift',
+														extrasobj:{cusId:data.content[0].cusId}
 													})
 												}
 												return;

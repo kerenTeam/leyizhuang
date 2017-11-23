@@ -121,7 +121,7 @@
 							 var b = new Base64();
 							 var str = b.encode(loginInfo.password);
 							 
-							mui.ajax('http://119.23.149.7:9999/app/employee/login',{
+							mui.ajax(serverUrl+'/app/employee/login',{
 								data:{"name":loginInfo.account,"password":str},
 								dataType:'json',
 								type:'post',
@@ -153,7 +153,14 @@
 										var time2 = setTimeout(function(){
 											plus.nativeUI.closeWaiting();
 											mui.toast('登录成功');
-											plus.webview.currentWebview().close(); 
+											if(data.content.type == 1){
+												openview({
+													view:'page/dispatching/dispatching.html',
+													id:'dispatching'
+												})
+											}else{
+												plus.webview.currentWebview().close(); 
+											}
 										},100) 
 									}
 								},

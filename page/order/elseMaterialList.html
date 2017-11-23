@@ -7,6 +7,7 @@
 		<title>确认订单</title>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link rel="stylesheet" type="text/css" href="../../css/mui.min.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/commonY.css"/>
 		<link rel="stylesheet" href="../../css/resetY.css">
 		<link rel="stylesheet" type="text/css" href="../../css/cart.css" />
 		<link rel="stylesheet" type="text/css" href="../../css/style.css" />
@@ -20,7 +21,8 @@
 			<h1 class="mui-title">确认订单</h1>
 		</header>
 		<!--状态栏-->
-		<div style="height:44px;"></div>
+		<script src="../../js/statusBar.js" type="text/javascript" charset="utf-8"></script>
+		<div style="height:50px;"></div>
 		
 		<div id="cartData" data-id=""></div>
 		<script type="text/html" id="cartTpl">
@@ -30,14 +32,14 @@
 					<dd>
 						<a class="goodsPic" style="margin-left: auto;"><img src="<%=list[i].coverImageUri%>" onerror="javascript:this.src='../../images/img.svg';" /></a>
 						<div class="goodsInfor" style="margin-left: 0.9rem!important;">
-							<h2>  
-						    		<a><%=list[i].goodsName%></a>
+							<h2 class="ft16">  
+						    		 <%=list[i].goodsName%>
 						    		<%if(list[i].hasGift){%>
 						    			<em class="mui-badge mui-badge-danger mui-pull-right" style="color: white;">包含赠品</em>
 						    		<%}%>
 						   	</h2>
 							<div class="priceArea">
-								<div class="extraBrief">
+								<div class="extraBrief" style="margin-top: 5px;">
 									单位：<%=list[i].goodsUnit%>；规格：<%=list[i].goodsSpecification%>
 								</div>
 								<strong>¥<span class="price"><%=list[i].retailPrice%></span></strong>

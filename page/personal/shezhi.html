@@ -162,7 +162,9 @@
 					plus.storage.removeItem("Acc_pass");//保存账号密码,用于自动登录
 					mui.fire(plus.webview.getWebviewById('../goodList.html'),'refresh');
 					mui.fire(plus.webview.getWebviewById('center.html'),'refresh');
-					 
+					if(plus.webview.getWebviewById('identify')){
+						plus.webview.getWebviewById('identify').close();
+					} 
 						plus.nativeUI.showWaiting();
 						var time2 = setTimeout(function(){
 							plus.nativeUI.closeWaiting();

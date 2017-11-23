@@ -82,7 +82,7 @@
 	    .mui-radio.mui-left label{
 			padding-left: 47px;
 		}
-		.psw{margin-top: -8px;margin-right: -13px;}
+		.psw{margin-top: -8px;margin-right: -10px;}
 		.mui-table-view-cell.mui-active{background-color: none!important;border-radius:0!important ;}
 		.mui-table-view-cell.mui-collapse .mui-collapse-content{margin: 11px -15px -15px;}
 	</style>
@@ -145,7 +145,7 @@
 			<div style="background: white;">
 				<div class="pad10 ft15 afterBorder">
 					<em>配送方式 </em>
-					<div class="mui-input-row mui-radio mui-left mui-pull-right psw">
+					<div class="mui-input-row mui-radio mui-left mui-pull-right psw selfTake">
 						<label>自提</label>
 						<input name="peis" type="radio" value="1">
 					</div>
@@ -162,6 +162,11 @@
 						  <option value="">选择</option>
 						</select>
 						<span class="mui-icon mui-icon-arrowdown mui-pull-right ft16"></span> 
+					</div>
+				</div>
+				<div class="pad10 ft15 flexr" id="storeAddress" style="display:none;">
+					<em>门店地址 </em>
+					<div class="storeAddress">
 					</div>
 				</div>
 				<div id="add_info" class="afterBorder"></div>
@@ -255,7 +260,7 @@
 					<%if(lebi && lebi.quantity && lebi.rebate){%>
 						<div id="coupon" class="afterBorder">
 							<dd class="pad10 kv-line-r">
-								<div class="titcl">共<span id="totalJfen" style="color: #ff5f32;" id="totalJfen"><%=lebi.quantity%></span>乐币,抵用<span id="itMinus" style="color: #ff5f32;"><span>￥<%=lebi.rebate%></span></span></div>
+								<div class="titcl">共<span id="totalJfen" style="color: #ff5f32;"><%=lebi.quantity%></span>乐币,抵用<span id="itMinus" style="color: #ff5f32;"><span>￥<%=lebi.rebate%></span></span></div>
 								<div id="changeJf" class="mui-checkbox"><input name="checkbox" class="groupCheck" type="checkbox"></div>
 							</dd>
 						</div>
@@ -347,13 +352,18 @@
 			var oldToken = plus.storage.getItem("oldToken");
 			var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
 			var idobj = plus.storage.getItem('orderGoodsList');
+			var customerId = plus.webview.currentWebview().customerId || '';
+			if(identityT == 2){
+				$('.selfTake').hide();
+			}
 			plus.nativeUI.showWaiting();
 			//获取料单商品
 			mui.ajax(serverUrl + '/app/order/enter', {
 				data: {
 					userId: userId,
 					identityType: identityT,
-					goodsList: JSON.parse(idobj)
+					goodsList: JSON.parse(idobj),
+					customerId:customerId
 				},
 				dataType: 'json',
 				type: 'post',
@@ -445,7 +455,9 @@
 									cashCouponsList.push({"id":coupon_id,"qty":1})
 								}
 							})
-							
+							var quantity = $('#totalJfen').text();
+							var rebate = $('#itMinus').text().replace('¥','');
+							alert(quantity+' '+rebate)
 							//选券 返回金额
 							mui.ajax(serverUrl + '/app/order/reEnter/ccp', {
 								data: {
@@ -454,7 +466,14 @@
 									"customerId": null,
 								    "totalOrderAmount": totalOrderAmount,
 								    "orderDiscount": orderDiscount,
-								    "cashCouponsList":cashCouponsList,
+								    "lebi": {
+							    			"id":userId,
+							    			"cusId":null,
+							    			"quantity":quantity,
+							    			"rebate":rebate
+							    	
+							    		},
+								    "couponsList":cashCouponsList,
 								},
 								dataType: 'json',
 								type: 'post',
@@ -574,32 +593,82 @@
 			//自提 获取门店
 			$("input[name='peis']").change(function(){
 				var delivery = $("input[name='peis']:checked").val();
+				var goodsId = '';
+				mui.each(JSON.parse(idobj),function(index,item){
+					if(index == JSON.parse(idobj).length-1){
+						goodsId+=item.id
+					}else{
+						goodsId+=item.id+','
+					}
+				})
 				if(delivery == 1){
 					//查询门店
-					mui.ajax(serverUrl + '/app/user/deliveryType/selfTake', {
-						data: {
-							userId: userId,
-							identityType: identityT,
-							goodsList: JSON.parse(idobj)
+					mui.ajax(serverUrl + '/app/settlement/get/selfTakeStore/available', {
+						data:{
+							userId:userId,
+							identityType:identityT,
+							goodsIds:goodsId
 						},
 						dataType: 'json',
 						type: 'post',
-						timeout: 1000,
+						timeout: 10000,
 						headers: {
 							"Authorization": oldToken,
-							'Content-Type': 'application/json'
 						},
 						success: function(data, type, xhr) {
 							console.log('获取门店', data);
 							var addrObj = {};
-							if(data.code == 0 && data.content) {
+							if(data.code == 0 && data.content && data.content.isSelfTakePermitted) {
 								$('#chooseStore').show();
-								$('#add_info,.isowndis').hide();
+								$('#add_info,.isowndis,#cityResult').hide();
+								$('#freight').parent().hide();
+								//合计
+								carculate(); 
 								var storeStr = '<option value="">选择</option>'; 
-								for (var i = 0;i<data.content.length;i++) {
-									storeStr += '<option value="'+data.content[i].storeId+'">'+data.content[i].storeName+'</option>'
+								for (var i = 0;i<data.content.storeList.length;i++) {
+									storeStr += '<option data-addr="'+data.content.storeList[i].detailedAddress+'" value="'+data.content.storeList[i].storeId+'">'+data.content.storeList[i].storeName+'</option>'
 								}
 								$('#chooseStore select').html(storeStr);
+								$('#chooseStore select').change(function(){
+									var storeId = $(this).val();
+									var curselect = $(this)
+									//请求门店库存
+									mui.ajax(serverUrl+'/app/settlement/selfTakeStore/choose', {
+										data: {
+											"userId": userId,
+											"identityType": identityT,
+											"storeId": storeId,
+											"goodsList":idobj
+										},
+										dataType: 'json',
+										type: 'post',
+										timeout: 10000,
+										headers: {
+											"Authorization": oldToken
+										},
+										success: function(data) {
+											console.log('门店库存',data);
+											if(data.code == 0) { 
+												var address = curselect.find('option:checked').attr('data-addr')
+												if(address){
+													$('#storeAddress').show();
+													$('.storeAddress').html(address)
+												}else{
+													$('#storeAddress').show();
+													$('.storeAddress').html('无地址')
+												}
+											}else{
+												mui.toast(data.message);
+												curselect.find('option').eq(0).attr('selected',true);
+												
+											}
+										},
+										error: function(xhr, type, errorThrown) {
+											plus.nativeUI.closeWaiting();
+											console.log('响应失败');
+										}
+									});
+								})
 							}else{
 								mui.toast(data.message);
 								$("input[name='peis']").eq(0).attr('checked',false)
@@ -611,10 +680,15 @@
 						}
 					});
 				}else{
-					$('#chooseStore').hide();
-					$('#add_info').show();
+					$('#chooseStore,#storeAddress').hide();
+					$('#add_info,.isowndis,#cityResult').show();
+					$('#freight').parent().show();
 				}
 			})
+			//重新计算价格
+			function carculate()	{
+				var orderAll = $('#totalPriceb').html().replace('¥','') 
+			}
 			//获取城市
 			var cityId = plus.storage.getItem('userCity');
 			//获取时间段
