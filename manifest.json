@@ -733,7 +733,8 @@
 					"page/history.html",
 					"page/order/pzOrder.html",
 					"page/wallet.html",
-					"page/personal/lebi.html"
+					"page/personal/lebi.html",
+					"page/personal/myOrderList.html"
 				],
 				"priority": 0
 			},
@@ -1517,6 +1518,14 @@
 					"page/woodFast.html",
 					"page/oilFast.html",
 					"page/tileFast.html"
+				],
+				"priority": 0
+			},
+			"page/personal/myOrderList.html": {
+				"resources": [],
+				"refer": [
+					"page/personal/myOrderDetail.html",
+					"page/personal/myOrderList.html"
 				],
 				"priority": 0
 			}

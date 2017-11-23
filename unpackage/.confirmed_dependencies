@@ -394,7 +394,8 @@
 			"page/history.html",
 			"page/order/pzOrder.html",
 			"page/wallet.html",
-			"page/personal/lebi.html"
+			"page/personal/lebi.html",
+			"page/personal/myOrderList.html"
 		]
 	},
 	"cart.html": {
@@ -1102,6 +1103,12 @@
 			"page/woodFast.html",
 			"page/oilFast.html",
 			"page/tileFast.html"
+		]
+	},
+	"page/personal/myOrderList.html": {
+		"refer": [
+			"page/personal/myOrderDetail.html",
+			"page/personal/myOrderList.html"
 		]
 	}
 }
