@@ -11,9 +11,17 @@
 	</head>
  	<style type="text/css">
  		.categray div{
- 			width: 80%;
+ 			width: calc(100vw - 100px);
  			vertical-align: top;
  		}
+ 		.sedc span{margin-bottom:10px;font-size: 14px;}
+ 		.flexw div{position: relative;align-items: center;padding: 15px 0 10px;}
+ 		.flexw div:not(:last-child):after{position: absolute;content: '';position: absolute;width: 1px;height: 30px;background: #DDD8CD;-webkit-transform:scaleX(.3);right: 0px;top:12px;z-index: 999;}
+ 		.afterBorder:after{bottom: -1px;}
+ 		.mui-badge-danger{padding: 5px 10px;font-size: 14px;border-radius: 3px;background-color: #DDDDDD;color: gray;}
+ 		.actBadge{background-color: #B42E28;color: white;}
+ 		.filter>div{margin: 10px 0;}
+ 		.actspan{color: #B42E28;}
  	</style>
 	<body>
 		<header class="mui-bar mui-bar-nav" style="padding-right: 15px;">
@@ -22,38 +30,28 @@
 		</header>
 		<script src="../js/statusBar.js" type="text/javascript" charset="utf-8"></script>
 		<!--一级分类-->
-		<div class="mui-content flexw">
-		     <div class="water curActive" data-id = "water">
-		     	水
-		     </div>
-		     <div class="electric" data-id = "electric">
-		     	电
-		     </div>
-		     <div class="wood" data-id = "wood">
-		     	木
-		     </div>
-		     <div class="tile" data-id = "tile">
-		     	瓦
-		     </div>
-		     <div class="oil" data-id = "oil">
-		     	油
-		     </div> 
+		<div class="mui-content flexw afterBorder" style="margin-top: 3px;">
+		    <div class="water curActive" data-id = "water">水</div>
+		    <div class="electric" data-id = "electric">电</div>
+		    <div class="wood" data-id = "wood">木</div>
+		    <div class="tile" data-id = "tile">瓦</div>
+		    <div class="oil" data-id = "oil">油</div> 
 		</div>
 		
 		<!--小分类-->
 		<div class="filter" style="background-color:white;padding:15px;font-size:14px">
 	     	<div class="categray">
-	     		<span class="mui-badge mui-badge-danger" data-id = '' data-name = 'category'>全部</span><div class="categraya"></div>
+	     		<span class="mui-badge mui-badge-danger ftb actBadge" data-id = '' data-name = 'category'>全部</span><div class="sedc categraya"></div>
 	     		 
 	     	</div>
 	     	<div class="categray">
-	     		<span class="mui-badge mui-badge-danger" data-id = '' data-name = 'brand'>品牌</span><div class="categrayb"></div>
+	     		<span class="mui-badge mui-badge-danger ftb actBadge" data-id = '' data-name = 'brand'>品牌</span><div class="sedc categrayb"></div>
 	     	</div>
 	     	<div class="categray">
-	     		<span class="mui-badge mui-badge-danger" data-id = '' data-name = 'specification'>规格</span><div class="categrayc"></div>
+	     		<span class="mui-badge mui-badge-danger ftb actBadge" data-id = '' data-name = 'specification'>规格</span><div class="sedc categrayc"></div>
 	     	</div>
 	     	<div class="categray">
-	     		<span class="mui-badge mui-badge-danger" data-id = '' data-name = 'type'>类型</span><div class="categrayd"></div>
+	     		<span class="mui-badge mui-badge-danger ftb actBadge" data-id = '' data-name = 'type'>类型</span><div class="sedc categrayd"></div>
 	     	</div>
 	     </div>
 	     
@@ -66,10 +64,10 @@
 		    		<li class="mui-table-view-cell mui-media" data-id="<%=list[i].id%>" onclick="goodsInfo(<%=list[i].id%>)">
 			        <a href="javascript:;">
 			            <img class="mui-media-object mui-pull-left" src="<%=list[i].coverImageUri%>">
-			            <div class="mui-media-body">
+			            <div class="mui-media-body ft16">
 			                <%=list[i].goodsName%>
-			                <p class='mui-ellipsis'>规格:<%=list[i].goodsSpecification%> &nbsp;单位:<%=list[i].goodsUnit%></p>
-				            <span class="ft16 activecl">￥<%=list[i].retailPrice%></span>
+			                <p class='mui-ellipsis ft16'>规格:<%=list[i].goodsSpecification%> &nbsp;单位:<%=list[i].goodsUnit%></p>
+				            <span class="ft18 activecl2">¥<%=list[i].retailPrice%></span>
 							<img style="display:inline-block;float:right;margin-left:5px;vertical-align:middle" data-id="<%=list[i].id%>" class="toCart" src="../images/addcart.svg"/>
 				            <div style="display:none;float:right;" class="mui-numbox" data-numbox-step='1' data-numbox-min='0'>
 							  <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
@@ -277,7 +275,7 @@
 										if(specification){
 											$('.categrayc span').each(function(){
 												if($(this).html() == specification){
-													$(this).addClass('mui-badge mui-badge-danger')
+													$(this).addClass('actspan')
 												}
 											})
 										}
@@ -289,8 +287,14 @@
 										
 										//商品 筛选
 										$('.categray span').click(function(){
-											$(this).parentsUntil('.filter').find('span').removeClass('mui-badge mui-badge-danger')
-											$(this).addClass('mui-badge mui-badge-danger');
+											$(this).parentsUntil('.filter').find('span').removeClass('actBadge actspan');
+											if($(this).hasClass('ftb')){
+												$(this).addClass('actBadge');
+											}else{
+												$(this).addClass('actspan');
+											}
+											
+											
 											if($(this).attr('data-name') == 'category'){
 												categoryId = $(this).attr('data-id')
 											}else if($(this).attr('data-name') == 'brand'){
@@ -472,7 +476,7 @@
 				$('.flexw div').click(function(){
 					$(this).siblings().removeClass('curActive')
 					$(this).addClass('curActive'); 
-					$('.categray>span').addClass('mui-badge mui-badge-danger')
+					$('.categray>span').addClass('mui-badge mui-badge-danger actBadge')
 					kindType($(this).attr('data-id'));
 				})
 				

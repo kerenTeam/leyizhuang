@@ -6,10 +6,12 @@
 		<title></title>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../css/commonY.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/configW.css"/>
 	</head>
 	<style type="text/css">
 		#gxball{padding: 15px;}
-		.gxbList{padding:20px;width: calc((100vw - 50px) / 2);float: left;text-align: center;background-color: #FF5053;margin: 5px;}
+		.gxbList{padding:30px;width: calc((100vw - 50px) / 2);float: left;text-align: center;background-color: white;margin: 5px;}
 		
 	</style>
 	<body>
@@ -17,6 +19,7 @@
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<h1 class="mui-title">工序包</h1>
 		</header>
+		<script src="../js/statusBar.js" type="text/javascript" charset="utf-8"></script>
 		<div class="mui-content">
 			<div id="gxball">
 			
@@ -24,7 +27,7 @@
 		</div>
 		<script type="text/html" id="goodsTpl">
 			<%for(var i = 0 ;i<list.length;i++){%>
-					<div id="<%=list[i].id%>" class="gxbList" onclick="goList(<%=list[i].id%>,'<%=list[i].processName%>')"> 
+					<div id="<%=list[i].id%>" class="gxbList ft16" onclick="goList(<%=list[i].id%>,'<%=list[i].processName%>')"> 
 						<%=list[i].processName%>
 					</div>
 			<%}%>

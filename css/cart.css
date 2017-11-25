@@ -1,4 +1,3 @@
-
 a:active,
 a:hover {
 	outline: 0
@@ -753,9 +752,11 @@ nav .userIcon:before {
 	text-shadow: 0 1px 1px white;
 	color: #333;
 }
-.btmNav a:first-child{
+
+.btmNav a:first-child {
 	width: 66.66%;
 }
+
 .btmNav a:last-child {
 	width: 33.34%;
 	border: none;
@@ -767,27 +768,28 @@ nav .userIcon:before {
 .cart {
 	background: white;
 	overflow: hidden;
-	margin: 0; 
+	margin: 0;
 }
 
-.cart dt {  
+.cart dt {
 	height: .4rem;
-	line-height: .4rem; 
+	line-height: .4rem;
 	position: relative;
 	/*border-bottom: 1px #eee solid;*/
 }
-.cart dt:after{
+
+.cart dt:after {
 	content: '';
 	display: block;
 	height: 1px;
-	background-color: rgba(0,0,0,0.1);
+	background-color: rgba(0, 0, 0, 0.1);
 	-webkit-transform: scaleY(.5);
 	position: absolute;
 	bottom: 0;
 	left: 0;
 	width: 100%;
-
 }
+
 .cart dt label input[type="checkbox"] {
 	margin-right: .1rem;
 	vertical-align: middle;
@@ -801,16 +803,18 @@ nav .userIcon:before {
 	font-size: 12px;
 }
 
-.cart dd { 
+.cart dd {
 	overflow: hidden;
 	border-bottom: 1px #eee solid;
-	padding: .05rem 2%;
+	padding: .08rem 2%;
 	position: relative;
 	margin: 0;
 }
-.cart dd:last-child{
+
+.cart dd:last-child {
 	border-bottom: 0;
 }
+
 .cart dd input[type="checkbox"] {
 	float: left;
 	margin-right: .15rem;
@@ -848,7 +852,13 @@ nav .userIcon:before {
 	content: "x";
 }
 
-.numberWidget{float: right;margin-top: -5px;}
+.numberWidget {
+	float: right;
+	margin-top: -5px;
+	/*border: 1px solid #eee;*/
+	border-radius: 4px;
+}
+
 .cart dd .goodsInfor .numberWidget input[type="button"] {
 	width: .5rem;
 	height: .5rem;
@@ -858,15 +868,16 @@ nav .userIcon:before {
 	color: grey;
 	outline: none;
 }
- 
 
 .cart dd .goodsInfor .priceArea strong {
-	color: #f53c42;
+	color: #coral;
 	font-size: .13rem;
 }
-.cart dd .goodsInfor .priceArea strong .price{
+
+.cart dd .goodsInfor .priceArea strong .price {
 	font-size: 0.14rem;
 }
+
 .cart dd .goodsInfor .priceArea del {
 	color: grey;
 }
@@ -883,7 +894,7 @@ nav .userIcon:before {
 }
 
 .cart dd .delBtn {
-	height: 100%; 
+	height: 100%;
 	display: none;
 	position: absolute;
 	right: 0;
@@ -1637,7 +1648,8 @@ nav .userIcon:before {
 	color: #999;
 	display: block;
 }
-.goodsbgc{
+
+.goodsbgc {
 	background-color: #F9F9F9;
 }
 
@@ -1652,7 +1664,6 @@ nav .userIcon:before {
 
 dt .mui-checkbox {
 	left: 0.6rem!important;
-	 
 }
 
 .num {
@@ -1667,6 +1678,7 @@ dt .mui-checkbox {
 .numberWidget input {
 	font-size: 0.15rem;
 }
+
 .mui-numbox {
 	width: 100px;
 	height: 25px;
@@ -1678,8 +1690,8 @@ dt .mui-checkbox {
 .mui-numbox .mui-input-numbox,
 .mui-numbox .mui-numbox-input {
 	border-radius: 3px !important;
-	    border: none!important;
-    color: grey;
+	border: none!important;
+	color: grey;
 	line-height: 25px;
 }
 
@@ -1687,17 +1699,18 @@ dt .mui-checkbox {
 .mui-numbox [class*=numbox-btn] {
 	width: 25px;
 	line-height: 23px;
-    background-color: #EEEEEE;
-    color: gray!important;
-    border: none;
-    font-size: 16px;
-    
+	background-color: #EEEEEE;
+	color: gray!important;
+	border: none;
+	font-size: 16px;
 }
-.mui-numbox [class*=btn-numbox][disabled], .mui-numbox [class*=numbox-btn][disabled]{
+
+.mui-numbox [class*=btn-numbox][disabled],
+.mui-numbox [class*=numbox-btn][disabled] {
 	opacity: 1;
 }
 
-@media (max-width:340px ) {
+@media (max-width:340px) {
 	.mui-numbox {
 		width: 80px;
 		height: 20px;
@@ -1705,7 +1718,6 @@ dt .mui-checkbox {
 		border: none;
 		background-color: #FFFFFF;
 	}
-	
 	.mui-numbox .mui-input-numbox,
 	.mui-numbox .mui-numbox-input {
 		border-radius: 3px !important;
@@ -1714,36 +1726,42 @@ dt .mui-checkbox {
 		font-size: 14px;
 		line-height: 100%;
 	}
-	
 	.mui-numbox [class*=btn-numbox],
 	.mui-numbox [class*=numbox-btn] {
-		    width: 20px;
-	line-height: 1px;
-    background-color: white;
-    color: gray!important;
-    border-radius: 50%;
-    border: 1px solid #d4cdcd;
-	} 
+		width: 20px;
+		line-height: 1px;
+		background-color: white;
+		color: gray!important;
+		border-radius: 50%;
+		border: 1px solid #d4cdcd;
+	}
 }
-.mui-checkbox input[type=checkbox]:checked:before, .mui-radio input[type=radio]:checked:before {
-    color: rgb(245, 60, 66);
+
+.mui-checkbox input[type=checkbox]:checked:before,
+.mui-radio input[type=radio]:checked:before {
+	color: rgb(245, 60, 66);
 }
-.cart{
+
+.cart {
 	border-top: 1px #eee solid;
 	margin-bottom: 5px;
 }
-.botCheck{
+
+.botCheck {
 	position: absolute;
-    left: 0.6rem;
+	left: 0.6rem;
 }
-.shopName{
+
+.shopName {
 	position: absolute;
 	left: 0.5rem;
 }
-.cartLogo{
+
+.cartLogo {
 	width: 22px;
-	vertical-align: middle; 
+	vertical-align: middle;
 }
-.goodname{
+
+.goodname {
 	word-break: break-all;
 }

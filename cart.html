@@ -64,7 +64,7 @@
 										<%=lists.goodsList[j].goodsUnit%>；规格：
 										<%=lists.goodsList[j].goodsSpecification%>
 									</div>
-									<strong>¥<span class="price"><%=lists.goodsList[j].retailPrice%></span></strong>
+									<strong class="activecl2">¥<span class="price"><%=lists.goodsList[j].retailPrice%></span></strong>
 									<div class="numberWidget">
 										<div class="mui-numbox" data-numbox-min='1' style="background-color: #F3F3F3!important;">
 											<button class="mui-btn mui-btn-numbox-minus" type="button">-</button>
@@ -99,7 +99,7 @@
 								<%=list[i].goodsUnit%>；规格：
 								<%=list[i].goodsSpecification%>
 							</div>
-							<strong>¥<span class="price"><%=list[i].retailPrice%></span></strong>
+							<strong class="activecl2">¥<span class="price"><%=list[i].retailPrice%></span></strong>
 							<div class="numberWidget">
 								<div class="mui-numbox" data-numbox-min='1'>
 									<button class="mui-btn mui-btn-numbox-minus" type="button">-</button>
@@ -135,6 +135,10 @@
 	<script>
 		mui.plusReady(function() {
 			var page = plus.webview.currentWebview().page;
+			var cusId = plus.webview.currentWebview().cusid;
+			if(!cusId){
+				cusId = ''
+			}
 			if(page == 1) {
 				$('#fanhui').show()
 			}
@@ -154,7 +158,8 @@
 				mui.ajax(serverUrl + '/app/materialList/list', {
 					data: {
 						userId: userId,
-						identityType: identityT
+						identityType: identityT,
+						cusId:cusId
 					},
 					dataType: 'json',
 					headers: {

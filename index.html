@@ -240,7 +240,7 @@
 
 		</div>
 		<div class="mui-content flexws ltac guides" style="display: ;">
-			<div>
+			<div onclick="noDelivery()">
 				<div class="imgb" style="background-color:#8992c8"><img src="images/6.svg" alt="" /></div>未提货
 			</div>
 			<div onclick="guideCredit()">
@@ -389,14 +389,19 @@
 					id: 'ofenBuy',
 				})
 			}
-
+			function noDelivery(){
+				openview({
+					view:'page/guide/noDelivery.html',
+					id:'noDelivery'
+				})
+			}
 			function goHotList() {
 				openview({
 					view: 'page/hotGoods.html',
 					id: 'hotGoods',
 				})
 			}
-
+			
 			function tradeLists() {
 				openview({
 					view: 'page/tradeList.html',
