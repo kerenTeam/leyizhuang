@@ -17,3 +17,131 @@
 .mui-bar-nav~.mui-content {
     padding-top: 50px;
 }
+input[type=color], input[type=date], input[type=datetime-local], input[type=datetime], input[type=email], input[type=month], input[type=number], input[type=password], input[type=search], input[type=tel], input[type=text], input[type=time], input[type=url], input[type=week], select, textarea{
+	border: 1px solid #eee;
+}
+
+/*页面样式*/
+
+.cancelDiv{
+	display: table;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 1000;
+	background-color: rgba(0,0,0,0.4);
+}
+.cancelCon{
+	display: table-cell;
+	vertical-align: middle;
+
+}
+.cancelMin{
+	background-color: #fff;
+    padding-bottom: 2%;
+    border-radius: 5px;
+}
+.cancelBtn{
+	margin-top: 3%;
+	margin-bottom: 3%;
+	text-align: center;
+}
+.cancelMin .h4{
+	font-size: 16px;
+	padding: 15px;
+}
+.mui-radio.mui-left input[type=radio] {
+    left: 15px;
+}
+.mui-checkbox input[type=checkbox]:before, .mui-radio input[type=radio]:before{
+	font-size: 22px;
+}
+.mui-checkbox input[type=checkbox], .mui-radio input[type=radio]{
+	top: 8px;
+}
+.mui-checkbox.mui-left label, .mui-radio.mui-left label {
+    padding-left: 44px;
+}
+.cancelText{
+	padding: 15px;
+}
+.cancelBtn button{
+	margin: 0 6%;
+}
+.cancelMin{
+	position: relative;
+	z-index: 1010;
+}
+.mui-btn, button, input[type=button], input[type=reset], input[type=submit]{
+	font-size: 15px;
+	padding: 5px 22px;
+}
+.mui-checkbox input[type=checkbox]:checked:before, .mui-radio input[type=radio]:checked:before{
+	color: #c7161e;
+}
+.headRight{
+    float: right;
+    padding: 4px;
+    margin-top: 10px;
+}
+.headRight img{
+	width: 20px;
+}
+/*订单列表页面*/
+.notice .tab-hdtwo li {width: 20%;color: #747474;font-size: 15px;}
+.notice li.active{border-bottom: 2px solid #c7161e;box-sizing: border-box;color: #c7161e;}
+.tab-hd{height: 45px !important;border-bottom: 1px solid #EFEFF4 !important;}
+.tab-nav li{height: 45px !important;}
+body{background-color: #fff;}
+.mui-bar-nav{box-shadow: none !important;}
+header.mui-bar{z-index: 200;}
+.checkList{background-color: #fff;margin-top: 10px;}
+.checkList h4{font-size: 14px;padding: 12px 10px;}
+.checkList h4 .h4span3{float: right;color: red;}
+.checkList h4 .h4span2{margin-left: 3%;}
+.checkListCon{padding: 10px;}
+.checkListCon img{width: 23%;float: left;margin-left: 1.6%;}
+.checkListDZ{padding: 10px;color: #757575;}
+.checkListB{padding: 10px 20px;text-align: right;}
+#infoListDiv{transition: all .3s;}
+
+#main{margin-top: 0px;border-top:1px solid #eee }
+.rechargeConDiv{background-color: #fff;margin-top: 10px;line-height: 26px;padding: 10px;}
+.notice .tab-hd{background-color: #eee;position: fixed; width: 100%; z-index: 100;box-shadow: 0 0 2px rgba(175, 166, 166, 0.85) !important;}
+/*订单*/
+.orderList{border-top: 8px solid #eee;}
+.orderList:first-child{border-top: none;}
+.orderList .h3{font-size: 15px;padding: 15px;}
+.orderList .h3 span{float: right;color: #c7161e;}
+.orderList .p1{margin: 0 15px;background-color: #f4f4f4;padding: 8px;position: relative;}
+.orderList .p1 a{display: inline-block; width: calc(100vw*0.2);height: calc(100vw*0.2);}
+.orderList .p1 img{width: 100%;height: 100%;}
+.orderList .p1 span{position: absolute;top: 0;right: 0;background-color: #c7161e;color: #eae4e4;padding: 2px 2px 0 2px;font-size: 14px;}
+.orderInfo{text-align: right;padding: 12px 15px 0px;color: #848484;font-size: 16px;}
+.orderInfo span{color: #333;}
+.orderBtns{text-align: right;padding: 12px 15px;border-bottom: 1px solid #eee;}
+.orderBtns span{display: inline-block;color: #666;border:1px solid #d2cfcf; border-radius: 2px;width: 82px;text-align: center;padding: 5px 0 4px;font-size: 15px;}
+.orderBtns span.redC{color: #c7161e;border-color: #c7161e;}
+/*搜索*/
+.searchFind { position: relative; }
+.sint { right: 0; top: 5px; left: 0; position: absolute; display: flex; align-items: center; }
+.sint .back {     font-size: 15px;
+    color: #c7161e;
+    flex-basis: 40px;
+    margin-left: 0px;
+    text-align: center;
+    margin-top: -10px;
+    margin-right: 12px; }
+.fsearch { border-radius: 20px!important; background-color: #f9f9f9!important; border: 1px solid #dfdfdf!important; font-size: 15px!important;
+	padding-left: 30px!important;  }
+.fsearch::-webkit-input-placeholder { color: gray!important; text-align: left; font-size: 12px; }
+.mui-icon-search { position: absolute;  top: 3px; color: gray;z-index: 200; }
+form { width: 100%;     padding: 0 8px;}
+.mui-icon-search2{
+	top: 10px;left: 14px;
+}
+input.fsearch::-webkit-input-placeholder{
+	color: #999;opacity:1;font-size: 15px;
+}
