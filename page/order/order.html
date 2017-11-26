@@ -62,7 +62,7 @@
 		.dateLimit {
 			font-size: 12px;
 		}
-		 
+		
 		.mui-radio input[type=radio]:before {
 			font-size: 20px;
 		}
@@ -70,21 +70,65 @@
 		.mui-radio input[type=radio] {
 			top: 8px;
 		}
-		 
+		
 		.quanc {
 			display: none;
 			width: 0.3rem;
 			margin-right: 0.1rem;
 			display: none;
 		}
-		.preDeposit{width: 38%!important;margin-top: -4px;height: 30px!important;text-align: right;padding: none!important;}
-		.cart dd{border-bottom: none;}
-	    .mui-radio.mui-left label{
+		
+		.preDeposit {
+			width: 38%!important;
+			margin-top: -4px;
+			height: 30px!important;
+			text-align: right;
+			padding: none!important;
+		}
+		
+		.cart dd {
+			border-bottom: none;
+		}
+		
+		.mui-radio.mui-left label {
 			padding-left: 47px;
 		}
-		.psw{margin-top: -8px;margin-right: -10px;}
-		.mui-table-view-cell.mui-active{background-color: none!important;border-radius:0!important ;}
-		.mui-table-view-cell.mui-collapse .mui-collapse-content{margin: 11px -15px -15px;}
+		
+		.psw {
+			margin-top: -8px;
+			margin-right: -10px;
+		}
+		
+		.mui-table-view-cell.mui-active {
+			background-color: none!important;
+			border-radius: 0!important;
+		}
+		
+		.mui-table-view-cell.mui-collapse .mui-collapse-content {
+			margin: 11px -15px -15px;
+		}
+		
+		#maskInfo {
+			z-index: 99999;
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			bottom: 0;
+			background-color: rgba(0, 0, 0, .5)
+		}
+		
+		.paychoose {
+			background-color: white;
+			bottom: 0!important;
+			position: absolute;
+			right: 0;
+			left: 0;
+		}
+		.paychoose img{
+			width: 40px;
+			margin: 0 5px;
+		}
 	</style>
 
 	<body>
@@ -95,7 +139,7 @@
 		</header>
 		<!--状态栏-->
 		<script src="../../js/statusBar.js" type="text/javascript" charset="utf-8"></script>
-	 	<div class="mui-content">
+		<div class="mui-content">
 			<div class="flexwc">
 				<div class="cartOne cartAct">
 					<img src="../../img/check2.png" /> 下料清单
@@ -109,35 +153,35 @@
 			</div>
 			<div id="cartData" data-id=""></div>
 			<script type="text/html" id="cartTpl">
-	
+
 				<dl class="cart">
 					<div style="max-height: 300px;overflow-y: scroll;">
 						<%for(var i=0;i<list.length;i++){%>
-							<dd class="afterBorder goodsbgc">
-								<a class="goodsPic" style="margin-left: auto;"><img src="<%=list[i].coverImageUri%>" onerror="javascript:this.src='../../images/img.svg';" /></a>
-								<div class="goodsInfor" style="margin-left: 0.9rem!important;">
-							    			<span class="ft15 goodname"><%=list[i].goodsName%></span>
-								    		<%if(list[i].isGift){%>
-								    			<em class="mui-badge mui-badge-danger mui-pull-right" style="color: white;">赠品</em>
-								    		<%}%>
-									<div class="priceArea">
-										<div class="maincl ft14">
-											单位：
-											<%=list[i].goodsUnit%>；规格：
-											<%=list[i].goodsSpecification%>
-										</div>
-										<span class="ft18 activecl2">¥<span class="price"><%=list[i].retailPrice%></span></span>
-										<div class="mui-pull-right">
-											<span class="num">x<%=list[i].goodsQty%></span>
-										</div>
+						<dd class="afterBorder goodsbgc">
+							<a class="goodsPic" style="margin-left: auto;"><img src="<%=list[i].coverImageUri%>" onerror="javascript:this.src='../../images/img.svg';" /></a>
+							<div class="goodsInfor" style="margin-left: 0.9rem!important;">
+								<span class="ft15 goodname"><%=list[i].goodsName%></span>
+								<%if(list[i].isGift){%>
+								<em class="mui-badge mui-badge-danger mui-pull-right" style="color: white;">赠品</em>
+								<%}%>
+								<div class="priceArea">
+									<div class="maincl ft14">
+										单位：
+										<%=list[i].goodsUnit%>；规格：
+										<%=list[i].goodsSpecification%>
 									</div>
-			
+									<span class="ft18 activecl2">¥<span class="price"><%=list[i].retailPrice%></span></span>
+									<div class="mui-pull-right">
+										<span class="num">x<%=list[i].goodsQty%></span>
+									</div>
 								</div>
-							</dd>
-							<%}%>
+
+							</div>
+						</dd>
+						<%}%>
 					</div>
 					<div class="pad10 ft16">
-						共<span id='totalGoods' class="activecl"><%=totalQty%></span>件商品  <span class="mui-pull-right">商品总金额：<span class="activecl" id="totalPrice">¥<%=totalPrice%></span><span class="mui-icon mui-icon-arrowright maincl ft18" onclick="materialList()"></span></span>
+						共<span id='totalGoods' class="activecl"><%=totalQty%></span>件商品 <span class="mui-pull-right">商品总金额：<span class="activecl" id="totalPrice">¥<%=totalPrice%></span><span class="mui-icon mui-icon-arrowright maincl ft18" onclick="materialList()"></span></span>
 					</div>
 					<div style="clear: both;"></div>
 				</dl>
@@ -159,9 +203,9 @@
 					<em>选择门店 </em>
 					<div style="display: flex;align-items: center;">
 						<select style="padding: 0;direction: rtl!important;">
-						  <option value="">选择</option>
+							<option value="">选择</option>
 						</select>
-						<span class="mui-icon mui-icon-arrowdown mui-pull-right ft16"></span> 
+						<span class="mui-icon mui-icon-arrowdown mui-pull-right ft16"></span>
 					</div>
 				</div>
 				<div class="pad10 ft15 flexr" id="storeAddress" style="display:none;">
@@ -197,7 +241,7 @@
 						</div>
 						<span class="mui-icon mui-icon-arrowright maincl ft20"></span>
 					</div>
-	
+
 					<%}%>
 				</script>
 				<div id='cityResult' class="ui-alert pad10 afterBorder ft15">配送时间<span class="mui-icon mui-icon-arrowdown maincl mui-pull-right ft16"></span><span class="mui-pull-right pstime">选择</span></div>
@@ -208,7 +252,7 @@
 				<div class="pad10 activecl ft13 isowndis">
 					温馨提示：若收货人为主家，系统将在出货打印单中自动隐藏折扣信息
 				</div>
-				
+
 			</div>
 			<div style="background-color: white;margin-top: 5px;">
 				<div class="pad10 ft16 afterBorder">账单明细<span class="mui-icon mui-icon-arrowdown maincl mui-pull-right"></span> </div>
@@ -217,90 +261,118 @@
 				<div class="pad_5 ft15 maincl">订单折扣<span class='mui-pull-right pad_r10' id="orderDiscount">¥--</span></div>
 				<div class="pad_5 ft15 maincl">运费<span class='mui-pull-right pad_r10' id="freight">¥--</span></div>
 				<div class="pad_5 ft15 maincl">上楼费<span class='mui-pull-right pad_r10' id="upstar">依现实情况收取</span></div>
-	
+
 			</div>
 			<div id="elseDiscount" style="margin-top: 5px;"></div>
 			<script type="text/html" id="elseDiscountTpl">
 				<dl class="list" style="border: none;">
-	
+
 					<div id="quanData">
-			
+
 						<div class="mui-card afterBorder" style="border: none!important;box-shadow: none;">
 							<ul class="mui-table-view">
 								<%if(cashCouponList && cashCouponList.length){%>
-									<li class="mui-table-view-cell mui-collapse pad10">
-										<a class="mui-navigate-right" style="padding: 10px 15px;" href="#">优惠券<span class="fr" style="margin-right: 15px;">选择</span></a>
-										<div class="mui-collapse-content">
-											<%for(var j = 0; j<cashCouponList.length;j++){%>
-												<div class="checkQuan mui-row" data-id="<%=j+1%>" >
-													<div class="mui-col-sm-3">
-														<div>￥<big><b><%=cashCouponList[j].denomination%></b></big></div>
-														<div><small><%=cashCouponList[j].description%></small></div>
-													</div>
-													<div class="mui-col-sm-9">
-														<div class="cred"><big><%=cashCouponList[j].title%></big>
-														</div>
-														<div class="dateLimit">
-															<%=cashCouponList[j].effectiveStartTime%> ~ <%=cashCouponList[j].effectiveEndTime%>内有效
-														</div>
-													</div>
-													<div class="mui-checkbox"><img src="../../images/xuanze.png" class="quanc" data-id="<%=j+1%>" alt="" /></div>
+								<li class="mui-table-view-cell mui-collapse pad10">
+									<a class="mui-navigate-right" style="padding: 10px 15px;" href="#">优惠券<span class="fr" style="margin-right: 15px;">选择</span></a>
+									<div class="mui-collapse-content">
+										<%for(var j = 0; j<cashCouponList.length;j++){%>
+										<div class="checkQuan mui-row" data-id="<%=j+1%>">
+											<div class="mui-col-sm-3">
+												<div>￥<big><b><%=cashCouponList[j].denomination%></b></big></div>
+												<div><small><%=cashCouponList[j].description%></small></div>
+											</div>
+											<div class="mui-col-sm-9">
+												<div class="cred"><big><%=cashCouponList[j].title%></big>
 												</div>
-											<%}%>
-											
+												<div class="dateLimit">
+													<%=cashCouponList[j].effectiveStartTime%> ~
+													<%=cashCouponList[j].effectiveEndTime%>内有效
+												</div>
+											</div>
+											<div class="mui-checkbox"><img src="../../images/xuanze.png" class="quanc" data-id="<%=j+1%>" alt="" /></div>
 										</div>
-									</li>
+										<%}%>
+
+									</div>
+								</li>
 								<%}else{%>
-									<div class="pad10 ft14 afterBorder">优惠券<span class='mui-pull-right pad_r10'>无</span></div>
+								<div class="pad10 ft14 afterBorder">优惠券<span class='mui-pull-right pad_r10'>无</span></div>
 								<%}%>
-								
+
 							</ul>
 						</div>
 					</div>
 					<%if(lebi && lebi.quantity && lebi.rebate){%>
-						<div id="coupon" class="afterBorder">
-							<dd class="pad10 kv-line-r">
-								<div class="titcl">共<span id="totalJfen" style="color: #ff5f32;"><%=lebi.quantity%></span>乐币,抵用<span id="itMinus" style="color: #ff5f32;"><span>￥<%=lebi.rebate%></span></span></div>
-								<div id="changeJf" class="mui-checkbox"><input name="checkbox" class="groupCheck" type="checkbox"></div>
-							</dd>
-						</div>
+					<div id="coupon" class="afterBorder">
+						<dd class="pad10 kv-line-r">
+							<div class="titcl">共<span id="totalJfen" style="color: #ff5f32;"><%=lebi.quantity%></span>乐币,抵用<span id="itMinus" style="color: #ff5f32;"><span>¥<%=lebi.rebate%></span></span>
+							</div>
+							<div id="changeJf" class="mui-checkbox"><input name="checkbox" class="groupCheck" type="checkbox"></div>
+						</dd>
+					</div>
 					<%}else{%>
-						<div id="coupon" class="afterBorder">
-							<dd class="pad10 kv-line-r">
-								<h6>无乐币</h6>
-								<div class="mui-checkbox"><input name="checkbox" style="right: 10px;" class="groupCheck" type="checkbox" disabled=""></div>
-							</dd>
-						</div>
+					<div id="coupon" class="afterBorder">
+						<dd class="pad10 kv-line-r">
+							<h6>无乐币</h6>
+							<div class="mui-checkbox"><input name="checkbox" style="right: 10px;" class="groupCheck" type="checkbox" disabled=""></div>
+						</dd>
+					</div>
 					<%}%>
 					<div class="pad10 ft16 activecl" style="text-align: right;">合计：<span id="totalOrderAmount">¥--</span></div>
 					<div style="height: 5px;background: #EEEEEE;"></div>
 
-					<div class="pad10 ft14 afterBorder">预存款<span class='activecl' id="preDepositb">¥--</span><input placeholder="请输入大于0的整数" onchange="maxC(this)" onkeyup="onlyNum(this)"
-					onafterpaste="pastNum(this)" class='mui-pull-right preDeposit'/></div>
+					<div class="pad10 ft14 afterBorder">预存款<span class='activecl' id="preDepositb">¥--</span><input placeholder="请输入大于0的整数" onchange="maxC(this)" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" class='mui-pull-right preDeposit' /></div>
 					<!--only manager-->
-					<div class="pad10 ft14 afterBorder manager" style="display: none;">信用金<span class='activecl' id="credit">¥--</span><input placeholder="请输入大于0的整数"  onchange="maxC(this)" onkeyup="onlyNum(this)"
-					onafterpaste="pastNum(this)" class='mui-pull-right preDeposit'/></div>
-					<div class="pad10 ft14 afterBorder manager" style="display: none;">现金返利<span class='activecl' id="cash">¥--</span><input placeholder="请输入大于0的整数"  onchange="maxC(this)" onkeyup="onlyNum(this)"
-					onafterpaste="pastNum(this)" class='mui-pull-right preDeposit'/></div>
+					<div class="pad10 ft14 afterBorder manager" style="display: none;">信用金<span class='activecl' id="credit">¥--</span><input placeholder="请输入大于0的整数" onchange="maxC(this)" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" class='mui-pull-right preDeposit' /></div>
+					<div class="pad10 ft14 afterBorder manager" style="display: none;">现金返利<span class='activecl' id="cash">¥--</span><input placeholder="请输入大于0的整数" onchange="maxC(this)" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" class='mui-pull-right preDeposit' /></div>
 					<!--only guide-->
-					<div class="pad10 ft14 afterBorder guide" style="display: none;">信用额度<span class='activecl' id="creditVal">¥--</span><input placeholder="请输入大于0的整数"  onchange="maxC(this)" onkeyup="onlyNum(this)"
-					onafterpaste="pastNum(this)" class='mui-pull-right preDeposit'/></div>
-					<div class="pad10 ft14 afterBorder guide" style="display: none;">代收金额<span class='activecl' id="cashHelp">¥--</span><input placeholder="请输入大于0的整数"  onchange="maxC(this)" onkeyup="onlyNum(this)"
-					onafterpaste="pastNum(this)" class='mui-pull-right preDeposit'/></div>
-					
+					<div class="pad10 ft14 afterBorder guide" style="display: none;">信用额度<span class='activecl' id="creditVal">¥--</span><input placeholder="请输入大于0的整数" onchange="maxC(this)" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" class='mui-pull-right preDeposit' /></div>
+					<div class="pad10 ft14 afterBorder guide" style="display: none;">代收金额<span class='activecl' id="cashHelp">¥--</span><input placeholder="请输入大于0的整数" onchange="maxC(this)" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" class='mui-pull-right preDeposit' /></div>
+
 				</dl>
 			</script>
 			<textarea name="" rows="3" cols="" placeholder="备注"></textarea>
-			<!--bottom nav-->
+
+			<!--存储 第一次返回乐币 和 合计-->
+			<input type="hidden" id="firstLebi" data-id='' value="" />
+			<input type="hidden" id="firstTotal" value="" />
+			<input type="hidden" id="firstFreight" value="" />
+			<input type="hidden" id="couponDiscount" value="0" />
+			<input type="hidden" id="firstOrderDiscount" value="0" />
 			<div style="height:1rem;"></div>
 			<aside class="btmNav" id="dibu">
 				<a class="dp" style="position: relative;color: #f63d43;">
 					<span style="color: #333333;">应付款：</span>¥<span class="totalMoney">0</span>元
 				</a>
 				<a class="goOrder dp" style="background:#f53c42;color:white;text-shadow:none;">去支付</a>
-	
+
 			</aside>
- 		</div>
+
+			<!--操作表-->
+			<div id="maskInfo" style="display: none;">
+				<!-- 可选择菜单 -->
+				<ul class="paychoose ft14">
+					<li class="fttc pad10 afterBorder">
+						应付金额：6666
+					</li>
+					<li class="pad10 afterBorder">
+						<img src="../../images/order/alipay.svg"/>支付宝
+					</li>
+					<li class="pad10 afterBorder">
+						<img src="../../images/order/weixinpay.svg"/>微信
+					</li>
+					<li class="pad10 afterBorder">
+						<img src="../../images/order/bankpay.svg"/>银联支付
+					</li>
+					<li class="pad10 afterBorder">
+						<img src="../../images/order/facePay.svg"/>货到付款
+					</li>
+					<li class="closeMask fttc pad10">
+						取消
+					</li>
+				</ul>
+			</div>
+		</div>
 
 		<script type="text/javascript" src="../../js/jquery.min.js"></script>
 		<script src="../../js/mui.min.js"></script>
@@ -311,24 +383,31 @@
 	</body>
 
 	<script>
-		function maxC(obj){
+		function maxC(obj) {
 			var cur = $(obj);
-			var maxCh = cur.prev().html().replace('¥','');
-			if(obj.value > maxCh){
+			var maxCh = cur.prev().html().replace('¥', '');
+			if(obj.value > maxCh) {
 				mui.toast('输入正确的金额')
 				obj.value = '';
 			}
 		}
-		function onlyNum(obj){
-			if(obj.value.length==1){
-				obj.value=obj.value.replace(/[^1-9]/g,'')
-			}else{
-				obj.value=obj.value.replace(/\D/g,'')
+
+		function onlyNum(obj) {
+			if(obj.value.length == 1) {
+				obj.value = obj.value.replace(/[^1-9]/g, '')
+			} else {
+				obj.value = obj.value.replace(/\D/g, '')
 			}
 		}
-		function pastNum(){
-			if(obj.value.length==1){obj.value=obj.value.replace(/[^1-9]/g,'0')}else{obj.value=obj.value.replace(/\D/g,'')}
+
+		function pastNum() {
+			if(obj.value.length == 1) {
+				obj.value = obj.value.replace(/[^1-9]/g, '0')
+			} else {
+				obj.value = obj.value.replace(/\D/g, '')
+			}
 		}
+
 		function materialList() {
 			openview({
 				view: 'elseMaterialList.html',
@@ -353,7 +432,7 @@
 			var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
 			var idobj = plus.storage.getItem('orderGoodsList');
 			var customerId = plus.webview.currentWebview().customerId || '';
-			if(identityT == 2){
+			if(identityT == 2) {
 				$('.selfTake').hide();
 			}
 			plus.nativeUI.showWaiting();
@@ -363,7 +442,7 @@
 					userId: userId,
 					identityType: identityT,
 					goodsList: JSON.parse(idobj),
-					customerId:customerId
+					customerId: customerId
 				},
 				dataType: 'json',
 				type: 'post',
@@ -393,87 +472,98 @@
 							$('#memberDiscount').html('¥0')
 						}
 						if(data.content.orderDiscount) {
-							$('#orderDiscount').html('¥' + data.content.orderDiscount)
+							$('#orderDiscount').html('¥' + data.content.orderDiscount);
+							$('#firstOrderDiscount').val(data.content.orderDiscount)
 						} else {
 							$('#orderDiscount').html('0')
 						}
 						if(data.content.freight) {
 							$('#freight').html('¥' + data.content.freight)
+							$('#firstFreight').val(data.content.freight)
 						} else {
 							$('#freight').html('0')
+							$('#firstFreight').val(0)
 						}
-						if(data.content.upstairsFee){
-							$('#upstar').html('¥'+data.content.upstairsFee)
+
+						if(data.content.upstairsFee) {
+							$('#upstar').html('¥' + data.content.upstairsFee)
 						}
-						if(data.content.cashCouponList && data.content.cashCouponList.length){
-							for(var i in data.content.cashCouponList){
-				       			if(data.content.cashCouponList[i].effectiveStartTime){
-				       				var date = new Date(data.content.cashCouponList[i].effectiveStartTime/1000 *1000);
-										Y = date.getFullYear() + '-';
-										M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
-										D = date.getDate() + ' ';
-										data.content.cashCouponList[i].effectiveStartTime = Y+M+D;
-				       			}
-				       			if(data.content.cashCouponList[i].effectiveEndTime){
-				       				var date = new Date(data.content.cashCouponList[i].effectiveEndTime/1000 *1000);
-										Y = date.getFullYear() + '-';
-										M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
-										D = date.getDate() + ' ';
-										data.content.cashCouponList[i].effectiveEndTime = Y+M+D;
-				       			}
-				       		}
+						if(data.content.cashCouponList && data.content.cashCouponList.length) {
+							for(var i in data.content.cashCouponList) {
+								if(data.content.cashCouponList[i].effectiveStartTime) {
+									var date = new Date(data.content.cashCouponList[i].effectiveStartTime / 1000 * 1000);
+									Y = date.getFullYear() + '-';
+									M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
+									D = date.getDate() + ' ';
+									data.content.cashCouponList[i].effectiveStartTime = Y + M + D;
+								}
+								if(data.content.cashCouponList[i].effectiveEndTime) {
+									var date = new Date(data.content.cashCouponList[i].effectiveEndTime / 1000 * 1000);
+									Y = date.getFullYear() + '-';
+									M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
+									D = date.getDate() + ' ';
+									data.content.cashCouponList[i].effectiveEndTime = Y + M + D;
+								}
+							}
 						}
 						var discount = {};
-							discount.lebi = data.content.lebi;
-							discount.cashCouponList = data.content.cashCouponList;
-							discount.productCouponList = data.content.productCouponList;
+						discount.lebi = data.content.leBi;
+						discount.cashCouponList = data.content.cashCouponList;
+						discount.productCouponList = data.content.productCouponList;
 						document.getElementById('elseDiscount').innerHTML = template('elseDiscountTpl', discount);
 						plus.nativeUI.closeWaiting();
-						if(identityT == 0 || identityT == 4 || identityT == 5){
+						var ctlebi = data.content.leBi.rebate || 0;
+						$('#firstLebi').val(ctlebi);
+						$('#firstLebi').attr('data-id', data.content.leBi.quantity);
+						$('#changeJf input').change(function() {
+							carculate();
+						})
+						if(identityT == 0 || identityT == 4 || identityT == 5) {
 							$('.guide').show();
 						}
-						if(identityT == 2){
+						if(identityT == 2) {
 							$('.manager').show();
 						}
 						//券
 						$(".checkQuan").click(function() {
-							var cashCouponsList = [];	
-							var qid = $(this).attr("data-id"); 
-							alert(qid)
-							if($(this).find(".quanc").css("display") == "block") {
-								$(this).find(".quanc").css("display", "none");
+							var cashCouponsList = [];
+							var qid = $(this).attr("data-id");
+							var curCoupon = $(this);
+							if(curCoupon.find(".quanc").css("display") == "block") {
+								curCoupon.find(".quanc").css("display", "none");
 							} else {
-								$(this).find(".quanc").css("display", "block");
-								 
+								curCoupon.find(".quanc").css("display", "block");
+
 							};
-							var totalOrderAmount = $('#totalPriceb').text().replace('¥','');
-							var orderDiscount = $("#orderDiscount").text().replace('¥','');
+
 							$(".quanc").each(function() {
 								if($(this).css("display") == "block") {
-									$("#orderDiscount").html('无')
 									coupon_id = $(this).attr("data-id");
-									cashCouponsList.push({"id":coupon_id,"qty":1})
+									cashCouponsList.push({
+										"id": coupon_id,
+										"qty": 1
+									})
 								}
 							})
-							var quantity = $('#totalJfen').text();
-							var rebate = $('#itMinus').text().replace('¥','');
-							alert(quantity+' '+rebate)
+							var quantity = $('#firstLebi').attr('data-id');
+							var rebate = $('#firstLebi').val();
+							var totalOrderAmount = $('#firstTotal').val();
+							alert(totalOrderAmount + ' ' + quantity + ' ' + rebate)
+							var lebi = {
+								"id": userId,
+								"cusId": '',
+								"quantity": quantity,
+								"rebate": rebate
+							};
 							//选券 返回金额
 							mui.ajax(serverUrl + '/app/order/reEnter/ccp', {
 								data: {
 									"userId": userId,
 									"identityType": identityT,
 									"customerId": null,
-								    "totalOrderAmount": totalOrderAmount,
-								    "orderDiscount": orderDiscount,
-								    "lebi": {
-							    			"id":userId,
-							    			"cusId":null,
-							    			"quantity":quantity,
-							    			"rebate":rebate
-							    	
-							    		},
-								    "couponsList":cashCouponsList,
+									"totalOrderAmount": totalOrderAmount,
+									"leBi": lebi,
+									"couponsList": cashCouponsList,
 								},
 								dataType: 'json',
 								type: 'post',
@@ -485,8 +575,20 @@
 								success: function(data, type, xhr) {
 									console.log('选取优惠券返回', data);
 									if(data.code == 0 && data.content) {
-										$("#totalOrderAmount").html('¥'+data.content)
-									}else{
+										//										$('#totalOrderAmount').html('¥'+data.content.totalOrderAmount);
+										if(data.content.couponDiscount) {
+											$("#orderDiscount").html('¥0');
+										} else {
+											$("#orderDiscount").html('¥' + $('#firstOrderDiscount').val());
+										}
+
+										$('#couponDiscount').val(data.content.couponDiscount);
+										if(data.content.lebi) {
+											$('#itMinus span').html('¥' + data.content.lebi.rebate)
+										}
+										carculate();
+									} else {
+										curCoupon.find(".quanc").css("display", "none");
 										mui.toast(data.message);
 									}
 								},
@@ -496,32 +598,39 @@
 							});
 						})
 						if(data.content.totalOrderAmount) {
+							$('#firstTotal').val(data.content.totalOrderAmount)
 							$('#totalOrderAmount').html('¥' + data.content.totalOrderAmount)
 						} else {
 							$('#totalOrderAmount').html('0')
 						}
-						if(data.content.preDeposit){
-							$('#preDepositb').html('¥'+data.content.preDeposit)
-						}else{
-							$('#preDepositb').html(0)
+						if(identityT == 6) {
+							if(data.content.preDeposit) {
+								$('#preDepositb').html('¥' + data.content.preDeposit)
+							} else {
+								$('#preDepositb').html('¥' + 0)
+								$('#preDepositb').next().hide()
+							}
+						} else {
+							if(data.content.storePreDeposit) {
+								$('#preDepositb').html('¥' + data.content.storePreDeposit)
+							} else {
+								$('#preDepositb').html('¥' + 0)
+								$('#preDepositb').next().hide()
+							}
 						}
-						if(data.content.storePreDeposit){
-							$('#preDepositb').html('¥'+data.content.storePreDeposit)
-						}else{
-							$('#preDepositb').html(0)
+						if(data.content.storeCreditMoney) {
+							$('#credit').html('¥' + data.content.storeCreditMoney)
+						} else {
+							$('#credit').html('¥' + 0);
+							$('#credit').next().hide()
 						}
-						if(data.content.storeCreditMoney){
-							$('#credit').html('¥'+data.content.storeCreditMoney)
-						}else{
-							$('#credit').html(0)
+						if(data.content.storeSubvention) {
+							$('#cash').html('¥' + data.content.storeSubvention)
+						} else {
+							$('#cash').html('¥' + 0);
+							$('#cash').next().hide()
 						}
-						if(data.content.storeSubvention){
-							$('#cash').html('¥'+data.content.storeSubvention)
-						}else{
-							$('#cash').html(0);
-							$(this).next().attr('disabled',true)
-						}
-						
+
 					} else {
 						mui.toast(data.message);
 						plus.nativeUI.closeWaiting();
@@ -591,23 +700,23 @@
 				//				plus.storage.removeItem("$addressStorage")
 			}
 			//自提 获取门店
-			$("input[name='peis']").change(function(){
+			$("input[name='peis']").change(function() {
 				var delivery = $("input[name='peis']:checked").val();
 				var goodsId = '';
-				mui.each(JSON.parse(idobj),function(index,item){
-					if(index == JSON.parse(idobj).length-1){
-						goodsId+=item.id
-					}else{
-						goodsId+=item.id+','
+				mui.each(JSON.parse(idobj), function(index, item) {
+					if(index == JSON.parse(idobj).length - 1) {
+						goodsId += item.id
+					} else {
+						goodsId += item.id + ','
 					}
 				})
-				if(delivery == 1){
+				if(delivery == 1) {
 					//查询门店
 					mui.ajax(serverUrl + '/app/settlement/get/selfTakeStore/available', {
-						data:{
-							userId:userId,
-							identityType:identityT,
-							goodsIds:goodsId
+						data: {
+							userId: userId,
+							identityType: identityT,
+							goodsIds: goodsId
 						},
 						dataType: 'json',
 						type: 'post',
@@ -621,24 +730,24 @@
 							if(data.code == 0 && data.content && data.content.isSelfTakePermitted) {
 								$('#chooseStore').show();
 								$('#add_info,.isowndis,#cityResult').hide();
-								$('#freight').parent().hide();
+								$('#freight').html('¥0');
 								//合计
-								carculate(); 
-								var storeStr = '<option value="">选择</option>'; 
-								for (var i = 0;i<data.content.storeList.length;i++) {
-									storeStr += '<option data-addr="'+data.content.storeList[i].detailedAddress+'" value="'+data.content.storeList[i].storeId+'">'+data.content.storeList[i].storeName+'</option>'
+								carculate();
+								var storeStr = '<option value="">选择</option>';
+								for(var i = 0; i < data.content.storeList.length; i++) {
+									storeStr += '<option data-addr="' + data.content.storeList[i].detailedAddress + '" value="' + data.content.storeList[i].storeId + '">' + data.content.storeList[i].storeName + '</option>'
 								}
 								$('#chooseStore select').html(storeStr);
-								$('#chooseStore select').change(function(){
+								$('#chooseStore select').change(function() {
 									var storeId = $(this).val();
 									var curselect = $(this)
 									//请求门店库存
-									mui.ajax(serverUrl+'/app/settlement/selfTakeStore/choose', {
+									mui.ajax(serverUrl + '/app/settlement/selfTakeStore/choose', {
 										data: {
 											"userId": userId,
 											"identityType": identityT,
 											"storeId": storeId,
-											"goodsList":idobj
+											"goodsList": idobj
 										},
 										dataType: 'json',
 										type: 'post',
@@ -647,20 +756,20 @@
 											"Authorization": oldToken
 										},
 										success: function(data) {
-											console.log('门店库存',data);
-											if(data.code == 0) { 
+											console.log('门店库存', data);
+											if(data.code == 0) {
 												var address = curselect.find('option:checked').attr('data-addr')
-												if(address){
+												if(address) {
 													$('#storeAddress').show();
 													$('.storeAddress').html(address)
-												}else{
+												} else {
 													$('#storeAddress').show();
 													$('.storeAddress').html('无地址')
 												}
-											}else{
+											} else {
 												mui.toast(data.message);
-												curselect.find('option').eq(0).attr('selected',true);
-												
+												curselect.find('option').eq(0).attr('selected', true);
+
 											}
 										},
 										error: function(xhr, type, errorThrown) {
@@ -669,30 +778,46 @@
 										}
 									});
 								})
-							}else{
+							} else {
 								mui.toast(data.message);
-								$("input[name='peis']").eq(0).attr('checked',false)
-								$("input[name='peis']").eq(1).prop('checked',true)
+								$("input[name='peis']").eq(0).attr('checked', false)
+								$("input[name='peis']").eq(1).prop('checked', true)
 							}
 						},
 						error: function(xhr, type, errorThrown) {
 							console.log('响应失败  !');
 						}
 					});
-				}else{
+				} else {
 					$('#chooseStore,#storeAddress').hide();
 					$('#add_info,.isowndis,#cityResult').show();
-					$('#freight').parent().show();
+					$('#freight').html('¥' + $('#firstFreight').val());
+					carculate();
 				}
 			})
 			//重新计算价格
-			function carculate()	{
-				var orderAll = $('#totalPriceb').html().replace('¥','') 
+			function carculate() {
+				var orderAll = $('#totalPriceb').html().replace('¥', ''); //订单金额
+				var memberDiscount = $('#memberDiscount').html().replace('¥', '');
+				var orderDiscount = $('#orderDiscount').html().replace('¥', '');
+				var freight = $('#freight').html().replace('¥', '');
+				var couponDiscount = $('#couponDiscount').val();
+
+				if($('#changeJf').find("input[type='checkbox']:checked").length == 1) {
+					var lebi = $('#itMinus').text().replace('¥', '')
+				} else {
+					var lebi = 0
+				}
+				var curTotal = Number(orderAll) - Number(memberDiscount) - Number(orderDiscount) + Number(freight) - Number(couponDiscount) - Number(lebi);
+				alert(orderAll + ' ' + memberDiscount + ' ' + orderDiscount + ' ' + freight + ' ' + couponDiscount + " " + lebi);
+				alert(curTotal)
+				$('#totalOrderAmount').html(parseFloat(curTotal).toFixed(2))
 			}
 			//获取城市
 			var cityId = plus.storage.getItem('userCity');
 			//获取时间段
 			timeRanges();
+
 			function timeRanges() {
 				mui.ajax(serverUrl + '/app/city/get/deliveryTime', {
 					data: {
@@ -730,12 +855,12 @@
 								cityResult.addEventListener('tap', function(event) {
 									cityPicker.show(function(items) {
 										$('#cityResult').attr('data-id', '1');
-										 if(!items[1].text){
-										 	alert('当天无可选时间段')
-										 }else{
-										 	$('#cityResult .pstime').html(items[0].text + " " + items[1].text)
-										 }
-										
+										if(!items[1].text) {
+											alert('当天无可选时间段')
+										} else {
+											$('#cityResult .pstime').html(items[0].text + " " + items[1].text)
+										}
+
 										//返回 false 可以阻止选择框的关闭
 										//return false;
 									});
@@ -756,6 +881,20 @@
 					}
 				});
 			}
+		})
+
+		//支付
+		$('.goOrder').click(function() {
+			event.stopPropagation();
+			$('#maskInfo').fadeIn(200);
+		})
+
+		$('#maskInfo li').click(function() {
+			event.stopPropagation()
+		})
+		$('#maskInfo,.closeMask').click(function() {
+			event.preventDefault()
+			$('#maskInfo').fadeOut(200);
 		})
 
 		Array.prototype.unique1 = function() {

@@ -241,7 +241,7 @@
 		<!--tab-->
 		<div id="tab">
 
-			<div id="searchOut" style="margin-top: 50px;"></div>
+			<div id="searchOut" style="margin-top: 51px;"></div>
 
 			<script type="text/html" id="searchOutTpl">
 				<div class="tabcontent tc1 taactive">
@@ -389,8 +389,7 @@
 				var userId = plus.storage.getItem('$userId');
 				var oldToken = plus.storage.getItem("oldToken");
 				var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
-
-				mui.ajax(serverUrl+'/app/user/search/customer', {
+				mui.ajax(serverUrl+'/app/user/search/employee', {
 					data: {
 						identityType: identityT,
 						keywords: words,
@@ -403,7 +402,7 @@
 					type: 'post',
 					timeout: 10000,
 					success: function(data, type, xhr) {
-						console.log('搜索商品列表' + JSON.stringify(data));
+						console.log('搜索工人列表' + JSON.stringify(data));
 						if(data.code == 0) {
 							plus.nativeUI.closeWaiting();
 							if(data.content) {

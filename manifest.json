@@ -570,7 +570,8 @@
 					"nview.html",
 					"quicklyOrder.html",
 					"page/fastOrder.html",
-					"page/dispatching/dispatching.html"
+					"page/dispatching/dispatching.html",
+					"page/guide/noDelivery.html"
 				],
 				"priority": 0
 			},
@@ -665,7 +666,9 @@
 					"fonts/mui.ttf",
 					"js/artTemplate-native.js"
 				],
-				"refer": [],
+				"refer": [
+					"page/goodsInfo.html"
+				],
 				"priority": 0
 			},
 			"page/searchGoods.html": {
@@ -1534,7 +1537,16 @@
 					"page/dispatching/woodFast.html",
 					"page/dispatching/tileFast.html",
 					"page/dispatching/electricFast.html",
-					"page/dispatching/oilFast.html"
+					"page/dispatching/oilFast.html",
+					"page/dispatching/deliveryCheckInfo.html",
+					"page/dispatching/deliveryInfo.html"
+				],
+				"priority": 0
+			},
+			"page/guide/noDelivery.html": {
+				"resources": [],
+				"refer": [
+					"page/personal/productCoupon.html"
 				],
 				"priority": 0
 			}

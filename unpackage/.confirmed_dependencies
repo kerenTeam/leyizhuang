@@ -248,7 +248,8 @@
 			"nview.html",
 			"quicklyOrder.html",
 			"page/fastOrder.html",
-			"page/dispatching/dispatching.html"
+			"page/dispatching/dispatching.html",
+			"page/guide/noDelivery.html"
 		]
 	},
 	"page/gxbList.html": {
@@ -329,7 +330,9 @@
 			"fonts/mui.ttf",
 			"js/artTemplate-native.js"
 		],
-		"refer": []
+		"refer": [
+			"page/goodsInfo.html"
+		]
 	},
 	"page/searchGoods.html": {
 		"resources": [
@@ -1116,10 +1119,17 @@
 			"page/dispatching/woodFast.html",
 			"page/dispatching/tileFast.html",
 			"page/dispatching/electricFast.html",
-			"page/dispatching/oilFast.html"
+			"page/dispatching/oilFast.html",
+			"page/dispatching/deliveryCheckInfo.html",
+			"page/dispatching/deliveryInfo.html"
 		],
 		"resources": [
 			"page/dispatching/waterFast.html"
+		]
+	},
+	"page/guide/noDelivery.html": {
+		"refer": [
+			"page/personal/productCoupon.html"
 		]
 	}
 }

@@ -17,22 +17,27 @@
 		<script type="text/javascript" src="../../js/jquery.min.js"></script>
 		<script src="../../js/mui.min.js" type="text/javascript"></script>
 		<style type="text/css">
-			.notice li.active{border-bottom: 2px solid #f63d41;box-sizing: border-box;color: #f63d41;}
-			.tab-hd{height: 45px !important;border-bottom: 1px solid #EFEFF4 !important;}
+			.notice li.active { box-sizing: border-box; background-color: #c7161e; color: #fff;
+  	  			border: 1px solid #c7161e;}
+			.notice li:first-child{border-radius: 3px 0 0 3px;font-size: 16px;}
+			.notice li:last-child{border-radius: 0 3px 3px 0;font-size: 16px;}
+			.notice .tab-hd li {height: 38px !important;line-height: 38px !important;}
+			.tab-hd{height: 40px !important;border-bottom: 1px solid #EFEFF4 !important;}
 			.tab-nav li{height: 45px !important;}
 			body{background-color: #f3f3f3;}
 			.mui-bar-nav{box-shadow: none !important;}
 			header.mui-bar{z-index: 200;}
 			.notice .tab-hdtwo li {width: 50%;}
-			.checkList{background-color: #fff;}
+			.checkList{background-color: #fff;padding: 10px;}
 			.checkList h4{font-size: 14px;padding: 12px 10px;}
 			.checkList h4 .h4span3{float: right;color: red;}
 			.checkList h4 .h4span2{margin-left: 3%;}
 			.checkListCon{padding: 10px;}
 			.checkListCon img{width: 23%;float: left;margin-left: 1.6%;}
 			.checkListDZ{padding: 10px;color: #757575;}
-			.checkListB{padding: 10px 20px;background: white;margin-bottom: 5px;}
+			.checkListB{background: white;margin-bottom: 5px;height:50px;background: url(../../images/center/lebiBg.png);background-size: 100% 100%;line-height: 50px;padding: 0 10px;}
 			#infoListDiv{transition: all .3s;}
+			.flexr{display: flex;align-items: center;justify-content: space-between;}
 		</style>
 	</head>
 	<body>
@@ -44,9 +49,8 @@
 		<div id="main" style="padding-top: 0!important;">
 			<div class="notice">
 				<!--列表loading结束-->
-				<div class="checkListB">
-				   乐币剩余：<span id="totalQuantity"></span>
-					
+				<div class="checkListB ft18">
+				   乐币剩余：<span class="activecl" id="totalQuantity"></span>
 				</div>
 				<div class="tab-hd tab-hdtwo" id="tabLink">
 					<ul class="tab-nav">
@@ -65,17 +69,49 @@
 				<script id="infoList" type="text/html">
 					
 					<%for(var i=0;i<list.length;i++){%>
-						<div class="checkList afterBorder">
-							<div class="checkListCon clearfix ft14">
+						<div class="checkList" style="margin: 5px 0;">
+							<div class="checkListCon clearfix ft15">
 								<%if(list[i].showType == 1){%>
-							 		乐币获取：+<%=list[i].variationQuantity%><br />
-							 		获取方式：<%=list[i].leBiVariationType%><br />
-							 		时间：<%=list[i].variationTime%>
+									<div class="flexr">
+										<div id="">
+											<div style="margin-bottom: 5px;">
+												<span class="maincl">
+													获取方式：
+												</span><%=list[i].leBiVariationType%>
+											</div>
+											<div class="">
+												<span class="maincl">
+													获取时间：
+												</span><%=list[i].variationTime%>
+											</div>
+										</div>
+										<div class="ft20 activecl2">
+											+<%=list[i].variationQuantity%>
+										</div>
+									</div>
 								<%}else{%>
-							 		乐币获取：-<%=list[i].variationQuantity%><br />
-							 		获取方式：<%=list[i].leBiVariationType%><br />
-							 		订单号：<%=list[i].orderNum%><br />
-							 		时间：<%=list[i].variationTime%>
+									<div class="flexr pad10">
+										<div id="">
+											<div  style="margin-bottom: 5px;">
+												<span class="maincl">
+													获取方式：
+												</span><%=list[i].leBiVariationType%>
+											</div>
+											<div class="">
+												<span class="maincl">
+													获取时间：
+												</span><%=list[i].variationTime%>
+											</div>
+											<div class="">
+												<span class="maincl">
+													订单号：
+												</span><%=list[i].orderNum%>
+											</div>
+										</div>
+										<div class="ft20 activecl2">
+											-<%=list[i].variationQuantity%>
+										</div>
+									</div>
 								<%}%>
 							 	
 							</div>

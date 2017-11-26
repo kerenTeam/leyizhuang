@@ -112,6 +112,7 @@
 			</div>
 		</div>
 	 </body>
+	 <script src="../../js/default.js" type="text/javascript" charset="utf-8"></script>
 	 <script type="text/javascript">
 	 	/*打开详情*/
 		function openDetail(id,typeNum){
@@ -160,7 +161,7 @@
 				var oldToken = plus.storage.getItem('oldToken');
 				
 				plus.nativeUI.showWaiting();//显示等待框
-				mui.ajax('http:119.23.149.7:9999/app/user/customer/list',{
+				mui.ajax(serverUrl+'/app/user/customer/list',{
 					data:{
 						userId:userId,
 						identityType:identityT

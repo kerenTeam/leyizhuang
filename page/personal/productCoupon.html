@@ -70,7 +70,7 @@
 								</div>
 							</div>
 						</a>
-						<img data-id="<%=list[i].id%>" class="check" src="../../images/center/uncheck.svg" alt="" />
+						<img data-id="<%=list[i].goodsId%>" data-left="<%=list[i].leftNumber%>" class="check" src="../../images/center/uncheck.svg" alt="" />
 					</li>
 					<%}%>
 				</ul>
@@ -83,15 +83,18 @@
 		<script src="../../js/default.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
 			mui.init();
-			
-				
-				
-			
 			mui.plusReady(function() {
 				var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
 				var userId = plus.storage.getItem('$userId');
 				var oldToken = plus.storage.getItem('oldToken')
 				var page = plus.webview.currentWebview().page;
+				var cusId = plus.webview.currentWebview().cusid;
+				alert(cusId)
+				if(!cusId){
+					cusId = '';
+				}else{
+					$('.mui-title').html('未提货明细')
+				}
 				plus.nativeUI.showWaiting();
 				kindType();
 				function kindType() {
@@ -99,7 +102,8 @@
 					mui.ajax(serverUrl + '/app/customer/productCoupon/list', {
 						data: {
 							userId:userId,
-							identityType: identityT
+							identityType: identityT,
+							cusId:cusId
 						},
 						dataType: 'json',
 						headers: {
@@ -136,12 +140,13 @@
 										var productCouponList = [];
 										$('.choosed').each(function(){
 											var id = $(this).attr('data-id');
+											var totalQty = $(this).attr('data-left');
 											var qty =$(this).prev().find('.mui-numbox-input').val();
-											productCouponList.push({"id":id,"qty":qty})
+											productCouponList.push({"gid":id,"qty":qty,"totalQty":totalQty})
 										})
 										mui.ajax(serverUrl+'/app/productCoupon/transform/materialList',{
 											data: {
-												customerId:'',
+												cusId:cusId,
 												userId: userId,
 												identityType: identityT,
 												productCouponList:productCouponList
@@ -158,10 +163,11 @@
 												console.log('产品券使用',data);
 												if(data.code == 0 ){
 													mui.fire(plus.webview.getWebviewById('cart.html'), 'refresh');
+													kindType();
 													openview({
 														view:'../../cart.html',
 														id:'cart',
-														extrasobj:{page:1}
+														extrasobj:{page:1,cusid:cusId}
 													})
 												}else{
 													mui.toast(data.message)
