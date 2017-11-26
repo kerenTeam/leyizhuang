@@ -1,0 +1,113 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>订单物流</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/configW.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/commonY.css">
+		<link rel="stylesheet" type="text/css" href="../../css/indexY.css">
+		<link rel="stylesheet" type="text/css" href="../../css/mui.min.css"/>
+		<link rel="stylesheet" href="../../css/resetY.css">
+		<link rel="stylesheet" href="../../css/yOrder.css">
+		<style type="text/css">
+			body{background-color: #fff;}
+			header.mui-bar{z-index: 200;}
+			.mui-content{background-color: #fff;}
+		</style>
+
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav fineB" style="padding-right: 15px;">
+			<a id="leftbtn" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">订单物流</h1>
+		</header>
+		<script src="../../js/statusBar.js" type="text/javascript" charset="utf-8"></script>
+		<div class="mui-content">
+			<!--loading-->
+			<div id="loadingdiv" style="text-align: center;font-size: 14px;height:42px;
+				line-height: 30px;color: #666;-webkit-transition: all .3s;overflow: hidden;">
+				<img style="width: 30px;margin-top:10px;" src="../../img/Rolling.svg"/>
+			</div>
+			<!--loading结束-->
+			<div id="dataDiv1"></div>
+			<script type="text/html" id="dataScript1">
+				<div class="huiZ f17" style="background: #eee;padding: 15px;line-height: 20px;">
+					物流编号：<span class="f17 huiZ" id='balance'><%= list.orderNumber%></span>
+				</div>
+				<div class="DWsmallInfo">
+					<div class="DWavatar">
+						<img src="https://gss0.bdstatic.com/94o3dSag_xI4khGkpoWK1HF6hhy/baike/w%3D268%3Bg%3D0/sign=c52a26b62234349b74066983f1d172f3/80cb39dbb6fd52663011fbb8a118972bd4073660.jpg"/>
+					</div>
+					<div class="DWsmallInfoCon">
+						<p><%= list.deliveryName%></p>
+						<p>电话：<%= list.deliveryPhone%></p>
+						<p>仓库：<%= list.warehouseName%></p>
+					</div>
+				</div>
+				<h4 class="DWh41">物流信息</h4>
+				<div class="DWinfoList">
+					<% for(var i=0; i<list.logisticsDetail.length; i++){%>
+						<% if(list.logisticsDetail[i].logisticsType == '已签收'){%>
+							<div class="active">
+								<h5><%= list.logisticsDetail[i].describe%></h5>
+								<p><%= list.logisticsDetail[i].createTime%> <span> <%= list.logisticsDetail[i].logisticsType%> </span></p>
+								<img src="../../img/huangdian.svg"/>
+							</div>
+						<%} else{%>
+							<div>
+								<h5><%= list.logisticsDetail[i].describe%></h5>
+								<p><%= list.logisticsDetail[i].createTime%> <span> <%= list.logisticsDetail[i].logisticsType%> </span></p>
+								<img src="../../img/huidian.svg"/>
+							</div>
+						<%} %>
+					<% }%>
+				</div>
+			</script>
+
+
+		</div>
+
+		<script src="../../js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/default.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/artTemplate-native.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			mui.init();
+			mui.plusReady(function(){
+				//获取缓存
+				var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
+				var userId = plus.storage.getItem('$userId');
+				var oldToken = plus.storage.getItem('oldToken');
+				var orderNo = plus.webview.currentWebview().orderNo;
+
+				mui.ajax(serverUrl + '/app/delivery/detail',{
+					data:{'orderNumber':orderNo},
+					dataType:'json',
+					type:'post',
+					timeout:1000,
+					headers:{"Authorization":oldToken},
+					success:function(data,type,xhr){
+						console.log(data);
+						if(data.code == 0){
+							$('#loadingdiv').css('height','0px');
+							if(data.content){
+								document.getElementById('dataDiv1').innerHTML = template('dataScript1',{list:data.content});
+							}else{
+								document.getElementById('dataDiv1').innerHTML = '暂无数据';
+							}
+						}else{
+							mui.toast(data.message);
+						}
+					},
+					error:function(xhr,type,errorThrown){
+						console.log('响应失败  !');
+					}
+				});
+			})
+		</script>
+	</body>
+
+</html>

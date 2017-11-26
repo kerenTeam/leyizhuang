@@ -12,32 +12,28 @@
 		<link rel="stylesheet" type="text/css" href="../../css/mui.min.css"/>
 		<link rel="stylesheet" href="../../css/resetY.css">
 		<link rel="stylesheet" href="../../css/feedback.css">
+		<link rel="stylesheet" href="../../css/youxd.css">
 		<style type="text/css">
 			body{background-color: #F8F9FA;font-size: 15px;}
-			.Dpart1{padding: 15px 15px 5px;background-color: #fff;line-height: 2.5;margin-bottom: 7px;}
-			.Dpart1 h4{font-size: 16px;}
-			.Dpart1 h4 span{color: #AC0100;}
-			.Dpart1 h4 span.span1{text-decoration: underline;margin-left: 10px;}
-			.Dpart1 p span.span2{float: right;}
-			.Dpart2{padding: 2px 15px;}
-			.huiC{color:#8f8f94}
-			.Dpart3{padding: 10px 15px;background-color: #fff;line-height: 1.8;margin-bottom: 7px;}
-			.redC{color: #AC0100;}
-			.floL{float: right;}
-			.proWrapAll{background-color: #fff;margin-bottom: 10px;}
-			.proWrap{display: flex;padding: 15px;}
-			.proLeft{flex: 2;}
-			.proLeft img{width: 100%;height: 100%;}
-			.proRight{flex: 5;padding-left: 20px;}
-			.proRight h4{display: -webkit-box;-webkit-box-orient: vertical;-webkit-line-clamp: 2;overflow: hidden;font-size: 16px;line-height: 1.3;min-height: 40px;}
-			.proRight p, .proRight div{margin-top: 2%;}
-			.proRight p button{border-color: #ccc;color: #c7161e; float: right; padding: 4px 10px; line-height: 1;}
-			.proRight div .span2{float: right;color: #7F8080;}
-			.proRight div .span1{font-size: 18px;color: #EE9000;}
-			.footBtn{text-align: right;padding: 10px 12px;border-bottom: 1px solid #eee;background-color: #fff;position: fixed;bottom: 0;width: 100%;    box-shadow: 0 0 2px rgba(175, 166, 166, 0.85) !important;}
-			.footBtn span{display: inline-block;color: #666;border:1px solid #d2cfcf; border-radius: 2px;width: 82px;text-align: center;padding: 5px 0 4px;font-size: 15px;}
-			.footBtn span.redC{color: #c7161e;border-color: #c7161e;}
-			.dingdanPJ{font-size: 15px;padding: 3px 0;padding: 5px 0 12px;}
+			#main{margin-top: 50px;}
+			.cancelBtn button {margin-right: 15px;margin-left: 0;}
+			.cancelBtn {text-align: right;}
+			/*图片组件*/
+			.disbg{border:none}
+			.uppics div.onepic input{width:0;height:0;position:absolute;outline:0}
+			#fangshi{background-color: #eee;padding-top: 8px;}
+			.mui-checkbox, .mui-radio { display: inline-block;}
+			#fangshi span{line-height: 40px;float: left;}
+			.dizhis{padding: 10px;background-color: #ccc;}
+			.dizhis div{padding:  5px 0;}
+			.isYezhu{background-color: #eee;}
+			.isYezhu .tishi{color: red;}
+			.beizhu{margin-top: 30px;}
+			.newAction, .newAction2 {width: 25%;height: calc((100vw - 26px) * 0.25);}
+			#uppics2{padding: 0 14px;padding-right: 10px;}
+			.cancelText{padding: 20px 15px 10px;}
+			.cancelBtn{margin-top: 20px;}
+			.evaluaCon textarea{height: 90px;}
 		</style>
 	</head>
 
@@ -61,7 +57,6 @@
 				<h4 style="-webkit-user-select: all;">
 					订单编号：<%= detail.orderNumber%>
 					<span style="-webkit-user-select: all;" class="span1">长按复制</span>
-
 				</h4>
 				<p>
 					下单时间：<%= detail.createTime%>
@@ -88,28 +83,6 @@
 					<span class="huiC">配送时间：</span> 时间时间时间时间
 				</div>
 			</div>
-
-			<div class="proWrapAll">
-				<%for(var i=0;i<detail.goodsList.length;i++){ %>
-					<div class="proWrap fineB">
-						<div class="proLeft">
-							<img src="<%= detail.goodsList[i].coverImageUri%>"/>
-						</div>
-						<div class="proRight">
-							<h4><%= detail.goodsList[i].skuName%></h4>
-							<p>
-								规格：<%= detail.goodsList[i].goodsSpecification%>  单位：<%= detail.goodsList[i].goodsUnit%>
-								<button type="button" class="mui-btn" onclick="evaluaProduct()">评价</button>
-							</p>
-							<div>
-								<span class="span1">¥<%= detail.goodsList[i].retailPrice%></span>
-								<span class="span2">x<%= detail.goodsList[i].qty%></span>
-							</div>
-						</div>
-					</div>
-				<%} %>
-			</div>
-
 			<div class="Dpart4 Dpart3">
 				<div>
 					<span class="huiC">商品总额：</span> <span class="floL">¥<%= detail.customerBillingDetailResponse.totalPrice%></span>
@@ -176,7 +149,26 @@
 					</div>
 				</div>
 			</div>
-
+			<div class="proWrapAll">
+				<%for(var i=0;i<detail.goodsList.length;i++){ %>
+					<div class="proWrap fineB">
+						<div class="proLeft">
+							<img src="<%= detail.goodsList[i].coverImageUri%>"/>
+						</div>
+						<div class="proRight">
+							<h4><%= detail.goodsList[i].skuName%></h4>
+							<p>
+								规格：<%= detail.goodsList[i].goodsSpecification%>  单位：<%= detail.goodsList[i].goodsUnit%>
+								<button type="button" class="mui-btn" onclick="evaluaProduct('<%= detail.goodsList[i].goodsId%>')">评价</button>
+							</p>
+							<div>
+								<span class="span1">¥<%= detail.goodsList[i].retailPrice%></span>
+								<span class="span2">x<%= detail.goodsList[i].qty%></span>
+							</div>
+						</div>
+					</div>
+				<%} %>
+			</div>
 			<div class="footBtn">
 				<span class="aClick">取消订单</span>
 				<span class="aClick">再来一单</span>
@@ -188,20 +180,17 @@
 		<div class="cancelDiv" id="evaluaSP" style="display: none;">
 			<div class="cancelCon">
 				<div class="cancelMin">
-					<h4 class="fineB h4">取消原因</h4>
-					<div id="cancelDiv0"></div>
-					<script type="text/html" id="cancelDiv0S">
-						<div class="mui-input-row mui-radio mui-left">
-							<label>呜呜呜呜呜</label>
-							<input name="radio1" type="radio">
-						</div>
-					</script>
-					<div class="cancelText">
-						<textarea placeholder="请输入备注内容" name="" rows="" cols=""></textarea>
+					<div class="cancelText evaluaCon">
+						<textarea class="evaluaText" placeholder="评价商品成功，乐易装奖励你乐豆！"></textarea>
 					</div>
+					<div class="uppics clearfix" id="uppics2">
+				        <div class="onepic newActionWrap">
+				        		<a class="newAction2"><img id="nowpic" style="width: 89%;height: 89%;margin-left: 11%;" onclick="showAction()" src="../../img/addpic.png"></a>
+				        </div>
+				    </div>
 					<div class="cancelBtn">
 						<button type="button" class="mui-btn operating1">取消</button>
-						<button type="button" class="mui-btn mui-btn-danger operating2">确定</button>
+						<button type="button" id="evaluaOk" class="mui-btn mui-btn-danger operating2">确定</button>
 					</div>
 				</div>
 			</div>
@@ -219,7 +208,7 @@
 				var oldToken = plus.storage.getItem('oldToken');
 				var orderNo = plus.webview.currentWebview().orderNo;
 
-				//订单详情
+				/*订单详情*/
 				mui.ajax(serverUrl + '/app/order/detail',{
 					data:{'userID':1,'identityType':identityT,'orderNumber':orderNo},
 					dataType:'json',
@@ -285,27 +274,184 @@
 						console.log('响应失败  !');
 					}
 				});
-
-
 			})
 
-			//商品评价
+			/*商品评价*/
 			$('.operating1').click(function(){//点取消
-					$('#cancelOrder').css('display','none');
+				$('#evaluaSP').css('display','none');
 			})
 			$('.cancelDiv').click(function(){//点遮罩
-				$('#cancelOrder').css('display','none');
+				$('#evaluaSP').css('display','none');
 			})
-			function evaluaProduct(){
-				$('#cancelOrder').css('display','table');
+			$('.cancelMin').click(function(){
+				event.stopPropagation();
+			})
+			//选择图片组件
+			var Apic = [],time1 = null,maxNum = 3;
+			function getImage(){//拍照并保存
+				var cmr = plus.camera.getCamera();
+				cmr.captureImage( function ( path ) {
+					plus.io.resolveLocalFileSystemURL(path,function(entry){
+						path = plus.io.convertLocalFileSystemURL(path);
+						if(0!=path.indexOf("file://")){path="file://"+path;}
+				    		var nowpic = Math.random().toString(36).substr(2) + '.jpg';
+				    		var endpic = path.split('.')[0]+"/"+nowpic;
+						plus.zip.compressImage({//压缩方法
+							src:path,
+							dst:endpic,
+							overwrite:true,
+							quality:30
+						},
+						function(obj) {
+							showImg(obj.target);
+							Apic.push(obj.target);
+						},function(error) {
+							mui.toast('图片获取错误，请重试');
+						});
+					});
+				}, function ( e ) {
+				}, {filename:"_doc/gallery/",index:1} );
+			}
+			function galleryImgsSelected(){//从相册中选择图片
+				mui.plusReady(function(){
+				    plus.gallery.pick( function(e){
+					    	clearInterval(time1);
+					    	var indexNum = 0;
+					    	var indexMax = e.files.length - 1;
+					    	time1 = setInterval(function(){
+					    		if(0!=e.files[indexNum].indexOf("file://")){e.files[indexNum]="file://"+e.files[indexNum];}
+					    		if(indexNum == indexMax){//全部压缩完毕
+					    			clearInterval(time1),time1 = null;
+					    		}
+					    		var nowpic = Math.random().toString(36).substr(2) + '.jpg';//随机字符串
+					    		var endpic = e.files[indexNum].split('.')[0]+"/" +nowpic;
+				    			plus.zip.compressImage({
+								src:e.files[indexNum],
+								dst:endpic,
+								overwrite:true,
+								quality:30
+							},
+							function(obj) {
+								Apic.push(obj.target);
+								showImg(obj.target,indexNum);
+							},function(error) {
+								mui.toast('图片获取错误，请重试');
+							});
+					    		indexNum ++;
+					    	},500)
+				    }, function ( e ) {
+				    },{filter:"image",multiple:true,maximum:maxNum-Apic.length,system:false,onmaxed:function(){//保存选择记录
+				    		mui.alert('最多选择'+maxNum+'张图片！');
+				    }});
+				})
+			}
+			function showImg(url,indexNum){//显示图片
+				if(0!=url.indexOf("file://")){url="file://"+url;}
+				if($('.newAction').length){
+					$('.newAction').eq($('.newAction').length-1).after('<a class="newAction"><img data-preview-src="" data-preview-group="1" src="'+url+'"/><span onclick="closePic(this)" class="mui-icon mui-icon-closeempty"></span></a>');
+				}else{
+					$('.onepic').prepend('<a class="newAction"><img data-preview-src="" data-preview-group="1" src="'+url+'"/><span onclick="closePic(this)" class="mui-icon mui-icon-closeempty"></span></a>');
+				}
+			}
+			function closePic(obj){
+				var nowPic = $(obj).parentsUntil('.newActionWrap').find('img').attr('src');
+				console.log($(obj).parent().html())
+				$(obj).parent().remove();
+				if(Apic.indexOf(nowPic)>-1){
+					Apic.splice($.inArray(nowPic,Apic),1);
+				}
+			}
+			function showAction(){
+				if(Apic.length  < maxNum){
+					mui.plusReady(function(){
+						plus.nativeUI.actionSheet({
+							cancel: "取消",
+							buttons: [{
+								title: "相册选择"
+							}, {
+								title: '拍照'
+							}]
+						},
+						function(e) {
+							if (e.index == 1) { //点击从相册选择
+								galleryImgsSelected();
+							} else if (e.index == 2) {
+								getImage();
+							}
+						})
+					})
+				}else{
+					mui.alert('最多选择'+maxNum+'张图片！');
+				}
+
+			}
+			//选择图片组件结束
+			function evaluaProduct(goodId){
+				$('#evaluaSP').css('display','table');
 				mui.plusReady(function(){
 					var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
 					var userId = plus.storage.getItem('$userId');
 					var oldToken = plus.storage.getItem('oldToken');
 					var orderNo = plus.webview.currentWebview().orderNo;
 
+					//确认评价
+					document.getElementById('evaluaOk').onclick = function(){
+						var content = $('.evaluaText').val();
+						if(!content){
+							mui.toast("还未填写内容呢！");
+			    	   			mui('.evaluaText')[0].focus();
+						}else if(!Apic.length){
+					    		mui.toast("请添加图片");
+					    	}else{
+					    		plus.nativeUI.showWaiting();
+							//发送数据开始
+							var task = plus.uploader.createUpload(serverUrl+'/app/order/evaluation/goods/submit',
+								{ method:"POST"},
+								function(back,status){
+									if(status == 200){
+										console.log(back.responseText);
+										var dataobj = JSON.parse(back.responseText);
+										console.log('评价商品',JSON.stringify(dataobj));
+										plus.nativeUI.closeWaiting(); //关闭等待框
+										if(dataobj.code == 0){
+											mui.toast("评价成功！");
+											$('#evaluaSP').css('display','none');
+											$('.evaluaText').val('');
+											Apic = [];
+											$('.onepic').html('<a class="newAction2"><img id="nowpic" style="width: 89%;height: 89%;margin-left: 11%;" onclick="showAction()" src="../../img/addpic.png"></a>');
+										}else{
+											mui.toast(dataobj.message);
+										}
+									}else{
+										plus.nativeUI.closeWaiting();
+										mui.toast("当前网络不好，请重试！");
+										console.log('响应失败  !');
+									}
+								}
+							);
+
+							task.setRequestHeader('Authorization',oldToken);
+							task.addData('userId',userId);
+							task.addData('identityType',identityT.toString());
+					        task.addData('orderNumber',orderNo);
+					        task.addData('goodsId',goodId.toString());
+					        task.addData('evaluationContent',content);
+
+							if(Apic.length){
+								console.log(Apic);
+								[].forEach.call(Apic,function(ele,index){
+									task.addFile(ele, {key:'pictures'});
+									if(index == Apic.length-1){ task.start(); }
+								})
+							}
+
+					    	}
+					}
+
 				})
 			}
+			/*商品评价结束*/
+
 		</script>
 	</body>
 
