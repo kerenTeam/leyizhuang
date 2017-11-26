@@ -145,3 +145,37 @@ form { width: 100%;     padding: 0 8px;}
 input.fsearch::-webkit-input-placeholder{
 	color: #999;opacity:1;font-size: 15px;
 }
+/*订单详情*/
+.Dpart1{padding: 15px 15px 5px;background-color: #fff;line-height: 2.5;margin-bottom: 7px;}
+.Dpart1 h4{font-size: 16px;}
+.Dpart1 h4 span{color: #AC0100;}
+.Dpart1 h4 span.span1{text-decoration: underline;margin-left: 10px;}
+.Dpart1 p span.span2{float: right;}
+.Dpart2{padding: 2px 15px;}
+.huiC{color:#8f8f94}
+.Dpart3{padding: 10px 15px;background-color: #fff;line-height: 1.8;margin-bottom: 7px;}
+.redC{color: #AC0100;}
+.floL{float: right;}
+.proWrapAll{background-color: #fff;margin-bottom: 10px;}
+.proWrap{display: flex;padding: 15px;}
+.proLeft{flex: 2;}
+.proLeft img{width: 100%;height: 100%;}
+.proRight{flex: 5;padding-left: 20px;}
+.proRight h4{display: -webkit-box;-webkit-box-orient: vertical;-webkit-line-clamp: 2;overflow: hidden;font-size: 16px;line-height: 1.3;min-height: 40px;}
+.proRight p, .proRight div{margin-top: 2%;}
+.proRight p button{border-color: #ccc;color: #c7161e; float: right; padding: 4px 10px; line-height: 1;}
+.proRight div .span2{float: right;color: #7F8080;}
+.proRight div .span1{font-size: 18px;color: #EE9000;}
+.footBtn{text-align: right;padding: 10px 12px;border-bottom: 1px solid #eee;background-color: #fff;position: fixed;bottom: 0;width: 100%;    box-shadow: 0 0 2px rgba(175, 166, 166, 0.85) !important;}
+.footBtn span{display: inline-block;color: #666;border:1px solid #d2cfcf; border-radius: 2px;width: 82px;text-align: center;padding: 5px 0 4px;font-size: 15px;}
+.footBtn span.redC{color: #c7161e;border-color: #c7161e;}
+.dingdanPJ{font-size: 15px;padding: 3px 0;padding: 5px 0 12px;}
+/*评价商品*/
+.evaluaCon textarea{
+	background-color: #eee;
+    padding: 8px;
+    font-size: 16px;
+}
+.evaluaCon textarea::-webkit-input-placeholder{
+    font-size: 16px;
+}

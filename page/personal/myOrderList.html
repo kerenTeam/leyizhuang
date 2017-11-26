@@ -81,6 +81,7 @@
 									<span onclick="cancelFun()">取消订单</span>
 									<span>再来一单</span>
 									<span class="redC">去支付</span>
+									<span onclick="goOrderWL('<%= list[i].orderNo%>')" class="redC">查看物流</span>
 								</div>
 							</div>
 						<%}%>
@@ -133,6 +134,16 @@
 				openview({
 					view:'myOrderDetail.html',
 					id:'myOrderDetail',
+					extrasobj:{
+						orderNo:orderNo
+					}
+				})
+			}
+			//打开订单物流
+			function goOrderWL(orderNo){
+				openview({
+					view:'myOrderWL.html',
+					id:'myOrderWL',
 					extrasobj:{
 						orderNo:orderNo
 					}
