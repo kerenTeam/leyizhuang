@@ -92,6 +92,19 @@
 .activecl2{
 	color: coral;
 }
+/*红色边框文字*/
+.bdc{
+	border: 1px solid darkgray;
+	color: darkgray;
+	padding: 2px 8px;
+	border-radius: 3px;
+}
+.bdcA{
+	border: 1px solid #B42E28;
+	color: #B42E28;
+	padding: 2px 8px;
+	border-radius: 3px;
+}
 /*标题颜色*/
 .titcl{
 	color: rgb(51,51,51);

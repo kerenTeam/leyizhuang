@@ -817,7 +817,8 @@
 					"js/artTemplate-native.js"
 				],
 				"refer": [
-					"page/personal/infoList.html"
+					"page/personal/infoList.html",
+					"page/personal/deliveryInform.html"
 				],
 				"priority": 0
 			},
@@ -1547,6 +1548,14 @@
 				"resources": [],
 				"refer": [
 					"page/personal/productCoupon.html"
+				],
+				"priority": 0
+			},
+			"page/dispatching/deliveryInfo.html": {
+				"resources": [],
+				"refer": [
+					"page/dispatching/refuse.html",
+					"page/dispatching/receipt.html"
 				],
 				"priority": 0
 			}

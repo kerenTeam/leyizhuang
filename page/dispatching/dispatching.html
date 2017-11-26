@@ -33,6 +33,7 @@
 			.checkListB{padding: 10px 20px;text-align: right;}
 			#infoListDiv{transition: all .3s;}
 			.flexr{display: flex;justify-content: space-between;margin: 2px 0;}
+			a,a:active{color: rgb(51,51,51)!important;}
 		</style>
 	</head>
 	<body>
@@ -86,7 +87,7 @@
 												电话：
 											</span>
 											<span class="titcl">
-												<%=list[i].customerPhone%>
+												<a class="titcl" href="tel:<%=list[i].customerPhone%>"><%=list[i].customerPhone%></a>
 											</span>
 										</div>
 									</div>
@@ -96,7 +97,7 @@
 												导购：
 											</span>
 											<span class="titcl">
-												<%=list[i].sellerName%>
+												<a href="tel:<%=list[i].sellerName%>"><%=list[i].sellerName%></a>
 											</span>
 										</div>
 										<div>
@@ -126,7 +127,7 @@
 								<div class="checkListCon clearfix afterBorder ft15">
 									<div class="flexr">
 										<div>
-											<span class="maincl">
+											<span class="disablecl">
 												顾客：
 											</span>
 											<span class="titcl">
@@ -138,7 +139,7 @@
 												电话：
 											</span>
 											<span class="titcl">
-												<%=list[i].receiverPhone%>
+												<a href="tel:<%=list[i].receiverPhone%>"><%=list[i].receiverPhone%></a>
 											</span>
 										</div>
 									</div>
@@ -156,7 +157,7 @@
 												电话：
 											</span>
 											<span class="titcl">
-												<%=list[i].sellerPhone%>
+												<a href="tel:<%=list[i].sellerPhone%>"><%=list[i].sellerPhone%></a>
 											</span>
 										</div>
 									</div>
