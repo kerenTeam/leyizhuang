@@ -3,80 +3,25 @@
 
 	<head>
 		<meta charset="UTF-8">
-		<title></title>
+		<title>信用额度（导购）</title>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="../../css/mui.min.css" rel="stylesheet" />
 		<link rel="stylesheet" type="text/css" href="../../css/configW.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/youxd.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/commonY.css"/>
 		<style type="text/css">
-		.circle {
-            width: 200px;
-            height: 200px;
-            position: absolute;
-            border-radius: 50%;
-            background: #0cc;
-            top: 20%;
-            left: 50%;
-            -webkit-transform: translateX(40%);
-        }
-        .pie_left, .pie_right {
-            width:200px; 
-            height:200px;
-            position: absolute;
-            top: 0;left: 0;
-        }
-        .left, .right {
-            width:200px; 
-            height:200px;
-            background:#CCCCCC;
-            border-radius: 50%;
-            position: absolute;
-            top: 0;
-            left: 0;
-        }
-        .pie_right, .right {
-            clip:rect(0,auto,auto,100px);
-        }
-        .pie_left, .left {
-            clip:rect(0,100px,auto,0);
-        }
-        .mask {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            left: 25px;
-            top: 25px;
-            background: #FFF;
-            position: absolute;
-            text-align: center;
-            line-height: 130px;
-            font-size: 16px;
-            color: #00aacc;
-        }
-        .totalEdu{
-        	 	position: absolute;
-            line-height: 130px;
-            font-size: 16px;
-            color: #00aacc;
-            left: 60px;
-            text-align: center;
-            top: 45px;
-        }
-        .alledu{
-        	position: absolute;
-        	top: 60%;
-        	left: 50%;
-        	-webkit-transform: translateX(-50%);
-        	text-align: center;
-        }
+			.mui-bar-nav.mui-bar .mui-icon {color: #555!important;margin-left: 0px;}
+			.circle{background: #B62D29;}
 		</style>
 	</head>
 
 	<body>
 		<header class="mui-bar mui-bar-nav" style="padding-right: 15px;">
 			<a id="leftbtn" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-			<h1 class="mui-title">xxx装饰</h1>
-			<a class="mui-pull-right editAll" id="bianji" style="line-height: 50px;color: #555;">明细查看</a>
+			<h1 class="mui-title">信用额度</h1>
+			<a class="mui-pull-right editAll"></a>
 		</header>
+		<script src="../../js/statusBar.js"></script>
 		<div class="mui-content">
 			<div class="circle" style="left:0">
 				<div class="pie_left">
@@ -88,16 +33,43 @@
 				<div class="mask">剩余额度<span id="availableBalance">0</span></div>
 				<div class="totalEdu">总额度<span id="totalBalance"></span></div>
 			</div>
-			<div class="alledu">
-				<div id="limitbalance">
-					固定额度：<span></span>
+
+			<div id="quotaPWrap">
+				<div class="quotaP1 fineB" id="limitbalance">
+					固定额度: <span>www</span>
 				</div>
-				<div id="tempbalance">
-					临时额度：<span></span>
+				<div class="quotaP1 fineB" id="tempbalance">
+					临时额度: <span>www</span>
+				</div>
+				<div class="quotaRecord">
+					<h4 class="h401">信用额度消费记录</h4>
+					<div class="div01">
+						<h4 class="h402">2015年11月15号</h4>
+						<p class="p01">订单编号：DHBDHHDHDBHBHDBVH <span>详情</span></p>
+						<img src="../../img/yuan01.svg"/>
+					</div>
+					<div class="div01">
+						<h4 class="h402">2015年11月15号</h4>
+						<p class="p01">订单编号：DHBDHHDHDBHBHDBVH <span>详情</span></p>
+						<img src="../../img/yuan01.svg"/>
+					</div>
+					<div class="div01">
+						<h4 class="h402">2015年11月15号</h4>
+						<p class="p01">订单编号：DHBDHHDHDBHBHDBVH <span>详情</span></p>
+						<img src="../../img/yuan01.svg"/>
+					</div>
+					<div class="div01">
+						<h4 class="h402">2015年11月15号</h4>
+						<p class="p01">订单编号：DHBDHHDHDBHBHDBVH <span>详情</span></p>
+						<img src="../../img/yuan01.svg"/>
+					</div>
 				</div>
 			</div>
-		</div> 
-		
+
+		</div>
+
+
+
 		<script src="../../js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../../js/mui.min.js"></script>
 		<script src="../../js/default.js" type="text/javascript" charset="utf-8"></script>
@@ -106,7 +78,7 @@
 			function addPercent(num) {
 				if(num > 100) return;
 				var c = document.getElementsByClassName("circle")[0];
-//				c.getElementsByTagName("span")[0].innerHTML = num;
+				//c.getElementsByTagName("span")[0].innerHTML = num;
 				num = num * 3.6;
 				if(num <= 180) {
 					c.getElementsByClassName("right")[0].style.transform = "rotate(" + num + "deg)";
@@ -116,9 +88,9 @@
 				}
 
 			}
- 
+
 			mui.plusReady(function() {
-				//获取缓存 
+				//获取缓存
 				var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
 				var userId = plus.storage.getItem('$userId');
 				var oldToken = plus.storage.getItem('oldToken');
@@ -144,16 +116,16 @@
 								$('#tempbalance span').html('¥'+data.content.tempBalance)
 								$('#availableBalance').html('¥'+data.content.availableBalance)
 								$('#totalBalance').html('¥'+(data.content.tempBalance+data.content.limitBalance))
-								
+
 								var count = (data.content.availableBalance / (data.content.tempBalance+data.content.limitBalance)) * 100,
 									i = 0;
 								var t = setInterval(function() {
 									if(i < count) {
 										addPercent(++i);
 									}
-					
+
 								}, 10);
-								
+
 							}
 
 						}

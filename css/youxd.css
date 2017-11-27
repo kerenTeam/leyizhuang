@@ -20,8 +20,117 @@
 input[type=color], input[type=date], input[type=datetime-local], input[type=datetime], input[type=email], input[type=month], input[type=number], input[type=password], input[type=search], input[type=tel], input[type=text], input[type=time], input[type=url], input[type=week], select, textarea{
 	border: 1px solid #eee;
 }
+body{
+	color: #555;
+}
 
 /*页面样式*/
+
+/*信用额度 导购*/
+.circle {width: 200px;
+    height: 200px;
+    position: absolute;
+    border-radius: 50%;
+    background: #0cc;
+    top: 20%;
+    left: 50%;
+    -webkit-transform: translateX(40%);
+}
+.pie_left, .pie_right {
+    width:200px;
+    height:200px;
+    position: absolute;
+    top: 0;left: 0;
+}
+.left, .right {
+    width:200px;
+    height:200px;
+    background:#CCCCCC;
+    border-radius: 50%;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+.pie_right, .right {
+    clip:rect(0,auto,auto,100px);
+}
+.pie_left, .left {
+    clip:rect(0,100px,auto,0);
+}
+.mask {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    left: 25px;
+    top: 25px;
+    background: #FFF;
+    position: absolute;
+    text-align: center;
+    line-height: 130px;
+    font-size: 16px;
+    color: #00aacc;
+}
+.totalEdu{
+	 	position: absolute;
+    line-height: 130px;
+    font-size: 16px;
+    color: #00aacc;
+    left: 60px;
+    text-align: center;
+    top: 45px;
+}
+.alledu{
+	position: absolute;
+	top: 60%;
+	left: 50%;
+	-webkit-transform: translateX(-50%);	text-align: center;
+}
+#quotaPWrap{
+	position: absolute;
+    top: 70%;
+    width: 100%;
+}
+.quotaP1{
+    margin: 0 15px;
+    padding: 10px 0;
+    font-size: 16px;
+}
+.quotaP1 span{
+	float: right;
+}
+.quotaRecord{
+	padding-bottom: 30px;
+}
+.quotaRecord .h401{
+	text-align: center;
+	margin: 20px 0;
+}
+.quotaRecord .div01{
+	margin: 0px 15px 0px 25px;
+	padding: 10px 0px 10px 20px;
+	border-left: 2px solid #A90100;
+	position: relative;
+}
+.quotaRecord .div01 span{
+	float: right;
+    background-color: #A90100;
+    color: #fff;
+    padding: 3px 8px 0px;
+    border-radius: 3px;
+    font-size: 13px;
+    margin-top: -19px;
+}
+.quotaRecord .div01 img{
+    position: absolute;
+    width: 15px;
+    left: -9px;
+    top: 15px;
+}
+.quotaRecord .p01{
+	padding-left: 16px;
+}
+
+
 
 .cancelDiv{
 	display: table;

@@ -12,46 +12,47 @@
 		<meta name="format-detection" content="address=no">
 		<link rel="stylesheet" type="text/css" href="../../css/commonY.css">
 		<link rel="stylesheet" type="text/css" href="../../css/mui.min.css" />
-		<link rel="stylesheet" type="text/css" href="../../css/config.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/configW.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/youxd.css"/>
 	</head>
 	<style type="text/css">
 		.disbg{border:none}
-		.uppics{padding:15px}
-		.uppics div.onepic img{width:4.5rem;height:4.5rem;display:inline-block;margin:0 5px;}
 		.uppics div.onepic input{width:0;height:0;position:absolute;outline:0}
-		#fangshi{background-color: #eee;padding-top: 8px;}
+		#fangshi{padding-top: 8px;padding-left: 15px;}
 		.mui-checkbox, .mui-radio { display: inline-block;}
 		#fangshi span{line-height: 40px;float: left;}
-		.dizhis{padding: 10px;background-color: #ccc;}
-		.dizhis div{padding:  5px 0;}
-		.isYezhu{background-color: #eee;}
-		.isYezhu .tishi{color: red;}
-		.beizhu{margin-top: 30px;}
-
+		.dizhis{padding: 10px;}
+		.dizhis div{padding:  5px 0;position: relative;}
+		.dizhis div img{position: absolute;right: 0;top: 20px;width: 30px;}
+		.isYezhu{margin-top: 10px;}
+		.isYezhu .tishi{color: #afaeae;padding: 0 15px;font-size: 14px;padding-left: 36px;}
+		.beizhu{margin-top: 20px;}
+		.beizhu h5{padding-left: 15px;font-size: 16px;color: #555;}
+		#main{margin-top: 49px;}
+		.disablecl{color: #555;}
+		.mui-checkbox input[type=checkbox]:before, .mui-radio input[type=radio]:before {font-size: 20px;}
+		.mui-checkbox input[type=checkbox], .mui-radio input[type=radio] {top: 10px;}
+		#BZCon{margin: 15px;width: calc(100% - 30px);border: none;background-color: #eee;height: 90px;}
+		.baocun{width: calc(100% - 30px);background-color: #B62D29;color: #fff;border: none;font-size: 16px;padding: 10px 20px;}
 	</style>
 
 	<body style="background-color: white;">
-		<header class="mui-bar mui-bar-nav" id="header">
+		<header class="mui-bar mui-bar-nav fineB" id="header">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left bigSize back"></a>
 			<h1 class="mui-title findUser">拍照下单</h1>
 		</header>
 		<script src="../../js/statusBar.js"></script><!--状态栏-->
 
 		<div id="main">
-			<div class="publishf">
-				<div class="apsan"></div>
-				<textarea style="display: none;"  maxlength="150" class="disbg ft14" rows="4" placeholder="发布的信息如果违反规定，将被管理员删帖"></textarea>
-			</div>
-			<div id="mainpic" class="biaoqian"></div>
-			<div class="uppics clearfix" id="uppics2">
-		        <div class="onepic">
-		            <img id="nowpic" onclick="galleryImgsSelected()" src="../../img/addpic.png">
-		            <p style="padding-left: 5px;">添加照片</p>
+		    <div class="uppics clearfix" id="uppics2">
+		        <div class="onepic newActionWrap">
+		        		<a class="newAction2"><img id="nowpic" style="width: 90%;height: 89%;margin-left: 12%;" onclick="showAction()" src="../../img/addpic.png"></a>
 		        </div>
 		    </div>
+
 		    <div id="fangshi">
 		    		<span id="">
-		    			配送方式
+		    			配送方式：
 		    		</span>
 				<div class="mui-input-row mui-radio mui-left">
 					<label>送货上门</label>
@@ -61,11 +62,12 @@
 
 
 		    <!--地址-->
-		    <div id="add_info" class="dizhis"></div>
+		    <div id="add_info" class="dizhis fineB fineT"></div>
 			<script type="text/html" id="addrTpl">
+				<h4 style="color: #c7161e;margin-bottom: -4px;">选择地址</h4>
 				<%if(obj.length==0){%>
 				<div class="qtop flexr pad10" onclick="addAddress()">
-					<div style="flex: 1;margin-left: 10px;">
+					<div style="flex: 1;margin-left: 5px;padding-right: 30px;">
 						<div class="maincl ft16">
 							<span class="disablecl"></span>
 							<span class="disablecl"></span>
@@ -73,14 +75,13 @@
 						<div class="ft16">
 							<span class="disablecl">请选择收获地址</span>
 						</div>
-					</div>
-					<div class="">
 						<img src="../../images/center/right.svg" alt="" />
 					</div>
+
 				</div>
 				<%}else{%>
 					<div class="qtop flexr pad10" onclick="addAddress()" id="addid" data-id="<%=obj[0].id%>" data-receiver="<%=obj[0].person%>" data-receiverPhone="<%=obj[0].phone%>" data-deliveryCity="<%=obj[0].city%>" data-deliveryCounty="<%=obj[0].country%>" data-deliveryStreet="<%=obj[0].street%>" data-residenceName="<%=obj[0].villageName%>" data-detailedAddress="<%=obj[0].address%>">
-						<div style="flex: 1;margin-left: 10px;">
+						<div style="flex: 1;margin-left: 5px;padding-right: 30px;">
 							<div class="maincl ft16">
 								<span class="disablecl"><%=obj[0].person%></span>
 								<span class="disablecl"><%=obj[0].phone%></span>
@@ -88,8 +89,6 @@
 							<div class="ft16">
 								<span class="disablecl"><%=obj[0].province%><%=obj[0].city%><%=obj[0].country%><%=obj[0].street%><%=obj[0].villageName%><%=obj[0].address%></span>
 							</div>
-						</div>
-						<div class="">
 							<img src="../../images/center/right.svg" alt="" />
 						</div>
 					</div>
@@ -99,7 +98,7 @@
 			<!--地址结束-->
 
 		    <div class="isYezhu">
-				<div class="mui-input-row mui-checkbox mui-left">
+				<div class="mui-input-row mui-checkbox mui-left" style="margin-left: -7px;">
 				  <label>是否业主收货</label>
 				  <input name="checkbox1" value="Item 1" type="checkbox">
 				</div>
@@ -111,7 +110,7 @@
 
 		    </div>
 		    <div class="beizhu">
-		    		<h5>备注</h5>
+		    		<!--<h5>备注</h5>-->
 				<textarea id="BZCon" name="" rows="" placeholder="备注请输入备注信息" cols=""></textarea>
 		    </div>
 		    <div id="" style="text-align: center;">
@@ -123,74 +122,120 @@
 
 		<div id='container' style="display:none"></div>
 	</body>
-<script type="text/javascript" src="../../js/jquery.min.js"></script>
+
+
+
+<script src="../../js/jquery.min.js"  type="text/javascript"></script>
 <script src="../../js/mui.min.js"></script>
 <script src="../../js/default.js"></script>
-<script src="../../js/common.js" type="text/javascript" charset="utf-8"></script>
-<script src="../../js/image-new.js" type="text/javascript" charset="utf-8"></script>
-
-<!--引入模板引擎-->
+<script src="../../js/mui.zoom.js"></script>
+<script src="../../js/mui.previewimage.js"></script>
 <script src="../../js/artTemplate-native.js"></script>
 <script type="text/javascript">
+
 	//从相册中选择图片 开始
-	var Apic = [];//图片存放数组
-	var lfs=null;// 保留上次选择图片列表
-	var time1 = null;
+	var Apic = [],time1 = null,maxNum = 5;
+	function getImage(){//拍照并保存
+		var cmr = plus.camera.getCamera();
+		cmr.captureImage( function ( path ) {
+			plus.io.resolveLocalFileSystemURL(path,function(entry){
+				path = plus.io.convertLocalFileSystemURL(path);
+				if(0!=path.indexOf("file://")){path="file://"+path;}
+		    		var nowpic = Math.random().toString(36).substr(2) + '.jpg';
+		    		var endpic = path.split('.')[0]+"/"+nowpic;
+				plus.zip.compressImage({//压缩方法
+					src:path,
+					dst:endpic,
+					overwrite:true,
+					quality:30
+				},
+				function(obj) {
+					showImg(obj.target);
+					Apic.push(obj.target);
+				},function(error) {
+					mui.toast('图片获取错误，请重试');
+				});
+			});
+		}, function ( e ) {
+		}, {filename:"_doc/gallery/",index:1} );
+	}
+
 	function galleryImgsSelected(){//从相册中选择图片
 		mui.plusReady(function(){
 		    plus.gallery.pick( function(e){
-		    	//初始化
-		    	mui('.onepic')[0].innerHTML = '<img id="nowpic" onclick="galleryImgsSelected()" src="../../img/addpic.png">';
-		    	Apic = [];
-		    	//初始化结束
-		    	lfs=e.files;
-		    	clearInterval(time1);
-		    	var indexNum = 0;
-		    	var indexMax = e.files.length - 1;
-		    	e.files.forEach(function(){
-		    		$('.onepic').prepend('<img onclick="galleryImgsSelected()" style="width：4.5rem;height:4.5rem;display:inline" src="../../img/Spinner.svg"/>')
-		    	})
-		    	time1 = setInterval(function(){
-		    		console.log(time1);
-		    		if(0!=e.files[indexNum].indexOf("file://")){
-						e.files[indexNum]="file://"+e.files[indexNum];//图片地址
-					}
-		    		if(indexNum == indexMax){//全部压缩完毕
-		    			clearInterval(time1);
-						time1 = null;
-		    		}
-		    		var nowpic = Math.random().toString(36).substr(2) + '.jpg';//随机字符串
-		    		var endpic = e.files[indexNum].split('.')[0]+"/" +nowpic;
-	    			plus.zip.compressImage({
+			    	clearInterval(time1);
+			    	var indexNum = 0;
+			    	var indexMax = e.files.length - 1;
+			    	time1 = setInterval(function(){
+			    		if(0!=e.files[indexNum].indexOf("file://")){e.files[indexNum]="file://"+e.files[indexNum];}
+			    		if(indexNum == indexMax){//全部压缩完毕
+			    			clearInterval(time1),time1 = null;
+			    		}
+			    		var nowpic = Math.random().toString(36).substr(2) + '.jpg';//随机字符串
+			    		var endpic = e.files[indexNum].split('.')[0]+"/" +nowpic;
+		    			plus.zip.compressImage({
 						src:e.files[indexNum],
 						dst:endpic,
 						overwrite:true,
 						quality:30
 					},
 					function(obj) {
-						console.log(obj)
-						Apic.push(endpic);
-						showImg(endpic,indexNum);
+						Apic.push(obj.target);
+						showImg(obj.target,indexNum);
 					},function(error) {
 						mui.toast('图片获取错误，请重试');
 					});
-		    		indexNum ++;
-
-		    	},500)
-		   }, function ( e ) {
-		    },{filter:"image",multiple:true,maximum:9,selected:lfs,system:false,onmaxed:function(){//保存选择记录
-				plus.nativeUI.alert('最多选择9张图片');
+			    		indexNum ++;
+			    	},500)
+		    }, function ( e ) {
+		    },{filter:"image",multiple:true,maximum:maxNum-Apic.length,system:false,onmaxed:function(){//保存选择记录
+		    		mui.alert('最多选择'+maxNum+'张图片！');
 		    }});
-			function showImg(url,indexNum){//显示图片
-				if(0!=url.indexOf("file://")){
-					url="file://"+url;
-				}
-				document.getElementsByClassName('onepic')[0].getElementsByTagName('img')[indexNum-1].src = url;
-				$('.onepic p').css('display','none');
-			}
 		})
 	}
+	function showImg(url,indexNum){//显示图片
+		if(0!=url.indexOf("file://")){url="file://"+url;}
+		if($('.newAction').length){
+			$('.newAction').eq($('.newAction').length-1).after('<a class="newAction"><img data-preview-src="" data-preview-group="1" src="'+url+'"/><span onclick="closePic(this)" class="mui-icon mui-icon-closeempty"></span></a>');
+		}else{
+			$('.onepic').prepend('<a class="newAction"><img data-preview-src="" data-preview-group="1" src="'+url+'"/><span onclick="closePic(this)" class="mui-icon mui-icon-closeempty"></span></a>');
+		}
+	}
+	function closePic(obj){
+		var nowPic = $(obj).parentsUntil('.newActionWrap').find('img').attr('src');
+		console.log($(obj).parent().html())
+		$(obj).parent().remove();
+		if(Apic.indexOf(nowPic)>-1){
+			Apic.splice($.inArray(nowPic,Apic),1);
+		}
+	}
+	function showAction(){
+		if(Apic.length  < maxNum){
+			mui.plusReady(function(){
+				plus.nativeUI.actionSheet({
+					cancel: "取消",
+					buttons: [{
+						title: "相册选择"
+					}, {
+						title: '拍照'
+					}]
+				},
+				function(e) {
+					if (e.index == 1) { //点击从相册选择
+						galleryImgsSelected();
+					} else if (e.index == 2) {
+						getImage();
+					}
+				})
+
+			})
+		}else{
+			mui.alert('最多选择'+maxNum+'张图片！');
+		}
+
+	}
 	//从相册中选择图片结束
+
 	function addAddress() {
 		mui.plusReady(function(){
 			var oneId = plus.webview.currentWebview().oneId;//导购的 客户id
@@ -339,5 +384,7 @@
 
 
 </script>
-
+<script type="text/javascript">
+	mui.previewImage();
+</script>
 </html>
