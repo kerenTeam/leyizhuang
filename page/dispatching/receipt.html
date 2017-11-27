@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html class="ui-page-login">
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>拒收</title>
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/commonY.css" />
+		<link href="../../css/style.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/configW.css" />
+		<style>
+			.area {
+				margin: 20px auto 0px auto;
+			}
+			
+			.mui-input-group:first-child {
+				margin-top: 20px;
+			}
+			
+			.mui-input-group label {
+				width: 30%;
+			}
+			
+			.mui-input-row label~input,
+			.mui-input-row label~select,
+			.mui-input-row label~textarea {
+				width: 65%;
+			}
+			
+			.mui-checkbox input[type=checkbox],
+			.mui-radio input[type=radio] {
+				top: 6px;
+			}
+			
+			.mui-content-padded {
+				margin-top: 25px;
+			}
+			
+			.mui-btn {
+				padding: 10px;
+			}
+			
+			.mui-input-row label~input,
+			.mui-input-row label~select,
+			.mui-input-row label~textarea {
+				margin-top: 1px;
+			}
+			
+			#getCode {
+				border: none;
+				border-left: 1px solid #eee;
+				font-size: 16px;
+			}
+			.mui-input-row{padding: 10px 0!important;height: 60px!important;}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">拒收</h1>
+		</header>
+		<script src="../../js/statusBar.js" type="text/javascript" charset="utf-8"></script>
+		<div class="mui-content">
+			<div class="bgcwt">
+				<form class="mui-input-group ft16" style="margin-top: 7px;border-bottom: 0;">
+					<div class="mui-input-row flexr">
+						<label style="border-right: 1px solid #EEEEEE;width: 27%;">订单金额</label>
+						 <input type="text" readonly="" id="orderMoney" value="" />
+					</div>
+					<div class="mui-input-row flexr">
+						<label style="border-right: 1px solid #EEEEEE;width: 27%;">收货码</label>
+						<input type="text" name="" id="" placeholder="输入收货码" />
+					</div>
+					<div class="mui-input-row flexr">
+						<label style="border-right: 1px solid #EEEEEE;width: 27%;">实收金额</label>
+						<input type="number" name="" id="" placeholder="输入实际收款金额" />
+					</div>
+					<div class="mui-input-row flexr" style="justify-content: flex-start;">
+						<label>付款方式</label>
+						<div id="payWay" style="flex: 1;"></div>
+					</div>
+				</form>
+				<div class="ft16" style="padding: 10px 10px 0;border-top: 5px solid #EEEEEE;">
+				状态备注	
+				</div>
+				<textarea name="" rows="3" cols="" placeholder="输入拒收原因" style="background-color: #DDDDDD;margin: 10px;width: calc(100vw - 20px);"></textarea>
+				<img src="../../images/center/camer.svg" style="width: 60px;padding: 10px;" />
+				<br /><br />
+			</div>
+			<div class="mui-content-padded">
+				<button id='sendMail' class="mui-btn mui-btn-block mui-btn-danger">提交</button>
+			</div>
+		</div>
+		<script src="../../js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/default.js" type="text/javascript" charset="utf-8"></script>
+		<script>
+			mui.init();
+			mui.plusReady(function() { 
+				var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
+				var userId = plus.storage.getItem('$userId');
+				var oldToken = plus.storage.getItem('oldToken');
+				var orderNumber = plus.webview.currentWebview().orderNumber;
+				var money = plus.webview.currentWebview().money;
+				var cityId = plus.storage.getItem('userCity');
+				$('#orderMoney').val('¥'+money)
+				mui.ajax(serverUrl + '/app/distributionAgent/list', {
+					data:{userId:userId,identityType:identityT,cityId:cityId},
+					dataType: 'json',
+					type: 'post',
+					timeout: 10000,
+					headers:{"Authorization":oldToken},
+					success: function(data, type, xhr) {
+						console.log('列表返回', data);
+						if(data.content && data.content.length) {
+							for(var i = 0; i < data.content.length; i++) {
+								$('#payWay').append('<span class="bdc">' + data.content[i].method + '</span>&nbsp;&nbsp;');
+							}
+							$('#payWay span').click(function(){
+								$(this).siblings().removeClass('bdcA')
+								$(this).addClass('bdcA')
+							})
+
+						}
+					},
+					error: function(xhr, type, errorThrown) {
+
+					}
+
+				});
+  
+			});
+		</script>
+	</body>
+
+</html>

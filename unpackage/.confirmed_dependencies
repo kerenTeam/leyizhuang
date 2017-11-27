@@ -470,7 +470,8 @@
 			"js/artTemplate-native.js"
 		],
 		"refer": [
-			"page/personal/infoList.html"
+			"page/personal/infoList.html",
+			"page/personal/deliveryInform.html"
 		]
 	},
 	"page/personal/infoList.html": {
@@ -1130,6 +1131,12 @@
 	"page/guide/noDelivery.html": {
 		"refer": [
 			"page/personal/productCoupon.html"
+		]
+	},
+	"page/dispatching/deliveryInfo.html": {
+		"refer": [
+			"page/dispatching/refuse.html",
+			"page/dispatching/receipt.html"
 		]
 	}
 }

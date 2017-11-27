@@ -3,7 +3,7 @@
 
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-		<title>通知消息</title>
+		<title>物流消息</title>
 		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, width=device-width">
 		<meta name="apple-mobile-web-app-capable" content="yes">
 		<meta name="apple-touch-fullscreen" content="yes">
@@ -80,12 +80,12 @@
 	<body>
 		<header class="mui-bar mui-bar-nav fineB">
 		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left bigSize" style="margin-left: 0;"></a>
-		    <h1 class="mui-title">通知消息</h1>  
+		    <h1 class="mui-title">物流消息</h1>  
 		</header>
 		<script src="../../js/statusBar.js"></script><!--状态栏-->
 	 
 		<!--状态栏结束-->
-		<div class="mui-content">
+		<div class="mui-content" style="margin-top: 7px;">
 			 
 			<div id="QA"><!--大盒子-->
 				<div class="QA qative dyCon" id="questions" style="display: block;">
@@ -94,17 +94,17 @@
 				
 				<script type="text/html" id="listinfo">
 					<%for(var i=0;i<list.length;i++){%>
-						<div class="qashadow" onclick="">
+						<div class="qashadow" onclick="DTdetail('<%= list[i].orderNumber%>')">
 							<div class="qtop flexr">
 								<div class="ft14 activecl">
-								系统通知
+								物流通知
 								</div>
 								<div class="">
 									<span class="disablecl ft12"><%= list[i].createTime%></span>
 								</div>
 							</div>
 							<div class="qbot ft14">
-								<%=list[i].title%>
+								<%=list[i].message%>
 							</div>
 						</div>
 					<%}%>	
@@ -113,21 +113,17 @@
 			
 		</div>
 	 </body>
+	 <script src="../../js/default.js" type="text/javascript" charset="utf-8"></script>
 	 <script type="text/javascript">
 	 	//动态详情
-		function DTdetail(id,userid){
+		function DTdetail(id){
 			event.stopPropagation();
-			openview({
-				view:'../socialCircle/mycircleIndex.html',
-				extrasobj: {
-					infoid: id,
-					UserId:userid,
-					delc:1,
-				}
-			})
+			 
 		}
 	 </script>
 	<script type="text/javascript">
+		mui.init();
+		
 		shopData();
 		function shopData(){
 			mui.plusReady(function(){
@@ -135,9 +131,9 @@
 				var userId = plus.storage.getItem('$userId'); 
 				var oldToken = plus.storage.getItem('oldToken');
 				plus.nativeUI.showWaiting();//显示等待框
-					mui.ajax('http://119.23.149.7:9999/app/user/message/list',{
+					mui.ajax(serverUrl+'/app/delivery/message',{
 						data:{
-							userId:userId,
+							userID:1,
 							identityType:identityT
 						},
 						dataType:'json',
@@ -146,18 +142,13 @@
 						headers:{"Authorization":oldToken},
 						success:function(data,type,xhr){
 							plus.nativeUI.closeWaiting();
-							console.log('消息',data);
+							console.log('物流消息',data);
 					       	if(data.code == 0){
 						       	if(data.content && data.content.length){
-						       		for(var i in data.content){
-//						       			var dt = new Date(nowArray[j].create_time).getTime(); 
-										var dt = data.content[i].createTime;
-										data.content[i].createTime = getDateDiff(dt);
-						       		}
 					     			var html = template("listinfo",{list:data.content});
 									document.getElementById("questions").innerHTML=html;
 								}else{
-									document.getElementById("questions").innerHTML='<div style="text-align: center;padding: 50px;">暂无通知消息</div>'
+									document.getElementById("questions").innerHTML='<div style="text-align: center;padding: 50px;">暂无物流消息</div>'
 								}
 					       	}
 					       	plus.nativeUI.closeWaiting();
@@ -170,39 +161,7 @@
 			})
 		}
 		
-		//发布时间判断 
-		var minute = 1000 * 60;
-		var hour = minute * 60;
-		var day = hour * 24;
-		var halfamonth = day * 15;
-		var month = day * 30;
-		function getDateDiff(dateTimeStamp){ 
-			var now = new Date().getTime(); 
-			var diffValue = now - dateTimeStamp; 
-			var monthC =diffValue/month;
-			var weekC =diffValue/(7*day);
-			var dayC =diffValue/day;
-			var hourC =diffValue/hour;
-			var minC =diffValue/minute;
-			if(monthC>=1){
-			 result=parseInt(monthC) + "月前";
-			 }
-			 else if(weekC>=1){
-			 result=parseInt(weekC) + "周前";
-			 }
-			 else if(dayC>=1){
-			 result=parseInt(dayC) +"天前";
-			 }
-			 else if(hourC>=1){
-			 result=parseInt(hourC) +"小时前";
-			 }
-			 else if(minC>=1){
-			 result=parseInt(minC) +"分钟前";
-			 }else{ 
-			 result="刚刚";
-			 }
-			return result;
-		}
+	 
 	</script>
 
 
