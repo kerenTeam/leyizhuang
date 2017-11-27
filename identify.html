@@ -139,7 +139,13 @@
 											if(plus.webview.getWebviewById('reg')) {
 												plus.webview.getWebviewById('reg').close();
 											}
-										
+											if(plus.webview.getWebviewById('login')) {
+												plus.webview.getWebviewById('reg').close();
+											}
+											if(plus.webview.getWebviewById('dispatching')) {
+												plus.webview.getWebviewById('dispatching').close();
+											}
+											 
 											var time2 = setTimeout(function() {
 												plus.nativeUI.closeWaiting();
 												mui.toast('登录成功');

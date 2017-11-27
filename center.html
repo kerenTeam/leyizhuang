@@ -195,21 +195,33 @@
 					</div>
 					<div class="flexRow ft14">
 						<div class="">
+							<div id="">
+								---
+							</div>
 							<div onclick="myCoupon()">
 								优惠券
 							</div>
 						</div>
 						<div class="">
+							<div id="">
+								---
+							</div>
 							<div onclick="productCoupon()">
 								产品券
 							</div>
 						</div>
 						<div class="">
+							<div id="userAct">
+								
+							</div>
 							<div onclick="wallet()">
 								账户余额
 							</div>
 						</div>
 						<div class="">
+							<div id="userlb">
+								
+							</div>
 							<div onclick="lebi()">
 								我的乐币
 							</div>
@@ -366,11 +378,13 @@
 			<!--配送员-->
 			<div class="centerList distributionN"  style="display: none;">
 				<div class="flexRow2">
-					<div class="">
-						代收款
+					<div class="afterBorder">
+						<img src="images/center/backT.png"/>代收款
+						<span class="mui-icon mui-icon-arrowright mui-pull-right maincl ft20 maincl"></span>
 					</div>
-					<div class="">
-						调色板
+					<div>
+						<img src="images/center/color.svg"/>调色板
+						<span class="mui-icon mui-icon-arrowright mui-pull-right maincl ft20 maincl"></span>
 					</div>
 				</div>
 			</div>
@@ -597,7 +611,9 @@
 								if(data.code == 0) {
 									plus.nativeUI.closeWaiting();
 									if(data.content) {
-										plus.storage.setItem('userCity',data.content.cityId.toString())
+										if(data.content.cityId){
+											plus.storage.setItem('userCity',data.content.cityId.toString())
+										}
 										if(!data.content.canSign){
 											$('.qiandao').removeAttr('onclick').html('已签到');
 										}
@@ -636,15 +652,15 @@
 											$('#dengh').html('无')
 										}
 										if(data.content.balance){
-											$('#accoutMoney').html('¥'+data.content.balance)
-											$('#manageMoney').html('¥'+data.content.balance)
+											$('#accoutMoney,#manageMoney,#userAct').html('¥'+data.content.balance)
 										}else{
-											$('#accoutMoney').html(0)
+											$('#userAct,#accoutMoney').html(0)
 										}
 										if(data.content.lb){
-											$('#coin').html(data.content.lb)
+											$('#userlb').html(data.content.lb)
 										}else{
-											$('#coin').html(0)
+											$('#userlb').html(data.content.lb)
+											$('#coin,#userlb').html(0)
 										}
 										if(identityT == 0){
 											if(data.content.mobile) {
@@ -653,6 +669,17 @@
 											}else{
 												$('#guidesPhone').css('display','inline-block')
 												$('#guidesPhone').html('未填写')
+											}
+										}
+										if(identityT == 1){
+											if(data.content.mobile) {
+												$('#guidesPhone').html(data.content.mobile)
+											}
+											if(data.content.sendQty){
+												$('#psNumber').html(data.content.psNumber)
+											}else{
+												$('#psNumber').html('0')
+												
 											}
 										}
 									}
@@ -671,6 +698,19 @@
 					}
 				} //刷新
 			});
+			var backButtonPress = 0;
+			mui.back = function(event) {
+				backButtonPress++;
+				if(backButtonPress > 1) {
+					plus.runtime.quit();
+				} else {
+					plus.nativeUI.toast('再按一次退出应用');
+				}
+				setTimeout(function() {
+					backButtonPress = 0;
+				}, 1000);
+				return false;
+			};
 		</script>
 
 	</body>

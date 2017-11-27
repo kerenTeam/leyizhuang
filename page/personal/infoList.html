@@ -78,7 +78,7 @@
 	</style>
 
 	<body>
-		<header class="mui-bar mui-bar-nav fineB">
+		<header class="mui-bar mui-bar-nav">
 		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left bigSize" style="margin-left: 0;"></a>
 		    <h1 class="mui-title">通知消息</h1>  
 		</header>
@@ -113,6 +113,7 @@
 			
 		</div>
 	 </body>
+	 <script src="../../js/default.js" type="text/javascript" charset="utf-8"></script>
 	 <script type="text/javascript">
 	 	//动态详情
 		function DTdetail(id,userid){
@@ -135,7 +136,7 @@
 				var userId = plus.storage.getItem('$userId'); 
 				var oldToken = plus.storage.getItem('oldToken');
 				plus.nativeUI.showWaiting();//显示等待框
-					mui.ajax('http://119.23.149.7:9999/app/user/message/list',{
+					mui.ajax(serverUrl+'/app/user/message/list',{
 						data:{
 							userId:userId,
 							identityType:identityT

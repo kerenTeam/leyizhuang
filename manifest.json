@@ -739,7 +739,8 @@
 					"page/order/pzOrder.html",
 					"page/wallet.html",
 					"page/personal/lebi.html",
-					"page/personal/myOrderList.html"
+					"page/personal/myOrderList.html",
+					"page/order/chooseCustom2.html"
 				],
 				"priority": 0
 			},
@@ -1154,7 +1155,9 @@
 					"js/default.js",
 					"js/jquery.min.js"
 				],
-				"refer": [],
+				"refer": [
+					"page/personal/recharge.html"
+				],
 				"priority": 0
 			},
 			"page/manager/backMoney.html": {
@@ -1508,7 +1511,8 @@
 				"refer": [
 					"page/ofenBuy.html",
 					"page/personal/collect.html",
-					"page/order/pzOrder.html"
+					"page/order/pzOrder.html",
+					"page/fastOrder.html"
 				],
 				"priority": 0
 			},
@@ -1540,7 +1544,9 @@
 					"page/dispatching/electricFast.html",
 					"page/dispatching/oilFast.html",
 					"page/dispatching/deliveryCheckInfo.html",
-					"page/dispatching/deliveryInfo.html"
+					"page/dispatching/deliveryInfo.html",
+					"page/personal/shezhi.html",
+					"page/personal/message.html"
 				],
 				"priority": 0
 			},
@@ -1555,7 +1561,22 @@
 				"resources": [],
 				"refer": [
 					"page/dispatching/refuse.html",
-					"page/dispatching/receipt.html"
+					"page/dispatching/receipt.html",
+					"page/dispatching/dispatchingWl.html"
+				],
+				"priority": 0
+			},
+			"page/personal/myOrderList.html": {
+				"resources": [],
+				"refer": [
+					"page/personal/myOrderWL.html"
+				],
+				"priority": 0
+			},
+			"page/personal/deliveryInform.html": {
+				"resources": [],
+				"refer": [
+					"page/personal/myOrderWL.html"
 				],
 				"priority": 0
 			}

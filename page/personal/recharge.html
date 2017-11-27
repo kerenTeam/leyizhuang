@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html class="ui-page-login">
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>充值</title>
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/commonY.css"/>
+		<link href="../../css/style.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/configW.css"/>
+		<style>
+			.area {
+				margin: 20px auto 0px auto;
+			}
+			
+			.mui-input-group:first-child {
+				margin-top: 20px;
+			}
+			
+			.mui-input-group label {
+				width: 30%;
+				border-right: 1px solid #EEEEEE;
+			}
+			
+			.mui-input-row label~input,
+			.mui-input-row label~select,
+			.mui-input-row label~textarea {
+				width: 68%;
+			}
+			
+			.mui-checkbox input[type=checkbox],
+			.mui-radio input[type=radio] {
+				top: 6px;
+			}
+			
+			.mui-content-padded {
+				margin-top: 25px;
+			}
+			
+			.mui-btn {
+				padding: 10px;
+			}
+			
+			.mui-input-row label~input,
+			.mui-input-row label~select,
+			.mui-input-row label~textarea {
+				margin-top: 1px;
+			}
+			.mui-input-row{padding: 10px 0!important;height: 60px!important;}
+			.pwy img{
+				width: 35px;
+				margin-right: 10px;
+				vertical-align: middle;
+			}
+			.mui-checkbox{margin-top: -35px;}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">充值</h1>
+		</header>
+		<script src="../../js/statusBar.js" type="text/javascript" charset="utf-8"></script>
+		<div class="mui-content">
+			<form class="mui-input-group ft16" style="margin-top: 7px;">
+ 
+				<div class="mui-input-row">
+					<label class="maincl">当前余额</label>
+					<input id='oldpsd' type="text" class="mui-input-clear mui-input" readonly="">
+				</div>
+				<div class="mui-input-row">
+					<label class="maincl">充值金额</label>
+					<input id='newpsd' type="number" class="mui-input-clear mui-input" placeholder="请输入0-5000的整数">
+				</div>
+			
+			</form>
+			
+			<div class="bgcwt pwy">
+					<div class="pad15 ft16 maincl afterBorder">充值方式:</div>
+					<div class="pad15 ft16 maincl flexr">
+						<div id="">
+							<img src="../../images/order/alipay.svg"/>支付宝
+						</div>
+						<div class="mui-checkbox">
+							<input name="checkbox" type="checkbox" checked="">
+						</div>
+					</div>
+					<div class="pad15 ft16 maincl">
+						<img src="../../images/order/weixinpay.svg"/>微信支付
+					</div>
+					<div class="pad15 ft16 maincl">
+						<img src="../../images/order/bankpay.svg"/>银联支付
+					</div>
+			</div>
+			<div class="mui-content-padded">
+				<button id='sendMail' class="mui-btn mui-btn-block mui-btn-danger">充值</button>
+			</div>
+		</div>
+		<script src="../../js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/base64.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/default.js"></script>
+		<script>
+			mui.init();
+			mui.plusReady(function() {
+				var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
+				var userId = plus.storage.getItem('$userId');
+				var oldToken = plus.storage.getItem('oldToken');
+				var sendButton = document.getElementById('sendMail');
+				var money = plus.webview.currentWebview().money;
+				$('#oldpsd').val(money)
+				var newpsd = document.getElementById('newpsd');
+				sendButton.addEventListener('tap', function() {
+
+					if(!newpsd.value) {
+						mui.toast('请输入原密码')
+					} else if(!oldpsd.value) {
+						mui.toast('请输入新密码')
+					} else {
+						var b = new Base64();
+						var str1 = b.encode(newpsd.value);
+						var str2 = b.encode(oldpsd.value);
+						console.log(str1 + ' ' + str2)
+						plus.nativeUI.showWaiting();
+						mui.ajax(serverUrl+'/app/employee/password/edit', { //改密
+							data: {
+								"userId": userId,
+								"identityType": identityT,
+								"oldPassword": str2,
+								"newPassword": str1
+							},
+							dataType: 'json',
+							type: 'post',
+							timeout: 10000,
+							headers: {
+								"Authorization": oldToken
+							},
+							success: function(data) {
+								console.log('改密返回' + JSON.stringify(data));
+								if(data.code == 1000) { //改密成功直接登录
+									plus.nativeUI.closeWaiting();
+									mui.toast(data.message);
+								} else if(data.code == 0) {
+									plus.nativeUI.closeWaiting();
+									mui.toast('修改成功');
+									mui.back();
+								} else {
+									plus.nativeUI.closeWaiting();
+									mui.toast(data.message);
+								}
+							},
+							error: function(xhr, type, errorThrown) {
+								plus.nativeUI.closeWaiting();
+								console.log('修改密码响应失败');
+							}
+						});
+					}
+
+				}, false);
+
+			});
+		</script>
+	</body>
+
+</html>

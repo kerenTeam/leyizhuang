@@ -3,128 +3,697 @@
 
 	<head>
 		<meta charset="utf-8">
-		<title>Hello MUI</title>
+		<title>快捷下单-水</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
 		<meta name="apple-mobile-web-app-capable" content="yes">
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
 		<link rel="stylesheet" href="../css/mui.min.css">
+		<link rel="stylesheet" type="text/css" href="../css/style.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/configW.css"/> 
 		<style>
 			html,
 			body {
 				background-color: #efeff4;
 			}
-			
 			.title {
-				padding: 20px 15px 10px;
+				padding: 14px 0 10px;
 				color: #6d6d72;
 				font-size: 15px;
-				background-color: #fff;
 			}
+			.categray{padding: 10px;}
+			.mui-badge-danger{padding: 5px 10px;font-size: 14px;border-radius: 3px;background-color: #DDDDDD;color: gray;}
+	 		.actBadge{background-color: #B42E28;color: white;}
+	 		.categray span{margin: 0 10px 0 0;display: inline-block;}
+	 		.actspan{color: #B42E28;}
+	 		.afterBorder:after{left: 5px;right: 5px;}
+	 		.flexr{text-align: center;}
+	 		.flexr span{margin: 5px 2px;display: inline-block;}
 		</style>
 	</head>
 
 	<body>
-		<div id="pullrefresh" class="mui-content mui-scroll-wrapper">
-			<div class="mui-scroll">
-				<div class="title">
-					这是webview模式选项卡中的第1个子页面
+		<div class="mui-content ft15">
+			<div class="maincl">
+				<div class="title fttc bgcee ft15">
+					PPR给水及管件
 				</div>
-				<ul class="mui-table-view mui-table-view-chevron">
-					<li class="mui-table-view-cell">
-						<a href="" class="mui-navigate-right">推荐-Item 1</a>
-					</li>
-					<li class="mui-table-view-cell">
-						<a href="" class="mui-navigate-right">推荐-Item 2</a>
-					</li>
-					<li class="mui-table-view-cell">
-						<a href="" class="mui-navigate-right">推荐-Item 3</a>
-					</li>
-					<li class="mui-table-view-cell">
-						<a href="" class="mui-navigate-right">推荐-Item 4</a>
-					</li>
-					<li class="mui-table-view-cell">
-						<a href="" class="mui-navigate-right">推荐-Item 5</a>
-					</li>
-					<li class="mui-table-view-cell">
-						<a href="" class="mui-navigate-right">推荐-Item 6</a>
-					</li>
-					<li class="mui-table-view-cell">
-						<a href="" class="mui-navigate-right">推荐-Item 7</a>
-					</li>
-					<li class="mui-table-view-cell">
-						<a href="" class="mui-navigate-right">推荐-Item 8</a>
-					</li>
-					<li class="mui-table-view-cell">
-						<a href="" class="mui-navigate-right">推荐-Item 9</a>
-					</li>
-					<li class="mui-table-view-cell">
-						<a href="" class="mui-navigate-right">推荐-Item 10</a>
-					</li>
-					<li class="mui-table-view-cell">
-						<a href="" class="mui-navigate-right">推荐-Item 11</a>
-					</li>
-					<li class="mui-table-view-cell">
-						<a href="" class="mui-navigate-right">推荐-Item 12</a>
-					</li>
-					<li class="mui-table-view-cell">
-						<a href="" class="mui-navigate-right">推荐-Item 13</a>
-					</li>
-					<li class="mui-table-view-cell">
-						<a href="" class="mui-navigate-right">推荐-Item 14</a>
-					</li>
-					<li class="mui-table-view-cell">
-						<a href="" class="mui-navigate-right">推荐-Item 15</a>
-					</li>
-					<li class="mui-table-view-cell">
-						<a href="" class="mui-navigate-right">推荐-Item 16</a>
-					</li>
-					<li class="mui-table-view-cell">
-						<a href="" class="mui-navigate-right">推荐-Item 17</a>
-					</li>
-					<li class="mui-table-view-cell">
-						<a href="" class="mui-navigate-right">推荐-Item 18</a>
-					</li>
-					<li class="mui-table-view-cell">
-						<a href="" class="mui-navigate-right">推荐-Item 19</a>
-					</li>
-					<li class="mui-table-view-cell">
-						<a href="" class="mui-navigate-right">推荐-Item 20</a>
-					</li>
-				</ul>
+				<div class="categray bgcwt">
+		     		<span class="mui-badge mui-badge-danger ftb" data-id = '' data-name = 'category'>品牌</span>
+		     		<span class="ftb actspan" data-id = 'SJRSG004' data-name = 'category'>金牛</span>
+		     	</div>
+		     	<div class="padd10 bgcwt">
+		     		<div class="flexr">
+		     			<div>产品</div>
+		     			<div>规格</div>
+		     			<div>数量</div>
+		     		</div>
+		     		<div class="flexr afterBorder paddv10">
+		     			<div>PPR热水管<br/>（4米/根）</div>
+		     			<div>
+		     				<span class="bdc bdcA" data-id="SJRSG004-20*2.8*4M">
+		     					20
+		     				</span>
+		     				<span class="bdc" data-id="SJRSG004-25*3.5*4M">
+		     					25
+		     				</span>
+		     				<span class="bdc" data-id="SJRSG004-32*4.4*4M">
+		     					32
+		     				</span>
+		     			</div>
+	     				<div class="mui-numbox" data-numbox-step='1' data-numbox-min='0'>
+						  <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+						  <input class="mui-numbox-input" type="number" value="0"/>
+						  <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+						</div>
+		     		</div>
+		     		<div class="flexr afterBorder paddv10">
+		     			<div>PPR90°弯头</div>
+		     			<div>
+		     				<span class="bdc bdcA" data-id="SJWT9003-20">
+		     					20
+		     				</span>
+		     				<span class="bdc" data-id="SJWT9003-25">
+		     					25
+		     				</span>
+		     				<span class="bdc" data-id="SJWT9003-32">
+		     					32
+		     				</span>
+		     			</div>
+	     				<div class="mui-numbox" data-numbox-step='1' data-numbox-min='0'>
+						  <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+						  <input class="mui-numbox-input" type="number" value="0"/>
+						  <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+						</div>
+		     		</div>
+		     		<div class="flexr afterBorder paddv10">
+		     			<div>PPR45°弯头</div>
+		     			<div>
+		     				<span class="bdc bdcA" data-id="SJWT4503-20">
+		     					20
+		     				</span>
+		     				<span class="bdc" data-id="SJWT4503-25">
+		     					25
+		     				</span>
+		     				 
+		     			</div>
+	     				<div class="mui-numbox" data-numbox-step='1' data-numbox-min='0'>
+						  <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+						  <input class="mui-numbox-input" type="number" value="0"/>
+						  <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+						</div>
+		     		</div>
+		     		<div class="flexr afterBorder paddv10">
+		     			<div>PPR等径三通</div>
+		     			<div>
+		     				<span class="bdc bdcA" data-id="SJDJST03-20">
+		     					20
+		     				</span>
+		     				<span class="bdc" data-id="SJDJST03-25">
+		     					25
+		     				</span>
+		     				<span class="bdc" data-id="SJDJST03-32">
+		     					32
+		     				</span>
+		     			</div>
+	     				<div class="mui-numbox" data-numbox-step='1' data-numbox-min='0'>
+						  <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+						  <input class="mui-numbox-input" type="number" value="0"/>
+						  <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+						</div>
+		     		</div>
+		     		<div class="flexr afterBorder paddv10">
+		     			<div>PPR异径三通</div>
+		     			<div>
+		     				<span class="bdc bdcA" data-id="SJYJST03-25*20">
+		     					25-20
+		     				</span>
+		     				<span class="bdc" data-id="SJYJST03-32*20">
+		     					32-20
+		     				</span>
+		     				<span class="bdc" data-id="SJYJST03-32*25">
+		     					32-25
+		     				</span>
+		     			</div>
+	     				<div class="mui-numbox" data-numbox-step='1' data-numbox-min='0'>
+						  <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+						  <input class="mui-numbox-input" type="number" value="0"/>
+						  <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+						</div>
+		     		</div>
+		     		<div class="flexr afterBorder paddv10">
+		     			<div>PPR直接</div>
+		     			<div>
+		     				<span class="bdc bdcA" data-id="SJDJGT03-20">
+		     					20
+		     				</span>
+		     				<span class="bdc" data-id="SJDJGT03-25">
+		     					25
+		     				</span>
+		     				<span class="bdc" data-id="SJDJGT03-32">
+		     					32
+		     				</span> 
+		     			</div>
+	     				<div class="mui-numbox" data-numbox-step='1' data-numbox-min='0'>
+						  <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+						  <input class="mui-numbox-input" type="number" value="0"/>
+						  <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+						</div>
+		     		</div>
+		     		<div class="flexr afterBorder paddv10">
+		     			<div>PPR异径直接</div>
+		     			<div>
+		     				<span class="bdc bdcA" data-id="SJYJGT03-25*20">
+		     					25-20
+		     				</span>
+		     				<span class="bdc" data-id="SJYJGT03-32*20">
+		     					32-20
+		     				</span>
+		     				<span class="bdc" data-id="SJYJGT03-32*25">
+		     					32-25
+		     				</span>
+		     			</div>
+	     				<div class="mui-numbox" data-numbox-step='1' data-numbox-min='0'>
+						  <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+						  <input class="mui-numbox-input" type="number" value="0"/>
+						  <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+						</div>
+		     		</div>
+		     		<div class="flexr afterBorder paddv10">
+		     			<div>PPR内丝直接</div>
+		     			<div>
+		     				<span class="bdc bdcA" data-id="SJNLJT03-20*1/2">
+		     					20*1/2
+		     				</span>
+		     				<span class="bdc" data-id="SJNLJT03-25*1/2">
+		     					25*1/2
+		     				</span>
+		     				<span class="bdc" data-id="SJNLJT03-25*3/4">
+		     					25*3/4
+		     				</span>
+		     			</div>
+	     				<div class="mui-numbox" data-numbox-step='1' data-numbox-min='0'>
+						  <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+						  <input class="mui-numbox-input" type="number" value="0"/>
+						  <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+						</div>
+		     		</div>
+		     		<div class="flexr afterBorder paddv10">
+		     			<div>PPR内丝弯头</div>
+		     			<div>
+		     				<span class="bdc bdcA" data-id="SJNLWT03-20*1/2">
+		     					20*1/2
+		     				</span>
+		     				<span class="bdc" data-id="SJNLWT03-25*1/2">
+		     					25*1/2
+		     				</span>
+		     				 
+		     			</div>
+	     				<div class="mui-numbox" data-numbox-step='1' data-numbox-min='0'>
+						  <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+						  <input class="mui-numbox-input" type="number" value="0"/>
+						  <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+						</div>
+		     		</div>
+		     		<div class="flexr afterBorder paddv10">
+		     			<div>PPR内丝三通</div>
+		     			<div>
+		     				<span class="bdc bdcA" data-id="SJNLST03-20*1/2">
+		     					20*1/2
+		     				</span>
+		     				<span class="bdc" data-id="SJNLST03-25*1/2">
+		     					25*1/2
+		     				</span>
+		     				 
+		     			</div>
+	     				<div class="mui-numbox" data-numbox-step='1' data-numbox-min='0'>
+						  <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+						  <input class="mui-numbox-input" type="number" value="0"/>
+						  <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+						</div>
+		     		</div>
+		     		<div class="flexr afterBorder paddv10">
+		     			<div>PPR过桥弯</div>
+		     			<div>
+		     				<span class="bdc bdcA" data-id="SJGQW03-20">
+		     					20
+		     				</span>
+		     				<span class="bdc" data-id="SJGQW03-25">
+		     					25
+		     				</span>
+		     				 
+		     			</div>
+	     				<div class="mui-numbox" data-numbox-step='1' data-numbox-min='0'>
+						  <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+						  <input class="mui-numbox-input" type="number" value="0"/>
+						  <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+						</div>
+		     		</div>
+		     		<div class="flexr afterBorder paddv10">
+		     			<div>PPR截止阀</div>
+		     			<div>
+		     				<span class="bdc bdcA" data-id="SJJZF003-20">
+		     					20
+		     				</span>
+		     				<span class="bdc" data-id="SJJZF003-25">
+		     					25
+		     				</span>
+		     				<span class="bdc" data-id="SJJZF003-32">
+		     					32
+		     				</span> 
+		     			</div>
+	     				<div class="mui-numbox" data-numbox-step='1' data-numbox-min='0'>
+						  <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+						  <input class="mui-numbox-input" type="number" value="0"/>
+						  <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+						</div>
+		     		</div>
+		     		<div class="flexr afterBorder paddv10">
+		     			<div>生料带</div>
+		     			<div>
+		     				<span class="bdc bdcA" data-id="SHSLDH-15M-C">
+		     					15m
+		     				</span> 
+		     			</div>
+	     				<div class="mui-numbox" data-numbox-step='1' data-numbox-min='0'>
+						  <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+						  <input class="mui-numbox-input" type="number" value="0"/>
+						  <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+						</div>
+		     		</div>
+		     		<div class="flexr afterBorder paddv10">
+		     			<div>水龙头</div>
+		     			<div>
+		     				<span class="bdc bdcA" data-id="SWSLT00">
+		     					1/2白色水龙头
+		     				</span> 
+		     			</div>
+	     				<div class="mui-numbox" data-numbox-step='1' data-numbox-min='0'>
+						  <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+						  <input class="mui-numbox-input" type="number" value="0"/>
+						  <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+						</div>
+		     		</div>
+		     		<div class="flexr afterBorder paddv10">
+		     			<div>PPR堵帽</div>
+		     			<div>
+		     				<span class="bdc bdcA" data-id="SJDM03-20">
+		     					20
+		     				</span>
+		     				<span class="bdc" data-id="SJDM03-25">
+		     					25
+		     				</span>
+		     				<span class="bdc" data-id="SJDM03-32">
+		     					32
+		     				</span> 
+		     			</div>
+	     				<div class="mui-numbox" data-numbox-step='1' data-numbox-min='0'>
+						  <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+						  <input class="mui-numbox-input" type="number" value="0"/>
+						  <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+						</div>
+		     		</div>
+		     		<div class="flexr afterBorder paddv10">
+		     			<div>PPR丝堵（堵头）</div>
+		     			<div>
+		     				<span class="bdc bdcA" data-id="SWSD00-1/2">
+		     					1/2
+		     				</span>
+		     				<span class="bdc" data-id="SWSD00-3/4">
+		     					3/4
+		     				</span>
+		     			</div>
+	     				<div class="mui-numbox" data-numbox-step='1' data-numbox-min='0'>
+						  <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+						  <input class="mui-numbox-input" type="number" value="0"/>
+						  <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+						</div>
+		     		</div>
+		     	</div>
+				 
 			</div>
+			
+			<div class="maincl">
+				<div class="title fttc bgcee ft15">
+					PVC排水及管件
+				</div>
+				<div class="categray bgcwt">
+		     		<span class="mui-badge mui-badge-danger ftb" data-id = '' data-name = 'category'>品牌</span>
+		     		<span class="ftb actspan" data-id = 'SJRSG004' data-name = 'category'>金牛</span>
+		     	</div>
+		     	<div class="padd10 bgcwt">
+		     		 
+		     		<div class="flexr afterBorder paddv10">
+		     			<div>PVC排水管<br/>（1米/根）</div>
+		     			<div>
+		     				<span class="bdc bdcA" data-id="SJPSGB-50*1M">
+		     					50*1m
+		     				</span>
+		     				<span class="bdc" data-id="SJPSGB-75*1M">
+		     					75*1m
+		     				</span>
+		     				<span class="bdc" data-id="SJPSGB-110*1M">
+		     					110*1m
+		     				</span>
+		     			</div>
+	     				<div class="mui-numbox" data-numbox-step='1' data-numbox-min='0'>
+						  <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+						  <input class="mui-numbox-input" type="number" value="0"/>
+						  <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+						</div>
+		     		</div>
+		     		<div class="flexr afterBorder paddv10">
+		     			<div>PVC顺水三通</div>
+		     			<div>
+		     				<span class="bdc bdcA" data-id="SJSSST-50">
+		     					50
+		     				</span>
+		     				<span class="bdc" data-id="SJSSST-70">
+		     					70
+		     				</span>
+		     				<span class="bdc" data-id="SJSSST-110">
+		     					110
+		     				</span>
+		     			</div>
+	     				<div class="mui-numbox" data-numbox-step='1' data-numbox-min='0'>
+						  <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+						  <input class="mui-numbox-input" type="number" value="0"/>
+						  <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+						</div>
+		     		</div>
+		     		<div class="flexr afterBorder paddv10">
+		     			<div>PVC异径顺水三通</div>
+		     			<div>
+		     				<span class="bdc bdcA" data-id="SJSSSTY-75*50">
+		     					75*50
+		     				</span>
+		     				<span class="bdc" data-id="SJSSSTY-110*50">
+		     					110*50
+		     				</span>
+		     				<span class="bdc" data-id="SJSSSTY-110*75">
+		     					110*75
+		     				</span> 
+		     			</div>
+	     				<div class="mui-numbox" data-numbox-step='1' data-numbox-min='0'>
+						  <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+						  <input class="mui-numbox-input" type="number" value="0"/>
+						  <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+						</div>
+		     		</div>
+		     		<div class="flexr afterBorder paddv10">
+		     			<div>PPR等径三通</div>
+		     			<div>
+		     				<span class="bdc bdcA" data-id="SJDJST03-20">
+		     					20
+		     				</span>
+		     				<span class="bdc" data-id="SJDJST03-25">
+		     					25
+		     				</span>
+		     				<span class="bdc" data-id="SJDJST03-32">
+		     					32
+		     				</span>
+		     			</div>
+	     				<div class="mui-numbox" data-numbox-step='1' data-numbox-min='0'>
+						  <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+						  <input class="mui-numbox-input" type="number" value="0"/>
+						  <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+						</div>
+		     		</div>
+		     		<div class="flexr afterBorder paddv10">
+		     			<div>PPR异径三通</div>
+		     			<div>
+		     				<span class="bdc bdcA" data-id="SJYJST03-25*20">
+		     					25-20
+		     				</span>
+		     				<span class="bdc" data-id="SJYJST03-32*20">
+		     					32-20
+		     				</span>
+		     				<span class="bdc" data-id="SJYJST03-32*25">
+		     					32-25
+		     				</span>
+		     			</div>
+	     				<div class="mui-numbox" data-numbox-step='1' data-numbox-min='0'>
+						  <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+						  <input class="mui-numbox-input" type="number" value="0"/>
+						  <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+						</div>
+		     		</div>
+		     		<div class="flexr afterBorder paddv10">
+		     			<div>PPR直接</div>
+		     			<div>
+		     				<span class="bdc bdcA" data-id="SJDJGT03-20">
+		     					20
+		     				</span>
+		     				<span class="bdc" data-id="SJDJGT03-25">
+		     					25
+		     				</span>
+		     				<span class="bdc" data-id="SJDJGT03-32">
+		     					32
+		     				</span> 
+		     			</div>
+	     				<div class="mui-numbox" data-numbox-step='1' data-numbox-min='0'>
+						  <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+						  <input class="mui-numbox-input" type="number" value="0"/>
+						  <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+						</div>
+		     		</div>
+		     		<div class="flexr afterBorder paddv10">
+		     			<div>PPR异径直接</div>
+		     			<div>
+		     				<span class="bdc bdcA" data-id="SJYJGT03-25*20">
+		     					25-20
+		     				</span>
+		     				<span class="bdc" data-id="SJYJGT03-32*20">
+		     					32-20
+		     				</span>
+		     				<span class="bdc" data-id="SJYJGT03-32*25">
+		     					32-25
+		     				</span>
+		     			</div>
+	     				<div class="mui-numbox" data-numbox-step='1' data-numbox-min='0'>
+						  <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+						  <input class="mui-numbox-input" type="number" value="0"/>
+						  <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+						</div>
+		     		</div>
+		     		<div class="flexr afterBorder paddv10">
+		     			<div>PPR内丝直接</div>
+		     			<div>
+		     				<span class="bdc bdcA" data-id="SJNLJT03-20*1/2">
+		     					20*1/2
+		     				</span>
+		     				<span class="bdc" data-id="SJNLJT03-25*1/2">
+		     					25*1/2
+		     				</span>
+		     				<span class="bdc" data-id="SJNLJT03-25*3/4">
+		     					25*3/4
+		     				</span>
+		     			</div>
+	     				<div class="mui-numbox" data-numbox-step='1' data-numbox-min='0'>
+						  <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+						  <input class="mui-numbox-input" type="number" value="0"/>
+						  <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+						</div>
+		     		</div>
+		     		<div class="flexr afterBorder paddv10">
+		     			<div>PPR内丝弯头</div>
+		     			<div>
+		     				<span class="bdc bdcA" data-id="SJNLWT03-20*1/2">
+		     					20*1/2
+		     				</span>
+		     				<span class="bdc" data-id="SJNLWT03-25*1/2">
+		     					25*1/2
+		     				</span>
+		     				 
+		     			</div>
+	     				<div class="mui-numbox" data-numbox-step='1' data-numbox-min='0'>
+						  <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+						  <input class="mui-numbox-input" type="number" value="0"/>
+						  <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+						</div>
+		     		</div>
+		     		<div class="flexr afterBorder paddv10">
+		     			<div>PPR内丝三通</div>
+		     			<div>
+		     				<span class="bdc bdcA" data-id="SJNLST03-20*1/2">
+		     					20*1/2
+		     				</span>
+		     				<span class="bdc" data-id="SJNLST03-25*1/2">
+		     					25*1/2
+		     				</span>
+		     				 
+		     			</div>
+	     				<div class="mui-numbox" data-numbox-step='1' data-numbox-min='0'>
+						  <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+						  <input class="mui-numbox-input" type="number" value="0"/>
+						  <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+						</div>
+		     		</div>
+		     		<div class="flexr afterBorder paddv10">
+		     			<div>PPR过桥弯</div>
+		     			<div>
+		     				<span class="bdc bdcA" data-id="SJGQW03-20">
+		     					20
+		     				</span>
+		     				<span class="bdc" data-id="SJGQW03-25">
+		     					25
+		     				</span>
+		     				 
+		     			</div>
+	     				<div class="mui-numbox" data-numbox-step='1' data-numbox-min='0'>
+						  <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+						  <input class="mui-numbox-input" type="number" value="0"/>
+						  <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+						</div>
+		     		</div>
+		     		<div class="flexr afterBorder paddv10">
+		     			<div>PPR截止阀</div>
+		     			<div>
+		     				<span class="bdc bdcA" data-id="SJJZF003-20">
+		     					20
+		     				</span>
+		     				<span class="bdc" data-id="SJJZF003-25">
+		     					25
+		     				</span>
+		     				<span class="bdc" data-id="SJJZF003-32">
+		     					32
+		     				</span> 
+		     			</div>
+	     				<div class="mui-numbox" data-numbox-step='1' data-numbox-min='0'>
+						  <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+						  <input class="mui-numbox-input" type="number" value="0"/>
+						  <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+						</div>
+		     		</div>
+		     		<div class="flexr afterBorder paddv10">
+		     			<div>生料带</div>
+		     			<div>
+		     				<span class="bdc bdcA" data-id="SHSLDH-15M-C">
+		     					15m
+		     				</span> 
+		     			</div>
+	     				<div class="mui-numbox" data-numbox-step='1' data-numbox-min='0'>
+						  <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+						  <input class="mui-numbox-input" type="number" value="0"/>
+						  <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+						</div>
+		     		</div>
+		     		<div class="flexr afterBorder paddv10">
+		     			<div>水龙头</div>
+		     			<div>
+		     				<span class="bdc bdcA" data-id="SWSLT00">
+		     					1/2白色水龙头
+		     				</span> 
+		     			</div>
+	     				<div class="mui-numbox" data-numbox-step='1' data-numbox-min='0'>
+						  <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+						  <input class="mui-numbox-input" type="number" value="0"/>
+						  <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+						</div>
+		     		</div>
+		     		<div class="flexr afterBorder paddv10">
+		     			<div>PPR堵帽</div>
+		     			<div>
+		     				<span class="bdc bdcA" data-id="SJDM03-20">
+		     					20
+		     				</span>
+		     				<span class="bdc" data-id="SJDM03-25">
+		     					25
+		     				</span>
+		     				<span class="bdc" data-id="SJDM03-32">
+		     					32
+		     				</span> 
+		     			</div>
+	     				<div class="mui-numbox" data-numbox-step='1' data-numbox-min='0'>
+						  <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+						  <input class="mui-numbox-input" type="number" value="0"/>
+						  <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+						</div>
+		     		</div>
+		     		<div class="flexr afterBorder paddv10">
+		     			<div>PPR丝堵（堵头）</div>
+		     			<div>
+		     				<span class="bdc bdcA" data-id="SWSD00-1/2">
+		     					1/2
+		     				</span>
+		     				<span class="bdc" data-id="SWSD00-3/4">
+		     					3/4
+		     				</span>
+		     			</div>
+	     				<div class="mui-numbox" data-numbox-step='1' data-numbox-min='0'>
+						  <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+						  <input class="mui-numbox-input" type="number" value="0"/>
+						  <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+						</div>
+		     		</div>
+		     	</div>
+				<!--bottom nav-->
+				<div style="height:40px;"></div>
+				<aside class="btmNav flexr" style="position: fixed;bottom: 0;left: 0;width: 100%;">
+					<a class="dp ft16" style="color: #B62D29;text-align: center;flex: 1;">
+						<span>合计：</span>¥<span class="totalMoney">0</span>
+					</a>
+					<a class="goOrder dp" style="background:#B62D29;color:white;padding:4px 10px;">加入下料清单<span class="totalVisi">(<span class="totalNum">0</span>)</span>
+					</a>
+				</aside>
+			</div>
+			
 		</div>
 		<script src="../js/mui.min.js"></script>
+		<script src="../js/default.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
 		<script>
-			mui.init({
-				swipeBack: false,
-				keyEventBind: {
-					backbutton: false //关闭back按键监听
-				},
-				pullRefresh: {
-					container: '#pullrefresh',
-					up: {
-						contentrefresh: '正在加载...',
-						callback: pullupRefresh
-					}
+		mui.init();
+		
+		$('.bdc').click(function(){
+			$(this).siblings().removeClass('bdcA')
+			$(this).addClass('bdcA')
+		})
+		mui('.goOrder')[0].onclick = function(){
+			var fastMaterial = '';
+			$('.bdcA').each(function(){
+				var goodCode = $(this).attr('data-id');
+				var goodNum = $(this).parent().next().find('input').val();
+				if(goodNum>0){
+					fastMaterial+=goodCode+'-'+goodNum+',';
 				}
-			});
-			var count = 0;
-			/**
-			 * 上拉加载具体业务实现
-			 */
-			function pullupRefresh() {
-				setTimeout(function() {
-					mui('#pullrefresh').pullRefresh().endPullupToRefresh((++count > 2)); //参数为true代表没有更多数据了。
-					var table = document.body.querySelector('.mui-table-view');
-					var cells = document.body.querySelectorAll('.mui-table-view-cell');
-					for(var i = cells.length, len = i + 20; i < len; i++) {
-						var li = document.createElement('li');
-						li.className = 'mui-table-view-cell';
-						li.innerHTML = '<a class="mui-navigate-right">推荐-Item ' + (i + 1) + '</a>';
-						table.appendChild(li);
-					}
-				}, 1000);
-			}
+			})
+			mui.plusReady(function(){
+				var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
+				var userId = plus.storage.getItem('$userId'); 
+				var oldToken = plus.storage.getItem('oldToken');
+				if(fastMaterial){
+					plus.nativeUI.showWaiting();
+					mui.ajax(serverUrl + '/app/materialList/quickOrder/add', {
+						data: {
+							userId: userId,
+							identityType: identityT,
+							params: fastMaterial,
+						},
+						dataType: 'json',
+						headers: {
+							"Authorization": oldToken
+						},
+						type: 'post',
+						timeout: 10000,
+						success: function(data, type, xhr) {
+							plus.nativeUI.closeWaiting();
+							console.log('快捷下单', data);
+							if(data.code == 0) { 
+								mui.toast('下单成功')
+							} else {
+								mui.toast(data.message)
+							}
+				
+						},
+						error: function(xhr, type, errorThrown) {
+							plus.nativeUI.closeWaiting();
+						}
+					});
+				}else{
+					mui.toast('还未选择商品哦')
+				}
+			})
+		}
 		</script>
 	</body>
 

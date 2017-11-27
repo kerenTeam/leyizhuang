@@ -149,7 +149,9 @@
 										mui.fire(plus.webview.getWebviewById('cart.html'), 'refresh');
 										mui.fire(plus.webview.getWebviewById('page/goodList.html'),'refresh');
 										mui.fire(plus.webview.getWebviewById('center.html'),'refresh');
-										
+										if(plus.webview.getWebviewById('dispatching')) {
+											plus.webview.getWebviewById('dispatching').close();
+										}
 										var time2 = setTimeout(function(){
 											plus.nativeUI.closeWaiting();
 											mui.toast('登录成功');

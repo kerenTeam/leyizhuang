@@ -22,7 +22,7 @@
 			<a id="leftbtn" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<h1 class="mui-title">常购商品</h1>
 		</header>
-		 
+		 <script src="../js/statusBar.js" type="text/javascript" charset="utf-8"></script>
 		<div class="mui-content" style="margin-top: 7px;">
 		    <!--商品列表-->
 		    <div class="goodsList" id="goodsList"></div>
@@ -92,7 +92,7 @@
 							console.log('商品列表',data);
 							if(data.code == 0 ){
 								plus.nativeUI.closeWaiting();
-								if(data.content.length){
+								if(data.content && data.content.length){
 									$('#goodsList').html(template('goodsTpl',{list:data.content}));
 									$('.toCart,.mui-numbox button,.mui-numbox input').click(function() {
 										event.stopPropagation()

@@ -102,29 +102,29 @@ proto._initDrag = function(webview, dir) {
 		return;
 	}
 	var viewId = webview['__mui_' + (dir === 'left' ? 'right' : 'left')];
-	if(viewId) {
-		var view = plus.webview.getWebviewById(viewId);
-		if(!view) { //如果目标webview不存在,使用nativeView替换
-			view = this.nativeView;
-		} else {
-			webview[flag] = true;
-		}
-		webview.drag({
-				'direction': dir,
-				'moveMode': 'followFinger'
-			}, {
-				'view': view,
-				'moveMode': 'follow'
-			},
-			function(res) {
-				if(res.type === 'end' && res.result) { //拖拽完成
-					this._dragCallback(dir, webview, view, viewId);
-				}
-			}.bind(this)
-		)
-	} else {
-		webview[flag] = true;
-	}
+//	if(viewId) {
+//		var view = plus.webview.getWebviewById(viewId);
+//		if(!view) { //如果目标webview不存在,使用nativeView替换
+//			view = this.nativeView;
+//		} else {
+//			webview[flag] = true;
+//		}
+//		webview.drag({
+//				'direction': dir,
+//				'moveMode': 'followFinger'
+//			}, {
+//				'view': view,
+//				'moveMode': 'follow'
+//			},
+//			function(res) {
+//				if(res.type === 'end' && res.result) { //拖拽完成
+//					this._dragCallback(dir, webview, view, viewId);
+//				}
+//			}.bind(this)
+//		)
+//	} else {
+//		webview[flag] = true;
+//	}
 };
 proto._initDrags = function(webview) {
 	this._initDrag(webview, 'left');

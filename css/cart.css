@@ -1739,7 +1739,7 @@ dt .mui-checkbox {
 
 .mui-checkbox input[type=checkbox]:checked:before,
 .mui-radio input[type=radio]:checked:before {
-	color: rgb(245, 60, 66);
+	color: #B62D29;
 }
 
 .cart {
