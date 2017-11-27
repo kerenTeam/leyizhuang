@@ -117,6 +117,7 @@
 			    	},500)
 		    }, function ( e ) {
 		    },{filter:"image",multiple:true,maximum:maxNum-Apic.length,system:false,onmaxed:function(){//保存选择记录
+		    		mui.alert('最多选择'+maxNum+'张图片！');
 		    }});
 		})
 	}
@@ -136,14 +137,6 @@
 			Apic.splice($.inArray(nowPic,Apic),1);
 		}
 	}
-
-	//从相册中选择图片结束
-
-	//发送 发布
-	mui('.baocun')[0].addEventListener('tap',function(){
-		console.log(Apic);
-	})
-
 	function showAction(){
 		alert(Apic.length);
 		if(Apic.length  < maxNum){
@@ -166,10 +159,18 @@
 
 			})
 		}else{
-			mui.toast('最多选择'+maxNum+'张图片！');
+			mui.alert('最多选择'+maxNum+'张图片！');
 		}
 
 	}
+	//从相册中选择图片结束
+
+	//发送 发布
+	mui('.baocun')[0].addEventListener('tap',function(){
+		console.log(Apic);
+	})
+
+
 
 
 
