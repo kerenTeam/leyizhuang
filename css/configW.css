@@ -45,7 +45,15 @@
 .pad10 {
 	padding: 0.15rem 0.1rem;
 }
-
+.padd10{
+	padding: 10px;
+}
+.pad15{
+	padding: 15px;
+}
+.paddv10{
+	padding: 10px 0;
+}
 .mt15 {
 	margin-top: 15px !important;
 }
@@ -78,7 +86,7 @@
 	color: rgb(101,101,101);
 }
 .activecl{
-	color: #B42E28;
+	color: #B62D29;
 }
 .disablecl{
 	color: rgb(153,153,153);
@@ -89,6 +97,9 @@
 .bgcwt{
 	background-color: white!important;
 }
+.bgcee{
+	background-color: #EEEEEE;
+}
 .activecl2{
 	color: coral;
 }
@@ -96,14 +107,15 @@
 .bdc{
 	border: 1px solid darkgray;
 	color: darkgray;
-	padding: 2px 8px;
+	padding: 2px 4px 2px 4px;
 	border-radius: 3px;
 }
 .bdcA{
-	border: 1px solid #B42E28;
-	color: #B42E28;
-	padding: 2px 8px;
+	border: 1px solid #B62D29;
+	color: #B62D29;
+	padding: 2px 4px 2px 4px;
 	border-radius: 3px;
+	text-align: center;
 }
 /*标题颜色*/
 .titcl{
@@ -154,8 +166,8 @@
  
 .mui-btn-danger{ 
 	color: #fff!important;
-    background-color: #B42E28!important;
-    border:1px solid #B42E28!important;
+    background-color: #B62D29!important;
+    border:1px solid #B62D29!important;
 }
 .mui-btn-blue{ 
 	color: #fff!important;
@@ -163,7 +175,7 @@
     border:1px solid #5394f2!important;
 }
 .mui-btn-outlined{
-    color: #B42E28!important;
+    color: #B62D29!important;
     background:transparent!important;
 }
 /*透明红色边框按钮 颜色相应改变
@@ -189,7 +201,7 @@
 }
 /*红色底边框*/
 .borBotRed{
-	border-bottom: 1px solid #B42E28;
+	border-bottom: 1px solid #B62D29;
 }
 
 

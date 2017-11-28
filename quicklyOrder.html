@@ -9,30 +9,32 @@
 		<link rel="stylesheet" href="css/style.css" />
 	</head>
 	<style type="text/css"> 
-		.vct{width: 90%;position: fixed;color: white;text-align: center;top: 25%;left:5%;}
-		.vct img{display: block;margin:auto;margin-bottom: 10px;}
+		.vct{width: 90%;position: fixed;color: white;text-align: center;top: 22%;left:5%;}
+		.vct img{display: block;width: 80px;margin:auto;margin-bottom: 10px;vertical-align: middle;}
 		.vct td{padding: 20px;}
+		#close{width: 20px;}
 	</style>
 	<body style="background-color:rgba(0,0,0,0.4);">
 		<table class="vct" border="0" cellspacing="" cellpadding="">
+			<caption>- 请选择快速下单方式 -</caption>
 			<tr>
 				<td class="ofenBuy">
-					<img src="images/s.svg" alt="" /> 我常购买
+					<img src="images/order/mycart.png" alt="" />
 				</td>
 				<td class="collect">
-					<img src="images/s.svg" alt="" /> 我的收藏
+					<img src="images/order/mycolt.png" alt="" />
 				</td>
 			</tr>
 			<tr>
 				<td class="quick">
-					<img src="images/s.svg" alt="" /> 快捷下单
+					<img src="images/order/fast.png" alt="" />
 				</td>
 				<td class="cameraOrder">
-					<img src="images/s.svg" alt="" /> 拍照下单
+					<img src="images/order/pzod.png" alt="" />
 				</td>
 			</tr>
 		</table>
-		<img id="close" src="images/close.svg" style="position: fixed;bottom: 10%;left: 50%;-webkit-transform: translateX(-50%);"/>
+		<img id="close" src="images/order/closef.png" style="position: fixed;bottom: 10%;left: 50%;-webkit-transform: translateX(-50%);"/>
 		<script src="js/mui.min.js"></script>
 		<script type="text/javascript">
 			mui.init();
@@ -49,6 +51,12 @@
 				openview({
 					view: 'page/personal/collect.html',
 					id: 'collect',
+				})
+			})
+			mui('.quick')[0].addEventListener('tap',function(){
+				openview({
+					view: 'page/fastOrder.html',
+					id: 'fastOrder',
 				})
 			})
 			mui('.cameraOrder')[0].addEventListener('tap',function(){

@@ -118,7 +118,11 @@
 	 	//动态详情
 		function DTdetail(id){
 			event.stopPropagation();
-			 
+			 openview({
+			 	view:'myOrderWL.html',
+			 	id:'myOrderWL',
+			 	extrasobj:{orderNo:id}
+			 })
 		}
 	 </script>
 	<script type="text/javascript">
@@ -133,7 +137,7 @@
 				plus.nativeUI.showWaiting();//显示等待框
 					mui.ajax(serverUrl+'/app/delivery/message',{
 						data:{
-							userID:1,
+							userID:userId,
 							identityType:identityT
 						},
 						dataType:'json',
@@ -150,6 +154,8 @@
 								}else{
 									document.getElementById("questions").innerHTML='<div style="text-align: center;padding: 50px;">暂无物流消息</div>'
 								}
+					       	}else{
+					       		mui.toast(data.message)
 					       	}
 					       	plus.nativeUI.closeWaiting();
 						},

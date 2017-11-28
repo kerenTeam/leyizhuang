@@ -27,7 +27,7 @@
 		
 		.mui-checkbox input[type=checkbox]:checked:before,
 		.mui-radio input[type=radio]:checked:before {
-			color: rgb(245, 60, 66);
+			color: #B62D29;
 		}
 		
 		.mui-card {
@@ -321,13 +321,13 @@
 					<div class="pad10 ft16 activecl" style="text-align: right;">合计：<span id="totalOrderAmount">¥--</span></div>
 					<div style="height: 5px;background: #EEEEEE;"></div>
 
-					<div class="pad10 ft14 afterBorder">预存款<span class='activecl' id="preDepositb">¥--</span><input placeholder="请输入大于0的整数" onchange="maxC(this)" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" class='mui-pull-right preDeposit' /></div>
+					<div class="pad10 ft14 afterBorder">预存款<span class='activecl' id="preDepositb">¥--</span><input placeholder="请输入大于0的整数" onchange="maxC(this)" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" value="0" name="preDepositb" class='mui-pull-right preDeposit' /></div>
 					<!--only manager-->
-					<div class="pad10 ft14 afterBorder manager" style="display: none;">信用金<span class='activecl' id="credit">¥--</span><input placeholder="请输入大于0的整数" onchange="maxC(this)" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" class='mui-pull-right preDeposit' /></div>
-					<div class="pad10 ft14 afterBorder manager" style="display: none;">现金返利<span class='activecl' id="cash">¥--</span><input placeholder="请输入大于0的整数" onchange="maxC(this)" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" class='mui-pull-right preDeposit' /></div>
+					<div class="pad10 ft14 afterBorder manager" style="display: none;">信用金<span class='activecl' id="credit">¥--</span><input placeholder="请输入大于0的整数" value="0" name="credit" onchange="maxC(this)" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" class='mui-pull-right preDeposit' /></div>
+					<div class="pad10 ft14 afterBorder manager" style="display: none;">现金返利<span class='activecl' id="cash">¥--</span><input placeholder="请输入大于0的整数" value="0" name="cash" onchange="maxC(this)" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" class='mui-pull-right preDeposit' /></div>
 					<!--only guide-->
-					<div class="pad10 ft14 afterBorder guide" style="display: none;">信用额度<span class='activecl' id="creditVal">¥--</span><input placeholder="请输入大于0的整数" onchange="maxC(this)" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" class='mui-pull-right preDeposit' /></div>
-					<div class="pad10 ft14 afterBorder guide" style="display: none;">代收金额<span class='activecl' id="cashHelp">¥--</span><input placeholder="请输入大于0的整数" onchange="maxC(this)" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" class='mui-pull-right preDeposit' /></div>
+					<div class="pad10 ft14 afterBorder guide" style="display: none;">信用额度<span class='activecl' id="creditVal">¥--</span><input placeholder="请输入大于0的整数" value="0" name="creditVal" onchange="maxC(this)" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" class='mui-pull-right preDeposit' /></div>
+					<div class="pad10 ft14 afterBorder guide" style="display: none;">代收金额<span class='activecl' id="cashHelp">¥--</span><input placeholder="请输入大于0的整数" value="0" name="cashHelp" onchange="maxC(this)" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" class='mui-pull-right preDeposit' /></div>
 
 				</dl>
 			</script>
@@ -341,10 +341,10 @@
 			<input type="hidden" id="firstOrderDiscount" value="0" />
 			<div style="height:1rem;"></div>
 			<aside class="btmNav" id="dibu">
-				<a class="dp" style="position: relative;color: #f63d43;">
-					<span style="color: #333333;">应付款：</span>¥<span class="totalMoney">0</span>元
+				<a class="dp ft16" style="color: #B62D29;">
+					<span>应付款：</span>¥<span class="totalMoney">0</span>
 				</a>
-				<a class="goOrder dp" style="background:#f53c42;color:white;text-shadow:none;">去支付</a>
+				<a class="goOrder dp ft16" style="background:#B62D29;color:white;text-shadow:none;">去支付</a>
 
 			</aside>
 
@@ -383,14 +383,6 @@
 	</body>
 
 	<script>
-		function maxC(obj) {
-			var cur = $(obj);
-			var maxCh = cur.prev().html().replace('¥', '');
-			if(obj.value > maxCh) {
-				mui.toast('输入正确的金额')
-				obj.value = '';
-			}
-		}
 
 		function onlyNum(obj) {
 			if(obj.value.length == 1) {
@@ -432,6 +424,16 @@
 			var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
 			var idobj = plus.storage.getItem('orderGoodsList');
 			var customerId = plus.webview.currentWebview().customerId || '';
+			window.maxC = function(obj) {
+				var cur = $(obj);
+				var maxCh = cur.prev().html().replace('¥', '');
+				if(Number(obj.value) > Number(maxCh)) {
+					mui.toast('输入正确的金额')
+					obj.value = '';
+					return false;
+				}
+				carculate()
+			}
 			if(identityT == 2) {
 				$('.selfTake').hide();
 			}
@@ -512,9 +514,12 @@
 						discount.productCouponList = data.content.productCouponList;
 						document.getElementById('elseDiscount').innerHTML = template('elseDiscountTpl', discount);
 						plus.nativeUI.closeWaiting();
-						var ctlebi = data.content.leBi.rebate || 0;
+						carculate();
 						$('#firstLebi').val(ctlebi);
-						$('#firstLebi').attr('data-id', data.content.leBi.quantity);
+						if(data.content.leBi){
+							var ctlebi = data.content.leBi.rebate || 0;
+							$('#firstLebi').attr('data-id', data.content.leBi.quantity);
+						}
 						$('#changeJf input').change(function() {
 							carculate();
 						})
@@ -548,10 +553,10 @@
 							var quantity = $('#firstLebi').attr('data-id');
 							var rebate = $('#firstLebi').val();
 							var totalOrderAmount = $('#firstTotal').val();
-							alert(totalOrderAmount + ' ' + quantity + ' ' + rebate)
+//							alert(totalOrderAmount + ' ' + quantity + ' ' + rebate)
 							var lebi = {
 								"id": userId,
-								"cusId": '',
+								"cusId": customerId,
 								"quantity": quantity,
 								"rebate": rebate
 							};
@@ -560,7 +565,7 @@
 								data: {
 									"userId": userId,
 									"identityType": identityT,
-									"customerId": null,
+									"customerId": customerId,
 									"totalOrderAmount": totalOrderAmount,
 									"leBi": lebi,
 									"couponsList": cashCouponsList,
@@ -802,16 +807,20 @@
 				var orderDiscount = $('#orderDiscount').html().replace('¥', '');
 				var freight = $('#freight').html().replace('¥', '');
 				var couponDiscount = $('#couponDiscount').val();
-
+				var credit = $('input[name="credit"]').val(); //信用金
+				var cash = $('input[name="cash"]').val();//现金返利
+				var creditVal = $('input[name="creditVal"]').val();//信用额度
+				var cashHelp = $('input[name="cashHelp"]').val();//代收金额
+				var preDepositb = $('input[name="preDepositb"]').val();//预存款
 				if($('#changeJf').find("input[type='checkbox']:checked").length == 1) {
 					var lebi = $('#itMinus').text().replace('¥', '')
 				} else {
 					var lebi = 0
 				}
-				var curTotal = Number(orderAll) - Number(memberDiscount) - Number(orderDiscount) + Number(freight) - Number(couponDiscount) - Number(lebi);
-				alert(orderAll + ' ' + memberDiscount + ' ' + orderDiscount + ' ' + freight + ' ' + couponDiscount + " " + lebi);
-				alert(curTotal)
+				var curTotal = Number(orderAll) - Number(memberDiscount) - Number(orderDiscount) + Number(freight) - Number(couponDiscount) - Number(lebi) - Number(credit) - Number(cash) - Number(creditVal) - Number(cashHelp) - Number(preDepositb);
+//				alert(orderAll + ' ' + memberDiscount + ' ' + orderDiscount + ' ' + freight + ' ' + couponDiscount + " " + lebi);
 				$('#totalOrderAmount').html(parseFloat(curTotal).toFixed(2))
+				$('.totalMoney').html(parseFloat(curTotal).toFixed(2))
 			}
 			//获取城市
 			var cityId = plus.storage.getItem('userCity');

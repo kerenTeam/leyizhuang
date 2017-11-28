@@ -50,7 +50,7 @@
 		<header class="mui-bar mui-bar-nav fineB" style="padding-right: 15px;">
 			<a id="leftbtn" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<h1 class="mui-title">出货信息</h1>
-			<span class="mui-pull-right activecl" style="margin-top: 15px;">物流状态</span>
+			<span class="mui-pull-right activecl" style="margin-top: 15px;" onclick="gowl()">物流状态</span>
 		</header>
 		<script src="../../js/statusBar.js"></script>
 
@@ -192,7 +192,14 @@
 						console.log('响应失败  !');
 					}
 				});
-
+				
+				window.gowl = function(){
+					openview({
+						view:"dispatchingWl.html",
+						id:'dispatchingWl',
+						extrasobj:{orderNo:orderNumber}
+					})
+				}
 			})
 		</script>
 	</body>

@@ -160,7 +160,7 @@
 							<input type="text" class="fr shuru" disabled name="" id="isCity" />
 						</a>
 					</li>
-					<li class="clearfloat">
+					<li class="clearfloat sgo" style="display: none;">
 						<a href="#">
 							<p class="fl">门店</p>
 							<span class="mui-icon mui-icon-arrowdown mui-pull-right ft16" style="top:5px;"></span> 
@@ -169,7 +169,7 @@
 							</select>
 						</a>
 					</li>
-					<li class="clearfloat">
+					<li class="clearfloat sgo" style="display: none;">
 						<a href="#">
 							<p class="fl">导购</p>
 							<span class="mui-icon mui-icon-arrowdown mui-pull-right ft16" style="top:5px;"></span> 
@@ -220,11 +220,17 @@
 			var oldToken = plus.storage.getItem("oldToken");
 			var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
 			var cityId = plus.storage.getItem('userCity');
-			
+			if(identityT == 0 || identityT == 4 || identityT == 5 || identityT == 6 || identityT == 2){
+				$(".sgo").show();
+				showStore();
+			}else{
+				$(".sgo").hide()
+			}
 			if(identityT == 0 || identityT == 4 || identityT == 5){
 				$('#store').attr('disabled',true)
 				$('#guide').attr('disabled',true)
 			}
+			
 			//显示既有信息
 			mui.ajax(serverUrl+'/app/user/setting/get/information',{
 				data:{"userId":userId,'identityType':identityT},
@@ -278,59 +284,13 @@
 				}
 			});
 			
-			//门店
-			mui.ajax(serverUrl+'/app/user/setting/storeSeller/get', {
-				data: {
-					"userId": userId,
-					"identityType": identityT,
-					"cityId": cityId,
-				},
-				dataType: 'json',
-				type: 'post',
-				timeout: 10000,
-				headers: {
-					"Authorization": oldToken
-				},
-				success: function(data) {
-					console.log('门店导购',data);
-					if(data.code == 0 && data.content) {
-						if(data.content.storeList && data.content.storeList.length){
-							var storeStr = '<option value="">选择</option>';
-							var curstore = 0;
-							for (var i = 0;i<data.content.storeList.length;i++) {
-								storeStr += '<option value="'+data.content.storeList[i].storeId+'">'+data.content.storeList[i].storeName+'</option>'
-								if(data.content.storeList[i].storeId == data.content.storeId){
-									curstore = i;
-								}
-							}
-							$('#store').html(storeStr);
-							$('#store option').eq(curstore+1).attr('selected',true);
-							//导购
-							getGuide(data.content.storeId,data.content.sellerId);
-							$('#store').change(function(){
-								getGuide($(this).val(),0);
-								
-							})
-						}else{
-							$('#store').html('<option value="">无门店</option>');
-							
-						}
-					}else{
-						mui.toast(data.message)
-					}
-				},
-				error: function(xhr, type, errorThrown) {
-					plus.nativeUI.closeWaiting();
-					console.log('门店响应失败');
-				}
-			});
-			//导购
-			function getGuide(storeid,curguide){
-				mui.ajax(serverUrl+'/app/user/setting/seller/get', {
+			function showStore(){
+				//门店
+				mui.ajax(serverUrl+'/app/user/setting/storeSeller/get', {
 					data: {
 						"userId": userId,
 						"identityType": identityT,
-						"storeId": storeid,
+						"cityId": cityId,
 					},
 					dataType: 'json',
 					type: 'post',
@@ -339,20 +299,27 @@
 						"Authorization": oldToken
 					},
 					success: function(data) {
-						console.log('导购',data);
+						console.log('门店导购',data);
 						if(data.code == 0 && data.content) {
-							if(data.content && data.content.length){
-								var guideStr = '<option value="">选择</option>'; 
-								for (var i = 0;i<data.content.length;i++) {
-									guideStr += '<option value="'+data.content[i].sellerId+'">'+data.content[i].sellerName+'</option>'
-									if(data.content[i].sellerId == curguide){
-										curguide = i;
+							if(data.content.storeList && data.content.storeList.length){
+								var storeStr = '<option value="">选择</option>';
+								var curstore = 0;
+								for (var i = 0;i<data.content.storeList.length;i++) {
+									storeStr += '<option value="'+data.content.storeList[i].storeId+'">'+data.content.storeList[i].storeName+'</option>'
+									if(data.content.storeList[i].storeId == data.content.storeId){
+										curstore = i;
 									}
 								}
-								$('#guide').html(guideStr);
-								$('#guide option').eq(curguide+1).attr('selected',true);
+								$('#store').html(storeStr);
+								$('#store option').eq(curstore+1).attr('selected',true);
+								//导购
+								getGuide(data.content.storeId,data.content.sellerId);
+								$('#store').change(function(){
+									getGuide($(this).val(),0);
+									
+								})
 							}else{
-								$('#guide').html('<option value="">无导购</option>');
+								$('#store').html('<option value="">无门店</option>');
 								
 							}
 						}else{
@@ -361,9 +328,50 @@
 					},
 					error: function(xhr, type, errorThrown) {
 						plus.nativeUI.closeWaiting();
-						console.log('导购响应失败');
+						console.log('门店响应失败');
 					}
 				});
+				//导购
+				function getGuide(storeid,curguide){
+					mui.ajax(serverUrl+'/app/user/setting/seller/get', {
+						data: {
+							"userId": userId,
+							"identityType": identityT,
+							"storeId": storeid,
+						},
+						dataType: 'json',
+						type: 'post',
+						timeout: 10000,
+						headers: {
+							"Authorization": oldToken
+						},
+						success: function(data) {
+							console.log('导购',data);
+							if(data.code == 0 && data.content) {
+								if(data.content && data.content.length){
+									var guideStr = '<option value="">选择</option>'; 
+									for (var i = 0;i<data.content.length;i++) {
+										guideStr += '<option value="'+data.content[i].sellerId+'">'+data.content[i].sellerName+'</option>'
+										if(data.content[i].sellerId == curguide){
+											curguide = i;
+										}
+									}
+									$('#guide').html(guideStr);
+									$('#guide option').eq(curguide+1).attr('selected',true);
+								}else{
+									$('#guide').html('<option value="">无导购</option>');
+									
+								}
+							}else{
+								mui.toast(data.message)
+							}
+						},
+						error: function(xhr, type, errorThrown) {
+							plus.nativeUI.closeWaiting();
+							console.log('导购响应失败');
+						}
+					});
+				}
 			}
 		})
 

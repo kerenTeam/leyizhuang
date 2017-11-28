@@ -55,7 +55,7 @@
 		<div class="mui-content">
 			<div class="huiZ f17" style="background: #eee;padding: 15px;line-height: 20px;">
 				当前余额：<span class="f17 huiZ" id='balance'></span>
-				<span class="mui-pull-right activecl aClick">我要充值</span>
+				<span class="mui-pull-right activecl aClick" id="recharge">我要充值</span>
 			</div>
 		</div>
 		<div id="main" style="padding-top: 0!important;">
@@ -111,6 +111,12 @@
 					var api = '/app/store/preDeposit/balance'
 				}else{
 					var api = '/app/customer/preDeposit/balance'
+				}
+				mui('#recharge')[0].onclick = function(){
+					openview({
+						view:"personal/recharge.html",
+						extrasobj:{money:$('#balance').text()}
+					})
 				}
 				//顾客余额
 				mui.ajax(serverUrl+api,{
