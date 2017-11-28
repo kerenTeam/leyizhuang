@@ -53,7 +53,9 @@
 				margin-right: 10px;
 				vertical-align: middle;
 			}
-			.mui-checkbox{margin-top: -35px;}
+			.flexr{position: relative;}
+			.mui-checkbox{position: absolute;top: 50%;-webkit-transform: translateY(-50%);right: 20px;}
+			.mui-checkbox input[type=checkbox],.mui-radio input[type=radio]{top: 13px!important;}
 		</style>
 	</head>
 
@@ -87,11 +89,12 @@
 							<input name="checkbox" type="checkbox" checked="">
 						</div>
 					</div>
-					<div class="pad15 ft16 maincl">
-						<img src="../../images/order/weixinpay.svg"/>微信支付
+					<div class="pad15 ft16 maincl flexr">
+						<div><img src="../../images/order/weixinpay.svg"/>微信支付</div>
+						
 					</div>
-					<div class="pad15 ft16 maincl">
-						<img src="../../images/order/bankpay.svg"/>银联支付
+					<div class="pad15 ft16 maincl flexr">
+						<div><img src="../../images/order/bankpay.svg"/>银联支付</div>
 					</div>
 			</div>
 			<div class="mui-content-padded">
@@ -115,47 +118,8 @@
 				sendButton.addEventListener('tap', function() {
 
 					if(!newpsd.value) {
-						mui.toast('请输入原密码')
-					} else if(!oldpsd.value) {
-						mui.toast('请输入新密码')
-					} else {
-						var b = new Base64();
-						var str1 = b.encode(newpsd.value);
-						var str2 = b.encode(oldpsd.value);
-						console.log(str1 + ' ' + str2)
-						plus.nativeUI.showWaiting();
-						mui.ajax(serverUrl+'/app/employee/password/edit', { //改密
-							data: {
-								"userId": userId,
-								"identityType": identityT,
-								"oldPassword": str2,
-								"newPassword": str1
-							},
-							dataType: 'json',
-							type: 'post',
-							timeout: 10000,
-							headers: {
-								"Authorization": oldToken
-							},
-							success: function(data) {
-								console.log('改密返回' + JSON.stringify(data));
-								if(data.code == 1000) { //改密成功直接登录
-									plus.nativeUI.closeWaiting();
-									mui.toast(data.message);
-								} else if(data.code == 0) {
-									plus.nativeUI.closeWaiting();
-									mui.toast('修改成功');
-									mui.back();
-								} else {
-									plus.nativeUI.closeWaiting();
-									mui.toast(data.message);
-								}
-							},
-							error: function(xhr, type, errorThrown) {
-								plus.nativeUI.closeWaiting();
-								console.log('修改密码响应失败');
-							}
-						});
+						mui.toast('请输入充值金额')
+					}else { 
 					}
 
 				}, false);

@@ -296,9 +296,9 @@
 				"android": {
 					"mdpi": "", /*普通屏启动图片，分辨率：240x282*/
 					"ldpi": "", /*大屏启动图片，分辨率：320x442*/
-					"hdpi": "/Users/wangfei/Downloads/st.png", /*高分屏启动图片，分辨率：480x762*/
-					"xhdpi": "/Users/wangfei/Downloads/st.png", /*720P高分屏启动图片，分辨率：720x1242*/
-					"xxhdpi": "/Users/wangfei/Downloads/st.png"
+					"hdpi": "/Users/wangfei/Desktop/Des/st.png", /*高分屏启动图片，分辨率：480x762*/
+					"xhdpi": "/Users/wangfei/Desktop/Des/st.png", /*720P高分屏启动图片，分辨率：720x1242*/
+					"xxhdpi": "/Users/wangfei/Desktop/Des/st.png"
 				}
 			}
 		}
