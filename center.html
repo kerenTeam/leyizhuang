@@ -224,7 +224,7 @@
 						<span class="mui-icon mui-icon-arrowright mui-pull-right maincl ft20 maincl"></span>
 					</div>
 
-					<div class="afterBorder">
+					<div class="afterBorder" onclick="openPalette()">
 						<img src="images/center/color.svg"/>调色板
 						<span class="mui-icon mui-icon-arrowright mui-pull-right maincl ft20 maincl"></span>
 					</div>
@@ -275,7 +275,7 @@
 						<span class="mui-icon mui-icon-arrowright mui-pull-right maincl ft20 maincl"></span>
 					</div>
 
-					<div class="afterBorder">
+					<div class="afterBorder" onclick="openPalette()">
 						<img src="images/center/color.svg"/>调色板
 						<span class="mui-icon mui-icon-arrowright mui-pull-right maincl ft20 maincl"></span>
 					</div>
@@ -321,7 +321,7 @@
 						<span class="mui-icon mui-icon-arrowright mui-pull-right maincl ft20 maincl"></span>
 					</div>
 
-					<div class="afterBorder">
+					<div class="afterBorder" monclick="openPalette()">
 						<img src="images/center/color.svg"/>调色板
 						<span class="mui-icon mui-icon-arrowright mui-pull-right maincl ft20 maincl"></span>
 					</div>
@@ -393,6 +393,13 @@
 		<script src="js/artTemplate-native.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/default.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
+			//调色版
+			function openPalette(){
+				openview({
+					view:'page/personal/palette.html',
+					id: 'palette',
+				})
+			}
 			//分类订单
 			function openOrder(){
 				openview({

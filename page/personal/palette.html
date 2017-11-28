@@ -1,0 +1,61 @@
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>调色板</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<link rel="stylesheet" href="../../css/mui.min.css">
+		<link rel="stylesheet" type="text/css" href="../../css/app.css">
+		<link rel="stylesheet" type="text/css" href="../../css/commonY.css">
+		<link rel="stylesheet" type="text/css" href="../../css/youxd.css">
+		<style>
+			.mui-row.mui-fullscreen>[class*="mui-col-"] {height: 100%;}
+			.mui-col-xs-3, .mui-control-content {overflow-y: auto;height: 100%;}
+			.mui-segmented-control .mui-control-item {line-height: 50px; width: 100%; }
+			.mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active { background-color: #fff; }
+		</style>
+	</head>
+
+	<body class="mui-plus mui-android mui-android-8 mui-android-8-0 mui-android-8-0-0">
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">调色板</h1>
+		</header>
+		<script src="../../js/statusBar.js"></script>
+		<div class="tzNav mui-content">
+			<a>黑白</a>
+			<a>纯色</a>
+			<a>个性</a>
+		</div>
+		<div class="mui-content mui-row mui-fullscreen">
+			<div class="mui-col-xs-3">
+				<div id="segmentedControls" class="mui-segmented-control mui-segmented-control-inverted mui-segmented-control-vertical">
+				  <a class="mui-control-item mui-active" href="#content1">选项1</a>
+				  <a class="mui-control-item" href="#content2">选项2</a>
+				</div>
+			</div>
+			<div id="segmentedControlContents" class="mui-col-xs-9" style="border-left: 1px solid #c8c7cc;">
+			  <div id="content1" class="mui-control-content mui-active">
+			    <ul class="mui-table-view">
+			      <li class="mui-table-view-cell">第1个选项卡子项-1</li>
+			      <li class="mui-table-view-cell">第1个选项卡子项-2</li>
+			      <li class="mui-table-view-cell">第1个选项卡子项-3</li>
+			    </ul>
+			  </div>
+			  <div id="content2" class="mui-control-content">
+			    <ul class="mui-table-view">
+			      <li class="mui-table-view-cell">第2个选项卡子项-1</li>
+			      <li class="mui-table-view-cell">第2个选项卡子项-2</li>
+			      <li class="mui-table-view-cell">第2个选项卡子项-3</li>
+			    </ul>
+			  </div>
+			</div>
+		</div>
+		<script src="../../js/mui.min.js"></script>
+
+
+
+
+</body>
+</html>

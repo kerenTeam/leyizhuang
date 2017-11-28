@@ -26,6 +26,13 @@ body{
 
 /*页面样式*/
 
+/*调色板*/
+.tzNav{
+	height: 45px;
+	line-height: 45px;
+}
+.tzNav
+
 /*信用额度 导购*/
 .circle {width: 200px;
     height: 200px;
