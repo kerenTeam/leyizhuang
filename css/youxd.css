@@ -17,11 +17,17 @@
 .mui-bar-nav~.mui-content {
     padding-top: 50px;
 }
+.mui-content{
+	background-color: #fff;
+}
 input[type=color], input[type=date], input[type=datetime-local], input[type=datetime], input[type=email], input[type=month], input[type=number], input[type=password], input[type=search], input[type=tel], input[type=text], input[type=time], input[type=url], input[type=week], select, textarea{
 	border: 1px solid #eee;
 }
 body{
 	color: #555;
+}
+.mui-bar-nav.mui-bar .mui-icon{
+	margin-left: 0;
 }
 
 /*页面样式*/
@@ -30,7 +36,30 @@ body{
 .tzNav{
 	height: 45px;
 	line-height: 45px;
+	margin-top: 50px;
+	padding: 0 !important;
+	background-color: #EFF0F1;
+	text-align: center;
 }
+.tzNav a{
+	color: #747474;
+	font-size: 16px;
+    display: inline-block;
+    /*width: 50px;*/
+    margin: 0 5%;
+    line-height: 43px;
+}
+.tzNav a.active{
+	color: #c7161e;
+	border-bottom: 2px solid #c7161e;
+}
+
+.tzLeftPart{
+	background-color: #F8F9FA;
+}
+
+
+
 
 /*信用额度 导购*/
 .circle {

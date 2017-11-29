@@ -10,7 +10,6 @@
 	</head>
 	<style type="text/css">
 		#bindPhone{border: none;}
-		
 	</style>
 	<body>
 		<header class="mui-bar mui-bar-nav" style="padding-right: 15px;">
@@ -35,18 +34,18 @@
 			mui.plusReady(function(){
 				var reg_phone = /^1((3|4|5|8|7){1}\d{1}|70)\d{8}$/;//手机号正则;
 				var account = $('#bindPhone');
-				//获取缓存 
+				//获取缓存
 				var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
-				var userId = plus.storage.getItem('$userId'); 
+				var userId = plus.storage.getItem('$userId');
 				var oldToken = plus.storage.getItem('oldToken');
-				
+
 				$('#bindGuide').click(function(){
-					
+
 					if(!reg_phone.test(account.val())){
 							mui.toast('请输入正确的手机号')
-						
+
 					}else{
-						
+
 						mui.ajax(serverUrl + '/app/user/search/customer', {
 							data: {
 								userId: userId,
@@ -75,14 +74,14 @@
 												}
 												return;
 											},'')
-										
+
 									}else{
 										plus.nativeUI.alert('会员不存在')
 									}
 								}else{
 									mui.toast(data.message)
 								}
-	
+
 							},
 							error: function(xhr, type, errorThrown) {
 								plus.nativeUI.closeWaiting();
@@ -90,12 +89,12 @@
 							}
 						});
 					}
-					
+
 				})
-				
+
 			})
-			
-			
+
+
 		</script>
 	</body>
 

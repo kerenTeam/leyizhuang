@@ -5,8 +5,16 @@
 		<title>选择顾客2</title>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/commonY.css" rel="stylesheet" />
 		<script src="../../js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../../js/mui.min.js"></script>
+		<style type="text/css">
+			.mui-bar-nav~.mui-content {padding-top: 50px;}
+			#bindPhone{display: inline-block;width: 100%;border: none;line-height: 45px;height: 50px;margin-top: 20px;}
+			.mui-btn-outlined.mui-btn-blue, .mui-btn-outlined.mui-btn-primary{color: #c7161e;border: 1px solid #c7161e;}
+			.mui-bar-nav.mui-bar .mui-icon{margin: 0;}
+			.mui-btn, button, input[type=button], input[type=reset], input[type=submit]{font-size:16px;line-height: 1.72;}
+		</style>
 	</head>
 
 	<body>
@@ -14,9 +22,10 @@
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<h1 class="mui-title">选择顾客</h1>
 		</header>
-		<div class="mui-content" >
-			<div style="padding: 15px;">请输入会员手机号 <button onclick="openMail()">导入通讯录</button><br />
-			<input type="text" id="bindPhone" value="12345678912" style="display: inline-block;width: 100%;" placeholder="输入导购电话号码" /></div>
+		<script src="../../js/statusBar.js"></script>
+		<div class="mui-content">
+			<div style="padding: 15px;display: none;">请输入会员手机号 <button onclick="openMail()">导入通讯录</button><br /></div>
+			<input type="text" id="bindPhone" value="12345678912" placeholder="请输入电话号码" /></div>
 			<div style="text-align: center;">
 				<button type="button" data-loading-icon-position="right" id="bindGuide" class="mui-btn mui-btn-primary mui-btn-outlined">为该顾客下单</button>
 			</div>

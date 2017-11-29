@@ -3,25 +3,31 @@
 
 	<head>
 		<meta charset="UTF-8">
-		<title></title>
+		<title>商学院详情</title>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="../css/mui.min.css" rel="stylesheet" />
 		<link rel="stylesheet" type="text/css" href="../css/configW.css" />
+		<link rel="stylesheet" type="text/css" href="../css/commonY.css" />
 	</head>
 	<style type="text/css">
 		#title,#content{padding: 10px;}
+		#title{font-size: 18px;color: #555;text-align: center;}
+		#content{font-size: 16px;text-indent: 2em;}
+		#content img{width: 100%;}
+		body ,.mui-content{background-color: #fff !important;}
 	</style>
 	<body>
 		<header class="mui-bar mui-bar-nav" style="padding-right: 15px;">
 			<a id="leftbtn" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-			<h1 class="mui-title"></h1>
+			<h1 class="mui-title">详情</h1>
 		</header>
+		<script src="../js/statusBar.js"></script>
 		<div class="mui-content">
-		<div id="title" style="text-align: center;"> 
-			
-		</div>	
+		<div id="title">
+
+		</div>
 		<div id="content">
-			
+
 		</div>
 		</div>
 		<div class="upload text-center text-xs gray" id="upload"></div>
@@ -32,30 +38,27 @@
 		<script type="text/javascript">
 			mui.init();
 			mui.plusReady(function(){
-				
-				mui.ajax('http://hiji.hifete.com:6789/index.php/Api_goods/lyzNewsInfo', {
-				data: {
-					newId: plus.webview.currentWebview().tradeId
-				},
-				dataType: 'json', //服务器返回json格式数据
-				type: 'post', //HTTP请求类型
-				timeout: 10000, //超时时间设置为10秒；
+
+				mui.ajax(oCms+'/lyzcms/index.php/ApiCms/postSchoolInfo', {
+				data: {id: plus.webview.currentWebview().tradeId	},
+				dataType: 'json',
+				type: 'post',
+				timeout: 10000,
 				success: function(data) {
-					console.log('trade', data)
+					console.log('商学院详情', data);
 					if(data) {
-						$('#title,.mui-title').html(data.title)
+						$('#title').html(data.title);
 						$('#content').html(data.content)
 					} else {
 						document.getElementById("tradeList").innerHTML = '<div style="text-align:center;padding:15px;font-size: 12px;">暂无数据</div>'
 					}
-					
 				},
 				error: function(xhr, type, errorThrown) {
-					mui.toast("当前网络不好请重试");
+					mui.toast("商学院详情响应失败");
 				}
 			});
 			})
-			
+
 		</script>
 	</body>
 

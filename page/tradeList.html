@@ -3,46 +3,50 @@
 
 	<head>
 		<meta charset="UTF-8">
-		<title></title>
+		<title>商学院更多列表</title>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="../css/mui.min.css" rel="stylesheet" />
 		<link rel="stylesheet" type="text/css" href="../css/configW.css" />
+		<link rel="stylesheet" type="text/css" href="../css/commonY.css" />
 	</head>
-<style type="text/css">
-	.qashadow{margin-bottom: 5px;background-color: white;padding:10px}
+	<style type="text/css">
+		.qashadow{margin-bottom: 5px;background-color: white;padding:10px}
 		.qbot{margin-top: 10px;line-height: 1.3;}
 		.Avator{width: 70px!important;height: 70px!important;}
 		.qaimg img{margin-right:5px;width:0.6rem;height:0.6rem;border-radius:3px;margin-top: 10px;}
-		.upload{padding: 20px;text-align: center;}
-</style>
+		.upload{padding: 20px;text-align: center;padding-bottom: 0px;}
+		.mui-card-content-inner p img{width: 22px;vertical-align: middle;}
+		.mui-card-content-inner p{font-size: 16px;}
+		.mui-card-content-inner{padding: 8px;}
+		body{padding-bottom: 0;}
+	</style>
+
 	<body>
 		<header class="mui-bar mui-bar-nav" style="padding-right: 15px;">
 			<a id="leftbtn" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<h1 class="mui-title">乐易装商学院</h1>
 		</header>
-		<div class="mui-content">
+		<script src="../js/statusBar.js"></script>
+		<div class="mui-content mui-contentY2">
+
 			<div id="tradeList"></div>
 			<script type="text/html" id="tradeTpl">
 				<%for(var i=0;i<dataList.length;i++){%>
-				<div class="qashadow" data-id="<%=dataList[i].id%>" onclick="openDetail(<%=dataList[i].id%>)">
-					<div class="qtop flexr">
-						<div class="ft16" style="display: flex;align-items: center;">
-							<img class="Avator" src="<%=dataList[i].pic%>" />
-
-							<div style="flex: 1;margin-left: 10px;">
-								<div class="maincl ft16">
-									<span class=""><%=dataList[i].title%></span>
-								</div>
-								<div class="ft12">
-									<span class="disablecl">阅读量：<%=dataList[i].read%> 时间：<%=dataList[i].createTime%></span>
-								</div>
+					<div class="mui-card" onclick="openDetail(<%=dataList[i].id%>)">
+						<div class="mui-card-header mui-card-media"
+							style="height:45vw;background-image:url(<%= url%><%= dataList[i].thumb%>)">
+						</div>
+						<div class="mui-card-content">
+							<div class="mui-card-content-inner">
+								<!--<p><%=dataList[i].createTime%></p>-->
+								<p style="color: #333;"><%=dataList[i].title%></p>
+								<p><img src="../img/yanjin2.svg"/> <%=dataList[i].read%></p>
 							</div>
 						</div>
-
 					</div>
-				</div>
 				<%}%>
 			</script>
+
 		</div>
 		<div class="upload text-center text-xs gray" id="upload"></div>
 		<script src="../js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
@@ -50,7 +54,7 @@
 		<script src="../js/artTemplate-native.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../js/default.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
-			mui.init();
+
 			function openDetail(id){
 				openview({
 					view: 'tradeSchoolLnfo.html',
@@ -63,9 +67,8 @@
 			var Spagenum = 2; //实到页数
 			var Ypagenum = 1; //应到页数
 			var currentPage = 1,
-				numsPerPage = 6,
-				endPage = 0;
-			mui.ajax('http://hiji.hifete.com:6789/index.php/Api_goods/lyzNews', {
+				numsPerPage = 10;
+			mui.ajax(oCms+'/lyzcms/index.php/ApiCms/postSchool', {
 				data: {
 					page: currentPage,
 					size: numsPerPage
@@ -74,11 +77,12 @@
 				type: 'post', //HTTP请求类型
 				timeout: 10000, //超时时间设置为10秒；
 				success: function(data) {
-					console.log('trade', data);
+					console.log('商学院 更多列表', data);
 
-					if(data && data.data.length) {
+					if(data && data.list.length) {
 						document.getElementById("tradeList").innerHTML = template("tradeTpl", {
-							dataList: data.data
+							dataList: data.list,
+							url:oCms
 						});
 						mui("#upload")[0].innerHTML = "";
 
@@ -87,13 +91,13 @@
 							var scrollTop = $(this).scrollTop();
 							var scrollHeight = $(document).height();
 							var windowHeight = $(this).height();
-							if(Spagenum <= data.pageNum && scrollTop + windowHeight == scrollHeight) {
+							if(Spagenum <= data.numPage && scrollTop + windowHeight == scrollHeight) {
 								if(Spagenum == Ypagenum + 1) { //当前页小于等于总页数时请求下一页
 									mui("#upload")[0].innerHTML = "<img src='../img/balls.svg' />";
 									Ypagenum++; //满足加载情况,应到页数+1
 									console.log('发起请求,实到' + Spagenum + '页');
 									console.log('发起请求,应到' + Ypagenum + '页');
-									mui.ajax('http://hiji.hifete.com:6789/index.php/Api_goods/lyzNews', {
+									mui.ajax(oCms+'/lyzcms/index.php/ApiCms/postSchool', {
 										data: {
 											page: Spagenum,
 											size: numsPerPage,
@@ -102,10 +106,11 @@
 										type: 'post', //HTTP请求类型
 										timeout: 10000, //超时时间设置为10秒；
 										success: function(data) {
-											console.log('trade续', data)
-											if(data && data.data.length) {
+											console.log('商学院 更多列表 续', data);
+											if(data && data.list.length) {
 												document.getElementById("tradeList").innerHTML += template("tradeTpl", {
-													dataList: data.data
+													dataList: data.list,
+													url:oCms
 												});
 											}
 											mui("#upload")[0].innerHTML = " ";
@@ -127,10 +132,8 @@
 					} else {
 						mui("#upload")[0].innerHTML = "";
 					}
-					plus.nativeUI.closeWaiting(); //关闭等待框
 				},
 				error: function(xhr, type, errorThrown) {
-					plus.nativeUI.closeWaiting(); //关闭等待框
 					mui("#upload")[0].innerHTML = "";
 				}
 			});

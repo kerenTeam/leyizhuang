@@ -6,14 +6,22 @@
 		<meta name="apple-mobile-web-app-capable" content="yes">
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
 		<link rel="stylesheet" href="../../css/mui.min.css">
-		<link rel="stylesheet" type="text/css" href="../../css/app.css">
 		<link rel="stylesheet" type="text/css" href="../../css/commonY.css">
 		<link rel="stylesheet" type="text/css" href="../../css/youxd.css">
 		<style>
 			.mui-row.mui-fullscreen>[class*="mui-col-"] {height: 100%;}
 			.mui-col-xs-3, .mui-control-content {overflow-y: auto;height: 100%;}
 			.mui-segmented-control .mui-control-item {line-height: 50px; width: 100%; }
-			.mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active { background-color: #fff; }
+			.mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active { background-color: #fff;
+			color: #F09934;}
+			.mui-segmented-control.mui-segmented-control-inverted.mui-segmented-control-vertical .mui-control-item, .mui-segmented-control.mui-segmented-control-inverted.mui-segmented-control-vertical .mui-control-item.mui-active{
+				border: none;border-bottom: 1px solid #fff;}
+			.mui-fullscreen{top: 120px;padding: 0 !important;}
+			.mui-table-view-cell img{width: 100%;}
+			.mui-table-view-cell:after, .mui-table-view:after{height: 0px;}
+			.mui-table-view-cell{padding: 11px 15px 0px;}
+			#navDiv{white-space: nowrap;overflow-x: scroll;padding: 0 2% !important;}
+			.tzNav a{margin: 0 2%;}
 		</style>
 	</head>
 
@@ -23,39 +31,121 @@
 			<h1 class="mui-title">调色板</h1>
 		</header>
 		<script src="../../js/statusBar.js"></script>
-		<div class="tzNav mui-content">
-			<a>黑白</a>
-			<a>纯色</a>
-			<a>个性</a>
-		</div>
-		<div class="mui-content mui-row mui-fullscreen">
-			<div class="mui-col-xs-3">
+		<div class="tzNav mui-content" id="navDiv"></div>
+		<script type="text/html" id="navS">
+			<% for(var i=0;i<list.length;i++){%>
+				<% if(i == 0){%>
+					<a class="aClick active" dataId='<%= list[i].id%>'><%= list[i].name%></a>
+				<% }else{%>
+					<a class="aClick" dataId='<%= list[i].id%>'><%= list[i].name%></a>
+				<% }%>
+			<% }%>
+		</script>
+		<div class="mui-content mui-row mui-fullscreen" id="conDiv"></div>
+		<script type="text/html" id="conS">
+			<div class="mui-col-xs-3 tzLeftPart">
+				<!--左侧tab-->
 				<div id="segmentedControls" class="mui-segmented-control mui-segmented-control-inverted mui-segmented-control-vertical">
-				  <a class="mui-control-item mui-active" href="#content1">选项1</a>
-				  <a class="mui-control-item" href="#content2">选项2</a>
+				  <% if(list.length){%>
+				  	<% for(var i=0;i<list.length;i++){%>
+				  		<% if(i == 0){%>
+							<a class="mui-control-item mui-active" href="#content<%= i+1%>"><%= list[i].name%></a>
+						<% }else{%>
+							<a class="mui-control-item" href="#content<%= i+1%>"><%= list[i].name%></a>
+						<% }%>
+				  	<% }%>
+
+				  <% }else{%>
+				  	<!--<a class="mui-control-item" href="#content2">暂无数据</a>-->
+				  <% }%>
 				</div>
 			</div>
-			<div id="segmentedControlContents" class="mui-col-xs-9" style="border-left: 1px solid #c8c7cc;">
-			  <div id="content1" class="mui-control-content mui-active">
-			    <ul class="mui-table-view">
-			      <li class="mui-table-view-cell">第1个选项卡子项-1</li>
-			      <li class="mui-table-view-cell">第1个选项卡子项-2</li>
-			      <li class="mui-table-view-cell">第1个选项卡子项-3</li>
-			    </ul>
-			  </div>
-			  <div id="content2" class="mui-control-content">
-			    <ul class="mui-table-view">
-			      <li class="mui-table-view-cell">第2个选项卡子项-1</li>
-			      <li class="mui-table-view-cell">第2个选项卡子项-2</li>
-			      <li class="mui-table-view-cell">第2个选项卡子项-3</li>
-			    </ul>
-			  </div>
+			<!--右侧内容-->
+			<div id="segmentedControlContents" class="mui-col-xs-9">
+			  <% if(list.length){%>
+			  	<% for(var i=0;i<list.length;i++){%>
+			  		<% if(i == 0){%>
+						<div id="content<%= i+1%>" class="mui-control-content mui-active">
+						    <ul class="mui-table-view">
+						      <% if(list[i].content.length){%>
+						      	<% for(var j=0;j<list[i].content.length;j++){%>
+						      		<li class="mui-table-view-cell aClick"><img src="<%= url%><%= list[i].content[j].pic%>"/></li>
+						      	<% }%>
+						      <% }else{%>
+						      	<li class="mui-table-view-cell">暂无数据</li>
+						      <% }%>
+						    </ul>
+				  		</div>
+					<% }else{%>
+						<div id="content<%= i+1%>" class="mui-control-content">
+						    <ul class="mui-table-view">
+						      <% if(list[i].content.length){%>
+						      	<% for(var j=0;j<list[i].content.length;j++){%>
+						      		<li class="mui-table-view-cell aClick"><img src="<%= url%><%= list[i].content[j].pic%>"/></li>
+						      	<% }%>
+						      <% }else{%>
+						      	<li class="mui-table-view-cell">暂无数据</li>
+						      <% }%>
+						    </ul>
+					  	</div>
+					<% }%>
+			  	<% }%>
+
+			  <% }else{%>
+		  		<div id="content1" class="mui-control-content mui-active">
+				    <ul class="mui-table-view">
+					    <li class="mui-table-view-cell">暂无数据</li>
+				    </ul>
+		   		</div>
+			  <% }%>
+
+
 			</div>
-		</div>
-		<script src="../../js/mui.min.js"></script>
+		</script>
+	</body>
+	<script src="../../js/mui.min.js"></script>
+	<script src="../../js/jquery.min.js"></script>
+	<script src="../../js/default.js"></script>
+	<script src="../../js/artTemplate-native.js"></script>
+	<script type="text/javascript">
 
+		//分类
+		mui.ajax(oCms + '/lyzcms/index.php/ApiCms/colorCate',{
+			data:{ 'cateId':0 },
+			dataType:'json',
+			type:'post',
+			timeout:10000,
+			success:function(data){
+				console.log('分类',data);
+				document.getElementById('navDiv').innerHTML = template('navS',{list:data});
 
+				$('.tzNav a').click(function(){
+					$('.tzNav a').removeClass('active');
+					$(this).addClass('active');
+					var id = $(this).attr('dataId');
+					navDetail(id);
+				})
+				navDetail($('.tzNav a').eq(0).attr('dataId'));//初始化
+				function navDetail(id){
+					mui.ajax(oCms + '/lyzcms/index.php/ApiCms/colorCate',{
+						data:{ cateId:id },
+						dataType:'json',
+						type:'post',
+						timeout:10000,
+						success:function(data){
+							console.log('内容',data);
+							document.getElementById('conDiv').innerHTML = template('conS',{list:data,url:oCms});
+						},
+						error:function(xhr,type,errorThrown){
+							console.error('调色板内容响应失败');
+						}
+					});
+				}
 
-
-</body>
+			},
+			error:function(xhr,type,errorThrown){
+				console.error('调色板分类响应失败');
+			}
+		});
+	</script>
 </html>
