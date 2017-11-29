@@ -112,7 +112,7 @@
 				position: relative;
 				z-index: 30;
 			}
-			.notice li.active{border-bottom: 2px solid #f63d41;box-sizing: border-box;color: #f63d41;}
+			.notice li.active{border-bottom: 2px solid #B62D29;box-sizing: border-box;color: #B62D29;}
 			.tab-hd{height: 45px !important;border-bottom: 1px solid #EFEFF4 !important;}
 			.tab-nav li{height: 45px !important;}
 			body{background-color: #f3f3f3;}
@@ -121,7 +121,7 @@
 			.notice .tab-hdtwo li {width: 25%;font-size: 16px!important;}
 			.checkList{background-color: #fff;margin-top: 10px;}
 			.checkList h4{padding: 12px 10px;}
-			.checkList h4 .h4span3{float: right;color: red;}
+			.checkList h4 .h4span3{float: right;color: #B62D29;}
 			.checkList h4 .h4span2{margin-left: 3%;}
 			.checkListCon{padding: 10px;line-height: 2;}
 			.checkListDZ{padding: 10px 0;color: #757575;font-size: 16px;}
@@ -191,11 +191,10 @@
 							<div class="checkList" onclick="goInfo('<%=list[i].orderNumber%>')">
 								<h4 class="fineB ft16">
 									<span>出货单号：<%=list[i].orderNumber%></span>
+									<span class="mui-icon mui-icon-arrowright mui-pull-right ft20 maincl"></span>
 									<span class="h4span3">
 										<%=list[i].status%>
 									</span>
-									<span class="mui-icon mui-icon-arrowright mui-pull-right ft20 maincl"></span>
-									
 								</h4>
 								<div class="checkListCon clearfix afterBorder ft15">
 									<div class="flexr">
@@ -222,7 +221,7 @@
 												导购：
 											</span>
 											<span class="titcl">
-												<a href="tel:<%=list[i].sellerName%>"><%=list[i].sellerName%></a>
+												<%=list[i].sellerName%>
 											</span>
 										</div>
 										<div>
@@ -230,7 +229,7 @@
 												电话：
 											</span>
 											<span class="titcl">
-												<%=list[i].sellerphone%>
+												<a href="tel:<%=list[i].sellerPhone%>"><%=list[i].sellerPhone%></a>
 											</span>
 										</div>
 									</div>
@@ -405,7 +404,7 @@
 				}
 			} //刷新
 			
-			$('#tabLink li:not(:last-child)').click(function(){
+			$('#tabLink li').click(function(){
 				$('#tabLink li').removeClass('active');
 				$(this).addClass('active');
 				$('#loadingdiv').css('height','32px');

@@ -85,26 +85,25 @@
 				</div>
 			</div> 
 			<div style="clear: both;"></div>
-			<div style="background-color: white;margin: 5px 0;">
+			<div style="background-color: white;margin: 5px 0;" class="afterBorder">
 				<div class="qtop flexr pad10" onclick="address()">
-					<div style="flex: 1;margin-left: 10px;">
+					<div style="flex: 1;">
 						<div class="maincl ft16">
-							<span class="disablecl receiver">---</span>
-							<span class="disablecl receiverPhone">---</span>
+							<span class="receiver">---</span>
+							<span class="receiverPhone">---</span>
 						</div>
 						<div class="ft16">
-							<span class="disablecl address">-----</span>
+							<span class="maincl address">-----</span>
 						</div>
 					</div>
 					 
 				</div>
 			</div>
 			<div id='cityResult' class="ui-alert pad10 afterBorder">配送时间 <span class="mui-pull-right" id="reservationDeliveryTime"></span></div>
-			<div class="mui-input-row mui-checkbox mui-left afterBorder">
-				<label>业主收货</label>
-				<input name="checkbox1" id="isOwnerReceiving" value="1" type="checkbox" disabled="">
+			<div class="mui-input-row mui-checkbox afterBorder ft15 isowndis">
+				<label style="padding: 18px 10px;">是否主家收货</label>
+				<input name="checkbox1" id="isOwnerReceiving" style="top: 12px;right: 12px;" class="mui-pull-right" value="1" disabled type="checkbox">
 			</div>
-			
 			<div style="padding: 10px;">
 				<div id="notice"></div>
 			</div>
