@@ -117,3 +117,22 @@ header{background-color: white!important;}
     color: #999;
 }
 .toCart{width: 25px;}
+#bottomCart{
+	position: fixed;
+	left: 0;
+	right:0;
+	bottom: 49px;
+	top: 0;
+	background-color: rgba(0,0,0,0.3);
+	z-index: 99999!important;
+}
+#btcgood{
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	right: 0;
+}
+#btcart{
+	max-height: calc(100vh * 0.6);
+	overflow-y:scroll ;
+}

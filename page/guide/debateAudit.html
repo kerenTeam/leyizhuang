@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<title>欠款审核</title>
+		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, width=device-width">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-touch-fullscreen" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="format-detection" content="telephone=no">
+		<meta name="format-detection" content="address=no">
+		<link rel="stylesheet" type="text/css" href="../../css/commonY.css">
+		<link rel="stylesheet" type="text/css" href="../../css/mui.min.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/configW.css"/>
+		<script type="text/javascript" src="../../js/jquery.min.js"></script>
+		<script src="../../js/mui.min.js" type="text/javascript"></script>
+		<style type="text/css">
+		    li.active{border-bottom: 2px solid #B62D29;box-sizing: border-box;color: #B62D29;}
+			.tab-hd{height: 45px !important;border-bottom: 1px solid #EFEFF4 !important;}
+			.tab-nav li{height: 45px !important;display: inline-block;}
+			body{background-color: #f3f3f3;}
+			.mui-bar-nav{box-shadow: none !important;}
+			header.mui-bar{z-index: 200;}
+		    .tab-hdtwo li {width: 49%!important;font-size: 16px!important;line-height: 45px;text-align: center;}
+			.checkList{background-color: #fff;margin-top: 10px;}
+			.checkList h4{padding: 12px 10px;}
+			.checkList h4 .h4span3{float: right;color: #B62D29;}
+			.checkList h4 .h4span2{margin-left: 3%;}
+			.checkListCon{padding: 10px;line-height: 2;}
+			.checkListDZ{padding: 10px 0;color: #757575;font-size: 16px;}
+			.checkListB{padding: 10px 20px;text-align: right;}
+			#infoListDiv{transition: all .3s;}
+			.flexr{display: flex;justify-content: space-between;margin: 2px 0;}
+			a,a:active{color: rgb(51,51,51)!important;}
+			.flexRow2 img{width: 30px;vertical-align: middle;margin-right: 10px;}
+			.flexr > div{width: 50%;}
+		</style>
+	</head>
+	<body>
+		<header class="mui-bar mui-bar-nav fineB">
+		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left bigSize" style="margin-left: 0;"></a>
+		    <h1 class="mui-title">欠款审核</h1>  
+		</header>
+		<script src="../../js/statusBar.js" type="text/javascript" charset="utf-8"></script>
+		<div class="mui-content" style="margin-top: 7px;">
+			<div style="padding-top: 0!important;margin-top: 5px;">
+				<div class="tab-hd tab-hdtwo bgcwt" id="tabLink" style="position: -webkit-sticky; position:sticky; top: 70px;z-index: 99;">
+					<ul class="tab-nav ft16">
+					  <li class="active aClick " data-statusId="0">待审核</li>
+					  <li class="aClick" data-statusId="1">已审核</li> 
+					</ul>
+				</div>
+				<div class="notice">
+					
+					<!--列表loading-->
+					<div id="loadingdiv" style="text-align: center;font-size: 14px;height:32px;
+						line-height: 30px;color: #666;-webkit-transition: all .3s;overflow: hidden;">
+						<img style="width: 30px;margin-top:5px;" src="../../img/Rolling.svg"/>
+					</div>
+					<!--列表loading结束-->
+					<div id="infoListDiv"><!--内容-->
+					</div>
+					<script id="infoList" type="text/html">
+						<%for(var i=0;i<list.length;i++){%>
+							
+								<div class="checkList" onclick="goInfo('<%=list[i].orderNumber%>')">
+									<h4 class="fineB ft16">
+										<span>订单编号：<%=list[i].orderNumber%></span>
+										<span class="mui-icon mui-icon-arrowright mui-pull-right ft20 maincl"></span>
+										<span class="h4span3">
+											<%=list[i].status%>
+										</span>
+									</h4>
+									<div class="checkListCon clearfix afterBorder ft15">
+										<div class="flexr">
+											<div>
+												<span class="disablecl">
+													会员：
+												</span>
+												<span class="titcl">
+													<%=list[i].customerName%>
+												</span>
+											</div>
+											<div id="">
+												<span class="disablecl">
+													电话：
+												</span>
+												<span class="titcl">
+													<a class="titcl" href="tel:<%=list[i].customerPhone%>"><%=list[i].customerPhone%></a>
+												</span>
+											</div>
+										</div>
+										<div class="flexr">
+											<div>
+												<span class="disablecl">
+													配送员：
+												</span>
+												<span class="titcl">
+													<a href="tel:<%=list[i].sellerName%>"><%=list[i].deliveryName%></a>
+												</span>
+											</div>
+											<div>
+												<span class="disablecl">
+													电话：
+												</span>
+												<span class="titcl">
+													<%=list[i].deliveryPhone%>
+												</span>
+											</div>
+										</div>
+										<div class="flexr">
+											<div>
+												<span class="disablecl">
+													应付金额：
+												</span>
+												<span class="titcl">
+													¥<%=list[i].orderMoney%>
+												</span>
+											</div>
+											<div id="">
+												<span class="disablecl">
+													欠款金额：
+												</span>
+												<span class="titcl">
+													¥<%=list[i].arrearsMoney%>
+												</span>
+											</div>
+										</div>
+										<div class="ft15"><span class="disablecl">支付方式：</span><span class="titcl"><%=list[i].paymentMethod%></span></div>
+										<div class="ft15"><span class="disablecl">申请日期：</span><span class="titcl"><%=list[i].createTime%></span></div>
+									</div>
+		
+									<div class="checkListB beforeBorder">
+									    <%if(listType == 0){%>
+										<button type="button" class="mui-btn mui-btn maincl">不通过</button>
+										<button type="button" class="mui-btn mui-btn-danger mui-btn-outlined">通过</button>
+									    	
+									    	<%}else{%>
+									    		<div class="activecl">
+									    			<%=list[i].status%>
+									    		</div>
+									    	<%}%>
+									</div>
+								</div>
+						 
+						<%}%>
+						 
+					</script>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script src="../../js/default.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../js/artTemplate-native.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		function goInfo(audi){
+			openview({
+			 
+			})
+		}
+		 
+		mui.plusReady(function(){
+			var userId = plus.storage.getItem('$userId');
+			var oldToken = plus.storage.getItem("oldToken");
+			var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
+			 
+			$('#tabLink li').click(function(){
+				$('#tabLink li').removeClass('active');
+				$(this).addClass('active');
+				$('#loadingdiv').css('height','32px');
+				loadFun($(this).index());
+			})
+			$('#center').click(function(){
+				openview({
+					view:'../../center.html',
+					id:'center'
+				})
+			})
+			document.addEventListener('refresh', function(event) {
+				loadFun(0);
+			});
+			loadFun(0);
+			function loadFun(index){
+				if(index == 0){
+					var apiString = '/app/seller/arrearsAudit/auditing/list';
+				}else{
+					var apiString = '/app/seller/arrearsAudit/audited/list';
+				}
+				mui.ajax(serverUrl+apiString,{
+					data:{'userId':userId,'identityType':identityT},
+					dataType:'json',
+					type:'post',
+					timeout:10000,
+					headers:{"Authorization":oldToken},
+					success:function(data,type,xhr){
+						console.log('欠款审核 ',data);
+						var timeLoad = setInterval(function(){
+							clearTimeout(timeLoad),timeLoad = null;
+							if(data.code == 0){
+								$('#loadingdiv').css('height','0px');
+								if(data.content && data.content.length){ 
+									document.getElementById('infoListDiv').innerHTML = template('infoList',{list:data.content,listType:index});
+								}else{
+									document.getElementById('infoListDiv').innerHTML = '<div style="text-align: center;padding: 50px;"><img src="../../images/order/order.png" style="width: 100px;" /><div class="ft13 disablecl">暂无数据</div></div>';
+								}
+								
+							}else{
+								mui.toast(data.message);
+							}
+						},500)
+					},
+					error:function(xhr,type,errorThrown){
+						console.log('响应失败  !');
+					}
+				});
+			}
+			
+		})
+ 
+	</script>
+</html>

@@ -53,19 +53,22 @@ body{
 	color: #c7161e;
 	border-bottom: 2px solid #c7161e;
 }
+
 .tzLeftPart{
 	background-color: #F8F9FA;
 }
 
 
 
+
 /*信用额度 导购*/
-.circle {width: 200px;
+.circle {
+	width: 200px;
     height: 200px;
     position: absolute;
     border-radius: 50%;
     background: #0cc;
-    top: 20%;
+    /*top: 20%;*/
     left: 50%;
     -webkit-transform: translateX(40%);
 }
@@ -104,11 +107,9 @@ body{
     color: #00aacc;
 }
 .totalEdu{
-	 	position: absolute;
+	position: absolute;
     line-height: 130px;
-    font-size: 16px;
-    color: #00aacc;
-    left: 60px;
+    left: 69px!important;
     text-align: center;
     top: 45px;
 }
@@ -120,7 +121,7 @@ body{
 }
 #quotaPWrap{
 	position: absolute;
-    top: 70%;
+    top: 50%;
     width: 100%;
 }
 .quotaP1{

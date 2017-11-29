@@ -92,10 +92,10 @@
 								</span>
 								<%if(list[i].status == 1){%>
 									<!--<button type="button" class="mui-btn mui-btn">取消</button>-->
-									<button type="button" class="mui-btn mui-btn-warning mui-btn-outlined" onclick="">审核</button>
+									<button type="button" class="mui-btn mui-btn-danger mui-btn-outlined" onclick="">审核</button>
 								<%}else if(list[i].status == 2){%>
 									<%if(list[i].isAudited){%>
-										<button type="button" class="mui-btn mui-btn-warning mui-btn-outlined">审核通过</button>
+										<button type="button" class="mui-btn mui-btn-danger mui-btn-outlined">审核通过</button>
 									<%}else{%>
 										<button type="button" class="mui-btn mui-btn-danger mui-btn-outlined">未通过</button>
 									<%}%>

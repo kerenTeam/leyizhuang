@@ -249,7 +249,7 @@
 			<div id="">
 				<div class="imgb" style="background-color:#199f97"><img src="images/7.svg" alt="" /></div>欠款查询
 			</div>
-			<div id="">
+			<div onclick="debateAudit()">
 				<div class="imgb" style="background-color:#e15d4b"><img src="images/8.svg" alt="" /></div>欠款审核
 			</div>
 		</div>
@@ -356,6 +356,12 @@
 				openview({
 					view:'page/fastOrder.html',
 					id:'fastOrder'
+				})
+			}
+			function debateAudit(){
+				openview({
+					view:'page/guide/debateAudit.html',
+					id:'debateAudit'
 				})
 			}
 			function paizhaoOrder() { //拍照下单

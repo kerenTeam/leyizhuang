@@ -54,6 +54,9 @@
 .paddv10{
 	padding: 10px 0;
 }
+.padv15{
+	padding: 12px 12px;
+}
 .mt15 {
 	margin-top: 15px !important;
 }

@@ -49,13 +49,13 @@
 				line-height: 25px;
 			}
 			.writing {
-				padding: 12px 0 5px;
+				padding: 22px 0 5px;
 				padding-bottom: 5px;
 				margin-left: -25px;
 			}
 			#userBox {
 				background-color: #eca4a6;
-				padding: 35px 0 35px;
+				padding: 35px 0 45px;
 				position: relative;
 			}
 			.dao {
@@ -157,7 +157,7 @@
 		<!--配送员-->
 		<div class="centerList distributionN bgcwt">
 			<div class="flexRow2">
-				<div class="afterBorder pad10">
+				<div class="afterBorder pad10" onclick="agencyFund()">
 					<img src="../../images/center/backT.png"/>代收款
 					<span class="mui-icon mui-icon-arrowright mui-pull-right maincl ft20 maincl"></span>
 				</div>
@@ -318,6 +318,12 @@
 			openview({
 				view:'../personal/message.html',
 				id: 'message',
+			})
+		}
+		function agencyFund(){
+			openview({
+				view:'agencyFund.html',
+				id:'agencyFund'
 			})
 		}
 		mui.plusReady(function(){

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>代收款明细</title>
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/commonY.css" />
+		<link href="../../css/style.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/configW.css" />
+	</head>
+	<style type="text/css">
+		.checkList{background-color: #fff;margin-top: 10px;}
+		.checkList h4{padding: 12px 10px;}
+		.checkList h4 .h4span3{float: right;color: red;}
+		.checkList h4 .h4span2{margin-left: 3%;}
+		.checkListCon{padding: 10px;line-height: 2;}
+		.checkListDZ{padding: 10px 0;color: #757575;font-size: 16px;}
+		.checkListB{padding: 10px 20px;text-align: right;}
+		#infoListDiv{transition: all .3s;}
+		.flexr{display: flex;justify-content: space-between;margin: 2px 0;}
+		.flexr>div{width: 50%;}
+		a,a:active{color: rgb(51,51,51)!important;}
+		.flexRow2 img{width: 30px;vertical-align: middle;margin-right: 10px;}
+	</style>
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">代收款明细</h1>
+		</header>
+		<script src="../../js/statusBar.js" type="text/javascript" charset="utf-8"></script>
+		<div class="mui-content">
+			<!--列表loading-->
+			<div id="loadingdiv" style="text-align: center;font-size: 14px;height:32px;
+				line-height: 30px;color: #666;-webkit-transition: all .3s;overflow: hidden;">
+				<img style="width: 30px;margin-top:5px;" src="../../img/Rolling.svg"/>
+			</div>
+			<div id="checkList"></div>
+			<script type="text/html" id="checkTpl">
+				<%for(var i = 0 ;i < list.length ; i ++){%>
+					<div class="checkList" onclick="goInfo('<%=list[i].orderNumber%>')">
+						<h4 class="fineB ft16">
+							<span>订单编号：<%=list[i].orderNumber%></span>
+						</h4>
+						<div class="checkListCon clearfix afterBorder ft15">
+							<div class="flexr">
+								<div>
+									<span class="disablecl">
+										代收金额：
+									</span>
+									<span class="titcl">
+										¥<%=list[i].agencyMoney%>
+									</span>
+								</div>
+								<div id="">
+									<span class="disablecl">
+										实收金额：
+									</span>
+									<span class="titcl">
+										¥<%=list[i].realMoney%>
+									</span>
+								</div>
+							</div>
+							<div class="flexr">
+								<div>
+									<span class="disablecl">
+										会员：
+									</span>
+									<span class="titcl">
+										<%=list[i].customerName%>
+									</span>
+								</div>
+								<div id="">
+									<span class="disablecl">
+										电话：
+									</span>
+									<span class="titcl">
+										<a href="tel:<%=list[i].customerPhone%>"><%=list[i].customerPhone%></a>
+									</span>
+								</div>
+							</div>
+							<div class="flexr">
+								<div>
+									<span class="disablecl">
+										导购：
+									</span>
+									<span class="titcl">
+										<%=list[i].sellerName%>
+									</span>
+								</div>
+								<div>
+									<span class="disablecl">
+										电话：
+									</span>
+									<span class="titcl">
+										<a href="tel:<%=list[i].sellerPhone%>"><%=list[i].sellerPhone%></a>
+									</span>
+								</div>
+							</div>
+							<div class="ft15"><span class="disablecl">支付方式：</span><span class="titcl"><%=list[i].paymentMethod%></span></div>
+							<div class="ft15"><span class="disablecl">日期：</span><span class="titcl"><%=list[i].createTime%></span></div>
+						</div>
+		 
+					</div>
+				
+				<%}%>
+			</script>
+			
+		</div>
+	</body>
+	<script src="../../js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../js/default.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../js/artTemplate-native.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		mui.plusReady(function(){
+			var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
+			var userId = plus.storage.getItem('$userId');
+			var oldToken = plus.storage.getItem('oldToken');
+			
+			mui.ajax(serverUrl+'/app/delivery/agencyFund/list',{
+				data:{
+					userId:userId,
+					identityType:identityT
+				},
+				dataType:'json',
+				type:'post',
+				timeout:1000,
+				headers:{"Authorization":oldToken},
+				success:function(data,type,xhr){
+					console.log('代收款明细 ',data);
+					var timeLoad = setInterval(function(){
+						clearTimeout(timeLoad),timeLoad = null;
+						if(data.code == 0){
+							$('#loadingdiv').css('height','0px');
+							if(data.content && data.content.length){ 
+								document.getElementById('checkList').innerHTML = template('checkTpl',{list:data.content});
+							}else{
+								document.getElementById('infoListDiv').innerHTML = '<div style="text-align: center;padding: 50px;"><img src="../../images/order/order.png" style="width: 100px;" /><div class="ft13 disablecl">暂无数据</div></div>';
+							}
+							
+						}else{
+							mui.toast(data.message);
+						}
+					},500)
+				},
+				error:function(xhr,type,errorThrown){
+					console.log('响应失败  !');
+				}
+			});
+		})
+	</script>
+</html>
