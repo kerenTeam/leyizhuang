@@ -11,6 +11,7 @@
 		<meta name="format-detection" content="telephone=no">
 		<meta name="format-detection" content="address=no">  
 		<link rel="stylesheet" type="text/css" href="../../css/mui.min.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/commonY.css"/>
 		<link rel="stylesheet" type="text/css" href="../../css/configW.css"/>
 		<script type="text/javascript" src="../../js/jquery.min.js"></script>
 		<script src="../../js/mui.min.js"></script> 
@@ -26,7 +27,7 @@
 		.bottomop .active{color:#B42E28;}
 		.bottomop div:after{position:absolute;bottom:0;left:50%;right:50%;height:2px;background-color:#B42E28;content:""}
 		.bottomop .active:after{left:15px!important;right:15px!important;transition:all .3s}
-		#QA{padding: 0px;background-color: white}
+		#QA{padding: 0px;}
 		.qashadow{margin-bottom: 10px;box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.1);background-color: white;padding:10px
 		}
 		.qashadow img{width: 20px;}
@@ -49,15 +50,15 @@
 		.searchBox .searchIcon{left:10px;width:13px;}
 	</style>
 
-	<body style="background-color: white;">
+	<body>
 		<header class="mui-bar mui-bar-nav fineB">
 		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left bigSize" style="margin-left: 0;"></a>
 		    <h1 class="mui-title">我的顾客</h1>  
 		</header>
 		<script src="../../js/statusBar.js"></script><!--状态栏-->
-		<div class="mui-content">
+		<div class="mui-content" style="margin-top: 7px;">
 			<!--状态栏结束-->
-		<div id="main">
+		<div>
 		 	<div class="search">
 				<div class="searchBox">
 					<img src="../../images/searchBar.png"/>
@@ -90,11 +91,11 @@
 								<img class="Avator loadPics" data-src="" src="<%=dataList[i].picUrl%>"/>
 								
 								<div style="flex: 1;margin-left: 10px;">
-									<div class="maincl ft14">
-										<span class="disablecl"><%=dataList[i].name%></span>
-										<span class="disablecl"><%=dataList[i].mobile%></span>
+									<div class="maincl ft16">
+										<span class="maincl"><%=dataList[i].name%></span>
+										<span class="maincl"><%=dataList[i].mobile%></span>
 									</div>
-									<div class="ft12">
+									<div class="ft14">
 										<span class="disablecl">注册时间：<%=dataList[i].createTime%></span>
 									</div>
 								</div>

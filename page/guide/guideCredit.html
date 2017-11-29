@@ -6,12 +6,12 @@
 		<title>信用额度（导购）</title>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/commonY.css"/>
 		<link rel="stylesheet" type="text/css" href="../../css/configW.css" />
 		<link rel="stylesheet" type="text/css" href="../../css/youxd.css"/>
-		<link rel="stylesheet" type="text/css" href="../../css/commonY.css"/>
 		<style type="text/css">
 			.mui-bar-nav.mui-bar .mui-icon {color: #555!important;margin-left: 0px;}
-			.circle{background: #B62D29;}
+			.circle{background: #B62D29; width: 200px;height: 200px;position: absolute;border-radius: 50%;}
 		</style>
 	</head>
 
@@ -23,18 +23,21 @@
 		</header>
 		<script src="../../js/statusBar.js"></script>
 		<div class="mui-content">
-			<div class="circle" style="left:0">
+			<div class="circle" style="left:50%;-webkit-transform: translateX(-50%);margin-top: 40px;">
 				<div class="pie_left">
 					<div class="left"></div>
 				</div>
 				<div class="pie_right">
 					<div class="right"></div>
 				</div>
-				<div class="mask">剩余额度<span id="availableBalance">0</span></div>
-				<div class="totalEdu">总额度<span id="totalBalance"></span></div>
+				<div class="mask"><span class=" activecl ft20" id="availableBalance">0</span></div>
+				<div class="totalEdu">剩余额度</div>
 			</div>
-
+			
 			<div id="quotaPWrap">
+				<div class="ft16 fttc padd10" style="border-bottom: 5px solid #EEEEEE;padding-bottom: 25px;">
+					总额度<span id="totalBalance"></span>
+				</div>
 				<div class="quotaP1 fineB" id="limitbalance">
 					固定额度: <span>www</span>
 				</div>
@@ -116,7 +119,6 @@
 								$('#tempbalance span').html('¥'+data.content.tempBalance)
 								$('#availableBalance').html('¥'+data.content.availableBalance)
 								$('#totalBalance').html('¥'+(data.content.tempBalance+data.content.limitBalance))
-
 								var count = (data.content.availableBalance / (data.content.tempBalance+data.content.limitBalance)) * 100,
 									i = 0;
 								var t = setInterval(function() {

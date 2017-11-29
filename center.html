@@ -263,7 +263,7 @@
 								欠款查询
 							</div>
 						</div>
-						<div class="">
+						<div onclick="debateAudit()">
 							<div >
 								欠款审核
 							</div>
@@ -470,6 +470,13 @@
 					id: 'myCustomer',
 				})
 			}
+			//导购 欠款审核
+			function debateAudit(){
+				openview({
+					view:'page/guide/debateAudit.html',
+					id:'debateAudit'
+				})
+			}
 			//经理-> 工人列表
 			function goworker(){
 				openview({
@@ -505,24 +512,11 @@
 					id: 'guideCredit',
 				})
 			}
-			function paizhaoOrder(){//拍照下单
-				mui.plusReady(function(){
-					var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
-					if(identityT == 0){//导购
-						openview({
-							view: 'page/order/chooseCustom2.html',
-							id: 'chooseCustom2',
-						})
-					}else{
-						openview({
-							view: 'page/order/pzOrder.html',
-							id: 'pzOrder',
-						})
-//						openview({
-//							view: 'page/order/pzOrderTest.html',
-//							id: 'pzOrder',
-//						})
-					}
+			//拍照下单
+			function paizhaoOrder(){
+				openview({
+					view: 'page/personal/pzOrderList.html',
+					id: 'pzOrderList',
 				})
 			}
 			//浏览记录
@@ -668,7 +662,7 @@
 											$('#userAct,#accoutMoney').html(0)
 										}
 										if(data.content.lb){
-											$('#userlb').html(data.content.lb)
+											$('#coin,#userlb').html(data.content.lb)
 										}else{
 											$('#userlb').html(data.content.lb)
 											$('#coin,#userlb').html(0)
