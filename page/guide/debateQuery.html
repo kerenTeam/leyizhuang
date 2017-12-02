@@ -1,0 +1,221 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>欠款查询</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/commonY.css"/>
+		<link rel="stylesheet" href="../../css/style.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/configW.css" />
+	</head>
+	<style type="text/css">
+		.categray div {
+			width: 80%;
+			vertical-align: top;
+		}
+		
+		.mui-media {
+			position: relative;
+		}
+		.mui-media a{
+			-webkit-transform: translateX(40px);
+		}
+		.check {
+			position: absolute;
+			top: 50%;
+			-webkit-transform: translateY(-50%);
+			width: 25px;
+			left: 20px;
+		}
+		
+		#useCoupon {
+			position: fixed;
+			bottom: 10px;
+			width: 80%;
+			margin: auto;
+			left: 10%;
+			height: 40px;
+		}
+		.righticon{
+			    position: absolute;
+			    right: 10px;
+			    top: 50%;
+			    -webkit-transform: translateY(-50%);
+			    font-weight: bold;
+		}
+		
+	</style>
+
+	<body>
+		<header class="mui-bar mui-bar-nav" style="padding-right: 15px;">
+			<a id="leftbtn" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">欠款查询</h1>
+			<span class="mui-pull-right ft15" style="line-height: 50px;" onclick="repayment()">
+				还款记录
+			</span>
+		</header>
+		<script src="../../js/statusBar.js" type="text/javascript" charset="utf-8"></script>
+		<div class="mui-content" style="margin-top: 7px;">
+			<!--商品列表-->
+			<div class="goodsList" id="goodsList" style="margin-bottom: 50px;"></div>
+			<script type="text/html" id="goodsTpl">
+				<ul class="mui-table-view">
+					<%for(var i = 0 ;i<list.length;i++){%>
+						<li class="mui-table-view-cell mui-media" id="<%=list[i].id%>">
+							<a href="javascript:;" style="margin-left: 5px;" onclick="goInfo('<%=list[i].orderNumber%>')">
+								<div class="mui-media-body ft16">
+									订单号：<%=list[i].orderNumber%>
+									<p class='mui-ellipsis maincl ft15'>顾客:
+										<%=list[i].customerName%> &nbsp;
+										<span class="activecl">¥<%=list[i].arrearageMoney%></span>
+									</p>
+								</div>
+							</a>
+							<span class="mui-pull-right mui-icon mui-icon-arrowright activecl righticon"></span>
+							
+							<img data-id="<%=list[i].orderNumber%>" data-left="<%=list[i].leftNumber%>" class="check" src="../../images/center/uncheck.svg" alt="" />
+						</li>
+					<%}%>
+				</ul>
+			</script>
+		</div>
+		<button id="useCoupon" class="mui-btn-danger btn-block" disabled="">还款</button>
+		<script src="../../js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/artTemplate-native.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/default.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			mui.init();
+			function goInfo(audi){
+			 	openview({
+					view:'../personal/myOrderDetail.html',
+					id:'myOrderDetail',
+					extrasobj:{
+						orderNo:audi
+					}
+				})
+			}
+			function repayment(){
+				openview({
+					view:'repayment.html',
+					id:'repayment',
+				})
+			}
+			mui.plusReady(function() {
+				var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
+				var userId = plus.storage.getItem('$userId');
+				var oldToken = plus.storage.getItem('oldToken')
+				var page = plus.webview.currentWebview().page;
+				var cusId = plus.webview.currentWebview().cusid;
+				if(!cusId){
+					cusId = '';
+				}else{
+					$('.mui-title').html('未提货明细')
+				}
+				plus.nativeUI.showWaiting();
+				kindType();
+				function kindType() {
+					//欠款查询列表
+					mui.ajax(serverUrl + '/app/seller/arrearsAudit/list', {
+						data: {
+							userID:userId,
+							identityType: identityT,
+						},
+						dataType: 'json',
+						headers: {
+							"Authorization": oldToken
+						},
+						type: 'post',
+						timeout: 10000,
+						success: function(data, type, xhr) {
+							console.log('欠款查询列表', data);
+							if(data.code == 0) {
+								plus.nativeUI.closeWaiting();
+								if(data.content && data.content.length) {
+									$('#goodsList').html(template('goodsTpl', {
+										list: data.content
+									}));
+									//还款
+									$('.check').click(function() {
+										event.stopPropagation();
+										if($(this).attr('src') == '../../images/center/uncheck.svg') {
+											$(this).addClass('choosed')
+											$(this).attr('src', '../../images/center/checked.svg')
+										} else {
+											$(this).removeClass('choosed')
+											$(this).attr('src', '../../images/center/uncheck.svg')
+										}
+										if($('.choosed').length > 0) {
+											$('#useCoupon').removeAttr('disabled')
+										} else {
+											$('#useCoupon').attr('disabled', true)
+										}
+									})
+									$('#useCoupon').click(function(){
+										var productCouponList = [];
+										$('.choosed').each(function(){
+											var id = $(this).attr('data-id');
+											productCouponList.push({"gid":id})
+										})
+//										mui.ajax(serverUrl+'/app/productCoupon/transform/materialList',{
+//											data: {
+//												cusId:cusId,
+//												userId: userId,
+//												identityType: identityT,
+//												productCouponList:productCouponList
+//											},
+//											dataType: 'json',
+//											type: 'post',
+//											timeout: 1000,
+//											headers: {
+//												"Authorization": oldToken,
+//												'Content-Type': 'application/json'
+//											},
+//											success:function(data,type,xhr){ 
+//												plus.nativeUI.closeWaiting();
+//												console.log('欠款查询使用',data);
+//												if(data.code == 0 ){
+//													mui.fire(plus.webview.getWebviewById('cart.html'), 'refresh');
+//													kindType();
+//													openview({
+//														view:'../../cart.html',
+//														id:'cart',
+//														extrasobj:{page:1,cusid:cusId}
+//													})
+//												}else{
+//													mui.toast(data.message)
+//												}
+//											},
+//											error:function(xhr,type,errorThrown){
+//												plus.nativeUI.closeWaiting();
+//												mui.toast(type)
+//												console.log('响应失败');
+//											}
+//										});
+									})
+								} else {
+									$('#useCoupon').hide();
+									$('#goodsList').html('<div style="text-align:center;padding:15px">暂无欠款查询</div>')
+								}
+							} else {
+								$('#useCoupon').hide();
+								mui.toast(data.message)
+							}
+
+						},
+						error: function(xhr, type, errorThrown) {
+							plus.nativeUI.closeWaiting();
+							mui.toast(type)
+							console.log('登录响应失败');
+						}
+					});
+
+				}
+
+			})
+		</script>
+	</body>
+
+</html>

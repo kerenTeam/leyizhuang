@@ -23,9 +23,6 @@
 		</header>
 		<script src="../js/statusBar.js"></script>
 		<div class="mui-content">
-		<div id="title">
-
-		</div>
 		<div id="content">
 
 		</div>
@@ -47,7 +44,7 @@
 				success: function(data) {
 					console.log('商学院详情', data);
 					if(data) {
-						$('#title').html(data.title);
+						$('.mui-title,#title').html(data.title);
 						$('#content').html(data.content)
 					} else {
 						document.getElementById("tradeList").innerHTML = '<div style="text-align:center;padding:15px;font-size: 12px;">暂无数据</div>'

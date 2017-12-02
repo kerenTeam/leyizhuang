@@ -154,8 +154,12 @@
 	<script src="../../js/artTemplate-native.js" type="text/javascript" charset="utf-8"></script>
 	<script type="text/javascript">
 		function goInfo(audi){
-			openview({
-			 
+		 	openview({
+				view:'../personal/myOrderDetail.html',
+				id:'myOrderDetail',
+				extrasobj:{
+					orderNo:audi
+				}
 			})
 		}
 		 

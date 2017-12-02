@@ -259,7 +259,7 @@
 					</div>
 					<div class="flexRow ft14">
 						<div class="">
-							<div class="">
+							<div onclick="debateQuery()">
 								欠款查询
 							</div>
 						</div>
@@ -433,6 +433,12 @@
 				openview({
 					view:'page/manager/listCheck.html',
 					id: 'listCheck',
+				})
+			}
+			function debateQuery(){
+				openview({
+					view:'page/guide/debateQuery.html',
+					id:'debateQuery'
 				})
 			}
 			//料单申请

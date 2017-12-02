@@ -270,7 +270,7 @@
 						}, 1000)
 
 						//发送验证码 
-						mui.ajax('http://119.23.149.7:9999/app/qrcode/send', {
+						mui.ajax(serverUrl+'/app/sms/verifyCode/send', {
 							data: {
 								mobile: account.value
 							},
