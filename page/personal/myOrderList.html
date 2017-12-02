@@ -12,7 +12,6 @@
 		<link rel="stylesheet" type="text/css" href="../../css/mui.min.css"/>
 		<link rel="stylesheet" href="../../css/resetY.css">
 		<link rel="stylesheet" href="../../css/youxd.css">
-
 	</head>
 
 	<body>
@@ -22,7 +21,6 @@
 			<span class="mui-icon mui-icon-search mui-pull-right" id="openSearch"></span>
 		</header>
 		<script src="../../js/statusBar.js"></script>
-
 		<div id="main" style="padding-top: 48px !important;">
 			<div class="notice">
 				<!--tab切换-->
@@ -82,6 +80,7 @@
 									<span>再来一单</span>
 									<span class="redC">去支付</span>
 									<span onclick="goOrderWL('<%= list[i].orderNo%>')" class="redC">查看物流</span>
+									<span class="redC" onclick="openReturns('<%= list[i].orderNo%>')">退货</span>
 								</div>
 							</div>
 						<%}%>
@@ -129,6 +128,23 @@
 		<script src="../../js/artTemplate-native.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../../js/youxd.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
+			$('header').click(function(){
+				openview({
+					view:'signInDay.html',
+					id:'signInDay'
+				})
+			})
+
+			//申请退货
+			function openReturns(orderNo){
+				openview({
+					view:'myOrderReturns.html',
+					id:'myOrderReturns',
+					extrasobj:{
+						orderNo:orderNo
+					}
+				})
+			}
 			//打开订单详情
 			function openDetail(orderNo){
 				openview({
