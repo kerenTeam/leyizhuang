@@ -78,9 +78,16 @@
 							 </div>
 							 <div class="padd10 afterBorder">
 							 	<div class="bgcee padd10">
-								 	<%for(var j = 0 ;j<list[i].photos.length;j++){%>
-								 		<img src="<%=list[i].photos[j]%>" class="cmimg" />
-								 	<%}%>
+							 		<%if(list[i].photos.length>4){%>
+								 		<%for(var j = 0 ;j<4;j++){%>
+									 		<img src="<%=list[i].photos[j]%>" class="cmimg" /> 
+									 	<%}%>
+							 		<%}else{%>
+							 			<%for(var j = 0 ;j<list[i].photos.length;j++){%>
+									 		<img src="<%=list[i].photos[j]%>" class="cmimg" /> 
+									 	<%}%>
+							 		<%}%>
+								 	
 								 </div>
 							 </div>
 							 <div class="padd10" style="overflow: hidden;">
@@ -154,7 +161,7 @@
 							var timeLoad = setInterval(function(){
 								clearTimeout(timeLoad),timeLoad = null;
 								if(data.code == 0){
-									$('#loadingdiv').css('height','0px');
+									$('#loadingdiv').css('height','0px'); 
 									if(data.content && data.content.length){
 										if(tabT == 'tab1'){
 											document.getElementById('infoListDiv').innerHTML = template('infoList',{list:data.content});
