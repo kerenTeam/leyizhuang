@@ -575,7 +575,8 @@
 					"page/guide/debateAudit.html",
 					"page/personal/message.html",
 					"page/personal/deliveryInform.html",
-					"page/guide/debateQuery.html"
+					"page/guide/debateQuery.html",
+					"page/personal/signInDay.html"
 				],
 				"priority": 0
 			},
@@ -1581,7 +1582,9 @@
 				"resources": [],
 				"refer": [
 					"page/personal/myOrderWL.html",
-					"page/personal/myOrderDetail.html"
+					"page/personal/myOrderDetail.html",
+					"page/personal/signInDay.html",
+					"page/personal/myOrderReturns.html"
 				],
 				"priority": 0
 			},
@@ -1611,6 +1614,13 @@
 				"resources": [],
 				"refer": [
 					"page/guide/repaymentInfo.html"
+				],
+				"priority": 0
+			},
+			"page/personal/pzOrderList.html": {
+				"resources": [],
+				"refer": [
+					"page/personal/pzOrderInfo.html"
 				],
 				"priority": 0
 			}

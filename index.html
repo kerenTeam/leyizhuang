@@ -50,13 +50,13 @@
 				margin: auto;
 			}
 			.flexws img {
-				width: 45px;
-				height: 45px;
+				width: 40px;
+				height: 40px;
 				display: inline-block!important;
 			}
 			.flexws{margin-top: 0;}
-			.flexws>div{width: 50%;display: flex;padding: 25px 15px;justify-content: space-between;align-items: center;}
-			/*.flexws>div>div:first-child{width: 50%;}*/
+			.flexws>div{width: 50%;display: flex;padding: 20px 15px;justify-content: space-between;align-items: center;}
+			.flexws>div>div:first-child{width: 50%;}
 			.ltac .imgb {
 				margin: 5px auto;
 				width: 60px;
@@ -164,7 +164,27 @@
 		</script>
 		<div style="position: relative;">
 			<div id="banner">
-				
+				<div class="mui-slider">
+					<div class="mui-slider-group mui-slider-loop">
+						<!--支持循环，需要重复图片节点-->
+						<div class="mui-slider-item mui-slider-item-duplicate zanwei zanwei2">
+							<img src="http://www.huarun.com/images/product/productIn_scroll.jpg" />
+						</div>
+						<div class="mui-slider-item zanwei zanwei2">
+							<img src="http://www.huarun.com/upload/temp/img/20160602/142150-979.jpg" />
+						</div>
+						<div class="mui-slider-item zanwei zanwei2">
+							<img src="http://www.huarun.com/upload/temp/img/20170524/154140-245.jpg" />
+						</div>
+						<div class="mui-slider-item zanwei zanwei2">
+							<img src="http://www.huarun.com/images/product/productIn_scroll.jpg" />
+						</div>
+						<!--支持循环，需要重复图片节点-->
+						<div class="mui-slider-item mui-slider-item-duplicate zanwei zanwei2">
+							<img src="http://www.huarun.com/upload/temp/img/20160602/142150-979.jpg" />
+						</div>
+					</div>
+				</div>
 			</div>
 			<script type="text/html" id="bannerTpl">
 				<div class="mui-slider">
@@ -196,7 +216,7 @@
 			</script>
 		</div>
 		
-		<div class="bgcwt">
+		<div class="bgcwt" style="box-shadow: 0 1px 1px rgba(0,0,0,.1);">
 			<div class="somenspf ft12 padd10 fttc activecl">
 				<div id="">
 					<img src="images/index/bdchexk.svg"/><span>满1000元包邮</span>
@@ -232,7 +252,7 @@
 		</div>
 
 		<!--顾客 和 项目经理-->
-		<div class="mui-content ltac cusMan bgcwt">
+		<div class="mui-content ltac cusMan bgcwt" style="box-shadow: 0 0px 1px rgba(0,0,0,.1);">
 			<div class="flexws afterBorder">
 				<div onclick="fastOrder()" class="rightBorder paddv10">
 					<div id="">
@@ -268,7 +288,7 @@
 					</div>
 					<img src="images/5.svg" alt="" />
 				</div>
-				<div>
+				<div onclick="signRecord()">
 					<div id="">
 						签到
 					</div> 
@@ -292,7 +312,7 @@
 		</div>
 		 
 		<!--工人-->
-		<div class="mui-content ltac worker bgcwt" style="display: ;">
+		<div class="mui-content ltac worker bgcwt" style="display: none;box-shadow: 0 0px 1px rgba(0,0,0,.1)">
 			<div class="flexws afterBorder">
 				<div onclick="fastOrder()" class="rightBorder paddv10">
 					<div id="">
@@ -338,7 +358,7 @@
 		</div>
 		 
 		<!--导购-->
-		<div class="mui-content ltac guides bgcwt" style="display: ;">
+		<div class="mui-content ltac guides bgcwt" style="display: none;box-shadow: 0 0px 1px rgba(0,0,0,.1)">
 			<div class="flexws afterBorder">
 				<div onclick="fastOrder()" class="rightBorder paddv10">
 					<div id="">
@@ -390,7 +410,7 @@
 		</div>
 
 		<!--常购清单-->
-		<div class="bgcwt afterBorder pad15 ft16" style="margin-top:10px;" id='oftenbuy' onclick="goOftenList()">
+		<div class="bgcwt afterBorder pad15 ft16" style="margin-top:10px;box-shadow: 0 0px 1px rgba(0,0,0,.1)" id='oftenbuy' onclick="goOftenList()">
 			<span class="bdl activecl">
 				常购清单
 			</span>
@@ -399,7 +419,7 @@
 		</div>
 
 		<!--常购清单商品列表-->
-		<div class="bgcwt">
+		<div class="bgcwt" style="box-shadow: 0 0px 1px rgba(0,0,0,.1)">
 			<div class="goodsList" id="goodsList"></div>
 		</div>
 		<script type="text/html" id="goodsTpl">
@@ -427,7 +447,7 @@
 				<%}%>
 			</ul>
 		</script>
-		<div class="bgcwt afterBorder pad15 ft16" style="margin-top:10px;" onclick="goHotList()">
+		<div class="bgcwt afterBorder pad15 ft16" style="margin-top:10px;box-shadow: 0 0px 1px rgba(0,0,0,.1)" onclick="goHotList()">
 			<span class="bdl activecl">
 				热门商品
 			</span>
@@ -436,7 +456,7 @@
 		</div>
 	 
 		<!--热门商品商品列表-->
-		<div class="bgcwt">
+		<div class="bgcwt" style="box-shadow: 0 0px 1px rgba(0,0,0,.1)">
 			<div class="goodsList" id="goodsListHot"></div>
 		</div>
 		<script type="text/html" id="goodsHotTpl">
@@ -472,7 +492,24 @@
 			<span class="mui-pull-right mui-icon mui-icon-arrowright activecl" style="font-weight: bold;"></span>
 			<span class="mui-pull-right disablecl">更多</span>
 		</div>
-		<div id="tradeList" class="bgcwt"></div>
+		<div id="tradeList" class="bgcwt">
+				<div style="height: 10px;"></div>
+			
+			<div class="mui-card" onclick="openDetail(<%=dataList[i].id%>,'<%=dataList[i].title%>')">
+				<div class="mui-card-header mui-card-media"
+					style="height:45vw;background-image:url('http://www.huarun.com/images/product/productIn_scroll.jpg')">
+				</div>
+				 
+				<div class="mui-card-content">
+					<div class="mui-card-content-inner">
+						<p style="color: #333;">妙想漆系列</p>
+						<p><img src="img/yanjin2.svg"/>111</p>
+					</div>
+				</div>
+			</div>
+				<br />
+			
+		</div>
 			<script type="text/html" id="tradeTpl">
 				<div style="height: 10px;"></div>
 				<%for(var i=0;i<dataList.length;i++){%>
@@ -505,6 +542,10 @@
 		<script src="js/default.js" type="text/javascript" charset="utf-8"></script>
 		<script>
 			mui.init();
+			var gallery = mui('.mui-slider');
+			gallery.slider({
+			  interval:0//自动轮播周期，若为0则不自动播放，默认为0；
+			});
 			var Spagenum = 2; //实到页数
 			var Ypagenum = 1; //应到页数
 			function fastOrder(){
@@ -586,6 +627,13 @@
 				openview({
 					view: 'page/tradeList.html',
 					id: 'tradeList',
+				})
+			}
+			//签到
+			function signRecord(){
+				openview({
+					view:'page/personal/signInDay.html',
+					id:'signInDay'
 				})
 			}
 			//收藏
@@ -780,17 +828,13 @@
 						console.log('banner', data);
 						plus.nativeUI.closeWaiting();
 						if(data && data.length) {
-							$('#banner').html(template('bannerTpl', {list: data,url:oCms}));
+//							$('#banner').html(template('bannerTpl', {list: data,url:oCms}));
 							 
 						} else {
 						}
 //							//获得slider插件对象
 						
-						var gallery = mui('.mui-slider');
-						gallery.slider({
-						  interval:0//自动轮播周期，若为0则不自动播放，默认为0；
-						});
-						mui('.mui-slider').slider().refresh();
+						
 					},
 					error: function(xhr, type, errorThrown) {
 						plus.nativeUI.closeWaiting();
@@ -902,11 +946,11 @@
 							console.log('trade', data);
 
 							if(data && data.list.length) {
-								document.getElementById("tradeList").innerHTML = template("tradeTpl", {
-									dataList: data.list,
-									url:oCms
-								});
-								mui("#upload")[0].innerHTML = "";
+//								document.getElementById("tradeList").innerHTML = template("tradeTpl", {
+//									dataList: data.list,
+//									url:oCms
+//								});
+//								mui("#upload")[0].innerHTML = "";
 
 								//上滑加载
 								//								$(window).scroll(function() {

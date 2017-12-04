@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>拍照下单详情</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/mui.min.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/configW.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/commonY.css">
+	</head>
+	<style type="text/css">
+		.cmimg{width: 100px;height: 100px;}
+		
+	</style>
+	<body>
+		<header class="mui-bar mui-bar-nav" style="padding-right: 15px;">
+			<a id="leftbtn" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">拍照下单详情</h1>
+			 
+		</header>
+		<script src="../../js/statusBar.js" type="text/javascript" charset="utf-8"></script>
+		<div class="mui-content" style="margin-top: 7px;">
+			<div id="infoListDiv"></div>
+			<script type="text/html" id="infoList">
+				<div class="padd10 bgcwt">
+				 	<%for(var i = 0 ;i<list.photos.length;i++){%>
+				 		<img src="<%=list.photos[i]%>" class="cmimg" />
+				 	<%}%>
+				 </div>
+				 <div style="height: 10px;"></div>
+				  <div class="padd10 bgcwt afterBorder">
+				 	<div class="disablecl">配送地址：</div>
+				 	<div class="">
+				 		<div><%=list.deliveryName%> &nbsp;&nbsp;	<%=list.deliveryPhone%></div>
+				 		<%=list.detailedAddress%>
+				 	</div>
+				 </div>
+				 <div class="padd10 bgcwt">
+				 	<div class="disablecl">备注：</div>
+				 	<div class="">
+				 		<div><%=list.remark%>
+				 	</div>
+				 </div>
+				 
+			</script>
+		</div>
+	</body>
+	<script src="../../js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../js/mui.min.js"></script>
+	<script src="../../js/artTemplate-native.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../js/default.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		mui.init();
+		mui.plusReady(function(){
+			var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
+			var userId = plus.storage.getItem('$userId');
+			var oldToken = plus.storage.getItem('oldToken');
+			var orderid= plus.webview.currentWebview().orderid;
+			plus.nativeUI.showWaiting();
+			mui.ajax(serverUrl + '/app/photoOrder/details',{
+				data:{'userId':userId,'identityType':identityT,'id':orderid},
+				dataType:'json',
+				type:'post',
+				timeout:1000,
+				headers:{"Authorization":oldToken},
+				success:function(data,type,xhr){
+					console.log('拍照下单详情',data);
+					if(data.code == 0){
+						if(data.content){
+							document.getElementById('infoListDiv').innerHTML = template('infoList',{list:data.content});
+							plus.nativeUI.closeWaiting();
+						}else{
+							plus.nativeUI.closeWaiting();
+							document.getElementById('infoListDiv').innerHTML = '<div style="text-align: center;padding: 50px;"><img src="../../images/order/order.png" style="width: 100px;" /><div class="ft13 disablecl">暂无数据</div></div>';
+						}
+					}else{
+						plus.nativeUI.closeWaiting();
+						mui.toast(data.message);
+					}
+				},
+				error:function(xhr,type,errorThrown){
+					plus.nativeUI.closeWaiting();
+					console.log('响应失败  !');
+				}
+			});
+		})
+	</script>
+</html>

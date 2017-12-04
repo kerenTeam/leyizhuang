@@ -253,7 +253,8 @@
 			"page/guide/debateAudit.html",
 			"page/personal/message.html",
 			"page/personal/deliveryInform.html",
-			"page/guide/debateQuery.html"
+			"page/guide/debateQuery.html",
+			"page/personal/signInDay.html"
 		]
 	},
 	"page/gxbList.html": {
@@ -1162,7 +1163,9 @@
 	"page/personal/myOrderList.html": {
 		"refer": [
 			"page/personal/myOrderWL.html",
-			"page/personal/myOrderDetail.html"
+			"page/personal/myOrderDetail.html",
+			"page/personal/signInDay.html",
+			"page/personal/myOrderReturns.html"
 		],
 		"resources": []
 	},
@@ -1186,6 +1189,11 @@
 	"page/guide/repayment.html": {
 		"refer": [
 			"page/guide/repaymentInfo.html"
+		]
+	},
+	"page/personal/pzOrderList.html": {
+		"refer": [
+			"page/personal/pzOrderInfo.html"
 		]
 	}
 }
