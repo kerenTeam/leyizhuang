@@ -707,7 +707,39 @@
 				var skuName = $(this).parent().parent().find('div').eq(0).text();
 				var specif = $.trim($(this).parentsUntil('.mui-content').find('.actspan').text())+$.trim($(this).parent().parent().find('.bdcA').text());
 				var cartObj={skuName:skuName,specif:specif,num:number,goodcode:fastMaterial}
-				alert(fastMaterial)
+				alert('～'+fastMaterial);
+				var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
+				var userId = plus.storage.getItem('$userId'); 
+				var oldToken = plus.storage.getItem('oldToken');
+				 
+				plus.nativeUI.showWaiting();
+				mui.ajax(serverUrl + '/app/materialList/quickOrder/add', {
+					data: {
+						userId: userId,
+						identityType: identityT,
+						params: fastMaterial,
+					},
+					dataType: 'json',
+					headers: {
+						"Authorization": oldToken
+					},
+					type: 'post',
+					timeout: 10000,
+					success: function(data, type, xhr) {
+						plus.nativeUI.closeWaiting();
+						console.log('快捷下单', data);
+						if(data.code == 0) { 
+							mui.toast('下单成功')
+						} else {
+							mui.toast(data.message)
+						}
+			
+					},
+					error: function(xhr, type, errorThrown) {
+						plus.nativeUI.closeWaiting();
+					}
+				});
+			 
 				//更新此商品数量缓存
 				if(waterFastGoods.length != 0) {
 					var flag = false;
@@ -767,7 +799,7 @@
 				var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
 				var userId = plus.storage.getItem('$userId'); 
 				var oldToken = plus.storage.getItem('oldToken');
-				alert(fastMaterial.length)
+				 
 				if(fastMaterial.length){
 					plus.nativeUI.showWaiting();
 					mui.ajax(serverUrl + '/app/materialList/quickOrder/add', {

@@ -9,9 +9,9 @@
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
 		<meta name="format-detection" content="telephone=no">
 		<meta name="format-detection" content="address=no">
+		<link rel="stylesheet" type="text/css" href="../../css/mui.min.css"/>
 		<link rel="stylesheet" type="text/css" href="../../css/commonY.css">
 		<link rel="stylesheet" type="text/css" href="../../css/indexY.css">
-		<link rel="stylesheet" type="text/css" href="../../css/mui.min.css"/>
 		<link rel="stylesheet" href="../../css/resetY.css">
 		<script type="text/javascript" src="../../js/jquery.min.js"></script>
 
@@ -111,7 +111,7 @@
 			<div id="main" class="mui-clearfix contaniner">
 				<% if(!addressLi || addressLi == ''){%>
 					<div class="nothing" style="margin-top: 60px;">
-						<img src="../../img/theList/ad.png" style="display: block;margin: 20px auto;width: 80px;"/>
+						<img src="../../images/order/addresic.svg" style="display: block;margin: 20px auto;width: 80px;"/>
 						<p style="text-align: center;">你还没有地址哟！</p>
 					</div>
 				<%}else{%>
@@ -205,7 +205,7 @@
 						var html = template('addressList-detail',addressObj);
 						document.getElementById('addressList').innerHTML = html;
 						if(data.content==0){
-							document.getElementById('main').innerHTML='<div class="nothing" style="background-color: #EFEFF4;margin-top: 60px;"><img src="../../img/theList/ad.png" style="display: block;margin: 20px auto;width: 80px;"/><p style="text-align: center;">你还没有地址哟！</p></div>';
+							document.getElementById('main').innerHTML='<div class="nothing" style="background-color: #EFEFF4;margin-top: 60px;"><img src="../../images/order/addresic.svg" style="display: block;margin: 20px auto;width: 80px;"/><p style="text-align: center;">你还没有地址哟！</p></div>';
 						}
 						if(pageid){/*从选择地址跳转*/
 							$(".addlist .bottom").css("display","none");

@@ -239,9 +239,10 @@
 											};
 											//微信
 											plus.payment.request(pays[id], varpay, function(result) {
-												console.log("----- 支付成功 -----"); 
-												var result = JSON.stringify(result)
-				
+												console.log("----- 支付成功 -----");
+												var result = JSON.stringify(result);
+												mui.fire(plus.webview.getWebviewById('wallet'),'refreash')
+												mui.back();
 											}, function(e) {
 												console.log("----- 支付失败 -----");
 												console.log("[" + e.code + "]：" + e.message);
@@ -282,7 +283,10 @@
 												console.log("----- 支付成功 -----", JSON.stringify(result));
 												plus.nativeUI.closeWaiting();
 												plus.nativeUI.alert("支付成功"); 
-												var result = JSON.stringify(result)
+												var result = JSON.stringify(result);
+												mui.fire(plus.webview.getWebviewById('wallet'),'refreash')
+												mui.back();
+												
 												//																 
 											}, function(e) {
 												console.log("----- 支付失败 -----");

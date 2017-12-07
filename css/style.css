@@ -45,7 +45,8 @@ body {
 .flexwc img{
 	margin: auto;
 	display: block;
-	width: 35px;
+	width: 30px;
+	margin-top: 5px;
 }
 .cartSecond,.cartOne,.cartThird{
 	position: relative;
@@ -55,7 +56,7 @@ body {
 	top: 20px;
 	height: 1px;
 	background-color: #EEEEEE;/*B42E28*/
-	right: 40px;
+	right: 42px;
 	width: 60px;
 	content: '';
 }
@@ -64,7 +65,7 @@ body {
 	top: 20px;
 	height: 1px;
 	background-color: #EEEEEE;
-	right: 32px;
+	right: 35px;
 	width: 108px;
 	content: '';
 }
@@ -74,7 +75,7 @@ body {
 	height: 1px;
 	background-color: #EEEEEE;
 	left: 35px;
-	width: 95px;
+	width: 94px;
 	content: '';
 }
 .cartThird:after{
@@ -83,7 +84,7 @@ body {
 	height: 1px;
 	background-color: #EEEEEE;/*B42E28*/
 	left: 30px;
-	width: 32px;
+	width: 30px;
 	content: '';
 }
 .cartAct:after,.cartAct:before{

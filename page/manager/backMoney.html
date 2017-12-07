@@ -44,8 +44,8 @@
 		<div class="notice">
 			<div class="tab-hd tab-hdtwo" id="tabLink">
 				<ul class="tab-nav">
-				  <li class="active aClick " data-statusId="">现金返利</li>
-				  <li class="aClick" data-statusId="1">信用金</li>
+				  <li class="active aClick" data-statusId="1">信用金</li>
+				  <li class="aClick " data-statusId="">现金返利</li>
 				</ul>
 			</div>
 			<!--列表loading-->
@@ -158,12 +158,12 @@
 					$('#tabLink li').removeClass('active');
 					$(this).addClass('active');
 					$('#loadingdiv').css('height','32px');
-					if($(this).index() == 0){
+					if($(this).index() == 1){
 						var url = '/app/employee/subvention/log';
-						loadFun(url,'tab1');
+						loadFun(url,'tab2');
 					}else{
 						var url = '/app/employee/creditMoney/log';
-						loadFun(url,'tab2');
+						loadFun(url,'tab1');
 					}
 				})
 				function loadFun(url,tabT){

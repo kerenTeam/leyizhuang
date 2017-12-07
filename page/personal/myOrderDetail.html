@@ -210,7 +210,7 @@
 
 				/*订单详情*/
 				mui.ajax(serverUrl + '/app/order/detail',{
-					data:{'userID':1,'identityType':identityT,'orderNumber':orderNo},
+					data:{'userID':userId,'identityType':identityT,'orderNumber':orderNo},
 					dataType:'json',
 					type:'post',
 					timeout:1000,

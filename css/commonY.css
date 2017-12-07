@@ -5829,6 +5829,9 @@ header{
 	background-color: #ff5248;
 
 }
+header a:first-child{
+	width: 40px!important;
+}
 
 .subActive{
 	color: red!important;

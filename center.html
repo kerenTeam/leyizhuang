@@ -46,13 +46,13 @@
 				line-height: 25px;
 			}
 			.writing {
-				padding: 22px 0 5px;
+				padding: 33px 0 5px;
 				padding-bottom: 5px;
 				margin-left: -25px;
 			}
 			#userBox {
 				background-color: #eca4a6;
-				padding: 35px 0 35px;
+				padding: 33px 0 35px;
 				position: relative;
 			}
 			.dao {
@@ -70,7 +70,7 @@
 				border-radius: 2px;
 				background: orange;
 				padding:2px 10px;
-				top: 45px;
+				top: 66px;
 				right: 10px;
 				position: absolute;
 			}
@@ -141,7 +141,7 @@
 			<!--<div id="beijing2"></div>-->
 			<div id="fixdtop"></div>
 			<div class="content clearfloat fl mui-row white">
-				<div class="mui-col-sm-4 mui-col-xs-4" style="padding-top: 18px;position: relative;left: 3px;"><img src="https://b-ssl.duitang.com/uploads/item/201710/12/20171012232816_GX5iw.thumb.224_0.jpeg" class="myInfo" id="mypic" /></div>
+				<div class="mui-col-sm-4 mui-col-xs-4" style="padding-top: 28px;position: relative;left: 3px;"><img src="https://b-ssl.duitang.com/uploads/item/201710/12/20171012232816_GX5iw.thumb.224_0.jpeg" class="myInfo" id="mypic" /></div>
 				<div class="mui-col-sm-8 mui-col-xs-8 writing">
 					<p class="centop">
 						<div class="denlu">用户名:<span id="userName" style="z-index: 99;"></span></div>
@@ -151,10 +151,10 @@
 						<div class="denlu" id="onlymange">账户:<span id="manageMoney"></span></div>
 					</p>
 				</div>
-				<img class="dao shezhi" style="top: 8px;width: 30px;" src="images/center/shizhi.png" />
+				<img class="dao shezhi" style="top: 8px;width: 36px;" src="images/center/shizhi.png" />
 				<div onclick="goMessage()">
-					<img class="dao" style="top: 8px;width: 30px;right: 50px;" src="images/center/message.svg" />
-					<span class="mui-badge mui-badge-green" style="right: 54px;position: absolute;padding: 4px;top: 6px;"></span>
+					<img class="dao" style="top: 8px;width: 36px;right: 50px;" src="images/center/message.svg" />
+					<span class="mui-badge mui-badge-green" style="right: 54px;position: absolute;padding: 4px;top: 8px;"></span>
 				</div>
 
 				<div class="qiandao" onclick="qian()">签到</div>
@@ -543,7 +543,8 @@
 					var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
 					var userId = plus.storage.getItem('$userId');
 					var oldToken = plus.storage.getItem('oldToken');
-					$('.qiandao').html('签到')
+					$('.qiandao').html('签到');
+					$('#mypic').attr('src','https://b-ssl.duitang.com/uploads/item/201710/12/20171012232816_GX5iw.thumb.224_0.jpeg')
 					//签到
 					window.qian = function(){
 						mui.ajax(serverUrl+'/app/customer/sign',{

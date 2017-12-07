@@ -28,7 +28,7 @@
 			.checkList h4{font-size: 14px;padding: 12px 10px;}
 			.checkList h4 .h4span3{float: right;color: #B62D29;}
 			.checkList h4 .h4span2{margin-left: 3%;}
-			.checkListCon{padding: 10px;}
+			.checkListCon{padding: 10px;overflow-y: scroll;white-space: nowrap;}
 			.checkListCon img{width: 23%;float: left;margin-left: 1.6%;}
 			.checkListDZ{padding: 10px;color: #757575;}
 			.checkListB{padding: 10px 20px;text-align: right;}
@@ -84,7 +84,15 @@
 							<div class="checkListCon clearfix">
 								<%if(list[i].pictureList && list[i].pictureList.length > 0){%>
 									<%for(var j = 0; j < list[i].pictureList.length; j++){%>
-										<img src="<%=list[i].pictureList[j]%>" onerror="../../images/img.svg"/>
+										<%if(list[i].pictureList.length > 4){%>
+											<%for(var j = 0; j < 4; j++){%>
+												<img src="<%=list[i].pictureList[j]%>" onerror="../../images/img.svg"/>
+											<%}%>
+										<%}else{%>
+											<%for(var j = 0; j < list[i].pictureList.length; j++){%>
+												<img src="<%=list[i].pictureList[j]%>" onerror="../../images/img.svg"/>
+											<%}%>
+										<%}%> 
 									<%}%>
 								<%}%>
 							</div>

@@ -33,9 +33,9 @@
 		#useCoupon {
 			position: fixed;
 			bottom: 10px;
-			width: 80%;
+			width: 90%;
 			margin: auto;
-			left: 10%;
+			left: 5%;
 			height: 40px;
 		}
 	</style>
@@ -136,7 +136,7 @@
 											$('#useCoupon').attr('disabled', true)
 										}
 									})
-									$('#useCoupon').click(function(){
+									$('#useCoupon').unbind("click").click(function(){
 										var productCouponList = [];
 										$('.choosed').each(function(){
 											var id = $(this).attr('data-id');

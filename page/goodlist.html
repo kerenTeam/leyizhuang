@@ -338,7 +338,7 @@
 													success: function(data, type, xhr) {
 														plus.nativeUI.closeWaiting();
 														console.log('加入购物车', data);
-														if(data.code == 0) {
+														if(data.code == 0) { 
 															plus.nativeUI.toast('加入成功')			
 															mui.fire(plus.webview.getWebviewById('cart.html'), 'refresh');
 														} else {
@@ -369,7 +369,7 @@
 															success: function(data, type, xhr) {
 																plus.nativeUI.closeWaiting();
 																console.log('删除', data);
-																if(data.code == 0) {
+																if(data.code == 0) { 
 																	mui.fire(plus.webview.getWebviewById('cart.html'), 'refresh');
 																} else {
 																	mui.toast(data.message)
@@ -406,7 +406,7 @@
 													plus.nativeUI.closeWaiting();
 													console.log('加入购物车',data);
 													if(data.code == 0 ){
-														plus.nativeUI.toast('加入成功')							
+														plus.nativeUI.toast('加入成功');
 														mui.fire(plus.webview.getWebviewById('cart.html'), 'refresh');
 														hadCart(goodid,cur);
 													}else{
@@ -416,7 +416,7 @@
 												},
 												error:function(xhr,type,errorThrown){
 													plus.nativeUI.closeWaiting();
-													console.log('登录响应失败');
+													console.log('响应失败');
 												}
 											});
 										}
@@ -436,8 +436,8 @@
 												type: 'post',
 												timeout: 10000,
 												success: function(data, type, xhr) {
-													plus.nativeUI.closeWaiting();
-													console.log('已有购物车数量', data);
+													plus.nativeUI.closeWaiting(); 
+													console.log('已有购物车', data);
 													if(data.code == 0) {
 														cur.next().show();
 														cur.hide();
@@ -466,7 +466,7 @@
 							},
 							error:function(xhr,type,errorThrown){
 								plus.nativeUI.closeWaiting();
-								console.log('登录响应失败');
+								console.log('响应失败');
 							}
 						}); 
 					}

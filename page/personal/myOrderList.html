@@ -180,10 +180,10 @@
 				function loadFun(tabT,condition){//搜索，tab切换 ，公用一个加载方法
 					$('#loadingdiv').css('height','32px');
 					var nowApi = '/app/order/list';
-					var nowData = {'userID':1,'identityType':identityT};
+					var nowData = {'userID':userId,'identityType':identityT};
 					if(condition){
 						nowApi = '/app/order/search';
-						nowData = {'userID':1,'identityType':identityT,'condition':condition}
+						nowData = {'userID':userId,'identityType':identityT,'condition':condition}
 					}
 					mui.ajax(serverUrl + nowApi,{
 						data:nowData,

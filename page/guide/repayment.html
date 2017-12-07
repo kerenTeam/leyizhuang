@@ -55,44 +55,7 @@
 		<div class="mui-content" style="margin-top: 7px;">
 			<!--商品列表-->
 			<div class="goodsList" id="goodsList" style="margin-bottom: 50px;">
-				<ul class="mui-table-view">
-						<li class="mui-table-view-cell mui-media" onclick="goInfo()">
-							<a href="javascript:;">
-								<div class="mui-media-body ft16">
-									2017-09-12 08:20:00
-									<p class='mui-ellipsis maincl ft15'>
-										欠款还款 &nbsp; &nbsp;
-										<span class="activecl">¥2000</span>
-									</p>
-								</div>
-							</a>
-							<span class="mui-pull-right mui-icon mui-icon-arrowright activecl righticon"></span>
-						</li>
-						<li class="mui-table-view-cell mui-media" onclick="goInfo()">
-							<a href="javascript:;">
-								<div class="mui-media-body ft16">
-									2017-09-12 08:20:00
-									<p class='mui-ellipsis maincl ft15'>
-										欠款还款 &nbsp; &nbsp;
-										<span class="activecl">¥2000</span>
-									</p>
-								</div>
-							</a>
-							<span class="mui-pull-right mui-icon mui-icon-arrowright activecl righticon"></span>
-						</li>
-						<li class="mui-table-view-cell mui-media" onclick="goInfo()">
-							<a href="javascript:;">
-								<div class="mui-media-body ft16">
-									2017-09-12 08:20:00
-									<p class='mui-ellipsis maincl ft15'>
-										欠款还款 &nbsp; &nbsp;
-										<span class="activecl">¥2000</span>
-									</p>
-								</div>
-							</a>
-							<span class="mui-pull-right mui-icon mui-icon-arrowright activecl righticon"></span>
-						</li>
-				</ul>
+				
 			</div>
 			<script type="text/html" id="goodsTpl">
 				<ul class="mui-table-view">
@@ -100,10 +63,10 @@
 						<li class="mui-table-view-cell mui-media" onclick="goInfo()">
 							<a href="javascript:;">
 								<div class="mui-media-body ft16">
-									2017-09-12 08:20:00
+									<%=list[i].repaymentTime%>
 									<p class='mui-ellipsis maincl ft15'>
 										欠款还款 &nbsp; &nbsp;
-										<span class="activecl">¥2000</span>
+										<span class="activecl">¥<%=list[i].repaymentMoney%></span>
 									</p>
 								</div>
 							</a>
@@ -139,7 +102,7 @@
 				var userId = plus.storage.getItem('$userId');
 				var oldToken = plus.storage.getItem('oldToken')
 				 
-//				plus.nativeUI.showWaiting();
+				plus.nativeUI.showWaiting();
 				kindType();
 				function kindType() {
 					//还款记录列表
@@ -158,14 +121,14 @@
 							console.log('还款记录列表', data);
 							if(data.code == 0) {
 								plus.nativeUI.closeWaiting();
-//								if(data.content && data.content.length) {
-//									$('#goodsList').html(template('goodsTpl', {
-//										list: data.content
-//									}));
-//								} else {
-//									$('#useCoupon').hide();
-//									$('#goodsList').html('<div style="text-align:center;padding:15px">暂无还款记录</div>')
-//								}
+								if(data.content && data.content.length) {
+									$('#goodsList').html(template('goodsTpl', {
+										list: data.content
+									}));
+								} else {
+									$('#useCoupon').hide();
+									$('#goodsList').html('<div style="text-align:center;padding:15px">暂无还款记录</div>')
+								}
 							} else {
 								$('#useCoupon').hide();
 								mui.toast(data.message)

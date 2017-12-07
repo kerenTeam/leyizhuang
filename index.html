@@ -216,7 +216,7 @@
 			</script>
 		</div>
 		
-		<div class="bgcwt" style="box-shadow: 0 1px 1px rgba(0,0,0,.1);">
+		<div class="bgcwt">
 			<div class="somenspf ft12 padd10 fttc activecl">
 				<div id="">
 					<img src="images/index/bdchexk.svg"/><span>满1000元包邮</span>
@@ -252,7 +252,7 @@
 		</div>
 
 		<!--顾客 和 项目经理-->
-		<div class="mui-content ltac cusMan bgcwt" style="box-shadow: 0 0px 1px rgba(0,0,0,.1);">
+		<div class="mui-content ltac cusMan bgcwt">
 			<div class="flexws afterBorder">
 				<div onclick="fastOrder()" class="rightBorder paddv10">
 					<div id="">
@@ -262,7 +262,7 @@
 				</div>
 				<div class="gxb" class="rightBorder paddv10">
 					<div id="">
-						工序包下单
+						工序包
 					</div>
 					<img src="images/2.svg" alt="" />
 				</div>
@@ -312,7 +312,7 @@
 		</div>
 		 
 		<!--工人-->
-		<div class="mui-content ltac worker bgcwt" style="display: none;box-shadow: 0 0px 1px rgba(0,0,0,.1)">
+		<div class="mui-content ltac worker bgcwt" style="display: none;">
 			<div class="flexws afterBorder">
 				<div onclick="fastOrder()" class="rightBorder paddv10">
 					<div id="">
@@ -322,7 +322,7 @@
 				</div>
 				<div class="gxb" class="rightBorder paddv10">
 					<div id="">
-						工序包下单
+						工序包
 					</div>
 					<img src="images/2.svg" alt="" />
 				</div>
@@ -358,7 +358,7 @@
 		</div>
 		 
 		<!--导购-->
-		<div class="mui-content ltac guides bgcwt" style="display: none;box-shadow: 0 0px 1px rgba(0,0,0,.1)">
+		<div class="mui-content ltac guides bgcwt" style="display: none;">
 			<div class="flexws afterBorder">
 				<div onclick="fastOrder()" class="rightBorder paddv10">
 					<div id="">
@@ -368,7 +368,7 @@
 				</div>
 				<div class="gxb" class="rightBorder paddv10">
 					<div id="">
-						工序包下单
+						工序包
 					</div>
 					<img src="images/2.svg" alt="" />
 				</div>
@@ -410,16 +410,16 @@
 		</div>
 
 		<!--常购清单-->
-		<div class="bgcwt afterBorder pad15 ft16" style="margin-top:10px;box-shadow: 0 0px 1px rgba(0,0,0,.1)" id='oftenbuy' onclick="goOftenList()">
+		<div class="bgcwt afterBorder pad15 ft16" style="margin-top:10px;" id='oftenbuy' onclick="goOftenList()">
 			<span class="bdl activecl">
 				常购清单
 			</span>
-			<span class="mui-pull-right mui-icon mui-icon-arrowright activecl" style="font-weight: bold;"></span>
-			<span class="mui-pull-right disablecl">更多</span>
+			<span class="mui-pull-right mui-icon mui-icon-arrowright activecl"></span>
+			<span class="mui-pull-right disablecl ft14" style="margin-top: 3px;">更多</span>
 		</div>
 
 		<!--常购清单商品列表-->
-		<div class="bgcwt" style="box-shadow: 0 0px 1px rgba(0,0,0,.1)">
+		<div class="bgcwt">
 			<div class="goodsList" id="goodsList"></div>
 		</div>
 		<script type="text/html" id="goodsTpl">
@@ -447,16 +447,16 @@
 				<%}%>
 			</ul>
 		</script>
-		<div class="bgcwt afterBorder pad15 ft16" style="margin-top:10px;box-shadow: 0 0px 1px rgba(0,0,0,.1)" onclick="goHotList()">
+		<div class="bgcwt afterBorder pad15 ft16" style="margin-top:10px;" onclick="goHotList()">
 			<span class="bdl activecl">
 				热门商品
 			</span>
-			<span class="mui-pull-right mui-icon mui-icon-arrowright activecl" style="font-weight: bold;"></span>
-			<span class="mui-pull-right disablecl">更多</span>
+			<span class="mui-pull-right mui-icon mui-icon-arrowright activecl"></span>
+			<span class="mui-pull-right disablecl ft14" style="margin-top: 3px;">更多</span>
 		</div>
 	 
 		<!--热门商品商品列表-->
-		<div class="bgcwt" style="box-shadow: 0 0px 1px rgba(0,0,0,.1)">
+		<div class="bgcwt">
 			<div class="goodsList" id="goodsListHot"></div>
 		</div>
 		<script type="text/html" id="goodsHotTpl">
@@ -489,8 +489,8 @@
 			<span class="bdl activecl">
 				乐易装商学院
 			</span>
-			<span class="mui-pull-right mui-icon mui-icon-arrowright activecl" style="font-weight: bold;"></span>
-			<span class="mui-pull-right disablecl">更多</span>
+			<span class="mui-pull-right mui-icon mui-icon-arrowright activecl"></span>
+			<span class="mui-pull-right disablecl ft14" style="margin-top: 3px;">更多</span>
 		</div>
 		<div id="tradeList" class="bgcwt">
 				<div style="height: 10px;"></div>
@@ -701,6 +701,7 @@
 				}
 			})
 			mui.plusReady(function() {
+				alert(plus.push.getClientInfo().clientid)
 				//判断是否登陆
 				document.addEventListener('refresh', function() {
 					loadIndex();
@@ -838,7 +839,7 @@
 					},
 					error: function(xhr, type, errorThrown) {
 						plus.nativeUI.closeWaiting();
-						console.log('登录响应失败');
+						console.log('响应失败');
 					}
 				});
 				function loadIndex() {

@@ -857,6 +857,7 @@ nav .userIcon:before {
 	margin-top: -5px;
 	/*border: 1px solid #eee;*/
 	border-radius: 4px;
+	margin-right:12px;
 }
 
 .cart dd .goodsInfor .numberWidget input[type="button"] {
