@@ -85,29 +85,29 @@
 			</div>
 			<div class="Dpart4 Dpart3">
 				<div>
-					<span class="huiC">商品总额：</span> <span class="floL">¥<%= detail.customerBillingDetailResponse.totalPrice%></span>
+					<span class="huiC">商品总额：</span> <span class="floL">¥<%= detail.BillingDetailResponse.totalPrice%></span>
 				</div>
 				<div>
-					<span class="huiC">运费：</span> <span class="floL">¥<%= detail.customerBillingDetailResponse.freight%></span>
+					<span class="huiC">运费：</span> <span class="floL">¥<%= detail.BillingDetailResponse.freight%></span>
 				</div>
 				<div>
-					<span class="huiC">优惠卷抵扣：</span> <span class="floL">¥<%= detail.customerBillingDetailResponse.memberDiscount%></span>
+					<span class="huiC">优惠卷抵扣：</span> <span class="floL">¥<%= detail.BillingDetailResponse.memberDiscount%></span>
 				</div>
 				<div>
-					<span class="huiC">乐豆抵扣：</span> <span class="floL">¥<%= detail.customerBillingDetailResponse.promotionDiscount%></span>
+					<span class="huiC">乐豆抵扣：</span> <span class="floL">¥<%= detail.BillingDetailResponse.promotionDiscount%></span>
 				</div>
 				<div>
-					<span class="huiC">产品卷抵扣：</span> <span class="floL">¥<%= detail.customerBillingDetailResponse.productCouponDiscount%></span>
+					<span class="huiC">产品卷抵扣：</span> <span class="floL">¥<%= detail.BillingDetailResponse.productCouponDiscount%></span>
 				</div>
 				<div>
-					<span class="huiC">预存款抵扣：</span> <span class="floL">¥<%= detail.customerBillingDetailResponse.preDeposit%></span>
+					<span class="huiC">预存款抵扣：</span> <span class="floL">¥<%= detail.BillingDetailResponse.preDeposit%></span>
 				</div>
 				<!--<div>
-					<span class="redC">应付金额：</span> <span class="floL redC">¥<%= detail.customerBillingDetailResponse.leBiCashDiscount%></span>
+					<span class="redC">应付金额：</span> <span class="floL redC">¥<%= detail.BillingDetailResponse.leBiCashDiscount%></span>
 				</div>-->
 			</div>
 			<div class="fineT" style="text-align: right;background-color: #fff;margin-top: -7px;padding: 10px 15px;margin-bottom: 7px;">
-				实付款：<span class="redC">¥<%= detail.customerBillingDetailResponse.amountPayable%></span>
+				实付款：<span class="redC">¥<%= detail.BillingDetailResponse.amountPayable%></span>
 			</div>
 			<!--订单评价-->
 			<div class="Dpart3">
@@ -218,6 +218,7 @@
 					success:function(data,type,xhr){
 						console.log('订单详情',data);
 						if(data.code == 0){
+							data.content.BillingDetailResponse = data.content.customerBillingDetailResponse || data.content.managerBillingDetailResponse || data.content.sellerBillingDetailResponse;
 							document.getElementById('main').innerHTML = template('mainS',{detail:data.content});
 						}else{
 							mui.toast(data.message);
@@ -400,7 +401,8 @@
 						if(!content){
 							mui.toast("还未填写内容呢！");
 			    	   			mui('.evaluaText')[0].focus();
-						}else if(!Apic.length){
+//						}else if(!Apic.length){
+						}else if(false){
 					    		mui.toast("请添加图片");
 					    	}else{
 					    		plus.nativeUI.showWaiting();
@@ -443,6 +445,8 @@
 									task.addFile(ele, {key:'pictures'});
 									if(index == Apic.length-1){ task.start(); }
 								})
+							}else{
+								task.start();
 							}
 
 					    	}
