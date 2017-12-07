@@ -132,6 +132,9 @@
 .ft10{
 	font-size: 10px;
 }
+.ft1{
+	font-size: 11px;
+}
 .ft12{
 	font-size: 12px;
 }
@@ -358,7 +361,7 @@
 }
 .mui-popup-inner{background-color: white;}
 .mui-popup-button{background-color: white;color: black;}
-.afterBorder,.beforeBorder{
+.afterBorder,.beforeBorder,.rightBorder{
 	position: relative;
 }
 .afterBorder:after{
@@ -380,4 +383,27 @@
 	top: 0;
     background: #cacaca;
     -webkit-transform: scaleY(.3);
+}
+.rightBorder:after{
+	position: absolute;
+	content: '';
+	width: 1px;
+	right: 0px;
+	top: 0px;
+	bottom: 0px;
+    background: #cacaca;
+    -webkit-transform: scaleX(.3);
+}
+.zanwei{
+	position: relative;
+	width: 100%;
+	display: inline-block;
+	padding-top: 100%;
+}
+.zanwei img{
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	overflow: hidden;
 }

@@ -1,0 +1,199 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>还款记录</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/commonY.css"/>
+		<link rel="stylesheet" href="../../css/style.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/configW.css" />
+	</head>
+	<style type="text/css">
+		.categray div {
+			width: 80%;
+			vertical-align: top;
+		}
+		
+		.mui-media {
+			position: relative;
+		}
+		 
+		.check {
+			position: absolute;
+			top: 50%;
+			-webkit-transform: translateY(-50%);
+			width: 25px;
+			left: 20px;
+		}
+		
+		#useCoupon {
+			position: fixed;
+			bottom: 10px;
+			width: 80%;
+			margin: auto;
+			left: 10%;
+			height: 40px;
+		}
+		.righticon{
+			    position: absolute;
+			    right: 10px;
+			    top: 50%;
+			    -webkit-transform: translateY(-50%);
+			    
+		}
+		
+	</style>
+
+	<body>
+		<header class="mui-bar mui-bar-nav" style="padding-right: 15px;">
+			<a id="leftbtn" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">还款记录</h1>
+		</header>
+		<script src="../../js/statusBar.js" type="text/javascript" charset="utf-8"></script>
+		<div class="mui-content" style="margin-top: 7px;">
+			<!--商品列表-->
+			<div class="goodsList" id="goodsList" style="margin-bottom: 50px;">
+				<ul class="mui-table-view">
+						<li class="mui-table-view-cell mui-media">
+							<a href="javascript:;">
+								<div class="mui-media-body ft16">
+									<p class='mui-ellipsis maincl ft15'>
+										还款金额 &nbsp; &nbsp;
+										
+									</p>
+								</div>
+							</a>
+							<span class="mui-pull-right titcl righticon">¥2000</span>
+						</li>
+						<li class="mui-table-view-cell mui-media">
+							<a href="javascript:;">
+								<div class="mui-media-body ft16">
+									<p class='mui-ellipsis maincl ft15'>
+										还款方式 &nbsp; &nbsp;
+										
+									</p>
+								</div>
+							</a>
+							<span class="mui-pull-right titcl righticon">支付宝</span>
+						</li>
+						<li class="mui-table-view-cell mui-media">
+							<a href="javascript:;">
+								<div class="mui-media-body ft16">
+									<p class='mui-ellipsis maincl ft15'>
+										还款单号&nbsp; &nbsp;
+										
+									</p>
+								</div>
+							</a>
+							<span class="mui-pull-right titcl righticon">12345677896</span>
+						</li>
+						<li class="mui-table-view-cell mui-media">
+							<a href="javascript:;">
+								<div class="mui-media-body ft16">
+									<p class='mui-ellipsis maincl ft15'>
+										还款日期&nbsp; &nbsp;
+										
+									</p>
+								</div>
+							</a>
+							<span class="mui-pull-right titcl righticon">2017年12月20号 09:23:00</span>
+						</li>
+						<li class="mui-table-view-cell mui-media">
+							<a href="javascript:;">
+								<div class="mui-media-body ft16">
+									<p class='mui-ellipsis maincl ft15'>
+										订单号&nbsp; &nbsp;
+										
+									</p>
+								</div>
+							</a>
+							<span class="mui-pull-right titcl righticon">sd32342342342</span>
+						</li>
+						<li class="mui-table-view-cell mui-media">
+							<a href="javascript:;">
+								<div class="mui-media-body ft16">
+									<p class='mui-ellipsis maincl ft15'>
+										顾客姓名&nbsp; &nbsp;
+										
+									</p>
+								</div>
+							</a>
+							<span class="mui-pull-right titcl righticon">the fin</span>
+						</li>
+						<li class="mui-table-view-cell mui-media">
+							<a href="javascript:;">
+								<div class="mui-media-body ft16">
+									<p class='mui-ellipsis maincl ft15'>
+										顾客电话&nbsp; &nbsp;
+										
+									</p>
+								</div>
+							</a>
+							<span class="mui-pull-right titcl righticon">15708434452</span>
+						</li>
+						
+						 
+				</ul>
+			</div>
+			 
+		</div>
+		<script src="../../js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/artTemplate-native.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/default.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			mui.init();
+			mui.plusReady(function() {
+				var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
+				var userId = plus.storage.getItem('$userId');
+				var oldToken = plus.storage.getItem('oldToken')
+				 
+//				plus.nativeUI.showWaiting();
+				kindType();
+				function kindType() {
+					//还款记录列表
+//					mui.ajax(serverUrl + '/app/seller/arrearsAudit/list', {
+//						data: {
+//							userID:userId,
+//							identityType: identityT,
+//						},
+//						dataType: 'json',
+//						headers: {
+//							"Authorization": oldToken
+//						},
+//						type: 'post',
+//						timeout: 10000,
+//						success: function(data, type, xhr) {
+//							console.log('还款记录列表', data);
+//							if(data.code == 0) {
+//								plus.nativeUI.closeWaiting();
+//								if(data.content && data.content.length) {
+//									$('#goodsList').html(template('goodsTpl', {
+//										list: data.content
+//									}));
+//								} else {
+//									$('#useCoupon').hide();
+//									$('#goodsList').html('<div style="text-align:center;padding:15px">暂无还款记录</div>')
+//								}
+//							} else {
+//								$('#useCoupon').hide();
+//								mui.toast(data.message)
+//							}
+//
+//						},
+//						error: function(xhr, type, errorThrown) {
+//							plus.nativeUI.closeWaiting();
+//							mui.toast(type)
+//							console.log('登录响应失败');
+//						}
+//					});
+
+				}
+
+			})
+		</script>
+	</body>
+
+</html>

@@ -572,7 +572,11 @@
 					"page/fastOrder.html",
 					"page/dispatching/dispatching.html",
 					"page/guide/noDelivery.html",
-					"page/guide/debateAudit.html"
+					"page/guide/debateAudit.html",
+					"page/personal/message.html",
+					"page/personal/deliveryInform.html",
+					"page/guide/debateQuery.html",
+					"page/personal/signInDay.html"
 				],
 				"priority": 0
 			},
@@ -744,7 +748,8 @@
 					"page/order/chooseCustom2.html",
 					"page/personal/palette.html",
 					"page/personal/pzOrderList.html",
-					"page/guide/debateAudit.html"
+					"page/guide/debateAudit.html",
+					"page/guide/debateQuery.html"
 				],
 				"priority": 0
 			},
@@ -1559,7 +1564,8 @@
 			"page/guide/noDelivery.html": {
 				"resources": [],
 				"refer": [
-					"page/personal/productCoupon.html"
+					"page/personal/productCoupon.html",
+					"page/guide/searchNodelivery.html"
 				],
 				"priority": 0
 			},
@@ -1575,7 +1581,10 @@
 			"page/personal/myOrderList.html": {
 				"resources": [],
 				"refer": [
-					"page/personal/myOrderWL.html"
+					"page/personal/myOrderWL.html",
+					"page/personal/myOrderDetail.html",
+					"page/personal/signInDay.html",
+					"page/personal/myOrderReturns.html"
 				],
 				"priority": 0
 			},
@@ -1583,6 +1592,35 @@
 				"resources": [],
 				"refer": [
 					"page/personal/myOrderWL.html"
+				],
+				"priority": 0
+			},
+			"page/guide/debateAudit.html": {
+				"resources": [],
+				"refer": [
+					"page/personal/myOrderDetail.html"
+				],
+				"priority": 0
+			},
+			"page/guide/debateQuery.html": {
+				"resources": [],
+				"refer": [
+					"page/personal/myOrderDetail.html",
+					"page/guide/repayment.html"
+				],
+				"priority": 0
+			},
+			"page/guide/repayment.html": {
+				"resources": [],
+				"refer": [
+					"page/guide/repaymentInfo.html"
+				],
+				"priority": 0
+			},
+			"page/personal/pzOrderList.html": {
+				"resources": [],
+				"refer": [
+					"page/personal/pzOrderInfo.html"
 				],
 				"priority": 0
 			}

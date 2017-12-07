@@ -10,8 +10,10 @@
 		<link rel="stylesheet" href="../../css/configW.css" />
 	</head>
 	<style type="text/css">
-		.mui-content{padding: 15px;}
-		.coupon{text-align: center;background-color: white;border-radius: 3px;padding: 10px;margin: 10px 0;line-height: 1.5;}
+		.mui-content{padding: 8px;}
+		.coupon{background: url(../../images/center/couponbg.jpg);padding: 55px 5px;margin: 10px 0;background-size: 100% 100%;position: relative;}
+		.cpleft{position: absolute;left: 12%;top:50%;-webkit-transform: translateY(-50%);}
+		.cpright{position: absolute;left: 40%;right:3%;top:50%;-webkit-transform: translateY(-50%);}
 	</style>
 	<body>
 		<header class="mui-bar mui-bar-nav fineB">
@@ -19,14 +21,18 @@
 		    <h1 class="mui-title">优惠券</h1>  
 		</header>
 		<script src="../../js/statusBar.js"></script><!--状态栏-->
-		<div class="mui-content">
+		<div class="mui-content" style="margin-top: 7px;">
 			<div id="coupon"></div>
 			<script type="text/html" id="couponTpl">
 				<%for(var i=0;i<dataList.length;i++){%>
 					<div class="coupon">
-						<div class="ft20"><span class="activecl"><%=dataList[i].denomination%>元</span> <small><%=dataList[i].title%></small></div>
-						<div class="ft14">有效期：<%=dataList[i].effectiveStartTime%> 至 <%=dataList[i].effectiveEndTime%></div>
-						<div class="ft12 disablecl">使用条件：<%=dataList[i].description%></div>
+						<div class="ft20 cpleft"><span class="whitecl"><%=dataList[i].denomination%>元</span></div>
+						<div class="cpright">
+							<div class="ft20"><%=dataList[i].title%></div>
+							<div class="ft14 maincl">使用条件：<%=dataList[i].description%></div>
+							<div class="ft13">有效期:<%=dataList[i].effectiveStartTime%> 至 <%=dataList[i].effectiveEndTime%></div>
+							
+						</div>
 					</div>
 				<%}%>
 			</script>

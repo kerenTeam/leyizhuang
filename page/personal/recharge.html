@@ -81,7 +81,7 @@
 				</div>
 				<div class="mui-input-row">
 					<label class="maincl">充值金额</label>
-					<input id='newpsd' type="number" min="1" max="5000" onchange="mac(this)" class="mui-input-clear mui-input" placeholder="请输入1-5000的整数">
+					<input id='newpsd' type="number" min="0" max="5000" onchange="mac(this)" class="mui-input-clear mui-input" placeholder="请输入1-5000的整数">
 				</div>
 
 			</form>
@@ -211,25 +211,53 @@
 						function gopay(id) {
 							var varpay;
 							if(id == 'wxpay') {
-								varpay = {
-									"appid": data.data.appid,
-									"noncestr": data.data.noncestr,
-									"package": "Sign=WXPay",
-									"partnerid": data.data.partnerid,
-									"prepayid": data.data.prepayid,
-									"timestamp": parseInt(data.data.timestamp),
-									"sign": data.data.sign
-								};
 								//微信
-								plus.payment.request(pays[id], varpay, function(result) {
-									console.log("----- 支付成功 -----");
-									$("#payChoose").removeClass("mui-active");
-									var result = JSON.stringify(result)
-	
-								}, function(e) {
-									console.log("----- 支付失败 -----");
-									console.log("[" + e.code + "]：" + e.message);
-									plus.nativeUI.alert("支付失败");
+								mui.ajax(serverUrl + '/app/pay/wechat/recharge', {
+									data: {
+										userId:userId,
+										identityType:identityT.toString(),
+										money:newpsd.value,
+										cityId:parseInt(cityId),
+									},
+									type: 'post', //HTTP请求类型
+									headers: {
+										"Authorization": oldToken
+									},
+									timeout: 10000, //超时时间设置为10秒；
+									success: function(data) { 
+										console.error(data);
+										plus.nativeUI.closeWaiting();
+										if(data.code == 0){
+											varpay = {
+												"appid": data.content.appid,
+												"noncestr": data.content.noncestr,
+												"package": "Sign=WXPay",
+												"partnerid": data.content.partnerid,
+												"prepayid": data.content.prepayid,
+												"timestamp": parseInt(data.content.timestamp),
+												"sign": data.content.sign
+											};
+											//微信
+											plus.payment.request(pays[id], varpay, function(result) {
+												console.log("----- 支付成功 -----"); 
+												var result = JSON.stringify(result)
+				
+											}, function(e) {
+												console.log("----- 支付失败 -----");
+												console.log("[" + e.code + "]：" + e.message);
+												plus.nativeUI.alert("支付失败");
+											}); 
+										}
+										
+									},
+									error: function(xhr, type, errorThrown) {
+										//异常处理；
+										console.log(type);
+										console.log("----- 请求订单失败 -----");
+										console.log(xhr.status);
+										plus.nativeUI.closeWaiting();
+										plus.nativeUI.alert("获取订单信息失败！");
+									}
 								});
 							} else {
 								//支付宝

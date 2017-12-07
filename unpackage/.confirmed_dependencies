@@ -250,7 +250,11 @@
 			"page/fastOrder.html",
 			"page/dispatching/dispatching.html",
 			"page/guide/noDelivery.html",
-			"page/guide/debateAudit.html"
+			"page/guide/debateAudit.html",
+			"page/personal/message.html",
+			"page/personal/deliveryInform.html",
+			"page/guide/debateQuery.html",
+			"page/personal/signInDay.html"
 		]
 	},
 	"page/gxbList.html": {
@@ -405,7 +409,8 @@
 			"page/order/chooseCustom2.html",
 			"page/personal/palette.html",
 			"page/personal/pzOrderList.html",
-			"page/guide/debateAudit.html"
+			"page/guide/debateAudit.html",
+			"page/guide/debateQuery.html"
 		]
 	},
 	"cart.html": {
@@ -1142,7 +1147,8 @@
 	},
 	"page/guide/noDelivery.html": {
 		"refer": [
-			"page/personal/productCoupon.html"
+			"page/personal/productCoupon.html",
+			"page/guide/searchNodelivery.html"
 		],
 		"resources": []
 	},
@@ -1156,7 +1162,10 @@
 	},
 	"page/personal/myOrderList.html": {
 		"refer": [
-			"page/personal/myOrderWL.html"
+			"page/personal/myOrderWL.html",
+			"page/personal/myOrderDetail.html",
+			"page/personal/signInDay.html",
+			"page/personal/myOrderReturns.html"
 		],
 		"resources": []
 	},
@@ -1165,5 +1174,26 @@
 			"page/personal/myOrderWL.html"
 		],
 		"resources": []
+	},
+	"page/guide/debateAudit.html": {
+		"refer": [
+			"page/personal/myOrderDetail.html"
+		]
+	},
+	"page/guide/debateQuery.html": {
+		"refer": [
+			"page/personal/myOrderDetail.html",
+			"page/guide/repayment.html"
+		]
+	},
+	"page/guide/repayment.html": {
+		"refer": [
+			"page/guide/repaymentInfo.html"
+		]
+	},
+	"page/personal/pzOrderList.html": {
+		"refer": [
+			"page/personal/pzOrderInfo.html"
+		]
 	}
 }

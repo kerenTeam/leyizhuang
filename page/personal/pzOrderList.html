@@ -6,10 +6,10 @@
 		<title>拍照下单</title>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/mui.min.css"/>
 		<link rel="stylesheet" type="text/css" href="../../css/configW.css"/>
 		<link rel="stylesheet" type="text/css" href="../../css/commonY.css">
 		<link rel="stylesheet" type="text/css" href="../../css/indexY.css">
-		<link rel="stylesheet" type="text/css" href="../../css/mui.min.css"/>
 		<link rel="stylesheet" href="../../css/resetY.css">
 		<!--<link rel="stylesheet" href="../../css/youxd.css">-->
 		<style type="text/css">
@@ -31,10 +31,8 @@
 			#infoListDiv{transition: all .3s;}
 
 			#main{margin-top: 0px;border-top:1px solid #eee }
-			.rechargeConDiv{background-color: #fff;margin-top: 5px;line-height: 28px;padding: 10px;}
+			.rechargeConDiv{background-color: #fff;margin-top: 5px;line-height: 28px;}
 			.rechargeConDiv p{font-size: 16px;}
-			.activecl{background-color: #FEFFFF; border: 1px solid #c7161e; color: #c7161e; border-radius: 3px; font-size: 15px;
-                      padding: 4px 10px; margin-top: -4px;}
   	  		#tabLink{padding: 14px;height: 66px !important;}
   	  		.notice li.active { box-sizing: border-box; background-color: #c7161e; color: #fff;
   	  			border: 1px solid #c7161e;}
@@ -42,6 +40,8 @@
 			.notice li:last-child{border-radius: 0 3px 3px 0;font-size: 16px;}
 			.notice .tab-hd li {height: 38px !important;line-height: 38px !important;}
 			.mui-bar-nav~.mui-content{padding-top: 50px;}
+			.cmimg{width: 1rem;height: 1rem;}
+			.bgcee{overflow-y:scroll ;white-space: nowrap;}
 		</style>
 
 	</head>
@@ -56,7 +56,7 @@
 			<div class="notice">
 				<div class="tab-hd tab-hdtwo" id="tabLink">
 					<ul class="tab-nav">
-					  <li class="active aClick " data-statusId="">未处理</li>
+					  <li class="active aClick " data-statusId="0">未处理</li>
 					  <li class="aClick" data-statusId="1">已处理</li>
 					</ul>
 				</div>
@@ -70,20 +70,46 @@
 				</div>
 				<script id="infoList" type="text/html">
 					<%for(var i=0;i<list.length;i++){%>
-						<div class="rechargeConDiv">
-							<p>充值时间: <%= list[i].createTime%></p>
-							<p>充值金额: <%= list[i].changeMoney%></p>
-							<p>充值方式: <%= list[i].type%></p>
+						<div class="rechargeConDiv" onclick="goInfo('<%=list[i].id%>')">
+							 <div class="padd10 ft16 afterBorder">
+							 	订单编号：<%=list[i].id%>
+							 	<span class="mui-pull-right mui-icon mui-icon-arrowright activecl righticon" style="margin-top: 2px;"></span>
+							 	<span class="mui-pull-right activecl"><%=list[i].status%></span>
+							 </div>
+							 <div class="padd10 afterBorder">
+							 	<div class="bgcee padd10">
+							 		<%if(list[i].photos.length>4){%>
+								 		<%for(var j = 0 ;j<4;j++){%>
+									 		<img src="<%=list[i].photos[j]%>" class="cmimg" /> 
+									 	<%}%>
+							 		<%}else{%>
+							 			<%for(var j = 0 ;j<list[i].photos.length;j++){%>
+									 		<img src="<%=list[i].photos[j]%>" class="cmimg" /> 
+									 	<%}%>
+							 		<%}%>
+								 	
+								 </div>
+							 </div>
+							 <div class="padd10" style="overflow: hidden;">
+							 	<button data-id="<%=list[i].id%>" class="mui-btn-danger mui-btn-outlined mui-pull-right" onclick="cancel('<%=list[i].id%>')">取消</button>
+							 </div>
 						</div>
 					<%}%>
 				</script>
 				<script id="infoList2" type="text/html">
 					<%for(var i=0;i<list.length;i++){%>
 						<div class="rechargeConDiv">
-							<p>消费时间: <%= list[i].createTime%></p>
-							<p>订单编号: <%= list[i].orderNumber%></p>
-							<p>消费金额: <%= list[i].changeMoney%></p>
-							<p>消费方式: <%= list[i].type%></p>
+							 <div class="padd10 ft16 afterBorder">
+							 	订单编号：<%=list[i].id%>
+							 	<span class="mui-pull-right activecl"><%=list[i].status%></span>
+							 </div>
+							 <div class="padd10">
+							 	<div class="bgcee padd10">
+								 	<%for(var j = 0 ;j<list[i].photos.length;j++){%>
+								 		<img src="<%=list[i].photos[j]%>" class="cmimg" />
+								 	<%}%>
+								 </div>
+							 </div>
 						</div>
 					<%}%>
 				</script>
@@ -95,90 +121,37 @@
 		<script src="../../js/artTemplate-native.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
 			mui.init();
+			function goInfo(id){
+				openview({
+					view:'pzOrderInfo.html',
+					id:'pzOrderInfo',
+					extrasobj:{orderid:id}
+				})
+			}
 			mui.plusReady(function(){
 				//获取缓存
 				var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
 				var userId = plus.storage.getItem('$userId');
 				var oldToken = plus.storage.getItem('oldToken');
-				plus.nativeUI.showWaiting();
-				if(identityT == 2){
-//					var api = '/app/store/preDeposit/balance'
-				}else{
-//					var api = '/app/customer/preDeposit/balance'
-				}
-				mui('#recharge')[0].onclick = function(){
-					openview({
-						view:"personal/recharge.html",
-						extrasobj:{money:$('#balance').text()}
-					})
-				}
-				//顾客余额
-				mui.ajax(serverUrl+api,{
-					data:{
-						userId:userId,
-						identityType:identityT
-					},
-					dataType:'json',
-					headers: {"Authorization": oldToken},
-					type:'post',
-					timeout:10000,
-					success:function(data,type,xhr){
-						plus.nativeUI.closeWaiting();
-						console.log('账户余额',data);
-						if(data.code == 0 ){
-							plus.nativeUI.closeWaiting();
-								if(data.content){
-									$('#balance').html('¥'+data.content);
-								}else{
-									$('#balance').html('¥'+0);
-								}
-
-						}
-						if(data.code == 1000 ){
-							mui.toast(data.message)
-						}else if(data.code == -1 ){
-							mui.toast(data.message)
-						}
-
-					},
-					error:function(xhr,type,errorThrown){
-						plus.nativeUI.closeWaiting();
-						mui.toast(type)
-						console.log('响应失败');
-					}
-				});
-
 				//tab切换
-				//初始化
-				if(identityT == 6){
-					var url = '/app/customer/PreDeposit/recharge/log';
-				}else if(identityT == 2){
-					var url = '/app/employee/PreDeposit/recharge/log';
-				}
+				//初始化 
+				var url = '/app/photoOrder/pending/list';
 				loadFun(url,'tab1');
 				$('#tabLink li').click(function(){
 					$('#tabLink li').removeClass('active');
 					$(this).addClass('active');
 					$('#loadingdiv').css('height','32px');
 					if($(this).index() == 0){
-						if(identityT == 6){
-							var url = '/app/customer/PreDeposit/recharge/log';
-						}else if(identityT == 2){
-							var url = '/app/employee/PreDeposit/recharge/log';
-						}
+						var url = '/app/photoOrder/pending/list';
 						loadFun(url,'tab1');
 					}else{
-						if(identityT == 6){
-							var url = '/app/customer/PreDeposit/consumption/log';
-						}else if(identityT == 2){
-							var url = '/app/employee/PreDeposit/consumption/log';
-						}
+						var url = '/app/photoOrder/handled/list';
 						loadFun(url,'tab2');
 					}
 				})
 				function loadFun(url,tabT){
 					mui.ajax(serverUrl + url,{
-						data:{'userId':1,'identityType':identityT},
+						data:{'userId':userId,'identityType':identityT},
 						dataType:'json',
 						type:'post',
 						timeout:1000,
@@ -188,7 +161,7 @@
 							var timeLoad = setInterval(function(){
 								clearTimeout(timeLoad),timeLoad = null;
 								if(data.code == 0){
-									$('#loadingdiv').css('height','0px');
+									$('#loadingdiv').css('height','0px'); 
 									if(data.content && data.content.length){
 										if(tabT == 'tab1'){
 											document.getElementById('infoListDiv').innerHTML = template('infoList',{list:data.content});
@@ -207,6 +180,44 @@
 							console.log('响应失败  !');
 						}
 					});
+				}
+				
+				window.cancel = function(id){
+					event.stopPropagation();
+					mui.confirm('确认取消吗？', '提示', ['取消', '确定'], function(e) {
+						if(e.index == 1) {
+							mui.ajax(serverUrl + '/app/photoOrder/cancel', {
+								data: {
+									userId: userId,
+									identityType: identityT,
+									id: id,
+								},
+								dataType: 'json',
+								headers: {
+									"Authorization": oldToken
+								},
+								type: 'post',
+								timeout: 10000,
+								success: function(data, type, xhr) {
+									plus.nativeUI.closeWaiting();
+									console.log('取消', data);
+									if(data.code == 0) {
+										 mui.toast('已取消');
+										 loadFun(url,'tab1');
+									} else {
+										mui.toast(data.message)
+									}
+	
+								},
+								error: function(xhr, type, errorThrown) {
+									plus.nativeUI.closeWaiting();
+								}
+							});
+						}else{
+							plus.nativeUI.closeWaiting();
+						}
+	
+					})
 				}
 			})
 		</script>

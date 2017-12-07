@@ -8,8 +8,6 @@
 		<link href="css/mui.min.css" rel="stylesheet" />
 		<link rel="stylesheet" type="text/css" href="css/configW.css" />
 		<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
-		<script src="js/mui.min.js"></script>
-		<script src="js/util.js"></script>
 		<style>
 			html,
 			body {
@@ -42,17 +40,23 @@
 				justify-content: space-around;
 				text-align: center;
 				margin-top: 15px;
-				font-size: 14px
+				font-size: 16px
 			}
 			
-			.flexw img,
-			.flexws img {
+			.flexw img{
 				display: block;
 				width: 30px;
 				height: 30px;
 				margin: auto;
 			}
-			
+			.flexws img {
+				width: 40px;
+				height: 40px;
+				display: inline-block!important;
+			}
+			.flexws{margin-top: 0;}
+			.flexws>div{width: 50%;display: flex;padding: 20px 15px;justify-content: space-between;align-items: center;}
+			.flexws>div>div:first-child{width: 50%;}
 			.ltac .imgb {
 				margin: 5px auto;
 				width: 60px;
@@ -96,17 +100,37 @@
 				padding: 20px;
 				text-align: center;
 			}
+			.indexSearch{
+				background-color: white;font-size: 12px;height: 33px;border-radius: 20px;text-align: center;line-height: 30px;
+			}
+			.mui-card{margin: 0px 10px 10px;}
+			.mui-card-content-inner p img{width: 22px;vertical-align: middle;}
+			.mui-card-content-inner p{font-size: 16px;}
+			.mui-card-content-inner{padding: 8px;}
+			.message {position: absolute;top: 32px;right: 20px;width: 6%;}
+			.somenspf{display: flex;justify-content: space-around;align-items: center;}
+			.somenspf > div{display: flex;align-items: center;}
+			.somenspf img{width:15px;vertical-align: middle;margin-top: -3px;} 
+			.goodsList{overflow:hidden}
+			.ftype .imgb img{width: 28px!important;height: 28px!important;}
+			.ftype .imgb{padding: 10px;border-radius:50% ;margin-bottom: 10px;}
+			.bdl{border-left: 3px solid #B62D29;padding-left: 5px;}
+			.mui-media-object{box-shadow: 0px 0px 0px 1px #EEEEEE;margin-bottom: 5px;}
+			.messagefitler{-webkit-filter: invert(0.8);filter:invert(0.8);}
+			.mui-slider .mui-slider-group .mui-slider-item img{width: 100%;height: 100%!important;}
+			.zanwei2{padding-top: 50%;}
 		</style>
 	</head>
-
+ 
 	<body>
 		<header class="mui-row mui-bar mui-bar-transparent hasManyCity" id="header" style="z-index: 200;">
-			<div class="searchBox" onclick="goSearch()" style="z-index:1;position: absolute;top: 27px;left: 20px;right: 20px;">
-				<div style="background-color: rgba(0,0,0,0.1);font-size: 12px;height: 30px;width: 100%;border-radius: 5px;text-align: center;line-height: 30px;">
+			<div class="searchBox" onclick="goSearch()" style="z-index:1;position: absolute;top: 27px;left: 20px;width: 80%;">
+				<div class="indexSearch">
 					<span class="mui-icon mui-icon-search" style="vertical-align: middle;font-size:20px;padding-top: 7px;"></span>
 				</div>
 			</div>
-		</header>
+			<img src="images/center/message.svg" onclick="goMessage()" class="message"/>
+		</header> 
 		<!--状态栏开始-->
 		<style type="text/css" id="headStyle"></style>
 		<div id="sBar" style="background-color: #FFFFFF;position: fixed;width:100%;top: 0;z-index: 9999"></div>
@@ -121,164 +145,301 @@
 			document.getElementById('headStyle').innerHTML = '.headI{height: ' + headH + 'px !important;} .hasManyCity .searchBox{top:' + immersed + 'px} .qrcodeBtn{top:' + immersed + 'px}';
 			headdiv.className += " headI";
 			headdiv.style.paddingTop = immersed + "px";
+			//head渐变效果
+			$(window).scroll(function() {
+				var scrollTop = $(this).scrollTop();
+				var scrollHeight = $(document).height();
+				var windowHeight = $(this).height();
+				if(scrollTop >= 100) {//不透明背景
+					mui('#header')[0].style.boxShadow="0 0 2px rgba(175, 166, 166, 0.85)";
+					mui('.message')[0].className = 'message messagefitler';
+					mui('.indexSearch')[0].style.background = 'rgba(204, 204, 204, 0.54)';
+				}else{//透明背景
+					mui('#header')[0].style.boxShadow="0 0 0 rgba(175, 166, 166, 0.85)";
+					mui('.message')[0].className = 'message';
+					mui('.indexSearch')[0].style.background = 'rgba(255, 255, 255, 0.57)';
+				}
+			});
+			
 		</script>
 		<div style="position: relative;">
-			<div class="mui-slider">
-				<div class="mui-slider-group mui-slider-loop">
-					<!--支持循环，需要重复图片节点-->
-					<div class="mui-slider-item mui-slider-item-duplicate">
-						<a href="#"><img src="https://b-ssl.duitang.com/uploads/item/201610/11/20161011213437_HeKXZ.thumb.700_0.jpeg" /></a>
-					</div>
-					<div class="mui-slider-item">
-						<a href="#"><img src="https://b-ssl.duitang.com/uploads/item/201610/11/20161011213437_HeKXZ.thumb.700_0.jpeg" /></a>
-					</div>
-					<div class="mui-slider-item">
-						<a href="#"><img src="https://b-ssl.duitang.com/uploads/item/201610/11/20161011213437_HeKXZ.thumb.700_0.jpeg" /></a>
-					</div>
-					<div class="mui-slider-item">
-						<a href="#"><img src="https://b-ssl.duitang.com/uploads/item/201610/11/20161011213437_HeKXZ.thumb.700_0.jpeg" /></a>
-					</div>
-					<div class="mui-slider-item">
-						<a href="#"><img src="https://b-ssl.duitang.com/uploads/item/201610/11/20161011213437_HeKXZ.thumb.700_0.jpeg" /></a>
-					</div>
-					<!--支持循环，需要重复图片节点-->
-					<div class="mui-slider-item mui-slider-item-duplicate">
-						<a href="#"><img src="https://b-ssl.duitang.com/uploads/item/201610/11/20161011213437_HeKXZ.thumb.700_0.jpeg" /></a>
+			<div id="banner">
+				<div class="mui-slider">
+					<div class="mui-slider-group mui-slider-loop">
+						<!--支持循环，需要重复图片节点-->
+						<div class="mui-slider-item mui-slider-item-duplicate zanwei zanwei2">
+							<img src="http://www.huarun.com/images/product/productIn_scroll.jpg" />
+						</div>
+						<div class="mui-slider-item zanwei zanwei2">
+							<img src="http://www.huarun.com/upload/temp/img/20160602/142150-979.jpg" />
+						</div>
+						<div class="mui-slider-item zanwei zanwei2">
+							<img src="http://www.huarun.com/upload/temp/img/20170524/154140-245.jpg" />
+						</div>
+						<div class="mui-slider-item zanwei zanwei2">
+							<img src="http://www.huarun.com/images/product/productIn_scroll.jpg" />
+						</div>
+						<!--支持循环，需要重复图片节点-->
+						<div class="mui-slider-item mui-slider-item-duplicate zanwei zanwei2">
+							<img src="http://www.huarun.com/upload/temp/img/20160602/142150-979.jpg" />
+						</div>
 					</div>
 				</div>
 			</div>
+			<script type="text/html" id="bannerTpl">
+				<div class="mui-slider">
+					<!--轮播图-->
+					<%if(list.length){%>
+					<div class="mui-slider-group mui-slider-loop">
+					    <!--支持循环，需要重复图片节点-->
+					    <div class="mui-slider-item mui-slider-item-duplicate zanwei zanwei2">
+					     	<img src="<%=url%><%=list[list.length-1].pic%>" onerror="javascript:this.src='images/img.svg';" />
+					    </div>
+						<% for(var i=0;i<list.length;i++){ %> 
+					    	<div class="mui-slider-item zanwei zanwei2">
+					    		<img src="<%=url%><%=list[i].pic%>"  onerror="javascript:this.src='images/img.svg';"/>
+					    	</div>
+					     <% } %>
+					    <!--支持循环，需要重复图片节点-->
+					    <div class="mui-slider-item mui-slider-item-duplicate zanwei zanwei2" >
+					     	<img src="<%=url%><%=list[0].pic%>" onerror="javascript:this.src='images/img.svg';" />
+					    </div>
+					</div>
+					<div class="mui-slider-indicator">
+						<div class="mui-indicator mui-active"></div>
+						<% for(var i=0;i<list.length-1;i++){ %>
+					    	<div class="mui-indicator"></div>
+					    <% } %>
+		            </div> 
+		            <%}%>
+				</div>
+			</script>
 		</div>
-		<div class="mui-content flexw">
-			<div data-id="water">
-				<img src="images/s.svg" alt="" /> 水
+		
+		<div class="bgcwt" style="box-shadow: 0 1px 1px rgba(0,0,0,.1);">
+			<div class="somenspf ft12 padd10 fttc activecl">
+				<div id="">
+					<img src="images/index/bdchexk.svg"/><span>满1000元包邮</span>
+				</div>
+				<div id="">
+					<img src="images/index/bdchexk.svg"/><span>电梯免费上楼</span>
+				</div>
+				<div id="">
+					<img src="images/index/bdchexk.svg"/><span>二绕内均可配送</span>
+				</div>
 			</div>
-			<div data-id="electric">
-				<img src="images/d.svg" alt="" />电
-			</div>
-			<div data-id="wood">
-				<img src="images/m.svg" alt="" />木
-			</div>
-			<div data-id="tile">
-				<img src="images/w.svg" alt="" />瓦
-			</div>
-			<div data-id="oil">
-				<img src="images/y.svg" alt="" />油
+			<div class="flexw paddv10 ftype" style="margin-top:0 ;">
+				<div data-id="water">
+					<div class="imgb" style="background-color:#B94629"><img src="images/s.svg" alt="" /></div> 水
+				</div>
+				<div data-id="electric">
+					<div class="imgb" style="background-color:#E89F65"><img src="images/d.svg" alt="" /></div>电
+				</div>
+				<div data-id="wood">
+					<div class="imgb" style="background-color:#B1938B"><img src="images/m.svg" alt="" /></div>木
+				</div>
+				<div data-id="tile">
+					<div class="imgb" style="background-color:#38595E"><img src="images/w.svg" alt="" /></div>瓦
+				</div>
+				<div data-id="oil">
+					<div class="imgb" style="background-color:#47AFAF"><img src="images/y.svg" alt="" /></div>油
+				</div>
 			</div>
 		</div>
-		<div style="text-align:center;padding:20px 10px 0">
-			<img style="vertical-align:middle;margin:0 5px;width:25px" src="images/activity.svg" />最新活动
+		
+		<div class="padd10">
+			<img style="vertical-align:middle;width:100%;border-radius:2px ;" src="images/index/huarun.png" />
 		</div>
 
 		<!--顾客 和 项目经理-->
-		<div class="mui-content flexws ltac cusMan">
-			<div onclick="fastOrder()">
-				<div class="imgb" style="background-color:#7dc5eb"><img src="images/1.svg" alt="" /></div>快捷下单
+		<div class="mui-content ltac cusMan bgcwt" style="box-shadow: 0 0px 1px rgba(0,0,0,.1);">
+			<div class="flexws afterBorder">
+				<div onclick="fastOrder()" class="rightBorder paddv10">
+					<div id="">
+						快捷下单
+					</div>
+					<img src="images/1.svg" alt="" />
+				</div>
+				<div class="gxb" class="rightBorder paddv10">
+					<div id="">
+						工序包下单
+					</div>
+					<img src="images/2.svg" alt="" />
+				</div>
 			</div>
-			<div class="gxb">
-				<div class="imgb" style="background-color:#be8dbd"><img src="images/2.svg" alt="" /></div>工序包下单
+			<div class="flexws afterBorder">
+				<div id="paizhaoOrder" class="rightBorder paddv10" onclick="paizhaoOrder()">
+					<div id="">
+						拍照下单
+					</div>
+				    <img src="images/3.svg" alt="" />
+				</div>
+				<div onclick="goCollect()" class="rightBorder paddv10">
+					<div id="">
+						我的收藏
+					</div>
+					<img src="images/4.svg" alt="" />
+				</div>
 			</div>
-			<div id="paizhaoOrder" onclick="paizhaoOrder()">
-				<div class="imgb" style="background-color:#7cba59"><img src="images/3.svg" alt="" /></div>拍照下单
+			<div class="flexws afterBorder">
+				<div class="rightBorder" onclick="delivery()">
+					<div>
+						物流
+					</div>
+					<img src="images/5.svg" alt="" />
+				</div>
+				<div onclick="signRecord()">
+					<div id="">
+						签到
+					</div> 
+					<img src="images/6.svg" alt="" />
+				</div>
 			</div>
-			<div onclick="goCollect()">
-				<div class="imgb" style="background-color:#ea986c"><img src="images/4.svg" alt="" /></div>我的收藏
+			<div class="flexws">
+				<div class="rightBorder" onclick="wallet()">
+					<div id="">
+						钱包
+					</div>
+					<img src="images/7.svg" alt="" />
+				</div>
+				<div id="">
+					<div id="">
+						咨询
+					</div>
+					<img src="images/8.svg" alt="" />
+				</div>
 			</div>
 		</div>
-		<div class="mui-content flexws ltac cusMan">
-			<div>
-				<div class="imgb" style="background-color:#e8989a"><img src="images/5.svg" alt="" /></div>物流
-			</div>
-			<div>
-				<div class="imgb" style="background-color:#8992c8"><img src="images/6.svg" alt="" /></div>签到
-			</div>
-			<div onclick="wallet()">
-				<div class="imgb" style="background-color:#199f97"><img src="images/7.svg" alt="" /></div>钱包
-			</div>
-			<div id="">
-				<div class="imgb" style="background-color:#e15d4b"><img src="images/8.svg" alt="" /></div>咨询
-			</div>
-		</div>
+		 
 		<!--工人-->
-		<div class="mui-content flexws ltac worker" style="display: ;">
-			<div onclick="fastOrder()">
-				<div class="imgb" style="background-color:#7dc5eb"><img src="images/1.svg" alt="" /></div>快捷下单
+		<div class="mui-content ltac worker bgcwt" style="display: none;box-shadow: 0 0px 1px rgba(0,0,0,.1)">
+			<div class="flexws afterBorder">
+				<div onclick="fastOrder()" class="rightBorder paddv10">
+					<div id="">
+						快捷下单
+					</div>
+					<img src="images/1.svg" alt="" />
+				</div>
+				<div class="gxb" class="rightBorder paddv10">
+					<div id="">
+						工序包下单
+					</div>
+					<img src="images/2.svg" alt="" />
+				</div>
 			</div>
-			<div class="gxb">
-				<div class="imgb" style="background-color:#be8dbd"><img src="images/2.svg" alt="" /></div>工序包下单
+			<div class="flexws afterBorder">
+				<div id="paizhaoOrder" class="rightBorder paddv10" onclick="paizhaoOrder()">
+					<div id="">
+						拍照下单
+					</div>
+					<img src="images/3.svg" alt="" />
+				</div>
+				<div onclick="goCollect()" class="rightBorder paddv10">
+					<div id="">
+						我的收藏
+					</div>
+					<img src="images/4.svg" alt="" />
+				</div>
 			</div>
-			<div id="paizhaoOrder" onclick="paizhaoOrder()">
-				<div class="imgb" style="background-color:#7cba59"><img src="images/3.svg" alt="" /></div>拍照下单
+			<div class="flexws afterBorder">
+				<div class="rightBorder" onclick="delivery()">
+					<div id="">
+						物流
+					</div>
+					<img src="images/5.svg" alt="" />
+				</div>
+				<div id="">
+					<div id="">
+						咨询
+					</div>
+					<img src="images/8.svg" alt="" />
+				</div>
 			</div>
-
 		</div>
-		<div class="mui-content flexws ltac worker" style="display: ;">
-			<div onclick="goCollect()">
-				<div class="imgb" style="background-color:#ea986c"><img src="images/4.svg" alt="" /></div>我的收藏
-			</div>
-			<div>
-				<div class="imgb" style="background-color:#e8989a"><img src="images/5.svg" alt="" /></div>物流
-			</div>
-			<div id="">
-				<div class="imgb" style="background-color:#e15d4b"><img src="images/8.svg" alt="" /></div>咨询
-			</div>
-		</div>
-
+		 
 		<!--导购-->
-		<div class="mui-content flexws ltac guides" style="display: ;">
-			<div onclick="fastOrder()">
-				<div class="imgb" style="background-color:#7dc5eb"><img src="images/1.svg" alt="" /></div>快捷下单
+		<div class="mui-content ltac guides bgcwt" style="display: none;box-shadow: 0 0px 1px rgba(0,0,0,.1)">
+			<div class="flexws afterBorder">
+				<div onclick="fastOrder()" class="rightBorder paddv10">
+					<div id="">
+						快捷下单
+					</div>
+					<img src="images/1.svg" alt="" />
+				</div>
+				<div class="gxb" class="rightBorder paddv10">
+					<div id="">
+						工序包下单
+					</div>
+					<img src="images/2.svg" alt="" />
+				</div>
 			</div>
-			<div class="gxb">
-				<div class="imgb" style="background-color:#be8dbd"><img src="images/2.svg" alt="" /></div>工序包下单
+			<div class="flexws afterBorder">
+				<div id="paizhaoOrder" class="rightBorder paddv10" onclick="paizhaoOrder()">
+					<div id="">
+						拍照下单
+					</div>
+					<img src="images/3.svg" alt="" />
+				</div>
+				<div class="rightBorder" onclick="delivery()">
+					<div id="">
+						物流
+					</div>
+					<img src="images/5.svg" alt="" />
+				</div>
 			</div>
-			<div id="paizhaoOrder" onclick="paizhaoOrder()">
-				<div class="imgb" style="background-color:#7cba59"><img src="images/3.svg" alt="" /></div>拍照下单
+			<div class="flexws afterBorder">
+				<div onclick="noDelivery()" class="rightBorder paddv10">
+					<div>未提货</div>
+					<img src="images/9.svg" alt="" />
+				</div>
+				<div onclick="guideCredit()">
+					<div>信用额度</div>
+					<img src="images/10.svg" alt="" />
+				</div>
 			</div>
-			<div>
-				<div class="imgb" style="background-color:#e8989a"><img src="images/5.svg" alt="" /></div>物流
-			</div>
-
-		</div>
-		<div class="mui-content flexws ltac guides" style="display: ;">
-			<div onclick="noDelivery()">
-				<div class="imgb" style="background-color:#8992c8"><img src="images/6.svg" alt="" /></div>未提货
-			</div>
-			<div onclick="guideCredit()">
-				<div class="imgb" style="background-color:#8992c8"><img src="images/6.svg" alt="" /></div>信用额度
-			</div>
-			<div id="">
-				<div class="imgb" style="background-color:#199f97"><img src="images/7.svg" alt="" /></div>欠款查询
-			</div>
-			<div onclick="debateAudit()">
-				<div class="imgb" style="background-color:#e15d4b"><img src="images/8.svg" alt="" /></div>欠款审核
+			<div class="flexws">
+				<div class="rightBorder" onclick="debateQuery()">
+					<div>欠款查询</div>
+					<img src="images/11.svg" alt="" />
+				</div>
+				<div onclick="debateAudit()">
+					<div>欠款审核</div>
+					<img src="images/12.svg" alt="" />
+				</div>
 			</div>
 		</div>
 
 		<!--常购清单-->
-		<div style="text-align:center;padding:20px 10px" id='oftenbuy'>
-			常购清单
-			<span style="float:right;font-size:12px" onclick="goOftenList()">更多</span>
+		<div class="bgcwt afterBorder pad15 ft16" style="margin-top:10px;box-shadow: 0 0px 1px rgba(0,0,0,.1)" id='oftenbuy' onclick="goOftenList()">
+			<span class="bdl activecl">
+				常购清单
+			</span>
+			<span class="mui-pull-right mui-icon mui-icon-arrowright activecl" style="font-weight: bold;"></span>
+			<span class="mui-pull-right disablecl">更多</span>
 		</div>
 
-		<!--商品列表-->
-		<div class="goodsList" id="goodsList"></div>
-		<div style="height: 50px;width: 100%;clear: both;"></div>
-
+		<!--常购清单商品列表-->
+		<div class="bgcwt" style="box-shadow: 0 0px 1px rgba(0,0,0,.1)">
+			<div class="goodsList" id="goodsList"></div>
+		</div>
 		<script type="text/html" id="goodsTpl">
 			<ul class="mui-table-view">
 				<%for(var i = 0 ;i<list.length;i++){%>
-				<li style="width:50%!important;float:left;border:none" class="mui-table-view-cell mui-media" id="<%=list[i].id%>" onclick="goodsInfo(<%=list[i].id%>)">
-					<a href="javascript:;">
-						<img class="mui-media-object" style="display:block!important;width:100%!important;max-width:none;height:auto" src="<%=list[i].coverImageUri%>">
-						<br>
+				<li class="mui-table-view-cell mui-media bgcwt" id="<%=list[i].id%>" onclick="goodsInfo(<%=list[i].id%>)" style="width:50%!important;float:left;border:none!important">
+					<a href="javascript:;" style="border-top: none!important;">
+						<div class="zanwei">
+							<img class="mui-media-object" style="display:block!important;width:100%!important;max-width:none;height:auto" src="<%=list[i].coverImageUri%>">
+						</div>
 						<div class="mui-media-body" style="font-size:12px">
-							<%=list[i].goodsName%>
-							<p class='mui-ellipsis'>规格:
+							<div class="titcl ft16" style="word-break: break-all;text-overflow: ellipsis;overflow: hidden;">
+								<%=list[i].goodsName%>
+							</div>
+							<p class='mui-ellipsis ft14'>规格:
 								<%=list[i].goodsSpecification%> &nbsp;单位:
 								<%=list[i].goodsUnit%>
 							</p>
-							<span>￥<%=list[i].retailPrice%></span>
-							<img style="display:inline-block;float:right;margin-left:5px;vertical-align:middle;width:20px" onclick="addcart(<%=list[i].id%>)" src="images/addcart.svg" />
+							<span class="activecl2 ft20">¥<%=list[i].retailPrice%></span>
+							<img style="display:inline-block;float:right;margin-left:5px;vertical-align:middle;width:22px" onclick="addcart(<%=list[i].id%>)" src="images/addcart.svg" />
 
 						</div>
 					</a>
@@ -286,30 +447,36 @@
 				<%}%>
 			</ul>
 		</script>
-
-		<div style="text-align:center;padding:20px 10px">
-			热门商品
-			<span style="float:right;font-size:12px" onclick="goHotList()">更多</span>
+		<div class="bgcwt afterBorder pad15 ft16" style="margin-top:10px;box-shadow: 0 0px 1px rgba(0,0,0,.1)" onclick="goHotList()">
+			<span class="bdl activecl">
+				热门商品
+			</span>
+			<span class="mui-pull-right mui-icon mui-icon-arrowright activecl" style="font-weight: bold;"></span>
+			<span class="mui-pull-right disablecl">更多</span>
 		</div>
-		<!--商品列表-->
-		<div class="goodsList" id="goodsListHot"></div>
-		<div style="height: 50px;width: 100%;clear: both;"></div>
-
+	 
+		<!--热门商品商品列表-->
+		<div class="bgcwt" style="box-shadow: 0 0px 1px rgba(0,0,0,.1)">
+			<div class="goodsList" id="goodsListHot"></div>
+		</div>
 		<script type="text/html" id="goodsHotTpl">
 			<ul class="mui-table-view" style="border-top: none!important;">
 				<%for(var i = 0 ;i<list.length;i++){%>
-				<li class="mui-table-view-cell mui-media" id="<%=list[i].id%>" onclick="goodsInfo(<%=list[i].id%>)" style="width:50%!important;float:left;border:none!important">
+				<li class="mui-table-view-cell mui-media bgcwt" id="<%=list[i].id%>" onclick="goodsInfo(<%=list[i].id%>)" style="width:50%!important;float:left;border:none!important">
 					<a href="javascript:;" style="border-top: none!important;">
-						<img class="mui-media-object" style="display:block!important;width:100%!important;max-width:none;height:auto" src="<%=list[i].coverImageUri%>">
-						<br>
+						<div class="zanwei">
+							<img class="mui-media-object" style="display:block!important;width:100%!important;max-width:none;height:auto" src="<%=list[i].coverImageUri%>">
+						</div>
 						<div class="mui-media-body" style="font-size:12px">
-							<%=list[i].goodsName%>
-							<p class='mui-ellipsis'>规格:
+							<div class="titcl ft16" style="word-break: break-all;text-overflow: ellipsis;overflow: hidden;">
+								<%=list[i].goodsName%>
+							</div>
+							<p class='mui-ellipsis ft14'>规格:
 								<%=list[i].goodsSpecification%> &nbsp;单位:
 								<%=list[i].goodsUnit%>
 							</p>
-							<span>￥<%=list[i].retailPrice%></span>
-							<img style="display:inline-block;float:right;margin-left:5px;vertical-align:middle;width:20px" onclick="addcart(<%=list[i].id%>)" src="images/addcart.svg" />
+							<span class="activecl2 ft20">¥<%=list[i].retailPrice%></span>
+							<img style="display:inline-block;float:right;margin-left:5px;vertical-align:middle;width:22px" onclick="addcart(<%=list[i].id%>)" src="images/addcart.svg" />
 
 						</div>
 					</a>
@@ -318,38 +485,67 @@
 				<%}%>
 			</ul>
 		</script>
-
-		<div style="text-align:center;padding:20px 10px">
-			乐易装商学院
-			<span style="float:right;font-size:12px" onclick="tradeLists()">更多</span>
+		<div class="bgcwt afterBorder pad15 ft16" style="margin-top:10px;" onclick="tradeLists()">
+			<span class="bdl activecl">
+				乐易装商学院
+			</span>
+			<span class="mui-pull-right mui-icon mui-icon-arrowright activecl" style="font-weight: bold;"></span>
+			<span class="mui-pull-right disablecl">更多</span>
 		</div>
-		<div id="tradeList"></div>
-		<script type="text/html" id="tradeTpl">
-			<%for(var i=0;i<dataList.length;i++){%>
-			<div class="qashadow" data-id="<%=dataList[i].id%>" onclick="openDetail(<%=dataList[i].id%>)">
-				<div class="qtop flexr">
-					<div class="ft16" style="display: flex;align-items: center;">
-						<img class="Avator" src="<%=dataList[i].pic%>" />
-						<div style="flex: 1;margin-left: 10px;">
-							<div class="maincl ft16">
-								<span class=""><%=dataList[i].title%></span>
-							</div>
-							<div class="ft12">
-								<span class="disablecl">阅读量：<%=dataList[i].read%> 时间：<%=dataList[i].createTime%></span>
-							</div>
-						</div>
+		<div id="tradeList" class="bgcwt">
+				<div style="height: 10px;"></div>
+			
+			<div class="mui-card" onclick="openDetail(<%=dataList[i].id%>,'<%=dataList[i].title%>')">
+				<div class="mui-card-header mui-card-media"
+					style="height:45vw;background-image:url('http://www.huarun.com/images/product/productIn_scroll.jpg')">
+				</div>
+				 
+				<div class="mui-card-content">
+					<div class="mui-card-content-inner">
+						<p style="color: #333;">妙想漆系列</p>
+						<p><img src="img/yanjin2.svg"/>111</p>
 					</div>
 				</div>
 			</div>
-			<%}%>
-		</script>
+				<br />
+			
+		</div>
+			<script type="text/html" id="tradeTpl">
+				<div style="height: 10px;"></div>
+				<%for(var i=0;i<dataList.length;i++){%>
+					<div class="mui-card" onclick="openDetail(<%=dataList[i].id%>,'<%=dataList[i].title%>')">
+						<%if(dataList[i].thumb){%>
+							<div class="mui-card-header mui-card-media"
+								style="height:45vw;background-image:url(<%= url%><%= dataList[i].thumb%>)">
+							</div>
+						<%}else{%>
+							<div class="mui-card-header mui-card-media"
+								style="height:45vw;background-image:url('images/img.svg')">
+							</div>
+						<%}%>
+						<div class="mui-card-content">
+							<div class="mui-card-content-inner">
+								<!--<p><%=dataList[i].createTime%></p>-->
+								<p style="color: #333;"><%=dataList[i].title%></p>
+								<p><img src="img/yanjin2.svg"/> <%=dataList[i].read%></p>
+							</div>
+						</div>
+					</div>
+				<%}%>
+				<br />
+			</script>
 		<div class="upload text-center text-xs gray" id="upload"></div>
-		<div style="height: 50px;width: 100%;clear: both;"></div>
-		
+		<script src="js/mui.min.js"></script>
+		<script src="js/util.js"></script>
 		<script src="js/artTemplate-native.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/app.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/default.js" type="text/javascript" charset="utf-8"></script>
 		<script>
+			mui.init();
+			var gallery = mui('.mui-slider');
+			gallery.slider({
+			  interval:0//自动轮播周期，若为0则不自动播放，默认为0；
+			});
 			var Spagenum = 2; //实到页数
 			var Ypagenum = 1; //应到页数
 			function fastOrder(){
@@ -358,10 +554,29 @@
 					id:'fastOrder'
 				})
 			}
+			function debateQuery(){
+				openview({
+					view:'page/guide/debateQuery.html',
+					id:'debateQuery'
+				})
+			}
 			function debateAudit(){
 				openview({
 					view:'page/guide/debateAudit.html',
 					id:'debateAudit'
+				})
+			}
+			function delivery(){
+				openview({
+					view:'page/personal/deliveryInform.html',
+					id:'deliveryInform'
+				})
+			}
+			//消息
+			function goMessage(){
+				openview({
+					view:'page/personal/message.html',
+					id: 'message',
 				})
 			}
 			function paizhaoOrder() { //拍照下单
@@ -414,6 +629,13 @@
 					id: 'tradeList',
 				})
 			}
+			//签到
+			function signRecord(){
+				openview({
+					view:'page/personal/signInDay.html',
+					id:'signInDay'
+				})
+			}
 			//收藏
 			function goCollect() {
 				openview({
@@ -447,12 +669,13 @@
 
 			}
 
-			function openDetail(id) {
+			function openDetail(id,tit) {
 				openview({
 					view: 'page/tradeSchoolLnfo.html',
 					id: 'tradeSchoolLnfo',
 					extrasobj: {
-						tradeId: id
+						tradeId: id,
+						tit:tit
 					}
 				})
 			}
@@ -463,13 +686,8 @@
 					id: 'guideCredit',
 				})
 			}
-			//获得slider插件对象
-			var gallery = mui('.mui-slider');
-			gallery.slider({
-				interval: 5000 //自动轮播周期，若为0则不自动播放，默认为0；
-			});
 
-			var goodsCt = document.querySelectorAll('.flexw div');
+			var goodsCt = document.querySelectorAll('.flexw>div');
 			[].forEach.call(goodsCt, function(ele, i) {
 				ele.onclick = function() {
 					openview({
@@ -600,7 +818,29 @@
 				} //登录方法结束
 
 				loadIndex();
-
+				//banner
+				mui.ajax(oCms + '/lyzcms/index.php/ApiCms/bannerList', {
+					data:{post:1},
+					dataType: 'json',
+					type: 'post',
+					timeout: 10000,
+					success: function(data, type, xhr) {
+						console.log('banner', data);
+						plus.nativeUI.closeWaiting();
+						if(data && data.length) {
+//							$('#banner').html(template('bannerTpl', {list: data,url:oCms}));
+							 
+						} else {
+						}
+//							//获得slider插件对象
+						
+						
+					},
+					error: function(xhr, type, errorThrown) {
+						plus.nativeUI.closeWaiting();
+						console.log('登录响应失败');
+					}
+				});
 				function loadIndex() {
 					//获取缓存
 					var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
@@ -620,7 +860,7 @@
 					} else { //配送员
 
 					}
-
+					
 					//常购商品列表
 					mui.ajax(serverUrl + '/app/goods/often/list', {
 						data: {
@@ -642,7 +882,7 @@
 										list: data.content
 									}));
 								} else {
-									$('#goodsList,#oftenbuy').hide()
+									$('#goodsList,#oftenbuy,.oftenbuy').hide()
 									//									$('#goodsList').html('<div style="text-align:center;padding:15px;font-size: 12px">暂无商品</div>')
 								}
 							} else {
@@ -688,11 +928,13 @@
 							console.log('登录响应失败');
 						}
 					});
+					
+					
 					//乐易装商学院
 					var currentPage = 1,
 						numsPerPage = 2,
 						endPage = 0;
-					mui.ajax('http://hiji.hifete.com:6789/index.php/Api_goods/lyzNews', {
+					mui.ajax(oCms+'/lyzcms/index.php/ApiCms/postSchool', {
 						data: {
 							page: currentPage,
 							size: numsPerPage
@@ -703,11 +945,12 @@
 						success: function(data) {
 							console.log('trade', data);
 
-							if(data && data.data.length) {
-								document.getElementById("tradeList").innerHTML = template("tradeTpl", {
-									dataList: data.data
-								});
-								mui("#upload")[0].innerHTML = "";
+							if(data && data.list.length) {
+//								document.getElementById("tradeList").innerHTML = template("tradeTpl", {
+//									dataList: data.list,
+//									url:oCms
+//								});
+//								mui("#upload")[0].innerHTML = "";
 
 								//上滑加载
 								//								$(window).scroll(function() {
@@ -813,10 +1056,16 @@
 				//				plus.storage.clear();
 				//获取购物车数量
 				var cartNum = plus.storage.getItem('cartNums') || 0;
+				if(cartNum>999){
+					cartNum= '999+'
+				}
 
 				document.addEventListener('cart_refresh', function() {
 					//获取购物车数量
 					cartNum = plus.storage.getItem('cartNums');
+					if(cartNum>999){
+						cartNum= '999+'
+					}
 					drawBadge();
 				})
 				document.addEventListener('refresh', function() {
@@ -878,7 +1127,7 @@
 						height: '50px'
 					},
 					rectStyles: {
-						color: '#DA635D',
+						color: '#B62D29',
 						radius: '50%'
 					}
 				}, {

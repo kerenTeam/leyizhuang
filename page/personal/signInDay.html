@@ -14,14 +14,26 @@
 		<link rel="stylesheet" href="../../css/youxd.css">
 	</head>
 
-	<body>
+	<body style="">
 		<header class="mui-bar mui-bar-nav fineB" style="padding-right: 15px;">
 			<a id="leftbtn" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-			<h1 class="mui-title">签到</h1>
+			<h1 class="mui-title">每日签到</h1>
 		</header>
 		<script src="../../js/statusBar.js"></script>
 
 		<div id="main" style="padding-top: 48px !important;">
+			<div class="">
+				<div style="position: relative;">
+					<img src="../../images/index/signin.png" style="width: 30%;display: block;margin: 15px auto;border-radius: 50%;"/>
+					<div class="activecl2 ft18 qiandao" onclick="qian()" style="position: absolute;top: 50%;left: 50%;-webkit-transform: translate(-49%,-50%);text-shadow:0px 0px 5px white;">
+						签到
+					</div>
+				</div>
+				
+				<div class="fttc maincl">
+					每日签到赚乐币
+				</div>
+			</div>
 			<div class="signHead">
 				<div>
 					连续签到
@@ -86,7 +98,47 @@
 		<script src="../../js/default.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../../js/artTemplate-native.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../../js/youxd.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			mui.plusReady(function(){
+					//获取缓存
+					var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
+					var userId = plus.storage.getItem('$userId');
+					var oldToken = plus.storage.getItem('oldToken');
+					$('.qiandao').html('签到')
+					//签到
+					window.qian = function(){
+						mui.ajax(serverUrl+'/app/customer/sign',{
+							data:{
+								userId:userId,
+								identityType:identityT
+							},
+							dataType:'json',
+							headers: {"Authorization": oldToken},
+							type:'post',
+							timeout:10000,
+							success:function(data,type,xhr){
+								plus.nativeUI.closeWaiting();
+								console.log('列表',data);
+								if(data.code == 0 ){
+									plus.nativeUI.closeWaiting();
+									plus.nativeUI.toast('签到成功，增加1乐币');
+									$('.qiandao').html('已签到');
+								}
+								if(data.code == 1000 ){
+									mui.toast(data.message)
+								}else if(data.code == -1 ){
+									mui.toast(data.message)
+								}
 
+							},
+							error:function(xhr,type,errorThrown){
+								plus.nativeUI.closeWaiting();
+								console.log('登录响应失败');
+							}
+						});
+					}
+			})
+		</script>
 	</body>
 
 </html>

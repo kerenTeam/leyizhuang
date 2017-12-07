@@ -46,7 +46,7 @@
 				line-height: 25px;
 			}
 			.writing {
-				padding: 12px 0 5px;
+				padding: 22px 0 5px;
 				padding-bottom: 5px;
 				margin-left: -25px;
 			}
@@ -147,7 +147,7 @@
 						<div class="denlu">用户名:<span id="userName" style="z-index: 99;"></span></div>
 						<div class="denlu" id="onlyPs">配送数量：<span id="psNumber" style="z-index: 99;"></span></div>
 						<div class="denlu" id="onlyGuide">手机号：<span id="guidesPhone"></span> <span id='bindPhone' style="background-color: orange;color: white;font-size: 10px;padding: 2px;border-radius: 3px;display: none;">绑定手机号</span></div>
-						<div class="denlu" id="onlyCust">乐币:<span id="coin"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 账户:<span id="accoutMoney"></span><br />灯号:<span id="dengh"></span>&nbsp;&nbsp; 导购:<span id="guideName"></span><a id="guideMobile" style="display: none;" href=""><img style="width: 15px;margin-left: 5px;" src="images/center/phone.svg"/></a></div>
+						<div class="denlu" id="onlyCust">灯号:<span id="dengh"></span>&nbsp;&nbsp; 导购:<span id="guideName"></span><a id="guideMobile" style="display: none;" href=""><img style="width: 15px;margin-left: 5px;" src="images/center/phone.svg"/></a></div>
 						<div class="denlu" id="onlymange">账户:<span id="manageMoney"></span></div>
 					</p>
 				</div>
@@ -259,7 +259,7 @@
 					</div>
 					<div class="flexRow ft14">
 						<div class="">
-							<div class="">
+							<div onclick="debateQuery()">
 								欠款查询
 							</div>
 						</div>
@@ -433,6 +433,12 @@
 				openview({
 					view:'page/manager/listCheck.html',
 					id: 'listCheck',
+				})
+			}
+			function debateQuery(){
+				openview({
+					view:'page/guide/debateQuery.html',
+					id:'debateQuery'
 				})
 			}
 			//料单申请
