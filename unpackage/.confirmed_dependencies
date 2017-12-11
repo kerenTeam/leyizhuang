@@ -945,7 +945,8 @@
       "js/artTemplate-native.js"
     ],
     "refer": [
-      "page/personal/address.html"
+      "page/personal/address.html",
+      "page/personal/pzOrderList.html"
     ]
   },
   "page/order/pzOrderTest.html": {
@@ -1039,7 +1040,9 @@
       "css/configW.css",
       "js/artTemplate-native.js"
     ],
-    "refer": []
+    "refer": [
+      "page/goodsInfo.html"
+    ]
   },
   "page/worker/wmaterialCheckList.html": {
     "resources": [

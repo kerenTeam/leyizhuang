@@ -25,7 +25,7 @@
 			<script type="text/html" id="infoList">
 				<div class="padd10 bgcwt">
 				 	<%for(var i = 0 ;i<list.photos.length;i++){%>
-				 		<img src="<%=list.photos[i]%>" class="cmimg" />
+				 		<img src="<%=list.photos[i]%>" class="cmimg" data-preview-src="" data-preview-group="1"/>
 				 	<%}%>
 				 </div>
 				 <div style="height: 10px;"></div>
@@ -48,6 +48,8 @@
 	</body>
 	<script src="../../js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
 	<script src="../../js/mui.min.js"></script>
+	<script src="../../js/mui.zoom.js"></script>
+	<script src="../../js/mui.previewimage.js"></script>
 	<script src="../../js/artTemplate-native.js" type="text/javascript" charset="utf-8"></script>
 	<script src="../../js/default.js" type="text/javascript" charset="utf-8"></script>
 	<script type="text/javascript">
@@ -85,5 +87,6 @@
 				}
 			});
 		})
+		mui.previewImage();
 	</script>
 </html>

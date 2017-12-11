@@ -14,7 +14,7 @@
  			width: calc(100vw - 100px);
  			vertical-align: top;
  		}
- 		.sedc span{margin-bottom:10px;font-size: 14px;}
+ 		.sedc span{margin-bottom:10px;font-size: 16px;}
  		.flexw div{position: relative;align-items: center;padding: 15px 0 10px;}
  		.flexw div:not(:last-child):after{position: absolute;content: '';position: absolute;width: 1px;height: 30px;background: #DDD8CD;-webkit-transform:scaleX(.3);right: 0px;top:12px;z-index: 999;}
  		.afterBorder:after{bottom: -1px;}
@@ -24,13 +24,13 @@
  		.actspan{color: #B42E28;}
  	</style>
 	<body>
-		<header class="mui-bar mui-bar-nav" style="padding-right: 15px;">
+		<header class="mui-bar mui-bar-nav" style="padding-right: 15px;z-index: 100;">
 			<a id="leftbtn" style="display: none;" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<h1 class="mui-title">商品列表</h1>
 		</header>
 		<script src="../js/statusBar.js" type="text/javascript" charset="utf-8"></script>
 		<!--一级分类-->
-		<div class="mui-content flexw afterBorder" style="margin-top: 3px;">
+		<div class="mui-content flexw afterBorder" style="margin-top: 3px;position: -webkit-sticky; position:sticky; top: 23px;z-index: 99;">
 		    <div class="water curActive" data-id = "water">水</div>
 		    <div class="electric" data-id = "electric">电</div>
 		    <div class="wood" data-id = "wood">木</div>
@@ -39,7 +39,7 @@
 		</div>
 		
 		<!--小分类-->
-		<div class="filter" style="background-color:white;padding:15px;font-size:14px">
+		<div class="filter" style="background-color:white;padding:6px;font-size:14px">
 	     	<div class="categray">
 	     		<span class="mui-badge mui-badge-danger ftb actBadge" data-id = '' data-name = 'category'>全部</span><div class="sedc categraya"></div>
 	     		 
@@ -112,7 +112,6 @@
 				}) 
 				 kindType(categoryCode);
 				 function kindType(categoryCode){
-				 	
 //					plus.nativeUI.showWaiting();
 				 	//获取缓存 
 					var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
@@ -135,9 +134,11 @@
 							if(data.code == 0 ){
 								plus.nativeUI.closeWaiting();
 								if(data.content && data.content.length){
+									var html = '';
 									for(var i = 0;i<data.content.length;i++){
-										$('.categraya').html('<span data-name = "category" data-id="'+data.content[i].categoryId+'">'+data.content[i].categoryName+'</span>')
+										html+='<span data-name = "category" data-id="'+data.content[i].categoryId+'">'+data.content[i].categoryName+'</span>'
 									}
+									$('.categraya').html(html)
 								}else{
 									$('.categraya').html('无')
 								}
@@ -170,10 +171,11 @@
 							if(data.code == 0 ){
 								plus.nativeUI.closeWaiting();
 								if(data.content && data.content.length){
+									var html = '';
 									for(var i = 0;i<data.content.length;i++){
-										$('.categrayb').html('<span data-name = "brand" data-id="'+data.content[i].brandId+'">'+data.content[i].brandName+'</span>')
+										html += '<span data-name = "brand" data-id="'+data.content[i].brandId+'">'+data.content[i].brandName+'</span>';
 									}
-									 
+									$('.categrayb').html(html)
 								}else{
 									$('.categrayb').html('无')
 								}
@@ -205,12 +207,12 @@
 							console.log('类型列表',data);
 							if(data.code == 0 ){
 								plus.nativeUI.closeWaiting();
-								
 								if(data.content && data.content.length){
+									var html = '';
 									for(var i = 0;i<data.content.length;i++){
-										$('.categrayd').html('<span data-name = "type" data-id="'+data.content[i].typeId+'">'+data.content[i].typeName+'</span>')
+										html += '<span data-name = "type" data-id="'+data.content[i].typeId+'">'+data.content[i].typeName+'</span>';
 									}
-									
+									$('.categrayd').html(html)
 								}else{
 									 $('.categrayd').html('无')
 								}
@@ -258,7 +260,6 @@
 												spec.push(data.content[i].goodsSpecification)
 											}
 										}
-										console.log('spec',spec);
 										//去重
 										spec = spec.unique1();
 										console.log('spec',spec);

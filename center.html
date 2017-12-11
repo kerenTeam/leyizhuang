@@ -52,7 +52,7 @@
 			}
 			#userBox {
 				background-color: #eca4a6;
-				padding: 33px 0 35px;
+				padding: 33px 0 17px;
 				position: relative;
 			}
 			.dao {
@@ -145,6 +145,7 @@
 				<div class="mui-col-sm-8 mui-col-xs-8 writing">
 					<p class="centop">
 						<div class="denlu">用户名:<span id="userName" style="z-index: 99;"></span></div>
+						<div class="denlu" style="display:none ;" id="userNumber">用户id:<span style="z-index: 99;"></span></div>
 						<div class="denlu" id="onlyPs">配送数量：<span id="psNumber" style="z-index: 99;"></span></div>
 						<div class="denlu" id="onlyGuide">手机号：<span id="guidesPhone"></span> <span id='bindPhone' style="background-color: orange;color: white;font-size: 10px;padding: 2px;border-radius: 3px;display: none;">绑定手机号</span></div>
 						<div class="denlu" id="onlyCust">灯号:<span id="dengh"></span>&nbsp;&nbsp; 导购:<span id="guideName"></span><a id="guideMobile" style="display: none;" href=""><img style="width: 15px;margin-left: 5px;" src="images/center/phone.svg"/></a></div>
@@ -195,7 +196,7 @@
 					</div>
 					<div class="flexRow ft14">
 						<div class="">
-							<div id="">
+							<div id="cashCouponQty">
 								---
 							</div>
 							<div onclick="myCoupon()">
@@ -203,7 +204,7 @@
 							</div>
 						</div>
 						<div class="">
-							<div id="">
+							<div id="productCouponQty">
 								---
 							</div>
 							<div onclick="productCoupon()">
@@ -268,7 +269,7 @@
 								欠款审核
 							</div>
 						</div>
-						<div class="">
+						<div onclick="qrcode()">
 							<div class="">
 								我的二维码
 							</div>
@@ -435,6 +436,12 @@
 					id: 'listCheck',
 				})
 			}
+			function qrcode(){
+				openview({
+					view:'page/guide/qrcode.html',
+					id: 'qrcode',
+				})
+			}
 			function debateQuery(){
 				openview({
 					view:'page/guide/debateQuery.html',
@@ -581,20 +588,20 @@
 
 					loadmyinfo();
 					if(identityT == 0 || identityT == 4 || identityT == 5){//导购
-						$('#onlyCust,.qiandao,.centerList,#onlyPs,#onlymange').css('display','none')
-						$('#onlyGuide,.orderType,.guiderN').css('display','');
+						$('#onlyCust,.qiandao,.centerList,#onlyPs,#onlymange').hide()
+						$('#onlyGuide,.orderType,.guiderN,#userNumber').show();
 					}else if(identityT == 6){//顾客
-						$('#onlyGuide,#onlymange,.centerList,.centerList,#onlyPs').css('display','none');
-						$('#onlyCust,.orderType,.customerN,.qiandao').css('display','')
+						$('#onlyGuide,#onlymange,.centerList,.centerList,#onlyPs,#userNumber').hide();
+						$('#onlyCust,.orderType,.customerN,.qiandao').show()
 					}else if(identityT == 3){//工人
-						$('#onlyGuide,#onlyCust,.centerList,.orderType,#onlymange,.qiandao,#onlyPs').css('display','none');
-						$('.workerN').css('display','block');
+						$('#onlyGuide,#onlyCust,.centerList,.orderType,#onlymange,.qiandao,#onlyPs').hide();
+						$('.workerN,#userNumber').show();
 					}else if(identityT == 2){//项目经理
-						$('.centerList,#onlyGuide,#onlyCust,#onlyPs,.qiandao').css('display','none');
-						$('.orderType,.manageN,#onlymange').css('display','');
+						$('.centerList,#onlyGuide,#onlyCust,#onlyPs,.qiandao').hide();
+						$('.orderType,.manageN,#onlymange,#userNumber').show();
 					}else{//配送员
-						$('.centerList,.orderType,#onlymange,#onlyCust,.qiandao').css('display','none');
-						$('.distributionN,#onlyPs,#onlyGuide').css('display','');
+						$('.centerList,.orderType,#onlymange,#onlyCust,.qiandao').hide();
+						$('.distributionN,#onlyPs,#onlyGuide,#userNumber').show();
 					}
 
 					/*设置*/
@@ -636,7 +643,8 @@
 												$('#userName').html('未填写')
 											}
 										}else{
-											$('#userName').html(data.content.number)
+											$('#userName').html(data.content.name)
+											$('#userNumber span').html(data.content.number)
 										}
 
 										if(data.content.picUrl) {
@@ -673,6 +681,12 @@
 										}else{
 											$('#userlb').html(data.content.lb)
 											$('#coin,#userlb').html(0)
+										}
+										if(data.content.cashCouponQty){
+											$('#cashCouponQty').html(data.content.cashCouponQty)
+										}
+										if(data.content.productCouponQty){
+											$('#productCouponQty').html(data.content.productCouponQty)
 										}
 										if(identityT == 0){
 											if(data.content.mobile) {

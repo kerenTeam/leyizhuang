@@ -55,7 +55,7 @@
 			}
 			#userBox {
 				background-color: #eca4a6;
-				padding: 35px 0 45px;
+				padding: 35px 0 17px;
 				position: relative;
 			}
 			.dao {
@@ -129,7 +129,9 @@
 			#infoListDiv{transition: all .3s;}
 			.flexr{display: flex;justify-content: space-between;margin: 2px 0;}
 			a,a:active{color: rgb(51,51,51)!important;}
-			.flexRow2 img{width: 30px;vertical-align: middle;margin-right: 10px;}
+			.flexRow2{display: flex;text-align: center;padding: 8px;}
+			.flexRow2 div{width: 50%;}
+			.flexRow2 img{width: 30px;vertical-align: middle;}
 		</style>
 	</head>
 	<body>
@@ -143,13 +145,14 @@
 				<div class="mui-col-sm-8 mui-col-xs-8 writing">
 					<p class="centop">
 						<div class="denlu">用户名:<span id="userName" style="z-index: 99;"></span></div>
+						<div class="denlu">用户id:<span id="userNumber" style="z-index: 99;"></span></div>
 						<div class="denlu" id="onlyPs">配送数量：<span id="psNumber" style="z-index: 99;"></span></div>
 						<div class="denlu" id="onlyGuide">手机号：<span id="guidesPhone"></span> <span id='bindPhone' style="background-color: orange;color: white;font-size: 10px;padding: 2px;border-radius: 3px;display: none;">绑定手机号</span></div>
 					</p>
 				</div>
-				<img class="dao shezhi" style="top: 8px;width: 30px;" src="../../images/center/shizhi.png" />
+				<img class="dao shezhi" style="top: 8px;width: 36px;" src="../../images/center/shizhi.png" />
 				<div onclick="goMessage()">
-					<img class="dao" style="top: 8px;width: 30px;right: 50px;" src="../../images/center/message.svg" />
+					<img class="dao" style="top: 8px;width: 36px;right: 50px;" src="../../images/center/message.svg" />
 					<span class="mui-badge mui-badge-green" style="right: 54px;position: absolute;padding: 4px;top: 6px;"></span>
 				</div>
 			</div>
@@ -157,13 +160,11 @@
 		<!--配送员-->
 		<div class="centerList distributionN bgcwt">
 			<div class="flexRow2">
-				<div class="afterBorder pad10" onclick="agencyFund()">
+				<div class="rightBorder" onclick="agencyFund()">
 					<img src="../../images/center/backT.png"/>代收款
-					<span class="mui-icon mui-icon-arrowright mui-pull-right maincl ft20 maincl"></span>
 				</div>
-				<div class="pad10">
+				<div class="">
 					<img src="../../images/center/color.svg"/>调色板
-					<span class="mui-icon mui-icon-arrowright mui-pull-right maincl ft20 maincl"></span>
 				</div>
 			</div>
 		</div>
@@ -375,7 +376,8 @@
 										$('#mypic').attr('src', '../../img/editset.png')
 
 									}
-									$('#userName').html(data.content.number)
+									$('#userName').html(data.content.name)
+									$('#userNumber').html(data.content.number)
 									if(data.content.mobile) {
 										plus.storage.setItem('mobile',data.content.mobile);
 									}

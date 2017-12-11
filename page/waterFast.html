@@ -629,10 +629,9 @@
 			<aside class="btmNav flexr" style="position: fixed;bottom: 0;left: 0;width: 100%;">
 				<span id="showBtcrt" class="mui-icon mui-icon-arrowup activecl showRotate" style="padding-left: 10px;"></span>
 				<a class="dp ft16" style="color: #B62D29;text-align: center;flex: 1;">
-					<span>合计：</span>¥<span class="totalMoney">0</span>
+					<span>合计：</span><span class="totalMoney">0</span>件商品
 				</a>
-				<a class="goOrder dp" style="background:#B62D29;color:white;padding:4px 10px;">加入下料清单<span class="totalVisi">(<span class="totalNum">0</span>)</span>
-				</a>
+				<a class="goOrder dp" style="background:#B62D29;color:white;padding:14px 10px;">加入下料清单</a>
 			</aside>
 			<!--弹出菜单-->
 			<div id="bottomCart" style="display: none;">
@@ -645,7 +644,7 @@
 							</span>
 						</div>
 						<span style="visibility: hidden;">dd</span>
-					   <img src="../images/delet.svg" class="mui-pull-right" style="width: 20px;" alt="" />
+					   <img src="../images/delet.svg" class="mui-pull-right" onclick="delAll()" style="width: 20px;" alt="" />
 					</div>
 					<div class="bgcwt padd10 fttc" id="btcart">
 						
@@ -654,7 +653,7 @@
 						<%for(var i = 0 ;i<list.length;i++){%>
 							<div class="flexr afterBorder padv15">
 								<div class="mui-checkbox" style="left: 15%;margin-top: -10%;">
-									<input name="checkbox" type="checkbox">
+									<input name="checkbox" type="checkbox" data-id="<%=list[i].goodcode%>">
 								</div>
 				     			<div>
 				     				<div data-id="16"><%=list[i].skuName%></div>
@@ -708,10 +707,90 @@
 				var specif = $.trim($(this).parentsUntil('.mui-content').find('.actspan').text())+$.trim($(this).parent().parent().find('.bdcA').text());
 				var cartObj={skuName:skuName,specif:specif,num:number,goodcode:fastMaterial}
 				alert('～'+fastMaterial);
+			 
+				//更新此商品数量缓存
+				if(waterFastGoods.length != 0) {
+					var flag = false;
+					for(var i = 0; i < waterFastGoods.length; i++) {
+						if(waterFastGoods[i].goodcode == fastMaterial) {
+							if(parseInt(number) != 0){
+								waterFastGoods[i].num = parseInt(number);
+							}else{
+								waterFastGoods.splice(i, 1);
+							}
+							flag = false;
+							break;
+						} else {
+							flag = true;
+						}
+					}
+					if(flag) {
+						waterFastGoods.push(cartObj);
+					}
+				} else {
+					if(parseInt(number) != 0){
+						waterFastGoods.push(cartObj);
+					}
+				}
+				alert(JSON.stringify(cartObj))
+				plus.storage.setItem("$waterFastGoods", JSON.stringify(waterFastGoods));
+				showBtCart();
+			})
+			function showBtCart(){
+				var waterFastGoods = JSON.parse(plus.storage.getItem('$waterFastGoods') || '[]');
+				if(waterFastGoods.length>0){
+					$('#btcart').html(template('btcartTpl',{list:waterFastGoods}))
+					mui('.mui-numbox').numbox();
+					$('#btcart .mui-checkbox').click(function() {
+						if($("#btcart").find("input[type='checkbox']:checked").length == $("#btcart").find("input[type='checkbox']").length){
+							$('#optal input').prop('checked',true)
+						}else{
+							$('#optal input').prop('checked',false)
+						}
+					})
+					$('.totalMoney').html(waterFastGoods.length);
+					$('#optal input').prop('checked',true)
+					$('#btcart input').prop('checked',true)
+				}else{
+					$('#btcart').html('暂无数据')
+					$('.totalMoney').html(0)
+					
+				}
+			}
+			window.delAll = function(){
+//				plus.storage.removeItem('$waterFastGoods');
+				var ALLcheckLength = $("#btcart").find("input[type='checkbox']:checked").length;
+				if(ALLcheckLength == 0) {
+					mui.toast("您还未选择要删除的商品哦！")
+				} else {  
+					mui.confirm('确认删除这' + ALLcheckLength + '件商品吗？', '提示', ['取消', '确定'], function(e) {
+						if(e.index == 1) {
+							//删除选中的 购物车 缓存 
+							$("#btcart").find("input[type='checkbox']:checked").each(function(){
+								var delID=$(this).attr("data-id"); 
+								//删除这一条缓存
+							    waterFastGoods =JSON.parse(plus.storage.getItem('$waterFastGoods')||'[]');
+								for(var i=0;i<waterFastGoods.length;i++){
+									if(delID==waterFastGoods[i].goodcode){
+										waterFastGoods.splice(i, 1);
+									}
+								} 
+								plus.storage.setItem("$waterFastGoods",JSON.stringify(waterFastGoods));
+							})
+							showBtCart();
+							ALLcheckLength = $("#btcart").find("input[type='checkbox']:checked").length;
+							if(ALLcheckLength == 0) {
+								$('#optal input').prop("checked", false);
+							} 
+						} 
+					})
+				}
+				
+			}
+			mui('.goOrder')[0].onclick = function(){
 				var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
 				var userId = plus.storage.getItem('$userId'); 
 				var oldToken = plus.storage.getItem('oldToken');
-				 
 				plus.nativeUI.showWaiting();
 				mui.ajax(serverUrl + '/app/materialList/quickOrder/add', {
 					data: {
@@ -738,101 +817,19 @@
 					error: function(xhr, type, errorThrown) {
 						plus.nativeUI.closeWaiting();
 					}
-				});
-			 
-				//更新此商品数量缓存
-				if(waterFastGoods.length != 0) {
-					var flag = false;
-					for(var i = 0; i < waterFastGoods.length; i++) {
-						if(waterFastGoods[i].skuName == skuName && waterFastGoods[i].specif == specif) {
-							waterFastGoods[i].num = parseInt(number);
-							flag = false;
-							break;
-						} else {
-							flag = true;
-						}
-					}
-					if(flag) {
-						waterFastGoods.push(cartObj);
-					}
-				} else {
-					waterFastGoods.push(cartObj);
-				}
-				alert(JSON.stringify(cartObj))
-				plus.storage.setItem("$waterFastGoods", JSON.stringify(waterFastGoods));
-				showBtCart();
-			})
-			function showBtCart(){
-				var waterFastGoods = JSON.parse(plus.storage.getItem('$waterFastGoods') || '[]');
-				if(waterFastGoods.length>0){
-					$('#btcart').html(template('btcartTpl',{list:waterFastGoods}))
-					mui('.mui-numbox').numbox();
-					
-				}else{
-					$('#btcart').html('暂无数据')
-				}
+				});	 
 			}
 		})
+		
 		//总选
 		$('#optal .mui-checkbox').click(function() {
 			if($(this).find("input").prop('checked') == false) {
-				$("#btcart .mui-checkbox input").attr("checked", false);
+				$("#btcart input").prop("checked", false);
 			} else {
-				$("#btcart .mui-checkbox input").attr("checked", true);
+				$("#btcart input").prop("checked", true);
 			}
 		})
-		mui('.goOrder')[0].onclick = function(){
-			var fastMaterial = '1-';
-			$('.maincl .flexr').each(function(){
-				var firstCode = $(this).parentsUntil('.mui-content').find('.title').attr('data-id');
-				var secondCode = $(this).parentsUntil('.mui-content').find('.actspan').attr('data-id');
-				var thirdCode = parseInt($(this).index())+1;
-
-				var goodCode = $(this).find('bdcA').attr('data-id');
-				var goodNum = $(this).find('input').val();
-				if(goodNum>0){
-					alert(thirdCode)
-					fastMaterial+=goodCode+'-'+goodNum+',';
-				}
-			})
-			mui.plusReady(function(){
-				var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
-				var userId = plus.storage.getItem('$userId'); 
-				var oldToken = plus.storage.getItem('oldToken');
-				 
-				if(fastMaterial.length){
-					plus.nativeUI.showWaiting();
-					mui.ajax(serverUrl + '/app/materialList/quickOrder/add', {
-						data: {
-							userId: userId,
-							identityType: identityT,
-							params: fastMaterial,
-						},
-						dataType: 'json',
-						headers: {
-							"Authorization": oldToken
-						},
-						type: 'post',
-						timeout: 10000,
-						success: function(data, type, xhr) {
-							plus.nativeUI.closeWaiting();
-							console.log('快捷下单', data);
-							if(data.code == 0) { 
-								mui.toast('下单成功')
-							} else {
-								mui.toast(data.message)
-							}
-				
-						},
-						error: function(xhr, type, errorThrown) {
-							plus.nativeUI.closeWaiting();
-						}
-					});
-				}else{
-					mui.toast('还未选择商品哦')
-				}
-			})
-		}
+		
 		</script>
 	</body>
 

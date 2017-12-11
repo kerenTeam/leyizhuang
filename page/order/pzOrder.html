@@ -341,7 +341,10 @@
 							var dataobj = JSON.parse(back.responseText);
 							if(dataobj.code == 0){
 								alert('您的订单已提交，客服会尽快跟您联系！')
-								plus.webview.currentWebview().close();
+								openview({
+									view:'../personal/pzOrderList.html',
+									id:'pzOrderList'
+								})
 	    						}else{
 	    							mui.toast(dataobj.message);
 	    							plus.nativeUI.closeWaiting();

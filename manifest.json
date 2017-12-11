@@ -1336,7 +1336,8 @@
 					"js/artTemplate-native.js"
 				],
 				"refer": [
-					"page/personal/address.html"
+					"page/personal/address.html",
+					"page/personal/pzOrderList.html"
 				],
 				"priority": 0
 			},
@@ -1435,7 +1436,9 @@
 					"css/configW.css",
 					"js/artTemplate-native.js"
 				],
-				"refer": [],
+				"refer": [
+					"page/goodsInfo.html"
+				],
 				"priority": 0
 			},
 			"page/worker/wmaterialCheckList.html": {

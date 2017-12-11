@@ -53,7 +53,7 @@
 		</header>
 		<script src="../js/statusBar.js" type="text/javascript" charset="utf-8"></script>
 		<div class="mui-content">
-			<div class="huiZ f17" style="background: #eee;padding: 15px;line-height: 20px;">
+			<div class="huiZ f17" style="background-image: url(../img/walletBg.png);background-size: 100% 100%;padding:25px 15px;line-height: 20px;">
 				当前余额：<span class="f17 huiZ" id='balance'></span>
 				<span class="mui-pull-right activecl aClick" id="recharge">我要充值</span>
 			</div>
@@ -101,9 +101,7 @@
 		<script src="../js/artTemplate-native.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
 			mui.init();
-			window.addEventListener('refreash', function(event) {
-				loadWallet();
-			});
+			
 			mui.plusReady(function(){
 				//获取缓存
 				var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
@@ -121,7 +119,9 @@
 						extrasobj:{money:$('#balance').text()}
 					})
 				}
-				
+				window.addEventListener('refreash', function(event) {
+					loadWallet();
+				});
 				loadWallet();
 				function loadWallet(){
 					//顾客余额

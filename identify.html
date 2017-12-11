@@ -77,7 +77,13 @@
 				if(plus.webview.getWebviewById('shezhi')) {
 					plus.webview.getWebviewById('shezhi').close();
 				}
-
+				if(/android/i.test(navigator.userAgent)){
+			 	 	var systemType = 'ANDROID'
+				}else{
+			 	 	var systemType = 'IOS'
+				}
+				var clientId = plus.push.getClientInfo().clientid;
+				var deviceId = plus.device.uuid; 
 				//第三方登录
 				var authBtns = ['weixin']; //配置业务支持的第三方登录
 				var auths = {};
@@ -114,7 +120,10 @@
 								console.log(openID);
 								mui.ajax(serverUrl + '/app/customer/login', {
 									data: {
-										"openId": openID
+										"openId": openID,
+										"deviceId":deviceId,
+										"clientId":clientId,
+										"systemType":systemType
 									},
 									dataType: 'json',
 									type: 'post',
@@ -135,7 +144,7 @@
 											mui.fire(plus.webview.getWebviewById('cart.html'), 'refresh');
 											
 											var index = plus.webview.getLaunchWebview();
-											mui.fire(index, 'refresh');
+											mui.fire(index, 'refreshid');
 											if(plus.webview.getWebviewById('reg')) {
 												plus.webview.getWebviewById('reg').close();
 											}

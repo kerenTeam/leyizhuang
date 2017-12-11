@@ -83,18 +83,18 @@
 			</dl>
 			<%}%>
 			 
-			<!--bottom nav-->
-			<div style="height:1rem;"></div>
-			<aside class="btmNav ft16" id="dibu">
-				<a class="dp" style="position: relative;color: #B62D29;">
-					<span>可选赠品5件，已选</span><span class="totalMoney">0</span>件
-				</a>
-				<a class="goOrder dp" style="background:#B62D29;color:white;text-shadow:none;">下一步
-				</a>
-				 
-			</aside> 
+			
 		</script>
-
+		<!--bottom nav-->
+		<div style="height:1rem;"></div>
+		<aside class="btmNav ft16" id="dibu">
+			<a class="dp" style="position: relative;color: #B62D29;">
+				<span>已选</span><span class="totalMoney">0</span>件
+			</a>
+			<a class="goOrder dp" style="background:#B62D29;color:white;text-shadow:none;">下一步
+			</a>
+			 
+		</aside> 
 		<script type="text/javascript" src="../../js/jquery_cart.js"></script>
 		<script src="../../js/mui.min.js"></script> 
 		<script src="../../js/artTemplate-native.js" type="text/javascript" charset="utf-8"></script>
@@ -112,7 +112,7 @@
 			window.addEventListener('refresh', function(event) {
 				cartload();
 			});
-
+			console.log('idobj ',idobj)
 			cartload();
 
 			function cartload() {
@@ -120,8 +120,8 @@
 				//获取赠品
 				mui.ajax(serverUrl+'/app/gift/list',{
 					data:{
-						userId:userId,
-						identityType:identityT,
+						userId:1,
+						identityType:6,
 						goodsArray:idobj
 					},
 					dataType:'json',
@@ -132,8 +132,8 @@
 						console.log('获取赠品',data);
 						var dataObj = {};
 						if(data.code == 0 && data.content){
-							if(data.content.goodsList && data.content.goodsList.length){
-								document.getElementById('cartData').innerHTML = template('cartTpl',{list:data.content.goodsList});
+							if(data.content.promotionsGiftList && data.content.promotionsGiftList.length && data.content.promotionsGiftList.giftList && data.content.promotionsGiftList.giftList.length){
+								document.getElementById('cartData').innerHTML = template('cartTpl',{list:data.content.promotionsGiftList});
 								plus.nativeUI.closeWaiting();
 								mui('.mui-numbox').numbox()
 								
@@ -159,52 +159,53 @@
 				
 								})
 								
-								//下一步
-								$('.goOrder').click(function() {
-									var ALLcheckLength = $("dd").find("input[type='checkbox']:checked").length;
-									var idobj = JSON.parse(plus.storage.getItem('materialList') || '[]');
-									if(ALLcheckLength > 0){
-										var gift = [];
-										//存缓存
-										$("dd").find("input[type='checkbox']:checked").each(function(index) {
-											gift.push({
-												id: $(this).attr('data-id'),
-												num: $(this).parent().parent().find('.mui-input-numbox').val(),
-												isGift: true
-											})
-										})
-										var newList = idobj.concat(gift);
-										plus.storage.setItem('orderGoodsList', JSON.stringify(newList));
-										
-									}else{
-										plus.storage.setItem('orderGoodsList', JSON.stringify(idobj));
-									}
-									
-									if(identityT == 3){
-										openview({
-											view:'workerMaterial.html',
-											id:'workerMaterial'
-										})
-								 	}else{
-								 		if(identityT == 0 || identityT == 4 || identityT == 5){
-								 			openview({
-												view:'order.html',
-												id:'order',
-												extrasobj:{customerId:cusId}
-											})
-								 		}else{
-								 			openview({
-												view:'order.html',
-												id:'order',
-											})
-								 		}
-								 	}
-								})
+								
 							}else{
 								plus.nativeUI.closeWaiting();
+								document.getElementById('cartData').innerHTML = '<div><img src="../../images/order/order.png" style="width:30%;margin: auto;display: block;margin-top: 40%;" alt="" /><div style="color: #666;text-align: center;margin-top: 30px;font-size: 14px;">没有赠品哦</div></div>'
 								
 							}
-							
+							//下一步
+							$('.goOrder').unbind('click').click(function() {
+								var ALLcheckLength = $("dd").find("input[type='checkbox']:checked").length;
+								var idobj = JSON.parse(plus.storage.getItem('materialList') || '[]');
+								if(ALLcheckLength > 0){
+									var gift = [];
+									//存缓存
+									$("dd").find("input[type='checkbox']:checked").each(function(index) {
+										gift.push({
+											id: $(this).attr('data-id'),
+											num: $(this).parent().parent().find('.mui-input-numbox').val(),
+											isGift: true
+										})
+									})
+									var newList = idobj.concat(gift);
+									plus.storage.setItem('orderGoodsList', JSON.stringify(newList));
+									
+								}else{
+									plus.storage.setItem('orderGoodsList', JSON.stringify(idobj));
+								}
+								
+								if(identityT == 3){
+									openview({
+										view:'workerMaterial.html',
+										id:'workerMaterial'
+									})
+							 	}else{
+							 		if(identityT == 0 || identityT == 4 || identityT == 5){
+							 			openview({
+											view:'order.html',
+											id:'order',
+											extrasobj:{customerId:cusId}
+										})
+							 		}else{
+							 			openview({
+											view:'order.html',
+											id:'order',
+										})
+							 		}
+							 	}
+							})
 						}else{
 							mui.toast(data.message);
 							plus.nativeUI.closeWaiting();

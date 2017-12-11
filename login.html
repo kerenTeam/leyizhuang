@@ -98,7 +98,13 @@
 					statusBarBackground: '#f7f7f7'
 				});
 				$.plusReady(function() { 
-			 
+				 	if(/android/i.test(navigator.userAgent)){
+				 	 	var systemType = 'ANDROID'
+					}else{
+				 	 	var systemType = 'IOS'
+					}
+					var clientId = plus.push.getClientInfo().clientid;
+					var deviceId = plus.device.uuid; 
 					var loginButton = doc.getElementById('login');
 					var accountBox = doc.getElementById('account');
 					var passwordBox = doc.getElementById('password');
@@ -122,13 +128,13 @@
 							 var str = b.encode(loginInfo.password);
 							 
 							mui.ajax(serverUrl+'/app/employee/login',{
-								data:{"name":loginInfo.account,"password":str},
+								data:{"name":loginInfo.account,"password":str,"deviceId":deviceId,"clientId":clientId,"systemType":systemType},
 								dataType:'json',
 								type:'post',
 								timeout:10000,
 								success:function(data,type,xhr){ 
 									console.log('登录返回',data);
-									if(data.code == -1){
+									if(data.code !=0){
 										plus.nativeUI.closeWaiting();
 										mui.toast(data.message)
 									}else{ 
@@ -145,7 +151,7 @@
 											plus.webview.getWebviewById('identify').close();
 										}
 										var index = plus.webview.getLaunchWebview();
-										mui.fire(index,'refresh');
+										mui.fire(index,'refreshid');
 										mui.fire(plus.webview.getWebviewById('cart.html'), 'refresh');
 										mui.fire(plus.webview.getWebviewById('page/goodList.html'),'refresh');
 										mui.fire(plus.webview.getWebviewById('center.html'),'refresh');

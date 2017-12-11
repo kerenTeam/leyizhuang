@@ -122,7 +122,7 @@
 		</style>
 	</head>
  
-	<body>
+	<body onload="text=document.getElementById('text');">
 		<header class="mui-row mui-bar mui-bar-transparent hasManyCity" id="header" style="z-index: 200;">
 			<div class="searchBox" onclick="goSearch()" style="z-index:1;position: absolute;top: 27px;left: 20px;width: 80%;">
 				<div class="indexSearch">
@@ -192,16 +192,16 @@
 					<%if(list.length){%>
 					<div class="mui-slider-group mui-slider-loop">
 					    <!--支持循环，需要重复图片节点-->
-					    <div class="mui-slider-item mui-slider-item-duplicate zanwei zanwei2">
+					    <div class="mui-slider-item mui-slider-item-duplicate zanwei zanwei2" onclick=('<%=list[list.length-1].id%>','<%=list[list.length-1].url%>','<%=list[list.length-1].name%>','<%=list[list.length-1].type%>')>
 					     	<img src="<%=url%><%=list[list.length-1].pic%>" onerror="javascript:this.src='images/img.svg';" />
 					    </div>
 						<% for(var i=0;i<list.length;i++){ %> 
-					    	<div class="mui-slider-item zanwei zanwei2">
+					    	<div class="mui-slider-item zanwei zanwei2" onclick=('<%=list[i].id%>','<%=list[i].url%>','<%=list[i].name%>','<%=list[i].type%>')>
 					    		<img src="<%=url%><%=list[i].pic%>"  onerror="javascript:this.src='images/img.svg';"/>
 					    	</div>
 					     <% } %>
 					    <!--支持循环，需要重复图片节点-->
-					    <div class="mui-slider-item mui-slider-item-duplicate zanwei zanwei2" >
+					    <div class="mui-slider-item mui-slider-item-duplicate zanwei zanwei2" onclick=('<%=list[0].id%>','<%=list[0].url%>','<%=list[0].name%>','<%=list[0].type%>')>
 					     	<img src="<%=url%><%=list[0].pic%>" onerror="javascript:this.src='images/img.svg';" />
 					    </div>
 					</div>
@@ -228,24 +228,31 @@
 					<img src="images/index/bdchexk.svg"/><span>二绕内均可配送</span>
 				</div>
 			</div>
-			<div class="flexw paddv10 ftype" style="margin-top:0 ;">
+			<div class="flexw paddv10 ftype" id="iconData" style="margin-top:0 ;">
 				<div data-id="water">
-					<div class="imgb" style="background-color:#B94629"><img src="images/s.svg" alt="" /></div> 水
+					<div class="imgb" style="background-color:#B62D29"><img src="images/s.svg" alt="" /></div>水
 				</div>
 				<div data-id="electric">
-					<div class="imgb" style="background-color:#E89F65"><img src="images/d.svg" alt="" /></div>电
+					<div class="imgb" style="background-color:#B62D29"><img src="images/d.svg" alt="" /></div>电
 				</div>
 				<div data-id="wood">
-					<div class="imgb" style="background-color:#B1938B"><img src="images/m.svg" alt="" /></div>木
+					<div class="imgb" style="background-color:#B62D29"><img src="images/m.svg" alt="" /></div>木
 				</div>
 				<div data-id="tile">
-					<div class="imgb" style="background-color:#38595E"><img src="images/w.svg" alt="" /></div>瓦
+					<div class="imgb" style="background-color:#B62D29"><img src="images/w.svg" alt="" /></div>瓦
 				</div>
 				<div data-id="oil">
-					<div class="imgb" style="background-color:#47AFAF"><img src="images/y.svg" alt="" /></div>油
+					<div class="imgb" style="background-color:#B62D29"><img src="images/y.svg" alt="" /></div>油
 				</div>
 			</div>
 		</div>
+		<script type="text/html" id="iconTpl">
+			<%for(var i = 0 ;i<list.length;i++){%>
+				<div data-id="<%=list[i].type%>">
+					<div class="imgb" style="background-color:#B62D29"><img src="<%=url%><%=list[i].pic%>" alt="" /></div><%=list[i].name%>
+				</div>
+			<%}%> 
+		</script>
 		
 		<div class="padd10">
 			<img style="vertical-align:middle;width:100%;border-radius:2px ;" src="images/index/huarun.png" />
@@ -258,13 +265,13 @@
 					<div id="">
 						快捷下单
 					</div>
-					<img src="images/1.svg" alt="" />
+					<img src="img/legray.svg" alt="" />
 				</div>
-				<div class="gxb" class="rightBorder paddv10">
+				<div class="gxb paddv10 rightBorder">
 					<div id="">
 						工序包
 					</div>
-					<img src="images/2.svg" alt="" />
+					<img src="img/legray.svg" alt="" />
 				</div>
 			</div>
 			<div class="flexws afterBorder">
@@ -272,13 +279,13 @@
 					<div id="">
 						拍照下单
 					</div>
-				    <img src="images/3.svg" alt="" />
+				    <img src="img/legray.svg" alt="" />
 				</div>
 				<div onclick="goCollect()" class="rightBorder paddv10">
 					<div id="">
 						我的收藏
 					</div>
-					<img src="images/4.svg" alt="" />
+					<img src="img/legray.svg" alt="" />
 				</div>
 			</div>
 			<div class="flexws afterBorder">
@@ -286,13 +293,13 @@
 					<div>
 						物流
 					</div>
-					<img src="images/5.svg" alt="" />
+					<img src="img/legray.svg" alt="" />
 				</div>
-				<div onclick="signRecord()">
+				<div onclick="signRecord()" class="rightBorder">
 					<div id="">
 						签到
 					</div> 
-					<img src="images/6.svg" alt="" />
+					<img src="img/legray.svg" alt="" />
 				</div>
 			</div>
 			<div class="flexws">
@@ -300,13 +307,13 @@
 					<div id="">
 						钱包
 					</div>
-					<img src="images/7.svg" alt="" />
+					<img src="img/legray.svg" alt="" />
 				</div>
-				<div id="">
+				<div id="" class="rightBorder">
 					<div id="">
 						咨询
 					</div>
-					<img src="images/8.svg" alt="" />
+					<img src="img/legray.svg" alt="" />
 				</div>
 			</div>
 		</div>
@@ -318,13 +325,13 @@
 					<div id="">
 						快捷下单
 					</div>
-					<img src="images/1.svg" alt="" />
+					<img src="img/legray.svg" alt="" />
 				</div>
-				<div class="gxb" class="rightBorder paddv10">
+				<div class="gxb paddv10 rightBorder">
 					<div id="">
 						工序包
 					</div>
-					<img src="images/2.svg" alt="" />
+					<img src="img/legray.svg" alt="" />
 				</div>
 			</div>
 			<div class="flexws afterBorder">
@@ -332,13 +339,13 @@
 					<div id="">
 						拍照下单
 					</div>
-					<img src="images/3.svg" alt="" />
+					<img src="img/legray.svg" alt="" />
 				</div>
 				<div onclick="goCollect()" class="rightBorder paddv10">
 					<div id="">
 						我的收藏
 					</div>
-					<img src="images/4.svg" alt="" />
+					<img src="img/legray.svg" alt="" />
 				</div>
 			</div>
 			<div class="flexws afterBorder">
@@ -346,13 +353,13 @@
 					<div id="">
 						物流
 					</div>
-					<img src="images/5.svg" alt="" />
+					<img src="img/legray.svg" alt="" />
 				</div>
-				<div id="">
+				<div id="" class="rightBorder">
 					<div id="">
 						咨询
 					</div>
-					<img src="images/8.svg" alt="" />
+					<img src="img/legray.svg" alt="" />
 				</div>
 			</div>
 		</div>
@@ -364,13 +371,13 @@
 					<div id="">
 						快捷下单
 					</div>
-					<img src="images/1.svg" alt="" />
+					<img src="img/legray.svg" alt="" />
 				</div>
-				<div class="gxb" class="rightBorder paddv10">
+				<div class="gxb paddv10 rightBorder">
 					<div id="">
 						工序包
 					</div>
-					<img src="images/2.svg" alt="" />
+					<img src="img/legray.svg" alt="" />
 				</div>
 			</div>
 			<div class="flexws afterBorder">
@@ -378,37 +385,40 @@
 					<div id="">
 						拍照下单
 					</div>
-					<img src="images/3.svg" alt="" />
+					<img src="img/legray.svg" alt="" />
 				</div>
 				<div class="rightBorder" onclick="delivery()">
 					<div id="">
 						物流
 					</div>
-					<img src="images/5.svg" alt="" />
+					<img src="img/legray.svg" alt="" />
 				</div>
 			</div>
 			<div class="flexws afterBorder">
 				<div onclick="noDelivery()" class="rightBorder paddv10">
 					<div>未提货</div>
-					<img src="images/9.svg" alt="" />
+					<img src="img/legray.svg" alt="" />
 				</div>
-				<div onclick="guideCredit()">
+				<div onclick="guideCredit()" class="rightBorder">
 					<div>信用额度</div>
-					<img src="images/10.svg" alt="" />
+					<img src="img/legray.svg" alt="" />
 				</div>
 			</div>
 			<div class="flexws">
 				<div class="rightBorder" onclick="debateQuery()">
 					<div>欠款查询</div>
-					<img src="images/11.svg" alt="" />
+					<img src="img/legray.svg" alt="" />
 				</div>
-				<div onclick="debateAudit()">
+				<div onclick="debateAudit()" class="rightBorder">
 					<div>欠款审核</div>
-					<img src="images/12.svg" alt="" />
+					<img src="img/legray.svg" alt="" />
 				</div>
 			</div>
 		</div>
-
+		<!--<div class="button" onclick="startRecognize()">开始语音识别</div>
+		<textarea readonly="readonly" id="text" style="margin:2%;padding:2%;height:50%;width:90%;border:1px solid #6C6C6C;-webkit-border-radius: 2px;border-radius: 2px;-webkit-appearance:none;">
+			语音输入内容
+		</textarea>-->
 		<!--常购清单-->
 		<div class="bgcwt afterBorder pad15 ft16" style="margin-top:10px;" id='oftenbuy' onclick="goOftenList()">
 			<span class="bdl activecl">
@@ -510,30 +520,30 @@
 				<br />
 			
 		</div>
-			<script type="text/html" id="tradeTpl">
-				<div style="height: 10px;"></div>
-				<%for(var i=0;i<dataList.length;i++){%>
-					<div class="mui-card" onclick="openDetail(<%=dataList[i].id%>,'<%=dataList[i].title%>')">
-						<%if(dataList[i].thumb){%>
-							<div class="mui-card-header mui-card-media"
-								style="height:45vw;background-image:url(<%= url%><%= dataList[i].thumb%>)">
-							</div>
-						<%}else{%>
-							<div class="mui-card-header mui-card-media"
-								style="height:45vw;background-image:url('images/img.svg')">
-							</div>
-						<%}%>
-						<div class="mui-card-content">
-							<div class="mui-card-content-inner">
-								<!--<p><%=dataList[i].createTime%></p>-->
-								<p style="color: #333;"><%=dataList[i].title%></p>
-								<p><img src="img/yanjin2.svg"/> <%=dataList[i].read%></p>
-							</div>
+		<script type="text/html" id="tradeTpl">
+			<div style="height: 10px;"></div>
+			<%for(var i=0;i<dataList.length;i++){%>
+				<div class="mui-card" onclick="openDetail(<%=dataList[i].id%>,'<%=dataList[i].title%>')">
+					<%if(dataList[i].thumb){%>
+						<div class="mui-card-header mui-card-media"
+							style="height:45vw;background-image:url(<%= url%><%= dataList[i].thumb%>)">
+						</div>
+					<%}else{%>
+						<div class="mui-card-header mui-card-media"
+							style="height:45vw;background-image:url('images/img.svg')">
+						</div>
+					<%}%>
+					<div class="mui-card-content">
+						<div class="mui-card-content-inner">
+							<!--<p><%=dataList[i].createTime%></p>-->
+							<p style="color: #333;"><%=dataList[i].title%></p>
+							<p><img src="img/yanjin2.svg"/> <%=dataList[i].read%></p>
 						</div>
 					</div>
-				<%}%>
-				<br />
-			</script>
+				</div>
+			<%}%>
+			<br />
+		</script>
 		<div class="upload text-center text-xs gray" id="upload"></div>
 		<script src="js/mui.min.js"></script>
 		<script src="js/util.js"></script>
@@ -542,12 +552,409 @@
 		<script src="js/default.js" type="text/javascript" charset="utf-8"></script>
 		<script>
 			mui.init();
-			var gallery = mui('.mui-slider');
-			gallery.slider({
-			  interval:0//自动轮播周期，若为0则不自动播放，默认为0；
-			});
+			var text=null;
+			function startRecognize() {
+				if(plus.os.name=='Android'&&navigator.userAgent.indexOf('StreamApp')>0){
+					plus.nativeUI.toast('当前环境暂不支持语音识别插件');
+					return;
+				}
+				var options = {};
+				options.engine = 'iFly';
+				//options.punctuation = false;	// 是否需要标点符号 
+				
+				text.value = "";
+				console.log( "开始语音识别：" );
+				plus.speech.startRecognize( options, function ( s ) {
+					console.log( s );
+					text.value += s;
+				}, function ( e ) {
+					console.log( "语音识别失败："+e.message );
+				} );
+			}
+			
+			
+			
 			var Spagenum = 2; //实到页数
 			var Ypagenum = 1; //应到页数
+			
+			mui.plusReady(function() { 
+				if(/android/i.test(navigator.userAgent)){
+			 	 	var systemType = 'ANDROID'
+				}else{
+			 	 	var systemType = 'IOS'
+				}
+				var clientId = plus.push.getClientInfo().clientid;
+				var deviceId = plus.device.uuid; 
+				//判断是否登陆
+				document.addEventListener('refresh', function() {
+					loadIndex();
+				})
+				Sign();
+				var timeSign = null;
+				var loadNum = 0;
+				var loadNum2 = 0;
+				clearInterval(timeSign);
+				timeSign = setInterval(Sign, 5000000); //两小时自动更新一次token
+
+				function Sign() { //登录方法
+					//设置默认token
+					if(!plus.storage.getItem('oldToken')) { //没有用户token
+						openview({
+							view: 'identify.html',
+							id: 'identify'
+						})
+
+					} else {
+						if(plus.storage.getItem("Acc_pass") || plus.storage.getItem("openId")) {
+							var Acc_pass = JSON.parse(plus.storage.getItem("Acc_pass")); //员工登陆
+							var openid = plus.storage.getItem("openId"); //顾客登录
+							console.log(openid);
+
+							//根据缓存密码自动登录, 重新获取Token
+							if(Acc_pass) {
+								mui.ajax(serverUrl + '/app/employee/login', {
+									data: {
+										"name": Acc_pass[0],
+										"password": Acc_pass[1],
+										"deviceId":deviceId,"clientId":clientId,"systemType":systemType
+									},
+									dataType: 'json',
+									type: 'post',
+									timeout: 10000,
+									success: function(data, type, xhr) {
+										console.log('登录返回', data);
+										if(data.code == -1) {
+											openview({
+												view: 'identify.html',
+												id: 'identify'
+											})
+										} else {
+											plus.nativeUI.closeWaiting();
+											console.log('默认账号登录返回' + JSON.stringify(data));
+											plus.storage.setItem("oldToken", xhr.getResponseHeader('token'));
+//											mui.fire(plus.webview.getWebviewById('page/goodList.html'), 'refresh');
+//											mui.fire(plus.webview.getWebviewById('center.html'), 'refresh');
+//											mui.fire(plus.webview.getWebviewById('cart.html'), 'refresh');
+											if(data.content.type == 1){
+												openview({
+													view:'page/dispatching/dispatching.html',
+													id:'dispatching'
+												})	
+											}
+											loadIndex();
+											util.initSubpage();
+										}
+									},
+									error: function(xhr, type, errorThrown) {
+										plus.nativeUI.closeWaiting();
+										console.log('响应失败');
+										loadNum++;
+										if(loadNum < 3) {
+											mui.toast('当前网络不好,再次连接');
+										}
+										console.log('获取默认token响应失败');
+									}
+								});
+							}
+							if(openid) {
+								mui.ajax(serverUrl + '/app/customer/login', {
+									data: {
+										"openId": openid,
+										"deviceId":deviceId,"clientId":clientId,"systemType":systemType
+									},
+									dataType: 'json',
+									type: 'post',
+									timeout: 10000,
+									success: function(data, type, xhr) {
+										console.log('登录返回', data);
+										if(data.code == 0 && data.content.isExist) {
+											plus.nativeUI.closeWaiting();
+											plus.storage.setItem("oldToken", xhr.getResponseHeader('token'));
+//											mui.fire(plus.webview.getWebviewById('cart.html'), 'refresh');
+//											mui.fire(plus.webview.getWebviewById('page/goodList.html'), 'refresh');
+//											mui.fire(plus.webview.getWebviewById('center.html'), 'refresh');
+											util.initSubpage();
+											loadIndex();
+										} else if(data.code == -1) {
+											plus.nativeUI.closeWaiting();
+											mui.toast(data.message);
+											openview({
+												view: 'identify.html',
+												id: 'identify'
+											})
+										}
+
+									},
+									error: function(xhr, type, errorThrown) {
+										plus.nativeUI.closeWaiting();
+										console.log('响应失败');
+									}
+
+								});
+							}
+						} else {
+							openview({
+								view: 'identify.html',
+								id: 'identify'
+							})
+						}
+
+					}
+					
+				} //登录方法结束
+
+				loadIndex();
+				//banner
+				mui.ajax(oCms + '/index.php/ApiCms/bannerList', {
+					data:{post:1},
+					dataType: 'json',
+					type: 'post',
+					timeout: 10000,
+					success: function(data, type, xhr) {
+						console.log('banner', data);
+						plus.nativeUI.closeWaiting();
+						if(data.code == '0'){
+							if(data.banner && data.banner.length) {
+								$('#banner').html(template('bannerTpl', {list: data.banner,url:oCms}));
+								 var gallery = mui('.mui-slider');
+									gallery.slider({
+									  interval:3000//自动轮播周期，若为0则不自动播放，默认为0；
+									});
+							}
+						}else{
+							mui.toast(data.message)
+						}
+						
+					},
+					error: function(xhr, type, errorThrown) {
+						plus.nativeUI.closeWaiting();
+						console.log('响应失败');
+					}
+				});
+				function loadIndex() {
+					//获取缓存
+					var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
+					var userId = plus.storage.getItem('$userId');
+					var oldToken = plus.storage.getItem('oldToken');
+					//切换板块
+					if(identityT == 0 || identityT == 4 || identityT == 5) { //导购
+						$('.guides').css('display', '')
+						$('.cusMan,.worker').css('display', 'none')
+						getIcon(3)
+					} else if(identityT == 6 || identityT == 2) { //顾客 项目经理
+						$('.cusMan').css('display', '')
+						$('.guides,.worker').css('display', 'none')
+						getIcon(1)
+					} else if(identityT == 3) { //工人
+						$('.guides,.worker').css('display', '')
+						$('.cusMan,.guides').css('display', 'none')
+						getIcon(2)
+					} else { //配送员
+
+					}
+					//icon
+					function getIcon(icontype){
+						mui.ajax(oCms + '/index.php/ApiCms/iconList', {
+							data: {
+								'type':icontype
+							},
+							dataType: 'json',
+							headers: {
+								"Authorization": oldToken
+							},
+							type: 'post',
+							timeout: 10000,
+							success: function(data, type, xhr) {
+								console.log('icon', data);
+								if(data.code == 0) {
+									plus.nativeUI.closeWaiting();
+									if(data.cates && data.cates.length) {
+										$('#iconData').html(template('iconTpl', {list: data.cates,url:oCms}));
+										var goodsCt = document.querySelectorAll('.flexw>div');
+										[].forEach.call(goodsCt, function(ele, i) {
+											ele.onclick = function() {
+												openview({
+													view: 'page/goodList.html',
+													id: 'goodList',
+													extrasobj: {
+														ctid: ele.getAttribute('data-id'),
+														page: 1
+													}
+												})
+											}
+										})
+									}
+									if(data.icon && data.icon.length) {
+										if(icontype == 1){
+											data.icon.forEach(function(ele,index){
+												$('.cusMan img').eq(index).attr('src',oCms+ele.pic);
+												$('.cusMan .rightBorder div').eq(index).html(ele.name);
+											})
+										}else if(icontype == 2){
+											data.icon.forEach(function(ele,index){
+												$('.worker img').eq(index).attr('src',oCms+ele.pic);
+												$('.worker .rightBorder div').eq(index).html(ele.name);
+											})
+										}else if(icontype == 3){
+											data.icon.forEach(function(ele,index){
+												$('.guides img').eq(index).attr('src',oCms+ele.pic);
+												$('.guides .rightBorder div').eq(index).html(ele.name);
+											})
+										}
+									}
+								} else {
+									mui.toast(data.message)
+								}
+	
+							},
+							error: function(xhr, type, errorThrown) {
+								plus.nativeUI.closeWaiting();
+								console.log('响应失败');
+							}
+						});
+					}
+					//常购商品列表
+					mui.ajax(serverUrl + '/app/goods/often/list', {
+						data: {
+							userId: userId,
+							identityType: identityT
+						},
+						dataType: 'json',
+						headers: {
+							"Authorization": oldToken
+						},
+						type: 'post',
+						timeout: 10000,
+						success: function(data, type, xhr) {
+							console.log('常购商品列表', data);
+							if(data.code == 0) {
+								plus.nativeUI.closeWaiting();
+								if(data.content && data.content.length) {
+									$('#goodsList').html(template('goodsTpl', {
+										list: data.content
+									}));
+								} else {
+									$('#goodsList,#oftenbuy,.oftenbuy').hide()
+									//									$('#goodsList').html('<div style="text-align:center;padding:15px;font-size: 12px">暂无商品</div>')
+								}
+							} else {
+								mui.toast(data.message)
+							}
+
+						},
+						error: function(xhr, type, errorThrown) {
+							plus.nativeUI.closeWaiting();
+							console.log('响应失败');
+						}
+					});
+					//热门商品列表
+					mui.ajax(serverUrl + '/app/goods/hot/list', {
+						data: {
+							userId: userId,
+							identityType: identityT
+						},
+						dataType: 'json',
+						headers: {
+							"Authorization": oldToken
+						},
+						type: 'post',
+						timeout: 10000,
+						success: function(data, type, xhr) {
+							console.log('热门商品列表', data);
+							if(data.code == 0) {
+								plus.nativeUI.closeWaiting();
+								if(data.content && data.content.length) {
+									$('#goodsListHot').html(template('goodsHotTpl', {
+										list: data.content
+									}));
+								} else {
+									$('#goodsListHot').html('<div style="text-align:center;padding:15px;font-size: 12px;">暂无商品</div>')
+								}
+							} else {
+								mui.toast(data.message)
+							}
+
+						},
+						error: function(xhr, type, errorThrown) {
+							plus.nativeUI.closeWaiting();
+							console.log('响应失败');
+						}
+					});
+					
+					
+					//乐易装商学院
+					var currentPage = 1,
+						numsPerPage = 2,
+						endPage = 0;
+					mui.ajax(oCms+'/index.php/ApiCms/postSchool', {
+						data: {
+							page: currentPage,
+							size: numsPerPage
+						},
+						dataType: 'json', //服务器返回json格式数据
+						type: 'post', //HTTP请求类型
+						timeout: 10000, //超时时间设置为10秒；
+						success: function(data) {
+							console.log('trade', data);
+							if(data.code == 0){
+								if(data && data.list.length) {
+									document.getElementById("tradeList").innerHTML = template("tradeTpl", {
+										dataList: data.list,
+										url:oCms
+									});
+								} else {
+									mui("#upload")[0].innerHTML = "";
+								}
+								
+							}else{
+								mui.toast(data.message)
+							}
+							plus.nativeUI.closeWaiting(); //关闭等待框
+						},
+						error: function(xhr, type, errorThrown) {
+							plus.nativeUI.closeWaiting(); //关闭等待框
+							mui("#upload")[0].innerHTML = "";
+						}
+					});
+
+					//加入购物车
+					window.addcart = function(goodid) {
+						event.stopPropagation();
+						plus.nativeUI.showWaiting();
+						mui.ajax(serverUrl + '/app/materialList/add', {
+							data: {
+								userId: userId,
+								identityType: identityT,
+								params: goodid + '-' + 1
+							},
+							dataType: 'json',
+							headers: {
+								"Authorization": oldToken
+							},
+							type: 'post',
+							timeout: 10000,
+							success: function(data, type, xhr) {
+								plus.nativeUI.closeWaiting();
+								console.log('加入购物车', data);
+								if(data.code == 0) {
+									plus.nativeUI.toast('加入成功')
+									mui.fire(plus.webview.getWebviewById('cart.html'), 'refresh');
+
+								} else {
+									mui.toast(data.message)
+								}
+
+							},
+							error: function(xhr, type, errorThrown) {
+								plus.nativeUI.closeWaiting();
+								mui.toast(type)
+								console.log('响应失败');
+							}
+						});
+					}
+
+				}
+			});
 			function fastOrder(){
 				openview({
 					view:'page/fastOrder.html',
@@ -686,362 +1093,6 @@
 					id: 'guideCredit',
 				})
 			}
-
-			var goodsCt = document.querySelectorAll('.flexw>div');
-			[].forEach.call(goodsCt, function(ele, i) {
-				ele.onclick = function() {
-					openview({
-						view: 'page/goodList.html',
-						id: 'goodList',
-						extrasobj: {
-							ctid: ele.getAttribute('data-id'),
-							page: 1
-						}
-					})
-				}
-			})
-			mui.plusReady(function() {
-				alert(plus.push.getClientInfo().clientid)
-				//判断是否登陆
-				document.addEventListener('refresh', function() {
-					loadIndex();
-				})
-				Sign();
-				var timeSign = null;
-				var loadNum = 0;
-				var loadNum2 = 0;
-				clearInterval(timeSign);
-				timeSign = setInterval(Sign, 5000000); //两小时自动更新一次token
-
-				function Sign() { //登录方法
-					//设置默认token
-					if(!plus.storage.getItem('oldToken')) { //没有用户token
-						openview({
-							view: 'identify.html',
-							id: 'identify'
-						})
-
-					} else {
-						if(plus.storage.getItem("Acc_pass") || plus.storage.getItem("openId")) {
-							var Acc_pass = JSON.parse(plus.storage.getItem("Acc_pass")); //员工登陆
-							var openid = plus.storage.getItem("openId"); //顾客登录
-							console.log(openid);
-
-							//根据缓存密码自动登录, 重新获取Token
-							if(Acc_pass) {
-								mui.ajax(serverUrl + '/app/employee/login', {
-									data: {
-										"name": Acc_pass[0],
-										"password": Acc_pass[1]
-									},
-									dataType: 'json',
-									type: 'post',
-									timeout: 10000,
-									success: function(data, type, xhr) {
-										console.log('登录返回', data);
-										if(data.code == -1) {
-											openview({
-												view: 'identify.html',
-												id: 'identify'
-											})
-										} else {
-											plus.nativeUI.closeWaiting();
-											console.log('默认账号登录返回' + JSON.stringify(data));
-											plus.storage.setItem("oldToken", xhr.getResponseHeader('token'));
-											mui.fire(plus.webview.getWebviewById('page/goodList.html'), 'refresh');
-											mui.fire(plus.webview.getWebviewById('center.html'), 'refresh');
-											mui.fire(plus.webview.getWebviewById('cart.html'), 'refresh');
-											if(data.content.type == 1){
-												openview({
-													view:'page/dispatching/dispatching.html',
-													id:'dispatching'
-												})	
-											}
-											loadIndex();
-											util.initSubpage();
-										}
-									},
-									error: function(xhr, type, errorThrown) {
-										plus.nativeUI.closeWaiting();
-										console.log('登录响应失败');
-										loadNum++;
-										if(loadNum < 3) {
-											mui.toast('当前网络不好,再次连接');
-										}
-										console.log('获取默认token响应失败');
-									}
-								});
-							}
-							if(openid) {
-								mui.ajax(serverUrl + '/app/customer/login', {
-									data: {
-										"openId": openid
-									},
-									dataType: 'json',
-									type: 'post',
-									timeout: 10000,
-									success: function(data, type, xhr) {
-										console.log('登录返回', data);
-										if(data.code == 0 && data.content.isExist) {
-											plus.nativeUI.closeWaiting();
-											plus.storage.setItem("oldToken", xhr.getResponseHeader('token'));
-											mui.fire(plus.webview.getWebviewById('cart.html'), 'refresh');
-											mui.fire(plus.webview.getWebviewById('page/goodList.html'), 'refresh');
-											mui.fire(plus.webview.getWebviewById('center.html'), 'refresh');
-											util.initSubpage();
-											loadIndex();
-										} else if(data.code == -1) {
-											plus.nativeUI.closeWaiting();
-											mui.toast(data.message);
-											openview({
-												view: 'identify.html',
-												id: 'identify'
-											})
-										}
-
-									},
-									error: function(xhr, type, errorThrown) {
-										plus.nativeUI.closeWaiting();
-										console.log('登录响应失败');
-									}
-
-								});
-							}
-						} else {
-							openview({
-								view: 'identify.html',
-								id: 'identify'
-							})
-						}
-
-					}
-					
-				} //登录方法结束
-
-				loadIndex();
-				//banner
-				mui.ajax(oCms + '/lyzcms/index.php/ApiCms/bannerList', {
-					data:{post:1},
-					dataType: 'json',
-					type: 'post',
-					timeout: 10000,
-					success: function(data, type, xhr) {
-						console.log('banner', data);
-						plus.nativeUI.closeWaiting();
-						if(data && data.length) {
-//							$('#banner').html(template('bannerTpl', {list: data,url:oCms}));
-							 
-						} else {
-						}
-//							//获得slider插件对象
-						
-						
-					},
-					error: function(xhr, type, errorThrown) {
-						plus.nativeUI.closeWaiting();
-						console.log('响应失败');
-					}
-				});
-				function loadIndex() {
-					//获取缓存
-					var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
-					var userId = plus.storage.getItem('$userId');
-					var oldToken = plus.storage.getItem('oldToken');
-					//切换板块
-					if(identityT == 0 || identityT == 4 || identityT == 5) { //导购
-						$('.guides').css('display', '')
-						$('.cusMan,.worker').css('display', 'none')
-					} else if(identityT == 6 || identityT == 2) { //顾客 项目经理
-						$('.cusMan').css('display', '')
-						$('.guides,.worker').css('display', 'none')
-
-					} else if(identityT == 3) { //工人
-						$('.guides,.worker').css('display', '')
-						$('.cusMan,.guides').css('display', 'none')
-					} else { //配送员
-
-					}
-					
-					//常购商品列表
-					mui.ajax(serverUrl + '/app/goods/often/list', {
-						data: {
-							userId: userId,
-							identityType: identityT
-						},
-						dataType: 'json',
-						headers: {
-							"Authorization": oldToken
-						},
-						type: 'post',
-						timeout: 10000,
-						success: function(data, type, xhr) {
-							console.log('常购商品列表', data);
-							if(data.code == 0) {
-								plus.nativeUI.closeWaiting();
-								if(data.content && data.content.length) {
-									$('#goodsList').html(template('goodsTpl', {
-										list: data.content
-									}));
-								} else {
-									$('#goodsList,#oftenbuy,.oftenbuy').hide()
-									//									$('#goodsList').html('<div style="text-align:center;padding:15px;font-size: 12px">暂无商品</div>')
-								}
-							} else {
-								mui.toast(data.message)
-							}
-
-						},
-						error: function(xhr, type, errorThrown) {
-							plus.nativeUI.closeWaiting();
-							console.log('登录响应失败');
-						}
-					});
-					//热门商品列表
-					mui.ajax(serverUrl + '/app/goods/hot/list', {
-						data: {
-							userId: userId,
-							identityType: identityT
-						},
-						dataType: 'json',
-						headers: {
-							"Authorization": oldToken
-						},
-						type: 'post',
-						timeout: 10000,
-						success: function(data, type, xhr) {
-							console.log('热门商品列表', data);
-							if(data.code == 0) {
-								plus.nativeUI.closeWaiting();
-								if(data.content && data.content.length) {
-									$('#goodsListHot').html(template('goodsHotTpl', {
-										list: data.content
-									}));
-								} else {
-									$('#goodsListHot').html('<div style="text-align:center;padding:15px;font-size: 12px;">暂无商品</div>')
-								}
-							} else {
-								mui.toast(data.message)
-							}
-
-						},
-						error: function(xhr, type, errorThrown) {
-							plus.nativeUI.closeWaiting();
-							console.log('登录响应失败');
-						}
-					});
-					
-					
-					//乐易装商学院
-					var currentPage = 1,
-						numsPerPage = 2,
-						endPage = 0;
-					mui.ajax(oCms+'/lyzcms/index.php/ApiCms/postSchool', {
-						data: {
-							page: currentPage,
-							size: numsPerPage
-						},
-						dataType: 'json', //服务器返回json格式数据
-						type: 'post', //HTTP请求类型
-						timeout: 10000, //超时时间设置为10秒；
-						success: function(data) {
-							console.log('trade', data);
-
-							if(data && data.list.length) {
-//								document.getElementById("tradeList").innerHTML = template("tradeTpl", {
-//									dataList: data.list,
-//									url:oCms
-//								});
-//								mui("#upload")[0].innerHTML = "";
-
-								//上滑加载
-								//								$(window).scroll(function() {
-								//									var scrollTop = $(this).scrollTop();
-								//									var scrollHeight = $(document).height();
-								//									var windowHeight = $(this).height();
-								//									if(Spagenum<=data.pageNum && scrollTop + windowHeight == scrollHeight) {
-								//										if(Spagenum == Ypagenum + 1) { //当前页小于等于总页数时请求下一页
-								//											mui("#upload")[0].innerHTML = "<img src='img/balls.svg' />";
-								//											Ypagenum++; //满足加载情况,应到页数+1
-								//											console.log('发起请求,实到' + Spagenum + '页');
-								//											console.log('发起请求,应到' + Ypagenum + '页');
-								//											mui.ajax('http://hiji.hifete.com:6789/index.php/Api_goods/lyzNews', {
-								//												data: {
-								//													page: Spagenum,
-								//													size: numsPerPage,
-								//												},
-								//												dataType: 'json', //服务器返回json格式数据
-								//												type: 'post', //HTTP请求类型
-								//												timeout: 10000, //超时时间设置为10秒；
-								//												success: function(data) {
-								//													console.log('trade续',data)
-								//													if(data && data.data.length) {
-								//														document.getElementById("tradeList").innerHTML += template("tradeTpl", {dataList:data.data});
-								//													}
-								//													mui("#upload")[0].innerHTML = " ";
-								//													Spagenum++; //加载成功,当前页+1
-								//													console.log('成功+1,实到' + Spagenum);
-								//													console.log('成功+1,应到' + Spagenum);
-								//												},
-								//												error: function(xhr, type, errorThrown) {
-								//													Ypagenum--; //失败是应到-1
-								//													mui.toast("当前网络不好请重试");
-								//													mui("#upload")[0].innerHTML = "";
-								//												}
-								//											});
-								//										}
-								//									} else { //当前页不小于等于总页数时请求下一页
-								//											mui("#upload")[0].innerHTML = "到底了";
-								//										}
-								//								});
-							} else {
-								mui("#upload")[0].innerHTML = "";
-							}
-							plus.nativeUI.closeWaiting(); //关闭等待框
-						},
-						error: function(xhr, type, errorThrown) {
-							plus.nativeUI.closeWaiting(); //关闭等待框
-							mui("#upload")[0].innerHTML = "";
-						}
-					});
-
-					//加入购物车
-					window.addcart = function(goodid) {
-						event.stopPropagation();
-						plus.nativeUI.showWaiting();
-						mui.ajax(serverUrl + '/app/materialList/add', {
-							data: {
-								userId: userId,
-								identityType: identityT,
-								params: goodid + '-' + 1
-							},
-							dataType: 'json',
-							headers: {
-								"Authorization": oldToken
-							},
-							type: 'post',
-							timeout: 10000,
-							success: function(data, type, xhr) {
-								plus.nativeUI.closeWaiting();
-								console.log('加入购物车', data);
-								if(data.code == 0) {
-									plus.nativeUI.toast('加入成功')
-									mui.fire(plus.webview.getWebviewById('cart.html'), 'refresh');
-
-								} else {
-									mui.toast(data.message)
-								}
-
-							},
-							error: function(xhr, type, errorThrown) {
-								plus.nativeUI.closeWaiting();
-								mui.toast(type)
-								console.log('响应失败');
-							}
-						});
-					}
-
-				}
-			});
 		</script>
 		
 		<script type="text/javascript">
@@ -1069,7 +1120,7 @@
 					}
 					drawBadge();
 				})
-				document.addEventListener('refresh', function() {
+				document.addEventListener('refreshid', function() {
 					//底部选项卡切换
 					util.toggleNview(3);
 				})

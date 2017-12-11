@@ -22,7 +22,7 @@
 			<a class="headbar mui-action-back mui-icon mui-icon-left-nav mui-pull-left normalSize"></a>
 			<h1 class="mui-title">确认订单</h1>
 		</header>
-		<script src="js/statusBar.js"></script>
+		<script src="../../js/statusBar.js"></script>
 		<!--状态栏-->
 		<div style="height:50px;"></div>
 		<div class="flexwc">
@@ -84,14 +84,14 @@
 			<div id="add_info"></div>
 			<script type="text/html" id="addrTpl">
 				<%if(obj.length==0){%>
-				<div class="qtop flexr pad10" onclick="address()">
-					<div style="flex: 1;margin-left: 10px;">
+				<div class="qtop flexr pad10 afterBorder" onclick="address()">
+					<div style="flex: 1;">
 						<div class="maincl ft16">
-							<span class="disablecl"></span>
-							<span class="disablecl"></span>
+							<span class="maincl"></span>
+							<span class="maincl"></span>
 						</div>
 						<div class="ft16">
-							<span class="disablecl">请选择收获地址</span>
+							<span class="maincl">请选择收获地址</span>
 						</div>
 					</div>
 					<div class="">
@@ -99,14 +99,14 @@
 					</div>
 				</div>
 				<%}else{%> 
-					<div class="qtop flexr pad10" onclick="address()" id="addid" data-id="<%=obj[0].id%>" data-receiver="<%=obj[0].person%>" data-receiverPhone="<%=obj[0].phone%>" data-deliveryCity="<%=obj[0].city%>" data-deliveryCounty="<%=obj[0].country%>" data-deliveryStreet="<%=obj[0].street%>" data-residenceName="<%=obj[0].villageName%>" data-detailedAddress="<%=obj[0].address%>">
-						<div style="flex: 1;margin-left: 10px;">
+					<div class="qtop flexr pad10 afterBorder" onclick="address()" id="addid" data-id="<%=obj[0].id%>" data-receiver="<%=obj[0].person%>" data-receiverPhone="<%=obj[0].phone%>" data-deliveryCity="<%=obj[0].city%>" data-deliveryCounty="<%=obj[0].country%>" data-deliveryStreet="<%=obj[0].street%>" data-residenceName="<%=obj[0].villageName%>" data-detailedAddress="<%=obj[0].address%>">
+						<div style="flex: 1;">
 							<div class="maincl ft16">
-								<span class="disablecl"><%=obj[0].person%></span>
-								<span class="disablecl"><%=obj[0].phone%></span>
+								<span class="maincl"><%=obj[0].person%></span>
+								<span class="maincl"><%=obj[0].phone%></span>
 							</div>
 							<div class="ft16">
-								<span class="disablecl"><%=obj[0].province%><%=obj[0].city%><%=obj[0].country%><%=obj[0].street%><%=obj[0].villageName%><%=obj[0].address%></span>
+								<span class="maincl"><%=obj[0].province%><%=obj[0].city%><%=obj[0].country%><%=obj[0].street%><%=obj[0].villageName%><%=obj[0].address%></span>
 							</div>
 						</div>
 						<div class="">
@@ -118,23 +118,21 @@
 			</script>
 			
 			</div>
-			<div id='cityResult' data-id = '0' class="ui-alert pad10 afterBorder">配送时间 <span class="mui-pull-right">选择</span></div>
-			<div class="mui-input-row mui-checkbox mui-left afterBorder">
-				<label>是否业主收货</label>
-				<input name="checkbox1" id="isOwner" value="1" type="checkbox" checked>
+			<div id='cityResult' data-id = '0' class="ui-alert pad10 afterBorder ft15">配送时间<span class="mui-icon mui-icon-arrowdown maincl mui-pull-right ft16"></span><span class="mui-pull-right pstime">选择</span></div>
+			<div class="mui-input-row mui-checkbox afterBorder ft15 isowndis">
+				<label style="padding: 18px 10px;">是否主家收货</label>
+				<input name="checkbox1" style="top: 12px;right: 12px;" id="isOwner" class="mui-pull-right isOwnerReceiving" value="Item 1" type="checkbox" checked>
 			</div>
 			<div class="pad10 activecl ft13 afterBorder">
 				温馨提示：若收货人为主家，系统将在出货打印单中自动隐藏折扣信息
 			</div>
-			<div>
-				备注：<textarea name="" id="other" maxlength="100" cols="30" rows="4"></textarea>
-			</div>
+			<textarea name="" id="other" maxlength="100" cols="30" rows="4" placeholder="备注"></textarea>
 		</div>
 		
 		<!--bottom nav-->
 		<div style="height:1rem;"></div>
 		<aside class="btmNav" id="dibu">
-			<a class="goOrder dp" style="background:#f53c42;color:white;text-shadow:none;">提交审核</a>
+			<a class="goOrder dp" style="background:#B62D29;color:white;text-shadow:none;">提交审核</a>
 		</aside>
 		<!--<button class="mui-btn-danger">提交审核</button>-->
 		<!--<%}%>-->
@@ -280,15 +278,25 @@
 						if(data.code == 0){
 							if(data.content && data.content.length){
 								var cityData = [];
-								mui.each(data.content,function(index,item){
-									var  eachday = {};
+								var cflag = 0;
+								mui.each(data.content, function(index, item) {
+									var eachday = {};
 									eachday.children = [];
 									eachday.text = item.day;
-									mui.each(item.deliveryTime,function(index2,item2){
-										eachday.children.push({'text':item2})
+									mui.each(item.deliveryTime, function(index2, item2) {
+										if(!cflag) {
+											if(item2) {
+												cflag = 1;
+												$('#cityResult .pstime').html(item.day + " " + item2)
+											}
+										}
+
+										eachday.children.push({
+											'text': item2
+										})
 									})
 									cityData.push(eachday)
-	                        		})
+								})
 								console.log('cityData ',cityData);
 								var cityPicker = new mui.PopPicker({
 									layer: 2
@@ -296,11 +304,13 @@
 								cityPicker.setData(cityData);
 								var cityResult = document.getElementById('cityResult');
 								cityResult.addEventListener('tap', function(event) {
-									cityPicker.show(function(items) {
-										$('#cityResult').attr('data-id','1')
-										$('#cityResult span').html(items[0].text + " " + items[1].text)
-										//返回 false 可以阻止选择框的关闭
-										//return false;
+									cityPicker.show(function(items) { 
+										$('#cityResult').attr('data-id', '1');
+										if(!items[1].text) {
+											alert('当天无可选时间段')
+										} else {
+											$('#cityResult .pstime').html(items[0].text + " " + items[1].text)
+										}
 									});
 								}, false);
 								//-----------------------------------------
@@ -330,7 +340,7 @@
 				var deliveryStreet = $('#addid').attr('data-deliveryStreet')
 				var detad = $('#addid').attr('data-detailedAddress')
 				var receiver = $('#addid').attr('data-receiver')
-				var pstime = $('#cityResult span').html();//配送时间
+				var pstime = $('#cityResult .pstime').html();//配送时间
 				var isOwner= $('#isOwner').attr('checked');
 				
 				console.log('idobj ',idobj)
@@ -339,7 +349,7 @@
 				}else{
 					isOwnerReceive = 0
 				}
-				if($('#cityResult').attr('data-id') == 0){
+				if(!pstime || pstime == '选择'){
 					mui.toast('请选择配送时间')
 				}else{
 					mui.ajax(serverUrl+'/app/material/audit/save',{

@@ -79,7 +79,7 @@
 		}
 		
 		.preDeposit {
-			width: 38%!important;
+			width: 15%!important;
 			margin-top: -4px;
 			height: 30px!important;
 			text-align: right;
@@ -322,13 +322,13 @@
 					<div class="pad10 ft16 activecl" style="text-align: right;">合计：<span id="totalOrderAmount">¥--</span></div>
 					<div style="height: 5px;background: #EEEEEE;"></div>
 
-					<div class="pad10 ft14 afterBorder">预存款<span class='activecl' id="preDepositb">¥--</span><input placeholder="请输入大于0的整数" onchange="maxC(this)" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" value="0" name="preDepositb" class='mui-pull-right preDeposit' /></div>
+					<div class="pad10 ft14 afterBorder">预存款<span class='activecl' id="preDepositb">¥--</span><input onchange="maxC(this)" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" placeholder="0" name="preDepositb" class='mui-pull-right preDeposit' /></div>
 					<!--only manager-->
-					<div class="pad10 ft14 afterBorder manager" style="display: none;">信用金<span class='activecl' id="credit">¥--</span><input placeholder="请输入大于0的整数" value="0" name="credit" onchange="maxC(this)" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" class='mui-pull-right preDeposit' /></div>
-					<div class="pad10 ft14 afterBorder manager" style="display: none;">现金返利<span class='activecl' id="cash">¥--</span><input placeholder="请输入大于0的整数" value="0" name="cash" onchange="maxC(this)" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" class='mui-pull-right preDeposit' /></div>
+					<div class="pad10 ft14 afterBorder manager" style="display: none;">信用金<span class='activecl' id="credit">¥--</span><input placeholder="0" name="credit" onchange="maxC(this)" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" class='mui-pull-right preDeposit' /></div>
+					<div class="pad10 ft14 afterBorder manager" style="display: none;">现金返利<span class='activecl' id="cash">¥--</span><input placeholder="0" name="cash" onchange="maxC(this)" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" class='mui-pull-right preDeposit' /></div>
 					<!--only guide-->
-					<div class="pad10 ft14 afterBorder guide" style="display: none;">信用额度<span class='activecl' id="creditVal">¥--</span><input placeholder="请输入大于0的整数" value="0" name="creditVal" onchange="maxC(this)" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" class='mui-pull-right preDeposit' /></div>
-					<div class="pad10 ft14 afterBorder guide" style="display: none;">代收金额<input placeholder="请输入大于0的整数" value="0" name="cashHelp" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" class='mui-pull-right preDeposit' /></div>
+					<div class="pad10 ft14 afterBorder guide" style="display: none;">信用额度<span class='activecl' id="creditVal">¥--</span><input placeholder="0" name="creditVal" onchange="maxC(this)" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" class='mui-pull-right preDeposit' /></div>
+					<div class="pad10 ft14 afterBorder guide" style="display: none;">代收金额<input placeholder="0" name="cashHelp" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" class='mui-pull-right preDeposit' /></div>
 
 				</dl>
 			</script>
@@ -382,11 +382,13 @@
 
 	<script>
 		function onlyNum(obj) {
-			if(obj.value.length == 1) {
-				obj.value = obj.value.replace(/[^1-9]/g, '')
-			} else {
-				obj.value = obj.value.replace(/\D/g, '')
-			}
+			obj.value = obj.value.replace(/[^\d.]/g,"");  //清除“数字”和“.”以外的字符   
+			  obj.value = obj.value.replace(/\.{2,}/g,"."); //只保留第一个. 清除多余的   
+			  obj.value = obj.value.replace(".","$#$").replace(/\./g,"").replace("$#$",".");  
+			  obj.value = obj.value.replace(/^(\-)*(\d+)\.(\d\d).*$/,'$1$2.$3');//只能输入两个小数   
+			  if(obj.value.indexOf(".")< 0 && obj.value !=""){//以上已经过滤，此处控制的是如果没有小数点，首位不能为类似于 01、02的金额  
+			   obj.value= parseFloat(obj.value);  
+			  }  
 		}
 
 		function pastNum() {
@@ -426,12 +428,28 @@
 			window.maxC = function(obj) {
 				var cur = $(obj);
 				var maxCh = cur.prev().html().replace('¥', '');
-				if(Number(obj.value) > Number(maxCh)) {
-					mui.toast('输入正确的金额')
+				var payValue = $('#totalOrderAmount').html().replace('¥', '');
+				var creditc = $('input[name="credit"]').val(); //信用金
+				var cashc = $('input[name="cash"]').val(); //现金返利
+				var creditValc = $('input[name="creditVal"]').val(); //信用额度
+				var cashHelpc = $('input[name="cashHelp"]').val(); //代收金额
+				var preDepositbc = $('input[name="preDepositb"]').val(); //预存款
+				var inputAll = Number(creditc) + Number(cashc) + Number(creditValc) + Number(cashHelpc) + Number(preDepositbc);
+				if(inputAll > payValue){
+					mui.toast('应付款不能为负');
 					obj.value = '';
-					return false;
+					carculate()
+					return;
+				}else if(Number(obj.value) > Number(maxCh)) {
+					mui.toast('不能大于当前项的最大额度');
+					obj.value = '';
+					carculate()
+					return;
+				}else{
+					carculate()
+//					$('.totalMoney').html(parseFloat(payValue-inputAll).toFixed(2))
 				}
-				carculate()
+				
 			}
 			if(identityT == 2) {
 				$('.selfTake').hide();
@@ -818,9 +836,16 @@
 				} else {
 					lebi = 0
 				}
+				var payTotal = Number(orderAll) - Number(memberDiscount) - Number(orderDiscount) + Number(freight) - Number(couponDiscount) - Number(lebi);
 				var curTotal = Number(orderAll) - Number(memberDiscount) - Number(orderDiscount) + Number(freight) - Number(couponDiscount) - Number(lebi) - Number(credit) - Number(cash) - Number(creditVal) - Number(cashHelp) - Number(preDepositb);
 				//				alert(orderAll + ' ' + memberDiscount + ' ' + orderDiscount + ' ' + freight + ' ' + couponDiscount + " " + lebi);
-				$('#totalOrderAmount').html(parseFloat(curTotal).toFixed(2))
+				if(payTotal<0){
+					payTotal = 0
+				}
+				if(curTotal<0){
+					curTotal = 0
+				}
+				$('#totalOrderAmount').html(parseFloat(payTotal).toFixed(2))
 				$('.totalMoney').html(parseFloat(curTotal).toFixed(2))
 			}
 			//获取城市
@@ -1004,6 +1029,7 @@
 					"auditNo": auditNo,
 					"billingInfo": JSON.stringify(billingInfo),
 				})
+				plus.nativeUI.showWaiting();
 				//创建订单 
 				mui.ajax(serverUrl + '/app/order/create', {
 					data: {
@@ -1016,7 +1042,7 @@
 						"productCouponInfo": JSON.stringify(productCouponInfo),
 						"promotionInfo": JSON.stringify(promotionInfo),
 						"deliveryInfo": JSON.stringify(deliveryInfo),
-						"cashCouponIds": JSON.stringify(cashCouponIds),
+						"cashCouponIds": '',
 						"auditNo": auditNo,
 						"billingInfo": JSON.stringify(billingInfo),
 					},
@@ -1034,7 +1060,9 @@
 								toPay(data.content.amountPayable, data.content.orderNumber);
 							}
 							$('#maskInfo').fadeIn(200);
+							plus.nativeUI.closeWaiting();
 						} else {
+							plus.nativeUI.closeWaiting();
 							mui.toast(data.message);
 						}
 					},

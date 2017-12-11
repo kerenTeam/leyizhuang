@@ -212,7 +212,7 @@
 							var varpay;
 							if(id == 'wxpay') {
 								//微信
-								mui.ajax(serverUrl + '/app/pay/wechat/recharge', {
+								mui.ajax(serverUrl + '/app/wechatpay/recharge/pay', {
 									data: {
 										userId:userId,
 										identityType:identityT.toString(),

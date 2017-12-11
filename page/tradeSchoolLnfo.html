@@ -36,18 +36,22 @@
 			mui.init();
 			mui.plusReady(function(){
 
-				mui.ajax(oCms+'/lyzcms/index.php/ApiCms/postSchoolInfo', {
+				mui.ajax(oCms+'/index.php/ApiCms/postSchoolInfo', {
 				data: {id: plus.webview.currentWebview().tradeId	},
 				dataType: 'json',
 				type: 'post',
 				timeout: 10000,
 				success: function(data) {
 					console.log('商学院详情', data);
-					if(data) {
-						$('.mui-title,#title').html(data.title);
-						$('#content').html(data.content)
+					if(data.code == 0) {
+						if(data.content){
+							$('.mui-title,#title').html(data.content.title);
+							$('#content').html(data.content.content)
+						}else{
+							document.getElementById("tradeList").innerHTML = '<div style="text-align:center;padding:15px;font-size: 12px;">暂无数据</div>'
+						}
 					} else {
-						document.getElementById("tradeList").innerHTML = '<div style="text-align:center;padding:15px;font-size: 12px;">暂无数据</div>'
+						mui.toast(message)
 					}
 				},
 				error: function(xhr, type, errorThrown) {

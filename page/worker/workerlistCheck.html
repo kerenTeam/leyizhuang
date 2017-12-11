@@ -83,17 +83,15 @@
 							</h4>
 							<div class="checkListCon clearfix">
 								<%if(list[i].pictureList && list[i].pictureList.length > 0){%>
-									<%for(var j = 0; j < list[i].pictureList.length; j++){%>
-										<%if(list[i].pictureList.length > 4){%>
-											<%for(var j = 0; j < 4; j++){%>
-												<img src="<%=list[i].pictureList[j]%>" onerror="../../images/img.svg"/>
-											<%}%>
-										<%}else{%>
-											<%for(var j = 0; j < list[i].pictureList.length; j++){%>
-												<img src="<%=list[i].pictureList[j]%>" onerror="../../images/img.svg"/>
-											<%}%>
-										<%}%> 
-									<%}%>
+									<%if(list[i].pictureList.length > 4){%>
+										<%for(var j = 0; j < 4; j++){%>
+											<img src="<%=list[i].pictureList[j]%>" onerror="../../images/img.svg"/>
+										<%}%>
+									<%}else{%>
+										<%for(var j = 0; j < list[i].pictureList.length; j++){%>
+											<img src="<%=list[i].pictureList[j]%>" onerror="../../images/img.svg"/>
+										<%}%>
+									<%}%> 
 								<%}%>
 							</div>
 							<p class="checkListDZ fineT fineB">收货地址：<%=list[i].deliveryCity%><%=list[i].deliveryCounty%><%=list[i].deliveryStreet%><%=list[i].residenceName%><%=list[i].detailedAddress%></p>
