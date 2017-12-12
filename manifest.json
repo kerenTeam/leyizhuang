@@ -615,7 +615,8 @@
 					"css/configW.css"
 				],
 				"refer": [
-					"page/goodsInfo.html"
+					"page/goodsInfo.html",
+					"cart.html"
 				],
 				"priority": 0
 			},
@@ -1610,6 +1611,13 @@
 				"resources": [],
 				"refer": [
 					"page/personal/pzOrderInfo.html"
+				],
+				"priority": 0
+			},
+			"page/oilFast.html": {
+				"resources": [],
+				"refer": [
+					"page/goodsInfo.html"
 				],
 				"priority": 0
 			}

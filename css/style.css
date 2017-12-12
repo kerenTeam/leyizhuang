@@ -137,3 +137,24 @@ header{background-color: white!important;}
 	max-height: calc(100vh * 0.6);
 	overflow-y:scroll ;
 }
+.gocarticon{
+	position: fixed;
+	display: block;
+	right: 1.5rem;
+	bottom: 2.5rem;
+	height: 3.2rem;
+	width: 3.2rem;
+	background-color: #B62D29;
+	border-radius: 50%; 
+	box-sizing: border-box;
+	z-index: 999;
+	padding: 0;
+	text-align: center;
+	line-height: 4.5rem;
+	box-shadow: 0px 0px 2px 2px rgba(208, 145, 145, 0.4);
+}
+.gocarticon img{
+	width: 50%;
+}
+.mui-badge-white{background: white;color: #B62D29;}
+.gocarticon .mui-badge{position: absolute;top: 8px;right: 5px;}

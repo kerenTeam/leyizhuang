@@ -3,37 +3,939 @@
 
 	<head>
 		<meta charset="utf-8">
-		<title>Hello MUI</title>
+		<title>快捷下单-电</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
 		<meta name="apple-mobile-web-app-capable" content="yes">
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
 		<link rel="stylesheet" href="../css/mui.min.css">
+		<link rel="stylesheet" type="text/css" href="../css/style.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/configW.css"/> 
 		<style>
 			html,
 			body {
 				background-color: #efeff4;
 			}
-			
 			.title {
-				padding: 20px 15px 10px;
+				padding: 14px 0 10px;
 				color: #6d6d72;
 				font-size: 15px;
-				background-color: #fff;
 			}
+			.mui-checkbox input[type=checkbox]:checked:before, .mui-radio input[type=radio]:checked:before{color: #B62D29;}
+			.categray{padding: 10px;}
+			.mui-badge-danger{padding: 5px 10px;font-size: 14px;border-radius: 3px;background-color: #DDDDDD;color: gray;}
+	 		.actBadge{background-color: #B42E28;color: white;}
+	 		.categray span{margin: 0 10px 0 0;display: inline-block;}
+	 		.actspan{color: #B42E28;}
+	 		.afterBorder:after{left: 5px;right: 5px;}
+	 		.flexr{text-align: center;}
+	 		.maincl .flexr span{margin: 5px 2px;display: block;}
+	 		.maincl .mui-numbox{display: block;margin: 4px 2px;}
+	 		.showRotate{-webkit-transform: rotateX(180deg);-webkit-transform-origin: center;padding-left: 10px;-webkit-transition:all 0.3s ease;}
 		</style>
 	</head>
 
 	<body>
-		<div class="mui-content">
-			<div class="mui-scroll">
-				<div class="title">
-					这是webview模式选项卡中的第2个子页面
+		<div class="mui-content ft15" style="margin-top: 0;">
+			<div class="maincl">
+				<div class="title fttc bgcee ft15" data-id='1'>
+					电线
 				</div>
+				<div class="categray bgcwt">
+		     		<span class="mui-badge mui-badge-danger ftb" data-id = '' data-name = 'category'>品牌</span>
+		     		<span class="ftb actspan" data-id = '1' data-name = 'category'>特变</span>
+		     	</div>
+		     	<div class="padd10 bgcwt">
+		     		<div class="flexr">
+		     			<div>产品</div>
+		     			<div>规格</div>
+		     			<div>数量</div>
+		     		</div>
+		     		<div class="flexr afterBorder paddv10">
+		     			<div class="spone">
+		     				<span class="bdc bdcA" data-id="1">
+		     					阻燃
+		     				</span>
+		     				<span class="bdc" data-id="2">
+		     					非阻燃
+		     				</span>
+		     			</div>
+		     			<div class="spsec">
+		     				<span class="bdc bdcA" data-id="1">
+		     					2.5mm^2
+		     				</span>
+		     				<span class="bdc" data-id="2">
+		     					4mm^2
+		     				</span>
+		     				<span class="bdc" data-id="3">
+		     					6mm^2
+		     				</span>
+		     			</div>
+		     			<div class="spthr">
+		     				<span class="bdc bdcA" data-id="1">
+		     					红
+		     				</span>
+		     				<span class="bdc bdcA" data-id="2">
+		     					黄
+		     				</span>
+		     				<span class="bdc bdcA" data-id="3">
+		     					蓝
+		     				</span>
+		     				<span class="bdc bdcA" data-id="4">
+		     					双色
+		     				</span>
+		     			</div>
+	     				<div>
+	     					<div class="mui-numbox wfast" data-id='1' data-numbox-step='1' data-numbox-min='0'>
+							  <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+							  <input class="mui-numbox-input" type="number" value="0"/>
+							  <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+							</div>
+							<div class="mui-numbox wfast" data-id='2' data-numbox-step='1' data-numbox-min='0'>
+							  <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+							  <input class="mui-numbox-input" type="number" value="0"/>
+							  <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+							</div>
+							<div class="mui-numbox wfast" data-id='3' data-numbox-step='1' data-numbox-min='0'>
+							  <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+							  <input class="mui-numbox-input" type="number" value="0"/>
+							  <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+							</div>
+							<div class="mui-numbox wfast" data-id='4' data-numbox-step='1' data-numbox-min='0'>
+							  <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+							  <input class="mui-numbox-input" type="number" value="0"/>
+							  <button class="mui-btn mui-numbox-btn-plus"type="button">+</button>
+							</div>
+	     				</div>
+		     		</div>
+		     		<div class="flexr afterBorder paddv10">
+		     			<div class="spone">
+		     				<span class="bdc bdcA" data-id="1">
+		     					阻燃
+		     				</span>
+		     				<span class="bdc" data-id="2">
+		     					非阻燃
+		     				</span>
+		     			</div>
+		     			<div class="spsec">
+		     				<span class="bdc bdcA" data-id="1">
+		     					2.5mm^2
+		     				</span>
+		     				<span class="bdc" data-id="2">
+		     					4mm^2
+		     				</span>
+		     				<span class="bdc" data-id="3">
+		     					6mm^2
+		     				</span>
+		     			</div>
+		     			<div class="spthr">
+		     				<span class="bdc bdcA" data-id="1">
+		     					红
+		     				</span>
+		     				<span class="bdc bdcA" data-id="2">
+		     					黄
+		     				</span>
+		     				<span class="bdc bdcA" data-id="3">
+		     					蓝
+		     				</span>
+		     				<span class="bdc bdcA" data-id="4">
+		     					双色
+		     				</span>
+		     			</div>
+	     				<div>
+	     					<div class="mui-numbox wfast" data-id='1' data-numbox-step='1' data-numbox-min='0'>
+							  <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+							  <input class="mui-numbox-input" type="number" value="0"/>
+							  <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+							</div>
+							<div class="mui-numbox wfast" data-id='2' data-numbox-step='1' data-numbox-min='0'>
+							  <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+							  <input class="mui-numbox-input" type="number" value="0"/>
+							  <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+							</div>
+							<div class="mui-numbox wfast" data-id='3' data-numbox-step='1' data-numbox-min='0'>
+							  <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+							  <input class="mui-numbox-input" type="number" value="0"/>
+							  <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+							</div>
+							<div class="mui-numbox wfast" data-id='4' data-numbox-step='1' data-numbox-min='0'>
+							  <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+							  <input class="mui-numbox-input" type="number" value="0"/>
+							  <button class="mui-btn mui-numbox-btn-plus"type="button">+</button>
+							</div>
+	     				</div>
+		     		</div>
+		     		<div class="flexr afterBorder paddv10">
+		     			<div class="spone">
+		     				<span class="bdc bdcA" data-id="1">
+		     					阻燃
+		     				</span>
+		     				<span class="bdc" data-id="2">
+		     					非阻燃
+		     				</span>
+		     			</div>
+		     			<div class="spsec">
+		     				<span class="bdc bdcA" data-id="1">
+		     					2.5mm^2
+		     				</span>
+		     				<span class="bdc" data-id="2">
+		     					4mm^2
+		     				</span>
+		     				<span class="bdc" data-id="3">
+		     					6mm^2
+		     				</span>
+		     			</div>
+		     			<div class="spthr">
+		     				<span class="bdc bdcA" data-id="1">
+		     					红
+		     				</span>
+		     				<span class="bdc bdcA" data-id="2">
+		     					黄
+		     				</span>
+		     				<span class="bdc bdcA" data-id="3">
+		     					蓝
+		     				</span>
+		     				<span class="bdc bdcA" data-id="4">
+		     					双色
+		     				</span>
+		     			</div>
+	     				<div>
+	     					<div class="mui-numbox wfast" data-id='1' data-numbox-step='1' data-numbox-min='0'>
+							  <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+							  <input class="mui-numbox-input" type="number" value="0"/>
+							  <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+							</div>
+							<div class="mui-numbox wfast" data-id='2' data-numbox-step='1' data-numbox-min='0'>
+							  <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+							  <input class="mui-numbox-input" type="number" value="0"/>
+							  <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+							</div>
+							<div class="mui-numbox wfast" data-id='3' data-numbox-step='1' data-numbox-min='0'>
+							  <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+							  <input class="mui-numbox-input" type="number" value="0"/>
+							  <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+							</div>
+							<div class="mui-numbox wfast" data-id='4' data-numbox-step='1' data-numbox-min='0'>
+							  <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+							  <input class="mui-numbox-input" type="number" value="0"/>
+							  <button class="mui-btn mui-numbox-btn-plus"type="button">+</button>
+							</div>
+	     				</div>
+		     		</div>
+		     		
+		     		<div class="flexr afterBorder paddv10">
+		     			<div data-id="3">安普超五类<br />网线</div>
+		     			<div class="spsec">
+		     				<span class="bdc bdcA" data-id="1">
+		     					白色-100米/箱
+		     				</span>
+		     			</div>
+	     				<div class="mui-numbox wfast" data-numbox-step='1' data-numbox-min='0'>
+						  <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+						  <input class="mui-numbox-input" type="number" value="0"/>
+						  <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+						</div>
+		     		</div>
+		     		<div class="flexr afterBorder paddv10">
+		     			<div data-id="4">贝莱茵千兆<br />六类网线</div>
+		     			<div class="spsec">
+		     				<span class="bdc bdcA" data-id="1">
+		     					金黄色-100米/箱
+		     				</span>
+		     			</div> 
+	     				<div class="mui-numbox wfast" data-numbox-step='1' data-numbox-min='0'>
+						  <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+						  <input class="mui-numbox-input" type="number" value="0"/>
+						  <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+						</div>
+		     		</div>
+		     	</div>
+				 
+			</div>
+			
+			<div class="maincl">
+				<div class="title fttc bgcee ft15" data-id = '2'>
+					线管及辅料
+				</div>
+				<div class="categray bgcwt">
+		     		<span class="mui-badge mui-badge-danger ftb" data-id = '' data-name = 'category'>品牌</span>
+		     		<span class="brand ftb actspan" data-id = '1' data-name = 'category'>金牛</span>
+		     		<span class="brand ftb" data-id = '2' data-name = 'category'>兰晨</span>
+		     	</div>
+		     	<div class="padd10 bgcwt">
+		     		 
+		     		<div class="flexr afterBorder paddv10">
+		     			<div data-id="1">轻型穿线管</div>
+		     			<div class="spsec">
+		     				<span class="bdc bdcA" data-id="1">
+		     					16*3m
+		     				</span>
+		     				<span class="bdc" data-id="2">
+		     					20*3m
+		     				</span> 
+		     			</div>
+		     			<div class="spthr">
+		     				<span class="bdc bdcA" data-id="1">
+		     					红色
+		     				</span>
+		     				<span class="bdc bdcA" data-id="2">
+		     					蓝色
+		     				</span> 
+		     			</div>
+	     				<div>
+	     					<div class="mui-numbox wfast" data-id='1' data-numbox-step='1' data-numbox-min='0'>
+							  <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+							  <input class="mui-numbox-input" type="number" value="0"/>
+							  <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+							</div>
+							<div class="mui-numbox wfast" data-id='2' data-numbox-step='1' data-numbox-min='0'>
+							  <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+							  <input class="mui-numbox-input" type="number" value="0"/>
+							  <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+							</div>
+	     				</div>
+		     		</div>
+		     		
+		     		   
+		     		<div class="flexr afterBorder paddv10">
+		     			<div data-id="2">线管直接</div>
+	     				<div class="spsec">
+		     				<span class="bdc bdcA" data-id="1">
+		     					16*3m
+		     				</span>
+		     				<span class="bdc" data-id="2">
+		     					20*3m
+		     				</span> 
+		     			</div>
+		     			<div class="spthr">
+		     				<span class="bdc bdcA" data-id="1">
+		     					红色
+		     				</span>
+		     				<span class="bdc bdcA" data-id="2">
+		     					蓝色
+		     				</span> 
+		     			</div>
+	     				<div>
+	     					<div class="mui-numbox wfast" data-id='1' data-numbox-step='1' data-numbox-min='0'>
+							  <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+							  <input class="mui-numbox-input" type="number" value="0"/>
+							  <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+							</div>
+							<div class="mui-numbox wfast" data-id='2' data-numbox-step='1' data-numbox-min='0'>
+							  <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+							  <input class="mui-numbox-input" type="number" value="0"/>
+							  <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+							</div>
+	     				</div>
+		     		</div>
+		     		<div class="flexr afterBorder paddv10">
+		     			<div data-id="3">线管弯头</div>
+	     				<div class="spsec">
+		     				<span class="bdc bdcA" data-id="1">
+		     					16
+		     				</span>
+		     				<span class="bdc" data-id="2">
+		     					20
+		     				</span> 
+		     			</div>
+		     			<div class="spthr">
+		     				<span class="bdc bdcA" data-id="1">
+		     					红色
+		     				</span>
+		     				<span class="bdc bdcA" data-id="2">
+		     					蓝色
+		     				</span> 
+		     			</div>
+	     				<div>
+	     					<div class="mui-numbox wfast" data-id='1' data-numbox-step='1' data-numbox-min='0'>
+							  <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+							  <input class="mui-numbox-input" type="number" value="0"/>
+							  <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+							</div>
+							<div class="mui-numbox wfast" data-id='2' data-numbox-step='1' data-numbox-min='0'>
+							  <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+							  <input class="mui-numbox-input" type="number" value="0"/>
+							  <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+							</div>
+	     				</div>
+		     		</div>
+		     		<div class="flexr afterBorder paddv10">
+		     			<div data-id="4">圆三通</div>
+	     				<div class="spsec">
+		     				<span class="bdc bdcA" data-id="1">
+		     					16
+		     				</span>
+		     				<span class="bdc" data-id="2">
+		     					20
+		     				</span> 
+		     			</div>
+		     			<div class="spthr">
+		     				<span class="bdc bdcA" data-id="1">
+		     					红色
+		     				</span>
+		     				<span class="bdc bdcA" data-id="2">
+		     					蓝色
+		     				</span> 
+		     			</div>
+	     				<div>
+	     					<div class="mui-numbox wfast" data-id='1' data-numbox-step='1' data-numbox-min='0'>
+							  <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+							  <input class="mui-numbox-input" type="number" value="0"/>
+							  <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+							</div>
+							<div class="mui-numbox wfast" data-id='2' data-numbox-step='1' data-numbox-min='0'>
+							  <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+							  <input class="mui-numbox-input" type="number" value="0"/>
+							  <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+							</div>
+	     				</div>
+		     		</div>
+		     		<div class="flexr afterBorder paddv10">
+		     			<div data-id="5">圆四通</div>
+	     				<div class="spsec">
+		     				<span class="bdc bdcA" data-id="1">
+		     					16
+		     				</span>
+		     				<span class="bdc" data-id="2">
+		     					20
+		     				</span> 
+		     			</div>
+		     			<div class="spthr">
+		     				<span class="bdc bdcA" data-id="1">
+		     					红色
+		     				</span>
+		     				<span class="bdc bdcA" data-id="2">
+		     					蓝色
+		     				</span> 
+		     			</div>
+	     				<div>
+	     					<div class="mui-numbox wfast" data-id='1' data-numbox-step='1' data-numbox-min='0'>
+							  <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+							  <input class="mui-numbox-input" type="number" value="0"/>
+							  <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+							</div>
+							<div class="mui-numbox wfast" data-id='2' data-numbox-step='1' data-numbox-min='0'>
+							  <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+							  <input class="mui-numbox-input" type="number" value="0"/>
+							  <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+							</div>
+	     				</div>
+		     		</div>
+		     		<div class="flexr afterBorder paddv10">
+		     			<div data-id="6">50深线盒</div>
+	     				<div class="spsec">
+		     				<span class="bdc bdcA" data-id="1">
+		     					86*50
+		     				</span>
+		     				<span class="bdc" data-id="2">
+		     					80*50
+		     				</span> 
+		     			</div>
+		     			<div class="spthr">
+		     				<span class="bdc bdcA" data-id="1">
+		     					红色
+		     				</span>
+		     				<span class="bdc bdcA" data-id="2">
+		     					蓝色
+		     				</span> 
+		     			</div>
+	     				<div>
+	     					<div class="mui-numbox wfast" data-id='1' data-numbox-step='1' data-numbox-min='0'>
+							  <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+							  <input class="mui-numbox-input" type="number" value="0"/>
+							  <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+							</div>
+							<div class="mui-numbox wfast" data-id='2' data-numbox-step='1' data-numbox-min='0'>
+							  <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+							  <input class="mui-numbox-input" type="number" value="0"/>
+							  <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+							</div>
+	     				</div>
+		     		</div>
+		     		<div class="flexr afterBorder paddv10">
+		     			<div data-id="7">连体开关盒</div>
+	     				<div class="spsec">
+		     				<span class="bdc bdcA" data-id="1">
+		     					86*50
+		     				</span>
+		     				<span class="bdc" data-id="2">
+		     					80*50
+		     				</span> 
+		     			</div>
+		     			<div class="spthr">
+		     				<span class="bdc bdcA" data-id="1">
+		     					红色
+		     				</span>
+		     				<span class="bdc bdcA" data-id="2">
+		     					蓝色
+		     				</span> 
+		     			</div>
+	     				<div>
+	     					<div class="mui-numbox wfast" data-id='1' data-numbox-step='1' data-numbox-min='0'>
+							  <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+							  <input class="mui-numbox-input" type="number" value="0"/>
+							  <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+							</div>
+							<div class="mui-numbox wfast" data-id='2' data-numbox-step='1' data-numbox-min='0'>
+							  <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+							  <input class="mui-numbox-input" type="number" value="0"/>
+							  <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+							</div>
+	     				</div>
+		     		</div>
+		     		<div class="flexr afterBorder paddv10">
+		     			<div data-id="8">38潜线盒</div>
+	     				<div class="spsec">
+		     				<span class="bdc bdcA" data-id="1">
+		     					80*38
+		     				</span> 
+		     			</div>
+		     			<div class="spthr">
+		     				<span class="bdc bdcA" data-id="1">
+		     					红色
+		     				</span>
+		     				<span class="bdc bdcA" data-id="2">
+		     					蓝色
+		     				</span> 
+		     			</div>
+	     				<div>
+	     					<div class="mui-numbox wfast" data-id='1' data-numbox-step='1' data-numbox-min='0'>
+							  <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+							  <input class="mui-numbox-input" type="number" value="0"/>
+							  <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+							</div>
+							<div class="mui-numbox wfast" data-id='2' data-numbox-step='1' data-numbox-min='0'>
+							  <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+							  <input class="mui-numbox-input" type="number" value="0"/>
+							  <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+							</div>
+	     				</div>
+		     		</div>
+		     		<div class="flexr afterBorder paddv10">
+		     			<div data-id="9">管卡（线管钉卡）</div>
+	     				<div class="spsec">
+		     				<span class="bdc bdcA" data-id="1">
+		     					16
+		     				</span>
+		     				<span class="bdc" data-id="2">
+		     					20
+		     				</span> 
+		     			</div>
+		     			<div class="spthr">
+		     				<span class="bdc bdcA" data-id="1">
+		     					红色
+		     				</span>
+		     				<span class="bdc bdcA" data-id="2">
+		     					蓝色
+		     				</span> 
+		     			</div>
+	     				<div>
+	     					<div class="mui-numbox wfast" data-id='1' data-numbox-step='1' data-numbox-min='0'>
+							  <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+							  <input class="mui-numbox-input" type="number" value="0"/>
+							  <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+							</div>
+							<div class="mui-numbox wfast" data-id='2' data-numbox-step='1' data-numbox-min='0'>
+							  <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+							  <input class="mui-numbox-input" type="number" value="0"/>
+							  <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+							</div>
+	     				</div>
+		     		</div>
+		     		<div class="flexr afterBorder paddv10">
+		     			<div data-id="10">锁扣（锁母）</div>
+	     				<div class="spsec">
+		     				<span class="bdc bdcA" data-id="1">
+		     					16
+		     				</span>
+		     				<span class="bdc" data-id="2">
+		     					20
+		     				</span> 
+		     			</div>
+		     			<div class="spthr">
+		     				<span class="bdc bdcA" data-id="1">
+		     					红色
+		     				</span>
+		     				<span class="bdc bdcA" data-id="2">
+		     					蓝色
+		     				</span> 
+		     			</div>
+	     				<div>
+	     					<div class="mui-numbox wfast" data-id='1' data-numbox-step='1' data-numbox-min='0'>
+							  <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+							  <input class="mui-numbox-input" type="number" value="0"/>
+							  <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+							</div>
+							<div class="mui-numbox wfast" data-id='2' data-numbox-step='1' data-numbox-min='0'>
+							  <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+							  <input class="mui-numbox-input" type="number" value="0"/>
+							  <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+							</div>
+	     				</div>
+		     		</div>
+		     		<div class="flexr afterBorder paddv10">
+		     			<div data-id="11">管卡（U型卡）</div>
+	     				<div class="spsec">
+		     				<span class="bdc bdcA" data-id="1">
+		     					20
+		     				</span>
+		     				<span class="bdc" data-id="2">
+		     					25
+		     				</span> 
+		     			</div>
+		     			<div class="spthr">
+		     				<span class="bdc bdcA" data-id="1">
+		     					红色
+		     				</span>
+		     				<span class="bdc bdcA" data-id="2">
+		     					蓝色
+		     				</span> 
+		     			</div>
+	     				<div>
+	     					<div class="mui-numbox wfast" data-id='1' data-numbox-step='1' data-numbox-min='0'>
+							  <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+							  <input class="mui-numbox-input" type="number" value="0"/>
+							  <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+							</div>
+							<div class="mui-numbox wfast" data-id='2' data-numbox-step='1' data-numbox-min='0'>
+							  <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+							  <input class="mui-numbox-input" type="number" value="0"/>
+							  <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+							</div>
+	     				</div>
+		     		</div>
+		     		<div class="flexr afterBorder paddv10">
+		     			<div data-id="12">弯管弹簧</div>
+	     				<div class="spsec">
+		     				<span class="bdc bdcA" data-id="1">
+		     					20
+		     				</span>
+		     				<span class="bdc" data-id="2">
+		     					25
+		     				</span> 
+		     			</div>
+		     			<div class="spthr">
+		     				<span class="bdc bdcA" data-id="1">
+		     					白色
+		     				</span>
+		     			</div>
+	     				<div>
+	     					<div class="mui-numbox wfast" data-id='1' data-numbox-step='1' data-numbox-min='0'>
+							  <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+							  <input class="mui-numbox-input" type="number" value="0"/>
+							  <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+							</div> 
+	     				</div>
+		     		</div>
+		     		<div class="flexr afterBorder paddv10">
+		     			<div data-id="13">黄腊管</div>
+	     				<div class="spsec">
+		     				<span class="bdc bdcA" data-id="1">
+		     					10*100mm
+		     				</span>
+		     				<span class="bdc" data-id="2">
+		     					8*100mm
+		     				</span> 
+		     			</div>
+		     			<div class="spthr">
+		     				 
+		     			</div>
+	     				<div>
+	     					<div class="mui-numbox wfast" data-numbox-step='1' data-numbox-min='0'>
+							  <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+							  <input class="mui-numbox-input" type="number" value="0"/>
+							  <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+							</div>
+							
+	     				</div>
+		     		</div>
+		     		<div class="flexr afterBorder paddv10">
+		     			<div data-id="14">高压管</div>
+	     				<div class="spsec">
+		     				<span class="bdc bdcA" data-id="1">
+		     					50cm
+		     				</span> 
+		     			</div>
+		     			<div class="spthr">
+		     				 
+		     			</div>
+	     				<div>
+	     					<div class="mui-numbox wfast" data-numbox-step='1' data-numbox-min='0'>
+							  <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+							  <input class="mui-numbox-input" type="number" value="0"/>
+							  <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+							</div>
+							
+	     				</div>
+		     		</div>
+		     	</div>
 				
 			</div>
+			<!--bottom nav-->
+			<div style="height:40px;"></div>
+			<aside class="btmNav flexr" style="position: fixed;bottom: 0;left: 0;width: 100%;">
+				<span id="showBtcrt" class="mui-icon mui-icon-arrowup activecl showRotate" style="padding-left: 10px;"></span>
+				<a class="dp ft16" style="color: #B62D29;text-align: center;flex: 1;">
+					<span>合计：</span><span class="totalMoney">0</span>件商品
+				</a>
+				<a class="goOrder dp" style="background:#B62D29;color:white;padding:14px 10px;">加入下料清单</a>
+			</aside>
+			<!--弹出菜单-->
+			<div id="bottomCart" style="display: none;">
+				<div id="btcgood">
+					<div class="padd10 bgcee fttc" id="optal">
+						<div class="mui-checkbox mui-pull-left" style="margin-top: -2%;">
+							<input name="checkbox" type="checkbox" style="margin-right: 10px;">
+							<span style="margin-left: 38px;margin-top: 8px;display: inline-block;">
+								全选
+							</span>
+						</div>
+						<span style="visibility: hidden;">dd</span>
+					   <img src="../images/delet.svg" class="mui-pull-right" onclick="delAll()" style="width: 20px;" alt="" />
+					</div>
+					<div class="bgcwt padd10 fttc" id="btcart">
+						
+					</div>
+					<script type="text/html" id="btcartTpl">
+						<%for(var i = 0 ;i<list.length;i++){%>
+							<div class="flexr afterBorder padv15">
+								<div class="mui-checkbox" style="left: 15%;margin-top: -10%;">
+									<input name="checkbox" type="checkbox" data-id="<%=list[i].goodcode%>">
+								</div>
+				     			<div>
+				     				<div data-id="16"><%=list[i].skuName%></div>
+				     				<span data-id="1">
+				     					<%=list[i].specif%>
+				     				</span>
+				     			</div>
+			     				<div class="mui-numbox btct" data-numbox-step='1' data-numbox-min='0'>
+								  <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+								  <input class="mui-numbox-input" type="number" value="<%=list[i].num%>" data-id="<%=list[i].goodcode%>"/>
+								  <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+								</div>
+				     		</div>
+				     		 
+						<%}%>
+					</script> 
+				</div>
+			</div>
 		</div>
+		<script src="../js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../js/mui.min.js"></script>
-		<script> 
+		<script src="../js/default.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/artTemplate-native.js" type="text/javascript" charset="utf-8"></script>
+		<script>
+		mui.init();
+		$('#showBtcrt,#bottomCart').click(function(){
+			$('#showBtcrt').toggleClass('showRotate')
+			$('#bottomCart').fadeToggle('fast');
+		})
+		$('#btcgood').click(function(){
+			event.stopPropagation();
+		})
+		$('.spone .bdc,.spsec .bdc').click(function(){
+			$(this).siblings().removeClass('bdcA')
+			$(this).addClass('bdcA')
+		})
+	 
+//		$('.spthr .bdc').click(function(){
+//			$(this).toggleClass('bdcA');
+//			var curid = $(this).attr('data-id');
+//			if($(this).hasClass('bdcA')){
+//				$(this).parent().next().find('.mui-numbox[data-id="'+curid+'"]').find('button').attr('disabled',false)
+//			}else{
+//				$(this).parent().next().find('.mui-numbox[data-id="'+curid+'"]').find('input').val(0)
+//				$(this).parent().next().find('.mui-numbox[data-id="'+curid+'"]').find('button').attr('disabled',true) 
+//			}
+//		})
+		
+		$('.brand').click(function(){
+			$(this).siblings().removeClass('actspan')
+			$(this).addClass('actspan')
+		})
+		mui.plusReady(function(){
+			//存缓存
+//			plus.storage.removeItem('$eleFastGoods')
+			var eleFastGoods = JSON.parse(plus.storage.getItem('$eleFastGoods') || '[]');
+			showBtCart();
+			$('.wfast input').on('change', function() {
+				var fastMaterial = '2';
+				var number = $(this).val(); //当前数量
+				var firstCode = $(this).parentsUntil('.mui-content').find('.title').attr('data-id');
+				var brand = $(this).parentsUntil('.mui-content').find('.actspan').text();
+				var secondCode = $(this).parentsUntil('.mui-content').find('.actspan').attr('data-id');
+				var thirdCode = $(this).parentsUntil('.bgcwt').find('div').eq(0).attr('data-id') || $(this).parentsUntil('.bgcwt').find('.spone .bdcA').attr('data-id'); 
+				var fourCode = $(this).parentsUntil('.bgcwt').find('.spsec .bdcA').attr('data-id') || '';
+				var fiveCode = $(this).parent().attr('data-id') || ''; 
+				var fiveSpecif = $(this).parentsUntil('.bgcwt').find('.spthr .bdcA[data-id="'+fiveCode+'"]').text()
+				fastMaterial += firstCode+secondCode+thirdCode+fourCode+fiveCode
+				var skuName = $(this).parentsUntil('.bgcwt').find('.spone .bdcA').text() || $(this).parentsUntil('.bgcwt').find('div').eq(0).text();
+				var specif =brand+' '+$.trim($(this).parentsUntil('.bgcwt').find('.spsec .bdcA').text())+' '+$.trim(fiveSpecif);
+				var cartObj={skuName:skuName,specif:specif,num:number,goodcode:fastMaterial}
+				alert('～'+fastMaterial);
+			 
+				//更新此商品数量缓存
+				if(eleFastGoods.length != 0) {
+					var flag = false;
+					for(var i = 0; i < eleFastGoods.length; i++) {
+						if(eleFastGoods[i].goodcode == fastMaterial) {
+							if(parseInt(number) != 0){
+								eleFastGoods[i].num = parseInt(number);
+							}else{
+								eleFastGoods.splice(i, 1);
+							}
+							flag = false;
+							break;
+						} else {
+							flag = true;
+						}
+					}
+					if(flag) {
+						eleFastGoods.push(cartObj);
+					}
+				} else {
+					if(parseInt(number) != 0){
+						eleFastGoods.push(cartObj);
+					}
+				}
+				alert(JSON.stringify(cartObj))
+				plus.storage.setItem("$eleFastGoods", JSON.stringify(eleFastGoods));
+				showBtCart();
+			})
+			
+			function showBtCart(){
+				var eleFastGoods = JSON.parse(plus.storage.getItem('$eleFastGoods') || '[]');
+				if(eleFastGoods.length>0){
+					$('#btcart').html(template('btcartTpl',{list:eleFastGoods}))
+					mui('.mui-numbox').numbox();
+					$('#btcart .mui-checkbox').click(function() {
+						if($("#btcart").find("input[type='checkbox']:checked").length == $("#btcart").find("input[type='checkbox']").length){
+							$('#optal input').prop('checked',true)
+						}else{
+							$('#optal input').prop('checked',false)
+						}
+					})
+					$('.totalMoney').html(eleFastGoods.length);
+					$('#optal input').prop('checked',true)
+					$('#btcart input').prop('checked',true)
+					$('#btcart .mui-numbox input').on('change', function() {
+					var cur = $(this);
+					var number = $(this).val(); //当前数量
+					var codeid = $(this).attr('data-id'); 
+					var flag = false;
+					for(var i = 0; i < eleFastGoods.length; i++) {
+						if(eleFastGoods[i].goodcode == codeid) {
+							alert(5+' '+number)
+							if(parseInt(number) != 0){
+								eleFastGoods[i].num = parseInt(number);
+							}else{
+								eleFastGoods.splice(i, 1);
+							}
+							flag = false;
+							break;
+						} else {
+							flag = true;
+						}
+					}
+					if(flag) {
+						eleFastGoods.push(cartObj);
+					} 
+					plus.storage.setItem("$eleFastGoods",JSON.stringify(eleFastGoods));
+					showBtCart()
+				})
+				}else{
+					$('#btcart').html('暂无数据')
+					$('.totalMoney').html(0)
+					
+				}
+			}
+			window.delAll = function(){
+//				plus.storage.removeItem('$eleFastGoods');
+				var ALLcheckLength = $("#btcart").find("input[type='checkbox']:checked").length;
+				if(ALLcheckLength == 0) {
+					mui.toast("您还未选择要删除的商品哦！")
+				} else {  
+					mui.confirm('确认删除这' + ALLcheckLength + '件商品吗？', '提示', ['取消', '确定'], function(e) {
+						if(e.index == 1) {
+							//删除选中的 购物车 缓存 
+							$("#btcart").find("input[type='checkbox']:checked").each(function(){
+								var delID=$(this).attr("data-id"); 
+								//删除这一条缓存
+							    eleFastGoods =JSON.parse(plus.storage.getItem('$eleFastGoods')||'[]');
+								for(var i=0;i<eleFastGoods.length;i++){
+									if(delID==eleFastGoods[i].goodcode){
+										eleFastGoods.splice(i, 1);
+									}
+								} 
+								plus.storage.setItem("$eleFastGoods",JSON.stringify(eleFastGoods));
+							})
+							showBtCart();
+							ALLcheckLength = $("#btcart").find("input[type='checkbox']:checked").length;
+							if(ALLcheckLength == 0) {
+								$('#optal input').prop("checked", false);
+							} 
+						} 
+					})
+				}
+				
+			}
+			mui('.goOrder')[0].onclick = function(){
+				var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
+				var userId = plus.storage.getItem('$userId'); 
+				var oldToken = plus.storage.getItem('oldToken');
+				var ALLcheckLength = $("#btcart").find("input[type='checkbox']:checked").length;
+				var fastMaterial = '';
+				if(ALLcheckLength>0){
+					$("#btcart").find("input[type='checkbox']:checked").each(function(index){
+						var goodCode=$(this).attr("data-id");
+						if(index+1 == ALLcheckLength){
+							fastMaterial+=goodCode;
+						}else{
+							fastMaterial+=goodCode+','
+						} 
+					})
+				}
+				
+				alert(fastMaterial)
+				if(fastMaterial){
+					plus.nativeUI.showWaiting();
+					mui.ajax(serverUrl + '/app/materialList/quickOrder/add', {
+						data: {
+							userId: userId,
+							identityType: identityT,
+							params: fastMaterial,
+						},
+						dataType: 'json',
+						headers: {
+							"Authorization": oldToken
+						},
+						type: 'post',
+						timeout: 10000,
+						success: function(data, type, xhr) {
+							plus.nativeUI.closeWaiting();
+							console.log('快捷下单', data);
+							if(data.code == 0) { 
+								mui.toast('下单成功')
+							} else {
+								mui.toast(data.message)
+							}
+						},
+						error: function(xhr, type, errorThrown) {
+							plus.nativeUI.closeWaiting();
+						}
+					});	
+				}
+			}
+		})
+		
+		//总选
+		$('#optal .mui-checkbox').click(function() {
+			if($(this).find("input").prop('checked') == false) {
+				$("#btcart input").prop("checked", false);
+			} else {
+				$("#btcart input").prop("checked", true);
+			}
+		})
+		
 		</script>
 	</body>
 
