@@ -13,26 +13,25 @@
 			body {
 				background-color: #efeff4;
 			}
-			
 			.title {
 				margin: 20px 15px 10px;
 				color: #6d6d72;
 				font-size: 15px;
 			}
-			
+
 			ul {
 				font-size: 14px;
 				color: #8f8f94;
 			}
-			
+
 			.mui-btn {
 				padding: 10px;
 			}
-			
+
 			.mui-placeholder span {
 				color: #333333;
 			}
-			
+
 			.flexw,
 			.flexws {
 				display: flex;
@@ -42,7 +41,7 @@
 				margin-top: 15px;
 				font-size: 16px
 			}
-			
+
 			.flexw img{
 				display: block;
 				width: 30px;
@@ -64,30 +63,30 @@
 				padding: 15px;
 				border-radius: 50%;
 			}
-			
+
 			.mui-table-view:after,
 			.mui-table-view:before,
 			.mui-table-view-cell:after,
 			.mui-table-view-cell:before {
 				height: 0!important;
 			}
-			
+
 			.qashadow {
 				margin-bottom: 5px;
 				background-color: white;
 				padding: 10px
 			}
-			
+
 			.qbot {
 				margin-top: 10px;
 				line-height: 1.3;
 			}
-			
+
 			.Avator {
 				width: 70px!important;
 				height: 70px!important;
 			}
-			
+
 			.qaimg img {
 				margin-right: 5px;
 				width: 0.6rem;
@@ -95,7 +94,7 @@
 				border-radius: 3px;
 				margin-top: 10px;
 			}
-			
+
 			.upload {
 				padding: 20px;
 				text-align: center;
@@ -110,7 +109,7 @@
 			.message {position: absolute;top: 32px;right: 20px;width: 6%;}
 			.somenspf{display: flex;justify-content: space-around;align-items: center;}
 			.somenspf > div{display: flex;align-items: center;}
-			.somenspf img{width:15px;vertical-align: middle;margin-top: -3px;} 
+			.somenspf img{width:15px;vertical-align: middle;margin-top: -3px;}
 			.goodsList{overflow:hidden}
 			.ftype .imgb img{width: 28px!important;height: 28px!important;}
 			.ftype .imgb{padding: 10px;border-radius:50% ;margin-bottom: 10px;}
@@ -121,7 +120,7 @@
 			.zanwei2{padding-top: 50%;}
 		</style>
 	</head>
- 
+
 	<body onload="text=document.getElementById('text');">
 		<header class="mui-row mui-bar mui-bar-transparent hasManyCity" id="header" style="z-index: 200;">
 			<div class="searchBox" onclick="goSearch()" style="z-index:1;position: absolute;top: 27px;left: 20px;width: 80%;">
@@ -130,7 +129,7 @@
 				</div>
 			</div>
 			<img src="images/center/message.svg" onclick="goMessage()" class="message"/>
-		</header> 
+		</header>
 		<!--状态栏开始-->
 		<style type="text/css" id="headStyle"></style>
 		<div id="sBar" style="background-color: #FFFFFF;position: fixed;width:100%;top: 0;z-index: 9999"></div>
@@ -160,7 +159,7 @@
 					mui('.indexSearch')[0].style.background = 'rgba(255, 255, 255, 0.57)';
 				}
 			});
-			
+
 		</script>
 		<div style="position: relative;">
 			<div id="banner">
@@ -195,7 +194,7 @@
 					    <div class="mui-slider-item mui-slider-item-duplicate zanwei zanwei2" onclick=('<%=list[list.length-1].id%>','<%=list[list.length-1].url%>','<%=list[list.length-1].name%>','<%=list[list.length-1].type%>')>
 					     	<img src="<%=url%><%=list[list.length-1].pic%>" onerror="javascript:this.src='images/img.svg';" />
 					    </div>
-						<% for(var i=0;i<list.length;i++){ %> 
+						<% for(var i=0;i<list.length;i++){ %>
 					    	<div class="mui-slider-item zanwei zanwei2" onclick=('<%=list[i].id%>','<%=list[i].url%>','<%=list[i].name%>','<%=list[i].type%>')>
 					    		<img src="<%=url%><%=list[i].pic%>"  onerror="javascript:this.src='images/img.svg';"/>
 					    	</div>
@@ -210,12 +209,12 @@
 						<% for(var i=0;i<list.length-1;i++){ %>
 					    	<div class="mui-indicator"></div>
 					    <% } %>
-		            </div> 
+		            </div>
 		            <%}%>
 				</div>
 			</script>
 		</div>
-		
+
 		<div class="bgcwt">
 			<div class="somenspf ft12 padd10 fttc activecl">
 				<div id="">
@@ -251,9 +250,9 @@
 				<div data-id="<%=list[i].type%>">
 					<div class="imgb" style="background-color:#B62D29"><img src="<%=url%><%=list[i].pic%>" alt="" /></div><%=list[i].name%>
 				</div>
-			<%}%> 
+			<%}%>
 		</script>
-		
+
 		<div class="padd10">
 			<img style="vertical-align:middle;width:100%;border-radius:2px ;" src="images/index/huarun.png" />
 		</div>
@@ -298,7 +297,7 @@
 				<div onclick="signRecord()" class="rightBorder">
 					<div id="">
 						签到
-					</div> 
+					</div>
 					<img src="img/legray.svg" alt="" />
 				</div>
 			</div>
@@ -317,7 +316,7 @@
 				</div>
 			</div>
 		</div>
-		 
+
 		<!--工人-->
 		<div class="mui-content ltac worker bgcwt" style="display: none;">
 			<div class="flexws afterBorder">
@@ -363,7 +362,7 @@
 				</div>
 			</div>
 		</div>
-		 
+
 		<!--导购-->
 		<div class="mui-content ltac guides bgcwt" style="display: none;">
 			<div class="flexws afterBorder">
@@ -464,7 +463,7 @@
 			<span class="mui-pull-right mui-icon mui-icon-arrowright activecl"></span>
 			<span class="mui-pull-right disablecl ft14" style="margin-top: 3px;">更多</span>
 		</div>
-	 
+
 		<!--热门商品商品列表-->
 		<div class="bgcwt">
 			<div class="goodsList" id="goodsListHot"></div>
@@ -504,12 +503,12 @@
 		</div>
 		<div id="tradeList" class="bgcwt">
 				<div style="height: 10px;"></div>
-			
+
 			<div class="mui-card" onclick="openDetail(<%=dataList[i].id%>,'<%=dataList[i].title%>')">
 				<div class="mui-card-header mui-card-media"
 					style="height:45vw;background-image:url('http://www.huarun.com/images/product/productIn_scroll.jpg')">
 				</div>
-				 
+
 				<div class="mui-card-content">
 					<div class="mui-card-content-inner">
 						<p style="color: #333;">妙想漆系列</p>
@@ -518,7 +517,7 @@
 				</div>
 			</div>
 				<br />
-			
+
 		</div>
 		<script type="text/html" id="tradeTpl">
 			<div style="height: 10px;"></div>
@@ -560,8 +559,8 @@
 				}
 				var options = {};
 				options.engine = 'iFly';
-				//options.punctuation = false;	// 是否需要标点符号 
-				
+				//options.punctuation = false;	// 是否需要标点符号
+
 				text.value = "";
 				console.log( "开始语音识别：" );
 				plus.speech.startRecognize( options, function ( s ) {
@@ -571,20 +570,20 @@
 					console.log( "语音识别失败："+e.message );
 				} );
 			}
-			
-			
-			
+
+
+
 			var Spagenum = 2; //实到页数
 			var Ypagenum = 1; //应到页数
-			
-			mui.plusReady(function() { 
+
+			mui.plusReady(function() {
 				if(/android/i.test(navigator.userAgent)){
 			 	 	var systemType = 'ANDROID'
 				}else{
 			 	 	var systemType = 'IOS'
 				}
 				var clientId = plus.push.getClientInfo().clientid;
-				var deviceId = plus.device.uuid; 
+				var deviceId = plus.device.uuid;
 				//判断是否登陆
 				document.addEventListener('refresh', function() {
 					loadIndex();
@@ -639,7 +638,7 @@
 												openview({
 													view:'page/dispatching/dispatching.html',
 													id:'dispatching'
-												})	
+												})
 											}
 											loadIndex();
 											util.initSubpage();
@@ -700,7 +699,7 @@
 						}
 
 					}
-					
+
 				} //登录方法结束
 
 				loadIndex();
@@ -724,7 +723,7 @@
 						}else{
 							mui.toast(data.message)
 						}
-						
+
 					},
 					error: function(xhr, type, errorThrown) {
 						plus.nativeUI.closeWaiting();
@@ -807,7 +806,7 @@
 								} else {
 									mui.toast(data.message)
 								}
-	
+
 							},
 							error: function(xhr, type, errorThrown) {
 								plus.nativeUI.closeWaiting();
@@ -882,8 +881,8 @@
 							console.log('响应失败');
 						}
 					});
-					
-					
+
+
 					//乐易装商学院
 					var currentPage = 1,
 						numsPerPage = 2,
@@ -897,7 +896,7 @@
 						type: 'post', //HTTP请求类型
 						timeout: 10000, //超时时间设置为10秒；
 						success: function(data) {
-							console.log('trade', data);
+							console.log('乐易装商学院trade', data);
 							if(data.code == 0){
 								if(data && data.list.length) {
 									document.getElementById("tradeList").innerHTML = template("tradeTpl", {
@@ -907,7 +906,7 @@
 								} else {
 									mui("#upload")[0].innerHTML = "";
 								}
-								
+
 							}else{
 								mui.toast(data.message)
 							}
@@ -1031,7 +1030,7 @@
 					id: 'hotGoods',
 				})
 			}
-			
+
 			function tradeLists() {
 				openview({
 					view: 'page/tradeList.html',
@@ -1096,7 +1095,7 @@
 				})
 			}
 		</script>
-		
+
 		<script type="text/javascript">
 			var aniShow = {};
 			mui.init({
@@ -1129,8 +1128,12 @@
 
 				var self = plus.webview.currentWebview(),
 					leftPos = Math.ceil((window.innerWidth - 60) / 2); // 设置凸起大图标为水平居中
-
-				/**	
+				//开启回弹
+				self.setStyle({
+					bounce: "vertical",
+					bounceBackground:"#efeff4",
+				});
+				/**
 				 * drawNativeIcon 绘制带边框的半圆，
 				 * 实现原理：
 				 *   id为bg的tag 创建带边框的圆
@@ -1290,7 +1293,7 @@
 					} else {
 						currIndex = 3;
 					}
-					// 匹配对应tab窗口	
+					// 匹配对应tab窗口
 					if(currIndex > 0) {
 						targetPage = plus.webview.getWebviewById(subpages[currIndex - 1]);
 					} else {
