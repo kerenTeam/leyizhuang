@@ -20,6 +20,7 @@
 				color: #6d6d72;
 				font-size: 15px;
 			}
+			.mui-checkbox input[type=checkbox]:checked:before, .mui-radio input[type=radio]:checked:before{color: #B62D29;}
 			.categray{padding: 10px;}
 			.mui-badge-danger{padding: 5px 10px;font-size: 14px;border-radius: 3px;background-color: #DDDDDD;color: gray;}
 	 		.actBadge{background-color: #B42E28;color: white;}
@@ -699,12 +700,13 @@
 				var fastMaterial = '1';
 				var number = $(this).val(); //当前数量
 				var firstCode = $(this).parentsUntil('.mui-content').find('.title').attr('data-id');
+				var brand = $(this).parentsUntil('.mui-content').find('.actspan').text();
 				var secondCode = $(this).parentsUntil('.mui-content').find('.actspan').attr('data-id');
 				var thirdCode = $(this).parent().parent().find('div').eq(0).attr('data-id'); 
 				var goodCode = $(this).parent().parent().find('.bdcA').attr('data-id');
 				fastMaterial += firstCode+secondCode+thirdCode+goodCode
 				var skuName = $(this).parent().parent().find('div').eq(0).text();
-				var specif = $.trim($(this).parentsUntil('.mui-content').find('.actspan').text())+$.trim($(this).parent().parent().find('.bdcA').text());
+				var specif = brand+' '+$.trim($(this).parent().parent().find('.bdcA').text());
 				var cartObj={skuName:skuName,specif:specif,num:number,goodcode:fastMaterial}
 				alert('～'+fastMaterial);
 			 
@@ -736,6 +738,7 @@
 				plus.storage.setItem("$waterFastGoods", JSON.stringify(waterFastGoods));
 				showBtCart();
 			})
+			
 			function showBtCart(){
 				var waterFastGoods = JSON.parse(plus.storage.getItem('$waterFastGoods') || '[]');
 				if(waterFastGoods.length>0){
@@ -751,6 +754,31 @@
 					$('.totalMoney').html(waterFastGoods.length);
 					$('#optal input').prop('checked',true)
 					$('#btcart input').prop('checked',true)
+					$('#btcart .mui-numbox input').on('change', function() {
+					var cur = $(this);
+					var number = $(this).val(); //当前数量
+					var codeid = $(this).attr('data-id'); 
+					var flag = false;
+					for(var i = 0; i < waterFastGoods.length; i++) {
+						if(waterFastGoods[i].goodcode == codeid) {
+							alert(5+' '+number)
+							if(parseInt(number) != 0){
+								waterFastGoods[i].num = parseInt(number);
+							}else{
+								waterFastGoods.splice(i, 1);
+							}
+							flag = false;
+							break;
+						} else {
+							flag = true;
+						}
+					}
+					if(flag) {
+						waterFastGoods.push(cartObj);
+					} 
+					plus.storage.setItem("$waterFastGoods",JSON.stringify(waterFastGoods));
+					showBtCart()
+				})
 				}else{
 					$('#btcart').html('暂无数据')
 					$('.totalMoney').html(0)
@@ -791,33 +819,48 @@
 				var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
 				var userId = plus.storage.getItem('$userId'); 
 				var oldToken = plus.storage.getItem('oldToken');
-				plus.nativeUI.showWaiting();
-				mui.ajax(serverUrl + '/app/materialList/quickOrder/add', {
-					data: {
-						userId: userId,
-						identityType: identityT,
-						params: fastMaterial,
-					},
-					dataType: 'json',
-					headers: {
-						"Authorization": oldToken
-					},
-					type: 'post',
-					timeout: 10000,
-					success: function(data, type, xhr) {
-						plus.nativeUI.closeWaiting();
-						console.log('快捷下单', data);
-						if(data.code == 0) { 
-							mui.toast('下单成功')
-						} else {
-							mui.toast(data.message)
+				var ALLcheckLength = $("#btcart").find("input[type='checkbox']:checked").length;
+				var fastMaterial = '';
+				if(ALLcheckLength>0){
+					$("#btcart").find("input[type='checkbox']:checked").each(function(index){
+						var goodCode=$(this).attr("data-id");
+						if(index+1 == ALLcheckLength){
+							fastMaterial+=goodCode;
+						}else{
+							fastMaterial+=goodCode+','
+						} 
+					})
+				}
+				
+				alert(fastMaterial)
+				if(fastMaterial){
+					plus.nativeUI.showWaiting();
+					mui.ajax(serverUrl + '/app/materialList/quickOrder/add', {
+						data: {
+							userId: userId,
+							identityType: identityT,
+							params: fastMaterial,
+						},
+						dataType: 'json',
+						headers: {
+							"Authorization": oldToken
+						},
+						type: 'post',
+						timeout: 10000,
+						success: function(data, type, xhr) {
+							plus.nativeUI.closeWaiting();
+							console.log('快捷下单', data);
+							if(data.code == 0) { 
+								mui.toast('下单成功')
+							} else {
+								mui.toast(data.message)
+							}
+						},
+						error: function(xhr, type, errorThrown) {
+							plus.nativeUI.closeWaiting();
 						}
-			
-					},
-					error: function(xhr, type, errorThrown) {
-						plus.nativeUI.closeWaiting();
-					}
-				});	 
+					});	
+				}
 			}
 		})
 		

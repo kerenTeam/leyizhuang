@@ -29,6 +29,11 @@
 			<h1 class="mui-title">商品列表</h1>
 		</header>
 		<script src="../js/statusBar.js" type="text/javascript" charset="utf-8"></script>
+		<div class="gocarticon" style="display: none;">
+			<img src="../images/whitecart.svg" alt="" />
+			<span class="mui-badge mui-badge-white">0</span>
+		</div>
+		
 		<!--一级分类-->
 		<div class="mui-content flexw afterBorder" style="margin-top: 3px;position: -webkit-sticky; position:sticky; top: 23px;z-index: 99;">
 		    <div class="water curActive" data-id = "water">水</div>
@@ -98,7 +103,7 @@
 				var categoryCode = plus.webview.currentWebview().ctid;
 				var pageFrom = plus.webview.currentWebview().page;
 				if(pageFrom == 1){
-					$('#leftbtn').css('display','block')
+					$('#leftbtn,.gocarticon').css('display','block')
 				}
 				if(!categoryCode){
 					categoryCode = 'water';
@@ -106,18 +111,19 @@
 				if(categoryCode){ 
 					$('.flexw div').siblings().removeClass('curActive')
 					$('.'+categoryCode).addClass('curActive');
-				}
+				} 
 				document.addEventListener('refresh', function() {
-					kindType('water');
+					kindType('water'); 
 				}) 
 				 kindType(categoryCode);
+				
 				 function kindType(categoryCode){
 //					plus.nativeUI.showWaiting();
 				 	//获取缓存 
 					var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
 					var userId = plus.storage.getItem('$userId'); 
 					var oldToken = plus.storage.getItem('oldToken');
-					 
+					getCartNum(0); 
 					mui.ajax(serverUrl+'/app/goods/category/list',{
 						data:{
 							categoryCode:categoryCode,
@@ -314,6 +320,7 @@
 											var cur = $(this);
 											plus.nativeUI.showWaiting();
 											addCart(goodid,1,cur);
+											
 										})
 										
 										//数量选择 -> 加入购物车
@@ -340,8 +347,9 @@
 														plus.nativeUI.closeWaiting();
 														console.log('加入购物车', data);
 														if(data.code == 0) { 
-															plus.nativeUI.toast('加入成功')			
-															mui.fire(plus.webview.getWebviewById('cart.html'), 'refresh');
+															plus.nativeUI.toast('加入成功')
+															mui.fire(plus.webview.getWebviewById('cart.html'), 'refresh');	
+															getCartNum(1);
 														} else {
 															mui.toast(data.message)
 														}
@@ -370,8 +378,9 @@
 															success: function(data, type, xhr) {
 																plus.nativeUI.closeWaiting();
 																console.log('删除', data);
-																if(data.code == 0) { 
-																	mui.fire(plus.webview.getWebviewById('cart.html'), 'refresh');
+																if(data.code == 0) {
+																	mui.fire(plus.webview.getWebviewById('cart.html'), 'refresh'); 
+																	getCartNum(-1);
 																} else {
 																	mui.toast(data.message)
 																}
@@ -409,6 +418,7 @@
 													if(data.code == 0 ){
 														plus.nativeUI.toast('加入成功');
 														mui.fire(plus.webview.getWebviewById('cart.html'), 'refresh');
+														getCartNum(1);
 														hadCart(goodid,cur);
 													}else{
 														mui.toast(data.message)
@@ -470,8 +480,7 @@
 								console.log('响应失败');
 							}
 						}); 
-					}
-					
+					} 				
 				 }
 				//一级分类切换 
 				$('.flexw div').click(function(){
@@ -480,9 +489,25 @@
 					$('.categray>span').addClass('mui-badge mui-badge-danger actBadge')
 					kindType($(this).attr('data-id'));
 				})
-				
-				
+				function getCartNum(num){
+					var cartNum = plus.storage.getItem('cartNums') || 0;
+					cartNum = cartNum < 0 ? 0:cartNum;
+					$('.gocarticon span').html(Number(cartNum)+num)
+				}
+				mui('.gocarticon')[0].onclick = function(){
+					mui.fire(plus.webview.getWebviewById('cart.html'), 'refresh');
+					openview({
+						view: "../cart.html",
+						id:'cart',
+						extrasobj: {
+							page: "1"
+						}
+					})
+
+				 	
+				}
 			})
+			
 			//数组去重
 			Array.prototype.unique1 = function() {
 				var res = [this[0]];

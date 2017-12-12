@@ -3,37 +3,991 @@
 
 	<head>
 		<meta charset="utf-8">
-		<title>Hello MUI</title>
+		<title>快捷下单-瓦</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
 		<meta name="apple-mobile-web-app-capable" content="yes">
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
 		<link rel="stylesheet" href="../css/mui.min.css">
+		<link rel="stylesheet" type="text/css" href="../css/style.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/configW.css"/> 
 		<style>
 			html,
 			body {
 				background-color: #efeff4;
 			}
 			.title {
-				padding: 20px 15px 10px;
+				padding: 14px 0 10px;
 				color: #6d6d72;
 				font-size: 15px;
-				background-color: #fff;
 			}
+			.mui-checkbox input[type=checkbox]:checked:before, .mui-radio input[type=radio]:checked:before{color: #B62D29;}
+			.categray{padding: 10px;}
+			.mui-badge-danger{padding: 5px 10px;font-size: 14px;border-radius: 3px;background-color: #DDDDDD;color: gray;}
+	 		.actBadge{background-color: #B42E28;color: white;}
+	 		.categray span{margin: 0 10px 0 0;display: inline-block;}
+	 		.actspan{color: #B42E28;}
+	 		.afterBorder>div:first-child{color: black!important;font-weight: 600;}
+	 		.afterBorder:after{left: 5px;right: 5px;}
+	 		.maincl .flexr{text-align: center;justify-content: flex-start;}
+	 		
+	 		.flexr span{margin: 5px 2px;display: inline-block;}
+	 		.showRotate{-webkit-transform: rotateX(180deg);-webkit-transform-origin: center;padding-left: 10px;-webkit-transition:all 0.3s ease;}
 		</style>
 	</head>
 
 	<body>
-		<div class="mui-content">
-			<div class="mui-scroll">
-				<div class="title">
-					这是webview模式选项卡中的第4个子页面
+		<div class="mui-content ft15" style="margin-top: 0;">
+			<div class="maincl">
+				
+		     	<div class="padd10 bgcwt">
+		     		 
+		     		<div class="afterBorder paddv10">
+		     			<div class="ft16" data-id="1">界面剂</div>
+		     			
+		     			<div class="flexr spsec">
+		     				品牌：
+		     				<span class="bdc bdcA" data-id="1">
+		     					摩利美涂
+		     				</span> 
+		     			</div>
+		     			<div class="flexr paddv10 spthr">
+		     				规格：
+		     				<span class="bdc bdcA" data-id="1">
+		     					20kg
+		     				</span> 
+		     			</div>
+		     			<div class="flexr">
+		     				数量：
+		     				<div class="mui-numbox wfast" data-numbox-step='1' data-numbox-min='0'>
+							  <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+							  <input class="mui-numbox-input" type="number" value="0"/>
+							  <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+							</div>
+		     			</div>
+		     		</div>
+		     		<div class="afterBorder paddv10">
+		     			<div class="ft16" data-id="1">界面剂</div>
+		     			
+		     			<div class="flexr spsec">
+		     				品牌：
+		     				<span class="bdc bdcA" data-id="2">
+		     					303
+		     				</span> 
+		     			</div>
+		     			<div class="flexr paddv10 spthr">
+		     				规格：
+		     				<span class="bdc bdcA" data-id="2">
+		     					18kg
+		     				</span> 
+		     			</div>
+		     			<div class="flexr">
+		     				数量：
+		     				<div class="mui-numbox wfast" data-numbox-step='1' data-numbox-min='0'>
+							  <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+							  <input class="mui-numbox-input" type="number" value="0"/>
+							  <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+							</div>
+		     			</div>
+		     		</div>
+		     		<div class="afterBorder paddv10">
+		     			<div class="ft16" data-id="2">粗石膏</div>
+		     			<div class="flexr paddv10 spone">
+		     				 
+		     			</div>
+		     			<div class="flexr spsec">
+		     				品牌：
+		     				<span class="bdc bdcA" data-id="1">
+		     					摩利美涂
+		     				</span> 
+		     			</div>
+		     			<div class="flexr paddv10 spthr">
+		     				规格：
+		     				<span class="bdc bdcA" data-id="1">
+		     					20kg
+		     				</span> 
+		     			</div>
+		     			<div class="flexr">
+		     				数量：
+		     				<div class="mui-numbox wfast" data-numbox-step='1' data-numbox-min='0'>
+							  <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+							  <input class="mui-numbox-input" type="number" value="0"/>
+							  <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+							</div>
+		     			</div>
+		     		</div>
+		     		<div class="afterBorder paddv10">
+		     			<div class="ft16" data-id="3">细石膏</div>
+		     			
+		     			<div class="flexr spsec">
+		     				品牌：
+		     				<span class="bdc bdcA" data-id="1">
+		     					摩利美涂
+		     				</span> 
+		     			</div>
+		     			<div class="flexr paddv10 spthr">
+		     				规格：
+		     				<span class="bdc bdcA" data-id="1">
+		     					15kg
+		     				</span> 
+		     			</div>
+		     			<div class="flexr">
+		     				数量：
+		     				<div class="mui-numbox wfast" data-numbox-step='1' data-numbox-min='0'>
+							  <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+							  <input class="mui-numbox-input" type="number" value="0"/>
+							  <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+							</div>
+		     			</div>
+		     		</div>
+		     		<div class="afterBorder paddv10">
+		     			<div class="ft16" data-id="3">细石膏</div>
+		     			
+		     			<div class="flexr spsec">
+		     				品牌：
+		     				<span class="bdc bdcA" data-id="2">
+		     					303
+		     				</span> 
+		     			</div>
+		     			<div class="flexr paddv10 spthr">
+		     				规格：
+		     				<span class="bdc bdcA" data-id="2">
+		     					20kg
+		     				</span> 
+		     			</div>
+		     			<div class="flexr">
+		     				数量：
+		     				<div class="mui-numbox wfast" data-numbox-step='1' data-numbox-min='0'>
+							  <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+							  <input class="mui-numbox-input" type="number" value="0"/>
+							  <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+							</div>
+		     			</div>
+		     		</div>
+		     		<div class="afterBorder paddv10">
+		     			<div class="ft16" data-id="4">腻子膏</div>
+		     			
+		     			<div class="flexr spsec">
+		     				品牌：
+		     				<span class="bdc bdcA" data-id="1">
+		     					摩利美涂
+		     				</span>
+		     				<span class="bdc" data-id="2">
+		     					303
+		     				</span> 
+		     			</div>
+		     			<div class="flexr paddv10 spthr">
+		     				规格：
+		     				<span class="bdc bdcA" data-id="1">
+		     					25kg
+		     				</span> 
+		     			</div>
+		     			<div class="flexr">
+		     				数量：
+		     				<div class="mui-numbox wfast" data-numbox-step='1' data-numbox-min='0'>
+							  <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+							  <input class="mui-numbox-input" type="number" value="0"/>
+							  <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+							</div>
+		     			</div>
+		     		</div>
+		     		<div class="afterBorder paddv10">
+		     			<div class="ft16" data-id="5">内墙干粉</div>
+		     			
+		     			<div class="flexr spsec">
+		     				品牌：
+		     				<span class="bdc bdcA" data-id="1">
+		     					摩利美涂
+		     				</span>
+		     				 
+		     			</div>
+		     			<div class="flexr paddv10 spthr">
+		     				规格：
+		     				<span class="bdc bdcA" data-id="1">
+		     					20kg
+		     				</span> 
+		     			</div>
+		     			<div class="flexr">
+		     				数量：
+		     				<div class="mui-numbox wfast" data-numbox-step='1' data-numbox-min='0'>
+							  <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+							  <input class="mui-numbox-input" type="number" value="0"/>
+							  <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+							</div>
+		     			</div>
+		     		</div>
+		     		<div class="afterBorder paddv10">
+		     			<div class="ft16" data-id="6">外墙干粉</div>
+		     			
+		     			<div class="flexr spsec">
+		     				品牌：
+		     				<span class="bdc bdcA" data-id="1">
+		     					摩利美涂
+		     				</span>
+		     				 
+		     			</div>
+		     			<div class="flexr paddv10 spthr">
+		     				规格：
+		     				<span class="bdc bdcA" data-id="1">
+		     					20kg
+		     				</span> 
+		     			</div>
+		     			<div class="flexr">
+		     				数量：
+		     				<div class="mui-numbox wfast" data-numbox-step='1' data-numbox-min='0'>
+							  <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+							  <input class="mui-numbox-input" type="number" value="0"/>
+							  <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+							</div>
+		     			</div>
+		     		</div>
+		     		<div class="afterBorder paddv10">
+		     			<div class="ft16" data-id="7">805型胶水</div>
+		     			
+		     			<div class="flexr spsec">
+		     				品牌：
+		     				<span class="bdc bdcA" data-id="1">
+		     					摩利美涂
+		     				</span>
+		     				 
+		     			</div>
+		     			<div class="flexr paddv10 spthr">
+		     				规格：
+		     				<span class="bdc bdcA" data-id="1">
+		     					30kg
+		     				</span> 
+		     			</div>
+		     			<div class="flexr">
+		     				数量：
+		     				<div class="mui-numbox wfast" data-numbox-step='1' data-numbox-min='0'>
+							  <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+							  <input class="mui-numbox-input" type="number" value="0"/>
+							  <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+							</div>
+		     			</div>
+		     		</div>
+		     		<div class="afterBorder paddv10">
+		     			<div class="ft16" data-id="8">808型胶水</div>
+		     			
+		     			<div class="flexr spsec">
+		     				品牌：
+		     				<span class="bdc bdcA" data-id="1">
+		     					摩利美涂
+		     				</span>
+		     				 
+		     			</div>
+		     			<div class="flexr paddv10 spthr">
+		     				规格：
+		     				<span class="bdc bdcA" data-id="1">
+		     					20kg
+		     				</span> 
+		     			</div>
+		     			<div class="flexr">
+		     				数量：
+		     				<div class="mui-numbox wfast" data-numbox-step='1' data-numbox-min='0'>
+							  <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+							  <input class="mui-numbox-input" type="number" value="0"/>
+							  <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+							</div>
+		     			</div>
+		     		</div>
+		     		<div class="afterBorder paddv10">
+		     			<div class="ft16" data-id="9">基膜</div>
+		     			
+		     			<div class="flexr spsec">
+		     				品牌：
+		     				<span class="bdc bdcA" data-id="1">
+		     					摩利美涂
+		     				</span>
+		     				 
+		     			</div>
+		     			<div class="flexr paddv10 spthr">
+		     				规格：
+		     				<span class="bdc bdcA" data-id="1">
+		     					5L
+		     				</span> 
+		     				<span class="bdc" data-id="2">
+		     					20L
+		     				</span> 
+		     			</div>
+		     			<div class="flexr">
+		     				数量：
+		     				<div class="mui-numbox wfast" data-numbox-step='1' data-numbox-min='0'>
+							  <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+							  <input class="mui-numbox-input" type="number" value="0"/>
+							  <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+							</div>
+		     			</div>
+		     		</div>
+		     		<div class="afterBorder paddv10">
+		     			<div class="ft16" data-id="10">瓷砖背胶</div>
+		     			
+		     			<div class="flexr spsec">
+		     				品牌：
+		     				<span class="bdc bdcA" data-id="1">
+		     					摩利美涂
+		     				</span>
+		     				 
+		     			</div>
+		     			<div class="flexr paddv10 spthr">
+		     				规格：
+		     				<span class="bdc bdcA" data-id="1">
+		     					10L
+		     				</span> 
+		     			</div>
+		     			<div class="flexr">
+		     				数量：
+		     				<div class="mui-numbox wfast" data-numbox-step='1' data-numbox-min='0'>
+							  <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+							  <input class="mui-numbox-input" type="number" value="0"/>
+							  <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+							</div>
+		     			</div>
+		     		</div>
+		     		<div class="afterBorder paddv10">
+		     			<div class="ft16" data-id="11">抗坠瓷砖胶</div>
+		     			
+		     			<div class="flexr spsec">
+		     				品牌：
+		     				<span class="bdc bdcA" data-id="1">
+		     					摩利美涂
+		     				</span>
+		     				 
+		     			</div>
+		     			<div class="flexr paddv10 spthr">
+		     				规格：
+		     				<span class="bdc bdcA" data-id="1">
+		     					20kg
+		     				</span> 
+		     			</div>
+		     			<div class="flexr">
+		     				数量：
+		     				<div class="mui-numbox wfast" data-numbox-step='1' data-numbox-min='0'>
+							  <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+							  <input class="mui-numbox-input" type="number" value="0"/>
+							  <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+							</div>
+		     			</div>
+		     		</div>
+		     		<div class="afterBorder paddv10">
+		     			<div class="ft16" data-id="12">地固</div>
+		     			
+		     			<div class="flexr spsec">
+		     				品牌：
+		     				<span class="bdc bdcA" data-id="1">
+		     					摩利美涂
+		     				</span>
+		     				 
+		     			</div>
+		     			<div class="flexr paddv10 spthr">
+		     				规格：
+		     				<span class="bdc bdcA" data-id="1">
+		     					10L
+		     				</span> 
+		     			</div>
+		     			<div class="flexr">
+		     				数量：
+		     				<div class="mui-numbox wfast" data-numbox-step='1' data-numbox-min='0'>
+							  <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+							  <input class="mui-numbox-input" type="number" value="0"/>
+							  <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+							</div>
+		     			</div>
+		     		</div>
+		     		<div class="afterBorder paddv10">
+		     			<div class="ft16" data-id="13">白乳胶</div>
+		     			
+		     			<div class="flexr spsec">
+		     				品牌：
+		     				<span class="bdc bdcA" data-id="1">
+		     					顶力
+		     				</span>
+		     				 
+		     			</div>
+		     			<div class="flexr paddv10 spthr">
+		     				规格：
+		     				<span class="bdc bdcA" data-id="1">
+		     					3.5kg
+		     				</span> 
+		     				<span class="bdc" data-id="2">
+		     					17kg
+		     				</span> 
+		     			</div>
+		     			<div class="flexr">
+		     				数量：
+		     				<div class="mui-numbox wfast" data-numbox-step='1' data-numbox-min='0'>
+							  <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+							  <input class="mui-numbox-input" type="number" value="0"/>
+							  <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+							</div>
+		     			</div>
+		     		</div>
+		     		<div class="afterBorder paddv10">
+		     			<div class="ft16" data-id="14">牛皮纸</div>
+		     			
+		     			<div class="flexr spsec">
+		     				品牌：
+		     				<span class="bdc bdcA" data-id="1">
+		     					乐易装
+		     				</span>
+		     				 
+		     			</div>
+		     			<div class="flexr paddv10 spthr">
+		     				规格：
+		     				<span class="bdc bdcA" data-id="1">
+		     					普通型
+		     				</span> 
+		     				<span class="bdc" data-id="2">
+		     					超薄型
+		     				</span> 
+		     			</div>
+		     			<div class="flexr">
+		     				数量：
+		     				<div class="mui-numbox wfast" data-numbox-step='1' data-numbox-min='0'>
+							  <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+							  <input class="mui-numbox-input" type="number" value="0"/>
+							  <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+							</div>
+		     			</div>
+		     		</div>
+		     		<div class="afterBorder paddv10">
+		     			<div class="ft16" data-id="15">阴角</div>
+		     			
+		     			<div class="flexr spsec">
+		     				品牌：
+		     				<span class="bdc bdcA" data-id="1">
+		     					乐易装
+		     				</span>
+		     				 
+		     			</div>
+		     			<div class="flexr paddv10 spthr">
+		     				规格：
+		     				<span class="bdc bdcA" data-id="1">
+		     					2.4m
+		     				</span> 
+		     				<span class="bdc" data-id="2">
+		     					2.7m
+		     				</span> 
+		     			</div>
+		     			<div class="flexr">
+		     				数量：
+		     				<div class="mui-numbox wfast" data-numbox-step='1' data-numbox-min='0'>
+							  <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+							  <input class="mui-numbox-input" type="number" value="0"/>
+							  <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+							</div>
+		     			</div>
+		     		</div>
+		     		<div class="afterBorder paddv10">
+		     			<div class="ft16" data-id="16">网格带</div>
+		     			
+		     			<div class="flexr spsec">
+		     				品牌：
+		     				<span class="bdc bdcA" data-id="1">
+		     					乐易装
+		     				</span>
+		     				 
+		     			</div>
+		     			<div class="flexr paddv10 spthr">
+		     				规格：
+		     				<span class="bdc bdcA" data-id="1">
+		     					5cm*40m
+		     				</span> 
+		     				<span class="bdc" data-id="2">
+		     					10cm*40m
+		     				</span> 
+		     				<span class="bdc" data-id="3">
+		     					100cm*50m
+		     				</span> 
+		     			</div>
+		     			<div class="flexr">
+		     				数量：
+		     				<div class="mui-numbox wfast" data-numbox-step='1' data-numbox-min='0'>
+							  <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+							  <input class="mui-numbox-input" type="number" value="0"/>
+							  <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+							</div>
+		     			</div>
+		     		</div>
+		     		<div class="afterBorder paddv10">
+		     			<div class="ft16" data-id="17">棕毛刷</div>
+		     			
+		     			<div class="flexr spsec">
+		     				品牌：
+		     				<span class="bdc bdcA" data-id="1">
+		     					乐易装
+		     				</span>
+		     				 
+		     			</div>
+		     			<div class="flexr paddv10 spthr">
+		     				规格：
+		     				<span class="bdc bdcA" data-id="1">
+		     					2寸
+		     				</span> 
+		     				<span class="bdc" data-id="2">
+		     					3寸
+		     				</span> 
+		     				<span class="bdc" data-id="3">
+		     					4寸
+		     				</span> 
+		     			</div>
+		     			<div class="flexr">
+		     				数量：
+		     				<div class="mui-numbox wfast" data-numbox-step='1' data-numbox-min='0'>
+							  <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+							  <input class="mui-numbox-input" type="number" value="0"/>
+							  <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+							</div>
+		     			</div>
+		     		</div>
+		     		<div class="afterBorder paddv10">
+		     			<div class="ft16" data-id="18">短柄羊毛刷</div>
+		     			
+		     			<div class="flexr spsec">
+		     				品牌：
+		     				<span class="bdc bdcA" data-id="1">
+		     					乐易装
+		     				</span>
+		     				 
+		     			</div>
+		     			<div class="flexr paddv10 spthr">
+		     				规格：
+		     				<span class="bdc bdcA" data-id="1">
+		     					2寸
+		     				</span> 
+		     				<span class="bdc" data-id="2">
+		     					3寸
+		     				</span> 
+		     				<span class="bdc" data-id="3">
+		     					4寸
+		     				</span> 
+		     			</div>
+		     			<div class="flexr">
+		     				数量：
+		     				<div class="mui-numbox wfast" data-numbox-step='1' data-numbox-min='0'>
+							  <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+							  <input class="mui-numbox-input" type="number" value="0"/>
+							  <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+							</div>
+		     			</div>
+		     		</div>
+		     		<div class="afterBorder paddv10">
+		     			<div class="ft16" data-id="19">中长柄羊毛刷</div>
+		     			
+		     			<div class="flexr spsec">
+		     				品牌：
+		     				<span class="bdc bdcA" data-id="1">
+		     					乐易装
+		     				</span>
+		     				 
+		     			</div>
+		     			<div class="flexr paddv10 spthr">
+		     				规格：
+		     				<span class="bdc bdcA" data-id="1">
+		     					2寸
+		     				</span> 
+		     				<span class="bdc" data-id="2">
+		     					3寸
+		     				</span> 
+		     				<span class="bdc" data-id="3">
+		     					4寸
+		     				</span> 
+		     			</div>
+		     			<div class="flexr">
+		     				数量：
+		     				<div class="mui-numbox wfast" data-numbox-step='1' data-numbox-min='0'>
+							  <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+							  <input class="mui-numbox-input" type="number" value="0"/>
+							  <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+							</div>
+		     			</div>
+		     		</div>
+		     		<div class="afterBorder paddv10">
+		     			<div class="ft16" data-id="20">滚筒</div>
+		     			
+		     			<div class="flexr spsec">
+		     				品牌：
+		     				<span class="bdc bdcA" data-id="1">
+		     					乐易装
+		     				</span>
+		     				 
+		     			</div>
+		     			<div class="flexr paddv10 spthr">
+		     				规格：
+		     				<span class="bdc bdcA" data-id="1">
+		     					小拇指
+		     				</span> 
+		     				<span class="bdc" data-id="2">
+		     					胶水专用
+		     				</span> 
+		     				<span class="bdc" data-id="3">
+		     					中毛
+		     				</span> 
+		     				<span class="bdc" data-id="4">
+		     					细毛
+		     				</span> 
+		     				<span class="bdc" data-id="5">
+		     					无死角
+		     				</span> 
+		     			</div>
+		     			<div class="flexr">
+		     				数量：
+		     				<div class="mui-numbox wfast" data-numbox-step='1' data-numbox-min='0'>
+							  <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+							  <input class="mui-numbox-input" type="number" value="0"/>
+							  <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+							</div>
+		     			</div>
+		     		</div>
+		     		<div class="afterBorder paddv10">
+		     			<div class="ft16" data-id="21">水砂</div>
+		     			
+		     			<div class="flexr spsec">
+		     				品牌：
+		     				<span class="bdc bdcA" data-id="1">
+		     					犀利
+		     				</span>
+		     				 
+		     			</div>
+		     			<div class="flexr paddv10 spthr">
+		     				规格：
+		     				<span class="bdc bdcA" data-id="1">
+		     					180号
+		     				</span> 
+		     				<span class="bdc" data-id="2">
+		     					240号
+		     				</span> 
+		     				<span class="bdc" data-id="3">
+		     					280号
+		     				</span> 
+		     				<span class="bdc" data-id="4">
+		     					320号
+		     				</span> 
+		     			</div>
+		     			<div class="flexr">
+		     				数量：
+		     				<div class="mui-numbox wfast" data-numbox-step='1' data-numbox-min='0'>
+							  <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+							  <input class="mui-numbox-input" type="number" value="0"/>
+							  <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+							</div>
+		     			</div>
+		     		</div>
+		     		<div class="afterBorder paddv10">
+		     			<div class="ft16" data-id="22">家装纸胶带</div>
+		     			
+		     			<div class="flexr spsec">
+		     				品牌：
+		     				<span class="bdc bdcA" data-id="1">
+		     					乐易装
+		     				</span>
+		     				 
+		     			</div>
+		     			<div class="flexr paddv10 spthr">
+		     				规格：
+		     				<span class="bdc bdcA" data-id="1">
+		     					2cm*30m
+		     				</span> 
+		     				<span class="bdc" data-id="2">
+		     					2.8cm*30m
+		     				</span> 
+		     			</div>
+		     			<div class="flexr">
+		     				数量：
+		     				<div class="mui-numbox wfast" data-numbox-step='1' data-numbox-min='0'>
+							  <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+							  <input class="mui-numbox-input" type="number" value="0"/>
+							  <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+							</div>
+		     			</div>
+		     		</div>
+		     		<div class="afterBorder paddv10">
+		     			<div class="ft16" data-id="23">和纸遮蔽膜</div>
+		     			
+		     			<div class="flexr spsec">
+		     				品牌：
+		     				<span class="bdc bdcA" data-id="1">
+		     					乐易装
+		     				</span>
+		     				 
+		     			</div>
+		     			<div class="flexr paddv10 spthr">
+		     				规格：
+		     				<span class="bdc bdcA" data-id="1">
+		     					55cm*25m
+		     				</span> 
+		     				<span class="bdc" data-id="2">
+		     					110cm*26m
+		     				</span> 
+		     			</div>
+		     			<div class="flexr">
+		     				数量：
+		     				<div class="mui-numbox wfast" data-numbox-step='1' data-numbox-min='0'>
+							  <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+							  <input class="mui-numbox-input" type="number" value="0"/>
+							  <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+							</div>
+		     			</div>
+		     		</div>
+		     		
+		     		
+		     	
+				</div> 
+			</div>
+			
+			<!--bottom nav-->
+			<div style="height:40px;"></div>
+			<aside class="btmNav flexr" style="position: fixed;bottom: 0;left: 0;width: 100%;">
+				<span id="showBtcrt" class="mui-icon mui-icon-arrowup activecl showRotate" style="padding-left: 10px;"></span>
+				<a class="dp ft16" style="color: #B62D29;text-align: center;flex: 1;">
+					<span>合计：</span><span class="totalMoney">0</span>件商品
+				</a>
+				<a class="goOrder dp" style="background:#B62D29;color:white;padding:14px 10px;">加入下料清单</a>
+			</aside>
+			<!--弹出菜单-->
+			<div id="bottomCart" style="display: none;">
+				<div id="btcgood">
+					<div class="padd10 bgcee fttc" id="optal">
+						<div class="mui-checkbox mui-pull-left" style="margin-top: -2%;">
+							<input name="checkbox" type="checkbox" style="margin-right: 10px;">
+							<span style="margin-left: 38px;margin-top: 8px;display: inline-block;">
+								全选
+							</span>
+						</div>
+						<span style="visibility: hidden;">dd</span>
+					   <img src="../images/delet.svg" class="mui-pull-right" onclick="delAll()" style="width: 20px;" alt="" />
+					</div>
+					<div class="bgcwt padd10 fttc" id="btcart">
+						
+					</div>
+					<script type="text/html" id="btcartTpl">
+						<%for(var i = 0 ;i<list.length;i++){%>
+							<div class="flexr afterBorder padv15">
+								<div class="mui-checkbox" style="left: 15%;margin-top: -10%;">
+									<input name="checkbox" type="checkbox" data-id="<%=list[i].goodcode%>">
+								</div>
+				     			<div style="max-width:67% ;">
+				     				<div data-id="16"><%=list[i].skuName%></div>
+				     				<span data-id="1">
+				     					<%=list[i].specif%>
+				     				</span>
+				     			</div>
+			     				<div class="mui-numbox btct" data-numbox-step='1' data-numbox-min='0'>
+								  <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+								  <input class="mui-numbox-input" type="number" value="<%=list[i].num%>" data-id="<%=list[i].goodcode%>"/>
+								  <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+								</div>
+				     		</div>
+				     		 
+						<%}%>
+					</script> 
 				</div>
-				 
 			</div>
 		</div>
+		<script src="../js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../js/mui.min.js"></script>
+		<script src="../js/default.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/artTemplate-native.js" type="text/javascript" charset="utf-8"></script>
 		<script>
-		 
+		mui.init();
+		$('#showBtcrt,#bottomCart').click(function(){
+			$('#showBtcrt').toggleClass('showRotate')
+			$('#bottomCart').fadeToggle('fast');
+		})
+		$('#btcgood').click(function(){
+			event.stopPropagation();
+		})
+		$('.bdc').click(function(){
+			$(this).siblings().removeClass('bdcA')
+			$(this).addClass('bdcA')
+		})
+		mui.plusReady(function(){
+			//存缓存
+//			plus.storage.removeItem('$tileFastGoods')
+			var tileFastGoods = JSON.parse(plus.storage.getItem('$tileFastGoods') || '[]');
+			showBtCart();
+			$('.wfast input').on('change', function() {
+				var fastMaterial = '3';
+				var number = $(this).val(); //当前数量 
+				var firstCode = $(this).parentsUntil('.bgcwt').find('div').eq(0).attr('data-id'); 
+				var firstSpecif = $(this).parentsUntil('.bgcwt').find('div').eq(0).text(); 
+				var secondCode = $(this).parentsUntil('.bgcwt').find('.spone .bdcA').attr('data-id') || '';
+				var secondSpecif = $(this).parentsUntil('.bgcwt').find('.spone .bdcA').text(); 
+				
+				var thirdCode = $(this).parentsUntil('.bgcwt').find('.spsec .bdcA').attr('data-id') || '';
+				var thirdSpecif = $(this).parentsUntil('.bgcwt').find('.spsec .bdcA').text(); 
+				
+				var fourCode = $(this).parentsUntil('.bgcwt').find('.spthr .bdcA').attr('data-id') || ''; 
+				var fourSpecif = $(this).parentsUntil('.bgcwt').find('.spthr .bdcA').text(); 
+				
+				fastMaterial += firstCode+secondCode+thirdCode+fourCode
+				var skuName = firstSpecif;
+				var specif =$.trim(secondSpecif)+' '+$.trim(thirdSpecif)+' '+fourSpecif;
+				var cartObj={skuName:skuName,specif:specif,num:number,goodcode:fastMaterial}
+				alert('～'+fastMaterial);
+			 
+				//更新此商品数量缓存
+				if(tileFastGoods.length != 0) {
+					var flag = false;
+					for(var i = 0; i < tileFastGoods.length; i++) {
+						if(tileFastGoods[i].goodcode == fastMaterial) {
+							if(parseInt(number) != 0){
+								tileFastGoods[i].num = parseInt(number);
+							}else{
+								tileFastGoods.splice(i, 1);
+							}
+							flag = false;
+							break;
+						} else {
+							flag = true;
+						}
+					}
+					if(flag) {
+						tileFastGoods.push(cartObj);
+					}
+				} else {
+					if(parseInt(number) != 0){
+						tileFastGoods.push(cartObj);
+					}
+				}
+				alert(JSON.stringify(cartObj))
+				plus.storage.setItem("$tileFastGoods", JSON.stringify(tileFastGoods));
+				showBtCart();
+			})
+			
+			function showBtCart(){
+				var tileFastGoods = JSON.parse(plus.storage.getItem('$tileFastGoods') || '[]');
+				if(tileFastGoods.length>0){
+					$('#btcart').html(template('btcartTpl',{list:tileFastGoods}))
+					mui('.mui-numbox').numbox();
+					$('#btcart .mui-checkbox').click(function() {
+						if($("#btcart").find("input[type='checkbox']:checked").length == $("#btcart").find("input[type='checkbox']").length){
+							$('#optal input').prop('checked',true)
+						}else{
+							$('#optal input').prop('checked',false)
+						}
+					})
+					$('.totalMoney').html(tileFastGoods.length);
+					$('#optal input').prop('checked',true)
+					$('#btcart input').prop('checked',true)
+					$('#btcart .mui-numbox input').on('change', function() {
+					var cur = $(this);
+					var number = $(this).val(); //当前数量
+					var codeid = $(this).attr('data-id'); 
+					var flag = false;
+					for(var i = 0; i < tileFastGoods.length; i++) {
+						if(tileFastGoods[i].goodcode == codeid) {
+							alert(5+' '+number)
+							if(parseInt(number) != 0){
+								tileFastGoods[i].num = parseInt(number);
+							}else{
+								tileFastGoods.splice(i, 1);
+							}
+							flag = false;
+							break;
+						} else {
+							flag = true;
+						}
+					}
+					if(flag) {
+						tileFastGoods.push(cartObj);
+					} 
+					plus.storage.setItem("$tileFastGoods",JSON.stringify(tileFastGoods));
+					showBtCart()
+				})
+				}else{
+					$('#btcart').html('暂无数据')
+					$('.totalMoney').html(0)
+					
+				}
+			}
+			window.delAll = function(){
+//				plus.storage.removeItem('$tileFastGoods');
+				var ALLcheckLength = $("#btcart").find("input[type='checkbox']:checked").length;
+				if(ALLcheckLength == 0) {
+					mui.toast("您还未选择要删除的商品哦！")
+				} else {  
+					mui.confirm('确认删除这' + ALLcheckLength + '件商品吗？', '提示', ['取消', '确定'], function(e) {
+						if(e.index == 1) {
+							//删除选中的 购物车 缓存 
+							$("#btcart").find("input[type='checkbox']:checked").each(function(){
+								var delID=$(this).attr("data-id"); 
+								//删除这一条缓存
+							    tileFastGoods =JSON.parse(plus.storage.getItem('$tileFastGoods')||'[]');
+								for(var i=0;i<tileFastGoods.length;i++){
+									if(delID==tileFastGoods[i].goodcode){
+										tileFastGoods.splice(i, 1);
+									}
+								} 
+								plus.storage.setItem("$tileFastGoods",JSON.stringify(tileFastGoods));
+							})
+							showBtCart();
+							ALLcheckLength = $("#btcart").find("input[type='checkbox']:checked").length;
+							if(ALLcheckLength == 0) {
+								$('#optal input').prop("checked", false);
+							} 
+						} 
+					})
+				}
+				
+			}
+			mui('.goOrder')[0].onclick = function(){
+				var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
+				var userId = plus.storage.getItem('$userId'); 
+				var oldToken = plus.storage.getItem('oldToken');
+				var ALLcheckLength = $("#btcart").find("input[type='checkbox']:checked").length;
+				var fastMaterial = '';
+				if(ALLcheckLength>0){
+					$("#btcart").find("input[type='checkbox']:checked").each(function(index){
+						var goodCode=$(this).attr("data-id");
+						if(index+1 == ALLcheckLength){
+							fastMaterial+=goodCode;
+						}else{
+							fastMaterial+=goodCode+','
+						} 
+					})
+				}
+				
+				alert(fastMaterial)
+				if(fastMaterial){
+					plus.nativeUI.showWaiting();
+					mui.ajax(serverUrl + '/app/materialList/quickOrder/add', {
+						data: {
+							userId: userId,
+							identityType: identityT,
+							params: fastMaterial,
+						},
+						dataType: 'json',
+						headers: {
+							"Authorization": oldToken
+						},
+						type: 'post',
+						timeout: 10000,
+						success: function(data, type, xhr) {
+							plus.nativeUI.closeWaiting();
+							console.log('快捷下单', data);
+							if(data.code == 0) { 
+								mui.toast('下单成功')
+							} else {
+								mui.toast(data.message)
+							}
+						},
+						error: function(xhr, type, errorThrown) {
+							plus.nativeUI.closeWaiting();
+						}
+					});	
+				}
+			}
+		})
+		
+		//总选
+		$('#optal .mui-checkbox').click(function() {
+			if($(this).find("input").prop('checked') == false) {
+				$("#btcart input").prop("checked", false);
+			} else {
+				$("#btcart input").prop("checked", true);
+			}
+		})
+		
 		</script>
 	</body>
 

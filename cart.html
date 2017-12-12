@@ -314,7 +314,7 @@
 														plus.nativeUI.closeWaiting();
 														console.log('删除全部', data);
 														if(data.code == 0) { 
-															mui.toast('删除成功') 
+															mui.toast('删除成功');
 															mui.fire(plus.webview.getWebviewById('page/goodList.html'),'refresh');
 															mui.fire(plus.webview.getWebviewById('cart.html'),'refresh');
 															cartload(); 
@@ -416,7 +416,7 @@
 											plus.nativeUI.closeWaiting();
 											console.log('加入购物车', data);
 											if(data.code == 0) {
-	
+												mui.fire(plus.webview.getWebviewById('goodList'),'refresh');
 											} else {
 												mui.toast(data.message)
 											}
@@ -446,6 +446,7 @@
 													plus.nativeUI.closeWaiting();
 													console.log('删除', data);
 													if(data.code == 0) {
+														mui.fire(plus.webview.getWebviewById('goodList'),'refresh');
 														mui.fire(plus.webview.getWebviewById('cart.html'), 'refresh');
 													} else {
 														mui.toast(data.message)
