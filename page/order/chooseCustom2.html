@@ -10,10 +10,12 @@
 		<script src="../../js/mui.min.js"></script>
 		<style type="text/css">
 			.mui-bar-nav~.mui-content {padding-top: 50px;}
-			#bindPhone{display: inline-block;width: 100%;border: none;line-height: 45px;height: 50px;margin-top: 20px;}
+			#bindPhone{display: inline-block;width: 100%;border: none;line-height: 45px;height: 50px;margin-top: 0px;}
 			.mui-btn-outlined.mui-btn-blue, .mui-btn-outlined.mui-btn-primary{color: #c7161e;border: 1px solid #c7161e;}
 			.mui-bar-nav.mui-bar .mui-icon{margin: 0;}
 			.mui-btn, button, input[type=button], input[type=reset], input[type=submit]{font-size:16px;line-height: 1.72;}
+			#contactBtn{float: right;font-size: 15px;}
+			.mui-btn-primary:enabled:active{border: 1px solid #c7161e;background-color: #c7161e;}
 		</style>
 	</head>
 
@@ -24,7 +26,7 @@
 		</header>
 		<script src="../../js/statusBar.js"></script>
 		<div class="mui-content">
-			<div style="padding: 15px;display: none;">请输入会员手机号 <button onclick="openMail()">导入通讯录</button><br /></div>
+			<div style="padding: 15px;line-height: 35px;font-size: 16px;color: #666;">请输入会员手机号 <button id="contactBtn" class="mui-btn mui-btn-primary mui-btn-outlined" onclick="openMail()">通讯录导入</button><br /></div>
 			<input type="text" id="bindPhone" value="12345678912" placeholder="请输入电话号码" /></div>
 			<div style="text-align: center;">
 				<button type="button" data-loading-icon-position="right" id="bindGuide" class="mui-btn mui-btn-primary mui-btn-outlined">为该顾客下单</button>
@@ -38,9 +40,16 @@
 			function openMail(){
 				openview({
 					view: '../mailList.html',
-					id: 'mailList'
+					id: 'mailList',
+					extrasobj:{htmlName:'chooseCustom2'}
 				})
 			}
+			//导入通讯录
+			document.addEventListener('resetTel',function(){
+				var contactOne = JSON.parse(plus.storage.getItem('contactOne'));
+				document.getElementById('bindPhone').value = contactOne[0].phone;
+				plus.storage.removeItem('contactOne');
+			})
 
 			mui.plusReady(function(){
 				var reg_phone = /^1((3|4|5|8|7){1}\d{1}|70)\d{8}$/;//手机号正则;

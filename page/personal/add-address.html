@@ -101,7 +101,9 @@
 			.add-address .textare{
 				border-bottom: none;
 			}
-			.data ul li span{color: #666;}
+			.mui-btn-outlined.mui-btn-blue, .mui-btn-outlined.mui-btn-primary{color: #c7161e;border: 1px solid #c7161e;}
+			#contactBtn{float: right;font-size: 15px;padding: 5px;}
+			.mui-btn-primary:enabled:active{border: 1px solid #c7161e;background-color: #c7161e;}
 		</style>
 	</head>
 
@@ -119,6 +121,10 @@
 		    	<div id="thisAddLi"></div>
 		    	<div class="plist clearfloat data">
 					<ul>
+						<div style="padding: 10px 15px;line-height: 35px;font-size: 16px;color: #666;display: none;" class="fineB" id="contactDiv0">
+							通讯录导入
+							<button id="contactBtn" class="mui-btn mui-btn-primary mui-btn-outlined" onclick="openMail()">通讯录导入</button>
+						</div>
 						<li class="clearfloat">
 							<a href="#">
 								<p class="fl">收货人</p>
@@ -257,12 +263,31 @@
 	    		/*地址结束*/
 		</script>
 		<script type="text/javascript" charset="utf-8">
+			function openMail(){
+				openview({
+					view: '../mailList.html',
+					id: 'mailList',
+					extrasobj:{htmlName:'add-address'}
+				})
+			}
+			//导入通讯录
+			document.addEventListener('resetTel',function(){
+				var contactOne = JSON.parse(plus.storage.getItem('contactOne'));
+				document.getElementById('person').value = contactOne[0].name;
+				document.getElementById('phone').value = contactOne[0].phone;
+				plus.storage.removeItem('contactOne');
+			})
 
 			mui.plusReady(function(){
 				//获取缓存
 				var oldToken = plus.storage.getItem('oldToken');
 				var userId = plus.webview.currentWebview().ConeId || plus.storage.getItem('$userId');
 				var identityT = plus.webview.currentWebview().CidentityT || JSON.parse(plus.storage.getItem("$identityType")).identityType;
+
+				//导购模式（加入通讯录导入功能）
+				if(plus.webview.currentWebview().ConeId){
+					$('#contactDiv0').css('display','block');
+				}
 
 				//点击保存新增地址
 				window.save = function(){

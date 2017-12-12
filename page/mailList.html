@@ -1,53 +1,178 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
+
 	<head>
-		<meta charset="UTF-8">
-		<title>通讯录</title>
+		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>通讯录</title>
 		<link href="../css/mui.min.css" rel="stylesheet" />
-		<script src="../js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
-		<script src="../js/mui.min.js"></script>
-		<script src="../js/default.js" type="text/javascript" charset="utf-8"></script>
-		<style type="text/css">
-			.mailList{margin-top: 50px;}
+		<link href="../css/mui.indexedlist.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../css/commonY.css">
+		<script src="../js/contact.js"></script>
+		<style>
+			html,
+			body { height: 100%; overflow: hidden;}
+			.mui-bar { -webkit-box-shadow: none; box-shadow: none;}
+			.mui-bar-nav~.mui-content { padding-top: 49px;}
+			.mui-indexed-list-bar a, .mui-table-view-divider{color: #c7161e !important;}
+			.mui-indexed-list-bar{width: 26px;}
+			.mui-indexed-list-bar a{font-size: 16px;}
+			.mui-table-view-divider{font-size: 18px;}
+			.mui-table-view-cell{font-size: 17px;color: #4285f4;padding-bottom: 0 !important;}
+			.mui-indexed-list-inner{padding-bottom: 30px;}
+			.mui-table-view:after, .mui-table-view:before{height: 0;}
+			.mui-indexed-list-item .span1{display: block;padding: 12px 10px;color: #666;font-size: 18px;}
+			.mui-indexed-list-bar a, .mui-table-view-divider, .mui-indexed-list-bar{background-color: rgba(232, 232, 232, 0.62)}
+			.fineT:before, .fineB:after { content: '';
+			    position: absolute;
+			    left: 0;
+			    background-color: #eee;
+			    width: 100%;
+			    height: 1px;
+			    -webkit-transform: scaleY(0.08);
+			    transform: scaleY(0.2);
+			}
+			.mui-indexed-list-item b{display: inline-block; margin-bottom: 8px;}
+			/*.mui-bar-nav{box-shadow: none !important;}*/
 		</style>
 	</head>
 
 	<body>
-		<header class="mui-bar mui-bar-nav" style="padding-right: 15px;">
+		<header class="mui-bar mui-bar-nav">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<h1 class="mui-title">通讯录</h1>
 		</header>
-		<div id="" class="mailList">
-			内容
+		<script src="../js/statusBar.js"></script>
+		<div class="mui-content">
+			<div id='list' class="mui-indexed-list">
+				<div style="display: none;" class="mui-indexed-list-search mui-input-row mui-search">
+					<input type="search" class="mui-input-clear mui-indexed-list-search-input" placeholder="搜索机场">
+				</div>
+				<div class="mui-indexed-list-bar">
+					<a>A</a>
+					<a>B</a>
+					<a>C</a>
+					<a>D</a>
+					<a>E</a>
+					<a>F</a>
+					<a>G</a>
+					<a>H</a>
+					<a>I</a>
+					<a>J</a>
+					<a>K</a>
+					<a>L</a>
+					<a>M</a>
+					<a>N</a>
+					<a>O</a>
+					<a>P</a>
+					<a>Q</a>
+					<a>R</a>
+					<a>S</a>
+					<a>T</a>
+					<a>U</a>
+					<a>V</a>
+					<a>W</a>
+					<a>X</a>
+					<a>Y</a>
+					<a>Z</a>
+				</div>
+				<div class="mui-indexed-list-alert"></div>
+				<div class="mui-indexed-list-inner">
+					<ul class="mui-table-view" id="contactDiv">
+						<!--列表loading-->
+						<div id="loadingdiv" style="text-align: center;font-size: 14px;height:32px;background-color: #fafafa;
+							line-height: 30px;color: #666;-webkit-transition: all .3s;overflow: hidden;">
+							<img style="width: 30px;margin-top:5px;" src="../img/Rolling.svg"/>
+						</div>
+						<!--列表loading结束-->
+					</ul>
+					<script type="text/html" id="contactS">
+						<% for(var i=0;i<list1.length;i++){%>
+							<li data-group="<%= list1[i].toUpperCase()%>" class="mui-table-view-divider mui-indexed-list-group"><%= list1[i].toUpperCase()%></li>
+							<% if( obj0[list1[i]].length){%>
+								<% for(var j=0,nowAA =obj0[list1[i]]; j<nowAA.length;j++){%>
+									<li class="mui-table-view-cell mui-indexed-list-item">
+										<b><%= nowAA[j].displayName%></b>
+										<% if(nowAA[j].phoneNumbers.length){%>
+											<% for(var k=0,nextAA = nowAA[j].phoneNumbers; k<nextAA.length;k++){%>
+												<span onclick="selectWho(this)" class="span1 aClick fineT"> <%= nextAA[k].value%> </span>
+											<% }%>
+										<% }%>
+									</li>
+								<% }%>
+							<% }%>
+						<% }%>
+					</script>
+				</div>
+			</div>
 		</div>
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/mui.indexedlist.js"></script>
+		<script src="../js/artTemplate-native.js"></script>
+		<script type="text/javascript" charset="utf-8">
+			mui.init();
+			function selectWho(newValue){
+				var selectName = newValue.parentNode.querySelector('b').innerText;
+				var selectTel = newValue.innerHTML.replace(new RegExp(" ", 'g'), "");
+				var isSure = confirm('确定选择，'+selectName+'：'+selectTel+'?');
+				var contactOne = [{name:selectName,phone:selectTel}];
+				plus.storage.setItem("contactOne",JSON.stringify(contactOne));
+				var nowhtmlName = plus.webview.currentWebview().htmlName;//跳转过来的页面
+				if(isSure){
+					mui.fire(plus.webview.getWebviewById(nowhtmlName),'resetTel');
+					plus.webview.currentWebview().close();
+				}else{
+					plus.storage.removeItem('contactOne');
+				}
+				console.log(plus.storage.getItem('contactOne'));
 
-		<script type="text/javascript">
+			}
 			document.addEventListener( "plusready", function(){
-				plus.contacts.getAddressBook(plus.contacts.ADDRESSBOOK_PHONE, function (addressbook) {
-					addressbook.find(["displayName","phoneNumbers"],function(contacts){
-						var oneMail = contacts;
-						//筛选有电话的数据
-						var twoMail = oneMail.filter(function(item){
-						  return item.phoneNumbers.length > 0;
-						});
-						console.log(twoMail);
+                plus.contacts.getAddressBook(plus.contacts.ADDRESSBOOK_PHONE, function (addressbook) {
+                    addressbook.find(["displayName","phoneNumbers"],function(contacts){
+                        	var oneMail = contacts;
+                        	//筛选有电话的数据
+                        	var twoMail = oneMail.filter(function(item){
+                      		return item.phoneNumbers.length > 0;
+                        	});
+                        	console.log('twoMail',twoMail);
+                        	var contactObj = {};
+                        	var FLA = [];
+                        	var erliu = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'];
+						twoMail.forEach(function(ele,index){
+							var firstLetter = goPinyin(ele.displayName);
+							if(FLA.indexOf(firstLetter)==-1){
+								FLA.push(firstLetter);
+							}
+							erliu.forEach(function(ele2,index2){
+								if(firstLetter == ele2){
+									if(!contactObj[ele2]){
+										contactObj[ele2] = [];
+										contactObj[ele2].push(ele);
+									}else{
+										contactObj[ele2].push(ele);
+									}
+								}
+							})
+						})
+						var FLAEnd = FLA.sort();
+						console.log('FLA',FLAEnd);
+						console.log('contactObj',contactObj);
+						document.getElementById('contactDiv').innerHTML = template('contactS',{obj0:contactObj,list1:FLAEnd});
+                    }, function () {
+                        console.error("error");
+                    },{multiple:true});
+                },function(e){
+                    console.error("Get address book failed: " + e.message);
+                });
+            }, false );
 
-						var thereMail = twoMail.sort(function(aaa,bbb){
-//							console.log('aaa'+ aaa.displayName)
-//							console.log('bbb'+ bbb.displayName)
-//							if(aaa.displayName && bbb.displayName){
-								return aaa.displayName.localeCompare(bbb.displayName);
-//							}
-						});
-						console.log(thereMail)
-					}, function () {
-						alert("error");
-					},{multiple:true});
-				},function(e){
-					alert("Get address book failed: " + e.message);
-				});
-			}, false );
+			mui.ready(function() {
+				var header = document.querySelector('header.mui-bar');
+				var list = document.getElementById('list');
+				list.style.height = (document.body.offsetHeight - header.offsetHeight) + 'px';
+				window.indexedList = new mui.IndexedList(list);
+			});
 		</script>
 	</body>
 

@@ -70,44 +70,44 @@
 				<div>
 					<span class="huiC">收货人：</span><%= detail.receiver%> <%= detail.receiverPhone%>
 				</div>
-				<div>
+				<!--<div>
 					<span class="huiC">提货码：</span> <span class="redC">HBGUHB</span>
-				</div>
+				</div>-->
 				<div>
-					<span class="huiC">配送方式：</span> 送货上门
+					<span class="huiC">配送方式：</span> <%= detail.deliveryType%>
 				</div>
 				<div>
 					<span class="huiC">配送地址：</span> <%= detail.shippingAddress%>
 				</div>
 				<div>
-					<span class="huiC">配送时间：</span> 时间时间时间时间
+					<span class="huiC">配送时间：</span> <%= detail.deliveryTime%>
 				</div>
 			</div>
 			<div class="Dpart4 Dpart3">
 				<div>
-					<span class="huiC">商品总额：</span> <span class="floL">¥<%= detail.BillingDetailResponse.totalPrice%></span>
+					<span class="huiC">商品总额：</span> <span class="floL"><%= detail.BillingDetailResponse.totalPrice%>元</span>
 				</div>
 				<div>
-					<span class="huiC">运费：</span> <span class="floL">¥<%= detail.BillingDetailResponse.freight%></span>
+					<span class="huiC">运费：</span> <span class="floL"><%= detail.BillingDetailResponse.freight%>元</span>
 				</div>
 				<div>
-					<span class="huiC">优惠卷抵扣：</span> <span class="floL">¥<%= detail.BillingDetailResponse.memberDiscount%></span>
+					<span class="huiC">优惠卷抵扣：</span> <span class="floL"><%= detail.BillingDetailResponse.memberDiscount%>元</span>
 				</div>
 				<div>
-					<span class="huiC">乐豆抵扣：</span> <span class="floL">¥<%= detail.BillingDetailResponse.promotionDiscount%></span>
+					<span class="huiC">乐豆抵扣：</span> <span class="floL"><%= detail.BillingDetailResponse.promotionDiscount%>元</span>
 				</div>
 				<div>
-					<span class="huiC">产品卷抵扣：</span> <span class="floL">¥<%= detail.BillingDetailResponse.productCouponDiscount%></span>
+					<span class="huiC">产品卷抵扣：</span> <span class="floL"><%= detail.BillingDetailResponse.productCouponDiscount || 0%>元</span>
 				</div>
 				<div>
-					<span class="huiC">预存款抵扣：</span> <span class="floL">¥<%= detail.BillingDetailResponse.preDeposit%></span>
+					<span class="huiC">预存款抵扣：</span> <span class="floL"><%= detail.BillingDetailResponse.preDeposit%>元</span>
 				</div>
 				<!--<div>
-					<span class="redC">应付金额：</span> <span class="floL redC">¥<%= detail.BillingDetailResponse.leBiCashDiscount%></span>
+					<span class="redC">应付金额：</span> <span class="floL redC"><%= detail.BillingDetailResponse.leBiCashDiscount%>元</span>
 				</div>-->
 			</div>
 			<div class="fineT" style="text-align: right;background-color: #fff;margin-top: -7px;padding: 10px 15px;margin-bottom: 7px;">
-				实付款：<span class="redC">¥<%= detail.BillingDetailResponse.amountPayable%></span>
+				实付款：<span class="redC"><%= detail.BillingDetailResponse.amountPayable%>元</span>
 			</div>
 			<!--订单评价-->
 			<div class="Dpart3">

@@ -4695,7 +4695,7 @@ label {
 	top: 0;
 	left: 0px;
 	background-size: cover;
-	background: url(../img/check1.png) no-repeat;
+	background: url(../img/check1.svg) no-repeat;
 	background-size: cover;
 }
 
@@ -4706,7 +4706,7 @@ label {
 }
 
 .radio input[type="checkbox"]:checked+div {
-	background: url(../img/check2.png) no-repeat;
+	background: url(../img/check2.svg) no-repeat;
 	background-size: cover;
 }
 

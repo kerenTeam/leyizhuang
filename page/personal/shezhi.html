@@ -60,6 +60,9 @@
 	<script type="text/javascript">
 		mui.plusReady(function(){
 			var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
+			if(identityT == 1){
+				mui('#dizhiGuan')[0].style.display = 'none';
+			}
 			//检测设备信息
 			!function(){
 				plus.runtime.getProperty(plus.runtime.appid,function(inf){//显示当前版本号
@@ -116,7 +119,7 @@
 					id:'oneSetup'
 				});
 			})
-			
+
 			//退出登录
 			mui('#Signout')[0].addEventListener('tap',function(){
 		        mui.confirm('确认退出登录？', '提示', ['取消', '确定'], function(e) {
@@ -150,7 +153,7 @@
 					mui.fire(plus.webview.getWebviewById('center.html'),'refresh');
 					if(plus.webview.getWebviewById('identify')){
 						plus.webview.getWebviewById('identify').close();
-					} 
+					}
 						plus.nativeUI.showWaiting();
 						var time2 = setTimeout(function(){
 							plus.nativeUI.closeWaiting();
