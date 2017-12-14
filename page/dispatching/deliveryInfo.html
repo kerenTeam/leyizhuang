@@ -7,10 +7,9 @@
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="../../css/mui.min.css" rel="stylesheet" />
 		<link rel="stylesheet" type="text/css" href="../../css/mui.min.css"/>
-		<link rel="stylesheet" type="text/css" href="../../css/configW.css"/>
 		<link rel="stylesheet" type="text/css" href="../../css/commonY.css">
-		<style type="text/css">
-			body{background-color: #F8F9FA;font-size: 15px;}
+		<link rel="stylesheet" type="text/css" href="../../css/configW.css"/>
+		<style type="text/css"> 
 			.Dpart1{padding: 15px 15px 5px;background-color: #fff;line-height: 2.5;margin-bottom: 7px;}
 			.Dpart1 h4{font-size: 16px;}
 			.Dpart1 h4 span{color: #AC0100;}
@@ -172,7 +171,7 @@
 					data:{userID:userId,identityType:identityT,orderNumber:orderNumber},
 					dataType:'json',
 					type:'post',
-					timeout:1000,
+					timeout:10000,
 					headers:{"Authorization":oldToken},
 					success:function(data,type,xhr){
 						console.log('出货信息 ',data);

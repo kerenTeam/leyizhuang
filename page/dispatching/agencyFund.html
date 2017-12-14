@@ -19,9 +19,13 @@
 		.checkListB{padding: 10px 20px;text-align: right;}
 		#infoListDiv{transition: all .3s;}
 		.flexr{display: flex;justify-content: space-between;margin: 2px 0;}
+		.flexrsh{display: flex;justify-content: space-between;margin: 2px 0;align-items: center;text-align: center;}
+		.flexrsh{vertical-align: middle;}
 		.flexr>div{width: 50%;}
 		a,a:active{color: rgb(51,51,51)!important;}
 		.flexRow2 img{width: 30px;vertical-align: middle;margin-right: 10px;}
+		.searchList input{border: none;outline: none;background: #EEEEEE;font-size: 14px;height: 30px;width: 110px;text-align: left;padding: 2px;}
+		 
 	</style>
 	<body>
 		<header class="mui-bar mui-bar-nav">
@@ -29,7 +33,20 @@
 			<h1 class="mui-title">代收款明细</h1>
 		</header>
 		<script src="../../js/statusBar.js" type="text/javascript" charset="utf-8"></script>
-		<div class="mui-content">
+		<div class="mui-content" style="margin-top: 5px;">
+			<div class="flexrsh searchList bgcwt padd10">
+				<!--<span id="">
+					今日
+				</span>-->
+				<div style="margin-top:14px ;">
+					开始：<input type="date" name="" id="" value="" class=";" placeholder="选择时间"/>
+				</div>
+				<div style="margin-top:14px ;">
+					结束：<input type="date" name="" id="" value="" class="end"placeholder="选择时间"/>
+				</div>
+				<span class="mui-icon mui-icon-search activecl"></span>
+			</div>
+
 			<!--列表loading-->
 			<div id="loadingdiv" style="text-align: center;font-size: 14px;height:32px;
 				line-height: 30px;color: #666;-webkit-transition: all .3s;overflow: hidden;">
@@ -38,7 +55,7 @@
 			<div id="checkList"></div>
 			<script type="text/html" id="checkTpl">
 				<%for(var i = 0 ;i < list.length ; i ++){%>
-					<div class="checkList" onclick="goInfo('<%=list[i].orderNumber%>')">
+					<div class="checkList">
 						<h4 class="fineB ft16">
 							<span>订单编号：<%=list[i].orderNumber%></span>
 						</h4>
@@ -149,6 +166,15 @@
 					console.log('响应失败  !');
 				}
 			});
+			 
+			$('input').change(function(){
+				alert($('.end').val());
+				if($('.end').val() || $('.start').val()){
+					if($('.end').val() < $('.start').val()){
+						$(this).val('')
+					}
+				}
+			})
 		})
 	</script>
 </html>

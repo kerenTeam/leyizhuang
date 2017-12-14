@@ -45,7 +45,7 @@
 		<!--产品券部分-->
 		<script type="text/html" id="couponsTpl"> 
 				<dl class="cart" style="background-color: #F8F8F8!important;">
-					<dt><div class="mui-checkbox"><input name="checkbox" class="groupCheck cssp" data-id="<%=lists.couponsList[0].cusId%>" data-phone="<%=lists.mobile%>" checked="true" disabled="" type="checkbox"></div>
+					<dt><div class="mui-checkbox"><input name="checkbox" class="groupCheck cssp" data-id="<%=lists.couponsList[0].cusId%>" data-phone="<%=lists.mobile%>" checked="true" type="checkbox"></div>
 					<div class="shopName" style="white-space: nowrap;overflow: hidden;max-width:2.5rem;" data-cusid="<%=lists.couponsList[0].cusId%>">
 						<%if(lists.customer){%>
 							顾客：<%=lists.customer%> <%=lists.mobile%>
@@ -57,7 +57,7 @@
 					<%for(var j=0;j<lists.couponsList.length;j++){%>
 					<dd>
 						<div class="mui-checkbox" style="top: 30%;">
-							<input name="checkbox" data-id="<%=lists.couponsList[j].goodsId%>" data-type="coupon" data-hid="<%=lists.couponsList[j].id%>" checked="true" disabled="" type="checkbox"></div>
+							<input name="checkbox" data-id="<%=lists.couponsList[j].goodsId%>" data-type="coupon" data-hid="<%=lists.couponsList[j].id%>" checked="true" type="checkbox"></div>
 							<a class="goodsPic"><img src="<%=lists.couponsList[j].coverImageUri%>" onerror="javascript:this.src='img/editset.png';" /></a>
 							<div class="goodsInfor">
 								<h2 class="ft16">  
@@ -88,7 +88,7 @@
 		<script type="text/html" id="auditTpl">
 		 
 				<dl class="cart" style="background-color: #F8F8F8!important;">
-					<dt><div class="mui-checkbox"><input name="checkbox" class="groupCheck" data-id="<%=lists.auditNo%>" checked="true" disabled="" type="checkbox"></div>
+					<dt><div class="mui-checkbox"><input name="checkbox" class="groupCheck" data-id="<%=lists.auditNo%>" checked="true" type="checkbox"></div>
 					<div class="shopName" style="white-space: nowrap;overflow: hidden;max-width:2.5rem;">
 						<%if(lists.worker){%>
 							<%=lists.worker%>
@@ -98,7 +98,7 @@
 					<%for(var j=0;j<lists.goodsList.length;j++){%>
 					<dd>
 						<div class="mui-checkbox" style="top: 30%;">
-							<input name="checkbox" data-id="<%=lists.goodsList[j].goodsId%>" data-type="ld" data-hid="<%=lists.goodsList[j].id%>" checked="true" disabled="" type="checkbox"></div>
+							<input name="checkbox" data-id="<%=lists.goodsList[j].goodsId%>" data-type="ld" data-hid="<%=lists.goodsList[j].id%>" checked="true" type="checkbox"></div>
 							<a class="goodsPic"><img src="<%=lists.goodsList[j].coverImageUri%>" onerror="javascript:this.src='img/editset.png';" /></a>
 							<div class="goodsInfor">
 								<h2 class="ft16">  
@@ -169,7 +169,7 @@
 			<a class="dp ft15" style="position: relative;color: #B62D29;">
 				<div class="mui-checkbox botCheck"><input name="checkbox" id="totalCheck" type="checkbox"></div><span>合计：</span>¥<span class="totalMoney">0</span>
 			</a>
-			<a class="goOrder dp" style="background:#B62D29;color:white;text-shadow:none;">下一步<span class="totalVisi">(<span class="totalNum">0</span>)</span>
+			<a class="dp goOrder" style="background:#B62D29;color:white;text-shadow:none;width：33.4%">下一步<span class="totalVisi">(<span class="totalNum">0</span>)</span>
 			</a>
 			<a class="dp whitecl delBtnAll" style="background:#B62D29;text-shadow:none;display: none;">删除
 			</a>
@@ -480,25 +480,30 @@
 									mui.toast("您还未选择要购买的商品哦！")
 								} else {
 									var materialList = [];
+									var removeCouponGoods = [];
 									//存缓存
 									$("dd").find("input[type='checkbox']:checked").each(function(index) {
-//										var gdtype = $(this).attr('data-type')
-//										if(gdtype == 'coupon'){
-//											var isProCouponGoods = true
-//										}else if(gdtype == 'ld'){
-//											var isProCouponGoods = false
-//										}else{
-//											
-//										}
+										var gdtype = $(this).attr('data-type')
+										if(gdtype == 'coupon'){
+											var isProCouponGoods = true
+										}else{
+											var isProCouponGoods = false
+											removeCouponGoods.push({
+												id: $(this).attr('data-id'),
+												qty: $(this).parent().parent().find('.mui-input-numbox').val(),
+												goodsLineType: false
+											})
+										}
 										materialList.push({
 											id: $(this).attr('data-id'),
-											num: $(this).parent().parent().find('.mui-input-numbox').val(),
-											isGift: false,
+											qty: $(this).parent().parent().find('.mui-input-numbox').val(),
+//											isGift: false,
 //											isProCouponGoods:isProCouponGoods
 										})
 									})
 
 									plus.storage.setItem('materialList', JSON.stringify(materialList));
+									plus.storage.setItem('removeCouponGoods', JSON.stringify(removeCouponGoods));
 									console.log(plus.storage.getItem('materialList'));
 
 									if(plus.storage.getItem('oldToken')) {

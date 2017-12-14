@@ -64,17 +64,18 @@
 		<script src="../../js/statusBar.js" type="text/javascript" charset="utf-8"></script>
 		<div class="mui-content">
 			<div class="bgcwt">
-				<form class="mui-input-group ft16" style="margin-top: 7px;">
+				<form class="mui-input-group ft16" style="margin-top: 6px;">
 					<div class="mui-input-row flexr">
 						<label style="border-right: 1px solid #EEEEEE;width: 27%;">拒收原因</label>
 						<select name="city" id="city" style="padding: 0 10px;">
-							<option value="">选择</option>
+							<option value="选择">选择</option>
 						</select>
 						<span class="mui-icon mui-icon-arrowdown"></span>
 					</div>
 				</form>
+				<br />
 				<textarea name="" rows="3" cols="" placeholder="输入拒收原因" style="background-color: #DDDDDD;margin: 10px;width: calc(100vw - 20px);"></textarea>
-				<img src="../../images/center/camer.svg" style="width: 60px;padding: 10px;" />
+				<!--<img src="../../images/center/camer.svg" style="width: 60px;padding: 10px;" />-->
 				<br /><br />
 			</div>
 			<div class="mui-content-padded">
@@ -113,9 +114,36 @@
 					},
 					error: function(xhr, type, errorThrown) {
 
-					}
-
+					} 
 				});
+				mui('#sendMail')[0].onclick = function(){ 
+					if($('select').val() == '选择'){
+						mui.toast('还未选择退货原因！！！');
+						return;
+					}else{
+						var reasonInfo = $('select').val();
+						var remarksInfo = $('textarea').val();
+						mui.ajax(serverUrl + '/app/returnOrder/refused/order', {
+							data:{userId:userId,identityType:identityT,orderNumber:orderNumber,reasonInfo:reasonInfo,remarksInfo:remarksInfo},
+							dataType: 'json',
+							type: 'post',
+							timeout: 10000,
+							headers:{"Authorization":oldToken},
+							success: function(data, type, xhr) {
+								console.log('拒收返回', data);
+								if(data.code == 0) { 
+									mui.toast('拒收成功');
+								}else{
+									mui.toast(data.message);
+									
+								}
+							},
+							error: function(xhr, type, errorThrown) {
+		
+							} 
+						});
+					}
+				}
   
 			});
 		</script>

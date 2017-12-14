@@ -132,8 +132,8 @@
 		
 									<div class="checkListB beforeBorder">
 									    <%if(listType == 0){%>
-										<button type="button" class="mui-btn mui-btn maincl" style="margin-right: 5px;">不通过</button>
-										<button type="button" class="mui-btn mui-btn-danger mui-btn-outlined">通过</button>
+										<button type="button" class="mui-btn mui-btn maincl" style="margin-right: 5px;" onclick="checkDebate(false,'<%=list[i].id%>')">不通过</button>
+										<button type="button" class="mui-btn mui-btn-danger mui-btn-outlined" onclick="checkDebate(true,'<%=list[i].id%>')">通过</button>
 									    	
 									    	<%}else{%>
 									    		<div class="activecl">
@@ -218,7 +218,34 @@
 					}
 				});
 			}
-			
+			window.checkDebate = function(isPass,arrearsAuditId){
+				event.stopPropagation();
+				plus.nativeUI.showWaiting();
+				mui.ajax(serverUrl+'/app/seller/arrearsAudit/audit',{
+					data:{'userId':userId,'identityType':identityT,'arrearsAuditId':arrearsAuditId,'result':isPass},
+					dataType:'json',
+					type:'post',
+					timeout:10000,
+					headers:{"Authorization":oldToken},
+					success:function(data,type,xhr){
+						plus.nativeUI.closeWaiting();
+						console.log('欠款审核 ',data);
+						var timeLoad = setInterval(function(){
+							clearTimeout(timeLoad),timeLoad = null;
+							if(data.code == 0){ 
+								mui.toast('审核成功');
+								loadFun(0);
+							}else{
+								mui.toast(data.message);
+							}
+						},500)
+					},
+					error:function(xhr,type,errorThrown){
+						console.log('响应失败  !');
+					}
+				});
+				
+			}
 		})
  
 	</script>

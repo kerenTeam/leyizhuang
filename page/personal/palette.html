@@ -110,7 +110,7 @@
 	<script type="text/javascript">
 
 		//分类
-		mui.ajax(oCms + '/lyzcms/index.php/ApiCms/colorCate',{
+		mui.ajax(oCms + '/index.php/ApiCms/colorCate',{
 			data:{ 'cateId':0 },
 			dataType:'json',
 			type:'post',
@@ -127,7 +127,7 @@
 				})
 				navDetail($('.tzNav a').eq(0).attr('dataId'));//初始化
 				function navDetail(id){
-					mui.ajax(oCms + '/lyzcms/index.php/ApiCms/colorCate',{
+					mui.ajax(oCms + '/index.php/ApiCms/colorCate',{
 						data:{ cateId:id },
 						dataType:'json',
 						type:'post',
