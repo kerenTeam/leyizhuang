@@ -213,7 +213,7 @@
 					data:{'userID':userId,'identityType':identityT,'orderNumber':orderNo},
 					dataType:'json',
 					type:'post',
-					timeout:1000,
+					timeout:10000,
 					headers:{"Authorization":oldToken},
 					success:function(data,type,xhr){
 						console.log('订单详情',data);
@@ -254,7 +254,7 @@
 								},
 								dataType:'json',
 								type:'post',
-								timeout:1000,
+								timeout:10000,
 								headers:{"Authorization":oldToken},
 								success:function(data,type,xhr){
 									console.log('订单评价'+JSON.stringify(data));

@@ -25,9 +25,9 @@
 		<div class="mui-content">
 			<div id="cartData"></div>
 		</div>
-			
+
 		<script type="text/html" id="cartTpl">
-		 
+
 			<dl class="cart">
 				<%for(var i=0;i<list.length;i++){%>
 					<dd>
@@ -46,11 +46,11 @@
 									<span class="num">x<%=list[i].qty%></span>
 								</div>
 							</div>
-		
+
 						</div>
 					</dd>
 				<%}%>
-				 
+
 				<div style="clear: both;"></div>
 			</dl>
 		</script>
@@ -70,22 +70,22 @@
 				data:{'auditNo':audiono},
 				dataType:'json',
 				type:'post',
-				timeout:1000,
+				timeout:10000,
 				headers:{"Authorization":oldToken},
 				success:function(data,type,xhr){
 					console.log('料单详情',data);
 					var timeLoad = setInterval(function(){
 						clearTimeout(timeLoad),timeLoad = null;
 						if(data.code == 0){
-							if(data.content){  
+							if(data.content){
 								if(data.content.goodsList && data.content.goodsList.length){
 									document.getElementById('cartData').innerHTML = template('cartTpl',{list:data.content.goodsList});
 								}
-								
+
 							}else{
 								mui.toast(data.message)
 							}
-							
+
 						}else{
 							mui.toast(data.message);
 						}

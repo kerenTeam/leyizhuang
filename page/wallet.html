@@ -101,7 +101,7 @@
 		<script src="../js/artTemplate-native.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
 			mui.init();
-			
+
 			mui.plusReady(function(){
 				//获取缓存
 				var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
@@ -144,14 +144,14 @@
 									}else{
 										$('#balance').html('¥'+0);
 									}
-	
+
 							}
 							if(data.code == 1000 ){
 								mui.toast(data.message)
 							}else if(data.code == -1 ){
 								mui.toast(data.message)
 							}
-	
+
 						},
 						error:function(xhr,type,errorThrown){
 							plus.nativeUI.closeWaiting();
@@ -159,7 +159,7 @@
 							console.log('响应失败');
 						}
 					});
-	
+
 					//tab切换
 					//初始化
 					if(identityT == 6){
@@ -193,7 +193,7 @@
 							data:{'userId':userId,'identityType':identityT},
 							dataType:'json',
 							type:'post',
-							timeout:1000,
+							timeout:10000,
 							headers:{"Authorization":oldToken},
 							success:function(data,type,xhr){
 								console.log(data);

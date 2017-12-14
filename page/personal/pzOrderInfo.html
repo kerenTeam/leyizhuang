@@ -11,13 +11,13 @@
 	</head>
 	<style type="text/css">
 		.cmimg{width: 100px;height: 100px;}
-		
+
 	</style>
 	<body>
 		<header class="mui-bar mui-bar-nav" style="padding-right: 15px;">
 			<a id="leftbtn" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<h1 class="mui-title">拍照下单详情</h1>
-			 
+
 		</header>
 		<script src="../../js/statusBar.js" type="text/javascript" charset="utf-8"></script>
 		<div class="mui-content" style="margin-top: 7px;">
@@ -42,7 +42,7 @@
 				 		<div><%=list.remark%>
 				 	</div>
 				 </div>
-				 
+
 			</script>
 		</div>
 	</body>
@@ -64,7 +64,7 @@
 				data:{'userId':userId,'identityType':identityT,'id':orderid},
 				dataType:'json',
 				type:'post',
-				timeout:1000,
+				timeout:10000,
 				headers:{"Authorization":oldToken},
 				success:function(data,type,xhr){
 					console.log('拍照下单详情',data);

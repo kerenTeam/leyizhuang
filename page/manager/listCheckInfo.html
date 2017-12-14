@@ -12,22 +12,22 @@
 		<link rel="stylesheet" type="text/css" href="../../css/cart.css" />
 		<link rel="stylesheet" type="text/css" href="../../css/style.css" />
 		<link rel="stylesheet" type="text/css" href="../../css/configW.css" />
-		 
+
 	</head>
 	<style type="text/css">
 		#dibu{padding: 20px;text-align: center;}
-		 
+
 	</style>
 	<body>
 
 		<header class="mui-bar mui-bar-nav">
 			<a class="headbar mui-action-back mui-icon mui-icon-left-nav mui-pull-left normalSize"></a>
 			<h1 class="mui-title">料单详情</h1>
-		</header> 
+		</header>
 		<script src="../../js/statusBar.js"></script>
 		<!--状态栏-->
 		<div style="height:50px;"></div>
-		
+
 		<div style="background-color: white;margin: 5px 0;">
 			<div class="qtop flexr pad10" onclick="address()">
 				<div style="flex: 1;">
@@ -45,14 +45,14 @@
 		</div>
 		<div id="cartData" data-id=""></div>
 		<script type="text/html" id="cartTpl">
-		 
+
 			<dl class="cart">
 				<%for(var i=0;i<list.length;i++){%>
 					<dd>
 						<a class="goodsPic" style="margin-left: auto;"><img src="<%=list[i].coverImageUri%>" onerror="javascript:this.src='../../images/img.svg';" /></a>
 						<div class="goodsInfor" style="margin-left: 0.9rem!important;">
-							<h2 class="ft16">  
-						    		<%=list[i].skuName%> 
+							<h2 class="ft16">
+						    		<%=list[i].skuName%>
 						    		<%if(list[i].isGift){%>
 						    			<em class="mui-badge mui-badge-danger mui-pull-right" style="color: white;">赠品</em>
 						    		<%}%>
@@ -66,12 +66,12 @@
 									<span class="num">x<%=list[i].qty%></span>
 								</div>
 							</div>
-		
+
 						</div>
 					</dd>
 				<%}%>
-				
-	
+
+
 				<div class="pad10 ft15">
 					共<span id='totalGoods'><%=list.length%></span>件商品 订单总金额：<span id="totalPrice"></span> <span class="mui-pull-right activecl" onclick="materialList()">查看全部</span>
 				</div>
@@ -84,7 +84,7 @@
 				<div class="mui-input-row mui-radio mui-left mui-pull-right" style="margin-top: -8px;">
 					<label>送货上门</label>
 				</div>
-			</div> 
+			</div>
 			<div style="clear: both;"></div>
 			<div style="background-color: white;margin: 5px 0;" class="afterBorder">
 				<div class="qtop flexr pad10" onclick="address()">
@@ -97,7 +97,7 @@
 							<span class="maincl address">-----</span>
 						</div>
 					</div>
-					 
+
 				</div>
 			</div>
 			<div id='cityResult' class="ui-alert pad10 afterBorder">配送时间 <span class="mui-pull-right" id="reservationDeliveryTime"></span></div>
@@ -109,12 +109,12 @@
 				<div id="notice"></div>
 			</div>
 		</div>
-		
+
 		<!--bottom nav-->
 		<aside id="dibu">
 			<button class="mui-btn ft16" style="padding: 6px 10px;width: 80px;" onclick="manageCheck(false)">不通过</button>
-			<button class="mui-btn mui-btn-danger ft16" style="padding: 6px 10px;width: 80px;" onclick="manageCheck(true)">通过</button> 
-		</aside> 
+			<button class="mui-btn mui-btn-danger ft16" style="padding: 6px 10px;width: 80px;" onclick="manageCheck(true)">通过</button>
+		</aside>
 
 		<script type="text/javascript" src="../../js/jquery.min.js"></script>
 		<script src="../../js/mui.min.js"></script>
@@ -130,7 +130,7 @@
 				extrasobj:{audioNo:$('#cartData').attr('data-id')}
 			})
 		}
- 
+
 		mui.plusReady(function() {
 			var audiono = plus.webview.currentWebview().audioNo;
 			var audiostatus = plus.webview.currentWebview().audioStatus;
@@ -143,7 +143,7 @@
 			}else if(audiostatus == 2){
 				$('.status').html('已审核')
 				$('#dibu').css('display','none')
-				
+
 			}else if(audiostatus == 3){
 				$('.status').html('已取消')
 				$('#dibu').css('display','none')
@@ -154,14 +154,14 @@
 				data:{'auditNo':audiono},
 				dataType:'json',
 				type:'post',
-				timeout:1000,
+				timeout:10000,
 				headers:{"Authorization":oldToken},
 				success:function(data,type,xhr){
 					console.log('料单详情',data);
 					var timeLoad = setInterval(function(){
 						clearTimeout(timeLoad),timeLoad = null;
 						if(data.code == 0){
-							if(data.content){ 
+							if(data.content){
 								$('.auditNo').html(data.content.auditNo)
 								$('.createTime').html(data.content.createTime)
 								if(data.content.goodsList && data.content.goodsList.length){
@@ -182,7 +182,7 @@
 								}else{
 									$('#totalPrice').html('¥'+data.content.totalPrice)
 								}
-								
+
 								if(data.content.isOwnerReceiving){
 									$('#isOwnerReceiving').attr('checked',true)
 								}
@@ -199,7 +199,7 @@
 								plus.nativeUI.closeWaiting();
 								mui.toast(data.message)
 							}
-							
+
 						}else{
 							plus.nativeUI.closeWaiting();
 							mui.toast(data.message);
@@ -211,15 +211,15 @@
 					console.log('响应失败  !');
 				}
 			});
-		
+
 			//经理审核
 			window.manageCheck = function(isAudited){
-				
+
 				mui.ajax(serverUrl+'/app/material/audit/manager/check',{
 					data:{'auditNo':audiono,"userID":userId,"isAudited":isAudited},
 					dataType:'json',
 					type:'post',
-					timeout:1000,
+					timeout:10000,
 					headers:{"Authorization":oldToken},
 					success:function(data,type,xhr){
 						console.log('审核反馈',data);
@@ -227,7 +227,7 @@
 						 	mui.toast('审核成功')
 							mui.fire(plus.webview.getWebviewById('cart.html'), 'refresh');
 						 	mui.fire(plus.webview.getWebviewById('listCheck'), 'refresh');
-							
+
 						 	if(isAudited){
 						 		mui.ajax(serverUrl+'/app/material/audit/manager/transform/materialList',{
 									data:{'userID':userId,'identityType':identityT,"auditNo":audiono},
@@ -237,7 +237,7 @@
 									headers:{"Authorization":oldToken},
 									success:function(data,type,xhr){
 										console.log('经理审核料单加入下料清单列表',data);
-										if(data.code == 0){ 
+										if(data.code == 0){
 											openview({
 										 		view:'../../cart.html',
 										 		id:'cart',
@@ -257,7 +257,7 @@
 						}else{
 							mui.toast(data.message);
 						}
-						
+
 					},
 					error:function(xhr,type,errorThrown){
 						console.log('响应失败  !');

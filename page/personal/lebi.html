@@ -63,11 +63,11 @@
 					line-height: 30px;color: #666;-webkit-transition: all .3s;overflow: hidden;">
 					<img style="width: 30px;margin-top:5px;" src="../../img/Rolling.svg"/>
 				</div>
-				
+
 				<div id="infoListDiv"><!--内容-->
 				</div>
 				<script id="infoList" type="text/html">
-					
+
 					<%for(var i=0;i<list.length;i++){%>
 						<div class="checkList" style="margin: 5px 0;">
 							<div class="checkListCon clearfix ft15">
@@ -113,21 +113,21 @@
 										</div>
 									</div>
 								<%}%>
-							 	
+
 							</div>
-							
+
 						</div>
 					<%}%>
-					 
+
 				</script>
-				
+
 			</div>
 		</div>
 	</body>
 	<script src="../../js/default.js" type="text/javascript" charset="utf-8"></script>
 	<script src="../../js/artTemplate-native.js" type="text/javascript" charset="utf-8"></script>
 	<script type="text/javascript">
-		
+
 		mui.plusReady(function(){
 			var userId = plus.storage.getItem('$userId');
 			var oldToken = plus.storage.getItem("oldToken");
@@ -137,16 +137,16 @@
 				$(this).addClass('active');
 				$('#loadingdiv').css('height','32px');
 					loadFun($(this).index()+1);
-				
+
 			})
-		 
+
 			loadFun(1);
 			function loadFun(index){
 				mui.ajax(serverUrl+'/app/lebi/variation/list',{
 					data:{'userID':userId,'identityType':identityT,'showType':index},
 					dataType:'json',
 					type:'post',
-					timeout:1000,
+					timeout:10000,
 					headers:{"Authorization":oldToken},
 					success:function(data,type,xhr){
 						console.log(data);
@@ -163,7 +163,7 @@
 								}else{
 									document.getElementById('infoListDiv').innerHTML = '<div style="text-align: center;padding: 50px;"><div class="ft13 disablecl">暂无数据</div></div>';
 								}
-								
+
 							}else{
 								mui.toast(data.message);
 							}
@@ -174,7 +174,7 @@
 					}
 				});
 			}
-			
+
 		})
 
 

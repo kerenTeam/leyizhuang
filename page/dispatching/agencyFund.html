@@ -25,7 +25,7 @@
 		a,a:active{color: rgb(51,51,51)!important;}
 		.flexRow2 img{width: 30px;vertical-align: middle;margin-right: 10px;}
 		.searchList input{border: none;outline: none;background: #EEEEEE;font-size: 14px;height: 30px;width: 110px;text-align: left;padding: 2px;}
-		 
+
 	</style>
 	<body>
 		<header class="mui-bar mui-bar-nav">
@@ -116,14 +116,14 @@
 							</div>
 							<div class="ft15"><span class="disablecl">支付方式：</span><span class="titcl"><%=list[i].paymentMethod%></span></div>
 							<div class="ft15"><span class="disablecl">日期：</span><span class="titcl"><%=list[i].createTime%></span></div>
-							
+
 						</div>
-		 
+
 					</div>
-				
+
 				<%}%>
 			</script>
-			
+
 		</div>
 	</body>
 	<script src="../../js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
@@ -135,7 +135,7 @@
 			var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
 			var userId = plus.storage.getItem('$userId');
 			var oldToken = plus.storage.getItem('oldToken');
-			
+
 			mui.ajax(serverUrl+'/app/delivery/agencyFund/list',{
 				data:{
 					userId:userId,
@@ -143,7 +143,7 @@
 				},
 				dataType:'json',
 				type:'post',
-				timeout:1000,
+				timeout:10000,
 				headers:{"Authorization":oldToken},
 				success:function(data,type,xhr){
 					console.log('代收款明细 ',data);
@@ -151,12 +151,12 @@
 						clearTimeout(timeLoad),timeLoad = null;
 						if(data.code == 0){
 							$('#loadingdiv').css('height','0px');
-							if(data.content && data.content.length){ 
+							if(data.content && data.content.length){
 								document.getElementById('checkList').innerHTML = template('checkTpl',{list:data.content});
 							}else{
 								document.getElementById('infoListDiv').innerHTML = '<div style="text-align: center;padding: 50px;"><img src="../../images/order/order.png" style="width: 100px;" /><div class="ft13 disablecl">暂无数据</div></div>';
 							}
-							
+
 						}else{
 							mui.toast(data.message);
 						}
@@ -166,7 +166,7 @@
 					console.log('响应失败  !');
 				}
 			});
-			 
+
 			$('input').change(function(){
 				alert($('.end').val());
 				if($('.end').val() || $('.start').val()){

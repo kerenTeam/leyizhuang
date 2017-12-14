@@ -15,7 +15,7 @@
 			width: 80%;
 			vertical-align: top;
 		}
-		
+
 		.mui-media {
 			position: relative;
 		}
@@ -29,7 +29,7 @@
 			width: 25px;
 			left: 20px;
 		}
-		
+
 		#useCoupon {
 			position: fixed;
 			bottom: 10px;
@@ -44,7 +44,7 @@
 		<header class="mui-bar mui-bar-nav" style="padding-right: 15px;">
 			<a id="leftbtn" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<h1 class="mui-title">产品券</h1>
-			
+
 		</header>
 		<script src="../../js/statusBar.js" type="text/javascript" charset="utf-8"></script>
 		<div class="mui-content">
@@ -153,12 +153,12 @@
 											},
 											dataType: 'json',
 											type: 'post',
-											timeout: 1000,
+											timeout: 10000,
 											headers: {
 												"Authorization": oldToken,
 												'Content-Type': 'application/json'
 											},
-											success:function(data,type,xhr){ 
+											success:function(data,type,xhr){
 												plus.nativeUI.closeWaiting();
 												console.log('产品券使用',data);
 												if(data.code == 0 ){

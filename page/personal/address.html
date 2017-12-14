@@ -258,7 +258,7 @@
 									data:{userid:userId,address_id:thisAdId,state:1},
 									dataType:'json',
 									type:'post',
-									timeout:1000,
+									timeout:10000,
 									headers:{"token":oldToken},
 									success:function(data,type,xhr){
 									},
@@ -272,7 +272,7 @@
 									data:{userid:userId,address_id:thisAdId,state:0},
 									dataType:'json',
 									type:'post',
-									timeout:1000,
+									timeout:10000,
 									headers:{"token":oldToken},
 									success:function(data,type,xhr){
 									},
@@ -299,7 +299,7 @@
 										data:{'deliveryAddressId':AdIdD,'identityType':identityT,'userId':userId},
 										dataType:'json',
 										type:'post',
-										timeout:1000,
+										timeout:10000,
 										headers:{"Authorization":oldToken},
 										success:function(data,type,xhr){
 											plus.nativeUI.alert("删除成功！");

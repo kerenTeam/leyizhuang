@@ -23,16 +23,16 @@
 		<!--状态栏-->
 		<script src="../../js/statusBar.js" type="text/javascript" charset="utf-8"></script>
 		<div style="height:50px;"></div>
-		
+
 		<div id="cartData" data-id=""></div>
 		<script type="text/html" id="cartTpl">
-		 
+
 			<dl class="cart">
 				<%for(var i=0;i<list.length;i++){%>
 					<dd>
 						<a class="goodsPic" style="margin-left: auto;"><img src="<%=list[i].coverImageUri%>" onerror="javascript:this.src='../../images/img.svg';" /></a>
 						<div class="goodsInfor" style="margin-left: 0.9rem!important;">
-							<h2 class="ft16">  
+							<h2 class="ft16">
 						    		<%=list[i].goodsName%>
 						    		<%if(list[i].isGift){%>
 								<em class="mui-badge mui-badge-danger mui-pull-right" style="color: white;">赠品</em>
@@ -47,11 +47,11 @@
 									<span class="num">x<%=list[i].goodsQty%></span>
 								</div>
 							</div>
-		
+
 						</div>
 					</dd>
 				<%}%>
-				 
+
 				<div style="clear: both;"></div>
 			</dl>
 		</script>
@@ -79,7 +79,7 @@
 			},
 			dataType:'json',
 			type:'post',
-			timeout:1000,
+			timeout:10000,
 			headers:{"Authorization":oldToken,'Content-Type':'application/json'},
 			success:function(data,type,xhr){
 				console.log('获取料单商品',data);
@@ -90,19 +90,19 @@
 					dataObj.totalQty = data.content.totalQty;
 					dataObj.totalPrice = data.content.totalPrice;
 					dataObj.list = goods;
-					
+
 					document.getElementById('cartData').innerHTML = template('cartTpl',dataObj);
 					plus.nativeUI.closeWaiting();
 				}else{
 					mui.toast(data.message);
 					plus.nativeUI.closeWaiting();
-					
+
 				}
 			},
 			error:function(xhr,type,errorThrown){
 				console.log('响应失败  !');
 				plus.nativeUI.closeWaiting();
-				
+
 			}
 		});
 

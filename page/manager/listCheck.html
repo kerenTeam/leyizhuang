@@ -85,7 +85,7 @@
 											<img src="<%=list[i].pictureList[j]%>" onerror="../../images/img.svg"/>
 										<%}%>
 									<%}%>
-									
+
 								<%}%>
 							</div>
 							<p class="checkListDZ fineT fineB">收货地址：<%=list[i].deliveryCity%><%=list[i].deliveryCounty%><%=list[i].deliveryStreet%><%=list[i].residenceName%><%=list[i].detailedAddress%></p>
@@ -108,13 +108,13 @@
 									<%}%>
 								<%}else if(list[i].status == 3){%>
 										<button type="button" class="mui-btn mui-btn-danger mui-btn-outlined">已取消</button>
-									
+
 								<%}%>
-								
+
 							</div>
 						</div>
 					<%}%>
-					 
+
 				</script>
 			</div>
 		</div>
@@ -142,7 +142,7 @@
 				}else{
 					loadFun($(this).index());
 				}
-				
+
 			})
 			document.addEventListener('refresh', function(event) {
 				loadFun('');
@@ -153,7 +153,7 @@
 					data:{'userID':userId,'status':index,'identityType':identityT},
 					dataType:'json',
 					type:'post',
-					timeout:1000,
+					timeout:10000,
 					headers:{"Authorization":oldToken},
 					success:function(data,type,xhr){
 						console.log(data);
@@ -161,12 +161,12 @@
 							clearTimeout(timeLoad),timeLoad = null;
 							if(data.code == 0){
 								$('#loadingdiv').css('height','0px');
-								if(data.content && data.content.length){ 
+								if(data.content && data.content.length){
 									document.getElementById('infoListDiv').innerHTML = template('infoList',{list:data.content});
 								}else{
 									document.getElementById('infoListDiv').innerHTML = '<div style="text-align: center;padding: 50px;"><img src="../../images/order/order.png" style="width: 100px;" /><div class="ft13 disablecl">暂无数据</div></div>';
 								}
-								
+
 							}else{
 								mui.toast(data.message);
 							}
@@ -177,7 +177,7 @@
 					}
 				});
 			}
-			
+
 		})
 
 

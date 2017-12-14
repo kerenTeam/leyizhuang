@@ -12,7 +12,7 @@
 		<link rel="stylesheet" type="text/css" href="../../css/cart.css" />
 		<link rel="stylesheet" type="text/css" href="../../css/style.css" />
 		<link rel="stylesheet" type="text/css" href="../../css/configW.css" />
-		 
+
 	</head>
 	<style type="text/css">
 		#dibu{padding: 20px;text-align: center;}
@@ -26,7 +26,7 @@
 		<script src="../../js/statusBar.js"></script>
 		<!--状态栏-->
 		<div style="height:50px;"></div>
-		
+
 		<div style="background-color: white;margin: 5px 0;">
 			<div class="qtop flexr pad10">
 				<div style="flex: 1;margin-left: 10px;">
@@ -44,7 +44,7 @@
 		</div>
 		<div id="cartData" data-id=""></div>
 		<script type="text/html" id="cartTpl">
-		 
+
 			<dl class="cart">
 				<%for(var i=0;i<list.length;i++){%>
 					<dd>
@@ -63,12 +63,12 @@
 									<span class="num">x<%=list[i].qty%></span>
 								</div>
 							</div>
-		
+
 						</div>
 					</dd>
 				<%}%>
-				
-	
+
+
 				<div class="pad10 ft15">
 					共<span id='totalGoods'><%=list.length%></span>件商品 订单总金额：<span id="totalPrice"></span> <span class="mui-pull-right activecl" onclick="materialList()">查看全部</span>
 				</div>
@@ -94,7 +94,7 @@
 							<span class="address">-----</span>
 						</div>
 					</div>
-					 
+
 				</div>
 			</div>
 			<div id='cityResult' class="ui-alert pad10 afterBorder">配送时间 <span class="mui-pull-right" id="reservationDeliveryTime"></span></div>
@@ -106,11 +106,11 @@
 				<div id="notice"></div>
 			</div>
 		</div>
-		
+
 		<!--bottom nav-->
 		<aside id="dibu" style="display: none;">
-			<button class="mui-btn mui-btn-danger" onclick="delet()">取消</button> 
-		</aside> 
+			<button class="mui-btn mui-btn-danger" onclick="delet()">取消</button>
+		</aside>
 
 		<script type="text/javascript" src="../../js/jquery.min.js"></script>
 		<script src="../../js/mui.min.js"></script>
@@ -126,7 +126,7 @@
 				extrasobj:{audioNo:$('#cartData').attr('data-id')}
 			})
 		}
- 
+
 		mui.plusReady(function() {
 			var audiono = plus.webview.currentWebview().audioNo;
 			var audiostatus = plus.webview.currentWebview().audioStatus;
@@ -147,14 +147,14 @@
 				data:{'auditNo':audiono},
 				dataType:'json',
 				type:'post',
-				timeout:1000,
+				timeout:10000,
 				headers:{"Authorization":oldToken},
 				success:function(data,type,xhr){
 					console.log('料单详情',data);
 					var timeLoad = setInterval(function(){
 						clearTimeout(timeLoad),timeLoad = null;
 						if(data.code == 0){
-							if(data.content){ 
+							if(data.content){
 								$('.auditNo').html(data.content.auditNo)
 								$('.createTime').html(data.content.createTime)
 								if(data.content.goodsList && data.content.goodsList.length){
@@ -192,35 +192,35 @@
 								plus.nativeUI.closeWaiting();
 								mui.toast(data.message)
 							}
-							
+
 						}else{
 							plus.nativeUI.closeWaiting();
 							mui.toast(data.message);
 						}
 					},500)
-					
-				
+
+
 				},
 				error:function(xhr,type,errorThrown){
 					plus.nativeUI.closeWaiting();
 					console.log('响应失败  !');
 				}
 			});
-		
+
 			//工人取消
 			window.delet = function(){
 				mui.ajax(serverUrl+'/app/material/audit/modify',{
 					data:{'auditNo':audiono},
 					dataType:'json',
 					type:'post',
-					timeout:1000,
+					timeout:10000,
 					headers:{"Authorization":oldToken},
 					success:function(data,type,xhr){
 						console.log('取消反馈',data);
 						if(data.code == 0){
 						 	mui.toast('取消成功');
 						 	mui.fire(plus.webview.getWebviewById('workerlistCheck'), 'refresh');
-							
+
 							setTimeout(function() {
 								plus.webview.currentWebview().close();
 							}, 500)

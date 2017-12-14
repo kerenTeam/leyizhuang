@@ -65,7 +65,7 @@
 					</div>
 					<a class="goodsPic"><img src="<%=list[i].giftList[j].coverImageUri%>" onerror="javascript:this.src='../../img/editset.png';" /></a>
 					<div class="goodsInfor">
-						<h2 class="ft14">  
+						<h2 class="ft14">
 						    <a><%=list[i].giftList[j].skuName%></a>
 						    <%if(list[i].giftList[j].isGift){%>
 					    			<em class="mui-badge mui-badge-danger mui-pull-right" style="color: white;">赠品</em>
@@ -123,7 +123,7 @@
 			var oldToken = plus.storage.getItem('oldToken');
 			var idobj = plus.storage.getItem('materialList') || '[]';
 			var cusId = plus.webview.currentWebview().cusId;
-			 
+
 			console.log('idobj ', idobj)
 			cartload();
 
@@ -138,7 +138,7 @@
 					},
 					dataType: 'json',
 					type: 'post',
-					timeout: 1000,
+					timeout: 10000,
 					headers: {
 						"Authorization": oldToken
 					},
@@ -153,31 +153,31 @@
 								plus.nativeUI.closeWaiting();
 								mui('.mui-numbox').numbox()
 
-								
+
 								//单个 选择
 								$('dl dd .mui-checkbox').click(function() {
 									var num = 0;
 									var cur = $(this).find("input");
 									var max = $(this).parentsUntil('#cartData').find('dt').attr('data-max');
 									var numbox =  $(this).parentsUntil('dl').find('.mui-numbox');
-									if($(this).find("input").prop('checked') == true) { 
+									if($(this).find("input").prop('checked') == true) {
 										var checkedGd = $(this).parentsUntil("#cartData").find("input[type='checkbox']:checked")
 										checkedGd.each(function(){
 											num+=Number($(this).parentsUntil('dl').find('.mui-input-numbox').val());
 											if(num > max){
 												mui.toast('当前促销活动已超过最大可选商品！！！')
-												cur.prop('checked',false) 
+												cur.prop('checked',false)
 											}
 										})
 									}
 									countFuc();
 								})
-								//数量选择 
+								//数量选择
 								$('.mui-numbox input').on('change', function() {
 									var cur = $(this);
 									var num = 0;
 									var max = $(this).parentsUntil('#cartData').find('dt').attr('data-max');
-									var number = $(this).val(); //当前数量 
+									var number = $(this).val(); //当前数量
 									if($(this).parentsUntil('.cart').find('.mui-checkbox input').prop('checked') == true){
 										var checkedGd = $(this).parentsUntil("#cartData").find("input[type='checkbox']:checked")
 											checkedGd.each(function(){
@@ -220,7 +220,7 @@
 									plus.storage.setItem('orderGoodsList', JSON.stringify(idobj));
 								}
 								$('.cart').each(function(){
-									var checkGift =  $(this).find("input[type='checkbox']:checked"); 
+									var checkGift =  $(this).find("input[type='checkbox']:checked");
 									var promotionId = $(this).find('dt').attr('data-id');
 									if(checkGift.length > 0){
 										var discount='',enjoyTimes = '',presentInfo = [];
@@ -238,14 +238,14 @@
 										})
 									}
 								})
-								
+
 
 								if(identityT == 3) {
 									openview({
 										view: 'workerMaterial.html',
 										id: 'workerMaterial'
 									})
-								} else { 
+								} else {
 									if(identityT == 0 || identityT == 4 || identityT == 5) {
 										openview({
 											view: 'order.html',
@@ -280,7 +280,7 @@
 
 					}
 				});
-				//数量选择 
+				//数量选择
 				$('.mui-numbox input').on('change', function() {
 					countFuc();
 
@@ -288,13 +288,13 @@
 				//计算总价和总数量
 				function countFuc() {
 					var fen = 0; //总份数
-					var pay = 0; //总金额 
+					var pay = 0; //总金额
 					$("dd").find("input[type='checkbox']:checked").each(function() {
 						//当前数量
 						var num = parseInt($(this).parentsUntil('#cartData').find("input[type='number']").val());
 						fen += num;
 					})
-					//赋值 
+					//赋值
 					$(".totalMoney").html(fen);
 				}
 

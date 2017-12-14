@@ -51,7 +51,7 @@
 			<a id="leftbtn" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<h1 class="mui-title">拍照下单</h1>
 		</header>
-		<script src="../../js/statusBar.js" type="text/javascript" charset="utf-8"></script> 
+		<script src="../../js/statusBar.js" type="text/javascript" charset="utf-8"></script>
 		<div id="main" style="margin-top: 50px!important;">
 			<div class="notice">
 				<div class="tab-hd tab-hdtwo" id="tabLink">
@@ -80,14 +80,14 @@
 							 	<div class="bgcee padd10">
 							 		<%if(list[i].photos.length>4){%>
 								 		<%for(var j = 0 ;j<4;j++){%>
-									 		<img src="<%=list[i].photos[j]%>" class="cmimg" /> 
+									 		<img src="<%=list[i].photos[j]%>" class="cmimg" />
 									 	<%}%>
 							 		<%}else{%>
 							 			<%for(var j = 0 ;j<list[i].photos.length;j++){%>
-									 		<img src="<%=list[i].photos[j]%>" class="cmimg" /> 
+									 		<img src="<%=list[i].photos[j]%>" class="cmimg" />
 									 	<%}%>
 							 		<%}%>
-								 	
+
 								 </div>
 							 </div>
 							 <div class="padd10" style="overflow: hidden;">
@@ -134,7 +134,7 @@
 				var userId = plus.storage.getItem('$userId');
 				var oldToken = plus.storage.getItem('oldToken');
 				//tab切换
-				//初始化 
+				//初始化
 				var url = '/app/photoOrder/pending/list';
 				loadFun(url,'tab1');
 				$('#tabLink li').click(function(){
@@ -154,14 +154,14 @@
 						data:{'userId':userId,'identityType':identityT},
 						dataType:'json',
 						type:'post',
-						timeout:1000,
+						timeout:10000,
 						headers:{"Authorization":oldToken},
 						success:function(data,type,xhr){
 							console.log(data);
 							var timeLoad = setInterval(function(){
 								clearTimeout(timeLoad),timeLoad = null;
 								if(data.code == 0){
-									$('#loadingdiv').css('height','0px'); 
+									$('#loadingdiv').css('height','0px');
 									if(data.content && data.content.length){
 										if(tabT == 'tab1'){
 											document.getElementById('infoListDiv').innerHTML = template('infoList',{list:data.content});
@@ -181,7 +181,7 @@
 						}
 					});
 				}
-				
+
 				window.cancel = function(id){
 					event.stopPropagation();
 					mui.confirm('确认取消吗？', '提示', ['取消', '确定'], function(e) {
@@ -207,7 +207,7 @@
 									} else {
 										mui.toast(data.message)
 									}
-	
+
 								},
 								error: function(xhr, type, errorThrown) {
 									plus.nativeUI.closeWaiting();
@@ -216,11 +216,11 @@
 						}else{
 							plus.nativeUI.closeWaiting();
 						}
-	
+
 					})
 				}
 			})
-			
+
 		</script>
 	</body>
 

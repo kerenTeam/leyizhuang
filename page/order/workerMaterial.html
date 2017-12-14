@@ -36,16 +36,16 @@
 					<img src="../../img/check1.svg" /> 结算
 				</div>
 			</div>
-		
+
 		<div id="cartData" data-id=""></div>
 		<script type="text/html" id="cartTpl">
-		 
+
 			<dl class="cart">
 				<%for(var i=0;i<list.length;i++){%>
 					<dd>
 						<a class="goodsPic" style="margin-left: auto;"><img src="<%=list[i].coverImageUri%>" onerror="javascript:this.src='../../images/img.svg';" /></a>
 						<div class="goodsInfor" style="margin-left: 0.9rem!important;">
-							<h2>  
+							<h2>
 						    		<a><%=list[i].goodsName%></a>
 						    		<%if(list[i].hasGift){%>
 						    			<em class="mui-badge mui-badge-danger mui-pull-right" style="color: white;">包含赠品</em>
@@ -60,12 +60,12 @@
 									<span class="num">x<%=list[i].goodsQty%></span>
 								</div>
 							</div>
-		
+
 						</div>
 					</dd>
 				<%}%>
-				
-	
+
+
 				<div class="pad10 ft15">
 					共<span id='totalGoods' class="activecl"><%=totalQty%></span>件商品 订单总金额：<span class="activecl" id="totalPrice">¥<%=totalPrice%></span> <span class="mui-pull-right activecl" onclick="materialList()">查看全部</span>
 				</div>
@@ -98,7 +98,7 @@
 						<img src="../../images/center/right.svg" alt="" />
 					</div>
 				</div>
-				<%}else{%> 
+				<%}else{%>
 					<div class="qtop flexr pad10 afterBorder" onclick="address()" id="addid" data-id="<%=obj[0].id%>" data-receiver="<%=obj[0].person%>" data-receiverPhone="<%=obj[0].phone%>" data-deliveryCity="<%=obj[0].city%>" data-deliveryCounty="<%=obj[0].country%>" data-deliveryStreet="<%=obj[0].street%>" data-residenceName="<%=obj[0].villageName%>" data-detailedAddress="<%=obj[0].address%>">
 						<div style="flex: 1;">
 							<div class="maincl ft16">
@@ -113,10 +113,10 @@
 							<img src="../../images/center/right.svg" alt="" />
 						</div>
 					</div>
-				
+
 				<%}%>
 			</script>
-			
+
 			</div>
 			<div id='cityResult' data-id = '0' class="ui-alert pad10 afterBorder ft15">配送时间<span class="mui-icon mui-icon-arrowdown maincl mui-pull-right ft16"></span><span class="mui-pull-right pstime">选择</span></div>
 			<div class="mui-input-row mui-checkbox afterBorder ft15 isowndis">
@@ -128,7 +128,7 @@
 			</div>
 			<textarea name="" id="other" maxlength="100" cols="30" rows="4" placeholder="备注"></textarea>
 		</div>
-		
+
 		<!--bottom nav-->
 		<div style="height:1rem;"></div>
 		<aside class="btmNav" id="dibu">
@@ -164,7 +164,7 @@
 				}
 			})
 		}
-		
+
 		mui.plusReady(function() {
 			var userId = plus.storage.getItem('$userId');
 			var oldToken = plus.storage.getItem("oldToken");
@@ -180,7 +180,7 @@
 				},
 				dataType:'json',
 				type:'post',
-				timeout:1000,
+				timeout:10000,
 				headers:{"Authorization":oldToken,'Content-Type':'application/json'},
 				success:function(data,type,xhr){
 					console.log('获取料单商品',data);
@@ -191,19 +191,19 @@
 						dataObj.totalQty = data.content.totalQty;
 						dataObj.totalPrice = data.content.totalPrice;
 						dataObj.list = goods;
-						
+
 						document.getElementById('cartData').innerHTML = template('cartTpl',dataObj);
 						plus.nativeUI.closeWaiting();
 					}else{
 						mui.toast(data.message);
 						plus.nativeUI.closeWaiting();
-						
+
 					}
 				},
 				error:function(xhr,type,errorThrown){
 					console.log('响应失败  !');
 					plus.nativeUI.closeWaiting();
-					
+
 				}
 			});
 			//刷新地址
@@ -221,12 +221,12 @@
 					},
 					dataType:'json',
 					type:'post',
-					timeout:1000,
+					timeout:10000,
 					headers:{"Authorization":oldToken},
 					success:function(data,type,xhr){
 						console.log('默认地址',data);
 						var addrObj = {};
-						if(data.code == 0 && data.content){ 
+						if(data.code == 0 && data.content){
 							if(plus.storage.getItem("$addressStorage") != null) {
 								addrObj.obj = JSON.parse(plus.storage.getItem("$addressStorage"));
 							}else{
@@ -244,19 +244,19 @@
 							}
 							document.getElementById("add_info").innerHTML = template("addrTpl", addrObj);
 							plus.storage.removeItem("$addressStorage")
-							
+
 						}else{
 								console.log('缓存地址',data);
 								addrObj.obj = JSON.parse(plus.storage.getItem("$addressStorage")) || [];
 								document.getElementById("add_info").innerHTML = template("addrTpl", addrObj);
-							 
+
 						}
 					},
 					error:function(xhr,type,errorThrown){
 						console.log('响应失败  !');
 					}
 				});
-				
+
 //				plus.storage.removeItem("$addressStorage")
 			}
 			//获取城市
@@ -270,7 +270,7 @@
 					},
 					dataType:'json',
 					type:'post',
-					timeout:1000,
+					timeout:10000,
 					headers:{"Authorization":oldToken},
 					success:function(data,type,xhr){
 						console.log('获取时间段',data);
@@ -304,7 +304,7 @@
 								cityPicker.setData(cityData);
 								var cityResult = document.getElementById('cityResult');
 								cityResult.addEventListener('tap', function(event) {
-									cityPicker.show(function(items) { 
+									cityPicker.show(function(items) {
 										$('#cityResult').attr('data-id', '1');
 										if(!items[1].text) {
 											alert('当天无可选时间段')
@@ -319,17 +319,17 @@
 						}else{
 							mui.toast(data.message);
 							plus.nativeUI.closeWaiting();
-							
+
 						}
 					},
 					error:function(xhr,type,errorThrown){
 						console.log('响应失败  !');
 						plus.nativeUI.closeWaiting();
-						
+
 					}
 				});
 			}
-		
+
 			//工人提交物料审核单
 			$('#dibu').click(function(){
 				var receiver = $('#addid').attr('data-receiver')
@@ -342,7 +342,7 @@
 				var receiver = $('#addid').attr('data-receiver')
 				var pstime = $('#cityResult .pstime').html();//配送时间
 				var isOwner= $('#isOwner').attr('checked');
-				
+
 				console.log('idobj ',idobj)
 				if(isOwner == 'checked'){
 					isOwnerReceive = 1
@@ -361,7 +361,7 @@
 							receiverPhone:receiverPhone,
 							deliveryCity:deliveryCity,
 							deliveryCounty:deliveryCounty,
-							deliveryStreet:deliveryStreet, 
+							deliveryStreet:deliveryStreet,
 							residenceName:residenceName,
 							detailedAddress:detad,
 							reservationDeliveryTime:pstime,
@@ -377,7 +377,7 @@
 							var addrObj = {};
 							if(data.code == 0){
 								mui.toast('提交成功');
-								
+
 								mui.fire(plus.webview.getWebviewById('cart.html'), 'refresh');
 								openview({
 									view:'../worker/workerlistCheck.html',
@@ -395,9 +395,9 @@
 						}
 					});
 				}
-				
+
 			})
-			
+
 		})
 	</script>
 </html>

@@ -24,17 +24,17 @@
 			margin-top: -18px;
 			right: 0;
 		}
-		
+
 		.mui-checkbox input[type=checkbox]:checked:before,
 		.mui-radio input[type=radio]:checked:before {
 			color: rgb(245, 60, 66);
 		}
-		
+
 		.mui-card {
 			border: 0;
 			margin: 0!important;
 		}
-		
+
 		.checkQuan {
 			padding: 2px 15px;
 			border: 1px solid #f53c42;
@@ -43,34 +43,34 @@
 			margin: 5px 0;
 			position: relative;
 		}
-		
+
 		.checkQuan .mui-col-sm-3 {
 			width: 28%;
 			padding: 12px 5px;
 			border-right: 1px dotted #f53c42;
 		}
-		
+
 		.checkQuan .mui-col-sm-9 {
 			width: 72%;
 			padding: 12px 15px;
 		}
-		
+
 		.cred {
 			color: #f53c42;
 		}
-		
+
 		.dateLimit {
 			font-size: 12px;
 		}
-		 
+
 		.mui-radio input[type=radio]:before {
 			font-size: 20px;
 		}
-		
+
 		.mui-radio input[type=radio] {
 			top: 8px;
 		}
-		 
+
 		.quanc {
 			display: none;
 			width: 0.3rem;
@@ -101,7 +101,7 @@
 			</div>
 			<div id="cartData" data-id=""></div>
 			<script type="text/html" id="cartTpl">
-	
+
 				<dl class="cart">
 					<div class="afterBorder" style="max-height: 300px;overflow-y: scroll;">
 						<%for(var i=0;i<list.length;i++){%>
@@ -123,11 +123,11 @@
 											<span class="num">x<%=list[i].goodsQty%></span>
 										</div>
 									</div>
-			
+
 								</div>
 							</dd>
 							<%}%>
-					</div> 
+					</div>
 					<div class="pad10 ft15">
 						共<span id='totalGoods' class="activecl"><%=totalQty%></span>件商品 订单总金额：<span class="activecl" id="totalPrice">¥<%=totalPrice%></span> <span class="mui-pull-right activecl" onclick="materialList()">查看全部</span>
 					</div>
@@ -152,7 +152,7 @@
 					<select style="float: right;margin-top: -10px;width: 40%;text-align: right!important;">
 					  <option value="">选择</option>
 					</select>
-					 
+
 				</div>
 				<div id="add_info"></div>
 				<script type="text/html" id="addrTpl">
@@ -186,10 +186,10 @@
 							<img src="../../images/center/right.svg" alt="" />
 						</div>
 					</div>
-	
+
 					<%}%>
 				</script>
-	
+
 				<div id='cityResult' class="ui-alert pad10 afterBorder">配送时间 <span class="mui-pull-right">选择</span></div>
 				<div class="mui-input-row mui-checkbox mui-left afterBorder">
 					<label>是否业主收货</label>
@@ -198,7 +198,7 @@
 				<div class="pad10 activecl ft13">
 					温馨提示：若收货人为主家，系统将在出货打印单中自动隐藏折扣信息
 				</div>
-				
+
 			</div>
 			<div style="background-color: white;margin-top: 5px;">
 				<div class="pad_5 ft16 afterBorder">订单金额:<span class='mui-pull-right pad_r10' id="totalPriceb">¥--</span> </div>
@@ -206,14 +206,14 @@
 				<div class="pad_5 ft16 afterBorder">订单折扣:<span class='mui-pull-right pad_r10' id="orderDiscount">¥--</span></div>
 				<div class="pad_5 ft16 afterBorder">运费:<span class='mui-pull-right pad_r10' id="freight">¥--</span></div>
 				<div class="pad_5 ft16">上楼费:<span class='mui-pull-right pad_r10' id="upstar">依现实情况收取</span></div>
-	
+
 			</div>
 			<div id="elseDiscount" style="margin-top: 5px;"></div>
 			<script type="text/html" id="elseDiscountTpl">
 				<dl class="list" style="border: none;">
-	
+
 					<div id="quanData">
-			
+
 						<div class="mui-card afterBorder" style="border: none!important;box-shadow: none;">
 							<ul class="mui-table-view">
 								<%if(cashCouponList && cashCouponList.length){%>
@@ -236,13 +236,13 @@
 													<div class="mui-checkbox"><img src="../../images/xuanze.png" class="quanc" data-id="<%=j+1%>" alt="" /></div>
 												</div>
 											<%}%>
-											
+
 										</div>
 									</li>
 								<%}else{%>
 									<div class="pad10 ft14 afterBorder">优惠券<span class='mui-pull-right pad_r10'>无</span></div>
 								<%}%>
-								
+
 							</ul>
 						</div>
 						<%if(productCouponList && productCouponList.length){%>
@@ -280,7 +280,7 @@
 					onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'0')}else{this.value=this.value.replace(/\D/g,'')}" class='mui-pull-right preDeposit'/></div>
 					<div class="pad10 ft14 afterBorder guide" style="display: none;">代收金额<span class='activecl' id="cash">¥--</span><input placeholder="请输入大于0的整数"  onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}"
 					onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'0')}else{this.value=this.value.replace(/\D/g,'')}" class='mui-pull-right preDeposit'/></div>
-					
+
 				</dl>
 			</script>
 			<textarea name="" rows="3" cols="" placeholder="备注"></textarea>
@@ -291,7 +291,7 @@
 					<span style="color: #333333;">应付款：</span>¥<span class="totalMoney">0</span>元
 				</a>
 				<a class="goOrder dp" style="background:#f53c42;color:white;text-shadow:none;">去支付</a>
-	
+
 			</aside>
  		</div>
 
@@ -347,7 +347,7 @@
 				},
 				dataType: 'json',
 				type: 'post',
-				timeout: 1000,
+				timeout: 10000,
 				headers: {
 					"Authorization": oldToken,
 					'Content-Type': 'application/json'
@@ -417,14 +417,14 @@
 						}
 						//券
 						$(".checkQuan").click(function() {
-							var cashCouponsList = [];	
-							var qid = $(this).attr("data-id"); 
+							var cashCouponsList = [];
+							var qid = $(this).attr("data-id");
 							alert(qid)
 							if($(this).find(".quanc").css("display") == "block") {
 								$(this).find(".quanc").css("display", "none");
 							} else {
 								$(this).find(".quanc").css("display", "block");
-								 
+
 							};
 							var totalOrderAmount = $('#totalPriceb').text().replace('¥','');
 							var orderDiscount = $("#orderDiscount").text().replace('¥','');
@@ -435,7 +435,7 @@
 									cashCouponsList.push({"id":coupon_id,"qty":1})
 								}
 							})
-							
+
 							//选券 返回金额
 							mui.ajax(serverUrl + '/app/order/reEnter/ccp', {
 								data: {
@@ -448,7 +448,7 @@
 								},
 								dataType: 'json',
 								type: 'post',
-								timeout: 1000,
+								timeout: 10000,
 								headers: {
 									"Authorization": oldToken,
 									'Content-Type': 'application/json'
@@ -504,7 +504,7 @@
 					},
 					dataType: 'json',
 					type: 'post',
-					timeout: 1000,
+					timeout: 10000,
 					headers: {
 						"Authorization": oldToken
 					},
@@ -557,7 +557,7 @@
 						},
 						dataType: 'json',
 						type: 'post',
-						timeout: 1000,
+						timeout: 10000,
 						headers: {
 							"Authorization": oldToken,
 							'Content-Type': 'application/json'
@@ -568,7 +568,7 @@
 							if(data.code == 0 && data.content) {
 								$('#chooseStore').show();
 								$('#add_info').hide();
-								var storeStr = '<option value="">选择</option>'; 
+								var storeStr = '<option value="">选择</option>';
 								for (var i = 0;i<data.content.length;i++) {
 									storeStr += '<option value="'+data.content[i].storeId+'">'+data.content[i].storeName+'</option>'
 								}
@@ -599,7 +599,7 @@
 					},
 					dataType: 'json',
 					type: 'post',
-					timeout: 1000,
+					timeout: 10000,
 					headers: {
 						"Authorization": oldToken
 					},

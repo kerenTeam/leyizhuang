@@ -22,12 +22,12 @@
 		</header>
 		<script src="../../js/statusBar.js"></script>
 		<!--状态栏-->
-	 
+
 		<div class="mui-content" style="margin-top: 6px;">
 			<div id="cartData"></div>
 		</div>
 		<script type="text/html" id="cartTpl">
-		 
+
 			<dl class="cart">
 				<%for(var i=0;i<list.length;i++){%>
 					<dd onclick="goodsInfo('<%=list[i].gid%>')">
@@ -46,11 +46,11 @@
 									<span class="num">x<%=list[i].qty%></span>
 								</div>
 							</div>
-		
+
 						</div>
 					</dd>
 				<%}%>
-				 
+
 				<div style="clear: both;"></div>
 			</dl>
 		</script>
@@ -65,10 +65,10 @@
 		function goodsInfo(id){
 			openview({
 				view:'../goodsInfo.html',
-				id: 'goodsInfo', 
+				id: 'goodsInfo',
 				extrasobj:{goodId:id}
-			}) 
-			
+			})
+
 		}
 		mui.plusReady(function() {
 			var audiono = plus.webview.currentWebview().audioNo;
@@ -79,14 +79,14 @@
 				data:{'auditNo':audiono},
 				dataType:'json',
 				type:'post',
-				timeout:1000,
+				timeout:10000,
 				headers:{"Authorization":oldToken},
 				success:function(data,type,xhr){
 					console.log('料单详情',data);
 					var timeLoad = setInterval(function(){
 						clearTimeout(timeLoad),timeLoad = null;
 						if(data.code == 0){
-							if(data.content){  
+							if(data.content){
 								if(data.content.goodsList && data.content.goodsList.length){
 									document.getElementById('cartData').innerHTML = template('cartTpl',{list:data.content.goodsList});
 									plus.nativeUI.closeWaiting();

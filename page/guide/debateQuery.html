@@ -15,7 +15,7 @@
 			width: 80%;
 			vertical-align: top;
 		}
-		
+
 		.mui-media {
 			position: relative;
 		}
@@ -29,7 +29,7 @@
 			width: 25px;
 			left: 20px;
 		}
-		
+
 		#useCoupon {
 			position: fixed;
 			bottom: 10px;
@@ -45,7 +45,7 @@
 			    -webkit-transform: translateY(-50%);
 			    font-weight: bold;
 		}
-		
+
 	</style>
 
 	<body>
@@ -74,7 +74,7 @@
 								</div>
 							</a>
 							<span class="mui-pull-right mui-icon mui-icon-arrowright activecl righticon"></span>
-							
+
 							<img data-id="<%=list[i].orderNumber%>" data-left="<%=list[i].leftNumber%>" class="check" src="../../images/center/uncheck.svg" alt="" />
 						</li>
 					<%}%>
@@ -168,12 +168,12 @@
 //											},
 //											dataType: 'json',
 //											type: 'post',
-//											timeout: 1000,
+//											timeout: 10000,
 //											headers: {
 //												"Authorization": oldToken,
 //												'Content-Type': 'application/json'
 //											},
-//											success:function(data,type,xhr){ 
+//											success:function(data,type,xhr){
 //												plus.nativeUI.closeWaiting();
 //												console.log('欠款查询使用',data);
 //												if(data.code == 0 ){
