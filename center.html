@@ -180,7 +180,7 @@
 						<img src="images/center/cmt.png"/>
 						待评价
 					</div>
-					<div class="">
+					<div class="" id="tuihuo0" onclick="openRTList()">
 						<img src="images/center/backT.png"/>
 						退货
 					</div>
@@ -213,7 +213,7 @@
 						</div>
 						<div class="">
 							<div id="userAct">
-								
+
 							</div>
 							<div onclick="wallet()">
 								账户余额
@@ -221,7 +221,7 @@
 						</div>
 						<div class="">
 							<div id="userlb">
-								
+
 							</div>
 							<div onclick="lebi()">
 								我的乐币
@@ -408,6 +408,13 @@
 		<script src="js/artTemplate-native.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/default.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
+			//退货
+			function openRTList(){
+				openview({
+					view:'page/personal/myOrderRTList.html',
+					id: 'myOrderRTList',
+				})
+			}
 			//调色版
 			function openPalette(){
 				openview({
@@ -705,7 +712,7 @@
 												$('#psNumber').html(data.content.psNumber)
 											}else{
 												$('#psNumber').html('0')
-												
+
 											}
 										}
 									}

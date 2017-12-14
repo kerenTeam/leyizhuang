@@ -12,6 +12,8 @@
 		<link rel="stylesheet" type="text/css" href="../../css/mui.min.css"/>
 		<link rel="stylesheet" href="../../css/resetY.css">
 		<link rel="stylesheet" href="../../css/youxd.css">
+		<link href="../../css/mui.picker.minY.css" rel="stylesheet" />
+		<link href="../../css/mui.poppicker.css" rel="stylesheet" />
 		<style type="text/css">
 			.beizhu{margin-top: 20px;}
 			.beizhu h5{padding-left: 15px;font-size: 16px;color: #555;}
@@ -24,6 +26,9 @@
 			#fangshi{padding-top: 8px;padding-left: 15px;}
 			#fangshi span{line-height: 20px;display: block;}
 			.mui-checkbox, .mui-radio { display: inline-block;}
+			.fangshiMore2{display: none;}
+			#cityResult{padding: 0 !important;}
+			p{color: #555;}
 		</style>
 	</head>
 
@@ -34,42 +39,28 @@
 		</header>
 		<script src="../../js/statusBar.js"></script>
 		<div id="main" style="padding-top: 48px !important;">
-			<div class="proWrapAll">
-				<div class="proWrap fineB">
-					<div class="proLeft proLeftTH">
-						<img src="http://img3.leyizhuang.com.cn/app/images/goods/2493/20170303120036450.jpg">
-					</div>
-					<div class="proRight proRightTH">
-						<h4>金牛白色PPR45度弯头20金牛白色PPR45度弯头20</h4>
-						<p> 订单数量：3 可退数量：1</p>
-						<div>
-							<span class="span1 span1TH">¥10</span>
-							<div class="mui-numbox span2" data-numbox-min='1' data-numbox-max='9'>
-								<button class="mui-btn mui-btn-numbox-minus" type="button">-</button>
-								<input id="test" class="mui-input-numbox" type="number" value="5" />
-								<button class="mui-btn mui-btn-numbox-plus" type="button">+</button>
+			<div class="proWrapAll" id="goodsD"></div>
+			<script type="text/html" id="goodsS">
+				<% for(var i=0;i<list.length;i++){%>
+					<div class="proWrap fineB">
+						<div class="proLeft proLeftTH">
+							<img src="http://img3.leyizhuang.com.cn/app/images/goods/2493/20170303120036450.jpg">
+						</div>
+						<div class="proRight proRightTH">
+							<h4><%= list[i].skuName%></h4>
+							<p> 订单数量：<%= list[i].returnPriority%> 可退数量：<%= list[i].returnableQuantity%></p>
+							<div>
+								<span class="span1 span1TH">¥<%= list[i].retailPrice%></span>
+								<div class="mui-numbox span2" data-numbox-min='0' data-numbox-max='<%= list[i].returnableQuantity%>'>
+									<button class="mui-btn mui-btn-numbox-minus" type="button">-</button>
+									<input class="mui-input-numbox goodNum" type="number" value="0" />
+									<button class="mui-btn mui-btn-numbox-plus" type="button">+</button>
+								</div>
 							</div>
 						</div>
 					</div>
-				</div>
-				<div class="proWrap fineB">
-					<div class="proLeft proLeftTH">
-						<img src="http://img3.leyizhuang.com.cn/app/images/goods/2493/20170303120036450.jpg">
-					</div>
-					<div class="proRight proRightTH">
-						<h4>金牛白色PPR45度弯头20金牛白色PPR45度弯头20</h4>
-						<p> 订单数量：3 可退数量：1</p>
-						<div>
-							<span class="span1 span1TH">¥10</span>
-							<div class="mui-numbox span2" data-numbox-min='1' data-numbox-max='9'>
-								<button class="mui-btn mui-btn-numbox-minus" type="button">-</button>
-								<input id="test" class="mui-input-numbox" type="number" value="5" />
-								<button class="mui-btn mui-btn-numbox-plus" type="button">+</button>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
+				<% }%>
+			</script>
 			<div id="">
 				<h3 class="thZhengce">退货政策</h3>
 				<div class="beizhu">
@@ -81,32 +72,265 @@
 			    			配送方式：
 			    		</span>
 					<div class="mui-input-row mui-radio mui-left">
-						<label>送货上门</label>
-						<input name="radio1" checked type="radio">
+						<label>送货至门店</label>
+						<input name="radio1" dataType='RETURN_STORE' value="送货至门店" class="typeRadio" checked type="radio">
 					</div>
 					<div class="mui-input-row mui-radio mui-left">
 						<label>上门取货</label>
-						<input name="radio1" checked type="radio">
+						<input name="radio1" dataType='HOUSE_PICK' value="上门取货" class="typeRadio" type="radio">
 					</div>
 					<div class="fangshiMore">
-						<p>请与上班时间送货到建设路</p>
-						<p>地址：建设路 567 号</p>
+						<p id="mendian0" style="padding-bottom: 6px;">请与上班时间送货到---</p>
+						<p id="mendianA0">地址：----</p>
+					</div>
+					<div class="fangshiMore fangshiMore2">
+						<p style="padding-bottom: 6px;">预约取货时间</p>
+						<div id='cityResult' class="ui-alert pad10 ft15">取货时间:<span class="mui-icon mui-icon-arrowdown maincl mui-pull-right ft16"></span><span class="mui-pull-right pstime">选择</span></div>
 					</div>
 			    </div>
 			    <div style="text-align: center;">
-			    		<button type="button" class="mui-btn  mui-btn-primary baocun">保存</button>
+			    		<button type="button" id="submitBtn" class="mui-btn  mui-btn-primary baocun">提交</button>
 			    </div>
 			</div>
-
 		</div>
-
-
 
 		<script src="../../js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/mui.picker.min.js"></script>
+		<script src="../../js/mui.poppicker.js"></script>
 		<script src="../../js/default.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../../js/artTemplate-native.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../../js/youxd.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			mui.plusReady(function(){
+				//获取缓存
+				var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
+				var userId = plus.storage.getItem('$userId');
+				var oldToken = plus.storage.getItem('oldToken');
+				var orderNumber = plus.webview.currentWebview().orderNo;
+				var moreInfo = null;//获取用户退货方式和取货地址
+
+				/*退货方式tab*/
+				$('.typeRadio').change(function(){
+					if ($(".typeRadio[type='radio']:checked").val() == '送货至门店') {
+						$('.fangshiMore').eq(0).css('display','block');
+						$('.fangshiMore').eq(1).css('display','none');
+					}else{
+						$('.fangshiMore').eq(0).css('display','none');
+						$('.fangshiMore').eq(1).css('display','block');
+					}
+				})
+				var cityId = plus.storage.getItem('userCity');//获取城市
+				mui.ajax(serverUrl + '/app/returnOrder/delivery/address',{//退货地址
+					data:{'userId':userId,'identityType':identityT,'orderNumber':orderNumber},
+					dataType:'json',
+					type:'post',
+					timeout:10000,
+					headers:{"Authorization":oldToken},
+					success:function(data,type,xhr){
+						console.log('退货地址',data);
+						if(data.code == 0){
+							moreInfo = data.content;
+							$('#mendian0').html('请与上班时间送货到'+data.content.bookingStoreName);
+							$('#mendianA0').html('地址：'+data.content.bookingStoreAddress);
+						}else{
+							mui.toast(data.message);
+						}
+					},
+					error:function(xhr,type,errorThrown){
+						console.error('退货地址，响应失败  !');
+					}
+				});
+				timeRanges();//获取时间段
+				function timeRanges() {
+					mui.ajax(serverUrl + '/app/city/get/deliveryTime', {
+						data: { cityId: cityId },
+						dataType: 'json',
+						type: 'post',
+						timeout: 10000,
+						headers: { "Authorization": oldToken },
+						success: function(data, type, xhr) {
+							console.log('获取时间段', data);
+							var dataObj = {};
+							if(data.code == 0) {
+								if(data.content && data.content.length) {
+									var cityData = [];
+									var cflag = 0;
+									mui.each(data.content, function(index, item) {
+										var eachday = {};
+										eachday.children = [];
+										eachday.text = item.day;
+										mui.each(item.deliveryTime, function(index2, item2) {
+											if(!cflag) {
+												if(item2) {
+													cflag = 1;
+													$('#cityResult .pstime').html(item.day + " " + item2)
+												}
+											}
+											eachday.children.push({
+												'text': item2
+											})
+										})
+										cityData.push(eachday)
+									})
+									console.log('cityData ', cityData);
+									var cityPicker = new mui.PopPicker({
+										layer: 2
+									});
+									cityPicker.setData(cityData);
+									var cityResult = document.getElementById('cityResult');
+									cityResult.addEventListener('tap', function(event) {
+										cityPicker.show(function(items) {
+											$('#cityResult').attr('data-id', '1');
+											if(!items[1].text) {
+												alert('当天无可选时间段')
+											} else {
+												$('#cityResult .pstime').html(items[0].text + " " + items[1].text)
+											}
+											//返回 false 可以阻止选择框的关闭
+											//return false;
+										});
+									}, false);
+									//-----------------------------------------
+								}
+								plus.nativeUI.closeWaiting();
+							} else {
+								mui.toast(data.message);
+								plus.nativeUI.closeWaiting();
+
+							}
+						},
+						error: function(xhr, type, errorThrown) {
+							console.log('获取时间段，响应失败  !');
+							plus.nativeUI.closeWaiting();
+
+						}
+					});
+				}
+
+				/*可退商品*/
+				mui.ajax(serverUrl + '/app/returnOrder/goods/returnable',{
+					data:{'userId':userId,'identityType':identityT,'orderNumber':orderNumber},
+					dataType:'json',
+					type:'post',
+					timeout:10000,
+					headers:{"Authorization":oldToken},
+					success:function(data,type,xhr){
+						console.log('可退商品列表',data);
+						if(data.code == 0){
+							document.getElementById('goodsD').innerHTML = template('goodsS',{list:data.content});
+							mui(".mui-numbox").numbox();
+
+						}else{
+							mui.toast(data.message);
+						}
+					},
+					error:function(xhr,type,errorThrown){
+						console.error('可退商品列表，响应失败  !');
+					}
+				});
+
+				/*发起退货*/
+				document.getElementById('submitBtn').onclick = function(){
+					plus.nativeUI.showWaiting();
+					var goodArray = [];//商品数据
+					$('.goodNum').each(function(index,ele){
+						if($(ele).val() != 0){
+							goodArray.push({
+								'id':'11',
+								'num':'22',
+								'goodsLineType':'33'
+							})
+						}
+					})
+					var reasonInfo = $('#BZCon').val();//备注
+					var cusId = null;//顾客id
+					var backType = $(".typeRadio[type='radio']:checked").attr('dataType');//退货方式
+					var deliveryTime = $('.pstime').html();//退货时间
+					var returnStoreCode = null,returnStoreName = null,returnStoreAddress = null,rejecter = null,rejecterPhone = null,
+					    returnFullAddress = null,deliveryCity = null,deliveryCounty = null,deliveryStreet = null,residenceName = null,
+						detailedAddress = null;
+					if(moreInfo){
+						var returnDeliveryInfo = {};
+						returnDeliveryInfo.returnStoreCode = moreInfo.bookingStoreCode;
+						returnDeliveryInfo.returnStoreName = moreInfo.bookingStoreName;
+						returnDeliveryInfo.returnStoreAddress = moreInfo.bookingStoreAddress;
+						returnDeliveryInfo.rejecter = moreInfo.receiver;
+						returnDeliveryInfo.rejecterPhone = moreInfo.receiverPhone;
+						returnDeliveryInfo.returnFullAddress = moreInfo.shippingAddress;
+						returnDeliveryInfo.deliveryCity = moreInfo.deliveryCity;
+						returnDeliveryInfo.deliveryCounty = moreInfo.deliveryCounty;
+						returnDeliveryInfo.deliveryStreet = moreInfo.deliveryStreet;
+						returnDeliveryInfo.residenceName = moreInfo.residenceName;
+						returnDeliveryInfo.detailedAddress = moreInfo.detailedAddress;
+
+						returnDeliveryInfo.deliveryType = backType;
+						returnDeliveryInfo.deliveryTime = deliveryTime;
+					}
+
+					if(!goodArray.length){
+						plus.nativeUI.closeWaiting();
+						alert('请选择商品');
+					}else{
+						if(backType == 'HOUSE_PICK'){
+							if(!deliveryTime){
+								plus.nativeUI.closeWaiting();
+								mui.toast('请选择取货时间，如不能选择时间请稍后再是试！');
+							}else if(!moreInfo){
+								plus.nativeUI.closeWaiting();
+								mui.toast('获取信息错误，请稍后再试！');
+							}else{
+								subFun();
+							}
+						}else{
+							if(!moreInfo){
+								plus.nativeUI.closeWaiting();
+								mui.toast('获取信息错误，请稍后再试！');
+							}else{
+								subFun();
+							}
+
+						}
+					}
+					function subFun(){
+						var dataObj = {
+						  	"userId":userId,
+						  	"identityType":identityT,
+						  	"cusId":cusId,
+						  	"orderNo":orderNumber,
+						  	"returnDeliveryInfo":returnDeliveryInfo,
+						  	"remarksInfo":reasonInfo,
+						  	"reasonInfo":reasonInfo,
+						  	"returnGoodsInfo":goodArray
+						}
+						console.error(dataObj);
+						mui.ajax(serverUrl + '/app/returnOrder/create',{
+							data:dataObj,
+							dataType:'json',
+							type:'post',
+							timeout:10000,
+							headers:{"Authorization":oldToken,'Content-Type':'application/json'},
+							success:function(data,type,xhr){
+								console.log('创建退货',data);
+								if(data.code == 0){
+									alert(data.message || '退货成功');
+								}else{
+									mui.toast(data.message);
+								}
+								plus.nativeUI.closeWaiting();
+							},
+							error:function(xhr,type,errorThrown){
+								console.error('创建退货，响应失败  !');
+								mui.toast('当前网络不好请重试');
+								plus.nativeUI.closeWaiting();
+							}
+						});
+					}
+				}
+
+
+			});
+		</script>
 
 	</body>
 

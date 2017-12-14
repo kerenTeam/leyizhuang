@@ -21,6 +21,7 @@ body{color: #555;
 }
 .mui-bar-nav.mui-bar .mui-icon{margin-left: 0;padding-left: 0;
 }
+.mui-btn-primary:enabled:active{background-color: #efa4a1;}
 
 
 												/*--------页面样式----------*/
