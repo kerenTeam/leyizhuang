@@ -1547,7 +1547,9 @@
 					"page/dispatching/deliveryInfo.html",
 					"page/personal/shezhi.html",
 					"page/personal/message.html",
-					"page/dispatching/agencyFund.html"
+					"page/dispatching/agencyFund.html",
+					"page/dispatching/addressMap.html",
+					"page/personal/palette.html"
 				],
 				"priority": 0
 			},

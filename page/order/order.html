@@ -159,7 +159,7 @@
 					<div style="max-height: 300px;overflow-y: scroll;">
 						<%for(var i=0;i<list.length;i++){%>
 						<dd class="afterBorder goodsbgc">
-							<a class="goodsPic" style="margin-left: auto;"><img src="<%=list[i].coverImageUri%>" onerror="javascript:this.src='../../images/img.svg';" /></a>
+							<a class="goodsPic" style="margin-left: auto;"><img src="<%=list[i].coverImageUri%>" onerror="javascript:this.src='../../img/editset.png';" /></a>
 							<div class="goodsInfor" style="margin-left: 0.9rem!important;">
 								<span class="ft15 goodname"><%=list[i].goodsName%></span>
 								<%if(list[i].isGift){%>
@@ -422,9 +422,13 @@
 			var oldToken = plus.storage.getItem("oldToken");
 			var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
 			var idobj = plus.storage.getItem('orderGoodsList');
+			var onlyGoods = plus.storage.getItem('removeCouponGoods');
+			var productCouponInfo = plus.webview.currentWebview().productCouponInfo;//产品券商品
+			var promotionInfo = plus.webview.currentWebview().promotionInfo;//促销赠品
 			var customerId = plus.webview.currentWebview().customerId || '';
 			var pays = {};
 			console.log('idobj ', idobj)
+			console.log('onlyGoods ', onlyGoods)
 			window.maxC = function(obj) {
 				var cur = $(obj);
 				var maxCh = cur.prev().html().replace('¥', '');
@@ -465,7 +469,7 @@
 				},
 				dataType: 'json',
 				type: 'post',
-				timeout: 1000,
+				timeout: 10000,
 				headers: {
 					"Authorization": oldToken,
 					'Content-Type': 'application/json'
@@ -589,7 +593,7 @@
 								},
 								dataType: 'json',
 								type: 'post',
-								timeout: 1000,
+								timeout: 10000,
 								headers: {
 									"Authorization": oldToken,
 									'Content-Type': 'application/json'
@@ -597,13 +601,7 @@
 								success: function(data, type, xhr) {
 									console.log('选取优惠券返回', data);
 									if(data.code == 0 && data.content) {
-										//										$('#totalOrderAmount').html('¥'+data.content.totalOrderAmount);
-										if(data.content.couponDiscount) {
-											$("#orderDiscount").html('¥0');
-										} else {
-											$("#orderDiscount").html('¥' + $('#firstOrderDiscount').val());
-										}
-
+										 
 										$('#couponDiscount').val(data.content.couponDiscount);
 										if(data.content.lebi) {
 											$('#itMinus span').html('¥' + data.content.lebi.rebate)
@@ -682,7 +680,7 @@
 					},
 					dataType: 'json',
 					type: 'post',
-					timeout: 1000,
+					timeout: 10000,
 					headers: {
 						"Authorization": oldToken
 					},
@@ -801,7 +799,8 @@
 									});
 								})
 							} else {
-								mui.toast(data.message);
+								var message = data.message || '包含不可选自提商品'
+								mui.toast(message);
 								$("input[name='peis']").eq(0).attr('checked', false)
 								$("input[name='peis']").eq(1).prop('checked', true)
 							}
@@ -860,7 +859,7 @@
 					},
 					dataType: 'json',
 					type: 'post',
-					timeout: 1000,
+					timeout: 10000,
 					headers: {
 						"Authorization": oldToken
 					},
@@ -967,9 +966,9 @@
 						//						alert(receiver+' '+receiverPhone+' '+deliveryCity+' '+deliveryCounty+' '+deliveryStreet+' '+residenceName+' '+detailedAddress)
 					}
 				}
-				var goodsInfo = idobj; //商品
-				var promotionInfo = []; //促销赠品
-				var productCouponInfo = []; //产品券
+				var goodsInfo = onlyGoods; //商品 （普通商品 料单商品）
+//				var promotionInfo = []; //促销赠品
+//				var productCouponInfo = []; //产品券
 				var cashCouponIds = []; //优惠券 
 				if(identityT == 6) {
 					var cusPreDeposit = preDepositb;
@@ -1087,7 +1086,7 @@
 								document.getElementById('alipay').setAttribute('onclick', 'payfun("alipay","' + payableAmount + '","' + orderNumber + '")');
 							}
 							if(channel.id == 'wxpay') {
-								document.getElementById('wxpay').setAttribute('onclick', 'payfun("alipay","' + payableAmount + '","' + orderNumber + '")');
+								document.getElementById('wxpay').setAttribute('onclick', 'payfun("wxpay","' + payableAmount + '","' + orderNumber + '")');
 							}
 							checkServices(channel);
 						}
@@ -1127,11 +1126,11 @@
 					function gopay(id, payableAmount, orderNumber) {
 						if(id == 'wxpay') {
 							//微信
-							mui.ajax(serverUrl + '/app/pay/wechat/recharge', {
+							mui.ajax(serverUrl + '/app/wechatpay/order/pay', {
 								data: {
 									userId: userId,
 									identityType: identityT.toString(),
-									payableAmount: payableAmount,
+									amountPayable: payableAmount,
 									orderNumber: orderNumber,
 								},
 								type: 'post', //HTTP请求类型
@@ -1156,8 +1155,19 @@
 										plus.payment.request(pays[id], varpay, function(result) {
 											console.log("----- 支付成功 -----");
 											var result = JSON.stringify(result);
-											mui.fire(plus.webview.getWebviewById('wallet'), 'refreash')
-											mui.back();
+											mui.fire(plus.webview.getWebviewById('cart.html'), 'refresh');
+											openview({
+												view: '../personal/myOrderList.html',
+												id: 'myOrderList'
+											})
+											setTimeout(function() {
+												if(plus.webview.getWebviewById("order")) {
+													plus.webview.getWebviewById("order").close();
+												}
+												if(plus.webview.getWebviewById("chooseGift")) {
+													plus.webview.getWebviewById("chooseGift").close();
+												}
+											}, 2000)
 										}, function(e) {
 											console.log("----- 支付失败 -----");
 											console.log("[" + e.code + "]：" + e.message);
@@ -1199,8 +1209,19 @@
 											plus.nativeUI.closeWaiting();
 											plus.nativeUI.alert("支付成功");
 											var result = JSON.stringify(result);
-											mui.fire(plus.webview.getWebviewById('wallet'), 'refreash')
-											mui.back();
+											mui.fire(plus.webview.getWebviewById('cart.html'), 'refresh');
+											openview({
+												view: '../personal/myOrderList.html',
+												id: 'myOrderList'
+											})
+											setTimeout(function() {
+												if(plus.webview.getWebviewById("order")) {
+													plus.webview.getWebviewById("order").close();
+												}
+												if(plus.webview.getWebviewById("chooseGift")) {
+													plus.webview.getWebviewById("chooseGift").close();
+												}
+											}, 2000)
 
 											//																 
 										}, function(e) {
