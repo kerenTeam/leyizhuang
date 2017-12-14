@@ -1,0 +1,184 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>退货列表</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/configW.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/commonY.css">
+		<link rel="stylesheet" type="text/css" href="../../css/indexY.css">
+		<link rel="stylesheet" type="text/css" href="../../css/mui.min.css"/>
+		<link rel="stylesheet" href="../../css/resetY.css">
+		<link rel="stylesheet" href="../../css/youxd.css">
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav fineB" style="padding-right: 15px;">
+			<a id="leftbtn" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">商品退货</h1>
+			<span class="mui-icon mui-icon-search mui-pull-right" id="openSearch" style="display: none;"></span>
+		</header>
+		<script src="../../js/statusBar.js"></script>
+		<div id="main" style="padding-top: 48px !important;">
+			<div class="notice">
+				<!--tab切换-->
+				<div class="tab-hd tab-hdtwo" id="tabLink" style="display: none;">
+					<ul class="tab-nav">
+					  <li class="active aClick " data-statusId="">全部</li>
+					  <li class="aClick" data-statusId="1">待付款</li>
+					  <li class="aClick" data-statusId="1">待收货</li>
+					  <li class="aClick" data-statusId="1">已完成</li>
+					  <li class="aClick" data-statusId="1">已取消</li>
+					</ul>
+				</div>
+				<!--搜索-->
+				<div class="tab-hd tab-hdtwo" id="tabLink2" style="display: none;">
+					<div class="searchFind">
+						<span class="mui-icon mui-icon-search mui-icon-search2" id="clickSearch"></span>
+						<div class="sint">
+							<form id="searchf">
+								<input type="search" id="valInt" class="fsearch" placeholder="订单号/收货地址">
+							</form>
+							<span class="back" id="cancelSearch">取消</span>
+						</div>
+					</div>
+				</div>
+				<!--列表loading-->
+				<div id="loadingdiv" style="text-align: center;font-size: 14px;height:32px;
+					line-height: 30px;color: #666;-webkit-transition: all .3s;overflow: hidden;">
+					<img style="width: 30px;margin-top:5px;" src="../../img/Rolling.svg"/>
+				</div>
+				<!--列表loading结束-->
+				<div id="infoListDiv">
+					<!--内容-->
+				</div>
+				<script id="infoList" type="text/html">
+					<%for(var i=0;i<list.length;i++){%>
+						<% if(nowState == '全部' || nowState == list[i].status){ %>
+							<div class="orderList">
+								<h3 class="h3" onclick="openDetail('<%= list[i].orderNo%>')">
+									订单编号：<%= list[i].orderNo%>
+									<span><%= list[i].status%></span>
+								</h3>
+								<p class="p1" onclick="openDetail('<%= list[i].orderNo%>')">
+									<% if(list[i].goodsImgList && list[i].goodsImgList.length){%>
+										<%for(var j=0; j<list[i].goodsImgList.length; j++){%>
+											<a><img class="loadPics" data-src="<%= list[i].goodsImgList[j]%>"/></a>
+										<%} %>
+									<% }else{%>
+										<a><img class="loadPics" data-src="https://b-ssl.duitang.com/uploads/item/201711/08/20171108102304_FTzw4.thumb.224_224_c.jpeg"/></a>
+									<% }%>
+									<% if(list[i].endTime){%>
+										<span>10分钟后关闭订单</span>
+									<% }%>
+								</p>
+								<div class="orderInfo">
+									共<%= list[i].count%>件商品 实付款：<span>¥ <%= list[i].price%></span>
+								</div>
+								<div class="orderBtns">
+									<span onclick="cancelFun('<%= list[i].orderNo%>')">取消订单</span>
+									<span>再来一单</span>
+									<span class="redC">去支付</span>
+									<span onclick="goOrderWL('<%= list[i].orderNo%>')" class="redC">查看物流</span>
+									<span class="redC" onclick="openReturns('<%= list[i].orderNo%>')">退货</span>
+								</div>
+							</div>
+						<%}%>
+						<!--没有相关状态-->
+						<% if(i == list.length-1 && nowState != '全部' && nowState != list[i].status){ %>
+							<div style="text-align: center;padding: 50px;">
+								<img src="../../images/order/order.png" style="width: 100px;" />
+								<div class="ft13 disablecl">暂无数据</div>
+							</div>
+						<% } %>
+					<%}%>
+				</script>
+
+			</div>
+		</div>
+
+		<script src="../../js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/default.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/artTemplate-native.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/youxd.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+
+			//打开订单详情
+			function openDetail(orderNo){
+				openview({
+					view:'myOrderDetail.html',
+					id:'myOrderDetail',
+					extrasobj:{
+						orderNo:orderNo
+					}
+				})
+			}
+
+			mui.plusReady(function(){
+
+				var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
+				var userId = plus.storage.getItem('$userId');
+				var oldToken = plus.storage.getItem('oldToken');
+
+				//tab切换
+				loadFun('全部');//初始化
+				$('#tabLink li').click(function(){
+					$('#tabLink li').removeClass('active');
+					$(this).addClass('active');
+					if($(this).index() == 0){
+						loadFun('全部');
+					}else if($(this).index() == 1){
+						loadFun('待付款');
+					}else if($(this).index() == 2){
+						loadFun('待收货');
+					}
+				})
+				function loadFun(tabT,condition){//搜索和tab切换 ，公用一个加载方法
+					document.getElementById('infoListDiv').innerHTML = '';
+					$('#loadingdiv').css('height','32px');
+					var nowApi = '/app/returnOrder/list';
+					var nowData = {'userId':userId,'identityType':identityT,'showStatus':3};
+					if(condition){//搜索字段
+						nowApi = '/app/order/search';
+						nowData = {'userID':userId,'identityType':identityT,'condition':condition}
+					}
+					mui.ajax(serverUrl + nowApi,{
+						data:nowData,
+						dataType:'json',
+						type:'post',
+						timeout:10000,
+						headers:{"Authorization":oldToken},
+						success:function(data,type,xhr){
+							console.log('订单',data);
+							var timeLoad = setInterval(function(){
+								clearTimeout(timeLoad),timeLoad = null;
+								if(data.code == 0){
+//									$('#loadingdiv').css('height','0px');
+									if(data.content && data.content.length){
+										document.getElementById('infoListDiv').innerHTML = template('infoList',{list:data.content,nowState:tabT});
+									}else{
+										document.getElementById('infoListDiv').innerHTML = '<div style="text-align: center;padding: 50px;"><img src="../../images/order/order.png" style="width: 100px;" /><div class="ft13 disablecl">暂无数据</div></div>';
+									}
+									lazyLoad();
+								}else{
+									mui.toast(data.message);
+								}
+							},500)
+						},
+						error:function(xhr,type,errorThrown){
+							console.log('响应失败  !');
+							$('#loadingdiv').css('height','0px');
+							document.getElementById('infoListDiv').innerHTML = '<div style="text-align: center;padding: 50px;"><img src="../../images/order/order.png" style="width: 100px;" /><div class="ft13 disablecl">当前网络不好，请重试</div></div>';
+						}
+					});
+				}
+
+
+			})
+		</script>
+	</body>
+
+</html>
