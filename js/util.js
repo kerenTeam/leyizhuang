@@ -13,17 +13,20 @@ var util = {
 		return view;
 	},
 	/**
-	 * 初始化首个tab窗口 和 创建子webview窗口 
+	 * 初始化首个tab窗口 和 创建子webview窗口
 	 */
 	initSubpage: function(aniShow) {
 		var subpage_style = {
 				top: 0,
-				bottom: 50
+				bottom: 50,
+				bounce: 'vertical',
+	        		bounceBackground:'#DCDCDC',//灰色
+	        		popGesture: 'close',
 			},
 			subpages = util.options.subpages,
 			self = plus.webview.currentWebview(),
 			temp = {};
-			
+
 		//兼容安卓上添加titleNView 和 设置沉浸式模式会遮盖子webview内容
 //		if(mui.os.android) {
 //			if(plus.navigator.isImmersedStatusbar()) {
@@ -32,7 +35,7 @@ var util = {
 //			if(self.getTitleNView()) {
 //				subpage_style.top += 40;
 //			}
-//			
+//
 //		}
 
 		// 初始化第一个tab项为首次显示
@@ -42,6 +45,7 @@ var util = {
 		util.toggleNview(0);
 
 		for(var i = 0, len = subpages.length; i < len; i++) {
+			console.error(subpages[i]);
 
 			if(!plus.webview.getWebviewById(subpages[i])) {
 				var sub = plus.webview.create(subpages[i], subpages[i], subpage_style);
@@ -52,8 +56,8 @@ var util = {
 			}
 		}
 	},
-	/**	
-	 * 点击切换tab窗口 
+	/**
+	 * 点击切换tab窗口
 	 */
 	changeSubpage: function(targetPage, activePage, aniShow) {
 		//若为iOS平台或非首次显示，则直接显示
