@@ -1,0 +1,77 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>活动页面</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="css/commonY.css">
+		<link rel="stylesheet" type="text/css" href="css/indexY.css">
+		<link rel="stylesheet" type="text/css" href="css/mui.min.css"/>
+		<link rel="stylesheet" href="css/resetY.css">
+		<script src="js/jquery.min.js"></script>
+		<script src="js/mui.min.js"></script>
+		<script src="js/youxd.js"></script>
+	</head>
+	<style type="text/css">
+		iframe{width: 100%;overflow: hidden;max-width: 100%;min-width: 100%;margin-top: 50px;}
+		iframe body iframe{ width: 100% !important; }
+		img{ width: 100% !important; }
+		.Scontent .mui-col-sm-3 img, .Scontent1 .mui-col-sm-3 img {
+		    width: 62% !important;
+		    border-radius: 50%;
+		}
+	</style>
+	<body>
+
+		<header class="mui-bar mui-bar-nav">
+		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left bigSize"></a>
+		    <h1 class="mui-title"></h1>
+		    <span class="mui-icon mui-icon-redo mui-pull-right" style="font-size: 28px;" id='shareBtn'></span>
+		</header>
+		<script src="js/statusBar.js"></script><!--状态栏-->
+		<iframe id="iframe" style="display: none;" class="jbjb" src="" width="" height=""></iframe>
+		<script type="text/javascript">
+			mui.plusReady(function(){
+				var iframeSrc = plus.webview.currentWebview().bannerUrl;
+				var urlType = plus.webview.currentWebview().type;
+				var name = plus.webview.currentWebview().bannerName;
+				var iframeHeight = window.screen.availHeight;
+				var iframeWidth = window.screen.availWidth;
+				mui(".mui-title")[0].innerHTML = name;
+				document.getElementById('iframe').src = iframeSrc;
+				if(1){//pro
+					document.getElementById('iframe').style.display = 'block';
+					document.getElementById('iframe').height = iframeHeight;
+					document.getElementById('iframe').width = iframeWidth;
+					$('#iframe').css('max-width','720px');
+					plus.nativeUI.closeWaiting();
+				}else{
+					var immersed = 0;
+					var ms=(/Html5Plus\/.+\s\(.*(Immersed\/(\d+\.?\d*).*)\)/gi).exec(navigator.userAgent);
+					if(ms&&ms.length>=3){ // 当前环境为沉浸式状态栏模式
+					    immersed=parseFloat(ms[2]);// 获取状态栏的高度
+					}
+					var w = plus.webview.create(iframeSrc,'html5page',{top:immersed+50+'px',bottom:'70px',dock:'top'});
+					    w.show(); // 显示窗口
+				}
+
+				mui('#shareBtn')[0].onclick = function(){
+					//示例
+					var msg = {
+						title:'分享测试',
+						content:'分享测试内容',
+						href:iframeSrc,
+						thumbs:['https://b-ssl.duitang.com/uploads/item/201709/08/20170908120614_mN5TE.thumb.224_0.jpeg'],
+						pictures:['https://b-ssl.duitang.com/uploads/item/201709/08/20170908120614_mN5TE.thumb.224_0.jpeg']
+
+					};
+					showSfun1(msg,function(){},function(){});
+				}
+			})
+//			document.getElementById('iframe').src = localStorage.Burlname;
+
+		</script>
+	</body>
+
+</html>

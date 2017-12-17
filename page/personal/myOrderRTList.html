@@ -75,14 +75,10 @@
 									<% }%>
 								</p>
 								<div class="orderInfo">
-									共<%= list[i].count%>件商品 实付款：<span>¥ <%= list[i].price%></span>
+									共<%= list[i].count%>件商品 退款金额：<span>¥ <%= list[i].returnPrice%></span>
 								</div>
 								<div class="orderBtns">
-									<span onclick="cancelFun('<%= list[i].orderNo%>')">取消订单</span>
-									<span>再来一单</span>
-									<span class="redC">去支付</span>
-									<span onclick="goOrderWL('<%= list[i].orderNo%>')" class="redC">查看物流</span>
-									<span class="redC" onclick="openReturns('<%= list[i].orderNo%>')">退货</span>
+									<span class="redC" onclick="cancelTHFun('<%= list[i].orderNo%>')">取消退货</span>
 								</div>
 							</div>
 						<%}%>
@@ -109,8 +105,8 @@
 			//打开订单详情
 			function openDetail(orderNo){
 				openview({
-					view:'myOrderDetail.html',
-					id:'myOrderDetail',
+					view:'myOrderRTdetail.html',
+					id:'myOrderRTdetail',
 					extrasobj:{
 						orderNo:orderNo
 					}
@@ -118,7 +114,6 @@
 			}
 
 			mui.plusReady(function(){
-
 				var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
 				var userId = plus.storage.getItem('$userId');
 				var oldToken = plus.storage.getItem('oldToken');
@@ -156,7 +151,7 @@
 							var timeLoad = setInterval(function(){
 								clearTimeout(timeLoad),timeLoad = null;
 								if(data.code == 0){
-//									$('#loadingdiv').css('height','0px');
+									$('#loadingdiv').css('height','0px');
 									if(data.content && data.content.length){
 										document.getElementById('infoListDiv').innerHTML = template('infoList',{list:data.content,nowState:tabT});
 									}else{
@@ -176,6 +171,29 @@
 					});
 				}
 
+				window.cancelTHFun = function(id){
+					var isCance = confirm('确认要取消退货？');
+					if(isCance){
+						mui.ajax(serverUrl + '/app/returnOrder/cancel',{//获取取消原因
+							data:{'userId':userId,'identityType':identityT,'returnNumber':id+1},
+							dataType:'json',
+							type:'post',
+							timeout:10000,
+							headers:{"Authorization":oldToken},
+							success:function(data,type,xhr){
+								console.log('取消退货',data);
+								if(data.code == 0){
+									mui.toast(data.message || '取消退货成功');
+								}else{
+									mui.toast(data.message);
+								}
+							},
+							error:function(xhr,type,errorThrown){
+								console.error('取消退货，响应失败  !');
+							}
+						});
+					}
+				}
 
 			})
 		</script>
