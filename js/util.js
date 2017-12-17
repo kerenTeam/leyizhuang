@@ -45,8 +45,6 @@ var util = {
 		util.toggleNview(0);
 
 		for(var i = 0, len = subpages.length; i < len; i++) {
-			console.error(subpages[i]);
-
 			if(!plus.webview.getWebviewById(subpages[i])) {
 				var sub = plus.webview.create(subpages[i], subpages[i], subpage_style);
 				//初始化隐藏

@@ -3,54 +3,50 @@
 
 	<head>
 		<meta charset="UTF-8">
-		<title></title>
+		<title>登录第一页</title>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="css/mui.min.css" rel="stylesheet" />
 	</head>
 
 	<body>
 		<style type="text/css">
+			body{background-color: #fff;}
 			#identy {
 				margin-top: 55%;
 			}
-			
 			.oauth-area {
 				text-align: center;
 				width: 100%;
 				padding: 0px;
 				margin: 0px;
+				min-height: 60px;
 			}
-			
 			.oauth-area .oauth-btn {
 				display: inline-block;
 				width: 60px;
 				height: 60px;
-				background-size: 30px 30px;
+				background-size: 60px 60px;
 				background-position: center center;
 				background-repeat: no-repeat;
 				vertical-align: middle;
-				border: solid 1px #aaa;
 				border-radius: 50%;
 			}
-			
 			.oauth-area .oauth-btn:active {
 				border: solid 1px #aaa;
 			}
-			
 			.oauth-area .oauth-btn.disabled {
 				background-color: #ddd;
 			}
-			
 			.mui-btn {
 				width: 90%;
 				margin: 20px auto;
 				padding: 10px;
 			}
-			
 			.custom {
 				text-align: center;
-				padding: 20px;
-				font-size: 12px;
+			    padding: 15px;
+			    font-size: 14px;
+			    color: #666;
 			}
 		</style>
 		<div id="identy">
@@ -72,7 +68,7 @@
 				})
 
 			})
-		
+
 			mui.plusReady(function() {
 				if(plus.webview.getWebviewById('shezhi')) {
 					plus.webview.getWebviewById('shezhi').close();
@@ -83,13 +79,14 @@
 			 	 	var systemType = 'IOS'
 				}
 				var clientId = plus.push.getClientInfo().clientid;
-				var deviceId = plus.device.uuid; 
+				var deviceId = plus.device.uuid;
 				//第三方登录
 				var authBtns = ['weixin']; //配置业务支持的第三方登录
 				var auths = {};
 				var oauthArea = document.querySelector('.oauth-area');
 				plus.oauth.getServices(function(services) {
 					for(var i in services) {
+						console.log(services);
 						var service = services[i];
 						auths[service.id] = service;
 						if(~authBtns.indexOf(service.id)) {
@@ -98,7 +95,7 @@
 							//如果微信未安装，则为不启用状态
 							btn.setAttribute('class', 'oauth-btn' + (!isInstalled && service.id === 'weixin' ? (' disabled') : ''));
 							btn.authId = service.id;
-							btn.style.backgroundImage = 'url("images/' + service.id + '.png")'
+							btn.style.backgroundImage = 'url("images/' + service.id + '.svg")'
 							oauthArea.appendChild(btn);
 						}
 					}
@@ -142,7 +139,7 @@
 											mui.fire(plus.webview.getWebviewById('page/goodList.html'), 'refresh');
 											mui.fire(plus.webview.getWebviewById('center.html'), 'refresh');
 											mui.fire(plus.webview.getWebviewById('cart.html'), 'refresh');
-											
+
 											var index = plus.webview.getLaunchWebview();
 											mui.fire(index, 'refreshid');
 											if(plus.webview.getWebviewById('reg')) {
@@ -154,7 +151,7 @@
 											if(plus.webview.getWebviewById('dispatching')) {
 												plus.webview.getWebviewById('dispatching').close();
 											}
-											 
+
 											var time2 = setTimeout(function() {
 												plus.nativeUI.closeWaiting();
 												mui.toast('登录成功');

@@ -117,7 +117,7 @@
 			timeout:10000,
 			success:function(data){
 				console.log('分类',data);
-				document.getElementById('navDiv').innerHTML = template('navS',{list:data});
+				document.getElementById('navDiv').innerHTML = template('navS',{list:data.cate});
 
 				$('.tzNav a').click(function(){
 					$('.tzNav a').removeClass('active');
@@ -134,7 +134,7 @@
 						timeout:10000,
 						success:function(data){
 							console.log('内容',data);
-							document.getElementById('conDiv').innerHTML = template('conS',{list:data,url:oCms});
+							document.getElementById('conDiv').innerHTML = template('conS',{list:data.cate,url:oCms});
 						},
 						error:function(xhr,type,errorThrown){
 							console.error('调色板内容响应失败');
