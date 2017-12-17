@@ -133,6 +133,7 @@
 								console.log('拒收返回', data);
 								if(data.code == 0) { 
 									mui.toast('拒收成功');
+									mui.back();
 								}else{
 									mui.toast(data.message);
 									

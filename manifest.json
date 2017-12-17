@@ -66,7 +66,7 @@
 			"style": "dark"
 		},
 		"launchwebview": {
-			
+
 			"bottom": "0px",
 			"background": "#fff",
 			"subNViews": [
@@ -83,118 +83,126 @@
 						{
 							"tag": "font",
 							"id": "indexIcon",
-							"text": "\uf015",
+							"text": "\ue63a",
 							"position": {
-								"top": "4px",
+								"top": "5px",
 								"left": "0",
 								"width": "25%",
 								"height": "24px"
 							},
 							"textStyles": {
-								"fontSrc": "_www/fonts/fontawesome-webfont.ttf",
+								"fontSrc": "_www/fonts/iconfont1.ttf",
 								"align": "center",
-								"size": "24px"
+								"size": "22px",
+								"color":"#888"
 							}
 						}, {
 							"tag": "font",
 							"id": "indexText",
 							"text": "首页",
 							"position": {
-								"top": "23px",
+								"top": "25px",
 								"left": "0",
 								"width": "25%",
 								"height": "24px"
 							},
 							"textStyles": {
 								"align": "center",
-								"size": "10px"
+								"size": "11px",
+								"color":"#888"
 							}
 						},{
 							"tag": "font",
 							"id": "newsIcon",
-							"text": "\uf0c9",
+							"text": "\ue65c",
 							"position": {
-								"top": "4px",
+								"top": "5px",
 								"left": "20%",
 								"width": "25%",
-								"height": "24px"
+								"height": "26px"
 							},
 							"textStyles": {
-								"fontSrc": "_www/fonts/fontawesome-webfont.ttf",
+								"fontSrc": "_www/fonts/iconfont1.ttf",
 								"align": "center",
-								"size": "24px"
+								"size": "22px",
+								"color":"#888"
 							}
 						}, {
 							"tag": "font",
 							"id": "newsText",
 							"text": "商品",
 							"position": {
-								"top": "23px",
+								"top": "25px",
 								"left": "20%",
 								"width": "25%",
 								"height": "24px"
 							},
 							"textStyles": {
 								"align": "center",
-								"size": "10px"
+								"size": "11px",
+								"color":"#888"
 							}
 						},{
 							"tag": "font",
 							"id": "contactIcon",
-							"text": "\uf217",
+							"text": "\uea1f",
 							"position": {
-								"top": "4px",
+								"top": "5px",
 								"left": "55%",
 								"width": "25%",
 								"height": "24px"
 							},
 							"textStyles": {
-								"fontSrc": "_www/fonts/fontawesome-webfont.ttf",
+								"fontSrc": "_www/fonts/iconfont1.ttf",
 								"align": "center",
-								"size": "24px"
+								"size": "22px",
+								"color":"#888"
 							}
 						}, {
 							"tag": "font",
 							"id": "contactText",
 							"text": "下料清单",
 							"position": {
-								"top": "24px",
+								"top": "25px",
 								"left": "55%",
 								"width": "25%",
 								"height": "24px"
 							},
 							"textStyles": {
 								"align": "center",
-								"size": "10px"
+								"size": "11px",
+								"color":"#888"
 							}
 						},{
 							"tag": "font",
 							"id": "newwindowIcon",
-							"text": "\uf007",
+							"text": "\ue63d",
 							"position": {
-								"top": "4px",
+								"top": "5px",
 								"left": "75%",
 								"width": "25%",
 								"height": "24px"
 							},
 							"textStyles": {
-								"fontSrc": "_www/fonts/fontawesome-webfont.ttf",
+								"fontSrc": "_www/fonts/iconfont1.ttf",
 								"align": "center",
-								"size": "24px"
+								"size": "22px",
+								"color":"#888"
 							}
 						}, {
 							"tag": "font",
 							"id": "newwindowText",
 							"text": "我的",
 							"position": {
-								"top": "24px",
+								"top": "25px",
 								"left": "75%",
 								"width": "25%",
 								"height": "24px"
 							},
 							"textStyles": {
 								"align": "center",
-								"size": "10px"
+								"size": "11px",
+								"color":"#888"
 							}
 						},
 						{
@@ -204,7 +212,7 @@
 								"top": "0",
 								"left": "0",
 								"width": "100%",
-								"height": "1px"
+								"height": "0.5px"
 							},
 							"rectStyles": {
 								"color": "#ccc"
@@ -279,8 +287,8 @@
 				"ios": {
 					"iphone": {
 						"default": "", /*iPhone3启动图片选，分辨率：320x480*/
-						"retina35": "/Users/wangfei/Downloads/st.png",/*3.5英寸设备(iPhone4)启动图片，分辨率：640x960*/
-						"retina40": "/Users/wangfei/Downloads/st.png","retina55":"/Users/wangfei/Downloads/st.png","retina47":"/Users/wangfei/Downloads/st.png","retina55l":"/Users/wangfei/Downloads/st.png"
+						"retina35": "/Users/wangfei/Desktop/Des/st.png",/*3.5英寸设备(iPhone4)启动图片，分辨率：640x960*/
+						"retina40": "/Users/wangfei/Desktop/Des/st.png","retina55":"/Users/wangfei/Downloads/st.png","retina47":"/Users/wangfei/Downloads/st.png","retina55l":"/Users/wangfei/Downloads/st.png"
 					},
 					"ipad": {
 						"portrait": "/Users/wangfei/Downloads/st.png", /*iPad竖屏启动图片，分辨率：768x1004*/
@@ -1369,7 +1377,8 @@
 					"js/default.js"
 				],
 				"refer": [
-					"page/order/pzOrder.html"
+					"page/order/pzOrder.html",
+					"page/mailList.html"
 				],
 				"priority": 0
 			},

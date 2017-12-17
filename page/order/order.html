@@ -162,8 +162,10 @@
 							<a class="goodsPic" style="margin-left: auto;"><img src="<%=list[i].coverImageUri%>" onerror="javascript:this.src='../../img/editset.png';" /></a>
 							<div class="goodsInfor" style="margin-left: 0.9rem!important;">
 								<span class="ft15 goodname"><%=list[i].goodsName%></span>
-								<%if(list[i].isGift){%>
+								<%if(list[i].goodsLineType == 'PRESENT'){%>
 								<em class="mui-badge mui-badge-danger mui-pull-right" style="color: white;">赠品</em>
+								<%}else if(list[i].goodsLineType == 'PRODUCT_COUPON'){%>
+								<em class="mui-badge mui-badge-warning mui-pull-right" style="color: white;">产品券</em>
 								<%}%>
 								<div class="priceArea">
 									<div class="maincl ft14">
@@ -218,6 +220,7 @@
 				<script type="text/html" id="addrTpl">
 					<%if(obj.length==0){%>
 					<div class="qtop flexr pad10" onclick="address()">
+						<img src="../../images/order/map.svg" style="margin-right: 10px;"/>
 						<div style="flex: 1;">
 							<div class="maincl ft15">
 								<span class="maincl"></span>
@@ -231,6 +234,7 @@
 					</div>
 					<%}else{%>
 					<div class="qtop flexr pad10" onclick="address()" id="addid" data-id="<%=obj[0].id%>" data-receiver="<%=obj[0].person%>" data-receiverPhone="<%=obj[0].phone%>" data-deliveryCity="<%=obj[0].city%>" data-deliveryCounty="<%=obj[0].country%>" data-deliveryStreet="<%=obj[0].street%>" data-residenceName="<%=obj[0].villageName%>" data-detailedAddress="<%=obj[0].address%>">
+						<img src="../../images/order/map.svg" style="margin-right: 10px;"/>
 						<div style="flex: 1;">
 							<div class="ft15">
 								<span class="titcl"><%=obj[0].person%></span>
@@ -397,15 +401,7 @@
 			} else {
 				obj.value = obj.value.replace(/\D/g, '')
 			}
-		}
-
-		function materialList() {
-			openview({
-				view: 'elseMaterialList.html',
-				id: 'elseMaterialList',
-			})
-		}
-
+		} 
 		function address() {
 			openview({
 				view: '../personal/address.html',
@@ -421,14 +417,27 @@
 			var userId = plus.storage.getItem('$userId');
 			var oldToken = plus.storage.getItem("oldToken");
 			var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
-			var idobj = plus.storage.getItem('orderGoodsList');
-			var onlyGoods = plus.storage.getItem('removeCouponGoods');
-			var productCouponInfo = plus.webview.currentWebview().productCouponInfo;//产品券商品
-			var promotionInfo = plus.webview.currentWebview().promotionInfo;//促销赠品
+			var allGoods =plus.storage.getItem('orderGoodsList');
+			var onlyGoods = plus.storage.getItem('justGoods');
+			var idobj = plus.storage.getItem('goodlists');
+			var productCouponList = plus.storage.getItem('productCouponList');//产品券商品
+			var promotionInfo = plus.storage.getItem('giftList');//促销赠品
 			var customerId = plus.webview.currentWebview().customerId || '';
 			var pays = {};
 			console.log('idobj ', idobj)
 			console.log('onlyGoods ', onlyGoods)
+			console.log('productCouponList ', productCouponList)
+			console.log('promotionInfo ', promotionInfo)
+			window.materialList = function() {
+				openview({
+					view: 'elseMaterialList.html',
+					id: 'elseMaterialList',
+					extrasobj:{
+						customerId:customerId
+					}
+				})
+			}
+
 			window.maxC = function(obj) {
 				var cur = $(obj);
 				var maxCh = cur.prev().html().replace('¥', '');
@@ -465,7 +474,9 @@
 					userId: userId,
 					identityType: identityT,
 					goodsList: JSON.parse(idobj),
-					customerId: customerId
+					customerId: customerId,
+					giftList:JSON.parse(promotionInfo),
+					productCouponList:JSON.parse(productCouponList)
 				},
 				dataType: 'json',
 				type: 'post',
@@ -724,8 +735,8 @@
 			$("input[name='peis']").change(function() {
 				var delivery = $("input[name='peis']:checked").val();
 				var goodsId = '';
-				mui.each(JSON.parse(idobj), function(index, item) {
-					if(index == JSON.parse(idobj).length - 1) {
+				mui.each(JSON.parse(allGoods), function(index, item) {
+					if(index == JSON.parse(allGoods).length - 1) {
 						goodsId += item.id
 					} else {
 						goodsId += item.id + ','
@@ -768,7 +779,7 @@
 											"userId": userId,
 											"identityType": identityT,
 											"storeId": storeId,
-											"goodsList": idobj
+											"goodsList": allGoods
 										},
 										dataType: 'json',
 										type: 'post',
@@ -1021,8 +1032,8 @@
 					"customerId": customerId,
 					"remark": remark,
 					"goodsInfo": goodsInfo,
-					"productCouponInfo": JSON.stringify(productCouponInfo),
-					"promotionInfo": JSON.stringify(promotionInfo),
+					"productCouponInfo": productCouponList,
+					"promotionInfo": promotionInfo,
 					"deliveryInfo": JSON.stringify(deliveryInfo),
 					"cashCouponIds": JSON.stringify(cashCouponIds),
 					"auditNo": auditNo,
@@ -1038,7 +1049,7 @@
 						"customerId": customerId,
 						"remark": remark,
 						"goodsInfo": goodsInfo,
-						"productCouponInfo": JSON.stringify(productCouponInfo),
+						"productCouponInfo": productCouponList,
 						"promotionInfo": JSON.stringify(promotionInfo),
 						"deliveryInfo": JSON.stringify(deliveryInfo),
 						"cashCouponIds": '',

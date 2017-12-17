@@ -30,10 +30,10 @@
 					<img src="../../img/check2.svg" /> 下料清单
 				</div>
 				<div class="cartSecond cartAct">
-					<img src="../../img/check1.svg" /> 选赠品
+					<img src="../../img/check2.svg" /> 选赠品
 				</div>
 				<div class="cartThird cartAct">
-					<img src="../../img/check1.svg" /> 结算
+					<img src="../../img/check2.svg" /> 结算
 				</div>
 			</div>
 
@@ -169,13 +169,16 @@
 			var userId = plus.storage.getItem('$userId');
 			var oldToken = plus.storage.getItem("oldToken");
 			var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
-			var idobj = plus.storage.getItem('materialList');
+			var idobj = plus.storage.getItem('goodlists');
+			var customerId = plus.webview.currentWebview().customerId || '';
+			
 			plus.nativeUI.showWaiting();
 			//获取料单商品
 			mui.ajax(serverUrl+'/app/goodsMoney/worker',{
 				data:{
 					userId:userId,
 					identityType:identityT,
+					custoermId:customerId,
 					goodsList:JSON.parse(idobj)
 				},
 				dataType:'json',

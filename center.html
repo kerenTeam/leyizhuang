@@ -639,6 +639,8 @@
 									if(data.content) {
 										if(data.content.cityId){
 											plus.storage.setItem('userCity',data.content.cityId.toString())
+										}else{
+											plus.storage.setItem('userCity','1')
 										}
 										if(!data.content.canSign){
 											$('.qiandao').removeAttr('onclick').html('已签到');

@@ -479,31 +479,45 @@
 								if(ALLcheckLength == 0) {
 									mui.toast("您还未选择要购买的商品哦！")
 								} else {
-									var materialList = [];
-									var removeCouponGoods = [];
+									var materialList = []; // for gift
+									var justGoods = [];//for create order
+									var goodlists = []; //for woker and count
+									var productCouponList = []; // count
 									//存缓存
 									$("dd").find("input[type='checkbox']:checked").each(function(index) {
-										var gdtype = $(this).attr('data-type')
+										var gdtype = $(this).attr('data-type');
+										var gid = $(this).attr('data-id');
+										var gnum = $(this).parent().parent().find('.mui-input-numbox').val();
 										if(gdtype == 'coupon'){
-											var isProCouponGoods = true
+											var goodsLineType = 'PRODUCT_COUPON';
+											productCouponList.push({
+												id: gid,
+												qty: gnum,
+											})
 										}else{
-											var isProCouponGoods = false
-											removeCouponGoods.push({
-												id: $(this).attr('data-id'),
-												qty: $(this).parent().parent().find('.mui-input-numbox').val(),
-												goodsLineType: false
+											var goodsLineType = 'GOODS';
+											justGoods.push({
+												id: gid,
+												qty: gnum,
+												goodsLineType: 'GOODS'
+											});
+											goodlists.push({
+												id: gid,
+												qty: gnum,
 											})
 										}
+										
 										materialList.push({
 											id: $(this).attr('data-id'),
 											qty: $(this).parent().parent().find('.mui-input-numbox').val(),
-//											isGift: false,
-//											isProCouponGoods:isProCouponGoods
+											goodsLineType:goodsLineType
 										})
 									})
 
 									plus.storage.setItem('materialList', JSON.stringify(materialList));
-									plus.storage.setItem('removeCouponGoods', JSON.stringify(removeCouponGoods));
+									plus.storage.setItem('justGoods', JSON.stringify(justGoods));
+									plus.storage.setItem('goodlists', JSON.stringify(goodlists));
+									plus.storage.setItem('productCouponList', JSON.stringify(productCouponList));
 									console.log(plus.storage.getItem('materialList'));
 
 									if(plus.storage.getItem('oldToken')) {

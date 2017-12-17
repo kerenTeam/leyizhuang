@@ -52,7 +52,7 @@
 			<%for(var i = 0 ;i < list.length ; i++){%>
 			<dl class="cart">
 
-				<dt data-id="<%=list[i].promotionId%>" data-max="4">
+				<dt data-id="<%=list[i].promotionId%>" data-enjoyTimes="<%=list[i].enjoyTimes%>" data-max="<%=list[i].maxChooseNumber%>">
 					<!--<div class="mui-checkbox"><input name="checkbox" class="groupCheck cssp" type="checkbox"></div>-->
 					<div class="shopName" style="white-space: nowrap;overflow: hidden;max-width:2.5rem;">
 						<%=list[i].promotionTitle%> 最多可选<%=list[i].maxChooseNumber%>个商品
@@ -200,7 +200,7 @@
 								var ALLcheckLength = $("dd").find("input[type='checkbox']:checked").length;
 								var idobj = JSON.parse(plus.storage.getItem('materialList') || '[]');
 								var gift = [];
-								var promotionList = [];
+								var giftList = [];
 								if(ALLcheckLength > 0) {
 									//存缓存
 									$("dd").find("input[type='checkbox']:checked").each(function(index) {
@@ -222,15 +222,16 @@
 								$('.cart').each(function(){
 									var checkGift =  $(this).find("input[type='checkbox']:checked");
 									var promotionId = $(this).find('dt').attr('data-id');
+									var enjoyTimes = $(this).find('dt').attr('data-enjoyTimes');
 									if(checkGift.length > 0){
-										var discount='',enjoyTimes = '',presentInfo = [];
+										var discount='',presentInfo = [];
 										checkGift.each(function(){
 											 presentInfo.push({
 											 	id:$(this).attr('data-id'),
 											 	qty:$(this).parent().parent().find('.mui-input-numbox').val(),
 											 })
 										})
-										promotionList.push({
+										giftList.push({
 											promotionId:promotionId,
 											discount:discount,
 											enjoyTimes:enjoyTimes,
@@ -238,8 +239,8 @@
 										})
 									}
 								})
-
-
+								plus.storage.setItem('giftList', JSON.stringify(giftList));
+								
 								if(identityT == 3) {
 									openview({
 										view: 'workerMaterial.html',
@@ -252,18 +253,12 @@
 											id: 'order',
 											extrasobj: {
 												customerId: cusId,
-												productCouponInfo: data.content.couponGoodsList,
-												promotionInfo:promotionList
 											}
 										})
 									} else {
 										openview({
 											view: 'order.html',
 											id: 'order',
-											extrasobj: {
-												productCouponInfo: data.content.couponGoodsList,
-												promotionInfo:promotionList
-											}
 										})
 									}
 								}

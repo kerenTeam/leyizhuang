@@ -172,7 +172,7 @@
 			<div class="notice">
 				<div class="tab-hd tab-hdtwo" id="tabLink">
 					<ul class="tab-nav ft16">
-					  <li class="active aClick " data-statusId="">待配送</li>
+					  <li class="active aClick " data-statusId="0">待配送</li>
 					  <li class="aClick" data-statusId="1">待取货</li>
 					  <li class="aClick" data-statusId="2">欠款审核</li>
 					  <li class="aClick" data-statusId="3">已完成</li>
@@ -486,9 +486,9 @@
 				})
 			})
 			document.addEventListener('refresh', function(event) {
-				loadFun('');
+				loadFun(0);
 			});
-			loadFun('');
+			loadFun(0);
 			function loadFun(index){
 				if(index == 2){
 					var apiString = '/app/arrearsAudit/list';
