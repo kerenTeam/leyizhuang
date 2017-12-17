@@ -58,10 +58,24 @@
 		"Webview": {},
 		"NativeUI": {},
 		"Navigator": {},
-		"NativeObj": {},"OAuth":{},"Device":{},"Maps":{},"Audio":{},"Speech":{},"Camera":{},"Barcode":{},"Contacts":{},"Messaging":{},"Geolocation":{},"Payment":{},"Push":{}
+		"NativeObj": {},
+		"OAuth": {},
+		"Device": {},
+		"Maps": {},
+		"Audio": {},
+		"Speech": {},
+		"Camera": {},
+		"Barcode": {},
+		"Contacts": {},
+		"Messaging": {},
+		"Geolocation": {},
+		"Payment": {},
+		"Push": {},
+		"Share": {},
+		"Statistic": {}
 	},
 	"plus": {
-		"statusbar":{
+		"statusbar": {
 			"immersed": true,
 			"style": "dark"
 		},
@@ -94,7 +108,7 @@
 								"fontSrc": "_www/fonts/iconfont1.ttf",
 								"align": "center",
 								"size": "22px",
-								"color":"#888"
+								"color": "#888"
 							}
 						}, {
 							"tag": "font",
@@ -109,9 +123,9 @@
 							"textStyles": {
 								"align": "center",
 								"size": "11px",
-								"color":"#888"
+								"color": "#888"
 							}
-						},{
+						}, {
 							"tag": "font",
 							"id": "newsIcon",
 							"text": "\ue65c",
@@ -125,7 +139,7 @@
 								"fontSrc": "_www/fonts/iconfont1.ttf",
 								"align": "center",
 								"size": "22px",
-								"color":"#888"
+								"color": "#888"
 							}
 						}, {
 							"tag": "font",
@@ -140,9 +154,9 @@
 							"textStyles": {
 								"align": "center",
 								"size": "11px",
-								"color":"#888"
+								"color": "#888"
 							}
-						},{
+						}, {
 							"tag": "font",
 							"id": "contactIcon",
 							"text": "\uea1f",
@@ -156,7 +170,7 @@
 								"fontSrc": "_www/fonts/iconfont1.ttf",
 								"align": "center",
 								"size": "22px",
-								"color":"#888"
+								"color": "#888"
 							}
 						}, {
 							"tag": "font",
@@ -171,9 +185,9 @@
 							"textStyles": {
 								"align": "center",
 								"size": "11px",
-								"color":"#888"
+								"color": "#888"
 							}
-						},{
+						}, {
 							"tag": "font",
 							"id": "newwindowIcon",
 							"text": "\ue63d",
@@ -187,7 +201,7 @@
 								"fontSrc": "_www/fonts/iconfont1.ttf",
 								"align": "center",
 								"size": "22px",
-								"color":"#888"
+								"color": "#888"
 							}
 						}, {
 							"tag": "font",
@@ -202,10 +216,9 @@
 							"textStyles": {
 								"align": "center",
 								"size": "11px",
-								"color":"#888"
+								"color": "#888"
 							}
-						},
-						{
+						}, {
 							"tag": "rect",
 							"id": "tabBorder",
 							"position": {
@@ -225,11 +238,37 @@
 		,
 		"splashscreen": {
 			"autoclose": true,/*是否自动关闭程序启动界面，true表示应用加载应用入口页面后自动关闭；false则需调plus.navigator.closeSplashscreen()关闭*/
-			"waiting": false,"delay":"0"
+			"waiting": false,
+			"delay": "0"
 		},
 		"runmode": "liberate",/*应用的首次启动运行模式，可取liberate或normal，liberate模式在第一次启动时将解压应用资源（Android平台File API才可正常访问_www目录）*/
 		"signature": "Sk9JTiBVUyBtYWlsdG86aHIyMDEzQGRjbG91ZC5pbw==",/*可选，保留给应用签名，暂不使用*/
-		"distribute": {"plugins":{"push":{"igexin":{"appid":"I5pt99Lp5t7zrN98wU7Nt1","appkey":"pYVG4Gi0Ow9mfQUxDJgBw5","appsecret":"IWMq9NbOTJ9dhJUYEg5KV5"}},"payment":{"weixin":{"description":"微信支付","appid":"wxa4e8a82e226587dd"},"alipay":{"description":"阿里支付","scheme":""}},"oauth":{"weixin":{"appid":"wxa4e8a82e226587dd","appsecret":"bc936a30ffcc36f3ffabb41b4293a889"}}},
+		"distribute": {
+			"plugins": {
+				"push": {
+					"igexin": {
+						"appid": "I5pt99Lp5t7zrN98wU7Nt1",
+						"appkey": "pYVG4Gi0Ow9mfQUxDJgBw5",
+						"appsecret": "IWMq9NbOTJ9dhJUYEg5KV5"
+					}
+				},
+				"payment": {
+					"weixin": {
+						"description": "微信支付",
+						"appid": "wxa4e8a82e226587dd"
+					},
+					"alipay": {
+						"description": "阿里支付",
+						"scheme": ""
+					}
+				},
+				"oauth": {
+					"weixin": {
+						"appid": "wxa4e8a82e226587dd",
+						"appsecret": "bc936a30ffcc36f3ffabb41b4293a889"
+					}
+				}
+			},
 			"apple": {
 				"appid": "",/*iOS应用标识，苹果开发网站申请的appid，如io.dcloud.HelloH5*/
 				"mobileprovision": "",/*iOS应用打包配置文件*/
@@ -243,9 +282,45 @@
 				"keystore": "",/*Android应用打包使用的密钥库文件*/
 				"password": "",/*Android应用打包使用密钥库中证书的密码*/
 				"aliasname": "",/*Android应用打包使用密钥库中证书的别名*/
-				"permissions": ["<uses-permission android:name=\"android.permission.CHANGE_NETWORK_STATE\"/>","<uses-permission android:name=\"android.permission.MOUNT_UNMOUNT_FILESYSTEMS\"/>","<uses-permission android:name=\"android.permission.READ_CONTACTS\"/>","<uses-permission android:name=\"android.permission.VIBRATE\"/>","<uses-permission android:name=\"android.permission.READ_LOGS\"/>","<uses-permission android:name=\"android.permission.ACCESS_WIFI_STATE\"/>","<uses-feature android:name=\"android.hardware.camera.autofocus\"/>","<uses-permission  android:name=\"android.permission.WRITE_EXTERNAL_STORAGE\"/>","<uses-permission android:name=\"android.permission.SYSTEM_ALERT_WINDOW\"/>","<uses-permission android:name=\"android.permission.WRITE_CONTACTS\"/>","<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\"/>","<uses-permission android:name=\"android.permission.RECEIVE_BOOT_COMPLETED\"/>","<uses-permission android:name=\"com.android.launcher.permission.UNINSTALL_SHORTCUT\"/>","<uses-permission android:name=\"android.permission.CAMERA\"/>","<uses-permission android:name=\"android.permission.RECORD_AUDIO\"/>","<uses-permission android:name=\"android.permission.GET_ACCOUNTS\"/>","<uses-permission android:name=\"android.permission.MODIFY_AUDIO_SETTINGS\"/>","<uses-permission android:name=\"com.android.launcher.permission.INSTALL_SHORTCUT\"/>","<uses-permission android:name=\"android.permission.SEND_SMS\"/>","<uses-permission android:name=\"android.permission.INTERNET\"/>","<uses-permission android:name=\"android.permission.READ_PHONE_STATE\"/>","<uses-permission android:name=\"android.permission.CHANGE_WIFI_STATE\"/>","<uses-permission android:name=\"android.permission.WAKE_LOCK\"/>","<uses-permission android:name=\"android.permission.CALL_PHONE\"/>","<uses-permission android:name=\"android.permission.FLASHLIGHT\"/>","<uses-permission android:name=\"android.permission.ACCESS_COARSE_LOCATION\"/>","<uses-feature android:name=\"android.hardware.camera\"/>","<uses-permission android:name=\"android.permission.ACCESS_FINE_LOCATION\"/>","<uses-permission android:name=\"android.permission.WRITE_EXTERNAL_STORAGE\"/>","<uses-permission android:name=\"android.permission.RECEIVE_USER_PRESENT\"/>","<uses-permission android:name=\"android.permission.WRITE_SETTINGS\"/>","<uses-permission android:name=\"android.permission.WRITE_SMS\"/>","<uses-permission android:name=\"android.permission.READ_SMS\"/>"]
+				"permissions": [
+					"<uses-permission android:name=\"android.permission.CHANGE_NETWORK_STATE\"/>",
+					"<uses-permission android:name=\"android.permission.MOUNT_UNMOUNT_FILESYSTEMS\"/>",
+					"<uses-permission android:name=\"android.permission.READ_CONTACTS\"/>",
+					"<uses-permission android:name=\"android.permission.VIBRATE\"/>",
+					"<uses-permission android:name=\"android.permission.READ_LOGS\"/>",
+					"<uses-permission android:name=\"android.permission.ACCESS_WIFI_STATE\"/>",
+					"<uses-feature android:name=\"android.hardware.camera.autofocus\"/>",
+					"<uses-permission  android:name=\"android.permission.WRITE_EXTERNAL_STORAGE\"/>",
+					"<uses-permission android:name=\"android.permission.SYSTEM_ALERT_WINDOW\"/>",
+					"<uses-permission android:name=\"android.permission.WRITE_CONTACTS\"/>",
+					"<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\"/>",
+					"<uses-permission android:name=\"android.permission.RECEIVE_BOOT_COMPLETED\"/>",
+					"<uses-permission android:name=\"com.android.launcher.permission.UNINSTALL_SHORTCUT\"/>",
+					"<uses-permission android:name=\"android.permission.CAMERA\"/>",
+					"<uses-permission android:name=\"android.permission.RECORD_AUDIO\"/>",
+					"<uses-permission android:name=\"android.permission.GET_ACCOUNTS\"/>",
+					"<uses-permission android:name=\"android.permission.MODIFY_AUDIO_SETTINGS\"/>",
+					"<uses-permission android:name=\"com.android.launcher.permission.INSTALL_SHORTCUT\"/>",
+					"<uses-permission android:name=\"android.permission.SEND_SMS\"/>",
+					"<uses-permission android:name=\"android.permission.INTERNET\"/>",
+					"<uses-permission android:name=\"android.permission.READ_PHONE_STATE\"/>",
+					"<uses-permission android:name=\"android.permission.CHANGE_WIFI_STATE\"/>",
+					"<uses-permission android:name=\"android.permission.WAKE_LOCK\"/>",
+					"<uses-permission android:name=\"android.permission.CALL_PHONE\"/>",
+					"<uses-permission android:name=\"android.permission.FLASHLIGHT\"/>",
+					"<uses-permission android:name=\"android.permission.ACCESS_COARSE_LOCATION\"/>",
+					"<uses-feature android:name=\"android.hardware.camera\"/>",
+					"<uses-permission android:name=\"android.permission.ACCESS_FINE_LOCATION\"/>",
+					"<uses-permission android:name=\"android.permission.WRITE_EXTERNAL_STORAGE\"/>",
+					"<uses-permission android:name=\"android.permission.RECEIVE_USER_PRESENT\"/>",
+					"<uses-permission android:name=\"android.permission.WRITE_SETTINGS\"/>",
+					"<uses-permission android:name=\"android.permission.WRITE_SMS\"/>",
+					"<uses-permission android:name=\"android.permission.READ_SMS\"/>"
+				]
 			},
-			"orientation": ["portrait-primary"],/*应用支持的方向，portrait-primary：竖屏正方向；portrait-secondary：竖屏反方向；landscape-primary：横屏正方向；landscape-secondary：横屏反方向*/
+			"orientation": [
+				"portrait-primary"
+			],/*应用支持的方向，portrait-primary：竖屏正方向；portrait-secondary：竖屏反方向；landscape-primary：横屏正方向；landscape-secondary：横屏反方向*/
 			"icons": {
 				"ios": {
 					"prerendered": true, /*应用图标是否已经高亮处理，在iOS6及以下设备上有效*/
@@ -280,7 +355,8 @@
 					"ldpi": "unpackage/res/icons/48x48.png", /*大屏程序图标，分辨率：48x48*/
 					"hdpi": "unpackage/res/icons/72x72.png", /*高分屏程序图标，分辨率：72x72*/
 					"xhdpi": "unpackage/res/icons/96x96.png",/*720P高分屏程序图标，分辨率：96x96*/
-					"xxhdpi": "unpackage/res/icons/144x144.png","xxxhdpi":"unpackage/res/icons/192x192.png"
+					"xxhdpi": "unpackage/res/icons/144x144.png",
+					"xxxhdpi": "unpackage/res/icons/192x192.png"
 				}
 			},
 			"splashscreen": {
@@ -288,7 +364,10 @@
 					"iphone": {
 						"default": "", /*iPhone3启动图片选，分辨率：320x480*/
 						"retina35": "/Users/wangfei/Desktop/Des/st.png",/*3.5英寸设备(iPhone4)启动图片，分辨率：640x960*/
-						"retina40": "/Users/wangfei/Desktop/Des/st.png","retina55":"/Users/wangfei/Downloads/st.png","retina47":"/Users/wangfei/Downloads/st.png","retina55l":"/Users/wangfei/Downloads/st.png"
+						"retina40": "/Users/wangfei/Desktop/Des/st.png",
+						"retina55": "/Users/wangfei/Downloads/st.png",
+						"retina47": "/Users/wangfei/Downloads/st.png",
+						"retina55l": "/Users/wangfei/Downloads/st.png"
 					},
 					"ipad": {
 						"portrait": "/Users/wangfei/Downloads/st.png", /*iPad竖屏启动图片，分辨率：768x1004*/
@@ -1645,7 +1724,7 @@
 			]
 		}
 	},
-	"unpackage":[
-	  "README.md"
+	"unpackage": [
+		"README.md"
 	]
 }
