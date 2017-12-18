@@ -662,7 +662,8 @@
 					"page/personal/message.html",
 					"page/personal/deliveryInform.html",
 					"page/guide/debateQuery.html",
-					"page/personal/signInDay.html"
+					"page/personal/signInDay.html",
+					"bannerTpl.html"
 				],
 				"priority": 0
 			},
