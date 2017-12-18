@@ -979,7 +979,7 @@
 				}
 				var goodsInfo = onlyGoods; //商品 （普通商品 料单商品）
 //				var promotionInfo = []; //促销赠品
-//				var productCouponInfo = []; //产品券
+//				var productCouponList = []; //产品券
 				var cashCouponIds = []; //优惠券 
 				if(identityT == 6) {
 					var cusPreDeposit = preDepositb;
@@ -1052,7 +1052,7 @@
 						"productCouponInfo": productCouponList,
 						"promotionInfo": JSON.stringify(promotionInfo),
 						"deliveryInfo": JSON.stringify(deliveryInfo),
-						"cashCouponIds": '',
+						"cashCouponIds": JSON.stringify(cashCouponIds),
 						"auditNo": auditNo,
 						"billingInfo": JSON.stringify(billingInfo),
 					},

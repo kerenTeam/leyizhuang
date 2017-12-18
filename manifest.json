@@ -71,8 +71,7 @@
 		"Geolocation": {},
 		"Payment": {},
 		"Push": {},
-		"Share": {},
-		"Statistic": {}
+		"Share": {}
 	},
 	"plus": {
 		"statusbar": {
@@ -244,7 +243,7 @@
 		"runmode": "liberate",/*应用的首次启动运行模式，可取liberate或normal，liberate模式在第一次启动时将解压应用资源（Android平台File API才可正常访问_www目录）*/
 		"signature": "Sk9JTiBVUyBtYWlsdG86aHIyMDEzQGRjbG91ZC5pbw==",/*可选，保留给应用签名，暂不使用*/
 		"distribute": {
-			"plugins": {
+			"plugins": {"share":{"weixin":{"appid":"wxa4e8a82e226587dd","appsecret":"bc936a30ffcc36f3ffabb41b4293a889","description":"可选，微信分享"}},
 				"push": {
 					"igexin": {
 						"appid": "I5pt99Lp5t7zrN98wU7Nt1",
