@@ -123,6 +123,7 @@
 
 						}else{
 							mui.toast(data.message);
+							document.getElementById('main').innerHTML = '<div style="text-align:center;padding:15px;">'+data.message+'</div>' ;
 						}
 					},
 					error:function(xhr,type,errorThrown){

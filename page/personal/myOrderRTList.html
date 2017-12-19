@@ -58,11 +58,11 @@
 					<%for(var i=0;i<list.length;i++){%>
 						<% if(nowState == '全部' || nowState == list[i].status){ %>
 							<div class="orderList">
-								<h3 class="h3" onclick="openDetail('<%= list[i].orderNo%>')">
+								<h3 class="h3" onclick="openDetail('<%= list[i].returnNo%>')">
 									订单编号：<%= list[i].orderNo%>
 									<span><%= list[i].status%></span>
 								</h3>
-								<p class="p1" onclick="openDetail('<%= list[i].orderNo%>')">
+								<p class="p1" onclick="openDetail('<%= list[i].returnNo%>')">
 									<% if(list[i].goodsImgList && list[i].goodsImgList.length){%>
 										<%for(var j=0; j<list[i].goodsImgList.length; j++){%>
 											<a><img class="loadPics" data-src="<%= list[i].goodsImgList[j]%>"/></a>

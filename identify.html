@@ -20,6 +20,8 @@
 				padding: 0px;
 				margin: 0px;
 				min-height: 60px;
+				background: url(img/Spinner.svg) center center no-repeat;
+				background-size: 50px;
 			}
 			.oauth-area .oauth-btn {
 				display: inline-block;
@@ -95,6 +97,7 @@
 							//如果微信未安装，则为不启用状态
 							btn.setAttribute('class', 'oauth-btn' + (!isInstalled && service.id === 'weixin' ? (' disabled') : ''));
 							btn.authId = service.id;
+							$('.oauth-area').css('background','none');
 							btn.style.backgroundImage = 'url("images/' + service.id + '.svg")'
 							oauthArea.appendChild(btn);
 						}

@@ -12,6 +12,16 @@
 		<link rel="stylesheet" type="text/css" href="../../css/mui.min.css"/>
 		<link rel="stylesheet" href="../../css/resetY.css">
 		<link rel="stylesheet" href="../../css/youxd.css">
+		<style type="text/css">
+			.qiandao{
+				position: absolute;
+				top: 50%;left: 50%;
+				-webkit-transform: translate(-49%,-50%);
+				text-shadow:0px 0px 5px white;
+				color: red;
+				font-size: 18px;
+			}
+		</style>
 	</head>
 
 	<body style="">
@@ -25,11 +35,11 @@
 			<div class="">
 				<div style="position: relative;">
 					<img src="../../images/index/signin.png" style="width: 30%;display: block;margin: 15px auto;border-radius: 50%;"/>
-					<div class="activecl2 ft18 qiandao" onclick="qian()" style="position: absolute;top: 50%;left: 50%;-webkit-transform: translate(-49%,-50%);text-shadow:0px 0px 5px white;">
+					<div class="qiandao" onclick="qian()">
 						签到
 					</div>
 				</div>
-				
+
 				<div class="fttc maincl">
 					每日签到赚乐币
 				</div>
@@ -37,60 +47,54 @@
 			<div class="signHead">
 				<div>
 					连续签到
-					<a>5</a>
+					<a id="consecutiveSignDays">--</a>
 				</div>
 				<div>
 					本月签到
-					<a>15</a>
+					<a id="monthlySignDays">--</a>
 				</div>
 				<div>
 					总签到数
-					<a>25</a>
+					<a id="totalSignDays">--</a>
 				</div>
 				<div>
 					累计奖励
-					<a>35</a>
+					<a id="totalAwardsQty">--</a>
 				</div>
 			</div>
+
 			<div class="signBody">
-				<table border="">
-					<tr>
-						<th>签到日期</th>
-						<th>奖励</th>
-						<th>说明</th>
-					</tr>
-					<tr>
-						<td>2017-10-12</td>
-						<td>0.20</td>
-						<td>签到奖励</td>
-					</tr>
-					<tr>
-						<td>2017-10-12</td>
-						<td>0.20</td>
-						<td>签到奖励</td>
-					</tr>
-					<tr>
-						<td>2017-10-12</td>
-						<td>0.20</td>
-						<td>签到奖励</td>
-					</tr>
-					<tr>
-						<td>2017-10-12</td>
-						<td>0.20</td>
-						<td>签到奖励</td>
-					</tr>
-					<tr>
-						<td>2017-10-12</td>
-						<td>0.20</td>
-						<td>签到奖励</td>
-					</tr>
-					<tr>
-						<td>2017-10-12</td>
-						<td>0.20</td>
-						<td>签到奖励</td>
-					</tr>
+				<table>
+					<thead>
+						<tr>
+							<th>签到日期</th>
+							<th>奖励</th>
+							<th>说明</th>
+						</tr>
+					</thead>
+					<tbody id="dataD0">
+
+					</tbody>
 				</table>
 			</div>
+			<script type="text/html" id="dataS0">
+				<% if(!list.length){%>
+					<tr>
+						<td>无数据</td>
+						<td>无数据</td>
+						<td>无数据</td>
+					</tr>
+				<% }else{%>
+					<%for(var i=0;i<list.length;i++){%>
+						<tr>
+							<td><%= list[i].oneTime%></td>
+							<td><%= list[i].award%></td>
+							<td><%= list[i].description%></td>
+						</tr>
+					<% }%>
+				<% }%>
+			</script>
+			<div class="upload text-center text-xs gray" id="upload"></div>
 		</div>
 
 		<script src="../../js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
@@ -100,43 +104,155 @@
 		<script src="../../js/youxd.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
 			mui.plusReady(function(){
-					//获取缓存
-					var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
-					var userId = plus.storage.getItem('$userId');
-					var oldToken = plus.storage.getItem('oldToken');
-					$('.qiandao').html('签到')
-					//签到
-					window.qian = function(){
-						mui.ajax(serverUrl+'/app/customer/sign',{
-							data:{
-								userId:userId,
-								identityType:identityT
-							},
-							dataType:'json',
-							headers: {"Authorization": oldToken},
-							type:'post',
-							timeout:10000,
-							success:function(data,type,xhr){
-								plus.nativeUI.closeWaiting();
-								console.log('列表',data);
-								if(data.code == 0 ){
-									plus.nativeUI.closeWaiting();
-									plus.nativeUI.toast('签到成功，增加1乐币');
-									$('.qiandao').html('已签到');
-								}
-								if(data.code == 1000 ){
-									mui.toast(data.message)
-								}else if(data.code == -1 ){
-									mui.toast(data.message)
-								}
+				//获取缓存
+				var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
+				var userId = plus.storage.getItem('$userId');
+				var oldToken = plus.storage.getItem('oldToken');
 
-							},
-							error:function(xhr,type,errorThrown){
-								plus.nativeUI.closeWaiting();
-								console.log('登录响应失败');
+				//显示概况
+				mui.ajax(serverUrl+'/app/customer/sign/overview',{
+					data:{
+						cusId: 0 || userId,
+						identityType:identityT
+					},
+					dataType:'json',
+					headers: {"Authorization": oldToken},
+					type:'post',
+					timeout:10000,
+					success:function(data,type,xhr){
+						console.log('概况',data);
+						if(data.code == 0 ){
+							if(data.content.canSign){
+								$('.qiandao').html('签到');
+							}else{
+								$('.qiandao').html('已签到');
 							}
-						});
+							$('#consecutiveSignDays').html(data.content.consecutiveSignDays);
+							$('#monthlySignDays').html(data.content.monthlySignDays);
+							$('#totalSignDays').html(data.content.totalSignDays);
+							$('#totalAwardsQty').html(data.content.totalAwardsQty);
+						}else{
+							mui.toast(data.message)
+						}
+					},
+					error:function(xhr,type,errorThrown){
+						console.error('概况响应失败');
 					}
+				});
+				//显示明细
+				var Spagenum = 2; //实到页数
+				var Ypagenum = 1; //应到页数
+				var 	oneSize = 10;
+				mui.ajax(serverUrl+'/app/customer/sign/detail',{
+					data:{
+						'cusId': 0 || userId,'identityType':identityT,'page':1,'size':oneSize
+					},
+					dataType:'json',
+					headers: {"Authorization": oldToken},
+					type:'post',
+					timeout:10000,
+					success:function(data,type,xhr){
+						console.log('明细',data);
+						if(data.code == 0 ){
+							if(data.content.data.length){
+								data.content.data.forEach(function(ele){
+									ele.oneTime = new Date(ele.signTime).toLocaleString();
+								})
+							}
+							$('#dataD0').html(template('dataS0',{list:data.content.data}));
+							//下拉加载
+							$(window).scroll(function() {
+								var scrollTop = $(this).scrollTop();
+								var scrollHeight = $(document).height();
+								var windowHeight = $(this).height();
+								if(scrollTop + windowHeight == scrollHeight) {
+									if(Spagenum <= data.content.totalPage && Spagenum == Ypagenum + 1) { //当前页小于等于总页数时请求下一页
+										mui("#upload")[0].innerHTML = "<img src='../../img/Rolling.svg' />";
+										Ypagenum++; //满足加载情况,应到页数+1
+										console.log('发起请求,实到' + Spagenum + '页');
+										console.log('发起请求,应到' + Ypagenum + '页');
+
+										mui.ajax(serverUrl+'/app/customer/sign/detail',{
+											data:{
+												'cusId': 0 || userId,'identityType':identityT,'page':Ypagenum,'size':oneSize
+											},
+											dataType:'json',
+											headers: {"Authorization": oldToken},
+											type:'post',
+											timeout:10000,
+											success:function(data,type,xhr){
+												console.log('明细续',data)
+												if(data.code == 0 ){
+													if(data.content.data.length){
+														data.content.data.forEach(function(ele){
+															ele.oneTime = new Date(ele.signTime).toLocaleString();
+														})
+													}
+													$('#dataD0').append(template('dataS0',{list:data.content.data}));
+												}else{
+													mui.toast(data.message);
+												}
+												mui("#upload")[0].innerHTML = " ";
+												Spagenum++; //加载成功,当前页+1
+												console.log('成功+1,实到' + Spagenum);
+												console.log('成功+1,应到' + Spagenum);
+											},
+											error: function(xhr, type, errorThrown) {
+												Ypagenum--; //失败是应到-1
+												mui.toast("当前网络不好请重试");
+												mui("#upload")[0].innerHTML = "";
+											}
+										});
+
+									} else if(Spagenum == data.content.totalPage + 1) { //当前页不小于等于总页数时请求下一页
+										mui("#upload")[0].innerHTML = "到底了";
+									}
+								}
+							});
+
+						}else{
+							mui.toast(data.message);
+						}
+					},
+					error:function(xhr,type,errorThrown){
+						console.error('明细响应失败');
+					}
+				});
+
+
+				$('.qiandao').html('签到');
+				//签到
+				window.qian = function(){
+					mui.ajax(serverUrl+'/app/customer/sign',{
+						data:{
+							userId:userId,
+							identityType:identityT
+						},
+						dataType:'json',
+						headers: {"Authorization": oldToken},
+						type:'post',
+						timeout:10000,
+						success:function(data,type,xhr){
+							plus.nativeUI.closeWaiting();
+							console.log('列表',data);
+							if(data.code == 0 ){
+								plus.nativeUI.closeWaiting();
+								plus.nativeUI.toast('签到成功，增加1乐币');
+								$('.qiandao').html('已签到');
+							}
+							if(data.code == 1000 ){
+								mui.toast(data.message)
+							}else if(data.code == -1 ){
+								mui.toast(data.message)
+							}
+
+						},
+						error:function(xhr,type,errorThrown){
+							plus.nativeUI.closeWaiting();
+							console.log('登录响应失败');
+						}
+					});
+				}
 			})
 		</script>
 	</body>
