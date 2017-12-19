@@ -12,6 +12,7 @@
 		<style type="text/css">
 			.mui-bar-nav.mui-bar .mui-icon {color: #555!important;margin-left: 0px;}
 			.circle{background: #B62D29; width: 200px;height: 200px;position: absolute;border-radius: 50%;}
+			.quotaRecord .div01 span{display: none;}
 		</style>
 	</head>
 
@@ -33,7 +34,7 @@
 				<div class="mask"><span class=" activecl ft20" id="availableBalance">---</span></div>
 				<div class="totalEdu">剩余额度</div>
 			</div>
-			
+
 			<div id="quotaPWrap">
 				<div class="ft16 fttc padd10" style="border-bottom: 5px solid #EEEEEE;padding-bottom: 25px;">
 					总额度<span id="totalBalance"></span>
@@ -46,26 +47,24 @@
 				</div>
 				<div class="quotaRecord">
 					<h4 class="h401">信用额度消费记录</h4>
-					<div class="div01">
-						<h4 class="h402">2015年11月15号</h4>
-						<p class="p01">订单编号：DHBDHHDHDBHBHDBVH <span>详情</span></p>
-						<img src="../../img/yuan01.svg"/>
+					<div id="dataD0">
+
 					</div>
-					<div class="div01">
-						<h4 class="h402">2015年11月15号</h4>
-						<p class="p01">订单编号：DHBDHHDHDBHBHDBVH <span>详情</span></p>
-						<img src="../../img/yuan01.svg"/>
-					</div>
-					<div class="div01">
-						<h4 class="h402">2015年11月15号</h4>
-						<p class="p01">订单编号：DHBDHHDHDBHBHDBVH <span>详情</span></p>
-						<img src="../../img/yuan01.svg"/>
-					</div>
-					<div class="div01">
-						<h4 class="h402">2015年11月15号</h4>
-						<p class="p01">订单编号：DHBDHHDHDBHBHDBVH <span>详情</span></p>
-						<img src="../../img/yuan01.svg"/>
-					</div>
+					<script type="text/html" id="dataS0">
+						<% if(list.length){%>
+							<% for(var i=0;i<list.length;i++){%>
+								<div class="div01" onclick="openDetail('<%= list[i].referenceNumber%>')">
+									<h4 class="h402"><%= list[i].createTime%></h4>
+									<p class="p01">订单编号：<%= list[i].referenceNumber%> <span>详情</span></p>
+									<img src="../../img/yuan01.svg"/>
+								</div>
+							<% }%>
+						<% }else{%>
+							<div class="">
+								暂无数据
+							</div>
+						<% }%>
+					</script>
 				</div>
 			</div>
 
@@ -76,8 +75,20 @@
 		<script src="../../js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../../js/mui.min.js"></script>
 		<script src="../../js/default.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/artTemplate-native.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
 			mui.init();
+			//打开订单详情
+			function openDetail(orderNo,evaluat){
+				openview({
+					view:'../personal/myOrderDetail.html',
+					id:'myOrderDetail',
+					extrasobj:{
+						orderNo:orderNo,
+						evaluat:evaluat
+					}
+				})
+			}
 			function addPercent(num) {
 				if(num > 100) return;
 				var c = document.getElementsByClassName("circle")[0];
@@ -144,6 +155,29 @@
 						console.log('登录响应失败');
 					}
 				});
+
+				//消费记录
+				mui.ajax(serverUrl+'/app/employee/seller/creditMoney/log',{
+					data:{
+						'userId': 0 || userId,'identityType':identityT
+					},
+					dataType:'json',
+					headers: {"Authorization": oldToken},
+					type:'post',
+					timeout:10000,
+					success:function(data,type,xhr){
+						console.log('消费记录',data);
+						if(data.code == 0 ){
+							$('#dataD0').append(template('dataS0',{list:data.content}));
+						}else{
+							mui.toast(data.message);
+						}
+					},
+					error: function(xhr, type, errorThrown) {
+						console.error('消费记录 响应失败');
+					}
+				});
+
 			})
 		</script>
 	</body>

@@ -128,9 +128,7 @@ mui.plusReady(function(){
 })
 
 function showSfun1(msg,fun1,fun0){
-
-	if(document.getElementById('shareWrap10')){
-	}else{
+	if(!document.getElementById('shareWrap10')){
 		var pathStr = '';
 		if(msg.myIsIndex){
 			pathStr = '../';

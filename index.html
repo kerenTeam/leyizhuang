@@ -772,6 +772,8 @@
 						$('.guides,.worker').css('display', '')
 						$('.cusMan,.guides').css('display', 'none')
 						getIcon(2)
+					} else { //配送员
+
 					}
 					//icon
 					function getIcon(icontype){
@@ -1124,6 +1126,7 @@
 			});
 
 			mui.plusReady(function() {
+				var badge = null;
 				plus.navigator.setStatusBarBackground('#f7f7f7');
 				// 设置系统状态栏样式为深色前景色样式
 				plus.navigator.setStatusBarStyle('dark');
@@ -1140,7 +1143,12 @@
 					if(cartNum>999){
 						cartNum= '999+'
 					}
-					drawBadge();
+					if(cartNum != 0){
+						drawBadge();
+					}else{
+						drawBadge('hide');
+					}
+
 				})
 				document.addEventListener('refreshid', function() {
 					//底部选项卡切换
@@ -1229,11 +1237,17 @@
 				}]);
 				// append 到父webview中
 				self.append(drawNativeIcon);
-				drawBadge();
 
-				function drawBadge() {
+				//初始化下料清单角标
+				if(cartNum != 0){
+					drawBadge();
+				}else{
+					drawBadge('hide');
+				}
+				function drawBadge(hide) {
+					if(badge){badge.clear()}
 					//绘制角标
-					var badge = util.drawNative('icon', {
+					badge = util.drawNative('icon', {
 						bottom: '30px',
 						left: '68%',
 						width: '20px',
@@ -1242,7 +1256,7 @@
 						tag: 'rect',
 						id: 'iconBg',
 						position: {
-							top: '0px',
+							top:'0px',
 							left: '0px',
 							width: '20px',
 							height: '15px'
@@ -1267,13 +1281,7 @@
 							size: '10px'
 						}
 					}]);
-					// append 到父webview中
-//											if(cartNum>0){
-					self.append(badge);
-//											}else{
-//												self.append(badge);
-//												badge.hide();
-//											}
+					if(!hide){self.append(badge);}
 
 				}
 

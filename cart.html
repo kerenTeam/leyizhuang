@@ -43,7 +43,7 @@
 			<div class="eachGroup" id="cartData"></div> <!--单品部分-->
 		</div>
 		<!--产品券部分-->
-		<script type="text/html" id="couponsTpl"> 
+		<script type="text/html" id="couponsTpl">
 				<dl class="cart" style="background-color: #F8F8F8!important;">
 					<dt><div class="mui-checkbox"><input name="checkbox" class="groupCheck cssp" data-id="<%=lists.couponsList[0].cusId%>" data-phone="<%=lists.mobile%>" checked="true" type="checkbox"></div>
 					<div class="shopName" style="white-space: nowrap;overflow: hidden;max-width:2.5rem;" data-cusid="<%=lists.couponsList[0].cusId%>">
@@ -60,7 +60,7 @@
 							<input name="checkbox" data-id="<%=lists.couponsList[j].goodsId%>" data-type="coupon" data-hid="<%=lists.couponsList[j].id%>" checked="true" type="checkbox"></div>
 							<a class="goodsPic"><img src="<%=lists.couponsList[j].coverImageUri%>" onerror="javascript:this.src='img/editset.png';" /></a>
 							<div class="goodsInfor">
-								<h2 class="ft16">  
+								<h2 class="ft16">
 							     <%=lists.couponsList[j].skuName%>
 							   </h2>
 								<div class="priceArea">
@@ -86,7 +86,7 @@
 		</script>
 		<!--料单审核部分-->
 		<script type="text/html" id="auditTpl">
-		 
+
 				<dl class="cart" style="background-color: #F8F8F8!important;">
 					<dt><div class="mui-checkbox"><input name="checkbox" class="groupCheck" data-id="<%=lists.auditNo%>" checked="true" type="checkbox"></div>
 					<div class="shopName" style="white-space: nowrap;overflow: hidden;max-width:2.5rem;">
@@ -101,7 +101,7 @@
 							<input name="checkbox" data-id="<%=lists.goodsList[j].goodsId%>" data-auditNo="<%=lists.auditNo%>" data-type="ld" data-hid="<%=lists.goodsList[j].id%>" checked="true" type="checkbox"></div>
 							<a class="goodsPic"><img src="<%=lists.goodsList[j].coverImageUri%>" onerror="javascript:this.src='img/editset.png';" /></a>
 							<div class="goodsInfor">
-								<h2 class="ft16">  
+								<h2 class="ft16">
 							     <%=lists.goodsList[j].skuName%>
 							   </h2>
 								<div class="priceArea">
@@ -135,9 +135,9 @@
 						<input name="checkbox" type="checkbox" data-id='<%=list[i].goodsId%>' data-hid="<%=list[i].id%>"></div>
 					<a class="goodsPic"><img src="<%=list[i].coverImageUri%>" onerror="javascript:this.src='img/editset.png';" /></a>
 					<div class="goodsInfor">
-						<h2 class="ft16">  
+						<h2 class="ft16">
 					    <%=list[i].skuName%>
-					    
+
 					   </h2>
 						<div class="priceArea">
 							<div class="extraBrief ft14">
@@ -162,7 +162,7 @@
 
 			</dl>
 			<!--bottom nav-->
-			
+
 		</script>
 		<div style="height:1rem;"></div>
 		<aside class="btmNav">
@@ -181,7 +181,7 @@
 	</body>
 
 	<script>
-		
+
 		mui.plusReady(function() {
 			var page = plus.webview.currentWebview().page;
 			var cusId = plus.webview.currentWebview().cusid;
@@ -220,7 +220,7 @@
 						console.log('下料清单返回', data);
 						if(data.code == 0) {
 							var m = 0;
-							if(data.content) { 
+							if(data.content) {
 								if(data.content.auditListRes && data.content.auditListRes.goodsList && data.content.auditListRes.goodsList.length>0){
 									m = m+1;
 									$('#auditList').html(template('auditTpl', {lists:data.content.auditListRes}));
@@ -228,19 +228,19 @@
 									$('#auditList').html('')
 								}
 								if(data.content.couponListRes && data.content.couponListRes.couponsList && data.content.couponListRes.couponsList.length>0){
-									m = m+1; 
+									m = m+1;
 									$('#couponsList').html(template('couponsTpl', {lists:data.content.couponListRes}));
 								}else{
 									$('#couponsList').html('')
 								}
 								if(data.content.materialListRes && data.content.materialListRes.length>0){
-									m = m+1; 
+									m = m+1;
 									$('#cartData').html(template('cartTpl', {list: data.content.materialListRes}));
 								}else{
 									$('#cartData').html('')
 								}
-								
-							} 
+
+							}
 							if(m == 0){
 								$(".editAll,aside").hide();
 								$('#cartData').html(tipsCont);
@@ -260,33 +260,33 @@
 								})
 							//编辑所有
 							$(".editAll").toggle(function() {
-								$(".delBtn,.delBtnAll").show(); 
+								$(".delBtn,.delBtnAll").show();
 								$("#allCartData").find("h2").css("visibility", "visible");
-								$(this).html("完成"); 
+								$(this).html("完成");
 								$(".numberWidget,.goOrder").hide();
 								$('.mui-checkbox input').attr('checked', false);
 								$(".groupCheck").attr("disabled",false);
-								$("dd").find("input[type='checkbox']").attr("disabled",false); 
+								$("dd").find("input[type='checkbox']").attr("disabled",false);
 							}, function() {
 								$(".delBtn,.delBtnAll").css("display", "none");
-								$("#allCartData").find("h2").css("visibility", "visible"); 
+								$("#allCartData").find("h2").css("visibility", "visible");
 								$(this).html("编辑");
 								$(".numberWidget,.goOrder").show();
 								$('.mui-checkbox input').attr('checked', true);
 								$(".groupCheck").attr("disabled",true);
-								$("groupCheck").parent().find("input[type='checkbox']").attr("disabled",false); 
-								
+								$("groupCheck").parent().find("input[type='checkbox']").attr("disabled",false);
+
 							});
 							//删除所有
-							$(".delBtnAll").unbind('click').click(function() { 
+							$(".delBtnAll").unbind('click').click(function() {
 								var ALLcheckLength = $("dd").find("input[type='checkbox']:checked").length;
 								if(ALLcheckLength == 0) {
 									mui.toast("您还未选择要删除的商品哦！")
-								} else {  
+								} else {
 									mui.confirm('确认删除这' + ALLcheckLength + '件商品吗？', '提示', ['取消', '确定'], function(e) {
 										if(e.index == 1) {
 											var delThis = $("dd").find("input[type='checkbox']:checked").parentsUntil("dl");
-											//删除选中的 购物车 缓存 
+											//删除选中的 购物车 缓存
 											var allgoods = '';
 											$("dd").find("input[type='checkbox']:checked").each(function(index){
 												var delID=$(this).attr("data-hid");
@@ -294,10 +294,10 @@
 													allgoods+=delID;
 												}else{
 													allgoods+=delID+','
-												} 
+												}
 											})
 											doDelete(allgoods);
-											function doDelete(allgoods){ 
+											function doDelete(allgoods){
 												mui.ajax(serverUrl + '/app/materialList/delete', {
 													data: {
 														userId: userId,
@@ -313,27 +313,27 @@
 													success: function(data, type, xhr) {
 														plus.nativeUI.closeWaiting();
 														console.log('删除全部', data);
-														if(data.code == 0) { 
+														if(data.code == 0) {
 															mui.toast('删除成功');
 															mui.fire(plus.webview.getWebviewById('page/goodList.html'),'refresh');
 															mui.fire(plus.webview.getWebviewById('cart.html'),'refresh');
-															cartload(); 
+															cartload();
 														} else {
 															mui.toast(data.message)
 														}
-		
+
 													},
 													error: function(xhr, type, errorThrown) {
 														plus.nativeUI.closeWaiting();
 													}
-												}); 
+												});
 											}
-										} 
+										}
 									})
 								}
-				
+
 							});
- 
+
 							//单组 全选
 							$('dl dt .mui-checkbox').click(function() {
 								if($(this).find("input").is(':checked')) {
@@ -352,12 +352,12 @@
 											$('aside input').attr("checked", false);
 										}
 									}
-			
+
 								} else {
 									$(this).parentsUntil(".eachGroup").find("input").attr("checked", false);
 									$('aside input').attr("checked", false);
 								}
-			
+
 								countFuc();
 							})
 							//单个 选择
@@ -390,14 +390,14 @@
 								}
 								countFuc();
 							})
-							//数量选择 
+							//数量选择
 							$('.mui-numbox input').on('change', function() {
 								plus.nativeUI.showWaiting();
 								var cur = $(this);
 								var number = $(this).val(); //当前数量
 								var goodsid = $(this).attr("data-id"); //当前商品行id
 								var gid = $(this).attr("data-gid"); //当前商品id
-								
+
 								if(number > 0){
 									mui.ajax(serverUrl + '/app/materialList/edit/number', {
 										data: {
@@ -421,7 +421,7 @@
 											} else {
 												mui.toast(data.message)
 											}
-	
+
 										},
 										error: function(xhr, type, errorThrown) {
 											plus.nativeUI.closeWaiting();
@@ -460,10 +460,10 @@
 											});
 										}else{
 											plus.nativeUI.closeWaiting();
-											cur.val(1);	
-											cur.siblings().removeAttr('disabled'); 
+											cur.val(1);
+											cur.siblings().removeAttr('disabled');
 										}
-	
+
 									})
 								}
 								countFuc();
@@ -514,7 +514,7 @@
 												qty: gnum,
 											})
 										}
-										
+
 										materialList.push({
 											id: $(this).attr('data-id'),
 											qty: $(this).parent().parent().find('.mui-input-numbox').val(),
@@ -542,7 +542,7 @@
 													id: 'chooseCustom'
 												})
 											}
-											
+
 										} else if(identityT == 3) {
 											openview({
 												view: 'page/order/workerMaterial.html',
@@ -577,15 +577,15 @@
 				//计算总价和总数量
 				function countFuc() {
 					var fen = 0; //总份数
-					var pay = 0; //总金额 
+					var pay = 0; //总金额
 					$("dd").find("input[type='checkbox']:checked").each(function() {
-						//价格  
+						//价格
 						var price = parseFloat($(this).parentsUntil('dl').find('.price').html());
 						//当前数量
 						var num = parseInt($(this).parentsUntil('.eachGroup').find("input[type='number']").val());
 						pay += num * price;
 						fen += num;
-					}) 
+					})
 					//赋值
 					$(".totalNum").html(fen);
 					$(".totalMoney").html(parseFloat(pay).toFixed(2));

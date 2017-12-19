@@ -110,7 +110,7 @@
 				实付款：<span class="redC"><%= detail.BillingDetailResponse.amountPayable%>元</span>
 			</div>
 			<!--订单评价-->
-			<div class="Dpart3">
+			<div class="Dpart3" id="evaluat">
 				<h4 class="fineB dingdanPJ">订单服务评价：</h4>
 				<div class="mui-content-padded">
 					<div class="vm">
@@ -207,6 +207,7 @@
 				var userId = plus.storage.getItem('$userId');
 				var oldToken = plus.storage.getItem('oldToken');
 				var orderNo = plus.webview.currentWebview().orderNo;
+				var evaluat = plus.webview.currentWebview().evaluat;
 
 				/*订单详情*/
 				mui.ajax(serverUrl + '/app/order/detail',{
@@ -220,6 +221,8 @@
 						if(data.code == 0){
 							data.content.BillingDetailResponse = data.content.customerBillingDetailResponse || data.content.managerBillingDetailResponse || data.content.sellerBillingDetailResponse;
 							document.getElementById('main').innerHTML = template('mainS',{detail:data.content});
+							//evaluat && (document.body.scrollTop = document.body.scrollHeight);
+							evaluat && (document.getElementById("evaluat").scrollIntoView());
 						}else{
 							mui.toast(data.message);
 						}

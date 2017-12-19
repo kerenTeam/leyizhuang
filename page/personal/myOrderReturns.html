@@ -244,7 +244,7 @@
 						}
 					})
 					var reasonInfo = $('#BZCon').val();//备注
-					var cusId = null;//顾客id
+					var cusId = plus.webview.currentWebview().cusId;//顾客id
 					var backType = $(".typeRadio[type='radio']:checked").attr('dataType');//退货方式
 					var deliveryTime = $('.pstime').html();//退货时间
 					var returnStoreCode = null,returnStoreName = null,returnStoreAddress = null,rejecter = null,rejecterPhone = null,
@@ -302,7 +302,7 @@
 						  	"remarksInfo":reasonInfo,
 						  	"reasonInfo":reasonInfo,
 						  	"returnGoodsInfo":goodArray
-						}
+						};
 						console.error(dataObj);
 						mui.ajax(serverUrl + '/app/returnOrder/create',{
 							data:dataObj,
