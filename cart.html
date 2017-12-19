@@ -98,7 +98,7 @@
 					<%for(var j=0;j<lists.goodsList.length;j++){%>
 					<dd>
 						<div class="mui-checkbox" style="top: 30%;">
-							<input name="checkbox" data-id="<%=lists.goodsList[j].goodsId%>" data-type="ld" data-hid="<%=lists.goodsList[j].id%>" checked="true" type="checkbox"></div>
+							<input name="checkbox" data-id="<%=lists.goodsList[j].goodsId%>" data-auditNo="<%=lists.auditNo%>" data-type="ld" data-hid="<%=lists.goodsList[j].id%>" checked="true" type="checkbox"></div>
 							<a class="goodsPic"><img src="<%=lists.goodsList[j].coverImageUri%>" onerror="javascript:this.src='img/editset.png';" /></a>
 							<div class="goodsInfor">
 								<h2 class="ft16">  
@@ -417,6 +417,7 @@
 											console.log('加入购物车', data);
 											if(data.code == 0) {
 												mui.fire(plus.webview.getWebviewById('goodList'),'refresh');
+												mui.fire(plus.webview.getWebviewById('page/goodList.html'),'refresh');
 											} else {
 												mui.toast(data.message)
 											}
@@ -447,6 +448,7 @@
 													console.log('删除', data);
 													if(data.code == 0) {
 														mui.fire(plus.webview.getWebviewById('goodList'),'refresh');
+														mui.fire(plus.webview.getWebviewById('page/goodList.html'),'refresh');
 														mui.fire(plus.webview.getWebviewById('cart.html'), 'refresh');
 													} else {
 														mui.toast(data.message)
@@ -495,6 +497,12 @@
 												qty: gnum,
 											})
 										}else{
+											if(gdtype == 'ld'){
+												var auditNo = $(this).attr('data-auditNo');
+											}else{
+												var auditNo = '';
+											}
+											plus.storage.setItem('auditNo',auditNo);
 											var goodsLineType = 'GOODS';
 											justGoods.push({
 												id: gid,

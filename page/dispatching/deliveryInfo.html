@@ -133,7 +133,7 @@
 					<%}%>
 					
 				</div>
-				<div class="footBtn">
+				<div class="footBtn" style="display: none;">
 					<div class="aClick maincl" style="background-color: #DDDDDD;" onclick="refuse('<%=list.orderNumber%>')">拒收</div>
 					<div class="aClick" style="background-color: #B42E28;color: white;" onclick="receipt('<%=list.orderNumber%>','<%=list.collectionAmount%>')">确认收货</div>
 				</div>
@@ -165,6 +165,8 @@
 				var userId = plus.storage.getItem('$userId');
 				var oldToken = plus.storage.getItem('oldToken');
 				var orderNumber = plus.webview.currentWebview().orderNumber;
+				var ordertype = plus.webview.currentWebview().orderType;
+				
 				plus.nativeUI.showWaiting();
 				mui.ajax(serverUrl+'/app/dispatching/shipper/detail',{
 					data:{userID:userId,identityType:identityT,orderNumber:orderNumber},
@@ -178,6 +180,11 @@
 						 
 							if(data.content && data.content.goodsList){ 
 								document.getElementById('infoListDiv').innerHTML = template('infoList',{list:data.content});
+								if(ordertype == 0){
+									$('.footBtn').show();
+								}else{
+									$('.footBtn').hide();
+								}
 							}else{
 								document.getElementById('infoListDiv').innerHTML = '<div style="text-align: center;padding: 50px;"><img src="../../images/order/order.png" style="width: 100px;" /><div class="ft13 disablecl">暂无数据</div></div>';
 							}

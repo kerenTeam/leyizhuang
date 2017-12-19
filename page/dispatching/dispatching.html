@@ -189,7 +189,7 @@
 				<script id="infoList" type="text/html">
 					<%for(var i=0;i<list.length;i++){%>
 						<%if(listType == 2){%>
-							<div class="checkList" onclick="goInfo('<%=list[i].orderNumber%>')">
+							<div class="checkList" onclick="goInfo('<%=list[i].orderNumber%>',2)">
 								<h4 class="fineB ft16">
 									<span>出货单号：<%=list[i].orderNumber%></span>
 									<span class="mui-icon mui-icon-arrowright mui-pull-right ft20 maincl"></span>
@@ -244,7 +244,7 @@
 								</div>
 							</div>
 						<%}else if(listType == 0){%>
-							<div class="checkList" onclick="goInfo('<%=list[i].orderNumber%>')">
+							<div class="checkList" onclick="goInfo('<%=list[i].orderNumber%>',0)">
 								<h4 class="fineB ft16">
 									<span>出货单号：<%=list[i].shipperNumber%></span>
 						    			<span class="mui-icon mui-icon-arrowright mui-pull-right maincl ft20 maincl"></span>
@@ -296,10 +296,63 @@
 								</div>
 							</div>
 						<%}else if(listType == 1){%>
-							<div class="checkList" onclick="goInfo('<%=list[i].orderNumber%>')">
+							<div class="checkList" onclick="goInfo('<%=list[i].orderNumber%>',1)">
 								<h4 class="fineB ft16">
 									<span>出货单号：<%=list[i].shipperNumber%></span>
 						    			<span class="mui-icon mui-icon-arrowright mui-pull-right maincl ft20 maincl"></span>
+								</h4>
+								<div class="checkListCon clearfix afterBorder ft15">
+									<div class="flexr">
+										<div>
+											<span class="disablecl">
+												顾客：
+											</span>
+											<span class="titcl">
+												<%=list[i].receiver%>
+											</span>
+										</div>
+										<div id="">
+											<span class="disablecl">
+												电话：
+											</span>
+											<span class="titcl">
+												<a href="tel:<%=list[i].receiverPhone%>"><%=list[i].receiverPhone%></a>
+											</span>
+										</div>
+									</div>
+									<div class="flexr">
+										<div>
+											<span class="disablecl">
+												导购：
+											</span>
+											<span class="titcl">
+												<%=list[i].sellerName%>
+											</span>
+										</div>
+										<div>
+											<span class="disablecl">
+												电话：
+											</span>
+											<span class="titcl">
+												<a href="tel:<%=list[i].sellerPhone%>"><%=list[i].sellerPhone%></a>
+											</span>
+										</div>
+									</div>
+									<div class="ft15"><span class="disablecl">配送地址：</span><span class="titcl"><%=list[i].shippingAddress%></span><img src="../../images/order/map.svg" onclick="goMap('<%=list[i].shippingAddress%>')" style="width: 30px;vertical-align: bottom;margin-top: 5px;" class="mui-pull-right"/></div>
+									<div class="ft15"><span class="disablecl">配送日期：</span><span class="titcl"><%=list[i].deliveryTime%></span></div>
+								</div>
+	
+								<div class="checkListB beforeBorder">
+								  <span class="titcl">代收款：</span><span class="activecl">¥<%=list[i].collectionAmount%></span>
+									
+								</div>
+							</div>
+						<%}else{%>
+							<div class="checkList" onclick="goInfo('<%=list[i].orderNumber%>',3)">
+								<h4 class="fineB ft16">
+									<span>出货单号：<%=list[i].shipperNumber%></span>
+									
+						    			<span class="mui-pull-right maincl maincl ft14"><%=list[i].auditStatus%><span class="mui-icon mui-icon-arrowright ft20"></span></span>
 								</h4>
 								<div class="checkListCon clearfix afterBorder ft15">
 									<div class="flexr">
@@ -358,11 +411,11 @@
 	<script src="../../js/default.js" type="text/javascript" charset="utf-8"></script>
 	<script src="../../js/artTemplate-native.js" type="text/javascript" charset="utf-8"></script>
 	<script type="text/javascript">
-		function goInfo(audi){
+		function goInfo(audi,type){
 			openview({
 				view:'deliveryInfo.html',
 				id:'deliveryInfo',
-				extrasobj:{orderNumber:audi}
+				extrasobj:{orderNumber:audi,orderType:type}
 			})
 		}
 		function goMap(address){
@@ -499,6 +552,9 @@
 				}else if(index == 1){
 					var apiString = '/app/dispatching/pickUp/list';
 					var data = {'userID':userId,'identityType':identityT}
+				}else{
+					var apiString = '/app/dispatching/finish/list';
+					var data = {'userId':userId,'identityType':identityT}
 				}
 				mui.ajax(serverUrl+apiString,{
 					data:data,

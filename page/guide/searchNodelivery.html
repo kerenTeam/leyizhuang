@@ -147,7 +147,7 @@
 		
 		.qashadow {
 			margin-bottom: 10px;
-			box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.1);
+			box-shadow: 0px 0px 1px 1px rgba(0, 0, 0, 0.1);
 			background-color: white;
 			padding: 10px
 		}
@@ -239,21 +239,21 @@
 		</script>
 
 		<!--tab-->
-		<div id="tab">
+		<div id="tab" style="margin-top: 51px;">
 
-			<div id="searchOut" style="margin-top: 51px;"></div>
+			<div id="searchOut"></div>
 
 			<script type="text/html" id="searchOutTpl">
 				<div class="tabcontent tc1 taactive">
 
 					<%for(var i=0;i < list.length;i++){%>
-					<div class="qashadow" onclick="openDetail(<%=list[i].cusid%>)">
-						<div class="qtop flexr">
+					<div class="qashadow" onclick="openDetail(<%=list[i].cusId%>)">
+						<div class="qtop flexr padd10">
 							<div class="ft14" style="display: flex;align-items: center;">
 								<div style="flex: 1;margin-left: 10px;">
-									<div class="maincl ft14">
-										<span class="disablecl"><%=list[i].name%></span>
-										<span class="disablecl"><%=list[i].mobile%></span>
+									<div class="maincl ft16">
+										<span class="maincl"><%=list[i].name%></span>
+										<span class="maincl"><%=list[i].mobile%></span>
 									</div>
 								</div>
 							</div>
@@ -393,46 +393,46 @@
 				var oldToken = plus.storage.getItem("oldToken");
 				var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
 
-//				mui.ajax(serverUrl+'/app/user/search/customer', {
-//					data: {
-//						identityType: identityT,
-//						keywords: words,
-//						userId: userId
-//					},
-//					dataType: 'json',
-//					headers: {
-//						"Authorization": oldToken
-//					},
-//					type: 'post',
-//					timeout: 10000,
-//					success: function(data, type, xhr) {
-//						console.log('搜索商品列表' + JSON.stringify(data));
-//						if(data.code == 0) {
-//							plus.nativeUI.closeWaiting();
-//							if(data.content) {
-//								if(data.content.length) {
-//									$('#searchOut').html(template('searchOutTpl', {
-//										list: data.content
-//									}));
-//
-//								} else {
-//									$('#searchOut').html('<div style="text-align:center;padding:15px;font-size: 12px;">暂无搜索结果</div>')
-//								}
-//							} else {
-//								$('#searchOut').html('<div style="text-align:center;padding:15px;font-size: 12px;">暂无搜索结果</div>')
-//							}
-//
-//						} else {
-//							mui.toast(data.message)
-//						}
-//
-//					},
-//					error: function(xhr, type, errorThrown) {
-//						plus.nativeUI.closeWaiting();
-//						mui.toast(type)
-//						console.log('登录响应失败');
-//					}
-//				});
+				mui.ajax(serverUrl+'/app/user/get/productCoupon/customer', {
+					data: {
+						identityType: identityT,
+						keywords: words,
+						userId: userId
+					},
+					dataType: 'json',
+					headers: {
+						"Authorization": oldToken
+					},
+					type: 'post',
+					timeout: 10000,
+					success: function(data, type, xhr) {
+						console.log('搜索商品列表' + JSON.stringify(data));
+						if(data.code == 0) {
+							plus.nativeUI.closeWaiting();
+							if(data.content) {
+								if(data.content.length) {
+									$('#searchOut').html(template('searchOutTpl', {
+										list: data.content
+									}));
+
+								} else {
+									$('#searchOut').html('<div style="text-align:center;padding:15px;font-size: 12px;">暂无搜索结果</div>')
+								}
+							} else {
+								$('#searchOut').html('<div style="text-align:center;padding:15px;font-size: 12px;">暂无搜索结果</div>')
+							}
+
+						} else {
+							mui.toast(data.message)
+						}
+
+					},
+					error: function(xhr, type, errorThrown) {
+						plus.nativeUI.closeWaiting();
+						mui.toast(type)
+						console.log('登录响应失败');
+					}
+				});
 			}
 
 		})

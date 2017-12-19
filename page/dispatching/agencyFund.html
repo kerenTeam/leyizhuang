@@ -39,12 +39,12 @@
 					今日
 				</span>-->
 				<div style="margin-top:14px ;">
-					开始：<input type="date" name="" id="" value="" class=";" placeholder="选择时间"/>
+					开始：<input type="date" name="" id="" value="" class="start" placeholder="选择时间"/>
 				</div>
 				<div style="margin-top:14px ;">
-					结束：<input type="date" name="" id="" value="" class="end"placeholder="选择时间"/>
+					结束：<input type="date" name="" id="" value="" class="end" placeholder="选择时间"/>
 				</div>
-				<span class="mui-icon mui-icon-search activecl"></span>
+				<span class="mui-icon mui-icon-search activecl" onclick="goSearch()"></span>
 			</div>
 
 			<!--列表loading-->
@@ -135,43 +135,56 @@
 			var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
 			var userId = plus.storage.getItem('$userId');
 			var oldToken = plus.storage.getItem('oldToken');
-
-			mui.ajax(serverUrl+'/app/delivery/agencyFund/list',{
-				data:{
-					userId:userId,
-					identityType:identityT
-				},
-				dataType:'json',
-				type:'post',
-				timeout:10000,
-				headers:{"Authorization":oldToken},
-				success:function(data,type,xhr){
-					console.log('代收款明细 ',data);
-					var timeLoad = setInterval(function(){
-						clearTimeout(timeLoad),timeLoad = null;
-						if(data.code == 0){
-							$('#loadingdiv').css('height','0px');
-							if(data.content && data.content.length){
-								document.getElementById('checkList').innerHTML = template('checkTpl',{list:data.content});
+			window.goSearch = function(){
+				getList($('.start').val(),$('.end').val());
+			}
+			getList('','');
+			function getList(start,end){
+				plus.nativeUI.showWaiting()
+				mui.ajax(serverUrl+'/app/delivery/agencyFund/list',{
+					data:{
+						userId:userId,
+						identityType:identityT,
+						startDate:start,
+						endDate:end,
+					},
+					dataType:'json',
+					type:'post',
+					timeout:10000,
+					headers:{"Authorization":oldToken},
+					success:function(data,type,xhr){
+						console.log('代收款明细 ',data);
+						var timeLoad = setInterval(function(){
+							clearTimeout(timeLoad),timeLoad = null;
+							if(data.code == 0){
+								$('#loadingdiv').css('height','0px');
+								if(data.content && data.content.length){
+									document.getElementById('checkList').innerHTML = template('checkTpl',{list:data.content});
+									plus.nativeUI.closeWaiting()
+								}else{
+									plus.nativeUI.closeWaiting()
+									document.getElementById('checkList').innerHTML = '<div style="text-align: center;padding: 50px;"><img src="../../images/order/order.png" style="width: 100px;" /><div class="ft13 disablecl">暂无数据</div></div>';
+								}
+	
 							}else{
-								document.getElementById('infoListDiv').innerHTML = '<div style="text-align: center;padding: 50px;"><img src="../../images/order/order.png" style="width: 100px;" /><div class="ft13 disablecl">暂无数据</div></div>';
+								plus.nativeUI.closeWaiting()
+								mui.toast(data.message);
 							}
-
-						}else{
-							mui.toast(data.message);
-						}
-					},500)
-				},
-				error:function(xhr,type,errorThrown){
-					console.log('响应失败  !');
-				}
-			});
+						},500)
+					},
+					error:function(xhr,type,errorThrown){
+						console.log('响应失败  !');
+						plus.nativeUI.closeWaiting()
+						
+					}
+				});
+			}
 
 			$('input').change(function(){
-				alert($('.end').val());
-				if($('.end').val() || $('.start').val()){
+				if($('.end').val() && $('.start').val()){
 					if($('.end').val() < $('.start').val()){
-						$(this).val('')
+						$(this).val('');
+						mui.toast('结束时间不能小于开始时间')
 					}
 				}
 			})

@@ -106,30 +106,8 @@
 		
 		.mui-table-view-cell.mui-collapse .mui-collapse-content {
 			margin: 11px -15px -15px;
-		}
+		} 
 		
-		#maskInfo {
-			z-index: 99999;
-			position: fixed;
-			top: 0;
-			left: 0;
-			width: 100%;
-			bottom: 0;
-			background-color: rgba(0, 0, 0, .5)
-		}
-		
-		.paychoose {
-			background-color: white;
-			bottom: 0!important;
-			position: absolute;
-			right: 0;
-			left: 0;
-		}
-		
-		.paychoose img {
-			width: 40px;
-			margin: 0 5px;
-		}
 	</style>
 
 	<body>
@@ -310,7 +288,7 @@
 					<%if(lebi && lebi.quantity && lebi.rebate){%>
 					<div id="coupon" class="afterBorder">
 						<dd class="pad10 kv-line-r">
-							<div class="titcl">共<span id="totalJfen" style="color: #ff5f32;"><%=lebi.quantity%></span>乐币,抵用<span id="itMinus" style="color: #ff5f32;"><span>¥<%=lebi.rebate%></span></span>
+							<div class="titcl">共<span id="totalJfen" class="activecl"><%=lebi.quantity%></span>乐币,抵用<span id="itMinus" class="activecl"><span>¥<%=lebi.rebate%></span></span>
 							</div>
 							<div id="changeJf" class="mui-checkbox"><input name="checkbox" class="groupCheck" type="checkbox"></div>
 						</dd>
@@ -356,7 +334,7 @@
 			<!--操作表-->
 			<div id="maskInfo" style="display: none;">
 				<!-- 可选择菜单 -->
-				<ul class="paychoose ft14">
+				<ul class="paychoose ft16">
 					<li class="fttc pad10 afterBorder ft16 activecl">
 						应付金额：<span id="payMoney">---</span>
 					</li>
@@ -655,7 +633,12 @@
 							$('#credit').html('¥' + 0);
 							$('#credit').next().hide()
 						}
-						 
+						if(data.content.creditMoney) {
+							$('#creditVal').html('¥' + data.content.creditMoney)
+						} else {
+							$('#creditVal').html('¥' + 0);
+							$('#creditVal').next().hide()
+						}
 						if(data.content.storeSubvention) {
 							$('#cash').html('¥' + data.content.storeSubvention)
 						} else {
@@ -847,7 +830,7 @@
 					lebi = 0
 				}
 				var payTotal = Number(orderAll) - Number(memberDiscount) - Number(orderDiscount) + Number(freight) - Number(couponDiscount) - Number(lebi);
-				var curTotal = Number(orderAll) - Number(memberDiscount) - Number(orderDiscount) + Number(freight) - Number(couponDiscount) - Number(lebi) - Number(credit) - Number(cash) - Number(creditVal) - Number(cashHelp) - Number(preDepositb);
+				var curTotal = Number(orderAll) - Number(memberDiscount) - Number(orderDiscount) + Number(freight) - Number(couponDiscount) - Number(lebi) - Number(credit) - Number(cash) - Number(creditVal) - Number(preDepositb);
 				//				alert(orderAll + ' ' + memberDiscount + ' ' + orderDiscount + ' ' + freight + ' ' + couponDiscount + " " + lebi);
 				if(payTotal<0){
 					payTotal = 0
@@ -938,7 +921,7 @@
 			$('.goOrder').unbind('click').click(function() {
 				event.stopPropagation();
 				var deliveryType, bookingStoreId, bookingStoreName, bookingStoreAddress,
-					receiver, receiverPhone, deliveryCity, deliveryCounty, deliveryStreet, residenceName, detailedAddress, deliveryTime, isOwnerReceiving, auditNo, remark;
+					receiver, receiverPhone, deliveryCity, deliveryCounty, deliveryStreet, residenceName, detailedAddress, deliveryTime, isOwnerReceiving, auditNo = plus.storage.getItem('auditNo') || '', remark;
 				remark = $('#remark').val();
 				var delivery = $("input[name='peis']:checked").val();
 				deliveryType = (delivery == 1) ? "SELF_TAKE" : "HOUSE_DELIVERY";
@@ -1005,9 +988,23 @@
 					"collectionAmount": cashHelp
 				}; //账单明细
 				console.log('账单明细', billingInfo)
-				$('.hasChoosed').each(function() {
-					cashCouponIds.push($(this).attr('data-id'))
+				$('.hasChoosed').each(function(index) {
+					cashCouponIds.push(parseInt($(this).attr('data-id')))
+//					if(index == $('.hasChoosed').length-1){
+//						cashCouponIds+= parseInt($(this).attr('data-id'))
+//					}else{
+//						cashCouponIds+= parseInt($(this).attr('data-id'))+','
+//					}
+					
 				})
+//				var dataStrArr=cashCouponIds.split(",");//分割成字符串数组  
+//			    var dataIntArr=[];//保存转换后的整型字符串  
+//			  
+//			    //方法一  
+//			    dataStrArr.forEach(function(data,index,arr){  
+//			        dataIntArr.push(+data);  
+//			    });  
+			   
 				console.log('优惠券使用', cashCouponIds)
 				var deliveryInfo = {
 					"deliveryType": deliveryType,
@@ -1050,9 +1047,9 @@
 						"remark": remark,
 						"goodsInfo": goodsInfo,
 						"productCouponInfo": productCouponList,
-						"promotionInfo": JSON.stringify(promotionInfo),
+						"promotionInfo":promotionInfo,
 						"deliveryInfo": JSON.stringify(deliveryInfo),
-						"cashCouponIds": JSON.stringify(cashCouponIds),
+					 	"cashCouponIds":JSON.stringify(cashCouponIds),
 						"auditNo": auditNo,
 						"billingInfo": JSON.stringify(billingInfo),
 					},

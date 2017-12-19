@@ -158,3 +158,24 @@ header{background-color: white!important;}
 }
 .mui-badge-white{background: white;color: #B62D29;}
 .gocarticon .mui-badge{position: absolute;top: 8px;right: 5px;}
+#maskInfo {
+	z-index: 99999;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	bottom: 0;
+	background-color: rgba(0, 0, 0, .5)
+} 
+.paychoose {
+	background-color: white;
+	bottom: 0!important;
+	position: absolute;
+	right: 0;
+	left: 0;
+} 
+.paychoose img {
+	width: 40px;
+	margin: 0 10px 0 5px;
+	vertical-align: middle;
+}
