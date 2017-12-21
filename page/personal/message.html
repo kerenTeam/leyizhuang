@@ -3,7 +3,7 @@
 
 	<head>
 		<meta charset="UTF-8">
-		<title></title>
+		<title>消息</title>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="../../css/mui.min.css" rel="stylesheet" />
 		<link rel="stylesheet" type="text/css" href="../../css/commonY.css"/>
@@ -25,10 +25,17 @@
 		</header>
 		<script src="../../js/statusBar.js" type="text/javascript" charset="utf-8"></script>
 		<div class="mui-content" style="margin-top: 7px;">
-		   <div class="mlist msg1"><img src="../../images/center/messageinf.svg"/>通知消息</div>
-		   <div class="mlist msg2"><img src="../../images/center/deliverymsg.svg"/>物流消息</div>
+		   	<div class="mlist msg1"><img src="../../images/center/messageinf.svg"/>
+		   		通知消息 
+		   		<span class="mui-badge mui-badge-danger mui-pull-right" style="display: none;" id="msg">1</span>
+		  	</div>
+		   	<div class="mlist msg2"><img src="../../images/center/deliverymsg.svg"/>
+		   		物流消息
+		   		<span class="mui-badge mui-badge-danger mui-pull-right" style="display: none;" id="wlmsg">1</span>
+		   	</div>
 	    </div> 
 		<script src="../../js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/default.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../../js/mui.min.js"></script>
 		<script type="text/javascript">
 			$('.msg1').click(function(){
@@ -42,6 +49,79 @@
 					view:'deliveryInform.html',
 					id:'deliveryInform'
 				})
+			})
+			mui.plusReady(function(){
+				var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
+				var userId = plus.storage.getItem('$userId'); 
+				var oldToken = plus.storage.getItem('oldToken');
+				showMsg()
+				function showMsg(){
+					mui.ajax(serverUrl+'/app/user/message/list',{
+						data:{
+							userId:userId,
+							identityType:identityT
+						},
+						dataType:'json',
+						type:'post',
+						timeout:10000,
+						headers:{"Authorization":oldToken},
+						success:function(data,type,xhr){
+							plus.nativeUI.closeWaiting();
+							console.log('消息',data);
+					       	if(data.code == 0){
+						     	if(data.content && data.content.length){
+						       		var infoNums = plus.storage.getItem('infoNums1') || 0;
+						       		if(data.content.length - infoNums > 0){
+						       			var msgnum1 = data.content.length - infoNums 
+						       			plus.storage.setItem('allInfo',msgnum1.toString())
+						       			mui('#msg')[0].style.display = 'block';
+					     				mui('#msg')[0].innerHTML = msgnum1;
+						       		}else{
+						       			mui('#msg')[0].style.display = 'none';
+						       		}
+								}
+					       	}
+					       	plus.nativeUI.closeWaiting();
+						},
+						error:function(xhr,type,errorThrown){
+							plus.nativeUI.closeWaiting();
+							console.log('当前网络不好,请重试');
+						}
+					});
+					mui.ajax(serverUrl+'/app/delivery/message',{
+						data:{
+							userID:userId,
+							identityType:identityT
+						},
+						dataType:'json',
+						type:'post',
+						timeout:10000,
+						headers:{"Authorization":oldToken},
+						success:function(data,type,xhr){
+							plus.nativeUI.closeWaiting();
+							console.log('wl消息',data);
+					       	if(data.code == 0){
+						     	if(data.content && data.content.length){
+						       		var infoNums = plus.storage.getItem('infoNums2') || 0;
+						       		if(data.content.length - infoNums > 0){
+						       			var msgnum2 = data.content.length - infoNums;
+						       			plus.storage.setItem('allInfo2',msgnum2.toString())
+						       			mui('#wlmsg')[0].style.display = 'block';
+					     				mui('#wlmsg')[0].innerHTML = msgnum2;
+						       		}else{
+						       			mui('#wlmsg')[0].style.display = 'none';
+						       		}
+								}
+					       	}
+					       	plus.nativeUI.closeWaiting();
+						},
+						error:function(xhr,type,errorThrown){
+							plus.nativeUI.closeWaiting();
+							console.log('当前网络不好,请重试');
+						}
+					});
+				}
+				
 			})
 		</script>
 		

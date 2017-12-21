@@ -21,7 +21,7 @@
 		<div class="mui-content" >
 			<div style="padding:10px 0;display: flex;align-items: center;justify-content: space-between;margin: 10px 0;" class="bgcwt">
 				<input type="text" id="bindPhone" style="width: 80%;margin: 0;" placeholder="请输入会员手机号" />
-				<!--<div style="border-left: 1px solid #EEEEEE;padding: 0 10px;">通讯录</div>-->
+				<div style="border-left: 1px solid #EEEEEE;padding: 0 10px;" onclick="openMail()">通讯录</div>
 			</div>
 			<div style="text-align: center;">
 				<button class="mui-btn-block mui-btn-danger" id="bindGuide">为该顾客代购</button>
@@ -32,6 +32,19 @@
 		<script src="../../js/default.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
 			mui.init();
+			function openMail(){
+				openview({
+					view: '../mailList.html',
+					id: 'mailList',
+					extrasobj:{htmlName:'chooseCustom'}
+				})
+			}
+			//导入通讯录
+			document.addEventListener('resetTel2',function(){
+				var contactOne = JSON.parse(plus.storage.getItem('contactOne'));
+				document.getElementById('bindPhone').value = contactOne[0].phone;
+				plus.storage.removeItem('contactOne');
+			})
 			mui.plusReady(function(){
 				var reg_phone = /^1((3|4|5|8|7){1}\d{1}|70)\d{8}$/;//手机号正则;
 				var account = $('#bindPhone');
@@ -39,7 +52,7 @@
 				var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
 				var userId = plus.storage.getItem('$userId');
 				var oldToken = plus.storage.getItem('oldToken');
-
+				
 				$('#bindGuide').click(function(){
 
 					if(!reg_phone.test(account.val())){

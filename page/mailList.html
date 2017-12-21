@@ -120,6 +120,7 @@
 				var nowhtmlName = plus.webview.currentWebview().htmlName;//跳转过来的页面
 				if(isSure){
 					mui.fire(plus.webview.getWebviewById(nowhtmlName),'resetTel');
+					mui.fire(plus.webview.getWebviewById(nowhtmlName),'resetTel2');
 					plus.webview.currentWebview().close();
 				}else{
 					plus.storage.removeItem('contactOne');

@@ -150,6 +150,8 @@
 							console.log('消息',data);
 					       	if(data.code == 0){
 						       	if(data.content && data.content.length){
+					       			plus.storage.setItem("infoNums1",JSON.stringify(data.data.length));
+						       		
 						       		for(var i in data.content){
 //						       			var dt = new Date(nowArray[j].create_time).getTime(); 
 										var dt = data.content[i].createTime;
