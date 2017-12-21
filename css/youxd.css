@@ -194,7 +194,7 @@ body{color: #555;
 }
 .quotaRecord .div01{
 	margin: 0px 15px 0px 25px;
-	padding: 10px 0px 10px 20px;
+	padding: 10px 0px 10px 15px;
 	border-left: 2px solid #A90100;
 	position: relative;
 }
@@ -214,7 +214,12 @@ body{color: #555;
     top: 15px;
 }
 .quotaRecord .p01{
-	padding-left: 16px;
+    /*padding-left: 10px;*/
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: #666;
+
 }
 
 .cancelDiv{
@@ -316,7 +321,7 @@ header.mui-bar{z-index: 200;}
 .orderInfo{text-align: right;padding: 12px 15px 0px;color: #848484;font-size: 16px;}
 .orderInfo span{color: #333;}
 .orderBtns{text-align: right;padding: 12px 15px;border-bottom: 1px solid #eee;}
-.orderBtns span{display: inline-block;color: #666;border:1px solid #d2cfcf; border-radius: 2px;text-align: center;padding: 4px 8px 4px;font-size: 16px;}
+.orderBtns span{display: inline-block;color: #666;border:1px solid #ccc; border-radius: 2px;text-align: center;padding: 4px 8px 4px;font-size: 16px;}
 .orderBtns span.redC{color: #c7161e;border-color: #c7161e;}
 /*搜索*/
 .searchFind { position: relative; }

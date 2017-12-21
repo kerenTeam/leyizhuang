@@ -173,6 +173,8 @@
 			    		}
 			    		var nowpic = Math.random().toString(36).substr(2) + '.jpg';//随机字符串
 			    		var endpic = e.files[indexNum].split('.')[0]+"/" +nowpic;
+			    		console.log(e.files[indexNum]);
+			    		console.log(endpic);
 		    			plus.zip.compressImage({
 						src:e.files[indexNum],
 						dst:endpic,
@@ -183,6 +185,7 @@
 						Apic.push(obj.target);
 						showImg(obj.target,indexNum);
 					},function(error) {
+						console.log(error)
 						mui.toast('图片获取错误，请重试');
 					});
 			    		indexNum ++;

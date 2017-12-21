@@ -35,6 +35,11 @@
 				margin: 0 5px;
 			}
 			/*去支付样式结束*/
+			.orderList .h3 a.a1{    white-space: nowrap;color: #555; font-size: 16px; display: inline-block;
+			    width: calc( 100vw - 90px );
+			    overflow: hidden;
+			    text-overflow: ellipsis;
+		    }
 		</style>
 	</head>
 
@@ -83,16 +88,16 @@
 						<%for(var i=0;i<list.length;i++){%>
 							<div class="orderList">
 								<h3 class="h3" onclick="openDetail('<%= list[i].orderNo%>')">
-									订单编号：<%= list[i].orderNo%>
+									<a class="a1">订单编号：<%= list[i].orderNo%></a>
 									<span><%= list[i].status%></span>
 								</h3>
 								<p class="p1" onclick="openDetail('<%= list[i].orderNo%>')">
 									<% if(list[i].goodsImgList && list[i].goodsImgList.length){%>
 										<%for(var j=0; j<list[i].goodsImgList.length; j++){%>
-											<a><img class="loadPics" data-src="<%= list[i].goodsImgList[j]%>"/></a>
+											<a><img class="loadPics" src="../../img/loadBack.svg" data-src="<%= list[i].goodsImgList[j]%>"/></a>
 										<%} %>
 									<% }else{%>
-										<a><img class="loadPics" data-src="https://b-ssl.duitang.com/uploads/item/201711/08/20171108102304_FTzw4.thumb.224_224_c.jpeg"/></a>
+										<a><img class="loadPics" src="../../img/loadBack.svg" data-src="https://b-ssl.duitang.com/uploads/item/201711/08/20171108102304_FTzw4.thumb.224_224_c.jpeg"/></a>
 									<% }%>
 									<% if(list[i].endTime){%>
 										<span>10分钟后关闭订单</span>
