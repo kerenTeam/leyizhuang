@@ -54,9 +54,9 @@
 		</div>
 		<script type="text/html" id="mainS">
 			<div class="Dpart1">
-				<h4 style="-webkit-user-select: all;">
-					订单编号：<%= detail.orderNumber%>
-					<span style="-webkit-user-select: all;" class="span1">长按复制</span>
+				<h4 style="font-size: 15px !important;line-height: 1.6;">
+					订单编号：<a id="copyDiv" style="color: #555;"><%= detail.orderNumber%></a>
+					<span id="copyBtn" style="float: right;" class="span1">复制</span>
 				</h4>
 				<p>
 					下单时间：<%= detail.createTime%>
@@ -201,6 +201,7 @@
 		<script src="../../js/default.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../../js/artTemplate-native.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../../js/feedback.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/clipboard.min.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
 			mui.plusReady(function(){
 				var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
@@ -223,6 +224,22 @@
 							document.getElementById('main').innerHTML = template('mainS',{detail:data.content});
 							//evaluat && (document.body.scrollTop = document.body.scrollHeight);
 							evaluat && (document.getElementById("evaluat").scrollIntoView());
+							//复制方法
+							    var clipboard = new Clipboard('#copyBtn', {
+							        target: function() {
+							            return document.querySelector('#copyDiv');
+							        }
+							    });
+
+							    clipboard.on('success', function(e) {
+							        console.log(e);
+							        mui.toast('复制成功');
+							    });
+
+							    clipboard.on('error', function(e) {
+							        console.error(e);
+
+							    });
 						}else{
 							mui.toast(data.message);
 						}
