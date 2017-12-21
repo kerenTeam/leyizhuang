@@ -132,6 +132,8 @@
 			.flexRow2{display: flex;text-align: center;padding: 8px;}
 			.flexRow2 div{width: 50%;}
 			.flexRow2 img{width: 30px;vertical-align: middle;}
+			.fineB span:first-child{display: inline-block;max-width: 70%;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;}
+			
 		</style>
 	</head>
 	<body>
@@ -189,7 +191,7 @@
 				<script id="infoList" type="text/html">
 					<%for(var i=0;i<list.length;i++){%>
 						<%if(listType == 2){%>
-							<div class="checkList" onclick="goInfo('<%=list[i].orderNumber%>',2)">
+							<div class="checkList" onclick="goInfo('<%=list[i].id%>',2)">
 								<h4 class="fineB ft16">
 									<span>出货单号：<%=list[i].orderNumber%></span>
 									<span class="mui-icon mui-icon-arrowright mui-pull-right ft20 maincl"></span>
@@ -412,11 +414,20 @@
 	<script src="../../js/artTemplate-native.js" type="text/javascript" charset="utf-8"></script>
 	<script type="text/javascript">
 		function goInfo(audi,type){
-			openview({
-				view:'deliveryInfo.html',
-				id:'deliveryInfo',
-				extrasobj:{orderNumber:audi,orderType:type}
-			})
+			if(type == 2){
+				openview({
+					view:'dispatchingAudit.html',
+					id:'dispatchingAudit',
+					extrasobj:{orderNumber:audi,orderType:type}
+				})
+			}else{
+				openview({
+					view:'deliveryInfo.html',
+					id:'deliveryInfo',
+					extrasobj:{orderNumber:audi,orderType:type}
+				})
+			}
+			
 		}
 		function goMap(address){
 			event.stopPropagation();

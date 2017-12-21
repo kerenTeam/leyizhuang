@@ -149,6 +149,7 @@
 							console.log('物流消息',data);
 					       	if(data.code == 0){
 						       	if(data.content && data.content.length){
+					       			plus.storage.setItem("infoNums2",JSON.stringify(data.data.length));
 					     			var html = template("listinfo",{list:data.content});
 									document.getElementById("questions").innerHTML=html;
 								}else{

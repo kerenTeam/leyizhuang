@@ -823,7 +823,7 @@
 				var skuName = firstSpecif;
 				var specif =$.trim(secondSpecif)+' '+$.trim(thirdSpecif)+' '+fourSpecif;
 				var cartObj={skuName:skuName,specif:specif,num:number,goodcode:fastMaterial}
-				alert('～'+fastMaterial);
+//				alert('～'+fastMaterial);
 			 
 				//更新此商品数量缓存
 				if(tileFastGoods.length != 0) {
@@ -849,7 +849,6 @@
 						tileFastGoods.push(cartObj);
 					}
 				}
-				alert(JSON.stringify(cartObj))
 				plus.storage.setItem("$tileFastGoods", JSON.stringify(tileFastGoods));
 				showBtCart();
 			})
@@ -876,7 +875,6 @@
 					var flag = false;
 					for(var i = 0; i < tileFastGoods.length; i++) {
 						if(tileFastGoods[i].goodcode == codeid) {
-							alert(5+' '+number)
 							if(parseInt(number) != 0){
 								tileFastGoods[i].num = parseInt(number);
 							}else{
@@ -939,15 +937,16 @@
 				if(ALLcheckLength>0){
 					$("#btcart").find("input[type='checkbox']:checked").each(function(index){
 						var goodCode=$(this).attr("data-id");
+						var num = $(this).parent().parent().find(".mui-numbox-input").val();
 						if(index+1 == ALLcheckLength){
-							fastMaterial+=goodCode;
+							fastMaterial+=goodCode+'-'+num;
 						}else{
-							fastMaterial+=goodCode+','
-						} 
+							fastMaterial+=goodCode+'-'+num+','
+						}  
 					})
 				}
 				
-				alert(fastMaterial)
+//				alert(fastMaterial)
 				if(fastMaterial){
 					plus.nativeUI.showWaiting();
 					mui.ajax(serverUrl + '/app/materialList/quickOrder/add', {
@@ -966,7 +965,25 @@
 							plus.nativeUI.closeWaiting();
 							console.log('快捷下单', data);
 							if(data.code == 0) { 
-								mui.toast('下单成功')
+								mui.toast('下单成功');
+								mui.fire(plus.webview.getWebviewById('cart.html'), 'refresh');
+								$('.mui-numbox-input').val(0);
+								$("#btcart").find("input[type='checkbox']:checked").each(function(index){
+									var goodCode=$(this).attr("data-id");
+									//删除这一条缓存
+								    tileFastGoods =JSON.parse(plus.storage.getItem('$tileFastGoods')||'[]');
+									for(var i=0;i<tileFastGoods.length;i++){
+										if(goodCode==tileFastGoods[i].goodcode){
+											tileFastGoods.splice(i, 1);
+										}
+									} 
+									plus.storage.setItem("$tileFastGoods",JSON.stringify(tileFastGoods));
+								})
+								showBtCart();
+								ALLcheckLength = $("#btcart").find("input[type='checkbox']:checked").length;
+								if(ALLcheckLength == 0) {
+									$('#optal input').prop("checked", false);
+								} 
 							} else {
 								mui.toast(data.message)
 							}
@@ -975,6 +992,8 @@
 							plus.nativeUI.closeWaiting();
 						}
 					});	
+				}else{
+					mui.toast('还未选择商品哦')
 				}
 			}
 		})

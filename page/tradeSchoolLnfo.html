@@ -12,9 +12,11 @@
 	<style type="text/css">
 		#title,#content{padding: 10px;}
 		#title{font-size: 18px;color: #555;text-align: center;}
-		#content{font-size: 16px;text-indent: 2em;}
-		#content img{width: 100%;}
-		body ,.mui-content{background-color: #fff !important;}
+		#content{font-size: 16px;}
+		#content img{width: 100%!important;}
+		p img{width: 100%!important;}
+		body,.mui-content{background-color: #fff !important;}
+		table{width: 100%!important;display: block;}
 	</style>
 	<body>
 		<header class="mui-bar mui-bar-nav" style="padding-right: 15px;">
@@ -47,6 +49,7 @@
 						if(data.content){
 							$('.mui-title,#title').html(data.content.title);
 							$('#content').html(data.content.content)
+							$('p img').removeAttr('style')
 						}else{
 							document.getElementById("tradeList").innerHTML = '<div style="text-align:center;padding:15px;font-size: 12px;">暂无数据</div>'
 						}

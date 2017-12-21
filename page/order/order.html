@@ -126,7 +126,7 @@
 				<div class="cartSecond cartAct">
 					<img src="../../img/check2.svg" /> 选赠品
 				</div>
-				<div class="cartThird">
+				<div class="cartThird cartAct">
 					<img src="../../img/check2.svg" /> 结算
 				</div>
 			</div>
@@ -438,7 +438,6 @@
 					return;
 				}else{
 					carculate()
-//					$('.totalMoney').html(parseFloat(payValue-inputAll).toFixed(2))
 				}
 				
 			}
@@ -446,6 +445,14 @@
 				$('.selfTake').hide();
 			}
 			plus.nativeUI.showWaiting();
+			console.log('ENTER ',{
+					userId: userId,
+					identityType: identityT,
+					goodsList: JSON.parse(idobj),
+					customerId: customerId,
+					giftList:JSON.parse(promotionInfo),
+					productCouponList:JSON.parse(productCouponList)
+				})
 			//获取料单商品
 			mui.ajax(serverUrl + '/app/order/enter', {
 				data: {
@@ -467,6 +474,7 @@
 					console.log('获取料单商品', data);
 					var dataObj = {};
 					if(data.code == 0 && data.content) {
+						promotionInfo = JSON.stringify(data.content.promotionInfo);//更换选赠品时存的促销赠品
 						//显示商品
 						var goods = data.content.totalGoodsInfo;
 						dataObj.totalQty = data.content.totalQty;
@@ -487,7 +495,7 @@
 							$('#orderDiscount').html('¥' + data.content.orderDiscount);
 							$('#firstOrderDiscount').val(data.content.orderDiscount)
 						} else {
-							$('#orderDiscount').html('0')
+							$('#orderDiscount').html('¥0')
 						}
 						if(data.content.freight) {
 							$('#freight').html('¥' + data.content.freight)
@@ -563,7 +571,6 @@
 							var quantity = $('#firstLebi').attr('data-id');
 							var rebate = $('#firstLebi').val();
 							var totalOrderAmount = $('#firstTotal').val();
-							//							alert(totalOrderAmount + ' ' + quantity + ' ' + rebate)
 							var lebi = {
 								"id": userId,
 								"cusId": customerId,
@@ -711,8 +718,6 @@
 						console.log('响应失败  !');
 					}
 				});
-
-				//				plus.storage.removeItem("$addressStorage")
 			}
 			//自提 获取门店
 			$("input[name='peis']").change(function() {
@@ -896,9 +901,7 @@
 										} else {
 											$('#cityResult .pstime').html(items[0].text + " " + items[1].text)
 										}
-
-										//返回 false 可以阻止选择框的关闭
-										//return false;
+ 
 									});
 								}, false);
 								//-----------------------------------------
@@ -957,12 +960,9 @@
 							deliveryTime = $('#cityResult .pstime').html();
 						}
 						isOwnerReceiving = $('.isOwnerReceiving').prop('checked') == true ? true : false;
-						//						alert(receiver+' '+receiverPhone+' '+deliveryCity+' '+deliveryCounty+' '+deliveryStreet+' '+residenceName+' '+detailedAddress)
 					}
 				}
 				var goodsInfo = onlyGoods; //商品 （普通商品 料单商品）
-//				var promotionInfo = []; //促销赠品
-//				var productCouponList = []; //产品券
 				var cashCouponIds = []; //优惠券 
 				if(identityT == 6) {
 					var cusPreDeposit = preDepositb;
@@ -989,22 +989,8 @@
 				}; //账单明细
 				console.log('账单明细', billingInfo)
 				$('.hasChoosed').each(function(index) {
-					cashCouponIds.push(parseInt($(this).attr('data-id')))
-//					if(index == $('.hasChoosed').length-1){
-//						cashCouponIds+= parseInt($(this).attr('data-id'))
-//					}else{
-//						cashCouponIds+= parseInt($(this).attr('data-id'))+','
-//					}
-					
-				})
-//				var dataStrArr=cashCouponIds.split(",");//分割成字符串数组  
-//			    var dataIntArr=[];//保存转换后的整型字符串  
-//			  
-//			    //方法一  
-//			    dataStrArr.forEach(function(data,index,arr){  
-//			        dataIntArr.push(+data);  
-//			    });  
-			   
+					cashCouponIds.push(parseInt($(this).attr('data-id'))) 
+				}) 
 				console.log('优惠券使用', cashCouponIds)
 				var deliveryInfo = {
 					"deliveryType": deliveryType,
@@ -1062,11 +1048,29 @@
 					success: function(data) {
 						console.log('创建订单返回', data);
 						if(data.code == 0) {
-							if(data.content.amountPayable) {
+							if(data.content.isPayUp == false) {
 								$('#payMoney').html('¥' + data.content.amountPayable);
+								$('#maskInfo').fadeIn(200);
 								toPay(data.content.amountPayable, data.content.orderNumber);
+							}else{
+								if(data.content.isPayUp){
+									mui.toast('订单提交成功！！！')
+									mui.fire(plus.webview.getWebviewById('cart.html'), 'refresh');
+									openview({
+										view: '../personal/myOrderList.html',
+										id: 'myOrderList'
+									})
+									setTimeout(function() {
+										if(plus.webview.getWebviewById("order")) {
+											plus.webview.getWebviewById("order").close();
+										}
+										if(plus.webview.getWebviewById("chooseGift")) {
+											plus.webview.getWebviewById("chooseGift").close();
+										}
+									}, 2000)
+								}
 							}
-							$('#maskInfo').fadeIn(200);
+							
 							plus.nativeUI.closeWaiting();
 						} else {
 							plus.nativeUI.closeWaiting();

@@ -45,7 +45,7 @@
 		<!--产品券部分-->
 		<script type="text/html" id="couponsTpl">
 				<dl class="cart" style="background-color: #F8F8F8!important;">
-					<dt><div class="mui-checkbox"><input name="checkbox" class="groupCheck cssp" data-id="<%=lists.couponsList[0].cusId%>" data-phone="<%=lists.mobile%>" checked="true" type="checkbox"></div>
+					<dt><div class="mui-checkbox"><input name="checkbox" class="groupCheck cssp" data-id="<%=lists.couponsList[0].cusId%>" data-phone="<%=lists.mobile%>" disabled checked="true" type="checkbox"></div>
 					<div class="shopName" style="white-space: nowrap;overflow: hidden;max-width:2.5rem;" data-cusid="<%=lists.couponsList[0].cusId%>">
 						<%if(lists.customer){%>
 							顾客：<%=lists.customer%> <%=lists.mobile%>
@@ -57,7 +57,7 @@
 					<%for(var j=0;j<lists.couponsList.length;j++){%>
 					<dd>
 						<div class="mui-checkbox" style="top: 30%;">
-							<input name="checkbox" data-id="<%=lists.couponsList[j].goodsId%>" data-type="coupon" data-hid="<%=lists.couponsList[j].id%>" checked="true" type="checkbox"></div>
+							<input name="checkbox" data-id="<%=lists.couponsList[j].goodsId%>" data-type="coupon" data-hid="<%=lists.couponsList[j].id%>" disabled checked="true" type="checkbox"></div>
 							<a class="goodsPic"><img src="<%=lists.couponsList[j].coverImageUri%>" onerror="javascript:this.src='img/editset.png';" /></a>
 							<div class="goodsInfor">
 								<h2 class="ft16">
@@ -88,7 +88,7 @@
 		<script type="text/html" id="auditTpl">
 
 				<dl class="cart" style="background-color: #F8F8F8!important;">
-					<dt><div class="mui-checkbox"><input name="checkbox" class="groupCheck" data-id="<%=lists.auditNo%>" checked="true" type="checkbox"></div>
+					<dt><div class="mui-checkbox"><input name="checkbox" class="groupCheck" data-id="<%=lists.auditNo%>" disabled checked="true" type="checkbox"></div>
 					<div class="shopName" style="white-space: nowrap;overflow: hidden;max-width:2.5rem;">
 						<%if(lists.worker){%>
 							<%=lists.worker%>
@@ -98,7 +98,7 @@
 					<%for(var j=0;j<lists.goodsList.length;j++){%>
 					<dd>
 						<div class="mui-checkbox" style="top: 30%;">
-							<input name="checkbox" data-id="<%=lists.goodsList[j].goodsId%>" data-auditNo="<%=lists.auditNo%>" data-type="ld" data-hid="<%=lists.goodsList[j].id%>" checked="true" type="checkbox"></div>
+							<input name="checkbox" data-id="<%=lists.goodsList[j].goodsId%>" data-auditNo="<%=lists.auditNo%>" data-type="ld" data-hid="<%=lists.goodsList[j].id%>" disabled checked="true" type="checkbox"></div>
 							<a class="goodsPic"><img src="<%=lists.goodsList[j].coverImageUri%>" onerror="javascript:this.src='img/editset.png';" /></a>
 							<div class="goodsInfor">
 								<h2 class="ft16">
@@ -171,7 +171,7 @@
 			</a>
 			<a class="dp goOrder" style="background:#B62D29;color:white;text-shadow:none;width：33.4%">下一步<span class="totalVisi">(<span class="totalNum">0</span>)</span>
 			</a>
-			<a class="dp whitecl delBtnAll" style="background:#B62D29;text-shadow:none;display: none;">删除
+			<a class="dp whitecl delBtnAll" style="background:#FE9000;text-shadow:none;display: none;width：33.4%">删除
 			</a>
 		</aside>
 		<script type="text/javascript" src="js/jquery_cart.js"></script>
@@ -274,7 +274,7 @@
 								$(".numberWidget,.goOrder").show();
 								$('.mui-checkbox input').attr('checked', true);
 								$(".groupCheck").attr("disabled",true);
-								$("groupCheck").parent().find("input[type='checkbox']").attr("disabled",false);
+								$(".groupCheck").parentsUntil('.eachGroup').find(".mui-checkbox input").attr("disabled",true);
 
 							});
 							//删除所有
@@ -315,6 +315,8 @@
 														console.log('删除全部', data);
 														if(data.code == 0) {
 															mui.toast('删除成功');
+															$('.delBtnAll').hide();
+															$('.goOrder').show();
 															mui.fire(plus.webview.getWebviewById('page/goodList.html'),'refresh');
 															mui.fire(plus.webview.getWebviewById('cart.html'),'refresh');
 															cartload();
@@ -384,9 +386,9 @@
 							//总选
 							$('aside .mui-checkbox').click(function() {
 								if($(this).find("input").prop('checked') == false) {
-									$("dl.cart input").attr("checked", false);
+									$("#cartData dl.cart input").attr("checked", false);
 								} else {
-									$("dl.cart input").attr("checked", true);
+									$("#cartData dl.cart input").attr("checked", true);
 								}
 								countFuc();
 							})
@@ -475,7 +477,11 @@
 
 							//下单
 							$('.goOrder').unbind("click").click(function() {
-								var cusid = $('.cssp').attr('data-id');
+								if($(".cssp[type='checkbox']:checked").length){
+									var cusId = $('.cssp').attr('data-id');
+								}else{
+									var cusId = ''
+								}
 								var cusphone = $('.cssp').attr('data-phone');
 								var ALLcheckLength = $("dd").find("input[type='checkbox']:checked").length;
 								if(ALLcheckLength == 0) {
@@ -530,11 +536,12 @@
 
 									if(plus.storage.getItem('oldToken')) {
 										if(identityT == 0 || identityT == 4 || identityT == 5) {
-											if(cusid){
+											
+											if(cusId){
 												openview({
 													view:'page/order/chooseGift.html',
 													id:'chooseGift',
-													extrasobj:{cusId:cusid}
+													extrasobj:{cusId:cusId}
 												})
 											}else{
 												openview({

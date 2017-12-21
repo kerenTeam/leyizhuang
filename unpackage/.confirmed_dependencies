@@ -858,7 +858,8 @@
       "js/default.js"
     ],
     "refer": [
-      "page/order/chooseGift.html"
+      "page/order/chooseGift.html",
+      "page/mailList.html"
     ]
   },
   "page/order/materialList.html": {
@@ -1148,7 +1149,8 @@
       "page/personal/message.html",
       "page/dispatching/agencyFund.html",
       "page/dispatching/addressMap.html",
-      "page/personal/palette.html"
+      "page/personal/palette.html",
+      "page/dispatching/dispatchingAudit.html"
     ],
     "resources": [
       "page/dispatching/waterFast.html"

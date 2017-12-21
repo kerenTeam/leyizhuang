@@ -1330,7 +1330,8 @@
 					"js/default.js"
 				],
 				"refer": [
-					"page/order/chooseGift.html"
+					"page/order/chooseGift.html",
+					"page/mailList.html"
 				],
 				"priority": 0
 			},
@@ -1637,7 +1638,8 @@
 					"page/personal/message.html",
 					"page/dispatching/agencyFund.html",
 					"page/dispatching/addressMap.html",
-					"page/personal/palette.html"
+					"page/personal/palette.html",
+					"page/dispatching/dispatchingAudit.html"
 				],
 				"priority": 0
 			},
