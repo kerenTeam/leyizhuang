@@ -208,7 +208,8 @@
 				var oldToken = plus.storage.getItem('oldToken');
 				var orderNo = plus.webview.currentWebview().orderNo;
 				var evaluat = plus.webview.currentWebview().evaluat;
-
+				var isButton = plus.webview.currentWebview().isButton;
+				
 				/*订单详情*/
 				mui.ajax(serverUrl + '/app/order/detail',{
 					data:{'userID':userId,'identityType':identityT,'orderNumber':orderNo},
@@ -221,6 +222,9 @@
 						if(data.code == 0){
 							data.content.BillingDetailResponse = data.content.customerBillingDetailResponse || data.content.managerBillingDetailResponse || data.content.sellerBillingDetailResponse;
 							document.getElementById('main').innerHTML = template('mainS',{detail:data.content});
+							if(isButton == 'no'){
+								$('.footBtn').hide()
+							}
 							//evaluat && (document.body.scrollTop = document.body.scrollHeight);
 							evaluat && (document.getElementById("evaluat").scrollIntoView());
 						}else{

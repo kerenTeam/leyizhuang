@@ -65,7 +65,7 @@
 									</div>
 									<p class='mui-ellipsis maincl ft15'>顾客:
 										<%=list[i].customerName%> &nbsp;
-										<span class="activecl">¥<%=list[i].arrearageMoney%></span>
+										<span class="activecl arrearageMoney">¥<%=list[i].arrearageMoney%></span>
 									</p>
 								</div>
 							</a>
@@ -81,7 +81,7 @@
 		<div style="height:40px;"></div>
 		<aside class="btmNav flexr" style="position: fixed;bottom: 0;left: 0;width: 100%;">
 			<a class="dp ft16" style="color: #B62D29;text-align: center;flex: 1;">
-				<span>合计：</span><span class="totalMoney">0</span>件商品
+				<span>合计：</span><span class="totalMoney">¥0</span>
 			</a>
 			<button id="useCoupon" class="mui-btn-danger" disabled="">立即还款</button>
 		</aside>
@@ -115,7 +115,8 @@
 					view:'../personal/myOrderDetail.html',
 					id:'myOrderDetail',
 					extrasobj:{
-						orderNo:audi
+						orderNo:audi,
+						isButton:'no'
 					}
 				})
 			}
@@ -163,9 +164,11 @@
 											$('.check').attr('src', '../../images/center/uncheck.svg')
 											$(this).addClass('choosed')
 											$(this).attr('src', '../../images/center/checked.svg')
+											$('.totalMoney').html($(this).parent().find('.arrearageMoney').html())
 										} else {
 											$(this).removeClass('choosed')
-											$(this).attr('src', '../../images/center/uncheck.svg')
+											$(this).attr('src', '../../images/center/uncheck.svg');
+											$('.totalMoney').html('¥'+0)
 										}
 										if($('.choosed').length > 0) {
 											$('#useCoupon').removeAttr('disabled')

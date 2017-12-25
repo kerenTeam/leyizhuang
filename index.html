@@ -217,14 +217,14 @@
 		</div>
 
 		<div class="bgcwt">
-			<div class="somenspf ft12 padd10 fttc activecl">
-				<div id="">
+			<div class="somenspf ft12 padd10 fttc activecl" id="slogan">
+				<div style="visibility: hidden;">
 					<img src="images/index/bdchexk.svg"/><span>满1000元包邮</span>
 				</div>
-				<div id="">
+				<div style="visibility: hidden;">
 					<img src="images/index/bdchexk.svg"/><span>电梯免费上楼</span>
 				</div>
-				<div id="">
+				<div style="visibility: hidden;">
 					<img src="images/index/bdchexk.svg"/><span>二绕内均可配送</span>
 				</div>
 			</div>
@@ -587,6 +587,9 @@
 				}
 				var clientId = plus.push.getClientInfo().clientid;
 				var deviceId = plus.device.uuid;
+				plus.storage.setItem('platform',systemType)
+				plus.storage.setItem('clientId',clientId)
+				plus.storage.setItem('deviceId',deviceId)
 				//判断是否登陆
 				document.addEventListener('refreshid', function() {
 					loadIndex();
@@ -705,10 +708,11 @@
 
 				} //登录方法结束
 
-				loadIndex();
+//				loadIndex(); 
 				//banner
+				var nowcity = plus.storage.getItem('userCity') || 1;
 				mui.ajax(oCms + '/index.php/ApiCms/bannerList', {
-					data:{post:1},
+					data:{post:1,city:nowcity},
 					dataType: 'json',
 					type: 'post',
 					timeout: 10000,
@@ -838,6 +842,39 @@
 							}
 						});
 					}
+					//slogan
+					mui.ajax(oCms + '/index.php/ApiCms/sloganList', {
+						data: {
+							'city':nowcity
+						},
+						dataType: 'json',
+						headers: {
+							"Authorization": oldToken
+						},
+						type: 'post',
+						timeout: 10000,
+						success: function(data, type, xhr) {
+							console.log('标语', data);
+							if(data.code == 0) {
+								plus.nativeUI.closeWaiting();
+								var slogan = '';
+								if(data.slogan && data.slogan.length){
+									for(var i = 0 ;i < data.slogan.length;i++){
+										slogan += '<div id=""><img src="images/index/bdchexk.svg"/><span>'+data.slogan[i].title+'</span></div>'
+									}
+									$('#slogan').html(slogan)
+								}
+							} else {
+								mui.toast(data.message)
+							}
+	
+						},
+						error: function(xhr, type, errorThrown) {
+							plus.nativeUI.closeWaiting();
+							console.log('响应失败');
+						}
+					});
+					
 					//常购商品列表
 					mui.ajax(serverUrl + '/app/goods/often/list', {
 						data: {

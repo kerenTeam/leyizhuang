@@ -63,7 +63,12 @@
 									<%=list[i].goodsUnit%>
 								</p>
 								<span class="activecl2">¥<%=list[i].retailPrice%></span>
-
+								<img style="display:inline-block;float:right;margin-left:5px;vertical-align:middle" data-id="<%=list[i].id%>" class="toCart" src="../../images/addcart.svg"/>
+					            <div style="display:none;float:right;" class="mui-numbox" data-numbox-step='1' data-numbox-min='0'>
+								  <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+								  <input class="mui-numbox-input" data-id="<%=list[i].id%>" value="1" type="number" />
+								  <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+								</div>
 							</div>
 						</a>
 						<img style="display: none;" data-id="<%=list[i].id%>" class="check" src="../../images/center/uncheck.svg" alt="" />
@@ -118,17 +123,168 @@
 									$('#goodsList').html(template('goodsTpl', {
 										list: data.content
 									}));
+									$('.toCart,.mui-numbox button,.mui-numbox input').click(function() {
+									event.stopPropagation()
+								})
+								mui('.mui-numbox').numbox();
+								//加入购物车
+								$('.toCart').click(function(){
+									var goodid = $(this).attr('data-id');
+									var cur = $(this);
+									plus.nativeUI.showWaiting();
+									addCart(goodid,1,cur);
+								})
+								
+								//数量选择 -> 加入购物车
+								$('.mui-numbox input').on('change', function() {
+									plus.nativeUI.showWaiting();
+									var cur = $(this);
+									var number = $(this).val(); //当前数量
+									var goodsid = $(this).attr("data-id"); //当前商品id
+									if(number>0){
+										var goodsList = [{'id':goodsid,'qty':number}];
+										mui.ajax(serverUrl + '/app/materialList/edit/batch', {
+											data: {
+												userId: userId,
+												identityType: identityT,
+												goodsList: JSON.stringify(goodsList),
+											},
+											dataType: 'json',
+											headers: {
+												"Authorization": oldToken
+											},
+											type: 'post',
+											timeout: 10000,
+											success: function(data, type, xhr) {
+												plus.nativeUI.closeWaiting();
+												console.log('加入购物车', data);
+												if(data.code == 0) {
+													plus.nativeUI.toast('加入成功')			
+													mui.fire(plus.webview.getWebviewById('cart.html'), 'refresh');
+												} else {
+													mui.toast(data.message)
+												}
+		
+											},
+											error: function(xhr, type, errorThrown) {
+												plus.nativeUI.closeWaiting();
+												console.log('登录响应失败');
+											}
+										});
+									}else{
+										mui.confirm('狠心不要了咩？', '提示', ['取消', '确定'], function(e) {
+											if(e.index == 1) {
+												mui.ajax(serverUrl + '/app/materialList/goods/delete', {
+													data: {
+														userId: userId,
+														identityType: identityT,
+														goodsIdArray: goodsid,
+													},
+													dataType: 'json',
+													headers: {
+														"Authorization": oldToken
+													},
+													type: 'post',
+													timeout: 10000,
+													success: function(data, type, xhr) {
+														plus.nativeUI.closeWaiting();
+														console.log('删除', data);
+														if(data.code == 0) {
+															mui.fire(plus.webview.getWebviewById('cart.html'), 'refresh');
+														} else {
+															mui.toast(data.message)
+														}
+		
+													},
+													error: function(xhr, type, errorThrown) {
+														plus.nativeUI.closeWaiting();
+													}
+												});
+											}else{
+												plus.nativeUI.closeWaiting();
+												cur.val(1);	
+												cur.siblings().removeAttr('disabled'); 
+											}
+		
+										})
+									}
+									
+								})
+								
+								function addCart(goodid,num,cur){
+									mui.ajax(serverUrl+'/app/materialList/add',{
+										data:{
+											userId:userId,
+											identityType:identityT,
+											params:goodid+'-'+num
+										},
+										dataType:'json',
+										headers: {"Authorization": oldToken},
+										type:'post',
+										timeout:10000,
+										success:function(data,type,xhr){ 
+											plus.nativeUI.closeWaiting();
+											console.log('加入购物车',data);
+											if(data.code == 0 ){
+												plus.nativeUI.toast('加入成功')							
+												mui.fire(plus.webview.getWebviewById('cart.html'), 'refresh');
+												hadCart(goodid,cur);
+											}else{
+												mui.toast(data.message)
+											}
+											 
+										},
+										error:function(xhr,type,errorThrown){
+											plus.nativeUI.closeWaiting();
+											console.log('登录响应失败');
+										}
+									});
+								}
+								
+								function hadCart(goodid,cur){
+									//获取已有购物车数量
+									mui.ajax(serverUrl + '/app/materialList/goods/qty', {
+										data: {
+											userId: userId,
+											identityType: identityT,
+											goodsId: goodid,
+										},
+										dataType: 'json',
+										headers: {
+											"Authorization": oldToken
+										},
+										type: 'post',
+										timeout: 10000,
+										success: function(data, type, xhr) {
+											plus.nativeUI.closeWaiting();
+											console.log('已有购物车数量', data);
+											if(data.code == 0) {
+												cur.next().show();
+												cur.hide();
+												if(data.content && data.content.qty){
+													cur.next().find('input').val(data.content.qty)
+												}
+											} else {
+												mui.toast(data.message)
+											}
+	
+										},
+										error: function(xhr, type, errorThrown) {
+											plus.nativeUI.closeWaiting();
+											console.log('登录响应失败');
+										}
+									});
+								}
 									//编辑
 									$('#edit').click(function() {
 										if($(this).html() == '编辑') {
-											$(this).html('取消');
-											$('.check').css('display', 'block');
-											$('#deleteCollect').css('display', 'block');
-
+											$(this).html('取消'); 
+											$('#deleteCollect,.check').show();
+											$('.toCart').hide();
 										} else {
-											$(this).html('编辑')
-											$('.check').css('display', 'none');
-											$('#deleteCollect').css('display', 'none');
+											$(this).html('编辑');
+											$('.toCart').show();
+											$('#deleteCollect,.check').hide();
 											$('#deleteCollect').attr('disabled', true);
 											$('.check').attr('src', '../../images/center/uncheck.svg');
 
@@ -158,7 +314,7 @@
 										if(!$('.choosed').length) {
 											mui.toast('还未选择要移除的商品哦')
 										} else {
-											mui.confirm('null', '确认删除吗', ['确认', '取消'], function(e) {
+											mui.confirm('确认删除吗', '提示', ['确认', '取消'], function(e) {
 												if(e.index == 0) {
 													$('.choosed').each(function() {
 														var cur = $(this);

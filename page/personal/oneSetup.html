@@ -160,6 +160,12 @@
 							<input type="text" class="fr shuru" disabled name="" id="isCity" />
 						</a>
 					</li>
+					<li class="clearfloat twosp" style="display: none;">
+						<a href="#">
+							<p class="fl">门店</p>
+							<input type="text" class="fr shuru" disabled name="" id="twosp" />
+						</a>
+					</li>
 					<li class="clearfloat sgo" style="display: none;">
 						<a href="#">
 							<p class="fl">门店</p>
@@ -169,7 +175,7 @@
 							</select>
 						</a>
 					</li>
-					<li class="clearfloat sgo" style="display: none;">
+					<li class="clearfloat sgo noguide" style="display: none;">
 						<a href="#">
 							<p class="fl">导购</p>
 							<span class="mui-icon mui-icon-arrowdown mui-pull-right ft16" style="top:5px;"></span> 
@@ -220,11 +226,14 @@
 			var oldToken = plus.storage.getItem("oldToken");
 			var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
 			var cityId = plus.storage.getItem('userCity');
-			if(identityT == 0 || identityT == 4 || identityT == 5 || identityT == 6 || identityT == 2){
+			if(identityT == 0 || identityT == 4 || identityT == 5 || identityT == 6){
 				$(".sgo").show();
 				showStore();
 			}else{
 				$(".sgo").hide()
+			}
+			if(identityT == 2 || identityT == 3){
+				$(".twosp").show()
 			}
 			if(identityT == 0 || identityT == 4 || identityT == 5){
 				$('#store').attr('disabled',true)
@@ -270,7 +279,10 @@
 						if(data.content.birthday){
 							mui('#shengri')[0].innerHTML = data.content.birthday;
 						}
-						 
+						if(data.content.storeName){
+							$('#twosp').val(data.content.storeName)
+						}
+						
 
 					}else{
 						mui.toast(data.message);

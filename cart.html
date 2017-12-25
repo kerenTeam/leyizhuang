@@ -337,7 +337,7 @@
 							});
 
 							//单组 全选
-							$('dl dt .mui-checkbox').click(function() {
+							$('dl dt .mui-checkbox').click(function() { 
 								if($(this).find("input").is(':checked')) {
 									$(this).parentsUntil(".eachGroup").find("input").attr("checked", true);
 									var allLength = $("dd").length;
@@ -385,11 +385,20 @@
 							})
 							//总选
 							$('aside .mui-checkbox').click(function() {
-								if($(this).find("input").prop('checked') == false) {
-									$("#cartData dl.cart input").attr("checked", false);
-								} else {
-									$("#cartData dl.cart input").attr("checked", true);
+								if($('#bianji').html() == '完成'){
+									if($(this).find("input").prop('checked') == false) {
+										$("dl.cart input").attr("checked", false);
+									} else {
+										$("dl.cart input").attr("checked", true);
+									}
+								}else{
+									if($(this).find("input").prop('checked') == false) {
+										$("#cartData dl.cart input").attr("checked", false);
+									} else {
+										$("#cartData dl.cart input").attr("checked", true);
+									}
 								}
+								
 								countFuc();
 							})
 							//数量选择

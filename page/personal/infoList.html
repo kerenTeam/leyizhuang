@@ -135,6 +135,8 @@
 				var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
 				var userId = plus.storage.getItem('$userId'); 
 				var oldToken = plus.storage.getItem('oldToken');
+				mui.fire(plus.webview.getWebviewById('message'),'refreshInfo');
+				
 				plus.nativeUI.showWaiting();//显示等待框
 					mui.ajax(serverUrl+'/app/user/message/list',{
 						data:{

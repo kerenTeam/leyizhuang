@@ -80,7 +80,7 @@
 				</div>
 				<div class="mui-input-row flexr">
 					<label style="border-right: 1px solid #EEEEEE;width: 27%;">服务导购</label>
-					<input id="guide" type="text" class="mui-input-clear mui-input" placeholder="请输入导购手机号（选填）">
+					<input id="guide" type="tel" class="mui-input-clear mui-input" placeholder="请输入导购手机号（选填）">
 				</div>
 			</form>
 			<div style="color:#FF5053;padding: 15px;font-size: 14px;">
@@ -167,7 +167,8 @@
 					} else if(account.value != codePhone) {
 						mui.toast('请重新获取验证码')
 					} else if(guide.value && !reg_phone.test(guide.value)){
-						mui.toast('请输入正确的导购手机号')
+						mui.toast('请输入正确的导购手机号');
+						return;
 					}else {
 						plus.nativeUI.showWaiting();
 						var cityId = $('#city').val();
@@ -222,7 +223,8 @@
 
 												var index = plus.webview.getLaunchWebview();
 												mui.fire(index, 'refreshid'); 
-													plus.nativeUI.closeWaiting(); 
+												plus.nativeUI.closeWaiting();
+												if(guide.value){
 													mui.ajax(serverUrl + '/app/customer/binding/seller', {
 														data: {
 															userId: userId,
@@ -240,18 +242,10 @@
 															console.log('绑定返回', data);
 															if(data.code == 0) {
 																if(data.content.isExist){
-																		mui.confirm('null', '绑定成功，你的导购是'+data.content.guideName, ['确认'], function(e) {
-																			if(e.index == 0) { 
-																				mui.fire(plus.webview.getWebviewById('center.html'),'refresh');	
-																				if(plus.webview.getWebviewById('reg')){
-																					plus.webview.getWebviewById('reg').close();
-																				}
-																				plus.webview.currentWebview().close();
-																				
-																			}
-																			return;
-																		},'')
-																	
+																	if(plus.webview.getWebviewById('reg')){
+																		plus.webview.getWebviewById('reg').close();
+																	}
+																	plus.webview.currentWebview().close(); 
 																}else{
 																	plus.nativeUI.alert('导购不存在')
 																}
@@ -265,7 +259,14 @@
 															plus.nativeUI.closeWaiting();
 															mui.toast(type)
 														}
-													}); 
+													});
+												}else{
+													if(plus.webview.getWebviewById('reg')){
+														plus.webview.getWebviewById('reg').close();
+													}
+													plus.webview.currentWebview().close(); 
+												}
+												 
 
 											}
 
