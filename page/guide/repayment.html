@@ -15,11 +15,11 @@
 			width: 80%;
 			vertical-align: top;
 		}
-		
+
 		.mui-media {
 			position: relative;
 		}
-		 
+
 		.check {
 			position: absolute;
 			top: 50%;
@@ -27,7 +27,7 @@
 			width: 25px;
 			left: 20px;
 		}
-		
+
 		#useCoupon {
 			position: fixed;
 			bottom: 10px;
@@ -43,7 +43,7 @@
 			    -webkit-transform: translateY(-50%);
 			    font-weight: bold;
 		}
-		
+
 	</style>
 
 	<body>
@@ -55,12 +55,12 @@
 		<div class="mui-content" style="margin-top: 7px;">
 			<!--商品列表-->
 			<div class="goodsList" id="goodsList" style="margin-bottom: 50px;">
-				
+
 			</div>
 			<script type="text/html" id="goodsTpl">
 				<ul class="mui-table-view">
 					<%for(var i = 0 ;i<list.length;i++){%>
-						<li class="mui-table-view-cell mui-media" onclick="goInfo()">
+						<li class="mui-table-view-cell mui-media" onclick="goInfo('<%=list[i].orderNumber%>')">
 							<a href="javascript:;">
 								<div class="mui-media-body ft16">
 									<%=list[i].repaymentTime%>
@@ -101,7 +101,7 @@
 				var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
 				var userId = plus.storage.getItem('$userId');
 				var oldToken = plus.storage.getItem('oldToken')
-				 
+
 				plus.nativeUI.showWaiting();
 				kindType();
 				function kindType() {
