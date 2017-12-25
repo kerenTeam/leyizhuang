@@ -34,6 +34,8 @@
 			.cancelText{padding: 20px 15px 10px;}
 			.cancelBtn{margin-top: 20px;}
 			.evaluaCon textarea{height: 90px;}
+			.copyBtn{    float: right; border: none; padding: 0 !important; color: #c7161e;}
+			.dingdanPingjia{margin-top: -8px; padding: 2px 6px; border-color: #ccc; color: #c7161e;}
 		</style>
 	</head>
 
@@ -54,9 +56,9 @@
 		</div>
 		<script type="text/html" id="mainS">
 			<div class="Dpart1">
-				<h4 style="-webkit-user-select: all;">
-					订单编号：<%= detail.orderNumber%>
-					<span style="-webkit-user-select: all;" class="span1">长按复制</span>
+				<h4 style="font-size: 15px !important;line-height: 1.6;">
+					订单编号：<a id="copyDiv" style="color: #555;"><%= detail.orderNumber%></a>
+					<button id="copyBtn" style="float: right;" class="span1 copyBtn">复制</button>
 				</h4>
 				<p>
 					下单时间：<%= detail.createTime%>
@@ -111,16 +113,17 @@
 			</div>
 			<!--订单评价-->
 			<div class="Dpart3" id="evaluat">
-				<h4 class="fineB dingdanPJ">订单服务评价：</h4>
+				<h4 class="fineB dingdanPJ">订单服务评价：<button class="dingdanPingjia mui-pull-right">提交评价</button> </h4>
 				<div class="mui-content-padded">
 					<div class="vm">
 						<span>产品：</span><!--mui-icon-star-filled-->
 						<div class="icons mui-inline" style="margin-left: 6px;vertical-align: middle;display: inline;">
-							<i data-index="1" class="mui-icon mui-icon-star"></i>
-							<i data-index="2" class="mui-icon mui-icon-star"></i>
-							<i data-index="3" class="mui-icon mui-icon-star"></i>
-							<i data-index="4" class="mui-icon mui-icon-star"></i>
-							<i data-index="5" class="mui-icon mui-icon-star"></i>
+							<% for(var i=1;i<detail.productStar+1;i++){%>
+								<i data-index="<%= i%>" class="mui-icon mui-icon-star-filled"></i>
+							<% }%>
+							<% for(var j=detail.productStar+1;j<6;j++){%>
+								<i data-index="<%= j%>" class="mui-icon mui-icon-star"></i>
+							<% }%>
 						</div>
 					</div>
 				</div>
@@ -128,11 +131,12 @@
 					<div class="vm">
 						<span>物流：</span><!--mui-icon-star-filled-->
 						<div class="icons mui-inline" style="margin-left: 6px;vertical-align: middle;display: inline;">
-							<i data-index="1" class="mui-icon mui-icon-star"></i>
-							<i data-index="2" class="mui-icon mui-icon-star"></i>
-							<i data-index="3" class="mui-icon mui-icon-star"></i>
-							<i data-index="4" class="mui-icon mui-icon-star"></i>
-							<i data-index="5" class="mui-icon mui-icon-star"></i>
+							<% for(var i=1;i<detail.logisticsStar+1;i++){%>
+								<i data-index="<%= i%>" class="mui-icon mui-icon-star-filled"></i>
+							<% }%>
+							<% for(var j=detail.logisticsStar+1;j<6;j++){%>
+								<i data-index="<%= j%>" class="mui-icon mui-icon-star"></i>
+							<% }%>
 						</div>
 					</div>
 				</div>
@@ -140,11 +144,12 @@
 					<div class="vm">
 						<span>服务：</span><!--mui-icon-star-filled-->
 						<div class="icons mui-inline" style="margin-left: 6px;vertical-align: middle;display: inline;">
-							<i data-index="1" class="mui-icon mui-icon-star"></i>
-							<i data-index="2" class="mui-icon mui-icon-star"></i>
-							<i data-index="3" class="mui-icon mui-icon-star"></i>
-							<i data-index="4" class="mui-icon mui-icon-star"></i>
-							<i data-index="5" class="mui-icon mui-icon-star"></i>
+							<% for(var i=1;i<detail.serviceStars+1;i++){%>
+								<i data-index="<%= i%>" class="mui-icon mui-icon-star-filled"></i>
+							<% }%>
+							<% for(var j=detail.serviceStars+1;j<6;j++){%>
+								<i data-index="<%= j%>" class="mui-icon mui-icon-star"></i>
+							<% }%>
 						</div>
 					</div>
 				</div>
@@ -159,7 +164,12 @@
 							<h4><%= detail.goodsList[i].skuName%></h4>
 							<p>
 								规格：<%= detail.goodsList[i].goodsSpecification%>  单位：<%= detail.goodsList[i].goodsUnit%>
-								<button type="button" class="mui-btn" onclick="evaluaProduct('<%= detail.goodsList[i].goodsId%>')">评价</button>
+								<% if(!detail.goodsList[i].isEvaluation){%>
+									<button type="button" class="mui-btn" onclick="evaluaProduct('<%= detail.goodsList[i].goodsId%>')">评价</button>
+								<% }else{%>
+									<button type="button" class="mui-btn">已评价</button>
+								<% }%>
+
 							</p>
 							<div>
 								<span class="span1">¥<%= detail.goodsList[i].retailPrice%></span>
@@ -201,6 +211,7 @@
 		<script src="../../js/default.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../../js/artTemplate-native.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../../js/feedback.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/clipboard.min.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
 			mui.plusReady(function(){
 				var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
@@ -227,58 +238,98 @@
 							}
 							//evaluat && (document.body.scrollTop = document.body.scrollHeight);
 							evaluat && (document.getElementById("evaluat").scrollIntoView());
+
+							//复制方法
+							var orderNumber = data.content.orderNumber;
+					        var clipboard = new Clipboard('.copyBtn', {
+					        		text: function() {
+						            return orderNumber;
+						        }
+						    });
+						    clipboard.on('success', function(e) {
+						    		mui.toast('复制成功');
+						        console.log('成功'+e.text);
+						    });
+						    clipboard.on('error', function(e) {
+						        console.log('失败',e);
+						    });
+
+						    //订单评价
+							var oneStar=0,twoStar=0,threeStar=0,EvaluatAble=true;
+							if(data.content.logisticsStar || data.content.productStar || data.content.serviceStars){
+								EvaluatAble = false;
+								mui('.dingdanPingjia')[0].innerHTML = '已评价';
+							}
+							if(EvaluatAble){
+								mui('.icons').on('tap','i',function(){
+								  	var index = parseInt(this.getAttribute("data-index"));
+								  	var parent = this.parentNode;
+								  	var children = parent.children;
+								  	if(this.classList.contains("mui-icon-star")){
+								  		for(var i=0;i<index;i++){
+							  				children[i].classList.remove('mui-icon-star');
+							  				children[i].classList.add('mui-icon-star-filled');
+								  		}
+								  	}else{
+								  		for (var i = index; i < 5; i++) {
+								  			children[i].classList.add('mui-icon-star')
+								  			children[i].classList.remove('mui-icon-star-filled')
+								  		}
+								  	}
+								  	starIndex = index;
+								  	//数据部分
+								  	oneStar = $('.mui-content-padded').eq(0).find('.mui-icon-star-filled').length;
+								  	twoStar = $('.mui-content-padded').eq(1).find('.mui-icon-star-filled').length;
+								  	threeStar = $('.mui-content-padded').eq(2).find('.mui-icon-star-filled').length;
+							  	});
+							}
+
+						  	mui('.dingdanPingjia')[0].onclick = function(){
+						  		if(EvaluatAble){
+									if(oneStar==0 || twoStar==0 || threeStar==0){
+										mui.toast('每项请至少选择一个星级！');
+									}else{
+										var dataObj0 = {
+											'userId':userId,
+											'identityType':identityT,
+											'productStar':oneStar,
+											'logisticsStar':twoStar,
+											'serviceStars':threeStar,
+											'orderNumber':orderNo
+										};
+										console.log(dataObj0);
+										goEvaluation();
+										function goEvaluation(){
+											mui.ajax(serverUrl + '/app/order/evaluation/submit',{
+												data:dataObj0,
+												dataType:'json',
+												type:'post',
+												timeout:10000,
+												headers:{"Authorization":oldToken},
+												success:function(data,type,xhr){
+													console.log('订单评价'+JSON.stringify(data));
+													if(data.code != 0){
+														mui.toast(data.message);
+													}else{
+														EvaluatAble = false;//已经评价
+														mui.toast(data.message || '感谢您的评价');
+													}
+												},
+												error:function(xhr,type,errorThrown){
+													console.log('响应失败  !');
+													mui.toast('当前网络不好，请重试');
+												}
+											});
+										}
+									}
+								}
+							}
+
 						}else{
 							mui.toast(data.message);
 						}
 
-						//订单评价
-						mui('.icons').on('tap','i',function(){
-						  	var index = parseInt(this.getAttribute("data-index"));
-						  	var parent = this.parentNode;
-						  	var children = parent.children;
-						  	if(this.classList.contains("mui-icon-star")){
-						  		for(var i=0;i<index;i++){
-					  				children[i].classList.remove('mui-icon-star');
-					  				children[i].classList.add('mui-icon-star-filled');
-						  		}
-						  	}else{
-						  		for (var i = index; i < 5; i++) {
-						  			children[i].classList.add('mui-icon-star')
-						  			children[i].classList.remove('mui-icon-star-filled')
-						  		}
-						  	}
-						  	starIndex = index;
-						  	//数据部分
-						  	var oneStar = $('.mui-content-padded').eq(0).find('.mui-icon-star-filled').length;
-						  	var twoStar = $('.mui-content-padded').eq(1).find('.mui-icon-star-filled').length;
-						  	var threeStar = $('.mui-content-padded').eq(2).find('.mui-icon-star-filled').length;
-						  	mui.ajax(serverUrl + '/app/order/evaluation/submit',{
-								data:{
-									'userId':userId,
-									'identityType':identityT,
-									'productStar':oneStar,
-									'logisticsStar':twoStar,
-									'serviceStars':threeStar,
-									'orderNumber':orderNo
-								},
-								dataType:'json',
-								type:'post',
-								timeout:10000,
-								headers:{"Authorization":oldToken},
-								success:function(data,type,xhr){
-									console.log('订单评价'+JSON.stringify(data));
-									if(data.code != 0){
-										mui.toast(data.message);
-									}else{
-										mui.toast('感谢您的评价');
-									}
-								},
-								error:function(xhr,type,errorThrown){
-									console.log('响应失败  !');
-									mui.toast('当前网络不好，请重试');
-								}
-							});
-					  	});
+
 					},
 					error:function(xhr,type,errorThrown){
 						console.log('响应失败  !');

@@ -13,51 +13,51 @@
 			.area {
 				margin: 20px auto 0px auto;
 			}
-			
+
 			.mui-input-group {
 				margin-top: 10px;
 			}
-			
+
 			.mui-input-group:first-child {
 				margin-top: 20px;
 			}
-			
+
 			.mui-input-group label {
 				width: 22%;
 				border-right: 1px solid #EEEEEE;
 			}
-			
+
 			.mui-input-row label~input,
 			.mui-input-row label~select,
 			.mui-input-row label~textarea {
 				width: 75%;
 			}
-			
+
 			.mui-checkbox input[type=checkbox],
 			.mui-radio input[type=radio] {
 				top: 6px;
 			}
-			
+
 			.mui-content-padded {
 				margin-top: 25px;
 			}
-			
+
 			.mui-btn {
 				padding: 10px;
 			}
-			
+
 			.link-area {
 				display: block;
 				margin-top: 25px;
 				text-align: center;
 			}
-			
+
 			.spliter {
 				color: #bbb;
 				padding: 0px 8px;
 			}
 			.mui-input-row{padding: 5px 0!important;height: 60px!important;}
-		
+
 		</style>
 
 	</head>
@@ -79,13 +79,13 @@
 					<input id='password' type="password" class="mui-input-clear mui-input" placeholder="请输入密码">
 				</div>
 			</form>
-		 
+
 			<div class="mui-content-padded">
 				<button id='login' class="mui-btn mui-btn-block mui-btn-danger">登录</button>
 				<div class="link-area"><a id='forgetPassword'>忘记密码</a>
 				</div>
 			</div>
-			
+
 		</div>
 		<script src="js/mui.min.js"></script>
 		<script src="js/mui.enterfocus.js"></script>
@@ -97,14 +97,14 @@
 				$.init({
 					statusBarBackground: '#f7f7f7'
 				});
-				$.plusReady(function() { 
+				$.plusReady(function() {
 				 	if(/android/i.test(navigator.userAgent)){
 				 	 	var systemType = 'ANDROID'
 					}else{
 				 	 	var systemType = 'IOS'
 					}
 					var clientId = plus.push.getClientInfo().clientid;
-					var deviceId = plus.device.uuid; 
+					var deviceId = plus.device.uuid;
 					var loginButton = doc.getElementById('login');
 					var accountBox = doc.getElementById('account');
 					var passwordBox = doc.getElementById('password');
@@ -115,10 +115,10 @@
 						var loginInfo = {
 							account: accountBox.value,
 							password: passwordBox.value
-						}; 
+						};
 						var reg_pass = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,12}$/;
 						var reg_phone = /^1((3|4|5|8|7){1}\d{1}|70)\d{8}$/;//手机号正则;
-						if(!loginInfo.account){ 
+						if(!loginInfo.account){
 							mui.toast('请输入账号名');
 						}else if(!loginInfo.password){
 							mui.toast('请输入密码');
@@ -126,18 +126,18 @@
 							plus.nativeUI.showWaiting();
 							 var b = new Base64();
 							 var str = b.encode(loginInfo.password);
-							 
+
 							mui.ajax(serverUrl+'/app/employee/login',{
 								data:{"name":loginInfo.account,"password":str,"deviceId":deviceId,"clientId":clientId,"systemType":systemType},
 								dataType:'json',
 								type:'post',
 								timeout:10000,
-								success:function(data,type,xhr){ 
-									console.log('登录返回',data);
+								success:function(data,type,xhr){
+									console.log('登录'+JSON.stringify(data));
 									if(data.code !=0){
 										plus.nativeUI.closeWaiting();
 										mui.toast(data.message)
-									}else{ 
+									}else{
 										mui.toast('登录成功')
 										plus.nativeUI.closeWaiting();
 								 		plus.storage.removeItem('openId');
@@ -146,7 +146,7 @@
 										plus.storage.setItem('$userId',JSON.stringify(data.content.userId));
 										plus.storage.setItem("$identityType",JSON.stringify({'identityType':data.content.type}));
 										plus.storage.setItem("Acc_pass",JSON.stringify(Acc_pass));//保存账号密码,用于自动登录
-										
+
 										if(plus.webview.getWebviewById('identify')){
 											plus.webview.getWebviewById('identify').close();
 										}
@@ -167,9 +167,9 @@
 													id:'dispatching'
 												})
 											}else{
-												plus.webview.currentWebview().close(); 
+												plus.webview.currentWebview().close();
 											}
-										},100) 
+										},100)
 									}
 								},
 								error:function(xhr,type,errorThrown){
@@ -178,8 +178,8 @@
 								}
 							});
 						}
-					 
-						
+
+
 					});
 					$.enterfocus('#login-form input', function() {
 						$.trigger(loginButton, 'tap');
@@ -188,7 +188,7 @@
 						$.openWindow({
 							url: 'forget_password.html',
 							id: 'forget_password',
-							
+
 							show: {
 								aniShow: 'pop-in'
 							},
