@@ -107,7 +107,10 @@
 		.mui-table-view-cell.mui-collapse .mui-collapse-content {
 			margin: 11px -15px -15px;
 		} 
-		
+		input[type="tel"],input[type="number"]{
+			padding: 0;
+   			text-align: center;
+		}
 	</style>
 
 	<body>
@@ -303,14 +306,22 @@
 					<%}%>
 					<div class="pad10 ft16 activecl" style="text-align: right;">合计：<span id="totalOrderAmount">¥--</span></div>
 					<div style="height: 5px;background: #EEEEEE;"></div>
-
-					<div class="pad10 ft14 afterBorder">预存款<span class='activecl' id="preDepositb">¥--</span><input onchange="maxC(this)" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" placeholder="0" name="preDepositb" class='mui-pull-right preDeposit' /></div>
-					<!--only manager-->
-					<div class="pad10 ft14 afterBorder manager" style="display: none;">信用金<span class='activecl' id="credit">¥--</span><input placeholder="0" name="credit" onchange="maxC(this)" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" class='mui-pull-right preDeposit' /></div>
-					<div class="pad10 ft14 afterBorder manager" style="display: none;">现金返利<span class='activecl' id="cash">¥--</span><input placeholder="0" name="cash" onchange="maxC(this)" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" class='mui-pull-right preDeposit' /></div>
-					<!--only guide-->
-					<div class="pad10 ft14 afterBorder guide" style="display: none;">信用额度<span class='activecl' id="creditVal">¥--</span><input placeholder="0" name="creditVal" onchange="maxC(this)" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" class='mui-pull-right preDeposit' /></div>
-					<div class="pad10 ft14 afterBorder guide" style="display: none;">代收金额<input placeholder="0" name="cashHelp" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" class='mui-pull-right preDeposit' /></div>
+					<%if(platform == 'ANDROID'){%>
+						<div class="pad10 ft14 afterBorder">预存款<span class='activecl' id="preDepositb">¥--</span><input type="tel" onchange="maxC(this)" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" placeholder="0" name="preDepositb" class='mui-pull-right preDeposit' /></div>
+						<!--only manager-->
+						<div class="pad10 ft14 afterBorder manager" style="display: none;">信用金<span class='activecl' id="credit">¥--</span><input type="tel" placeholder="0" name="credit" onchange="maxC(this)" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" class='mui-pull-right preDeposit' /></div>
+						<div class="pad10 ft14 afterBorder manager" style="display: none;">现金返利<span class='activecl' id="cash">¥--</span><input type="tel" placeholder="0" name="cash" onchange="maxC(this)" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" class='mui-pull-right preDeposit' /></div>
+						<!--only guide-->
+						<div class="pad10 ft14 afterBorder guide" style="display: none;">信用额度<span class='activecl' id="creditVal">¥--</span><input type="tel" placeholder="0" name="creditVal" onchange="maxC(this)" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" class='mui-pull-right preDeposit' /></div>
+						<div class="pad10 ft14 afterBorder guide" style="display: none;">代收金额<input type="tel" placeholder="0" name="cashHelp" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" class='mui-pull-right preDeposit' /></div>
+					<%}else{%>
+						<div class="pad10 ft14 afterBorder">预存款<span class='activecl' id="preDepositb">¥--</span><input type="number" onchange="maxC(this)" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" placeholder="0" name="preDepositb" class='mui-pull-right preDeposit' /></div>
+						<div class="pad10 ft14 afterBorder manager" style="display: none;">信用金<span class='activecl' id="credit">¥--</span><input type="number" placeholder="0" name="credit" onchange="maxC(this)" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" class='mui-pull-right preDeposit' /></div>
+						<div class="pad10 ft14 afterBorder manager" style="display: none;">现金返利<span class='activecl' id="cash">¥--</span><input type="number" placeholder="0" name="cash" onchange="maxC(this)" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" class='mui-pull-right preDeposit' /></div>
+						<div class="pad10 ft14 afterBorder guide" style="display: none;">信用额度<span class='activecl' id="creditVal">¥--</span><input type="number" placeholder="0" name="creditVal" onchange="maxC(this)" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" class='mui-pull-right preDeposit' /></div>
+						<div class="pad10 ft14 afterBorder guide" style="display: none;">代收金额<input type="number" placeholder="0" name="cashHelp" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" class='mui-pull-right preDeposit' /></div>
+					<%}%>
+					
 
 				</dl>
 			</script>
@@ -392,6 +403,7 @@
 		}
 
 		mui.plusReady(function() {
+			var platform = plus.storage.getItem('platform')
 			var userId = plus.storage.getItem('$userId');
 			var oldToken = plus.storage.getItem("oldToken");
 			var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
@@ -477,6 +489,7 @@
 						promotionInfo = JSON.stringify(data.content.promotionInfo);//更换选赠品时存的促销赠品
 						//显示商品
 						var goods = data.content.totalGoodsInfo;
+						
 						dataObj.totalQty = data.content.totalQty;
 						dataObj.totalPrice = data.content.totalPrice;
 						dataObj.list = goods;
@@ -527,6 +540,7 @@
 							}
 						}
 						var discount = {};
+						discount.platform = platform;
 						discount.lebi = data.content.leBi;
 						discount.cashCouponList = data.content.cashCouponList;
 						discount.productCouponList = data.content.productCouponList;

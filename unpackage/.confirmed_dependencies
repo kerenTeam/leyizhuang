@@ -412,7 +412,8 @@
       "page/personal/palette.html",
       "page/personal/pzOrderList.html",
       "page/guide/debateAudit.html",
-      "page/guide/debateQuery.html"
+      "page/guide/debateQuery.html",
+      "page/personal/myOrderRTList.html"
     ]
   },
   "cart.html": {
@@ -1219,6 +1220,11 @@
   "page/guide/searchNodelivery.html": {
     "refer": [
       "page/personal/productCoupon.html"
+    ]
+  },
+  "page/personal/palette.html": {
+    "refer": [
+      "page/personal/paletteHelp.html"
     ]
   }
 }

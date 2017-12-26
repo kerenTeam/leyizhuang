@@ -54,9 +54,15 @@
 				var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
 				var userId = plus.storage.getItem('$userId'); 
 				var oldToken = plus.storage.getItem('oldToken');
+				if(identityT == 1){
+					$('.msg2').hide();
+				}
+				document.addEventListener('refreshInfo', function() {
+					showMsg();
+				})
 				showMsg()
-				function showMsg(){
-					mui.ajax(serverUrl+'/app/user/message/list',{
+				function showMsg(){//待测
+					mui.ajax(serverUrl+'/app/user/message/unread/number',{
 						data:{
 							userId:userId,
 							identityType:identityT
@@ -78,38 +84,6 @@
 					     				mui('#msg')[0].innerHTML = msgnum1;
 						       		}else{
 						       			mui('#msg')[0].style.display = 'none';
-						       		}
-								}
-					       	}
-					       	plus.nativeUI.closeWaiting();
-						},
-						error:function(xhr,type,errorThrown){
-							plus.nativeUI.closeWaiting();
-							console.log('当前网络不好,请重试');
-						}
-					});
-					mui.ajax(serverUrl+'/app/delivery/message',{
-						data:{
-							userID:userId,
-							identityType:identityT
-						},
-						dataType:'json',
-						type:'post',
-						timeout:10000,
-						headers:{"Authorization":oldToken},
-						success:function(data,type,xhr){
-							plus.nativeUI.closeWaiting();
-							console.log('wl消息',data);
-					       	if(data.code == 0){
-						     	if(data.content && data.content.length){
-						       		var infoNums = plus.storage.getItem('infoNums2') || 0;
-						       		if(data.content.length - infoNums > 0){
-						       			var msgnum2 = data.content.length - infoNums;
-						       			plus.storage.setItem('allInfo2',msgnum2.toString())
-						       			mui('#wlmsg')[0].style.display = 'block';
-					     				mui('#wlmsg')[0].innerHTML = msgnum2;
-						       		}else{
-						       			mui('#wlmsg')[0].style.display = 'none';
 						       		}
 								}
 					       	}

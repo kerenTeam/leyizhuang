@@ -29,6 +29,7 @@
 		<header class="mui-bar mui-bar-nav">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<h1 class="mui-title">调色板</h1>
+			<img src="../../images/center/help.svg" class="mui-pull-right" style="width: 22px;margin-top: 13px;" onclick="goHelp()"/>
 		</header>
 		<script src="../../js/statusBar.js"></script>
 		<div class="tzNav mui-content" id="navDiv"></div>
@@ -108,7 +109,12 @@
 	<script src="../../js/default.js"></script>
 	<script src="../../js/artTemplate-native.js"></script>
 	<script type="text/javascript">
-
+		function goHelp(){
+			openview({
+				view:'paletteHelp.html',
+				id:'paletteHelp'
+			})
+		}
 		//分类
 		mui.ajax(oCms + '/index.php/ApiCms/colorCate',{
 			data:{ 'cateId':0 },
