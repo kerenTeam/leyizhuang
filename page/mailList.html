@@ -75,6 +75,7 @@
 					<a>X</a>
 					<a>Y</a>
 					<a>Z</a>
+					<a id="teshu">#</a>
 				</div>
 				<div class="mui-indexed-list-alert"></div>
 				<div class="mui-indexed-list-inner">
@@ -87,18 +88,20 @@
 						<!--列表loading结束-->
 					</ul>
 					<script type="text/html" id="contactS">
-						<% for(var i=0;i<list1.length;i++){%>
-							<li data-group="<%= list1[i].toUpperCase()%>" class="mui-table-view-divider mui-indexed-list-group"><%= list1[i].toUpperCase()%></li>
-							<% if( obj0[list1[i]].length){%>
-								<% for(var j=0,nowAA =obj0[list1[i]]; j<nowAA.length;j++){%>
-									<li class="mui-table-view-cell mui-indexed-list-item">
-										<b><%= nowAA[j].displayName%></b>
-										<% if(nowAA[j].phoneNumbers.length){%>
-											<% for(var k=0,nextAA = nowAA[j].phoneNumbers; k<nextAA.length;k++){%>
-												<span onclick="selectWho(this)" class="span1 aClick fineT"> <%= nextAA[k].value%> </span>
+						<% if(list1.length){%>
+							<% for(var i=0;i<list1.length;i++){%>
+								<li data-group="<%= list1[i].toUpperCase()%>" class="mui-table-view-divider mui-indexed-list-group"><%= list1[i].toUpperCase()%></li>
+								<% if( obj0[list1[i]].length){%>
+									<% for(var j=0,nowAA =obj0[list1[i]]; j<nowAA.length;j++){%>
+										<li class="mui-table-view-cell mui-indexed-list-item">
+											<b><%= nowAA[j].displayName%></b>
+											<% if(nowAA[j].phoneNumbers.length){%>
+												<% for(var k=0,nextAA = nowAA[j].phoneNumbers; k<nextAA.length;k++){%>
+													<span onclick="selectWho(this)" class="span1 aClick fineT"> <%= nextAA[k].value%> </span>
+												<% }%>
 											<% }%>
-										<% }%>
-									</li>
+										</li>
+									<% }%>
 								<% }%>
 							<% }%>
 						<% }%>
@@ -139,11 +142,19 @@
                         	console.log('twoMail',twoMail);
                         	var contactObj = {};
                         	var FLA = [];
+                        	var haveJin = false;
                         	var erliu = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'];
 						twoMail.forEach(function(ele,index){
 							var firstLetter = goPinyin(ele.displayName);
 							if(FLA.indexOf(firstLetter)==-1){
-								FLA.push(firstLetter);
+								if(erliu.indexOf(firstLetter)>-1){
+									FLA.push(firstLetter);
+								}else{
+									if(FLA.indexOf('#')==-1){
+										haveJin = true;
+										//FLA.push('#');
+									}
+								}
 							}
 							erliu.forEach(function(ele2,index2){
 								if(firstLetter == ele2){
@@ -154,11 +165,26 @@
 										contactObj[ele2].push(ele);
 									}
 								}
+
 							})
+							//除了字母外的特殊字符
+							if(erliu.indexOf(firstLetter)==-1){
+								if(!contactObj['#']){
+									contactObj['#'] = [];
+									contactObj['#'].push(ele);
+								}else{
+									contactObj['#'].push(ele);
+								}
+							}
 						})
 						var FLAEnd = FLA.sort();
-						console.log('FLA',FLAEnd);
-						console.log('contactObj',contactObj);
+						if(haveJin){
+							FLAEnd.push('#');
+						}else{
+							//mui('#teshu')[0].style.display = 'none';
+						}
+						console.log('FLA-list1',FLAEnd);
+						console.log('contactObj-obj0',contactObj);
 						document.getElementById('contactDiv').innerHTML = template('contactS',{obj0:contactObj,list1:FLAEnd});
                     }, function () {
                         console.error("error");
@@ -171,7 +197,7 @@
 			mui.ready(function() {
 				var header = document.querySelector('header.mui-bar');
 				var list = document.getElementById('list');
-				list.style.height = (document.body.offsetHeight - header.offsetHeight) + 'px';
+				list.style.height = (document.body.offsetHeight - header.offsetHeight + 15) + 'px';
 				window.indexedList = new mui.IndexedList(list);
 			});
 		</script>
