@@ -1317,7 +1317,8 @@
 					"page/personal/address.html",
 					"page/personal/productCoupon.html",
 					"page/order/elseMaterialList.html",
-					"page/personal/myOrderList.html"
+					"page/personal/myOrderList.html",
+					"page/order/orderSuccess.html"
 				],
 				"priority": 0
 			},
@@ -1725,6 +1726,13 @@
 				"resources": [],
 				"refer": [
 					"page/personal/paletteHelp.html"
+				],
+				"priority": 0
+			},
+			"page/order/orderSuccess.html": {
+				"resources": [],
+				"refer": [
+					"page/personal/myOrderDetail.html"
 				],
 				"priority": 0
 			}

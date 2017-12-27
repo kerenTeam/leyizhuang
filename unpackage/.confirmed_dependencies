@@ -846,7 +846,8 @@
       "page/personal/address.html",
       "page/personal/productCoupon.html",
       "page/order/elseMaterialList.html",
-      "page/personal/myOrderList.html"
+      "page/personal/myOrderList.html",
+      "page/order/orderSuccess.html"
     ]
   },
   "page/order/chooseCustom.html": {
@@ -1215,16 +1216,24 @@
   "page/oilFast.html": {
     "refer": [
       "page/goodsInfo.html"
-    ]
+    ],
+    "resources": []
   },
   "page/guide/searchNodelivery.html": {
     "refer": [
       "page/personal/productCoupon.html"
-    ]
+    ],
+    "resources": []
   },
   "page/personal/palette.html": {
     "refer": [
       "page/personal/paletteHelp.html"
+    ],
+    "resources": []
+  },
+  "page/order/orderSuccess.html": {
+    "refer": [
+      "page/personal/myOrderDetail.html"
     ]
   }
 }

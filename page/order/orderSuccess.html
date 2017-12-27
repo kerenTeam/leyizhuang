@@ -1,0 +1,66 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>商品列表</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/commonY.css"/>
+		<link rel="stylesheet" href="../../css/style.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/configW.css"/>
+	</head>
+  	<style type="text/css">
+  		button{padding: 8px!important;font-size: 15px!important;width: 30%!important;margin: 20px;}
+  	</style>
+	<body class="bgcwt">
+		<header class="mui-bar mui-bar-nav" style="padding-right: 15px;z-index: 100;">
+			<a id="leftbtn" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">支付成功</h1>
+		</header>
+		<script src="../../js/statusBar.js" type="text/javascript" charset="utf-8"></script>
+		<div id="main">
+			<div class="ft18 fttc padd10">
+				<img class="mui-block" style="margin: auto auto 10px auto;" src="../../img/check2.svg"/> 
+				支付成功
+			</div>
+			<div class="fttc padd10">
+				<button class="mui-btn-outlined" onclick="goback()">返回首页</button>
+				<button class="mui-btn-danger" onclick="goOrderInfo()">查看订单</button>
+			</div>
+			
+			
+		</div>
+		<script src="../../js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/mui.min.js"></script>  
+		<script type="text/javascript">
+			mui.init();
+			
+			mui.plusReady(function(){
+			 	//获取缓存 
+				var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
+				var userId = plus.storage.getItem('$userId'); 
+				var oldToken = plus.storage.getItem('oldToken');
+				var orderNo = plus.webview.currentWebview().orderNo;
+				console.log(orderNo)
+				var money = plus.webview.currentWebview().money;
+				window.goback = function(){
+					var index = plus.webview.getLaunchWebview();
+					mui.fire(index,'refreshpage');
+					mui.back();
+				}
+				window.goOrderInfo = function(){
+					openview({
+						view:'../personal/myOrderDetail.html',
+						id:'myOrderDetail',
+						extrasobj:{
+							orderNo:orderNo
+						}
+					})
+				}
+				
+			})
+			
+		</script>
+	</body>
+
+</html>
