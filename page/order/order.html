@@ -262,7 +262,7 @@
 									<a class="mui-navigate-right" style="padding: 10px 15px;" href="#">优惠券<span class="fr" style="margin-right: 15px;">选择</span></a>
 									<div class="mui-collapse-content">
 										<%for(var j = 0; j<cashCouponList.length;j++){%>
-										<div class="checkQuan mui-row" data-id="<%=j+1%>">
+										<div class="checkQuan mui-row" data-id="<%=cashCouponList[j].id%>">
 											<div class="mui-col-sm-3">
 												<div>￥<big><b><%=cashCouponList[j].denomination%></b></big></div>
 												<div><small><%=cashCouponList[j].description%></small></div>
@@ -275,7 +275,7 @@
 													<%=cashCouponList[j].effectiveEndTime%>内有效
 												</div>
 											</div>
-											<div class="mui-checkbox"><img src="../../images/xuanze.png" class="quanc" data-id="<%=j+1%>" alt="" /></div>
+											<div class="mui-checkbox"><img src="../../images/xuanze.png" class="quanc" data-id="<%=cashCouponList[j].id%>" alt="" /></div>
 										</div>
 										<%}%>
 
@@ -413,6 +413,11 @@
 			var productCouponList = plus.storage.getItem('productCouponList');//产品券商品
 			var promotionInfo = plus.storage.getItem('giftList');//促销赠品
 			var customerId = plus.webview.currentWebview().customerId || '';
+			if(plus.storage.getItem('auditNo') && plus.storage.getItem('remark')){
+				$('#remark').val(plus.storage.getItem('remark'));
+				
+			}
+			
 			var pays = {};
 			console.log('idobj ', idobj)
 			console.log('onlyGoods ', onlyGoods)
@@ -703,7 +708,9 @@
 						console.log('默认地址', data);
 						var addrObj = {};
 						if(data.code == 0 && data.content) {
-							if(plus.storage.getItem("$addressStorageOrder") != null) {
+							if(plus.storage.getItem("audnoAddrObj") && plus.storage.getItem("auditNo")){
+								addrObj.obj = JSON.parse(plus.storage.getItem("audnoAddrObj"));
+							}else if(plus.storage.getItem("$addressStorageOrder") != null) {
 								addrObj.obj = JSON.parse(plus.storage.getItem("$addressStorageOrder"));
 							} else {
 								var defultAddress = {};
@@ -955,18 +962,18 @@
 						isOwnerReceiving = true;
 					}
 				} else {
-					var addid = $('#addid').attr('data-id');
+					var addid = $('#addid').attr('data-receiver');
 					if(!addid) {
 						mui.toast('还未选择收货地址哦！');
 						return;
 					} else {
 						receiver = $('#addid').attr('data-receiver'),
-							receiverPhone = $('#addid').attr('data-receiverPhone'),
-							deliveryCity = $('#addid').attr('data-deliveryCity'),
-							deliveryCounty = $('#addid').attr('data-deliveryCounty'),
-							deliveryStreet = $('#addid').attr('data-deliveryStreet'),
-							residenceName = $('#addid').attr('data-residenceName'),
-							detailedAddress = $('#addid').attr('data-detailedAddress');
+						receiverPhone = $('#addid').attr('data-receiverPhone'),
+						deliveryCity = $('#addid').attr('data-deliveryCity'),
+						deliveryCounty = $('#addid').attr('data-deliveryCounty'),
+						deliveryStreet = $('#addid').attr('data-deliveryStreet'),
+						residenceName = $('#addid').attr('data-residenceName'),
+						detailedAddress = $('#addid').attr('data-detailedAddress');
 						if(!$('#cityResult .pstime').html()) {
 							mui.toast('还未选择配送时间哦！');
 							return;

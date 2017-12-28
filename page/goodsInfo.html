@@ -148,13 +148,15 @@
 								<img src="<%=list[i].picUrl%>" class="userAvator"/>
 								<div class="butright">
 									<div class="btop">
-						            		<b class="ft14"><%=list[i].evaluationName%></b> <span class="disablecl"><!--xxxxx--></span>
+						            		<b class="ft14"><%=list[i].evaluationName ||'匿名'%></b> <span class="disablecl"><%=list[i].creatTime ||'time'%></span>
 						            	</div>
 					            	<div class="maincl ft14"><%=list[i].commentContent%></div>
 					            	<%if(list[i].evaluationPictures && list[i].evaluationPictures.length){%>
 					            		<div class="cmtImg">
 						            	<%for(var j = 0 ; j<list[i].evaluationPictures.length;j++){%>
-										<img src="<%=list[i].evaluationPictures[j]%>"  data-preview-src="" data-preview-group="<%=i+1%>" alt="" />
+						            		<%if(list[i].evaluationPictures[j]){%>
+											<img src="<%=list[i].evaluationPictures[j]%>"  data-preview-src="" data-preview-group="<%=i+1%>" alt="" />
+						            		<%}%>
 						            	<%}%>
 					            		</div>
 					            	<%}%>
@@ -449,7 +451,7 @@
 			//获取评论
 			mui.ajax(serverUrl+'/app/order/evaluation/goods/list',{
 				data:{
-					gid:32
+					gid:goodid
 				},
 				dataType:'json',
 				headers: {"Authorization": oldToken},

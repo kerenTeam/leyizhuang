@@ -320,6 +320,7 @@
 		//发送 发布
 		mui('.baocun')[0].addEventListener('tap',function(){
 		 	var BZCon = mui('#BZCon')[0].value;//备注
+		 	
 			var deliveryId = $('#addid').attr('data-id');
 		 	if(!Apic.length){
 		 		mui.toast('请选择至少一张图片');
@@ -333,6 +334,7 @@
 
 		 	//发送数据
 		 	function releaseData(){
+		 		plus.nativeUI.showWaiting();
 				var task = plus.uploader.createUpload(serverUrl+'/app/photoOrder/add',
 					{ method:"POST"},
 					function(back,status){
@@ -343,11 +345,15 @@
 							console.log("发送返回",back.responseText);
 							var dataobj = JSON.parse(back.responseText);
 							if(dataobj.code == 0){
-								alert('您的订单已提交，客服会尽快跟您联系！')
+		 						plus.nativeUI.showWaiting();
+								plus.nativeUI.alert('您的订单已提交，客服会尽快跟您联系！')
 								openview({
 									view:'../personal/pzOrderList.html',
 									id:'pzOrderList'
-								})
+								});
+								setTimeout(function() {
+									plus.webview.currentWebview().close();
+								}, 500)
 	    						}else{
 	    							mui.toast(dataobj.message);
 	    							plus.nativeUI.closeWaiting();
