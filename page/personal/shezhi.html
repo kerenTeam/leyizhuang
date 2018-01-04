@@ -47,15 +47,15 @@
 			</ul>
 			<!--<div id="xieyi">
 				HI集用户协议
-			</div>
-			<div id="" style="text-align: center;margin-top: 40px;color: #777;font-size: 11px;line-height: 20px;">
-				© 宏帆集团  &nbsp; hiji.hifete.com<br />
-				当前版本号: v<span id="version">- - -</span>
 			</div>-->
+			<div id="" style="text-align: center;margin-top: 40px;color: #777;font-size: 11px;line-height: 20px;">
+				© 乐意装  &nbsp; leyi.zhang.com<br />
+				当前版本号: v<span id="version">- - -</span>
+			</div>
 	    </div>
 	</body>
 	<script src="../../js/mui.min.js"></script>
-	<script src="../../js/app.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../js/default.js" type="text/javascript" charset="utf-8"></script>
 	<script src="../../js/update.js" type="text/javascript" charset="utf-8"></script>
 	<script type="text/javascript">
 		mui.plusReady(function(){
@@ -66,7 +66,7 @@
 			//检测设备信息
 			!function(){
 				plus.runtime.getProperty(plus.runtime.appid,function(inf){//显示当前版本号
-//		        	mui('#version')[0].innerHTML = inf.version;
+		        	    mui('#version')[0].innerHTML = inf.version;
 			    });
 				if(/android/i.test(navigator.userAgent)){
 					mui('#editPhone')[0].className += ' liafter';
