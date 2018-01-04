@@ -168,11 +168,11 @@
 					<span class="mui-icon mui-icon-arrowright mui-pull-right maincl ft20 activecl" style="font-weight: 800;"></span>
 				</div>
 				<div class="flexRow ft14 maincl">
-					<div class="">
+					<div class="" onclick="openOrder(1)">
 						<img src="images/center/waitPay.svg"/>
 						待付款
 					</div>
-					<div class="">
+					<div class="" onclick="openOrder(2)">
 						<img src="images/center/take.svg"/>
 						待收货
 					</div>
@@ -399,11 +399,14 @@
 					id: 'palette',
 				})
 			}
-			//分类订单
-			function openOrder(){
+			//打开订单，
+			function openOrder(type){
 				openview({
 					view:'page/personal/myOrderList.html',
 					id: 'myOrderList',
+					extrasobj:{
+						type:type
+					}
 				})
 			}
 			//顾客 收藏
@@ -528,7 +531,7 @@
 				document.addEventListener('refresh', function() {
 					Refresh();
 				})
-				
+
 				Refresh();
 				function Refresh() { //刷新
 					//获取缓存
@@ -606,7 +609,7 @@
 							}
 						});
 					}
-						
+
 					loadmyinfo();
 					if(identityT == 0 || identityT == 4 || identityT == 5){//导购
 						$('#onlyCust,.qiandao,.centerList,#onlyPs,#onlymange').hide()

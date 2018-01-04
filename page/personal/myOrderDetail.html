@@ -13,6 +13,7 @@
 		<link rel="stylesheet" href="../../css/resetY.css">
 		<link rel="stylesheet" href="../../css/feedback.css"><!--订单星级-->
 		<link rel="stylesheet" href="../../css/youxd.css">
+		<script src="../../js/order0.js"></script>
 		<style type="text/css">
 			body{background-color: #F8F9FA;font-size: 15px;}
 			#main{margin-top: 50px;}
@@ -174,12 +175,13 @@
 							<h4><%= detail.goodsList[i].skuName%></h4>
 							<p>
 								规格：<%= detail.goodsList[i].goodsSpecification%>  单位：<%= detail.goodsList[i].goodsUnit%>
-								<% if(!detail.goodsList[i].isEvaluation){%>
-									<button type="button" class="mui-btn" onclick="evaluaProduct('<%= detail.goodsList[i].goodsId%>')">评价</button>
-								<% }else{%>
-									<button type="button" class="mui-btn">已评价</button>
+								<% if(detail.status == '已完成' || detail.status == '已结案'){%>
+									<% if(!detail.goodsList[i].isEvaluation){%>
+										<button type="button" class="mui-btn" onclick="evaluaProduct('<%= detail.goodsList[i].goodsId%>')">评价</button>
+									<% }else{%>
+										<button type="button" class="mui-btn">已评价</button>
+									<% }%>
 								<% }%>
-
 							</p>
 							<div>
 								<span class="span1">¥<%= detail.goodsList[i].retailPrice%></span>
@@ -190,9 +192,24 @@
 				<%} %>
 			</div>
 			<div class="footBtn">
-				<span class="aClick">取消订单</span>
-				<span class="aClick">再来一单</span>
-				<span class="redC aClick">查看物流</span>
+				<% if(detail.deliveryType == '送货上门' || detail.deliveryType == '门店自提'){%>
+                    <% if(detail.status == '待付款'){%>
+                        <!--<span class="redC aClick" onclick="goToPay('<%= detail.orderNumber%>','<%= detail.price%>')">去支付</span>-->
+                    <% }%>
+                    <% if(detail.status == '待付款' || detail.status == '待发货'){%>
+                        <span class="aClick" onclick="cancelFun('<%= detail.orderNumber%>',this)">取消订单</span>
+                    <% }%>
+                    <% if(detail.status == '已完成'){%>
+                        <span class="redC aClick" onclick="openReturns('<%= detail.orderNumber%>','<%= detail.customer.customerId%>')">退货</span>
+                    <% }%>
+                    <span onclick="comeOnAgain('<%= detail.orderNumber%>','<%= detail.customer.customerId%>')" class="aClick">再来一单</span>
+                <% }%>
+
+                <% if(detail.deliveryType == '送货上门'){%>
+                    <% if(detail.status != '待付款' && detail.status != '已取消' && detail.status != '取消中'){%>
+                        <span onclick="goOrderWL('<%= detail.orderNumber%>')" class="aClick redC">查看物流</span>
+                    <% }%>
+                <% }%>
 			</div>
 		</script>
 
@@ -211,6 +228,30 @@
 					<div class="cancelBtn">
 						<button type="button" class="mui-btn operating1">取消</button>
 						<button type="button" id="evaluaOk" class="mui-btn mui-btn-danger operating2">确定</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--取消订单-->
+		<div class="cancelDiv" id="cancelOrder" style="display: none;">
+			<div class="cancelCon">
+				<div class="cancelMin">
+					<h4 class="fineB h4">取消原因</h4>
+					<div id="cancelDiv0"></div>
+					<script type="text/html" id="cancelDiv0S">
+						<% for(var i=0;i<list.length;i++){%>
+							<div class="mui-input-row mui-radio mui-left">
+								<label><%= list[i].reason%></label>
+								<input class="reasonInfo" value="<%= list[i].reason%>" name="radio1" type="radio">
+							</div>
+						<% }%>
+					</script>
+					<div class="cancelText">
+						<textarea id="remarksInfo" placeholder="请输入备注内容" name="" rows="" cols=""></textarea>
+					</div>
+					<div class="cancelBtn">
+						<button type="button" class="mui-btn operating1">取消</button>
+						<button type="button" class="mui-btn mui-btn-danger operating3">确定</button>
 					</div>
 				</div>
 			</div>
@@ -241,6 +282,9 @@
 					success:function(data,type,xhr){
 						console.log('订单详情',data);
 						if(data.code == 0){
+							if(!data.content.customer || !data.content.customer.customerId){
+								data.content.customer = {customerId:null}
+							}
 							data.content.BillingDetailResponse = data.content.customerBillingDetailResponse || data.content.managerBillingDetailResponse || data.content.sellerBillingDetailResponse;
 							document.getElementById('main').innerHTML = template('mainS',{detail:data.content});
 							if(isButton == 'no'){
@@ -455,6 +499,16 @@
 				})
 			}
 			/*商品评价结束*/
+
+			//订单操作
+			//再来一单 ==> order0.js
+			//申请退货 ==> order0.js
+			//打开订单物流  ==> order0.js
+			//评价订单 ==> !!（无需做）
+			//支付 ==> ??
+
+			//取消订单
+			cancelOF('detail');
 
 		</script>
 	</body>
