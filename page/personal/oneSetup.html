@@ -318,14 +318,20 @@
 								var curstore = 0;
 								for (var i = 0;i<data.content.storeList.length;i++) {
 									storeStr += '<option value="'+data.content.storeList[i].storeId+'">'+data.content.storeList[i].storeName+'</option>'
-									if(data.content.storeList[i].storeId == data.content.storeId){
-										curstore = i;
+									if(data.content.storeId){
+										if(data.content.storeList[i].storeId == data.content.storeId){
+											curstore = i;
+										}
 									}
 								}
 								$('#store').html(storeStr);
-								$('#store option').eq(curstore+1).attr('selected',true);
+								if(data.content.storeId){
+									$('#store option').eq(curstore+1).attr('selected',true);
+								}
+								
 								//导购
 								getGuide(data.content.storeId,data.content.sellerId);
+								 
 								$('#store').change(function(){
 									getGuide($(this).val(),0);
 									

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>Hello MUI</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<link rel="stylesheet" href="css/mui.min.css">
+		<style>
+			#close {
+				position: absolute;
+				width: 160px;
+				left: 50%;
+				margin-left: -80px;
+				bottom: 10%;
+				padding: 10px;
+				color: #fff;
+				border-color: #fff;
+			}
+			.item-logo {
+				width: 100%;
+				height: 100%;
+				position: relative;
+			}
+			.item-logo a {
+				width: 200px;
+				height: 200px;
+				display: block;
+				border: 1px solid #FFFFFF;
+				border-color: rgba(255, 255, 255, 0.5);
+				text-align: center;
+				line-height: 200px;
+				border-radius: 50%;
+				font-size: 40px;
+				color: #fff;
+				position: absolute;
+				top: 15%;
+				left: 50%;
+				margin-left: -100px;
+			}
+			.animate {
+				position: absolute;
+				left: 0;
+				bottom: 10%;
+				width: 100%;
+				color: #fff;
+				display: -moz-box;
+			}
+			.animated {
+				-webkit-animation-duration: 1s;
+				-webkit-animation-play-state: paused;
+				-webkit-animation-fill-mode: both;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="slider" class="mui-slider mui-fullscreen" style="background-color: black;">
+			<div class="mui-slider-group">
+				<!-- 第一张 -->
+				<div class="mui-slider-item">
+					<div class="item-logo" style="background-color: #D74B28;background: url(images/welcome/wel1.jpg);background-size: 100% 100%;">
+					</div>
+				</div>
+				<!-- 第二张 -->
+				<div class="mui-slider-item">
+					<div class="item-logo" style="background-color: #02C1ED;background: url(images/welcome/wel2.png);background-size: 100% 100%;">
+						<div class="animate">
+							<button id='close' class="mui-btn mui-btn-warning mui-btn-outlined">立即体验</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="mui-slider-indicator">
+				<div class="mui-indicator mui-active"></div>
+				<div class="mui-indicator"></div>
+			</div>
+		</div>
+		<script src="js/mui.min.js"></script>
+		<script>
+			mui.back = function() {};
+			mui.plusReady(function() {
+				if(mui.os.ios){
+					plus.navigator.setFullscreen(true);
+				}
+				plus.navigator.closeSplashscreen();
+			});
+			//立即体验按钮点击事件
+			document.getElementById("close").addEventListener('tap', function(event) {
+				plus.storage.setItem("lauchFlag", "true");
+				plus.navigator.setFullscreen(false);
+				plus.webview.currentWebview().close();
+			}, false);
+		</script>
+	</body>
+
+</html>

@@ -14,7 +14,7 @@
 	</head>
 <style type="text/css">
 	 .goodsInfor h2{margin-bottom: 5px!important;}
-	 .cart dd{border-top: 5px #eee solid;}
+	 .selfCart dd{border-top: 5px #eee solid;}
 </style>
 	<body>
 
@@ -229,16 +229,16 @@
 									if(data.content.auditListRes.remark){
 										plus.storage.setItem('remark',data.content.auditListRes.remark);
 									}
-									if(data.content.auditListRes.detailedAddress && data.content.auditListRes.receiver && data.content.auditListRes.deliveryCity){ 
+									if(data.content.auditListRes.receiverPhone && data.content.auditListRes.receiver && data.content.auditListRes.deliveryCity){ 
 										var audnoAddrObj = {};
 										audnoAddrObj.person = data.content.auditListRes.receiver;
 										audnoAddrObj.phone = data.content.auditListRes.receiverPhone;
-										audnoAddrObj.province = data.content.auditListRes.deliveryCity ||'';
+										audnoAddrObj.province = '';
 										audnoAddrObj.city = data.content.auditListRes.deliveryCity;
 										audnoAddrObj.country = data.content.auditListRes.deliveryCounty;
 										audnoAddrObj.street = data.content.auditListRes.deliveryStreet;
 										audnoAddrObj.villageName = data.content.auditListRes.residenceName;
-										audnoAddrObj.address = data.content.auditListRes.deliveryCity || '';
+										audnoAddrObj.address = data.content.auditListRes.detailedAddress;
 										plus.storage.setItem('audnoAddrObj',JSON.stringify(audnoAddrObj));
 									}
 								}else{

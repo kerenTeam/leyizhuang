@@ -234,7 +234,7 @@
 							data.content.BillingDetailResponse = data.content.customerBillingDetailResponse || data.content.managerBillingDetailResponse || data.content.sellerBillingDetailResponse;
 							document.getElementById('main').innerHTML = template('mainS',{detail:data.content});
 							if(isButton == 'no'){
-								$('.footBtn').hide()
+								$('.footBtn,.proRight button').hide();
 							}
 							//evaluat && (document.body.scrollTop = document.body.scrollHeight);
 							evaluat && (document.getElementById("evaluat").scrollIntoView());

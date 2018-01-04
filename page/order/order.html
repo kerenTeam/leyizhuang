@@ -214,7 +214,7 @@
 						<span class="mui-icon mui-icon-arrowright maincl ft20"></span>
 					</div>
 					<%}else{%>
-					<div class="qtop flexr pad10" onclick="address()" id="addid" data-id="<%=obj[0].id%>" data-receiver="<%=obj[0].person%>" data-receiverPhone="<%=obj[0].phone%>" data-deliveryCity="<%=obj[0].city%>" data-deliveryCounty="<%=obj[0].country%>" data-deliveryStreet="<%=obj[0].street%>" data-residenceName="<%=obj[0].villageName%>" data-detailedAddress="<%=obj[0].address%>">
+					<div class="qtop flexr pad10" onclick="address()" id="addid" data-receiver="<%=obj[0].person%>" data-receiverPhone="<%=obj[0].phone%>" data-deliveryCity="<%=obj[0].city%>" data-deliveryCounty="<%=obj[0].country%>" data-deliveryStreet="<%=obj[0].street%>" data-residenceName="<%=obj[0].villageName%>" data-detailedAddress="<%=obj[0].address%>">
 						<img src="../../images/order/map.svg" style="margin-right: 10px;"/>
 						<div style="flex: 1;">
 							<div class="ft15">
@@ -415,7 +415,6 @@
 			var customerId = plus.webview.currentWebview().customerId || '';
 			if(plus.storage.getItem('auditNo') && plus.storage.getItem('remark')){
 				$('#remark').val(plus.storage.getItem('remark'));
-				
 			}
 			
 			var pays = {};
@@ -439,10 +438,9 @@
 				var payValue = $('#totalOrderAmount').html().replace('¥', '');
 				var creditc = $('input[name="credit"]').val(); //信用金
 				var cashc = $('input[name="cash"]').val(); //现金返利
-				var creditValc = $('input[name="creditVal"]').val(); //信用额度
-				var cashHelpc = $('input[name="cashHelp"]').val(); //代收金额
+				var creditValc = $('input[name="creditVal"]').val(); //信用额度 
 				var preDepositbc = $('input[name="preDepositb"]').val(); //预存款
-				var inputAll = Number(creditc) + Number(cashc) + Number(creditValc) + Number(cashHelpc) + Number(preDepositbc);
+				var inputAll = Number(creditc) + Number(cashc) + Number(creditValc) +Number(preDepositbc);
 				if(inputAll > payValue){
 					mui.toast('应付款不能为负');
 					obj.value = '';
@@ -689,7 +687,15 @@
 			document.addEventListener('readdstorage', function(event) {
 				orderAdd()
 			});
-			orderAdd();
+			
+			console.log('audnoAddrObj ',plus.storage.getItem("audnoAddrObj"))
+			if(plus.storage.getItem("audnoAddrObj") && plus.storage.getItem("auditNo")){
+				var addrObj = {};
+				addrObj.obj = [JSON.parse(plus.storage.getItem("audnoAddrObj"))];
+				document.getElementById("add_info").innerHTML = template("addrTpl", addrObj);
+			}else{
+				orderAdd();
+			}
 			//显示地址
 			function orderAdd() {
 				//默认地址
@@ -708,9 +714,7 @@
 						console.log('默认地址', data);
 						var addrObj = {};
 						if(data.code == 0 && data.content) {
-							if(plus.storage.getItem("audnoAddrObj") && plus.storage.getItem("auditNo")){
-								addrObj.obj = JSON.parse(plus.storage.getItem("audnoAddrObj"));
-							}else if(plus.storage.getItem("$addressStorageOrder") != null) {
+							if(plus.storage.getItem("$addressStorageOrder") != null) {
 								addrObj.obj = JSON.parse(plus.storage.getItem("$addressStorageOrder"));
 							} else {
 								var defultAddress = {};

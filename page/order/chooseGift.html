@@ -55,7 +55,12 @@
 				<dt data-id="<%=list[i].promotionId%>" data-enjoyTimes="<%=list[i].enjoyTimes%>" data-max="<%=list[i].maxChooseNumber%>">
 					<!--<div class="mui-checkbox"><input name="checkbox" class="groupCheck cssp" type="checkbox"></div>-->
 					<div class="shopName" style="white-space: nowrap;overflow: hidden;max-width:2.5rem;">
-						<%=list[i].promotionTitle%> 最多可选<%=list[i].maxChooseNumber%>个商品
+						<%=list[i].promotionTitle%> 最多可选<%=list[i].maxChooseNumber%>个商品 --
+						<%if(list[i].isGiftOptionalQty){%>
+							可任选数量
+						<%}else{%>
+							不可任选数量
+						<%}%>
 					</div>
 				</dt>
 				<%for(var j = 0;j < list[i].giftList.length; j++){%>
@@ -79,11 +84,21 @@
 							</div>
 							<span class="activecl2 ft15">¥<span class="price"><%=list[i].giftList[j].retailPrice%></span></span>
 							<div class="numberWidget">
-								<div class="mui-numbox" data-numbox-min='1'>
-									<button class="mui-btn mui-btn-numbox-minus" type="button">-</button>
-									<input class="mui-input-numbox" data-id="<%=list[i].giftList[j].goodsId%>" value="1" type="number" />
-									<button class="mui-btn mui-btn-numbox-plus" type="button">+</button>
-								</div>
+								
+									<%if(list[i].isGiftOptionalQty){%>
+										<div class="mui-numbox" data-numbox-min='1'>
+											<button class="mui-btn mui-btn-numbox-minus" type="button">-</button>
+											<input class="mui-input-numbox" data-id="<%=list[i].giftList[j].goodsId%>" value="1" type="number" />
+											<button class="mui-btn mui-btn-numbox-plus" type="button">+</button>
+										</div>
+									<%}else{%>
+										<div class="mui-numbox" data-numbox-min='<%=list[i].giftList[j].qty%>' data-numbox-max='<%=list[i].giftList[j].qty%>'>
+											<button class="mui-btn mui-btn-numbox-minus" type="button">-</button>
+											<input class="mui-input-numbox" data-id="<%=list[i].giftList[j].goodsId%>" readonly="" value="<%=list[i].giftList[j].qty%>" type="number" />
+											<button class="mui-btn mui-btn-numbox-plus" type="button">+</button>
+										</div>
+									<%}%>
+								
 							</div>
 						</div>
 

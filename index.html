@@ -129,7 +129,11 @@
 					<span class="mui-icon mui-icon-search" style="vertical-align: middle;font-size:20px;padding-top: 7px;"></span>
 				</div>
 			</div>
-			<img src="images/center/message.svg" onclick="goMessage()" class="message"/>
+			<div>
+				<img src="images/center/message.svg" onclick="goMessage()" class="message"/>
+				<span class="mui-badge mui-badge-danger" id="ctMsg" style="right: 20px;position: absolute;padding: 4px;bottom: 29px;background-color: red;display: none;"></span>
+			</div>
+			
 		</header>
 		<!--状态栏开始-->
 		<style type="text/css" id="headStyle"></style>
@@ -573,13 +577,27 @@
 					console.log( "语音识别失败："+e.message );
 				} );
 			}
-
-
-
-			var Spagenum = 2; //实到页数
-			var Ypagenum = 1; //应到页数
-
+			
 			mui.plusReady(function() {
+//				plus.storage.removeItem('lauchFlag')
+				var showGuide = plus.storage.getItem("lauchFlag");
+				if(!showGuide) {
+					openview({
+						view:'welcome.html',
+						id:'welcome'
+					})
+					//延迟的原因：优先打开启动导航页面，避免资源争夺
+					setTimeout(function() {
+						Sign();
+					}, 200);
+				}else{
+					//有值，说明已经显示过了，无需显示；
+					//关闭splash页面；
+					plus.navigator.closeSplashscreen();
+					plus.navigator.setFullscreen(false)
+					Sign();
+				}
+				
 				if(/android/i.test(navigator.userAgent)){
 			 	 	var systemType = 'ANDROID'
 				}else{
@@ -594,7 +612,7 @@
 				document.addEventListener('refreshid', function() {
 					loadIndex();
 				})
-				Sign();
+				
 				var timeSign = null;
 				var loadNum = 0;
 				var loadNum2 = 0;
@@ -627,7 +645,7 @@
 									type: 'post',
 									timeout: 10000,
 									success: function(data, type, xhr) {
-										console.log('登录返回', data);
+										console.log('密码自动登录返回', data);
 										if(data.code == -1) {
 											openview({
 												view: 'identify.html',
@@ -635,11 +653,7 @@
 											})
 										} else {
 											plus.nativeUI.closeWaiting();
-											console.log('默认账号登录返回' + JSON.stringify(data));
 											plus.storage.setItem("oldToken", xhr.getResponseHeader('token'));
-//											mui.fire(plus.webview.getWebviewById('page/goodList.html'), 'refresh');
-//											mui.fire(plus.webview.getWebviewById('center.html'), 'refresh');
-//											mui.fire(plus.webview.getWebviewById('cart.html'), 'refresh');
 											if(data.content.type == 1){
 												openview({
 													view:'page/dispatching/dispatching.html',
@@ -661,6 +675,7 @@
 									}
 								});
 							}
+							//微信自动登录
 							if(openid) {
 								mui.ajax(serverUrl + '/app/customer/login', {
 									data: {
@@ -671,13 +686,10 @@
 									type: 'post',
 									timeout: 10000,
 									success: function(data, type, xhr) {
-										console.log('登录返回', data);
+										console.log('微信自动登录返回', data);
 										if(data.code == 0 && data.content.isExist) {
 											plus.nativeUI.closeWaiting();
 											plus.storage.setItem("oldToken", xhr.getResponseHeader('token'));
-//											mui.fire(plus.webview.getWebviewById('cart.html'), 'refresh');
-//											mui.fire(plus.webview.getWebviewById('page/goodList.html'), 'refresh');
-//											mui.fire(plus.webview.getWebviewById('center.html'), 'refresh');
 											util.initSubpage();
 											loadIndex();
 										} else if(data.code == -1) {
@@ -708,58 +720,9 @@
 
 				} //登录方法结束
 
-//				loadIndex(); 
-				//banner
-				var nowcity = plus.storage.getItem('userCity') || 1;
-				mui.ajax(oCms + '/index.php/ApiCms/bannerList', {
-					data:{post:1,city:nowcity},
-					dataType: 'json',
-					type: 'post',
-					timeout: 10000,
-					success: function(data, type, xhr) {
-						console.log('banner', data);
-						plus.nativeUI.closeWaiting();
-						if(data.code == '0'){
-							if(data.banner && data.banner.length) {
-								$('#banner').html(template('bannerTpl', {list: data.banner,url:oCms}));
-								 var gallery = mui('.mui-slider');
-									gallery.slider({
-									  interval:3000//自动轮播周期，若为0则不自动播放，默认为0；
-									});
-							}
-						}else{
-							mui.toast(data.message)
-						}
-
-					},
-					error: function(xhr, type, errorThrown) {
-						plus.nativeUI.closeWaiting();
-						console.log('响应失败');
-					}
-				});
-				//首页活动
-				var nowcity = plus.storage.getItem('userCity') || 1;
-				mui.ajax(oCms + '/index.php/ApiCms/activity', {
-					data:{city:nowcity},
-					dataType: 'json',
-					type: 'post',
-					timeout: 10000,
-					success: function(data, type, xhr) {
-						console.log('首页活动', data);
-						if(data.code == '0'){
-							$('#huodong0').html(template('huodongS0', {list: data.activity,url:oCms}));
-						}else{
-							mui.toast(data.message)
-						}
-					},
-					error: function(xhr, type, errorThrown) {
-						plus.nativeUI.closeWaiting();
-						console.log('响应失败');
-					}
-				});
-
 				function loadIndex() {
 					//获取缓存
+				    var nowcity = plus.storage.getItem('userCity') || 1;
 					var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
 					var userId = plus.storage.getItem('$userId');
 					var oldToken = plus.storage.getItem('oldToken');
@@ -779,6 +742,67 @@
 					} else { //配送员
 
 					}
+					
+					showMsg();
+					function showMsg(){
+						mui.ajax(serverUrl+'/app/user/message/unread/number',{
+							data:{
+								userId:userId,
+								identityType:identityT
+							},
+							dataType:'json',
+							type:'post',
+							timeout:10000,
+							headers:{"Authorization":oldToken},
+							success:function(data,type,xhr){
+								plus.nativeUI.closeWaiting();
+								console.log('消息',data);
+						       	if(data.code == 0){
+							     	if(data.content){
+							     		var logisticMsg = data.content.logisticMsg || 0;
+							     		var notifyMsg = data.content.notifyMsg || 0;
+										if(logisticMsg > 0 || notifyMsg > 0){
+							       			mui('#ctMsg')[0].style.display = 'block';
+							       		}else{
+							       			mui('#ctMsg')[0].style.display = 'none';
+							       		}
+									}
+						       	}
+						       	plus.nativeUI.closeWaiting();
+							},
+							error:function(xhr,type,errorThrown){
+								plus.nativeUI.closeWaiting();
+								console.log('当前网络不好,请重试');
+							}
+						});
+					}
+					//banner
+					mui.ajax(oCms + '/index.php/ApiCms/bannerList', {
+						data:{city:nowcity},
+						dataType: 'json',
+						type: 'post',
+						timeout: 10000,
+						success: function(data, type, xhr) {
+							console.log('banner', data);
+							plus.nativeUI.closeWaiting();
+							if(data.code == '0'){
+								if(data.banner && data.banner.length) {
+									$('#banner').html(template('bannerTpl', {list: data.banner,url:oCms}));
+									 var gallery = mui('.mui-slider');
+										gallery.slider({
+										  interval:3000//自动轮播周期，若为0则不自动播放，默认为0；
+										});
+								}
+							}else{
+								mui.toast(data.message)
+							}
+	
+						},
+						error: function(xhr, type, errorThrown) {
+							plus.nativeUI.closeWaiting();
+							console.log('响应失败');
+						}
+					});
 					//icon
 					function getIcon(icontype){
 						mui.ajax(oCms + '/index.php/ApiCms/iconList', {
@@ -874,7 +898,25 @@
 							console.log('响应失败');
 						}
 					});
-					
+					//首页活动
+					mui.ajax(oCms + '/index.php/ApiCms/activity', {
+						data:{city:nowcity},
+						dataType: 'json',
+						type: 'post',
+						timeout: 10000,
+						success: function(data, type, xhr) {
+							console.log('首页活动', data);
+							if(data.code == '0'){
+								$('#huodong0').html(template('huodongS0', {list: data.activity,url:oCms}));
+							}else{
+								mui.toast(data.message)
+							}
+						},
+						error: function(xhr, type, errorThrown) {
+							plus.nativeUI.closeWaiting();
+							console.log('响应失败');
+						}
+					});
 					//常购商品列表
 					mui.ajax(serverUrl + '/app/goods/often/list', {
 						data: {

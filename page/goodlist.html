@@ -85,6 +85,8 @@
 	    		<%}%> 
 			</ul>
 	    </script> 
+		<div class="upload text-center text-xs gray" id="upload"></div>
+	    
 		<script src="../js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../js/mui.min.js"></script>
 		<script src="../js/artTemplate-native.js" type="text/javascript" charset="utf-8"></script>
@@ -136,7 +138,7 @@
 						timeout:10000,
 						success:function(data,type,xhr){ 
 							plus.nativeUI.closeWaiting();
-							console.log('列表',data);
+							console.log('分类列表',data);
 							if(data.code == 0 ){
 								plus.nativeUI.closeWaiting();
 								if(data.content && data.content.length){
@@ -237,6 +239,9 @@
 					}); 
 					//商品列表
 					var categoryId='',brandId='',typeId='',specification='';
+					var Spagenum = 2; //实到页数
+					var Ypagenum = 1; //应到页数
+					var 	oneSize = 5;
 					goodsList(categoryId,brandId,typeId,specification,0);
 					function goodsList(categoryId,brandId,typeId,specification,nosp){
 						plus.nativeUI.showWaiting();
@@ -248,7 +253,9 @@
 								typeId:typeId,
 								specification:specification,
 								userId:userId,
-								identityType:identityT
+								identityType:identityT,
+								page:1,
+								size:oneSize
 							},
 							dataType:'json',
 							headers: {"Authorization": oldToken},
@@ -258,12 +265,12 @@
 								console.log('商品列表',data);
 								if(data.code == 0 ){
 									plus.nativeUI.closeWaiting();
-									if(data.content && data.content.length){
+									if(data.content.list && data.content.list.length){
 										//规格
 										var spec = [];
-										for(var i in data.content){
-											if(data.content[i].goodsSpecification){
-												spec.push(data.content[i].goodsSpecification)
+										for(var i in data.content.list){
+											if(data.content.list[i].goodsSpecification){
+												spec.push(data.content.list[i].goodsSpecification)
 											}
 										}
 										//去重
@@ -286,7 +293,7 @@
 												}
 											})
 										}
-										$('#goodsList').html(template('goodsTpl',{list:data.content}));
+										$('#goodsList').html(template('goodsTpl',{list:data.content.list}));
 										mui('.mui-numbox').numbox();
 										$('.toCart,.mui-numbox button,.mui-numbox input').click(function() {
 											event.stopPropagation()
@@ -466,6 +473,272 @@
 												}
 											});
 										}
+										$(window).scroll(function() {
+											var scrollTop = $(this).scrollTop();
+											var scrollHeight = $(document).height();
+											var windowHeight = $(this).height();
+											if(scrollTop + windowHeight == scrollHeight) {
+												if(Spagenum <= data.content.pages && Spagenum == Ypagenum + 1) { //当前页小于等于总页数时请求下一页
+													mui("#upload")[0].innerHTML = "<img src='../img/Rolling.svg' />";
+													Ypagenum++; //满足加载情况,应到页数+1
+													console.log('发起请求,实到' + Spagenum + '页');
+													console.log('发起请求,应到' + Ypagenum + '页');
+													mui.ajax(serverUrl+'/app/goods/filter',{
+														data:{
+															firstCategoryCode:categoryCode,
+															categoryId:categoryId,
+															brandId:brandId,
+															typeId:typeId,
+															specification:specification,
+															userId:userId,
+															identityType:identityT,
+															page:Ypagenum,
+															size:oneSize
+														},
+														dataType:'json',
+														headers: {"Authorization": oldToken},
+														type:'post',
+														timeout:10000,
+														success:function(data,type,xhr){ 
+															console.log('商品列表',data);
+															if(data.code == 0 ){
+																plus.nativeUI.closeWaiting();
+																if(data.content.list && data.content.list.length){
+																	//规格
+																	for(var i in data.content.list){
+																		if(data.content.list[i].goodsSpecification){
+																			spec.push(data.content.list[i].goodsSpecification)
+																		}
+																	}
+																	//去重
+																	spec = spec.unique1();
+																	console.log('spec',spec);
+																	var str='';
+																	if(!nosp){
+																		for(var i = 0;i<spec.length;i++){
+																			str+='<span data-name = "specification" data-id="'+spec[i]+'">'+spec[i]+'</span>';
+																		}
+																	}else{
+																		str = plus.storage.getItem('specification');
+																	}
+																	plus.storage.setItem('specification',str)
+																	$('.categrayc').html(str);
+																	if(specification){
+																		$('.categrayc span').each(function(){
+																			if($(this).html() == specification){
+																				$(this).addClass('actspan')
+																			}
+																		})
+																	}
+																	$('#goodsList').append(template('goodsTpl',{list:data.content.list}));
+																	mui('.mui-numbox').numbox();
+																	$('.toCart,.mui-numbox button,.mui-numbox input').click(function() {
+																		event.stopPropagation()
+																	})
+																	mui("#upload")[0].innerHTML = " ";
+																	Spagenum++; //加载成功,当前页+1
+																	console.log('成功+1,实到' + Spagenum);
+																	console.log('成功+1,应到' + Spagenum);
+																	//商品 筛选
+																	$('.categray span').click(function(){
+																		$(this).parentsUntil('.filter').find('span').removeClass('actBadge actspan');
+																		if($(this).hasClass('ftb')){
+																			$(this).addClass('actBadge');
+																		}else{
+																			$(this).addClass('actspan');
+																		}
+																		
+																		
+																		if($(this).attr('data-name') == 'category'){
+																			categoryId = $(this).attr('data-id')
+																		}else if($(this).attr('data-name') == 'brand'){
+																			brandId = $(this).attr('data-id')
+																		}else if($(this).attr('data-name') == 'specification'){
+																			specification = $(this).attr('data-id')
+																		}else if($(this).attr('data-name') == 'type'){
+																			typeId = $(this).attr('data-id')
+																		}
+																		goodsList(categoryId,brandId,typeId,specification,1);
+																	})
+																	
+																	//加入购物车
+																	$('.toCart').click(function(){
+																		var goodid = $(this).attr('data-id');
+																		var cur = $(this);
+																		plus.nativeUI.showWaiting();
+																		addCart(goodid,1,cur);
+																		
+																	})
+																	
+																	//数量选择 -> 加入购物车
+																	$('.mui-numbox input').on('change', function() {
+																		plus.nativeUI.showWaiting();
+																		var cur = $(this);
+																		var number = $(this).val(); //当前数量
+																		var goodsid = $(this).attr("data-id"); //当前商品id
+																		if(number>0){
+																			var goodsList = [{'id':goodsid,'qty':number}];
+																			mui.ajax(serverUrl + '/app/materialList/edit/batch', {
+																				data: {
+																					userId: userId,
+																					identityType: identityT,
+																					goodsList: JSON.stringify(goodsList),
+																				},
+																				dataType: 'json',
+																				headers: {
+																					"Authorization": oldToken
+																				},
+																				type: 'post',
+																				timeout: 10000,
+																				success: function(data, type, xhr) {
+																					plus.nativeUI.closeWaiting();
+																					console.log('加入购物车', data);
+																					if(data.code == 0) { 
+																						plus.nativeUI.toast('加入成功')
+																						mui.fire(plus.webview.getWebviewById('cart.html'), 'refresh');	
+																						getCartNum(1);
+																					} else {
+																						mui.toast(data.message)
+																					}
+											
+																				},
+																				error: function(xhr, type, errorThrown) {
+																					plus.nativeUI.closeWaiting();
+																					console.log('登录响应失败');
+																				}
+																			});
+																		}else{
+																			mui.confirm('狠心不要了咩？', '提示', ['取消', '确定'], function(e) {
+																				if(e.index == 1) {
+																					mui.ajax(serverUrl + '/app/materialList/goods/delete', {
+																						data: {
+																							userId: userId,
+																							identityType: identityT,
+																							goodsIdArray: goodsid,
+																						},
+																						dataType: 'json',
+																						headers: {
+																							"Authorization": oldToken
+																						},
+																						type: 'post',
+																						timeout: 10000,
+																						success: function(data, type, xhr) {
+																							plus.nativeUI.closeWaiting();
+																							console.log('删除', data);
+																							if(data.code == 0) {
+																								mui.fire(plus.webview.getWebviewById('cart.html'), 'refresh'); 
+																								getCartNum(-1);
+																							} else {
+																								mui.toast(data.message)
+																							}
+											
+																						},
+																						error: function(xhr, type, errorThrown) {
+																							plus.nativeUI.closeWaiting();
+																						}
+																					});
+																				}else{
+																					plus.nativeUI.closeWaiting();
+																					cur.val(1);	
+																					cur.siblings().removeAttr('disabled'); 
+																				}
+											
+																			})
+																		}
+																		
+																	})
+																	
+																	function addCart(goodid,num,cur){
+																		mui.ajax(serverUrl+'/app/materialList/add',{
+																			data:{
+																				userId:userId,
+																				identityType:identityT,
+																				params:goodid+'-'+num
+																			},
+																			dataType:'json',
+																			headers: {"Authorization": oldToken},
+																			type:'post',
+																			timeout:10000,
+																			success:function(data,type,xhr){ 
+																				plus.nativeUI.closeWaiting();
+																				console.log('加入购物车',data);
+																				if(data.code == 0 ){
+																					plus.nativeUI.toast('加入成功');
+																					mui.fire(plus.webview.getWebviewById('cart.html'), 'refresh');
+																					getCartNum(1);
+																					hadCart(goodid,cur);
+																				}else{
+																					mui.toast(data.message)
+																				}
+																				 
+																			},
+																			error:function(xhr,type,errorThrown){
+																				plus.nativeUI.closeWaiting();
+																				console.log('响应失败');
+																			}
+																		});
+																	}
+																	
+																	function hadCart(goodid,cur){
+																		//获取已有购物车数量
+																		mui.ajax(serverUrl + '/app/materialList/goods/qty', {
+																			data: {
+																				userId: userId,
+																				identityType: identityT,
+																				goodsId: goodid,
+																			},
+																			dataType: 'json',
+																			headers: {
+																				"Authorization": oldToken
+																			},
+																			type: 'post',
+																			timeout: 10000,
+																			success: function(data, type, xhr) {
+																				plus.nativeUI.closeWaiting(); 
+																				console.log('已有购物车', data);
+																				if(data.code == 0) {
+																					cur.next().show();
+																					cur.hide();
+																					if(data.content && data.content.qty){
+																						cur.next().find('input').val(data.content.qty)
+																					}
+																				} else {
+																					mui.toast(data.message)
+																				}
+										
+																			},
+																			error: function(xhr, type, errorThrown) {
+																				plus.nativeUI.closeWaiting();
+																				console.log('响应失败');
+																			}
+																		});
+																	}
+																	
+																}else{
+																	$('#goodsList').html('<div style="text-align:center;padding:15px">暂无商品</div>') 
+																}
+															}else{
+																plus.nativeUI.closeWaiting();
+																mui.toast(data.message)
+															}
+
+															 
+														},
+														error:function(xhr,type,errorThrown){
+															plus.nativeUI.closeWaiting();
+															Ypagenum--; //失败是应到-1
+															mui.toast("当前网络不好请重试");
+															mui("#upload")[0].innerHTML = "";
+															console.log('响应失败');
+														}
+													}); 
+			
+												} else if(Spagenum == data.content.pages + 1) { //当前页不小于等于总页数时请求下一页
+													mui("#upload")[0].innerHTML = "到底了";
+												}
+											}
+										});
+										
 									}else{
 										$('#goodsList').html('<div style="text-align:center;padding:15px">暂无商品</div>') 
 									}

@@ -167,7 +167,7 @@
 								var windowHeight = $(this).height();
 								if(scrollTop + windowHeight == scrollHeight) {
 									if(Spagenum <= data.content.totalPage && Spagenum == Ypagenum + 1) { //当前页小于等于总页数时请求下一页
-										mui("#upload")[0].innerHTML = "<img src='../../img/Rolling.svg' />";
+										mui("#upload")[0].innerHTML = "<img src='../img/Rolling.svg' />";
 										Ypagenum++; //满足加载情况,应到页数+1
 										console.log('发起请求,实到' + Spagenum + '页');
 										console.log('发起请求,应到' + Ypagenum + '页');

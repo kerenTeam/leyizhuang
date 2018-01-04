@@ -52,7 +52,7 @@
 		.newbop{bottom: 0.3rem;}
 		.bottomop{border-bottom: 1px solid #f3f3f3;}
 		.bottomop img{width:22px}
-		.flexr{display:flex;width:100%;background-color:white;justify-content:space-between;color: #303030;align-items: center;}
+		.flexr{display:flex;width:100%;justify-content:space-between;color: #303030;align-items: center;}
 		.flexa{display: flex;align-items: center;line-height: 1.5;} 
 		.bottomop>div{padding:14px 0;display:flex;width:50%;justify-content:center;align-items:center;position:relative;}
 		/*.bottomop div:first-child{border-right:1px solid #f3f3f3}*/ 
@@ -97,23 +97,34 @@
 						<div class="qashadow" onclick="">
 							<div class="qtop flexr">
 								<div class="ft14 activecl">
-								系统通知
+									<%=list[i].title%>
 								</div>
 								<div class="">
 									<span class="disablecl ft12"><%= list[i].createTime%></span>
+									<%if(i+1 <=noReadNum){%>
+										<span class="mui-badge mui-badge-danger" style="padding: 4px;bottom: 29px;background-color: red;"></span>
+									<%}%>
 								</div>
+
 							</div>
 							<div class="qbot ft14">
-								<%=list[i].title%>
+								<%=list[i].detailed%>
 							</div>
+							<%if(list[i].pictureUrl){%>
+								<div class="qbot">
+									<img src="<%=list[i].pictureUrl%>"style="width: 100px;" data-preview-src="" data-preview-group="<%=i+1%>" />
+								</div>
+							<%}%>
 						</div>
 					<%}%>	
 				</script>	
 			</div><!--大盒子-->
 			
 		</div>
-	 </body>
-	 <script src="../../js/default.js" type="text/javascript" charset="utf-8"></script>
+	</body>
+	<script src="../../js/default.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../js/mui.zoom.js"></script>
+	<script src="../../js/mui.previewimage.js"></script>
 	 <script type="text/javascript">
 	 	//动态详情
 		function DTdetail(id,userid){
@@ -135,7 +146,9 @@
 				var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
 				var userId = plus.storage.getItem('$userId'); 
 				var oldToken = plus.storage.getItem('oldToken');
+				var noReadNum = plus.webview.currentWebview().noReadNum;
 				mui.fire(plus.webview.getWebviewById('message'),'refreshInfo');
+				mui.fire(plus.webview.getWebviewById('center.html'),'refreshInfoC');
 				
 				plus.nativeUI.showWaiting();//显示等待框
 					mui.ajax(serverUrl+'/app/user/message/list',{
@@ -152,14 +165,11 @@
 							console.log('消息',data);
 					       	if(data.code == 0){
 						       	if(data.content && data.content.length){
-					       			plus.storage.setItem("infoNums1",JSON.stringify(data.data.length));
-						       		
 						       		for(var i in data.content){
-//						       			var dt = new Date(nowArray[j].create_time).getTime(); 
-										var dt = data.content[i].createTime;
+										var dt = new Date(data.content[i].createTime).getTime();
 										data.content[i].createTime = getDateDiff(dt);
 						       		}
-					     			var html = template("listinfo",{list:data.content});
+					     			var html = template("listinfo",{list:data.content,noReadNum:noReadNum});
 									document.getElementById("questions").innerHTML=html;
 								}else{
 									document.getElementById("questions").innerHTML='<div style="text-align: center;padding: 50px;">暂无通知消息</div>'
@@ -208,6 +218,8 @@
 			 }
 			return result;
 		}
+		mui.previewImage(); 
+		
 	</script>
 
 

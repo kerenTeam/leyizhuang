@@ -70,7 +70,7 @@
 
 
 				<div class="pad10 ft15">
-					共<span id='totalGoods'><%=list.length%></span>件商品 订单总金额：<span id="totalPrice"></span> <span class="mui-pull-right activecl" onclick="materialList()">查看全部</span>
+					共<span id='totalGoods'><%=money || list.length%></span>件商品 订单总金额：<span id="totalPrice"></span> <span class="mui-pull-right activecl" onclick="materialList()">查看全部</span>
 				</div>
 				<div style="clear: both;"></div>
 			</dl>
@@ -166,7 +166,7 @@
 									}else{
 										goodsList = data.content.goodsList;
 									}
-									document.getElementById('cartData').innerHTML = template('cartTpl',{list:goodsList});
+									document.getElementById('cartData').innerHTML = template('cartTpl',{list:goodsList,money:data.content.totalGoodsQty});
 									plus.nativeUI.closeWaiting();
 								}
 								plus.nativeUI.closeWaiting();
@@ -175,7 +175,6 @@
 								}else{
 									$('#totalPrice').html('¥'+data.content.totalPrice)
 								}
-								$('#totalPrice').html(data.content.totalPrice)
 								if(data.content.isOwnerReceiving){
 									$('#isOwnerReceiving').attr('checked',true)
 								}

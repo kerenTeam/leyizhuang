@@ -11,10 +11,10 @@
 		<link rel="stylesheet" type="text/css" href="../../css/configW.css"/>
 	</head>
  	<style type="text/css">
- 		.categray div{
- 			width: 80%;
- 			vertical-align: top;
- 		}
+	.categray div{
+		width: 80%;
+		vertical-align: top;
+	}
  	 .mlist{margin: 10px 0;background-color: #FFFFFF;padding: 15px;}
  	 .mlist img{width: 30px;vertical-align: middle;margin-right: 10px;}
  	</style>
@@ -25,11 +25,11 @@
 		</header>
 		<script src="../../js/statusBar.js" type="text/javascript" charset="utf-8"></script>
 		<div class="mui-content" style="margin-top: 7px;">
-		   	<div class="mlist msg1"><img src="../../images/center/messageinf.svg"/>
+		   	<div class="mlist msg1" data-id = '0'><img src="../../images/center/messageinf.svg"/>
 		   		通知消息 
 		   		<span class="mui-badge mui-badge-danger mui-pull-right" style="display: none;" id="msg">1</span>
 		  	</div>
-		   	<div class="mlist msg2"><img src="../../images/center/deliverymsg.svg"/>
+		   	<div class="mlist msg2" data-id = '0'><img src="../../images/center/deliverymsg.svg"/>
 		   		物流消息
 		   		<span class="mui-badge mui-badge-danger mui-pull-right" style="display: none;" id="wlmsg">1</span>
 		   	</div>
@@ -41,13 +41,19 @@
 			$('.msg1').click(function(){
 				openview({
 					view:'infoList.html',
-					id:'infoList'
+					id:'infoList',
+					extrasobj:{
+						noReadNum:$(this).attr('data-id')
+					}
 				})
 			})
 			$('.msg2').click(function(){
 				openview({
 					view:'deliveryInform.html',
-					id:'deliveryInform'
+					id:'deliveryInform',
+					extrasobj:{
+						noReadNum:$(this).attr('data-id')
+					}
 				})
 			})
 			mui.plusReady(function(){
@@ -75,15 +81,22 @@
 							plus.nativeUI.closeWaiting();
 							console.log('消息',data);
 					       	if(data.code == 0){
-						     	if(data.content && data.content.length){
-						       		var infoNums = plus.storage.getItem('infoNums1') || 0;
-						       		if(data.content.length - infoNums > 0){
-						       			var msgnum1 = data.content.length - infoNums 
-						       			plus.storage.setItem('allInfo',msgnum1.toString())
+						     	if(data.content){
+						     		var logisticMsg = data.content.logisticMsg;
+						     		var notifyMsg = data.content.notifyMsg;
+						       		if(notifyMsg > 0){ 
 						       			mui('#msg')[0].style.display = 'block';
-					     				mui('#msg')[0].innerHTML = msgnum1;
+					     				mui('#msg')[0].innerHTML = notifyMsg;
+					     				$('.msg1').attr('data-id',notifyMsg)
 						       		}else{
 						       			mui('#msg')[0].style.display = 'none';
+						       		}
+						       		if(logisticMsg > 0){ 
+						       			mui('#wlmsg')[0].style.display = 'block';
+					     				mui('#wlmsg')[0].innerHTML = logisticMsg;
+					     				$('.msg2').attr('data-id',logisticMsg)
+						       		}else{
+						       			mui('#wlmsg')[0].style.display = 'none';
 						       		}
 								}
 					       	}

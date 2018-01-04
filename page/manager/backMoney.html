@@ -28,7 +28,7 @@
 		.checkListDZ{padding: 10px;color: #757575;}
 		.checkListB{padding: 10px 20px;text-align: right;}
 		#infoListDiv{transition: all .3s;}
-		.rechargeConDiv{background-color: #fff;margin-top: 5px;line-height: 28px;padding: 10px;}
+		.rechargeConDiv{background-color: #fff;margin-top: 5px;line-height: 28px;padding: 10px;}/*10px*/
 		.rechargeConDiv p{font-size: 16px;}
 	</style>
 	<body>
@@ -71,6 +71,8 @@
 					</div>
 				<%}%>
 			</script>
+			<div class="upload text-center text-xs gray" id="upload"></div>
+			
 		</div>
 		<script src="../../js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../../js/mui.min.js"></script>
@@ -153,7 +155,7 @@
 				});
 
 				//tab切换
-				loadFun('/app/employee/creditMoney/log','tab2');
+				loadFun('/app/employee/creditMoney/log','tab1');
 				$('#tabLink li').click(function(){
 					$('#tabLink li').removeClass('active');
 					$(this).addClass('active');
@@ -167,8 +169,11 @@
 					}
 				})
 				function loadFun(url,tabT){
+					var Spagenum = 2; //实到页数
+					var Ypagenum = 1; //应到页数
+					var 	oneSize = 15;
 					mui.ajax(serverUrl + url,{
-						data:{'userId':userId,'identityType':identityT},
+						data:{'userId':userId,'identityType':identityT,'page':1,'size':oneSize},
 						dataType:'json',
 						type:'post',
 						timeout:10000,
@@ -179,15 +184,79 @@
 								clearTimeout(timeLoad),timeLoad = null;
 								if(data.code == 0){
 									$('#loadingdiv').css('height','0px');
-									if(data.content && data.content.length){
+									if(data.content){
 										if(tabT == 'tab1'){
-											document.getElementById('infoListDiv').innerHTML = template('infoList',{list:data.content});
+											if(data.content.list && data.content.list.length){
+												document.getElementById('infoListDiv').innerHTML = template('infoList',{list:data.content.list});
+											} 
 										}else if(tabT == 'tab2'){
-											document.getElementById('infoListDiv').innerHTML = template('infoList2',{list:data.content});
+											if(data.content.length){
+												document.getElementById('infoListDiv').innerHTML = template('infoList2',{list:data.content});
+											}
 										}
 									}else{
 										document.getElementById('infoListDiv').innerHTML = '<div style="text-align: center;padding: 50px;"><img src="../../images/order/order.png" style="width: 100px;" /><div class="ft13 disablecl">暂无数据</div></div>';
 									}
+									//下拉加载
+									$(window).scroll(function() {
+										var scrollTop = $(this).scrollTop();
+										var scrollHeight = $(document).height();
+										var windowHeight = $(this).height();
+										if(scrollTop + windowHeight == scrollHeight) {
+											if(Spagenum <= data.content.pages && Spagenum == Ypagenum + 1) { //当前页小于等于总页数时请求下一页
+												mui("#upload")[0].innerHTML = "<img src='../../img/Rolling.svg' />";
+												Ypagenum++; //满足加载情况,应到页数+1
+												console.log('发起请求,实到' + Spagenum + '页');
+												console.log('发起请求,应到' + Ypagenum + '页');
+		
+												mui.ajax(serverUrl + url,{
+													data:{'userId':userId,'identityType':identityT,'page':Ypagenum,'size':oneSize},
+													dataType:'json',
+													type:'post',
+													timeout:10000,
+													headers:{"Authorization":oldToken},
+													success:function(data,type,xhr){
+														console.log('上拉加载',data);
+														var timeLoad = setInterval(function(){
+															clearTimeout(timeLoad),timeLoad = null;
+															if(data.code == 0){
+																$('#loadingdiv').css('height','0px');
+																if(data.content){
+																	if(tabT == 'tab1'){
+																		if(data.content.list && data.content.list.length){
+																			document.getElementById('infoListDiv').innerHTML = template('infoList',{list:data.content.list});
+																		} 
+																	}else if(tabT == 'tab2'){
+																		if(data.content.length){
+																			document.getElementById('infoListDiv').innerHTML = template('infoList2',{list:data.content});
+																		}
+																	}
+																}else{
+																	document.getElementById('infoListDiv').innerHTML = '<div style="text-align: center;padding: 50px;"><img src="../../images/order/order.png" style="width: 100px;" /><div class="ft13 disablecl">暂无数据</div></div>';
+																}
+															}else{
+																mui.toast(data.message);
+															}
+														},500)
+														mui("#upload")[0].innerHTML = " ";
+														Spagenum++; //加载成功,当前页+1
+														console.log('成功+1,实到' + Spagenum);
+														console.log('成功+1,应到' + Spagenum);
+													},
+													error:function(xhr,type,errorThrown){
+														console.log('响应失败  !');
+														Ypagenum--; //失败是应到-1
+														mui.toast("当前网络不好请重试");
+														mui("#upload")[0].innerHTML = "";
+													}
+												});
+		
+											} else if(Spagenum == data.content.pages + 1) { //当前页不小于等于总页数时请求下一页
+												mui("#upload")[0].innerHTML = "到底了";
+												
+											}
+										}
+									});
 								}else{
 									mui.toast(data.message);
 								}

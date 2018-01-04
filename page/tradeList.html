@@ -67,11 +67,11 @@
 			var Spagenum = 2; //实到页数
 			var Ypagenum = 1; //应到页数
 			var currentPage = 1,
-				numsPerPage = 10;
+				numsPerPage = 4;
 			mui.ajax(oCms+'/index.php/ApiCms/postSchool', {
 				data: {
-					page: currentPage,
-					size: numsPerPage
+					page:currentPage,
+					size:numsPerPage
 				},
 				dataType: 'json', //服务器返回json格式数据
 				type: 'post', //HTTP请求类型
@@ -99,7 +99,7 @@
 									console.log('发起请求,应到' + Ypagenum + '页');
 									mui.ajax(oCms+'/index.php/ApiCms/postSchool', {
 										data: {
-											page: Spagenum,
+											page: Ypagenum,
 											size: numsPerPage,
 										},
 										dataType: 'json', //服务器返回json格式数据

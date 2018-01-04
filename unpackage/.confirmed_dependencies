@@ -255,7 +255,8 @@
       "page/personal/deliveryInform.html",
       "page/guide/debateQuery.html",
       "page/personal/signInDay.html",
-      "bannerTpl.html"
+      "bannerTpl.html",
+      "welcome.html"
     ]
   },
   "page/gxbList.html": {
@@ -413,7 +414,8 @@
       "page/personal/pzOrderList.html",
       "page/guide/debateAudit.html",
       "page/guide/debateQuery.html",
-      "page/personal/myOrderRTList.html"
+      "page/personal/myOrderRTList.html",
+      "page/guide/qrCode.html"
     ]
   },
   "cart.html": {

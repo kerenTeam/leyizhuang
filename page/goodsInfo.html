@@ -148,14 +148,14 @@
 								<img src="<%=list[i].picUrl%>" class="userAvator"/>
 								<div class="butright">
 									<div class="btop">
-						            		<b class="ft14"><%=list[i].evaluationName ||'匿名'%></b> <span class="disablecl"><%=list[i].creatTime ||'time'%></span>
+						            		<b class="ft14"><%=list[i].evaluationName ||'匿名'%></b> <span class="disablecl"><%=list[i].evaluationTime%></span>
 						            	</div>
 					            	<div class="maincl ft14"><%=list[i].commentContent%></div>
 					            	<%if(list[i].evaluationPictures && list[i].evaluationPictures.length){%>
 					            		<div class="cmtImg">
 						            	<%for(var j = 0 ; j<list[i].evaluationPictures.length;j++){%>
 						            		<%if(list[i].evaluationPictures[j]){%>
-											<img src="<%=list[i].evaluationPictures[j]%>"  data-preview-src="" data-preview-group="<%=i+1%>" alt="" />
+											<img src="<%=list[i].evaluationPictures[j]%>" data-preview-src="" data-preview-group="<%=i+1%>" alt="" />
 						            		<%}%>
 						            	<%}%>
 					            		</div>
@@ -462,6 +462,10 @@
 					console.log('评论列表',data);
 					if(data.code == 0 ){
 					 	if(data.content && data.content.length){
+					 		for(var i in data.content){
+								var dt = new Date(data.content[i].evaluationTime).getTime();
+								data.content[i].evaluationTime = getDateDiff(dt);
+				       		}
 					 		mui('#curShow')[0].innerHTML = template('cmtTpl',{list:data.content})
 					 		
 					 	}else{
@@ -513,7 +517,7 @@
 			 }
 			return result;
 		}
-		 		mui.previewImage(); 
+		mui.previewImage(); 
 		
 	</script>
 
