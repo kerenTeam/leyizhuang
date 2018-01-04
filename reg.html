@@ -241,14 +241,14 @@
 															plus.nativeUI.closeWaiting();
 															console.log('绑定返回', data);
 															if(data.code == 0) {
-																if(data.content.isExist){
-																	if(plus.webview.getWebviewById('reg')){
-																		plus.webview.getWebviewById('reg').close();
-																	}
-																	plus.webview.currentWebview().close(); 
+																if(data.content.isExist){ 
 																}else{
 																	plus.nativeUI.alert('导购不存在')
 																}
+																if(plus.webview.getWebviewById('reg')){
+																	plus.webview.getWebviewById('reg').close();
+																}
+																plus.webview.currentWebview().close(); 
 																plus.nativeUI.closeWaiting();
 															}else{
 																mui.toast(data.message)

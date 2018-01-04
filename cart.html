@@ -221,9 +221,26 @@
 						if(data.code == 0) {
 							var m = 0;
 							if(data.content) {
+								plus.storage.removeItem('remark');
+								plus.storage.removeItem('audnoAddrObj');
 								if(data.content.auditListRes && data.content.auditListRes.goodsList && data.content.auditListRes.goodsList.length>0){
 									m = m+1;
 									$('#auditList').html(template('auditTpl', {lists:data.content.auditListRes}));
+									if(data.content.auditListRes.remark){
+										plus.storage.setItem('remark',data.content.auditListRes.remark);
+									}
+									if(data.content.auditListRes.detailedAddress && data.content.auditListRes.receiver && data.content.auditListRes.deliveryCity){ 
+										var audnoAddrObj = {};
+										audnoAddrObj.person = data.content.auditListRes.receiver;
+										audnoAddrObj.phone = data.content.auditListRes.receiverPhone;
+										audnoAddrObj.province = data.content.auditListRes.deliveryCity ||'';
+										audnoAddrObj.city = data.content.auditListRes.deliveryCity;
+										audnoAddrObj.country = data.content.auditListRes.deliveryCounty;
+										audnoAddrObj.street = data.content.auditListRes.deliveryStreet;
+										audnoAddrObj.villageName = data.content.auditListRes.residenceName;
+										audnoAddrObj.address = data.content.auditListRes.deliveryCity || '';
+										plus.storage.setItem('audnoAddrObj',JSON.stringify(audnoAddrObj));
+									}
 								}else{
 									$('#auditList').html('')
 								}
@@ -486,6 +503,7 @@
 
 							//下单
 							$('.goOrder').unbind("click").click(function() {
+								plus.storage.removeItem('auditNo');
 								if($(".cssp[type='checkbox']:checked").length){
 									var cusId = $('.cssp').attr('data-id');
 								}else{
@@ -514,10 +532,9 @@
 										}else{
 											if(gdtype == 'ld'){
 												var auditNo = $(this).attr('data-auditNo');
-											}else{
-												var auditNo = '';
-											}
-											plus.storage.setItem('auditNo',auditNo);
+												plus.storage.setItem('auditNo',auditNo);
+											} 
+											
 											var goodsLineType = 'GOODS';
 											justGoods.push({
 												id: gid,

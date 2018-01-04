@@ -243,7 +243,14 @@
 		"runmode": "liberate",/*应用的首次启动运行模式，可取liberate或normal，liberate模式在第一次启动时将解压应用资源（Android平台File API才可正常访问_www目录）*/
 		"signature": "Sk9JTiBVUyBtYWlsdG86aHIyMDEzQGRjbG91ZC5pbw==",/*可选，保留给应用签名，暂不使用*/
 		"distribute": {
-			"plugins": {"share":{"weixin":{"appid":"wxa4e8a82e226587dd","appsecret":"bc936a30ffcc36f3ffabb41b4293a889","description":"可选，微信分享"}},
+			"plugins": {
+				"share": {
+					"weixin": {
+						"appid": "wxa4e8a82e226587dd",
+						"appsecret": "bc936a30ffcc36f3ffabb41b4293a889",
+						"description": "可选，微信分享"
+					}
+				},
 				"push": {
 					"igexin": {
 						"appid": "I5pt99Lp5t7zrN98wU7Nt1",
@@ -364,19 +371,21 @@
 						"default": "", /*iPhone3启动图片选，分辨率：320x480*/
 						"retina35": "/Users/wangfei/Desktop/Des/st.png",/*3.5英寸设备(iPhone4)启动图片，分辨率：640x960*/
 						"retina40": "/Users/wangfei/Desktop/Des/st.png",
-						"retina55": "/Users/wangfei/Downloads/st.png",
-						"retina47": "/Users/wangfei/Downloads/st.png",
-						"retina55l": "/Users/wangfei/Downloads/st.png"
+						"retina55": "/Users/wangfei/Desktop/Des/st.png",
+						"retina47": "/Users/wangfei/Desktop/Des/st.png",
+						"retina55l": "/Users/wangfei/Desktop/Des/st.png",
+						"iphonex": "/Users/wangfei/Desktop/Des/st.png",
+						"iphonexl": "/Users/wangfei/Desktop/Des/st.png"
 					},
 					"ipad": {
-						"portrait": "/Users/wangfei/Downloads/st.png", /*iPad竖屏启动图片，分辨率：768x1004*/
-						"portrait-retina": "/Users/wangfei/Downloads/st.png",/*iPad高分屏竖屏图片，分辨率：1536x2008*/
-						"landscape": "/Users/wangfei/Downloads/st.png", /*iPad横屏启动图片，分辨率：1024x748*/
-						"landscape-retina": "/Users/wangfei/Downloads/st.png", /*iPad高分屏横屏启动图片，分辨率：2048x1496*/
-						"portrait7": "/Users/wangfei/Downloads/st.png", /*iPad iOS7竖屏启动图片，分辨率：768x1024*/
-						"portrait-retina7": "/Users/wangfei/Downloads/st.png",/*iPad iOS7高分屏竖屏图片，分辨率：1536x2048*/
-						"landscape7": "/Users/wangfei/Downloads/st.png", /*iPad iOS7横屏启动图片，分辨率：1024x768*/
-						"landscape-retina7": "/Users/wangfei/Downloads/st.png"
+						"portrait": "/Users/wangfei/Desktop/Des/st.png", /*iPad竖屏启动图片，分辨率：768x1004*/
+						"portrait-retina": "/Users/wangfei/Desktop/Des/st.png",/*iPad高分屏竖屏图片，分辨率：1536x2008*/
+						"landscape": "/Users/wangfei/Desktop/Des/st.png", /*iPad横屏启动图片，分辨率：1024x748*/
+						"landscape-retina": "/Users/wangfei/Desktop/Des/st.png", /*iPad高分屏横屏启动图片，分辨率：2048x1496*/
+						"portrait7": "/Users/wangfei/Desktop/Des/st.png", /*iPad iOS7竖屏启动图片，分辨率：768x1024*/
+						"portrait-retina7": "/Users/wangfei/Desktop/Des/st.png",/*iPad iOS7高分屏竖屏图片，分辨率：1536x2048*/
+						"landscape7": "/Users/wangfei/Desktop/Des/st.png", /*iPad iOS7横屏启动图片，分辨率：1024x768*/
+						"landscape-retina7": "/Users/wangfei/Desktop/Des/st.png"
 					}
 				},
 				"android": {
@@ -1317,7 +1326,8 @@
 					"page/personal/address.html",
 					"page/personal/productCoupon.html",
 					"page/order/elseMaterialList.html",
-					"page/personal/myOrderList.html"
+					"page/personal/myOrderList.html",
+					"page/order/orderSuccess.html"
 				],
 				"priority": 0
 			},
@@ -1725,6 +1735,13 @@
 				"resources": [],
 				"refer": [
 					"page/personal/paletteHelp.html"
+				],
+				"priority": 0
+			},
+			"page/order/orderSuccess.html": {
+				"resources": [],
+				"refer": [
+					"page/personal/myOrderDetail.html"
 				],
 				"priority": 0
 			}
