@@ -28,13 +28,13 @@
 		<div style="height:51px;"></div>
 		<div class="flexwc">
 			<div class="cartOne cartAct">
-				<img src="img/check2.svg" /> 下料清单
+				<img src="images/order/c1.svg" /> 下料清单
 			</div>
 			<div class="cartSecond">
-				<img src="img/check1.svg" /> 选赠品
+				<img src="images/order/c2g.svg" /> 挑选赠品
 			</div>
 			<div class="cartThird">
-				<img src="img/check1.svg" /> 结算
+				<img src="images/order/c3g.svg" /> 订单结算
 			</div>
 		</div>
 		<div id="allCartData">
@@ -478,6 +478,7 @@
 														mui.fire(plus.webview.getWebviewById('goodList'),'refresh');
 														mui.fire(plus.webview.getWebviewById('page/goodList.html'),'refresh');
 														mui.fire(plus.webview.getWebviewById('cart.html'), 'refresh');
+														mui.fire(plus.webview.getWebviewById('cart'), 'refresh');
 													} else {
 														mui.toast(data.message)
 													}
