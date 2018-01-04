@@ -62,12 +62,13 @@
 								</div>
 							<% }%>
 						<% }else{%>
-							<div class="">
+							<div class="" style="text-align: center;color: #999;">
 								暂无数据
 							</div>
 						<% }%>
 					</script>
 				</div>
+				<div class="upload text-center text-xs gray" id="upload"></div>
 			</div>
 
 		</div>
@@ -159,9 +160,12 @@
 				});
 
 				//消费记录
+				var Spagenum = 2; //实到页数
+				var Ypagenum = 1; //应到页数
+				var 	oneSize = 10;
 				mui.ajax(serverUrl+'/app/employee/seller/creditMoney/log',{
 					data:{
-						'userId':userId,'identityType':identityT
+						'userId':userId,'identityType':identityT,'page':1,'size':oneSize
 					},
 					dataType:'json',
 					headers: {"Authorization": oldToken},
@@ -170,7 +174,47 @@
 					success:function(data,type,xhr){
 						console.log('消费记录',data);
 						if(data.code == 0 ){
-							$('#dataD0').append(template('dataS0',{list:data.content}));
+							$('#dataD0').append(template('dataS0',{list:data.content.list}));
+
+							$(window).scroll(function() {
+								var scrollTop = $(this).scrollTop();
+								var scrollHeight = $(document).height();
+								var windowHeight = $(this).height();
+								if(scrollTop + windowHeight == scrollHeight) {
+									if(Spagenum <= data.content.pages && Spagenum == Ypagenum + 1) { //当前页小于等于总页数时请求下一页
+										mui("#upload")[0].innerHTML = "<img src='../../img/Rolling.svg' />";
+										Ypagenum++; //满足加载情况,应到页数+1
+										mui.ajax(serverUrl+'/app/employee/seller/creditMoney/log',{
+						                    data:{
+						                        'userId':userId,'identityType':identityT,'page':Ypagenum,'size':oneSize
+						                    },
+						                    dataType:'json',
+						                    headers: {"Authorization": oldToken},
+						                    type:'post',
+						                    timeout:10000,
+						                    success:function(data,type,xhr){
+						                        console.log('消费记录续',data);
+						                        if(data.code == 0 ){
+						                            $('#dataD0').append(template('dataS0',{list:data.content.list}));
+						                        }
+						                        mui("#upload")[0].innerHTML = " ";
+												Spagenum++; //加载成功,当前页+1
+												console.log('成功+1,实到' + Spagenum);
+												console.log('成功+1,应到' + Spagenum);
+						                    },
+						                    error: function(xhr, type, errorThrown) {
+						                        console.error('消费记录 响应失败');
+						                        Ypagenum--; //失败是应到-1
+												mui.toast("当前网络不好请重试");
+												mui("#upload")[0].innerHTML = "";
+						                    }
+						                });
+
+									} else if(Spagenum == data.content.pages + 1) { //当前页不小于等于总页数时请求下一页
+										mui("#upload")[0].innerHTML = "到底了";
+									}
+								}
+							});
 						}else{
 							mui.toast(data.message);
 						}

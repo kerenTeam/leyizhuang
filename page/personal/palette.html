@@ -13,15 +13,18 @@
 			.mui-col-xs-3, .mui-control-content {overflow-y: auto;height: 100%;}
 			.mui-segmented-control .mui-control-item {line-height: 50px; width: 100%; }
 			.mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active { background-color: #fff;
-			color: #F09934;}
+			color: #de545a;}
 			.mui-segmented-control.mui-segmented-control-inverted.mui-segmented-control-vertical .mui-control-item, .mui-segmented-control.mui-segmented-control-inverted.mui-segmented-control-vertical .mui-control-item.mui-active{
 				border: none;border-bottom: 1px solid #fff;}
-			.mui-fullscreen{top: 120px;padding: 0 !important;}
+			.mui-fullscreen{top: 121px;padding: 0 !important;}
 			.mui-table-view-cell img{width: 100%;}
 			.mui-table-view-cell:after, .mui-table-view:after{height: 0px;}
 			.mui-table-view-cell{padding: 11px 15px 0px;}
 			#navDiv{white-space: nowrap;overflow-x: scroll;padding: 0 2% !important;}
-			.tzNav a{margin: 0 2%;}
+			.tzNav a{padding: 0 4%;margin: 0;}
+			.colorBoard{position: relative;}
+			.colorBoard span{position: absolute;bottom: 10px;left: 22px;color: #444;}
+			#content1 ul{background-color: #EFF0F1;}
 		</style>
 	</head>
 
@@ -72,7 +75,14 @@
 						    <ul class="mui-table-view">
 						      <% if(list[i].content.length){%>
 						      	<% for(var j=0;j<list[i].content.length;j++){%>
-						      		<li class="mui-table-view-cell aClick"><img src="<%= url%><%= list[i].content[j].pic%>"/></li>
+						      		<li class="colorBoard mui-table-view-cell aClick">
+						      			<% if(list[i].content[j].pic.indexOf('http')>-1){%>
+						      				<img src="<%= list[i].content[j].pic%>"/>
+						      			<% }else{%>
+						      				<img src="<%= url%><%= list[i].content[j].pic%>"/>
+						      			<% }%>
+						      			<span id=""><%= list[i].content[j].colorNum%></span>
+						      		</li>
 						      	<% }%>
 						      <% }else{%>
 						      	<li class="mui-table-view-cell">暂无数据</li>
@@ -84,7 +94,13 @@
 						    <ul class="mui-table-view">
 						      <% if(list[i].content.length){%>
 						      	<% for(var j=0;j<list[i].content.length;j++){%>
-						      		<li class="mui-table-view-cell aClick"><img src="<%= url%><%= list[i].content[j].pic%>"/></li>
+						      		<li class="mui-table-view-cell aClick">
+						      			<% if(list[i].content[j].pic.indexOf('http')>-1){%>
+						      				<img src="<%= list[i].content[j].pic%>"/>
+						      			<% }else{%>
+						      				<img src="<%= url%><%= list[i].content[j].pic%>"/>
+						      			<% }%>
+						      		</li>
 						      	<% }%>
 						      <% }else{%>
 						      	<li class="mui-table-view-cell">暂无数据</li>

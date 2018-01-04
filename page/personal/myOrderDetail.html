@@ -72,9 +72,10 @@
 				<div>
 					<span class="huiC">收货人：</span><%= detail.receiver%> <%= detail.receiverPhone%>
 				</div>
-				<!--<div>
-					<span class="huiC">提货码：</span> <span class="redC">HBGUHB</span>
-				</div>-->
+				<div>
+					<span class="huiC">提货码：</span>
+					<span class=""> <%= detail.pickUpCode || '无'%> </span>
+				</div>
 				<div>
 					<span class="huiC">配送方式：</span> <%= detail.deliveryType%>
 				</div>
@@ -93,10 +94,19 @@
 					<span class="huiC">运费：</span> <span class="floL"><%= detail.BillingDetailResponse.freight%>元</span>
 				</div>
 				<div>
-					<span class="huiC">优惠卷抵扣：</span> <span class="floL"><%= detail.BillingDetailResponse.memberDiscount%>元</span>
+					<span class="huiC">优惠卷抵扣：</span> <span class="floL"><%= detail.BillingDetailResponse.couponDiscount%>元</span>
 				</div>
 				<div>
-					<span class="huiC">乐豆抵扣：</span> <span class="floL"><%= detail.BillingDetailResponse.promotionDiscount%>元</span>
+					<span class="huiC">会员抵扣：</span> <span class="floL"><%= detail.BillingDetailResponse.memberDiscount%>元</span>
+				</div>
+				<!--<div>
+					<span class="huiC">乐豆抵扣：</span> <span class="floL"> 还没有 元</span>
+				</div>-->
+				<div>
+					<span class="huiC">促销抵扣：</span> <span class="floL"><%= detail.BillingDetailResponse.promotionDiscount%>元</span>
+				</div>
+				<div>
+					<span class="huiC">信用金抵扣：</span> <span class="floL"><%= detail.BillingDetailResponse.creditMoney%>元</span>
 				</div>
 				<div>
 					<span class="huiC">产品卷抵扣：</span> <span class="floL"><%= detail.BillingDetailResponse.productCouponDiscount || 0%>元</span>
@@ -112,8 +122,8 @@
 				实付款：<span class="redC"><%= detail.BillingDetailResponse.amountPayable%>元</span>
 			</div>
 			<!--订单评价-->
-			<div class="Dpart3" id="evaluat">
-				<h4 class="fineB dingdanPJ">订单服务评价：<button class="dingdanPingjia mui-pull-right">提交评价</button> </h4>
+			<div class="Dpart3" id="evaluat" style="display: none;">
+				<h4 class="fineB dingdanPJ">订单服务评价</h4>
 				<div class="mui-content-padded">
 					<div class="vm">
 						<span>产品：</span><!--mui-icon-star-filled-->
@@ -220,7 +230,7 @@
 				var orderNo = plus.webview.currentWebview().orderNo;
 				var evaluat = plus.webview.currentWebview().evaluat;
 				var isButton = plus.webview.currentWebview().isButton;
-				
+
 				/*订单详情*/
 				mui.ajax(serverUrl + '/app/order/detail',{
 					data:{'userID':userId,'identityType':identityT,'orderNumber':orderNo},
@@ -236,9 +246,10 @@
 							if(isButton == 'no'){
 								$('.footBtn,.proRight button').hide();
 							}
-							//evaluat && (document.body.scrollTop = document.body.scrollHeight);
-							evaluat && (document.getElementById("evaluat").scrollIntoView());
-
+							//显示订单评价
+							if(data.content.logisticsStar || data.content.productStar || data.content.serviceStars){
+								mui('#evaluat')[0].style.display = 'block';
+							}
 							//复制方法
 							var orderNumber = data.content.orderNumber;
 					        var clipboard = new Clipboard('.copyBtn', {
@@ -253,77 +264,6 @@
 						    clipboard.on('error', function(e) {
 						        console.log('失败',e);
 						    });
-
-						    //订单评价
-							var oneStar=0,twoStar=0,threeStar=0,EvaluatAble=true;
-							if(data.content.logisticsStar || data.content.productStar || data.content.serviceStars){
-								EvaluatAble = false;
-								mui('.dingdanPingjia')[0].innerHTML = '已评价';
-							}
-							if(EvaluatAble){
-								mui('.icons').on('tap','i',function(){
-								  	var index = parseInt(this.getAttribute("data-index"));
-								  	var parent = this.parentNode;
-								  	var children = parent.children;
-								  	if(this.classList.contains("mui-icon-star")){
-								  		for(var i=0;i<index;i++){
-							  				children[i].classList.remove('mui-icon-star');
-							  				children[i].classList.add('mui-icon-star-filled');
-								  		}
-								  	}else{
-								  		for (var i = index; i < 5; i++) {
-								  			children[i].classList.add('mui-icon-star')
-								  			children[i].classList.remove('mui-icon-star-filled')
-								  		}
-								  	}
-								  	starIndex = index;
-								  	//数据部分
-								  	oneStar = $('.mui-content-padded').eq(0).find('.mui-icon-star-filled').length;
-								  	twoStar = $('.mui-content-padded').eq(1).find('.mui-icon-star-filled').length;
-								  	threeStar = $('.mui-content-padded').eq(2).find('.mui-icon-star-filled').length;
-							  	});
-							}
-
-						  	mui('.dingdanPingjia')[0].onclick = function(){
-						  		if(EvaluatAble){
-									if(oneStar==0 || twoStar==0 || threeStar==0){
-										mui.toast('每项请至少选择一个星级！');
-									}else{
-										var dataObj0 = {
-											'userId':userId,
-											'identityType':identityT,
-											'productStar':oneStar,
-											'logisticsStar':twoStar,
-											'serviceStars':threeStar,
-											'orderNumber':orderNo
-										};
-										console.log(dataObj0);
-										goEvaluation();
-										function goEvaluation(){
-											mui.ajax(serverUrl + '/app/order/evaluation/submit',{
-												data:dataObj0,
-												dataType:'json',
-												type:'post',
-												timeout:10000,
-												headers:{"Authorization":oldToken},
-												success:function(data,type,xhr){
-													console.log('订单评价'+JSON.stringify(data));
-													if(data.code != 0){
-														mui.toast(data.message);
-													}else{
-														EvaluatAble = false;//已经评价
-														mui.toast(data.message || '感谢您的评价');
-													}
-												},
-												error:function(xhr,type,errorThrown){
-													console.log('响应失败  !');
-													mui.toast('当前网络不好，请重试');
-												}
-											});
-										}
-									}
-								}
-							}
 
 						}else{
 							mui.toast(data.message);

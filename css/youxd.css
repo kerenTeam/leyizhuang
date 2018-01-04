@@ -310,17 +310,17 @@ header.mui-bar{z-index: 200;}
 .rechargeConDiv{background-color: #fff;margin-top: 10px;line-height: 26px;padding: 10px;}
 .notice .tab-hd{background-color: #eee;position: fixed; width: 100%; z-index: 100;box-shadow: 0 0 2px rgba(175, 166, 166, 0.85) !important;}
 /*订单*/
-.orderList{border-top: 8px solid #eee;position: relative;}
+.orderList{border-top: 8px solid #eee;position: relative;border-bottom: 1px solid #e0e0e0;}
 .orderList:first-child{border-top: none;}
 .orderList .h3{font-size: 15px;padding: 15px;}
 .orderList .h3 span{float: right;color: #c7161e;}
-.orderList .p1{margin: 0 15px;padding: 5px;white-space: nowrap;overflow-x: scroll;border: 1px solid #f4f4f4;}
+.orderList .p1{padding: 7px 15px;white-space: nowrap;overflow-x: scroll;background-color: #f9f9f9;}
 .orderList .p1 a{display: inline-block; width: calc(100vw*0.2);height: calc(100vw*0.2);}
 .orderList .p1 img{width: 100%;height: 100%;}
 .orderList .p1 span{position: absolute;top: 48px;right: 15px;background-color: #c7161e;color: #eae4e4;padding: 2px 2px 0 2px;font-size: 14px;}
 .orderInfo{text-align: right;padding: 12px 15px 0px;color: #848484;font-size: 16px;}
 .orderInfo span{color: #333;}
-.orderBtns{text-align: right;padding: 12px 15px;border-bottom: 1px solid #eee;}
+.orderBtns{text-align: right;padding: 12px 15px;}
 .orderBtns span{display: inline-block;color: #666;border:1px solid #ccc; border-radius: 2px;text-align: center;padding: 4px 8px 4px;font-size: 16px;}
 .orderBtns span.redC{color: #c7161e;border-color: #c7161e;}
 /*搜索*/
