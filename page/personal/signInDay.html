@@ -237,8 +237,9 @@
 							console.log('列表',data);
 							if(data.code == 0 ){
 								plus.nativeUI.closeWaiting();
-								plus.nativeUI.toast('签到成功，增加1乐币');
+								plus.nativeUI.toast(data.message || '签到成功');
 								$('.qiandao').html('已签到');
+								location.reload();
 							}
 							if(data.code == 1000 ){
 								mui.toast(data.message)

@@ -34,6 +34,7 @@
 		.mui-checkbox input[type=checkbox], .mui-radio input[type=radio] {top: 10px;}
 		#BZCon{margin: 15px;width: calc(100% - 30px);border: none;background-color: #eee;height: 90px;}
 		.baocun{width: calc(100% - 30px);background-color: #B62D29;color: #fff;border: none;font-size: 16px;padding: 10px 20px;}
+		.mui-btn .mui-spinner{position: relative;top: -5px;}
 	</style>
 
 	<body style="background-color: white;">
@@ -114,7 +115,7 @@
 				<textarea id="BZCon" name="" rows="" placeholder="备注请输入备注信息" cols=""></textarea>
 		    </div>
 		    <div id="" style="text-align: center;">
-		    		<button type="button" class="mui-btn  mui-btn-primary baocun">保存</button>
+		    		<button type="button" data-loading-text="提交中..." class="mui-btn  mui-btn-primary baocun">提交</button>
 		    </div>
 
 
@@ -318,7 +319,7 @@
 		}
 
 		//发送 发布
-		mui('.baocun')[0].addEventListener('tap',function(){
+		$('.baocun').click(function(){
 		 	var BZCon = mui('#BZCon')[0].value;//备注
 			var deliveryId = $('#addid').attr('data-id');
 		 	if(!Apic.length){
@@ -333,6 +334,7 @@
 
 		 	//发送数据
 		 	function releaseData(){
+		 		mui('.baocun').button('loading');
 				var task = plus.uploader.createUpload(serverUrl+'/app/photoOrder/add',
 					{ method:"POST"},
 					function(back,status){
@@ -348,13 +350,16 @@
 									view:'../personal/pzOrderList.html',
 									id:'pzOrderList'
 								})
+								var loadClose = setTimeout(function(){
+									mui('.baocun').button('reset');//关闭等待框
+									plus.webview.currentWebview().close();
+								},1000)
 	    						}else{
 	    							mui.toast(dataobj.message);
-	    							plus.nativeUI.closeWaiting();
+	    							mui('.baocun').button('reset');//关闭等待框
 	    						}
-	    						plus.nativeUI.closeWaiting();//关闭等待框
 						}else{
-							plus.nativeUI.closeWaiting();//关闭等待框
+							mui('.baocun').button('reset');//关闭等待框
 							mui.toast('当前网络不好，请重试！');
 						}
 
@@ -372,7 +377,7 @@
 					console.log(Apic);
 					[].forEach.call(Apic,function(ele,index){
 						task.addFile(ele, {key:index.toString()});
-//						task.addFile(ele, {key:'myfiles'});
+						//task.addFile(ele, {key:'myfiles'});
 						if(index == Apic.length-1){
 							task.start();
 						}
@@ -381,9 +386,9 @@
 					task.start();
 				}
 
-		 	}
+		 	}//发送数据结束
 
-		})//发送数据结束
+		})
 
 	})
 
