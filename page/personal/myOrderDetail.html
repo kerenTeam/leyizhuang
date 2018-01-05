@@ -184,9 +184,15 @@
 								<% }%>
 							</p>
 							<div>
-								<span class="span1">¥<%= detail.goodsList[i].retailPrice%></span>
-								<span class="span2">x<%= detail.goodsList[i].qty%></span>
+								<span class="span1">
+									<em class="mui-badge mui-badge-danger" style="color: white;position: relative;top: -2px;">赠品</em>
+									¥<%= detail.goodsList[i].retailPrice%>
+								</span>
+								<span class="span2">
+									x<%= detail.goodsList[i].qty%>
+								</span>
 							</div>
+
 						</div>
 					</div>
 				<%} %>
@@ -271,6 +277,7 @@
 				var orderNo = plus.webview.currentWebview().orderNo;
 				var evaluat = plus.webview.currentWebview().evaluat;
 				var isButton = plus.webview.currentWebview().isButton;
+				var cancelParentId = plus.webview.currentWebview().cancelParentId;
 
 				/*订单详情*/
 				mui.ajax(serverUrl + '/app/order/detail',{
@@ -319,6 +326,16 @@
 						console.log('响应失败  !');
 					}
 				});
+
+				//订单操作
+				//再来一单 ==> order0.js
+				//申请退货 ==> order0.js
+				//打开订单物流  ==> order0.js
+				//评价订单 ==> !!（无需做）
+				//支付 ==> ??
+
+				//取消订单
+				cancelOF('detail',cancelParentId);
 			})
 
 			/*商品评价*/
@@ -438,6 +455,7 @@
 					var userId = plus.storage.getItem('$userId');
 					var oldToken = plus.storage.getItem('oldToken');
 					var orderNo = plus.webview.currentWebview().orderNo;
+					var cancelParentId = plus.webview.currentWebview().cancelParentId;
 
 					//确认评价
 					document.getElementById('evaluaOk').onclick = function(){
@@ -500,15 +518,7 @@
 			}
 			/*商品评价结束*/
 
-			//订单操作
-			//再来一单 ==> order0.js
-			//申请退货 ==> order0.js
-			//打开订单物流  ==> order0.js
-			//评价订单 ==> !!（无需做）
-			//支付 ==> ??
 
-			//取消订单
-			cancelOF('detail');
 
 		</script>
 	</body>
