@@ -46,6 +46,7 @@
 		    .dingdanPingjia{padding: 4px 10px; border-color: #c7161e; color: #c7161e;}
 		    .cancelBtn{padding-top: 3%;margin-bottom: 0;}
 		    .mui-icon-star-filled, .mui-icon-star{font-size: 24px;}
+		    .loadOpcity{opacity: 0;}
 		</style>
 	</head>
 
@@ -93,52 +94,54 @@
 					<% if(list.length){%>
 						<%for(var i=0;i<list.length;i++){%>
 							<div class="orderList">
-								<h3 class="h3" onclick="openDetail('<%= list[i].orderNo%>')">
-									<a class="a1"><%= list[i].deliveryType%></a>
-									<span><%= list[i].status%></span>
-								</h3>
-								<p class="p1" onclick="openDetail('<%= list[i].orderNo%>')">
-									<% if(list[i].goodsImgList && list[i].goodsImgList.length){%>
-										<%for(var j=0; j<list[i].goodsImgList.length; j++){%>
-											<a><img class="loadPics" src="../../img/loadBack.svg" data-src="<%= list[i].goodsImgList[j]%>"/></a>
-										<%} %>
-									<% }else{%>
-										<a><img class="loadPics" src="../../img/loadBack.svg"/></a>
-									<% }%>
-									<% if(list[i].endTime){%>
-										<span>10分钟后关闭订单</span>
-									<% }%>
-								</p>
-								<div class="orderInfo">
-									共<%= list[i].count%>件商品 合计：<span>¥ <%= list[i].price%></span>
-								</div>
-								<!--显示状态按钮-->
-								<div class="orderBtns">
-									<% if(list[i].deliveryType == '送货上门' || list[i].deliveryType == '门店自提'){%>
-										<% if(list[i].status == '待付款'){%>
-											<span class="redC aClick" onclick="goToPay('<%= list[i].orderNo%>','<%= list[i].price%>')">去支付</span>
+								<div id="orderList<%= i%>">
+									<h3 class="h3" onclick="openDetail('<%= list[i].orderNo%>','','orderList<%= i%>')">
+										<a class="a1"><%= list[i].deliveryType%></a>
+										<span class="stateSpan"><%= list[i].status%></span>
+									</h3>
+									<p class="p1" onclick="openDetail('<%= list[i].orderNo%>','','orderList<%= i%>')">
+										<% if(list[i].goodsImgList && list[i].goodsImgList.length){%>
+											<%for(var j=0; j<list[i].goodsImgList.length; j++){%>
+												<a><img class="loadPics" src="../../img/loadBack.svg" data-src="<%= list[i].goodsImgList[j]%>"/></a>
+											<%} %>
+										<% }else{%>
+											<a><img class="loadPics" src="../../img/loadBack.svg"/></a>
 										<% }%>
-										<% if(list[i].status == '待付款' || list[i].status == '待发货'){%>
-											<span class="aClick" onclick="cancelFun('<%= list[i].orderNo%>',this)">取消订单</span>
+										<% if(list[i].endTime){%>
+											<span class="stateSpan2">10分钟后关闭订单</span>
 										<% }%>
-										<% if(list[i].status == '已完成'){%>
-											<span class="redC aClick" onclick="openReturns('<%= list[i].orderNo%>','<%= list[i].customer.customerId%>')">退货</span>
+									</p>
+									<div class="orderInfo">
+										共<%= list[i].count%>件商品 合计：<span>¥ <%= list[i].price%></span>
+									</div>
+									<!--显示状态按钮-->
+									<div class="orderBtns">
+										<% if(list[i].deliveryType == '送货上门' || list[i].deliveryType == '门店自提'){%>
+											<% if(list[i].status == '待付款'){%>
+												<span class="redC aClick" onclick="goToPay('<%= list[i].orderNo%>','<%= list[i].price%>')">去支付</span>
+											<% }%>
+											<% if(list[i].status == '待付款' || list[i].status == '待发货'){%>
+												<span class="aClick" onclick="cancelFun('<%= list[i].orderNo%>',this)">取消订单</span>
+											<% }%>
+											<% if(list[i].status == '已完成'){%>
+												<span class="redC aClick" onclick="openReturns('<%= list[i].orderNo%>','<%= list[i].customer.customerId%>')">退货</span>
+											<% }%>
+											<% if(list[i].status == '已完成' || list[i].status == '已结案'){%>
+												<% if(list[i].isEvaluated == false){%>
+													<span class="aClick" onclick="evaFun('<%= list[i].orderNo%>',this)">评价</span>
+												<% }else{%>
+													<span class="aClick">已评价</span>
+												<% }%>
+											<% }%>
+											<span onclick="comeOnAgain('<%= list[i].orderNo%>','<%= list[i].customer.customerId%>')" class="aClick">再来一单</span>
 										<% }%>
-										<% if(list[i].status == '已完成' || list[i].status == '已结案'){%>
-											<% if(list[i].isEvaluated == false){%>
-												<span class="aClick" onclick="evaFun('<%= list[i].orderNo%>',this)">评价</span>
-											<% }else{%>
-												<span class="aClick">已评价</span>
+
+										<% if(list[i].deliveryType == '送货上门'){%>
+											<% if(list[i].status != '待付款' && list[i].status != '已取消' && list[i].status != '取消中'){%>
+												<span onclick="goOrderWL('<%= list[i].orderNo%>')" class="aClick redC">查看物流</span>
 											<% }%>
 										<% }%>
-										<span onclick="comeOnAgain('<%= list[i].orderNo%>','<%= list[i].customer.customerId%>')" class="aClick">再来一单</span>
-									<% }%>
-
-									<% if(list[i].deliveryType == '送货上门'){%>
-										<% if(list[i].status != '待付款' && list[i].status != '已取消' && list[i].status != '取消中'){%>
-											<span onclick="goOrderWL('<%= list[i].orderNo%>')" class="aClick redC">查看物流</span>
-										<% }%>
-									<% }%>
+									</div>
 								</div>
 							</div>
 						<%}%>
@@ -150,9 +153,10 @@
 					<% }%>
 
 				</script>
-				<div class="upload text-center text-xs gray" id="upload"></div>
+
 
 			</div>
+			<div class="upload text-center text-xs gray" id="upload"></div>
 		</div>
 
 		<!--取消订单-->
@@ -462,13 +466,14 @@
 			//打开订单物流  ==> order0.js
 
 			//打开订单详情
-			function openDetail(orderNo,evaluat){
+			function openDetail(orderNo,evaluat,id){
 				openview({
 					view:'myOrderDetail.html',
 					id:'myOrderDetail',
 					extrasobj:{
 						orderNo:orderNo,
-						evaluat:evaluat
+						evaluat:evaluat,
+						cancelParentId:id
 					}
 				})
 			}
@@ -483,34 +488,41 @@
 				var inType = plus.webview.currentWebview().type;
 
 				//详情页面点取消,监听刷新
-				document.addEventListener('cancelrefresh', function(event) {
-					$('#tabLink li').each(function(index,ele){
-						if($(ele).attr('class').indexOf('active')>-1){
-							if(index == 0){
-								loadFun('','',{SH0:SH0});
-							}else{
-								loadFun(index,'',{SH0:SH0});
-							}
-							return false;
-						}
-					})
+				document.addEventListener('cancelrefresh2', function(event) {
+					var cancelParentId = event.detail.cancelParentId;
+					$('#'+cancelParentId).find('.stateSpan').html('已取消');
+					$('#'+cancelParentId).find('.stateSpan2').css('display','none');
+				    $('#'+cancelParentId).find('.orderBtns').find('span').each(function(index,ele){
+			    	 		if($(ele).html() != '取消订单'){
+			    	 			$(ele).css('display','none');
+			    	 		}
+				    })
+//					$('#tabLink li').each(function(index,ele){
+//						if($(ele).attr('class').indexOf('active')>-1){
+//							if(index == 0){
+//								loadFun('','',{SH0:SH0});
+//							}else{
+//								loadFun(index,'',{SH0:SH0});
+//							}
+//							return false;
+//						}
+//					})
 				});
 
 				//tab切换
 				if(inType == 1){
 					$('#tabLink li').removeClass('active');
 					$('#tabLink li').eq(inType).addClass('active');
-					loadFun(1);//全部
+					loadFun(1);
 				}else if(inType == 2){
 					$('#tabLink li').removeClass('active');
 					$('#tabLink li').eq(inType).addClass('active');
-					loadFun(2);//全部
+					loadFun(2);
 				}else{
 					$('#tabLink li').removeClass('active');
 					$('#tabLink li').eq(0).addClass('active');
 					loadFun('');//初始化,全部
 				}
-
 				$('#tabLink li').click(function(){
 					$('#tabLink li').removeClass('active');
 					$(this).addClass('active');
@@ -529,8 +541,9 @@
 				function loadFun(tabT,condition,cancelrefresh){//搜索和tab切换 ，公用一个加载方法
 					var Spagenum = 2, Ypagenum = 1, oneSize = 10;
 					document.getElementById('infoListDiv').innerHTML = '';
-					mui("#upload")[0].innerHTML = "";
+					document.getElementById('upload').innerHTML = '';
 					$('#loadingdiv').css('height','32px');
+					$(window).unbind('scroll');
 					var nowApi = '/app/order/list';
 					var nowData = {'userID':userId,'identityType':identityT,'showStatus':tabT,'page':1,'size':oneSize};
 					if(condition){//搜索字段
@@ -573,7 +586,7 @@
 										var windowHeight = $(this).height();
 										if(scrollTop + windowHeight == scrollHeight) {
 											if(Spagenum <= data.content.pages && Spagenum == Ypagenum + 1) { //当前页小于等于总页数时请求下一页
-												mui("#upload")[0].innerHTML = "<img src='../../img/Rolling.svg' />";
+												document.getElementById('upload').innerHTML = "<img src='../../img/Rolling.svg' />";
 												Ypagenum++; //满足加载情况,应到页数+1
 												console.log('发起请求,实到' + Spagenum + '页');
 												console.log('发起请求,应到' + Ypagenum + '页');
@@ -589,23 +602,29 @@
 						                                if(data.code == 0){
 						                                    $('#loadingdiv').css('height','0px');
 						                                    if(data.content.list && data.content.list.length){
+						                                    		//没有customerId的手动加为null
+																data.content.list.forEach(function(ele,index){
+																	if(!ele.customer || !ele.customer.customerId){
+																		ele.customer = {customerId:null}
+																	}
+																})
 						                                        document.getElementById('infoListDiv').innerHTML += template('infoList',{list:data.content.list,nowState:tabT});
 						                                    }
 						                                    lazyLoad();
 						                                }
-							                            mui("#upload")[0].innerHTML = " ";
+							                             document.getElementById('upload').innerHTML = '';
 														Spagenum++; //加载成功,当前页+1
 														console.log('成功+1,实到' + Spagenum);
 														console.log('成功+1,应到' + Spagenum);
 							                        },
 							                        error:function(xhr,type,errorThrown){
 								                        	Ypagenum--; //失败是应到-1
-														mui("#upload")[0].innerHTML = "";
+														document.getElementById('upload').innerHTML = '';
 							                        }
 							                    });
 
 											} else if(Spagenum == data.content.pages + 1) { //当前页不小于等于总页数时请求下一页
-												mui("#upload")[0].innerHTML = "到底了";
+												document.getElementById('upload').innerHTML = "没有更多了";
 											}
 										}
 									});
@@ -644,8 +663,6 @@
 
 				//取消订单
 				cancelOF();
-
-
 
 				/*订单评价*/
 				$('.operating11').click(function(){//点取消
