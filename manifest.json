@@ -1746,6 +1746,13 @@
 					"page/personal/myOrderDetail.html"
 				],
 				"priority": 0
+			},
+			"page/personal/myOrderRTList.html": {
+				"resources": [],
+				"refer": [
+					"page/personal/myOrderRTdetail.html"
+				],
+				"priority": 0
 			}
 		},
 		"idle": {

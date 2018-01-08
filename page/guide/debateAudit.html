@@ -27,7 +27,8 @@
 			.checkList h4 .h4span2{margin-left: 3%;}
 			.checkListCon{padding: 10px;line-height: 2;}
 			.checkListDZ{padding: 10px 0;color: #757575;font-size: 16px;}
-			.checkListB{padding: 10px 20px;text-align: right;}
+			.checkListB{padding: 15px 20px;text-align: right;}
+			.checkListB button{width: 80px;padding: 6px 10px;}
 			#infoListDiv{transition: all .3s;}
 			.flexr{display: flex;justify-content: space-between;margin: 2px 0;}
 			a,a:active{color: rgb(51,51,51)!important;}
@@ -132,7 +133,7 @@
 		
 									<div class="checkListB beforeBorder">
 									    <%if(listType == 0){%>
-										<button type="button" class="mui-btn mui-btn maincl" style="margin-right: 5px;" onclick="checkDebate(false,'<%=list[i].id%>')">不通过</button>
+										<button type="button" class="mui-btn mui-btn maincl" style="margin-right: 10px;" onclick="checkDebate(false,'<%=list[i].id%>')">不通过</button>
 										<button type="button" class="mui-btn mui-btn-danger mui-btn-outlined" onclick="checkDebate(true,'<%=list[i].id%>')">通过</button>
 									    	
 									    	<%}else{%>
