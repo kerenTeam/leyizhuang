@@ -114,11 +114,24 @@
 			.ftype .imgb img{width: 28px!important;height: 28px!important;}
 			.ftype .imgb{padding: 10px;border-radius:50% ;margin-bottom: 10px;}
 			.bdl{border-left: 3px solid #B62D29;padding-left: 5px;}
-			.mui-media-object{box-shadow: 0px 0px 0px 1px #EEEEEE;margin-bottom: 5px;}
+			/*.mui-media-object{box-shadow: 0px 0px 0px 1px #EEEEEE;margin-bottom: 5px;}*/
 			.messagefitler{-webkit-filter: invert(0.8);filter:invert(0.8);}
 			.mui-slider .mui-slider-group .mui-slider-item img{width: 100%;height: 100%!important;}
 			.zanwei2{padding-top: 50%;}
 			.huodongImg{vertical-align:middle;width:100%;border-radius:2px;}
+
+			.mui-card-footer:before, .mui-card-header:after{height: 0px !important;}
+			.mui-card{border-radius: 5px;box-shadow: 0px 0px 2px rgba(0,0,0,.2);}
+			.mui-card p{margin-bottom: 0;}
+			.mui-card .p2{font-size: 14px;}
+			.mui-card .p2 img{width: 20px;position: relative;top: -1px;}
+			.mui-table-view-cell>a:not(.mui-btn){background: url(img/main/baisedikuang.png) 0 0 no-repeat;background-size: 100% 100%;padding: 1px;margin: 0;}
+			#goodsListHot{padding: 8px;}
+			#goodsListHot .mui-table-view-cell{padding: 12px 5px 0;}
+			.mui-table-view .mui-media, .mui-table-view .mui-media-body{padding: 0px 5px;}
+			.zanweiY2{overflow: hidden;padding-top: 86%;border-radius: 2px 2px 0 0;}
+			.zanweiY2 img{top: -10%;}
+			#goodsListHot{padding-top: 0;}
 		</style>
 	</head>
 
@@ -133,7 +146,7 @@
 				<img src="images/center/message.svg" onclick="goMessage()" class="message"/>
 				<span class="mui-badge mui-badge-danger" id="ctMsg" style="right: 20px;position: absolute;padding: 4px;bottom: 29px;background-color: red;display: none;"></span>
 			</div>
-			
+
 		</header>
 		<!--状态栏开始-->
 		<style type="text/css" id="headStyle"></style>
@@ -442,7 +455,7 @@
 				<%for(var i = 0 ;i<list.length;i++){%>
 				<li class="mui-table-view-cell mui-media bgcwt" id="<%=list[i].id%>" onclick="goodsInfo(<%=list[i].id%>)" style="width:50%!important;float:left;border:none!important">
 					<a href="javascript:;" style="border-top: none!important;">
-						<div class="zanwei">
+						<div class="zanwei zanweiY2">
 							<img class="mui-media-object" style="display:block!important;width:100%!important;max-width:none;height:auto" src="<%=list[i].coverImageUri%>">
 						</div>
 						<div class="mui-media-body" style="font-size:12px">
@@ -479,7 +492,7 @@
 				<%for(var i = 0 ;i<list.length;i++){%>
 				<li class="mui-table-view-cell mui-media bgcwt" id="<%=list[i].id%>" onclick="goodsInfo(<%=list[i].id%>)" style="width:50%!important;float:left;border:none!important">
 					<a href="javascript:;" style="border-top: none!important;">
-						<div class="zanwei">
+						<div class="zanwei zanweiY2">
 							<img class="mui-media-object" style="display:block!important;width:100%!important;max-width:none;height:auto" src="<%=list[i].coverImageUri%>">
 						</div>
 						<div class="mui-media-body" style="font-size:12px">
@@ -542,13 +555,14 @@
 						<div class="mui-card-content-inner">
 							<!--<p><%=dataList[i].createTime%></p>-->
 							<p style="color: #333;"><%=dataList[i].title%></p>
-							<p><img src="img/yanjin2.svg"/> <%=dataList[i].read%></p>
+							<p class="p2"><img src="img/yanjin2.svg"/> <%=dataList[i].read%></p>
 						</div>
 					</div>
 				</div>
 			<%}%>
 			<br />
 		</script>
+
 		<div class="upload text-center text-xs gray" id="upload"></div>
 		<script src="js/mui.min.js"></script>
 		<script src="js/util.js"></script>
@@ -577,7 +591,7 @@
 					console.log( "语音识别失败："+e.message );
 				} );
 			}
-			
+
 			mui.plusReady(function() {
 //				plus.storage.removeItem('lauchFlag')
 				var showGuide = plus.storage.getItem("lauchFlag");
@@ -597,7 +611,7 @@
 					plus.navigator.setFullscreen(false)
 					Sign();
 				}
-				
+
 				if(/android/i.test(navigator.userAgent)){
 			 	 	var systemType = 'ANDROID'
 				}else{
@@ -612,7 +626,7 @@
 				document.addEventListener('refreshid', function() {
 					loadIndex();
 				})
-				
+
 				var timeSign = null;
 				var loadNum = 0;
 				var loadNum2 = 0;
@@ -742,7 +756,7 @@
 					} else { //配送员
 
 					}
-					
+
 					showMsg();
 					function showMsg(){
 						mui.ajax(serverUrl+'/app/user/message/unread/number',{
@@ -796,7 +810,7 @@
 							}else{
 								mui.toast(data.message)
 							}
-	
+
 						},
 						error: function(xhr, type, errorThrown) {
 							plus.nativeUI.closeWaiting();
@@ -891,7 +905,7 @@
 							} else {
 								mui.toast(data.message)
 							}
-	
+
 						},
 						error: function(xhr, type, errorThrown) {
 							plus.nativeUI.closeWaiting();
@@ -1073,7 +1087,7 @@
 						})
 					}
 				}
-				
+
 			}
 			function fastOrder(){
 				openview({
@@ -1251,7 +1265,7 @@
 					//底部选项卡切换
 					util.toggleNview(0);
 					util.changeSubpage(targetPage, activePage, aniShow);
-					
+
 				})
 				var self = plus.webview.currentWebview(),
 					leftPos = Math.ceil((window.innerWidth - 60) / 2); // 设置凸起大图标为水平居中

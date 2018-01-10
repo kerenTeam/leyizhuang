@@ -130,7 +130,8 @@
 				width: 100%;
 				z-index: 100;
 			}
-
+			.orderEBtn div{position: relative;}
+			.orderEBtn .mui-badge{position: absolute;top: -2px;right: -1px;font-style: normal;padding: 2px 5px;}
 		</style>
 
 	</head>
@@ -167,22 +168,26 @@
 					所有订单
 					<span class="mui-icon mui-icon-arrowright mui-pull-right maincl ft20 activecl" style="font-weight: 800;"></span>
 				</div>
-				<div class="flexRow ft14 maincl">
+				<div class="flexRow ft14 maincl orderEBtn">
 					<div class="" onclick="openOrder(1)">
 						<img src="images/center/waitPay.svg"/>
 						待付款
+						<em class="mui-badge mui-badge-danger">12</em>
 					</div>
 					<div class="" onclick="openOrder(2)">
 						<img src="images/center/take.svg"/>
 						待收货
+						<em class="mui-badge mui-badge-danger">22</em>
 					</div>
-					<div class="">
+					<div class="" onclick="openRTList('pingjia')">
 						<img src="images/center/cmt.svg"/>
 						待评价
+						<em class="mui-badge mui-badge-danger">3</em>
 					</div>
 					<div class="" id="tuihuo0" onclick="openRTList()">
 						<img src="images/center/backT.svg"/>
-						退货
+						&nbsp;退&nbsp;&nbsp;货&nbsp;
+						<em class="mui-badge mui-badge-danger">4</em>
 					</div>
 				</div>
 			</div>
@@ -386,10 +391,13 @@
 		<script src="js/default.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
 			//退货
-			function openRTList(){
+			function openRTList(type){
 				openview({
 					view:'page/personal/myOrderRTList.html',
 					id: 'myOrderRTList',
+					extrasobj:{
+						type:type
+					}
 				})
 			}
 			//调色版

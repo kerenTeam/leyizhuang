@@ -19,6 +19,10 @@
 		.mui-card-content-inner p{font-size: 16px;}
 		.mui-card-content-inner{padding: 8px;}
 		body{padding-bottom: 0;}
+		.mui-card-footer:before, .mui-card-header:after{height: 0px !important;}
+		.mui-card{border-radius: 5px;}
+		.mui-card .p2{font-size: 14px;}
+		.mui-card .p2 img{width: 20px;position: relative;top: -1px;}
 	</style>
 
 	<body>
@@ -40,7 +44,7 @@
 							<div class="mui-card-content-inner">
 								<!--<p><%=dataList[i].createTime%></p>-->
 								<p style="color: #333;"><%=dataList[i].title%></p>
-								<p><img src="../img/yanjin2.svg"/> <%=dataList[i].read%></p>
+								<p class="p2"><img src="../img/yanjin2.svg"/> <%=dataList[i].read%></p>
 							</div>
 						</div>
 					</div>
