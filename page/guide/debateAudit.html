@@ -40,7 +40,7 @@
 	<body>
 		<header class="mui-bar mui-bar-nav fineB">
 		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left bigSize" style="margin-left: 0;"></a>
-		    <h1 class="mui-title">欠款审核</h1>  
+		    <h1 class="mui-title">欠款审核</h1>
 		</header>
 		<script src="../../js/statusBar.js" type="text/javascript" charset="utf-8"></script>
 		<div class="mui-content" style="margin-top: 7px;">
@@ -48,11 +48,11 @@
 				<div class="tab-hd tab-hdtwo bgcwt" id="tabLink" style="position: -webkit-sticky; position:sticky; top: 70px;z-index: 99;">
 					<ul class="tab-nav ft16">
 					  <li class="active aClick " data-statusId="0">待审核</li>
-					  <li class="aClick" data-statusId="1">已审核</li> 
+					  <li class="aClick" data-statusId="1">已审核</li>
 					</ul>
 				</div>
 				<div class="notice">
-					
+
 					<!--列表loading-->
 					<div id="loadingdiv" style="text-align: center;font-size: 14px;height:32px;
 						line-height: 30px;color: #666;-webkit-transition: all .3s;overflow: hidden;">
@@ -61,9 +61,10 @@
 					<!--列表loading结束-->
 					<div id="infoListDiv"><!--内容-->
 					</div>
+					<div class="upload text-center text-xs gray" id="upload"></div>
 					<script id="infoList" type="text/html">
 						<%for(var i=0;i<list.length;i++){%>
-							
+
 								<div class="checkList" onclick="goInfo('<%=list[i].orderNumber%>')">
 									<h4 class="fineB ft16">
 										<span>订单编号：<%=list[i].orderNumber%></span>
@@ -130,12 +131,12 @@
 										<div class="ft15"><span class="disablecl">支付方式：</span><span class="titcl"><%=list[i].paymentMethod%></span></div>
 										<div class="ft15"><span class="disablecl">申请日期：</span><span class="titcl"><%=list[i].createTime%></span></div>
 									</div>
-		
+
 									<div class="checkListB beforeBorder">
 									    <%if(listType == 0){%>
 										<button type="button" class="mui-btn mui-btn maincl" style="margin-right: 10px;" onclick="checkDebate(false,'<%=list[i].id%>')">不通过</button>
 										<button type="button" class="mui-btn mui-btn-danger mui-btn-outlined" onclick="checkDebate(true,'<%=list[i].id%>')">通过</button>
-									    	
+
 									    	<%}else{%>
 									    		<div class="activecl">
 									    			<%=list[i].status%>
@@ -143,9 +144,9 @@
 									    	<%}%>
 									</div>
 								</div>
-						 
+
 						<%}%>
-						 
+
 					</script>
 				</div>
 			</div>
@@ -164,12 +165,12 @@
 				}
 			})
 		}
-		 
+
 		mui.plusReady(function(){
 			var userId = plus.storage.getItem('$userId');
 			var oldToken = plus.storage.getItem("oldToken");
 			var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
-			 
+
 			$('#tabLink li').click(function(){
 				$('#tabLink li').removeClass('active');
 				$(this).addClass('active');
@@ -187,13 +188,14 @@
 			});
 			loadFun(0);
 			function loadFun(index){
+				var Spagenum = 2, Ypagenum = 1, oneSize = 10;
 				if(index == 0){
 					var apiString = '/app/seller/arrearsAudit/auditing/list';
 				}else{
 					var apiString = '/app/seller/arrearsAudit/audited/list';
 				}
 				mui.ajax(serverUrl+apiString,{
-					data:{'userId':userId,'identityType':identityT},
+					data:{'userId':userId,'identityType':identityT,'page':1,'size':oneSize},
 					dataType:'json',
 					type:'post',
 					timeout:10000,
@@ -204,12 +206,49 @@
 							clearTimeout(timeLoad),timeLoad = null;
 							if(data.code == 0){
 								$('#loadingdiv').css('height','0px');
-								if(data.content && data.content.length){ 
+								if( data.content.list && data.content.list.length){
+									document.getElementById('infoListDiv').innerHTML = template('infoList',{list:data.content.list,listType:index});
+
+									//下拉加载
+									$(window).scroll(function() {
+										var scrollTop = SH0 = $(this).scrollTop(),scrollHeight = $(document).height(),windowHeight = $(this).height();
+										if(scrollTop + windowHeight == scrollHeight) {
+											if(Spagenum <= data.content.pages && Spagenum == Ypagenum + 1) { //当前页小于等于总页数时请求下一页
+												document.getElementById('upload').innerHTML = "<img src='../../img/Rolling.svg' />";
+												Ypagenum++;console.log('发起请求,实到' + Spagenum + '页');console.log('发起请求,应到' + Ypagenum + '页');
+												mui.ajax(serverUrl + apiString,{
+							                        data:{'userId':userId,'identityType':identityT,'page':Spagenum,'size':oneSize},
+							                        dataType:'json',
+							                        type:'post',
+							                        timeout:10000,
+							                        headers:{"Authorization":oldToken},
+							                        success:function(data,type,xhr){
+							                            console.log('已审核续',data);
+						                                if(data.code == 0){
+															if( data.content.list && data.content.list.length){
+																document.getElementById('infoListDiv').innerHTML += template('infoList',{list:data.content.list,listType:index});
+															}
+						                                }
+							                             document.getElementById('upload').innerHTML = '';
+														Spagenum++;console.log('成功+1,实到' + Spagenum);console.log('成功+1,应到' + Spagenum);
+							                        },
+							                        error:function(xhr,type,errorThrown){
+								                        	Ypagenum--;document.getElementById('upload').innerHTML = '';
+							                        }
+							                    });
+											} else if(Spagenum == data.content.pages + 1) { //当前页不小于等于总页数时请求下一页
+												document.getElementById('upload').innerHTML = "没有更多了";
+											}
+										}
+									});
+									//下拉加载结束
+
+								}else if(data.content && data.content.length){
 									document.getElementById('infoListDiv').innerHTML = template('infoList',{list:data.content,listType:index});
 								}else{
 									document.getElementById('infoListDiv').innerHTML = '<div style="text-align: center;padding: 50px;"><img src="../../images/order/order.png" style="width: 100px;" /><div class="ft13 disablecl">暂无数据</div></div>';
 								}
-								
+
 							}else{
 								mui.toast(data.message);
 							}
@@ -234,7 +273,7 @@
 						console.log('欠款审核 ',data);
 						var timeLoad = setInterval(function(){
 							clearTimeout(timeLoad),timeLoad = null;
-							if(data.code == 0){ 
+							if(data.code == 0){
 								mui.toast('审核成功');
 								loadFun(0);
 							}else{
@@ -246,9 +285,9 @@
 						console.log('响应失败  !');
 					}
 				});
-				
+
 			}
 		})
- 
+
 	</script>
 </html>

@@ -193,7 +193,7 @@
 			function RefreshAd(){
 				/*我的地址*/
 				mui.ajax(serverUrl+'/app/user/setting/deliveryAddress/list',{
-					data:{'userId' : userId,'identityType':identityT},
+					data:{'userId' : userId,'identityType':identityT,'page':1},
 					dataType:'json',
 					type:'post',
 					timeout:10000,
@@ -201,7 +201,7 @@
 					success:function(data,type,xhr){
 						console.log('地址',data);
 						var addressObj = {};
-						addressObj.addressLi = data.content;
+						addressObj.addressLi = data.content.list;
 						var html = template('addressList-detail',addressObj);
 						document.getElementById('addressList').innerHTML = html;
 						if(data.content==0){

@@ -132,6 +132,7 @@
 			}
 			.orderEBtn div{position: relative;}
 			.orderEBtn .mui-badge{position: absolute;top: -2px;right: -1px;font-style: normal;padding: 2px 5px;}
+			.orderNum{display: none;}
 		</style>
 
 	</head>
@@ -172,22 +173,22 @@
 					<div class="" onclick="openOrder(1)">
 						<img src="images/center/waitPay.svg"/>
 						待付款
-						<em class="mui-badge mui-badge-danger">12</em>
+						<em class="mui-badge orderNum mui-badge-danger">12</em>
 					</div>
 					<div class="" onclick="openOrder(2)">
 						<img src="images/center/take.svg"/>
 						待收货
-						<em class="mui-badge mui-badge-danger">22</em>
+						<em class="mui-badge orderNum mui-badge-danger">22</em>
 					</div>
 					<div class="" onclick="openRTList('pingjia')">
 						<img src="images/center/cmt.svg"/>
 						待评价
-						<em class="mui-badge mui-badge-danger">3</em>
+						<em class="mui-badge orderNum mui-badge-danger">3</em>
 					</div>
 					<div class="" id="tuihuo0" onclick="openRTList()">
 						<img src="images/center/backT.svg"/>
 						&nbsp;退&nbsp;&nbsp;货&nbsp;
-						<em class="mui-badge mui-badge-danger">4</em>
+						<em class="mui-badge orderNum mui-badge-danger">4</em>
 					</div>
 				</div>
 			</div>
@@ -268,8 +269,12 @@
 						<img src="images/center/debate.svg"/>欠款查询
 						<span class="mui-icon mui-icon-arrowright mui-pull-right maincl ft20 maincl"></span>
 					</div>
-					<div onclick="debateAudit()" class="mb10">
+					<div onclick="debateAudit()" class="afterBorder">
 						<img src="images/center/paycheck.svg"/>欠款审核
+						<span class="mui-icon mui-icon-arrowright mui-pull-right maincl ft20 maincl"></span>
+					</div>
+					<div onclick="storePreDepositb()" class="mb10">
+						<img src="images/center/paycheck.svg"/>门店预存款
 						<span class="mui-icon mui-icon-arrowright mui-pull-right maincl ft20 maincl"></span>
 					</div>
 
@@ -483,6 +488,13 @@
 				openview({
 					view:'page/guide/debateAudit.html',
 					id:'debateAudit'
+				})
+			}
+			//导购 门店预存款
+			function storePreDepositb(){
+				openview({
+					view:'page/guide/storePreDepositb.html',
+					id:'storePreDepositb'
 				})
 			}
 			//经理-> 工人列表
@@ -753,9 +765,36 @@
 								console.log('登录响应失败');
 							}
 						});
-
-
 					}
+
+					//显示订单数量
+					showOrderNum();
+					function showOrderNum(){
+						mui.ajax(serverUrl+'/app/user/message/unread/number',{
+							data:{ userId:userId,identityType:identityT },
+							dataType:'json',
+							type:'post',
+							timeout:10000,
+							headers:{"Authorization":oldToken},
+							success:function(data,type,xhr){
+								console.log('订单数量',data);
+								if(data.code == 0){
+									var unpaidOrderQuantity = data.content.unpaidOrderQuantity,pendingReceiveOrderQuantity = data.content.pendingReceiveOrderQuantity,
+									    isEvaluatedOrderQuantity = data.content.isEvaluatedOrderQuantity,returningOrderQuantity = data.content.returningOrderQuantity;
+									unpaidOrderQuantity && ($('.orderNum').eq(0).html(unpaidOrderQuantity).css('display','inline-block'));
+									pendingReceiveOrderQuantity && ($('.orderNum').eq(1).html(pendingReceiveOrderQuantity).css('display','inline-block'));
+									isEvaluatedOrderQuantity && ($('.orderNum').eq(2).html(isEvaluatedOrderQuantity).css('display','inline-block'));
+									returningOrderQuantity && ($('.orderNum').eq(3).html(returningOrderQuantity).css('display','inline-block'));
+								}else{
+									console.error(data.message);
+								}
+							},
+							error:function(xhr,type,errorThrown){
+								console.error('显示订单数量响应失败！');
+							}
+						});
+					}
+
 				} //刷新
 			});
 			var backButtonPress = 0;

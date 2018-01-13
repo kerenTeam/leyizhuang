@@ -5779,7 +5779,7 @@ sub{
 	font-family: "微软雅黑";
 }
 
-#upload img{
+#upload img, #upload2 img{
 	padding: 15px !important;
 }
 header{
@@ -5801,10 +5801,10 @@ header h1,.mui-bar-nav.mui-bar .mui-icon, .mui-title, #theSearch{
 .mui-bar-nav.mui-bar .mui-icon,.mui-title,#theSearch{
 	color: #555!important;
 }
-#upload{
+#upload , #upload2{
 	text-align: center;font-size: 15px;line-height: 30px;min-height: 40px;color: #999;padding-top: 5px;
 }
-#upload img{width: 60px;margin-top: -10px;
+#upload img, #upload2 img{width: 60px;margin-top: -10px;
 }
 
 #textInfo img{

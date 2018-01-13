@@ -229,7 +229,7 @@
 									if(data.content.auditListRes.remark){
 										plus.storage.setItem('remark',data.content.auditListRes.remark);
 									}
-									if(data.content.auditListRes.receiverPhone && data.content.auditListRes.receiver && data.content.auditListRes.deliveryCity){ 
+									if(data.content.auditListRes.receiverPhone && data.content.auditListRes.receiver && data.content.auditListRes.deliveryCity){
 										var audnoAddrObj = {};
 										audnoAddrObj.person = data.content.auditListRes.receiver;
 										audnoAddrObj.phone = data.content.auditListRes.receiverPhone;
@@ -354,7 +354,7 @@
 							});
 
 							//单组 全选
-							$('dl dt .mui-checkbox').click(function() { 
+							$('dl dt .mui-checkbox').click(function() {
 								if($(this).find("input").is(':checked')) {
 									$(this).parentsUntil(".eachGroup").find("input").attr("checked", true);
 									var allLength = $("dd").length;
@@ -415,7 +415,7 @@
 										$("#cartData dl.cart input").attr("checked", true);
 									}
 								}
-								
+
 								countFuc();
 							})
 							//数量选择
@@ -534,8 +534,8 @@
 											if(gdtype == 'ld'){
 												var auditNo = $(this).attr('data-auditNo');
 												plus.storage.setItem('auditNo',auditNo);
-											} 
-											
+											}
+
 											var goodsLineType = 'GOODS';
 											justGoods.push({
 												id: gid,
@@ -563,7 +563,7 @@
 
 									if(plus.storage.getItem('oldToken')) {
 										if(identityT == 0 || identityT == 4 || identityT == 5) {
-											
+
 											if(cusId){
 												openview({
 													view:'page/order/chooseGift.html',

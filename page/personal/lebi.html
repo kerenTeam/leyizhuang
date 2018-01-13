@@ -66,6 +66,7 @@
 
 				<div id="infoListDiv"><!--内容-->
 				</div>
+				<div class="upload text-center text-xs gray" id="upload"></div>
 				<script id="infoList" type="text/html">
 
 					<%for(var i=0;i<list.length;i++){%>
@@ -142,8 +143,9 @@
 
 			loadFun(1);
 			function loadFun(index){
+				var Spagenum = 2, Ypagenum = 1, oneSize = 10;
 				mui.ajax(serverUrl+'/app/lebi/variation/list',{
-					data:{'userID':userId,'identityType':identityT,'showType':index},
+					data:{'userID':userId,'identityType':identityT,'showType':index,'page':1,'size':oneSize},
 					dataType:'json',
 					type:'post',
 					timeout:10000,
@@ -154,12 +156,48 @@
 							clearTimeout(timeLoad),timeLoad = null;
 							if(data.code == 0){
 								$('#loadingdiv').css('height','0px');
-								if(data.content && data.content.length){
-									for(var i in data.content){
-										data.content[i].showType = index;
+								if(data.content.list && data.content.list.length){
+									for(var i in data.content.list){
+										data.content.list[i].showType = index;
 									}
-									document.getElementById('infoListDiv').innerHTML = template('infoList',{list:data.content});
-									$("#totalQuantity").html(data.content[0].totalQuantity)
+									document.getElementById('infoListDiv').innerHTML = template('infoList',{list:data.content.list});
+									$("#totalQuantity").html(data.content.list[0].totalQuantity);
+									//下拉加载
+									$(window).scroll(function() {
+										var scrollTop = SH0 = $(this).scrollTop(),scrollHeight = $(document).height(),windowHeight = $(this).height();
+										if(scrollTop + windowHeight == scrollHeight) {
+											if(Spagenum <= data.content.pages && Spagenum == Ypagenum + 1) { //当前页小于等于总页数时请求下一页
+												document.getElementById('upload').innerHTML = "<img src='../../img/Rolling.svg' />";
+												Ypagenum++;console.log('发起请求,实到' + Spagenum + '页');console.log('发起请求,应到' + Ypagenum + '页');
+												mui.ajax(serverUrl+'/app/lebi/variation/list',{
+													data:{'userID':userId,'identityType':identityT,'showType':index,'page':Spagenum,'size':oneSize},
+							                        dataType:'json',
+							                        type:'post',
+							                        timeout:10000,
+							                        headers:{"Authorization":oldToken},
+							                        success:function(data,type,xhr){
+							                            console.log('续',data);
+						                                if(data.code == 0){
+															if(data.content.list && data.content.list.length){
+																for(var i in data.content.list){
+																	data.content.list[i].showType = index;
+																}
+																document.getElementById('infoListDiv').innerHTML += template('infoList',{list:data.content.list});
+															}
+						                                }
+							                             document.getElementById('upload').innerHTML = '';
+														Spagenum++;console.log('成功+1,实到' + Spagenum);console.log('成功+1,应到' + Spagenum);
+							                        },
+							                        error:function(xhr,type,errorThrown){
+								                        	Ypagenum--;document.getElementById('upload').innerHTML = '';
+							                        }
+							                    });
+											} else if(Spagenum == data.content.pages + 1) { //当前页不小于等于总页数时请求下一页
+												document.getElementById('upload').innerHTML = "没有更多了";
+											}
+										}
+									});
+									//下拉加载结束
 								}else{
 									document.getElementById('infoListDiv').innerHTML = '<div style="text-align: center;padding: 50px;"><div class="ft13 disablecl">暂无数据</div></div>';
 								}

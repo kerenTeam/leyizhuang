@@ -182,14 +182,14 @@
 			var oldToken = plus.storage.getItem('oldToken');
 
 			mui.ajax(serverUrl+'/app/user/setting/deliveryAddress/list',{
-					data:{'userId' : userId,'identityType':identityT},
+					data:{'userId' : userId,'identityType':identityT,'page':1},
 					dataType:'json',
 					type:'post',
 					timeout:10000,
 					headers:{"Authorization":oldToken},
 					success:function(data,type,xhr){
 						console.log('地址列表',data);
-					var thisAddArray = data.content;
+					var thisAddArray = data.content.list;
 					for (var k = 0; k < thisAddArray.length; k++) {
 						if(thisAddArray[k].id == adId){
 							$('#person').attr('value',thisAddArray[k].deliveryName);
