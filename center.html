@@ -148,8 +148,8 @@
 					<p class="centop">
 						<div class="denlu">用户名:<span id="userName" style="z-index: 99;"></span></div>
 						<div class="denlu" style="display:none ;" id="userNumber">用户id:<span style="z-index: 99;"></span></div>
-						<div class="denlu" id="onlyPs">配送数量：<span id="psNumber" style="z-index: 99;"></span></div>
-						<div class="denlu" id="onlyGuide">手机号：<span id="guidesPhone"></span> <span id='bindPhone' style="background-color: orange;color: white;font-size: 10px;padding: 2px;border-radius: 3px;display: none;">绑定手机号</span></div>
+						<div class="denlu" id="onlyPs">配送数量:<span id="psNumber" style="z-index: 99;"></span></div>
+						<div class="denlu" id="onlyGuide">手机号:<span id="guidesPhone"></span> <span id='bindPhone' style="background-color: orange;color: white;font-size: 10px;padding: 2px;border-radius: 3px;display: none;">绑定手机号</span></div>
 						<div class="denlu" id="onlyCust">灯号:<span id="dengh"></span>&nbsp;&nbsp; 导购:<span id="guideName"></span><a id="guideMobile" style="display: none;" href=""><img style="width: 15px;margin-left: 5px;" src="images/center/phone.svg"/></a></div>
 						<div class="denlu" id="onlymange">账户:<span id="manageMoney"></span></div>
 					</p>
@@ -203,7 +203,7 @@
 					<div class="flexRow ft14">
 						<div class="">
 							<div id="cashCouponQty">
-								---
+								0
 							</div>
 							<div onclick="myCoupon()">
 								优惠券
@@ -211,7 +211,7 @@
 						</div>
 						<div class="">
 							<div id="productCouponQty">
-								---
+								0
 							</div>
 							<div onclick="productCoupon()">
 								产品券
@@ -260,23 +260,23 @@
 			<!--导购-->
 			<div class="centerList guiderN"  style="display: none;">
 				<div class="flexRow2">
-
 					<div class="afterBorder" onclick="guideCredit()">
 						<img src="images/center/credit.svg"/>信用额度
+						<span class="mui-icon mui-icon-arrowright mui-pull-right maincl ft20 maincl"></span>
+					</div>
+					<div onclick="storePreDepositb()" id="storePreDepositb" style="display: none;" class="afterBorder">
+						<img src="images/center/paycheck.svg"/>门店预存款
 						<span class="mui-icon mui-icon-arrowright mui-pull-right maincl ft20 maincl"></span>
 					</div>
 					<div class="afterBorder" onclick="debateQuery()">
 						<img src="images/center/debate.svg"/>欠款查询
 						<span class="mui-icon mui-icon-arrowright mui-pull-right maincl ft20 maincl"></span>
 					</div>
-					<div onclick="debateAudit()" class="afterBorder">
+					<div onclick="debateAudit()" class="mb10">
 						<img src="images/center/paycheck.svg"/>欠款审核
 						<span class="mui-icon mui-icon-arrowright mui-pull-right maincl ft20 maincl"></span>
 					</div>
-					<div onclick="storePreDepositb()" class="mb10">
-						<img src="images/center/paycheck.svg"/>门店预存款
-						<span class="mui-icon mui-icon-arrowright mui-pull-right maincl ft20 maincl"></span>
-					</div>
+					
 
 					<div class="afterBorder" onclick="paizhaoOrder()">
 						<img src="images/center/camer.svg"/>拍照下单
@@ -558,6 +558,7 @@
 					var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
 					var userId = plus.storage.getItem('$userId');
 					var oldToken = plus.storage.getItem('oldToken');
+					var sellerType = plus.storage.getItem('sellerType');
 					$('.qiandao').html('签到');
 					$('#mypic').attr('src','https://b-ssl.duitang.com/uploads/item/201710/12/20171012232816_GX5iw.thumb.224_0.jpeg')
 					//签到
@@ -596,7 +597,6 @@
 					document.addEventListener('refreshInfoC', function() {
 						showMsg();
 					})
-					showMsg();
 					function showMsg(){
 						mui.ajax(serverUrl+'/app/user/message/unread/number',{
 							data:{
@@ -646,6 +646,11 @@
 					}else{//配送员
 						$('.centerList,.orderType,#onlymange,#onlyCust,.qiandao').hide();
 						$('#onlyPs,#onlyGuide,#userNumber').show();
+					}
+					if(sellerType == 'SUPERVISOR'){
+						$('#storePreDepositb').show()
+					}else{
+						$('#storePreDepositb').hide()
 					}
 
 					/*设置*/

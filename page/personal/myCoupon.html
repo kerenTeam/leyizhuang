@@ -11,7 +11,7 @@
 	</head>
 	<style type="text/css">
 		.mui-content{padding: 8px;}
-		.coupon{background: url(../../images/center/couponbg.jpg);padding: 55px 5px;margin: 10px 0;background-size: 100% 100%;position: relative;}
+		.coupon{background: url(../../images/center/couponbg.jpg);padding: 55px 5px;background-size: 100% 100%;position: relative;border: 10px solid white;}
 		.cpleft{position: absolute;left: 12%;top:50%;-webkit-transform: translateY(-50%);}
 		.cpright{position: absolute;left: 40%;right:3%;top:50%;-webkit-transform: translateY(-50%);}
 	</style>
@@ -25,14 +25,17 @@
 			<div id="coupon"></div>
 			<script type="text/html" id="couponTpl">
 				<%for(var i=0;i<dataList.length;i++){%>
-					<div class="coupon">
-						<div class="ft20 cpleft"><span class="whitecl"><%=dataList[i].denomination%>元</span></div>
-						<div class="cpright">
-							<div class="ft20"><%=dataList[i].title%></div>
-							<div class="ft14 maincl">使用条件：<%=dataList[i].description%></div>
-							<div class="ft13">有效期:<%=dataList[i].effectiveStartTime%> 至 <%=dataList[i].effectiveEndTime%></div>
-							
+					<div style="margin: 10px 0;">
+						<div class="coupon">
+							<div class="ft20 cpleft"><span class="whitecl"><%=dataList[i].denomination%>元</span></div>
+							<div class="cpright">
+								<div class="ft18"><%=dataList[i].title%></div>
+								<div class="ft13">有效期:<%=dataList[i].effectiveStartTime%> 至 <%=dataList[i].effectiveEndTime%></div>
+							</div>
 						</div>
+						<%if(dataList[i].description){%>
+							<div class="ft12 maincl bgcwt padd10 beforeBorder">使用条件：<%=dataList[i].description%></div>
+						<%}%>
 					</div>
 				<%}%>
 			</script>

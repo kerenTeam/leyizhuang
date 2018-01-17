@@ -6,10 +6,10 @@
 		<title>门店预存款</title>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/mui.min.css"/>
 		<link rel="stylesheet" type="text/css" href="../../css/configW.css"/>
 		<link rel="stylesheet" type="text/css" href="../../css/commonY.css">
 		<link rel="stylesheet" type="text/css" href="../../css/indexY.css">
-		<link rel="stylesheet" type="text/css" href="../../css/mui.min.css"/>
 		<link rel="stylesheet" href="../../css/resetY.css">
 		<!--<link rel="stylesheet" href="../../css/youxd.css">-->
 		<style type="text/css">
@@ -107,10 +107,12 @@
 			mui.plusReady(function(){
 				//获取缓存
 				var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
-				var userId = 1 || plus.storage.getItem('$userId');
+				var userId = plus.storage.getItem('$userId');
 				var oldToken = plus.storage.getItem('oldToken');
+				var sellerType = plus.storage.getItem('sellerType');
 				plus.nativeUI.showWaiting();
-				if(identityT == 4){
+				
+				if(sellerType == 'SUPERVISOR'){
 					var api = '/app/store/preDepositBalance'
 				}
 				mui('#recharge')[0].onclick = function(){
@@ -162,7 +164,7 @@
 
 					//tab切换
 					//初始化
-					if(identityT == 4){
+					if(sellerType == 'SUPERVISOR'){
 						var url = '/app/store/preDeposit/recharge/log';
 					}
 					loadFun(url,'tab1');
@@ -171,21 +173,23 @@
 						$(this).addClass('active');
 						$('#loadingdiv').css('height','32px');
 						if($(this).index() == 0){
-							if(identityT == 4){
+							if(sellerType == 'SUPERVISOR'){
 								var url = '/app/store/preDeposit/recharge/log';
 							}
 							loadFun(url,'tab1');
 						}else{
-							if(identityT == 4){
+							if(sellerType == 'SUPERVISOR'){
 								var url = '/app/store/preDeposit/consumption/log';
 							}
 							loadFun(url,'tab2');
 						}
 					})
 					function loadFun(url,tabT){
+						mui("#upload")[0].innerHTML = " ";
+				 		$(window).unbind('scroll');
 						var Spagenum = 2; //实到页数
 						var Ypagenum = 1; //应到页数
-						var 	oneSize = 10;
+						var oneSize = 10;
 						mui.ajax(serverUrl + url,{
 							data:{'userId':userId,'identityType':identityT,'page':1,'size':oneSize},
 							dataType:'json',

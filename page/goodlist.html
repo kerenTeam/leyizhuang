@@ -120,6 +120,8 @@
 				 kindType(categoryCode);
 				
 				 function kindType(categoryCode){
+				 	document.getElementById('upload').innerHTML = '';
+				 	$(window).unbind('scroll');
 //					plus.nativeUI.showWaiting();
 				 	//获取缓存 
 					var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
@@ -241,7 +243,7 @@
 					var categoryId='',brandId='',typeId='',specification='';
 					var Spagenum = 2; //实到页数
 					var Ypagenum = 1; //应到页数
-					var 	oneSize = 5;
+					var oneSize = 5;
 					goodsList(categoryId,brandId,typeId,specification,0);
 					function goodsList(categoryId,brandId,typeId,specification,nosp){
 						plus.nativeUI.showWaiting();

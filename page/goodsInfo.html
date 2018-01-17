@@ -134,13 +134,13 @@
 				    <% } %>
 				</div>
 			</script>
+			<div class="afterBorder" style="padding: 10px;background-color: white;">
+				<div class="ft16 goodstit">商品评价 <span class="mui-pull-right maincl ft14"></span></div> 
+			</div>
 			<div id="curShow" class="bgcwt" style="padding-bottom:60px;"></div>
     			<!--留言--> 
 		 	<script type="text/html" id="cmtTpl">
-		 		<div class="afterBorder" style="padding: 10px;background-color: white;">
-					<div class="ft16 goodstit">商品评价 <span class="mui-pull-right maincl ft14"><%=list.length%>条</span></div> 
-					
-				</div>
+		 		
 		 		<%for(var i=0;i<list.length;i++){%>
 		 			<%if(list[i].isShow){%>
 			 			<div class="follow"> 
@@ -167,7 +167,7 @@
 					<%}%>
 		 	</script> 
 		</div>
-		 
+
 		<!--底部-->
 		<div class="opbot maincl ft16">
 			<div class="opbf">
@@ -226,6 +226,7 @@
 			
 			<a class="shop-btn db">确定</a>
 		</div>
+		<div class="upload text-center text-xs gray" id="upload" style="padding-bottom: 100px;z-index: 9999;"></div>
 		
 	 </body>
 	<script type="text/javascript" src="../js/jquery.min.js"></script>
@@ -447,11 +448,15 @@
 					}
 				});
 			})
-			
+			var Spagenum = 2; //实到页数
+			var Ypagenum = 1; //应到页数
+			var oneSize = 10;
 			//获取评论
 			mui.ajax(serverUrl+'/app/order/evaluation/goods/list',{
 				data:{
-					gid:goodid
+					gid:goodid,
+					page:1,
+					size:oneSize
 				},
 				dataType:'json',
 				headers: {"Authorization": oldToken},
@@ -461,13 +466,62 @@
 					plus.nativeUI.closeWaiting();
 					console.log('评论列表',data);
 					if(data.code == 0 ){
-					 	if(data.content && data.content.length){
-					 		for(var i in data.content){
-								var dt = new Date(data.content[i].evaluationTime).getTime();
-								data.content[i].evaluationTime = getDateDiff(dt);
+					 	if(data.content && data.content.list && data.content.list.length){
+					 		for(var i in data.content.list){
+								var dt = new Date(data.content.list[i].evaluationTime).getTime();
+								data.content.list[i].evaluationTime = getDateDiff(dt);
 				       		}
-					 		mui('#curShow')[0].innerHTML = template('cmtTpl',{list:data.content})
-					 		
+					 		mui('#curShow')[0].innerHTML = template('cmtTpl',{list:data.content.list})
+					 		//下拉加载
+							$(window).scroll(function() {
+								var scrollTop = $(this).scrollTop();
+								var scrollHeight = $(document).height();
+								var windowHeight = $(this).height();
+								if(scrollTop + windowHeight == scrollHeight) {
+									if(Spagenum <= data.content.pages && Spagenum == Ypagenum + 1) { //当前页小于等于总页数时请求下一页
+										mui("#upload")[0].innerHTML = "<img src='../img/Rolling.svg' />";
+										Ypagenum++; //满足加载情况,应到页数+1
+										console.log('发起请求,实到' + Spagenum + '页');
+										console.log('发起请求,应到' + Ypagenum + '页');
+
+										mui.ajax(serverUrl+'/app/order/evaluation/goods/list',{
+											data:{
+												gid:goodid,'page':Ypagenum,'size':oneSize
+											},
+											dataType:'json',
+											headers: {"Authorization": oldToken},
+											type:'post',
+											timeout:10000,
+											success:function(data,type,xhr){
+												console.log('明细续',data)
+												if(data.code == 0 ){
+													if(data.content && data.content.list && data.content.list.length){
+												 		for(var i in data.content.list){
+															var dt = new Date(data.content.list[i].evaluationTime).getTime();
+															data.content.list[i].evaluationTime = getDateDiff(dt);
+											       		}
+												 		mui('#curShow')[0].innerHTML += template('cmtTpl',{list:data.content.list})
+													}else{
+														mui.toast(data.message);
+													}
+												mui("#upload")[0].innerHTML = " ";
+												Spagenum++; //加载成功,当前页+1
+												console.log('成功+1,实到' + Spagenum);
+												console.log('成功+1,应到' + Spagenum);
+												}
+											},
+											error: function(xhr, type, errorThrown) {
+												Ypagenum--; //失败是应到-1
+												mui.toast("当前网络不好请重试");
+												mui("#upload")[0].innerHTML = "";
+											}
+										});
+
+									} else if(Spagenum == data.content.pages + 1) { //当前页不小于等于总页数时请求下一页
+										mui("#upload")[0].innerHTML = "到底了";
+									}
+								}
+							});
 					 	}else{
 					 		mui('#curShow')[0].innerHTML = '<div style="font-size:14px;color:gray;padding:5%;text-align: center;"><img width="60" src="../img/nocmt.svg" /><br/><br/>暂无评论</div>'
 					 	}

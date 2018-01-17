@@ -146,7 +146,9 @@
 										plus.storage.setItem('$userId',JSON.stringify(data.content.userId));
 										plus.storage.setItem("$identityType",JSON.stringify({'identityType':data.content.type}));
 										plus.storage.setItem("Acc_pass",JSON.stringify(Acc_pass));//保存账号密码,用于自动登录
-
+										if(data.content.sellerType == 'SUPERVISOR'){
+											plus.storage.setItem("sellerType",'SUPERVISOR');//店长
+										}
 										if(plus.webview.getWebviewById('identify')){
 											plus.webview.getWebviewById('identify').close();
 										}

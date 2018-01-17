@@ -156,7 +156,8 @@
 
 				//tab切换
 				loadFun('/app/employee/creditMoney/log','tab1');
-				$('#tabLink li').click(function(){
+				$('#tabLink li').unbind('click').click(function(){
+					
 					$('#tabLink li').removeClass('active');
 					$(this).addClass('active');
 					$('#loadingdiv').css('height','32px');
@@ -169,9 +170,11 @@
 					}
 				})
 				function loadFun(url,tabT){
+					mui("#upload")[0].innerHTML = " ";
+				 	$(window).unbind('scroll');
 					var Spagenum = 2; //实到页数
 					var Ypagenum = 1; //应到页数
-					var 	oneSize = 15;
+					var oneSize = 15;
 					mui.ajax(serverUrl + url,{
 						data:{'userId':userId,'identityType':identityT,'page':1,'size':oneSize},
 						dataType:'json',
@@ -188,10 +191,14 @@
 										if(tabT == 'tab1'){
 											if(data.content.list && data.content.list.length){
 												document.getElementById('infoListDiv').innerHTML = template('infoList',{list:data.content.list});
+											}else{
+												document.getElementById('infoListDiv').innerHTML = '<div style="text-align: center;padding: 50px;"><img src="../../images/order/order.png" style="width: 100px;" /><div class="ft13 disablecl">暂无数据</div></div>';
 											} 
 										}else if(tabT == 'tab2'){
-											if(data.content.length){
-												document.getElementById('infoListDiv').innerHTML = template('infoList2',{list:data.content});
+											if(data.content.list && data.content.list.length){
+												document.getElementById('infoListDiv').innerHTML = template('infoList2',{list:data.content.list});
+											}else{
+												document.getElementById('infoListDiv').innerHTML = '<div style="text-align: center;padding: 50px;"><img src="../../images/order/order.png" style="width: 100px;" /><div class="ft13 disablecl">暂无数据</div></div>';
 											}
 										}
 									}else{
@@ -224,15 +231,13 @@
 																if(data.content){
 																	if(tabT == 'tab1'){
 																		if(data.content.list && data.content.list.length){
-																			document.getElementById('infoListDiv').innerHTML = template('infoList',{list:data.content.list});
+																			document.getElementById('infoListDiv').innerHTML += template('infoList',{list:data.content.list});
 																		} 
 																	}else if(tabT == 'tab2'){
 																		if(data.content.length){
-																			document.getElementById('infoListDiv').innerHTML = template('infoList2',{list:data.content});
+																			document.getElementById('infoListDiv').innerHTML += template('infoList2',{list:data.content});
 																		}
 																	}
-																}else{
-																	document.getElementById('infoListDiv').innerHTML = '<div style="text-align: center;padding: 50px;"><img src="../../images/order/order.png" style="width: 100px;" /><div class="ft13 disablecl">暂无数据</div></div>';
 																}
 															}else{
 																mui.toast(data.message);

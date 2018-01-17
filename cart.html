@@ -25,7 +25,7 @@
 		</header>
 		<script src="js/statusBar.js"></script>
 		<!--状态栏-->
-		<div style="height:51px;"></div>
+		<div style="height:50px;"></div>
 		<div class="flexwc">
 			<div class="cartOne cartAct">
 				<img src="images/order/c1.svg" /> 下料清单
@@ -194,6 +194,16 @@
 			document.addEventListener('refresh', function(event) {
 				cartload();
 			});
+			document.addEventListener('refreshBtn', function(event) {
+				//监听底部点击
+				$(".delBtn,.delBtnAll").css("display", "none");
+				$("#allCartData").find("h2").css("visibility", "visible");
+				$('.editAll').html('编辑');
+				$(".numberWidget,.goOrder").show();
+				$('.mui-checkbox input').attr('checked', true);
+				$(".groupCheck").attr("disabled",true);
+				$(".groupCheck").parentsUntil('.eachGroup').find(".mui-checkbox input").attr("disabled",true);
+			});
 			var tipsCont = '<div><img src="images/blankCart.png" style="width:30%;margin: auto;display: block;margin-top: 40%;" alt="" /><div style="color: #666;text-align: center;margin-top: 30px;font-size: 14px;">你的下料清单还是空的哦</div></div>';
 			cartload();
 			function cartload() {
@@ -229,7 +239,7 @@
 									if(data.content.auditListRes.remark){
 										plus.storage.setItem('remark',data.content.auditListRes.remark);
 									}
-									if(data.content.auditListRes.receiverPhone && data.content.auditListRes.receiver && data.content.auditListRes.deliveryCity){
+									if(data.content.auditListRes.receiverPhone && data.content.auditListRes.receiver && data.content.auditListRes.deliveryCity){ 
 										var audnoAddrObj = {};
 										audnoAddrObj.person = data.content.auditListRes.receiver;
 										audnoAddrObj.phone = data.content.auditListRes.receiverPhone;
@@ -354,7 +364,7 @@
 							});
 
 							//单组 全选
-							$('dl dt .mui-checkbox').click(function() {
+							$('dl dt .mui-checkbox').click(function() { 
 								if($(this).find("input").is(':checked')) {
 									$(this).parentsUntil(".eachGroup").find("input").attr("checked", true);
 									var allLength = $("dd").length;
@@ -415,7 +425,7 @@
 										$("#cartData dl.cart input").attr("checked", true);
 									}
 								}
-
+								
 								countFuc();
 							})
 							//数量选择
@@ -534,8 +544,8 @@
 											if(gdtype == 'ld'){
 												var auditNo = $(this).attr('data-auditNo');
 												plus.storage.setItem('auditNo',auditNo);
-											}
-
+											} 
+											
 											var goodsLineType = 'GOODS';
 											justGoods.push({
 												id: gid,
@@ -563,7 +573,7 @@
 
 									if(plus.storage.getItem('oldToken')) {
 										if(identityT == 0 || identityT == 4 || identityT == 5) {
-
+											
 											if(cusId){
 												openview({
 													view:'page/order/chooseGift.html',

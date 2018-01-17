@@ -448,7 +448,7 @@
 
 		<!--常购清单商品列表-->
 		<div class="bgcwt">
-			<div class="goodsList" id="goodsList"></div>
+			<div class="goodsList padd10" id="goodsList"></div>
 		</div>
 		<script type="text/html" id="goodsTpl">
 			<ul class="mui-table-view">
@@ -736,7 +736,7 @@
 
 				function loadIndex() {
 					//获取缓存
-				    var nowcity = plus.storage.getItem('userCity') || 1;
+				    var nowcity = plus.storage.getItem('userCity');
 					var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
 					var userId = plus.storage.getItem('$userId');
 					var oldToken = plus.storage.getItem('oldToken');
@@ -756,9 +756,11 @@
 					} else { //配送员
 
 					}
-
-					showMsg();
+					var timeMsg = null;
+					clearInterval(timeMsg);
+//					timeMsg = setInterval(showMsg,3000);
 					function showMsg(){
+						mui.fire(plus.webview.getWebviewById('center.html'),'refreshInfoC');
 						mui.ajax(serverUrl+'/app/user/message/unread/number',{
 							data:{
 								userId:userId,
@@ -1127,20 +1129,24 @@
 				})
 			}
 			function paizhaoOrder() { //拍照下单
-				mui.plusReady(function() {
-					var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
-					if(identityT == 0) { //导购
-						openview({
-							view: 'page/order/chooseCustom2.html',
-							id: 'chooseCustom2',
-						})
-					} else {
-						openview({
-							view: 'page/order/pzOrder.html',
-							id: 'pzOrder',
-						})
-					}
+				openview({
+					view: 'page/order/pzOrder.html',
+					id: 'pzOrder',
 				})
+//				mui.plusReady(function() {
+//					var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
+//					if(identityT == 0) { //导购
+//						openview({
+//							view: 'page/order/chooseCustom2.html',
+//							id: 'chooseCustom2',
+//						})
+//					} else {
+//						openview({
+//							view: 'page/order/pzOrder.html',
+//							id: 'pzOrder',
+//						})
+//					}
+//				})
 
 			}
 			function goSearch() {

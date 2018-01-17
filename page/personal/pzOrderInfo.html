@@ -17,7 +17,6 @@
 		<header class="mui-bar mui-bar-nav" style="padding-right: 15px;">
 			<a id="leftbtn" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<h1 class="mui-title">拍照下单详情</h1>
-
 		</header>
 		<script src="../../js/statusBar.js" type="text/javascript" charset="utf-8"></script>
 		<div class="mui-content" style="margin-top: 7px;">
@@ -29,23 +28,10 @@
 				 	<%}%>
 				 </div>
 				 <div style="height: 10px;"></div>
-				  <div class="paddv10 bgcwt afterBorder">
-				 	<div class="disablecl mui-input-row mui-checkbox padd10">
-				 		是否主家收货
-				 		<%if(list.isOwnerReceiving){%>
-							<span class="mui-pull-right titcl">是</span>
-				 		<%}else{%>
-							<span class="mui-pull-right titcl">否</span>
-				 			
-				 		<%}%>
-
-				 	</div>
-				 </div>
 				  <div class="padd10 bgcwt afterBorder">
-				 	<div class="disablecl">配送地址：</div>
+				 	<div class="disablecl">联系人：</div>
 				 	<div class="">
-				 		<div><%=list.deliveryName%> &nbsp;&nbsp;	<%=list.deliveryPhone%></div>
-				 		<%=list.detailedAddress%>
+				 		<div><%=list.contactName%> &nbsp;&nbsp;	<%=list.contactPhone%></div>
 				 	</div>
 				 </div>
 				 <div class="padd10 bgcwt">

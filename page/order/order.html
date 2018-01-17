@@ -47,12 +47,12 @@
 		.checkQuan .mui-col-sm-3 {
 			width: 28%;
 			padding: 12px 5px;
-			border-right: 1px dotted #f53c42;
 		}
 		
 		.checkQuan .mui-col-sm-9 {
 			width: 72%;
 			padding: 12px 15px;
+			border-left: 1px dotted #f53c42;
 		}
 		
 		.cred {
@@ -606,6 +606,7 @@
 									"totalOrderAmount": totalOrderAmount,
 									"leBi": lebi,
 									"couponsList": cashCouponsList,
+									"goodsList":JSON.parse(idobj),
 								},
 								dataType: 'json',
 								type: 'post',

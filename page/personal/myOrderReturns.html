@@ -313,7 +313,11 @@
 							success:function(data,type,xhr){
 								console.log('创建退货',data);
 								if(data.code == 0){
-									alert(data.message || '退货成功');
+									alert(data.message || '申请退货成功');
+									openview({
+										view:'myOrderRTList.html',
+										id:'myOrderRTList',
+									})
 								}else{
 									mui.toast(data.message);
 								}

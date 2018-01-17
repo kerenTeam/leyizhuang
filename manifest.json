@@ -7,8 +7,8 @@
 	"id": "H570519A0",/*应用的标识，创建应用时自动生成，勿手动修改*/
 	"name": "乐易装",/*应用名称，程序桌面图标名称*/
 	"version": {
-		"name": "1.1.0",/*应用版本名称*/
-		"code": "110"
+		"name": "1.0.0",/*应用版本名称*/
+		"code": "100"
 	},
 	"description": "室内设计APP",/*应用描述信息*/
 	"icons": {
@@ -330,31 +330,47 @@
 			"icons": {
 				"ios": {
 					"prerendered": true, /*应用图标是否已经高亮处理，在iOS6及以下设备上有效*/
-					"auto": "", /*应用图标，分辨率：512x512，用于自动生成各种尺寸程序图标*/
+					/*应用图标，分辨率：512x512，用于自动生成各种尺寸程序图标*/
 					"iphone": {
 						"normal": "unpackage/res/icons/57x57.png",/*iPhone普通屏幕程序图标，分辨率：57x57*/
 						"retina": "unpackage/res/icons/114x114.png",/*iPhone高分屏程序图标，分辨率：114x114*/
-						"retina7": "unpackage/res/icons/120x120.png",/*iPhone iOS7高分屏程序图标，分辨率：120x120*/
+						/*iPhone iOS7高分屏程序图标，分辨率：120x120*/
 						"spotlight-normal": "unpackage/res/icons/29x29.png", /*iPhone Spotlight搜索程序图标，分辨率：29x29*/
 						"spotlight-retina": "unpackage/res/icons/58x58.png", /*iPhone高分屏Spotlight搜索程序图标，分辨率：58x58*/
-						"spotlight-retina7": "unpackage/res/icons/80x80.png",/*iPhone iOS7高分屏Spotlight搜索程序图标，分辨率：80x80*/
+						/*iPhone iOS7高分屏Spotlight搜索程序图标，分辨率：80x80*/
 						"settings-normal": "unpackage/res/icons/29x29.png", /*iPhone设置页面程序图标，分辨率：29x29*/
-						"settings-retina": "unpackage/res/icons/58x58.png",
-						"retina8": "unpackage/res/icons/180x180.png",
-						"settings-retina8": "unpackage/res/icons/87x87.png"
+
+
+						"app@3x": "unpackage/res/icons/180x180.png",
+						"app@2x": "unpackage/res/icons/120x120.png",
+						"settings@2x": "unpackage/res/icons/58x58.png",
+						"settings@3x": "unpackage/res/icons/87x87.png",
+						"spotlight@2x": "unpackage/res/icons/80x80.png",
+						"spotlight@3x": "unpackage/res/icons/120x120.png",
+						"notification@2x": "unpackage/res/icons/40x40.png",
+						"notification@3x": "unpackage/res/icons/60x60.png"
 					},
 					"ipad": {
 						"normal": "unpackage/res/icons/72x72.png", /*iPad普通屏幕程序图标，分辨率：72x72*/
 						"retina": "unpackage/res/icons/144x144.png", /*iPad高分屏程序图标，分辨率：144x144*/
-						"normal7": "unpackage/res/icons/76x76.png", /*iPad iOS7程序图标，分辨率：76x76*/
-						"retina7": "unpackage/res/icons/152x152.png", /*iPad iOS7高分屏程序图标，分辨率：152x152*/
+						/*iPad iOS7程序图标，分辨率：76x76*/
+						/*iPad iOS7高分屏程序图标，分辨率：152x152*/
 						"spotlight-normal": "unpackage/res/icons/50x50.png", /*iPad Spotlight搜索程序图标，分辨率：50x50*/
 						"spotlight-retina": "unpackage/res/icons/100x100.png", /*iPad高分屏Spotlight搜索程序图标，分辨率：100x100*/
-						"spotlight-normal7": "unpackage/res/icons/40x40.png",/*iPad iOS7 Spotlight搜索程序图标，分辨率：40x40*/
-						"spotlight-retina7": "unpackage/res/icons/80x80.png",/*iPad iOS7高分屏Spotlight搜索程序图标，分辨率：80x80*/
-						"settings-normal": "unpackage/res/icons/29x29.png",/*iPad设置页面程序图标，分辨率：29x29*/
-						"settings-retina": "unpackage/res/icons/58x58.png"
-					}
+						/*iPad iOS7 Spotlight搜索程序图标，分辨率：40x40*/
+						/*iPad iOS7高分屏Spotlight搜索程序图标，分辨率：80x80*/
+						/*iPad设置页面程序图标，分辨率：29x29*/
+						"app": "unpackage/res/icons/76x76.png",
+						"app@2x": "unpackage/res/icons/152x152.png",
+						"settings": "unpackage/res/icons/29x29.png",
+						"spotlight": "unpackage/res/icons/40x40.png",
+						"proapp@2x": "unpackage/res/icons/167x167.png",
+						"settings@2x": "unpackage/res/icons/58x58.png",
+						"spotlight@2x": "unpackage/res/icons/80x80.png",
+						"notification": "unpackage/res/icons/20x20.png",
+						"notification@2x": "unpackage/res/icons/40x40.png"
+					},
+					"appstore": "unpackage/res/icons/1024x1024.png"
 				},
 				"android": {
 					"mdpi": "unpackage/res/icons/48x48.png", /*普通屏程序图标，分辨率：48x48*/
@@ -369,31 +385,31 @@
 				"ios": {
 					"iphone": {
 						"default": "", /*iPhone3启动图片选，分辨率：320x480*/
-						"retina35": "/Users/wangfei/Desktop/Des/st.png",/*3.5英寸设备(iPhone4)启动图片，分辨率：640x960*/
-						"retina40": "/Users/wangfei/Desktop/Des/st.png",
-						"retina55": "/Users/wangfei/Desktop/Des/st.png",
-						"retina47": "/Users/wangfei/Desktop/Des/st.png",
-						"retina55l": "/Users/wangfei/Desktop/Des/st.png",
-						"iphonex": "/Users/wangfei/Desktop/Des/st.png",
-						"iphonexl": "/Users/wangfei/Desktop/Des/st.png"
+						"retina35": "D:/接收文件/ios/640X960.png",/*3.5英寸设备(iPhone4)启动图片，分辨率：640x960*/
+						"retina40": "D:/接收文件/ios/640X1136.png",
+						"retina55": "D:/接收文件/ios/1242X2208.png",
+						"retina47": "D:/接收文件/ios/750X1334.png",
+						"retina55l": "D:/接收文件/ios/2208X1242.png",
+						"iphonex": "D:/接收文件/ios/1125X2436.png",
+						"iphonexl": "D:/接收文件/ios/2436X1125.png"
 					},
 					"ipad": {
-						"portrait": "/Users/wangfei/Desktop/Des/st.png", /*iPad竖屏启动图片，分辨率：768x1004*/
-						"portrait-retina": "/Users/wangfei/Desktop/Des/st.png",/*iPad高分屏竖屏图片，分辨率：1536x2008*/
-						"landscape": "/Users/wangfei/Desktop/Des/st.png", /*iPad横屏启动图片，分辨率：1024x748*/
-						"landscape-retina": "/Users/wangfei/Desktop/Des/st.png", /*iPad高分屏横屏启动图片，分辨率：2048x1496*/
-						"portrait7": "/Users/wangfei/Desktop/Des/st.png", /*iPad iOS7竖屏启动图片，分辨率：768x1024*/
-						"portrait-retina7": "/Users/wangfei/Desktop/Des/st.png",/*iPad iOS7高分屏竖屏图片，分辨率：1536x2048*/
-						"landscape7": "/Users/wangfei/Desktop/Des/st.png", /*iPad iOS7横屏启动图片，分辨率：1024x768*/
-						"landscape-retina7": "/Users/wangfei/Desktop/Des/st.png"
+						"portrait": "D:/接收文件/ios/768X1004.png", /*iPad竖屏启动图片，分辨率：768x1004*/
+						"portrait-retina": "D:/接收文件/ios/1536X2008.png",/*iPad高分屏竖屏图片，分辨率：1536x2008*/
+						"landscape": "D:/接收文件/ios/1024X748.png", /*iPad横屏启动图片，分辨率：1024x748*/
+						"landscape-retina": "D:/接收文件/ios/2048X1496.png", /*iPad高分屏横屏启动图片，分辨率：2048x1496*/
+						"portrait7": "D:/接收文件/ios/768X1024.png", /*iPad iOS7竖屏启动图片，分辨率：768x1024*/
+						"portrait-retina7": "D:/接收文件/ios/1536X2048.png",/*iPad iOS7高分屏竖屏图片，分辨率：1536x2048*/
+						"landscape7": "D:/接收文件/ios/1024X768.png", /*iPad iOS7横屏启动图片，分辨率：1024x768*/
+						"landscape-retina7": "D:/接收文件/ios/2048X1536.png"
 					}
 				},
 				"android": {
 					"mdpi": "", /*普通屏启动图片，分辨率：240x282*/
 					"ldpi": "", /*大屏启动图片，分辨率：320x442*/
-					"hdpi": "/Users/wangfei/Desktop/Des/st.png", /*高分屏启动图片，分辨率：480x762*/
-					"xhdpi": "/Users/wangfei/Desktop/Des/st.png", /*720P高分屏启动图片，分辨率：720x1242*/
-					"xxhdpi": "/Users/wangfei/Desktop/Des/st.png"
+					"hdpi": "D:/接收文件/安卓/480X762.png", /*高分屏启动图片，分辨率：480x762*/
+					"xhdpi": "D:/接收文件/安卓/720X1242.png", /*720P高分屏启动图片，分辨率：720x1242*/
+					"xxhdpi": "D:/接收文件/安卓/1080X1880.png"
 				}
 			}
 		}
@@ -639,7 +655,8 @@
 					"page/tab-webview-subpage-contact.html",
 					"js/default.js",
 					"css/configW.css",
-					"img/balls.svg"
+					"img/balls.svg",
+					"cart.html"
 				],
 				"refer": [
 					"html/tab-webview-subpage-contact.html",
@@ -649,7 +666,6 @@
 					"page/searchGoods.html",
 					"page/hotGoods.html",
 					"center.html",
-					"cart.html",
 					"page/collect.html",
 					"page/personal/collect.html",
 					"page/goodsInfo.html",
@@ -834,7 +850,8 @@
 					"page/guide/debateAudit.html",
 					"page/guide/debateQuery.html",
 					"page/personal/myOrderRTList.html",
-					"page/guide/qrCode.html"
+					"page/guide/qrCode.html",
+					"page/guide/storePreDepositb.html"
 				],
 				"priority": 0
 			},
@@ -1751,6 +1768,20 @@
 				"resources": [],
 				"refer": [
 					"page/personal/myOrderRTdetail.html"
+				],
+				"priority": 0
+			},
+			"page/personal/myOrderDetail.html": {
+				"resources": [],
+				"refer": [
+					"page/personal/myOrderWL.html"
+				],
+				"priority": 0
+			},
+			"page/guide/storePreDepositb.html": {
+				"resources": [],
+				"refer": [
+					"page/personal/recharge.html"
 				],
 				"priority": 0
 			}

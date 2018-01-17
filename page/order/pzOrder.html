@@ -16,6 +16,7 @@
 		<link rel="stylesheet" type="text/css" href="../../css/youxd.css"/>
 	</head>
 	<style type="text/css">
+		#uppics2{padding: 10px;}
 		.disbg{border:none}
 		.uppics div.onepic input{width:0;height:0;position:absolute;outline:0}
 		#fangshi{padding-top: 8px;padding-left: 15px;}
@@ -26,15 +27,16 @@
 		.dizhis div img{position: absolute;right: 0;top: 20px;width: 30px;}
 		.isYezhu{margin-top: 10px;}
 		.isYezhu .tishi{color: #afaeae;padding: 0 15px;font-size: 14px;padding-left: 36px;}
-		.beizhu{margin-top: 20px;}
+		.beizhu{margin-top: 10px;}
 		.beizhu h5{padding-left: 15px;font-size: 16px;color: #555;}
 		#main{margin-top: 49px;}
 		.disablecl{color: #555;}
 		.mui-checkbox input[type=checkbox]:before, .mui-radio input[type=radio]:before {font-size: 20px;}
 		.mui-checkbox input[type=checkbox], .mui-radio input[type=radio] {top: 10px;}
-		#BZCon{margin: 15px;width: calc(100% - 30px);border: none;background-color: #eee;height: 90px;}
+		#BZCon,.inpub{margin: 5px 15px!important;width: calc(100% - 30px)!important;border: none;background-color: #eee!important;height: 90px;}
 		.baocun{width: calc(100% - 30px);background-color: #B62D29;color: #fff;border: none;font-size: 16px;padding: 10px 20px;}
 		.mui-btn .mui-spinner{position: relative;top: -5px;}
+		::-webkit-input-placeholder{font-size: 14px!important;}
 	</style>
 
 	<body style="background-color: white;">
@@ -51,66 +53,9 @@
 		        </div>
 		    </div>
 
-		    <div id="fangshi">
-		    		<span id="">
-		    			配送方式：
-		    		</span>
-				<div class="mui-input-row mui-radio mui-left">
-					<label>送货上门</label>
-					<input name="radio1" checked type="radio">
-				</div>
-		    </div>
-
-
-		    <!--地址-->
-		    <div id="add_info" class="dizhis fineB fineT"></div>
-			<script type="text/html" id="addrTpl">
-				<h4 style="color: #c7161e;margin-bottom: -4px;">选择地址</h4>
-				<%if(obj.length==0){%>
-				<div class="qtop flexr pad10" onclick="addAddress()">
-					<div style="flex: 1;margin-left: 5px;padding-right: 30px;">
-						<div class="maincl ft16">
-							<span class="disablecl"></span>
-							<span class="disablecl"></span>
-						</div>
-						<div class="ft16">
-							<span class="disablecl">请选择收获地址</span>
-						</div>
-						<img src="../../images/center/right.svg" alt="" />
-					</div>
-
-				</div>
-				<%}else{%>
-					<div class="qtop flexr pad10" onclick="addAddress()" id="addid" data-id="<%=obj[0].id%>" data-receiver="<%=obj[0].person%>" data-receiverPhone="<%=obj[0].phone%>" data-deliveryCity="<%=obj[0].city%>" data-deliveryCounty="<%=obj[0].country%>" data-deliveryStreet="<%=obj[0].street%>" data-residenceName="<%=obj[0].villageName%>" data-detailedAddress="<%=obj[0].address%>">
-						<div style="flex: 1;margin-left: 5px;padding-right: 30px;">
-							<div class="maincl ft16">
-								<span class="disablecl"><%=obj[0].person%></span>
-								<span class="disablecl"><%=obj[0].phone%></span>
-							</div>
-							<div class="ft16">
-								<span class="disablecl"><%=obj[0].province%><%=obj[0].city%><%=obj[0].country%><%=obj[0].street%><%=obj[0].villageName%><%=obj[0].address%></span>
-							</div>
-							<img src="../../images/center/right.svg" alt="" />
-						</div>
-					</div>
-
-				<%}%>
-			</script>
-			<!--地址结束-->
-
-		    <div class="isYezhu">
-				<div class="mui-input-row mui-checkbox mui-left" style="margin-left: -7px;">
-				  <label>是否业主收货</label>
-				  <input name="checkbox1" value="Item 1" type="checkbox">
-				</div>
-				<div class="tishi">
-					温馨提示：若收货人为主家，系统将在出货打印单中自动隐藏折扣信息
-				</div>
-		    </div>
-		    <div id="">
-
-		    </div>
 		    <div class="beizhu">
+		    	<input type="text" name="" id="cname" placeholder="请输入姓名" value="" class="inpub"/>
+		    	<input type="tel" name="" id="cphone" placeholder="请输入手机号" value="" class="inpub"/>
 		    		<!--<h5>备注</h5>-->
 				<textarea id="BZCon" name="" rows="" placeholder="备注请输入备注信息" cols=""></textarea>
 		    </div>
@@ -263,71 +208,21 @@
 		var oldToken = plus.storage.getItem("oldToken");
 		var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
 		var oneId = plus.webview.currentWebview().oneId || userId;//导购的 客户id(如果没有就是直接打开页面，不是由导购帮助顾客下单。)
-
-		//选择后 刷新地址
-		window.addEventListener('readdstorage', function(event) {
-			orderAdd();
-		});
-		//显示地址 与 选择地址
-		orderAdd();
-		function orderAdd(){
-			mui.ajax(serverUrl+'/app/user/deliveryAddress/default',{
-				data:{
-					userId:oneId,
-					identityType:6
-				},
-				dataType:'json',
-				type:'post',
-				timeout:10000,
-				headers:{"Authorization":oldToken},
-				success:function(data,type,xhr){
-					console.log('默认地址',data);
-					var addrObj = {};
-					if(data.code == 0){
-						if(plus.storage.getItem("$addressStorageY2") != null) {
-							addrObj.obj = JSON.parse(plus.storage.getItem("$addressStorageY2"));
-						}else{
-							if(data.content){
-								var defultAddress ={};
-									defultAddress.id = data.content.id;
-									defultAddress.person = data.content.deliveryName;
-									defultAddress.phone = data.content.deliveryPhone;
-									defultAddress.province = data.content.deliveryProvince;
-									defultAddress.city = data.content.deliveryCity;
-									defultAddress.country = data.content.deliveryCounty;
-									defultAddress.street = data.content.deliveryStreet;
-									defultAddress.villageName = data.content.villageName;
-									defultAddress.address = data.content.detailedAddress;
-									addrObj.obj = [defultAddress];
-							}else{
-								//没有默认地址,就去添加
-								addrObj.obj = [];
-							}
-						}
-						document.getElementById("add_info").innerHTML = template("addrTpl", addrObj);
-						plus.storage.removeItem("$addressStorageY2");
-
-					}else{
-						mui.toast(data.message);
-					}
-				},
-				error:function(xhr,type,errorThrown){
-					console.log('响应失败  !');
-				}
-			});
-
-		}
-
+		var reg_phone = /^1((3|4|5|8|7){1}\d{1}|70)\d{8}$/;//手机号正则;
+		var nowcity = plus.storage.getItem('userCity');
 		//发送 发布
 		$('.baocun').click(function(){
 		 	var BZCon = mui('#BZCon')[0].value;//备注
-			var deliveryId = $('#addid').attr('data-id');
+			var cname = $('#cname').val();
+			var cphone = $('#cphone').val();
 		 	if(!Apic.length){
 		 		mui.toast('请选择至少一张图片');
 		 	}else if(time1 != null){
 		 		mui.toast('图片还在处理中');
-		 	}else if(!deliveryId){
-		 		mui.toast('请添加一个地址');
+		 	}else if(!cname){
+		 		mui.toast('请填写联系人姓名');
+		 	}else if(!reg_phone.test(cphone)){
+		 		mui.toast('请填写联系人手机号');
 		 	}else{
 		 		releaseData();
 		 	}
@@ -368,10 +263,10 @@
 				task.setRequestHeader('Authorization',oldToken);
 				task.addData("userId",userId.toString());
 				task.addData("identityType",identityT.toString());
-				task.addData("deliveryId",deliveryId.toString());//地址id
-				task.addData("isOwnerReceiving",'1');//是否主家
+				task.addData("cityId",nowcity);//城市
+				task.addData("contactName",cname);//联系人
+				task.addData("contactPhone",cphone);//手机号
 				task.addData("remark",BZCon);//备注
-				task.addData("customerId",oneId.toString());//导购的 客户id
 
 				if(Apic.length){
 					console.log(Apic);
