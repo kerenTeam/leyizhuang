@@ -63,7 +63,7 @@
 						<% if(nowState == '全部' || nowState == list[i].status){ %>
 							<div class="orderList">
 								<h3 class="h3" onclick="openDetail('<%= list[i].returnNo%>')">
-									订单编号：<%= list[i].orderNo%>
+									订单编号：<%= list[i].returnNo%>
 									<span><%= list[i].status%></span>
 								</h3>
 								<p class="p1" onclick="openDetail('<%= list[i].returnNo%>')">
@@ -106,30 +106,32 @@
 		<script src="../../js/youxd.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
 
-			//打开订单详情
-			function openDetail(orderNo){
-				openview({
-					view:'myOrderRTdetail.html',
-					id:'myOrderRTdetail',
-					extrasobj:{
-						orderNo:orderNo
-					}
-				})
-			}
+			
 
 			mui.plusReady(function(){
 				var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
-				var userId = plus.storage.getItem('$userId');
+				var userId = plus.webview.currentWebview().lookCusid || plus.storage.getItem('$userId');
 				var oldToken = plus.storage.getItem('oldToken');
 				var pingjia = plus.webview.currentWebview().type;
-
+				var noButton = plus.webview.currentWebview().isNoButton;
 				if(pingjia){
 					mui('#mui-title1')[0].innerHTML = '待评价';
 				}else{
 					mui('#mui-title1')[0].innerHTML = '退货';
 				}
 				loadFun('全部');//初始化
-
+				//打开订单详情
+				window.openDetail = function(orderNo,userId){
+					openview({
+						view:'myOrderRTdetail.html',
+						id:'myOrderRTdetail',
+						extrasobj:{
+							orderNo:orderNo,
+							noButton:noButton,
+							lookCusid:userId
+						}
+					})
+				}
 				function loadFun(tabT,condition){//搜索和tab切换 ，公用一个加载方法
 					var Spagenum = 2, Ypagenum = 1, oneSize = 10;
 					document.getElementById('infoListDiv').innerHTML = '';
@@ -153,6 +155,9 @@
 									$('#loadingdiv').css('height','0px');
 									if(data.content.list && data.content.list.length){
 										document.getElementById('infoListDiv').innerHTML = template('infoList',{list:data.content.list,nowState:tabT});
+										if(noButton == 1){
+											$('.orderBtns').empty()
+										}
 									}else{
 										document.getElementById('infoListDiv').innerHTML = '<div style="text-align: center;padding: 50px;"><img src="../../images/order/order.png" style="width: 100px;" /><div class="ft13 disablecl">暂无相关订单</div></div>';
 									}
@@ -178,6 +183,9 @@
 															$('#loadingdiv').css('height','0px');
 															if(data.content.list && data.content.list.length){
 																document.getElementById('infoListDiv').innerHTML += template('infoList',{list:data.content.list,nowState:tabT});
+																if(noButton == 1){
+																	$('.orderBtns').empty()
+																}
 															}
 															lazyLoad();
 						                                }

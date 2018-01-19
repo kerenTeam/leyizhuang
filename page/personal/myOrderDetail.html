@@ -277,11 +277,12 @@
 		<script type="text/javascript">
 			mui.plusReady(function(){
 				var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
-				var userId = plus.storage.getItem('$userId');
+				var userId = plus.webview.currentWebview().lookCusid || plus.storage.getItem('$userId');
 				var oldToken = plus.storage.getItem('oldToken');
 				var orderNo = plus.webview.currentWebview().orderNo;
 				var evaluat = plus.webview.currentWebview().evaluat;
 				var isButton = plus.webview.currentWebview().isButton;
+				var noButton = plus.webview.currentWebview().noButton; 
 				var cancelParentId = plus.webview.currentWebview().cancelParentId;
 
 				/*订单详情*/
@@ -299,7 +300,7 @@
 							}
 							data.content.BillingDetailResponse = data.content.customerBillingDetailResponse || data.content.managerBillingDetailResponse || data.content.sellerBillingDetailResponse;
 							document.getElementById('main').innerHTML = template('mainS',{detail:data.content});
-							if(isButton == 'no'){
+							if(isButton == 'no' || noButton){
 								$('.footBtn,.proRight button').hide();
 							}
 							//显示订单评价

@@ -965,7 +965,8 @@
 					"images/center/right.svg"
 				],
 				"refer": [
-					"page/guide/searchCustomer.html"
+					"page/guide/searchCustomer.html",
+					"page/guide/customerPage.html"
 				],
 				"priority": 0
 			},
@@ -1782,6 +1783,21 @@
 				"resources": [],
 				"refer": [
 					"page/personal/recharge.html"
+				],
+				"priority": 0
+			},
+			"page/guide/customerPage.html": {
+				"resources": [],
+				"refer": [
+					"page/personal/myOrderList.html",
+					"page/personal/myOrderRTList.html"
+				],
+				"priority": 0
+			},
+			"page/personal/myOrderReturns.html": {
+				"resources": [],
+				"refer": [
+					"page/personal/myOrderRTList.html"
 				],
 				"priority": 0
 			}

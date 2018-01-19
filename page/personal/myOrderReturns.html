@@ -53,7 +53,7 @@
 								<span class="span1 span1TH">¥<%= list[i].retailPrice%></span>
 								<div class="mui-numbox span2" data-numbox-min='0' data-numbox-max='<%= list[i].returnableQuantity%>'>
 									<button class="mui-btn mui-btn-numbox-minus" type="button">-</button>
-									<input class="mui-input-numbox goodNum" type="number" value="0" />
+									<input class="mui-input-numbox goodNum" data-id="<%= list[i].id%>" data-type="<%= list[i].goodsLine%>" type="number" value="0" />
 									<button class="mui-btn mui-btn-numbox-plus" type="button">+</button>
 								</div>
 							</div>
@@ -237,9 +237,9 @@
 					$('.goodNum').each(function(index,ele){
 						if($(ele).val() != 0){
 							goodArray.push({
-								'id':'11',
-								'qty':'22',
-								'goodsLineType':'33'
+								'id':$(ele).attr('data-id'),
+								'qty':$(ele).val(),
+								'goodsLineType':$(ele).attr('data-type'),
 							})
 						}
 					})
@@ -317,7 +317,10 @@
 									openview({
 										view:'myOrderRTList.html',
 										id:'myOrderRTList',
-									})
+									}) 
+									var time2 = setTimeout(function(){
+										plus.webview.currentWebview().close()
+									},1000)
 								}else{
 									mui.toast(data.message);
 								}

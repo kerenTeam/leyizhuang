@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<title>个人中心</title>
+		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, width=device-width">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-touch-fullscreen" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="format-detection" content="telephone=no">
+		<meta name="format-detection" content="address=no">
+		<link rel="stylesheet" type="text/css" href="../../css/mui.min.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/center.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/configW.css"/>
+		<style type="text/css">
+			body {
+				margin: 0;
+			}
+
+			body::-webkit-scrollbar {
+				/*滚动条*/
+				width: 0!important;
+				height: 0!important;
+				opacity: 1!important;
+			}
+			.white {
+				color: #FFFFFF !important;
+				width: 100%;
+			}
+			.myInfo {
+				width: 70px;
+			    height: 70px;
+			    margin: 4% 6%;
+				border-radius: 50%;
+				border: 2px solid rgba(255, 255, 255, 0.7);
+			}
+
+			.denlu {
+				font-size: 15px;
+			}
+
+			/*修改*/
+			.denlu {
+				/*padding-left: 20px;*/
+				color: #fff;
+				line-height: 25px;
+			}
+			.writing {
+				padding: 33px 0 5px;
+				padding-bottom: 5px;
+				margin-left: -25px;
+			}
+			#userBox {
+				background-color: #eca4a6;
+				padding: 33px 0 17px;
+				position: relative;
+			}
+			.dao {
+				color: white!important;
+				border-color: white;
+				padding: 1px 7px;
+				top: 10px;
+				right: 10px;
+				position: absolute;
+				font-size: 12px;
+				border-radius: 2px;
+			}
+			.qiandao{
+				font-size: 14px;
+				border-radius: 2px;
+				background: orange;
+				padding:2px 10px;
+				top: 66px;
+				right: 10px;
+				position: absolute;
+			}
+			.centop span {
+				display: inline-block;
+				padding: 4px 0;
+				font-size: 14px;
+			}
+
+			#beijing {
+				position: absolute;
+				z-index: 10;
+				width: 100%;
+				height: 100%;
+				top: 0;
+				overflow: hidden;
+				/*-webkit-filter: blur(5px);*/
+			}
+
+			#beijing img {
+				width: 100%;
+				position: relative;
+				/*top: -40%;*/
+			}
+
+			#beijing2 {
+				position: absolute;
+				z-index: 20;
+				width: 100%;
+				height: 100%;
+				top: 0;
+				background-color: rgba(241, 63, 63, 0.76);
+			}
+
+			#userBox .content {
+				position: relative;
+				z-index: 30;
+			}
+
+			#numjifen {
+				z-index: 99;
+				font-weight: 500;
+				padding: 0;
+				line-height: 20px;
+				font-size: 14px;
+			}
+
+			body {
+				background-color: #f8f8f8 !important;
+				width: 100%;
+				overflow-x: hidden;
+			}
+			#fixdtop {
+				position: fixed;
+				top: 0;
+				height: 25px;
+				width: 100%;
+				z-index: 100;
+			}
+			.orderEBtn div{position: relative;}
+			.orderEBtn .mui-badge{position: absolute;top: -2px;right: -1px;font-style: normal;padding: 2px 5px;}
+			.orderNum{display: none;}
+		</style>
+
+	</head>
+
+	<body>
+		<div class="clearfloat box-s box-ss" id="userBox">
+			<div id="beijing"><img id="mypic1" src="../../images/center/centerBg.png"></div>
+			<!--<div id="beijing2"></div>-->
+			<div id="fixdtop"></div>
+			<div class="content clearfloat fl mui-row white">
+				<div class="mui-col-sm-4 mui-col-xs-4" style="padding-top: 28px;position: relative;left: 3px;"><img src="https://b-ssl.duitang.com/uploads/item/201710/12/20171012232816_GX5iw.thumb.224_0.jpeg" class="myInfo" id="mypic" /></div>
+				<div class="mui-col-sm-8 mui-col-xs-8 writing">
+					<p class="centop">
+						<div class="denlu">用户名:<span id="userName" style="z-index: 99;"></span></div>
+						<div class="denlu" style="display:none ;" id="userNumber">用户id:<span style="z-index: 99;"></span></div>
+						<div class="denlu" id="onlyPs">配送数量:<span id="psNumber" style="z-index: 99;"></span></div>
+						<div class="denlu" id="onlyGuide">手机号:<span id="guidesPhone"></span> <span id='bindPhone' style="background-color: orange;color: white;font-size: 10px;padding: 2px;border-radius: 3px;display: none;">绑定手机号</span></div>
+						<div class="denlu" id="onlyCust">灯号:<span id="dengh"></span>&nbsp;&nbsp; 导购:<span id="guideName"></span><a id="guideMobile" style="display: none;" href=""><img style="width: 15px;margin-left: 5px;" src="../../images/center/phone.svg"/></a></div>
+						<div class="denlu" id="onlymange">账户:<span id="manageMoney"></span></div>
+					</p>
+				</div> 
+			</div>
+		</div>
+		<div id="customar">
+			<div class="orderType">
+				<div class="afterBorder bgcwt ft14" style="padding: 15px;" onclick="openOrder()">
+					所有订单
+					<span class="mui-icon mui-icon-arrowright mui-pull-right maincl ft20 activecl" style="font-weight: 800;"></span>
+				</div>
+				<div class="flexRow ft14 maincl orderEBtn">
+					<div class="" onclick="openOrder(1)">
+						<img src="../../images/center/waitPay.svg"/>
+						待付款
+						<em class="mui-badge orderNum mui-badge-danger">12</em>
+					</div>
+					<div class="" onclick="openOrder(2)">
+						<img src="../../images/center/take.svg"/>
+						待收货
+						<em class="mui-badge orderNum mui-badge-danger">22</em>
+					</div>
+					<div class="" onclick="openRTList('pingjia')">
+						<img src="../../images/center/cmt.svg"/>
+						待评价
+						<em class="mui-badge orderNum mui-badge-danger">3</em>
+					</div>
+					<div class="" id="tuihuo0" onclick="openRTList()">
+						<img src="../../images/center/backT.svg"/>
+						&nbsp;退&nbsp;&nbsp;货&nbsp;
+						<em class="mui-badge orderNum mui-badge-danger">4</em>
+					</div>
+				</div>
+			</div> 
+		</div>
+
+
+
+		<script type="text/javascript">
+			window.onscroll = function() {
+				if(document.body.scrollTop > 25) {
+					document.getElementById('fixdtop').style.backgroundColor = '#af4444';
+				} else {
+					document.getElementById('fixdtop').style.background = 'none';
+				}
+			}
+		</script>
+		<script src="../../js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/app.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/artTemplate-native.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/default.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			
+			
+			mui.plusReady(function() {
+				Refresh();
+				function Refresh() { //刷新
+					//获取缓存
+					var identityT = 6;
+					var userId = plus.webview.currentWebview().cusid;
+					var oldToken = plus.storage.getItem('oldToken');
+					
+					//打开订单，
+					window.openOrder = function(type){
+						openview({
+							view:'../personal/myOrderList.html',
+							id: 'myOrderList',
+							extrasobj:{
+								type:type,
+								isNoButton:1,
+								lookCusid:userId
+							}
+						})
+					}
+					//退货
+					window.openRTList = function(type){
+						openview({
+							view:'../personal/myOrderRTList.html',
+							id: 'myOrderRTList',
+							extrasobj:{
+								type:type,
+								isNoButton:1,
+								lookCusid:userId
+							}
+						})
+					}	
+					
+					$('#mypic').attr('src','../../img/editset.png')
+
+					loadmyinfo();
+					if(identityT == 0 || identityT == 4 || identityT == 5){//导购
+						$('#onlyCust,.qiandao,.centerList,#onlyPs,#onlymange').hide()
+						$('#onlyGuide,.orderType,.guiderN,#userNumber').show();
+					}else if(identityT == 6){//顾客
+						$('#onlyGuide,#onlymange,.centerList,.centerList,#onlyPs,#userNumber').hide();
+						$('#onlyCust,.orderType,.customerN,.qiandao').show()
+					}else if(identityT == 3){//工人
+						$('#onlyGuide,#onlyCust,.centerList,.orderType,#onlymange,.qiandao,#onlyPs').hide();
+						$('.workerN,#userNumber').show();
+					}else if(identityT == 2){//项目经理
+						$('.centerList,#onlyGuide,#onlyCust,#onlyPs,.qiandao').hide();
+						$('.orderType,.manageN,#onlymange,#userNumber').show();
+					}else{//配送员
+						$('.centerList,.orderType,#onlymange,#onlyCust,.qiandao').hide();
+						$('#onlyPs,#onlyGuide,#userNumber').show();
+					}
+					 
+					function loadmyinfo() {
+						//个人信息
+						mui.ajax(serverUrl+'/app/user/homepage', {
+							data: {
+								userId: userId,
+								identityType: identityT
+							},
+							dataType: 'json',
+							headers: {
+								"Authorization": oldToken
+							},
+							type: 'post',
+							timeout: 10000,
+							success: function(data, type, xhr) {
+								console.log('个人信息', data);
+								if(data.code == 0) {
+									plus.nativeUI.closeWaiting();
+									if(data.content) {
+										if(data.content.cityId){
+											plus.storage.setItem('userCity',data.content.cityId.toString())
+										}else{
+											plus.storage.setItem('userCity','1')
+										} 
+										if(identityT == 6){
+											if(data.content.name) {
+												$('#userName').html(data.content.name)
+											} else {
+												$('#userName').html('未填写')
+											}
+										}else{
+											$('#userName').html(data.content.name)
+											$('#userNumber span').html(data.content.number)
+										}
+
+										if(data.content.picUrl) {
+											$('#mypic').attr('src', data.content.picUrl)
+										}else{
+											$('#mypic').attr('src', '../../img/editset.png')
+
+										}
+										if(data.content.mobile) {
+											plus.storage.setItem('mobile',data.content.mobile);
+										}
+										if(data.content.guideName) {
+											$('#guideName').html(data.content.guideName)
+										} else {
+											$('#guideName').html('无')
+										}
+										if(data.content.guideMobile) {
+											$('#guideMobile').css('display','inline-block').attr('href', 'tel:' + data.content.guideMobile)
+										}else{
+											$('#guideMobile').css('display','none')
+										}
+										if(data.content.light) {
+											$('#dengh').html(data.content.light)
+										} else {
+											$('#dengh').html('无')
+										}
+										if(data.content.balance){
+											$('#accoutMoney,#manageMoney,#userAct').html('¥'+data.content.balance)
+										}else{
+											$('#userAct,#accoutMoney').html(0)
+										}
+										if(data.content.lb){
+											$('#coin,#userlb').html(data.content.lb)
+										}else{
+											$('#userlb').html(data.content.lb)
+											$('#coin,#userlb').html(0)
+										}
+										if(data.content.cashCouponQty){
+											$('#cashCouponQty').html(data.content.cashCouponQty)
+										}
+										if(data.content.productCouponQty){
+											$('#productCouponQty').html(data.content.productCouponQty)
+										}
+										if(identityT == 0){
+											if(data.content.mobile) {
+												$('#bindPhone').css('display','none')
+												$('#guidesPhone').html(data.content.mobile);
+											}else{
+												$('#guidesPhone').css('display','inline-block')
+												$('#guidesPhone').html('未填写')
+											}
+										}
+										if(identityT == 1){
+											if(data.content.mobile) {
+												$('#guidesPhone').html(data.content.mobile)
+											}
+											if(data.content.sendQty){
+												$('#psNumber').html(data.content.psNumber)
+											}else{
+												$('#psNumber').html('0')
+
+											}
+										}
+									}
+								} else {
+									mui.toast(data.message)
+								}
+
+							},
+							error: function(xhr, type, errorThrown) {
+								plus.nativeUI.closeWaiting();
+								console.log('登录响应失败');
+							}
+						});
+					}
+
+					//显示订单数量
+					showOrderNum();
+					function showOrderNum(){
+						mui.ajax(serverUrl+'/app/user/message/unread/number',{
+							data:{ userId:userId,identityType:identityT },
+							dataType:'json',
+							type:'post',
+							timeout:10000,
+							headers:{"Authorization":oldToken},
+							success:function(data,type,xhr){
+								console.log('订单数量',data);
+								if(data.code == 0){
+									var unpaidOrderQuantity = data.content.unpaidOrderQuantity,pendingReceiveOrderQuantity = data.content.pendingReceiveOrderQuantity,
+									    isEvaluatedOrderQuantity = data.content.isEvaluatedOrderQuantity,returningOrderQuantity = data.content.returningOrderQuantity;
+									unpaidOrderQuantity && ($('.orderNum').eq(0).html(unpaidOrderQuantity).css('display','inline-block'));
+									pendingReceiveOrderQuantity && ($('.orderNum').eq(1).html(pendingReceiveOrderQuantity).css('display','inline-block'));
+									isEvaluatedOrderQuantity && ($('.orderNum').eq(2).html(isEvaluatedOrderQuantity).css('display','inline-block'));
+									returningOrderQuantity && ($('.orderNum').eq(3).html(returningOrderQuantity).css('display','inline-block'));
+								}else{
+									console.error(data.message);
+								}
+							},
+							error:function(xhr,type,errorThrown){
+								console.error('显示订单数量响应失败！');
+							}
+						});
+					}
+
+				} //刷新
+			});
+		</script>
+
+	</body>
+
+</html>

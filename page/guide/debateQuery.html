@@ -257,7 +257,7 @@
 								mui.ajax(serverUrl + '/app/wechatpay/repayment/pay', {
 									data: {
 										userId: userId,
-										identityType: identityT.toString(),
+										identityType: identityT,
 										orderNumber: orderNumber,
 									},
 									type: 'post', //HTTP请求类型
@@ -303,10 +303,10 @@
 							} else {
 								//支付宝
 								mui.ajax(serverUrl + '/app/alipay/repayment/pay', {
-									data: {
-										userId: userId,
-										identityType: identityT.toString(),
-										orderNumber: orderNumber,
+									data:{
+										userId:userId,
+										identityType:identityT,
+										orderNumber:orderNumber,
 									},
 									type: 'post', //HTTP请求类型
 									headers: {
@@ -314,7 +314,7 @@
 									},
 									timeout: 10000, //超时时间设置为10秒；
 									success: function(data) {
-										console.error(data);
+										console.error('HUANK',data);
 										plus.nativeUI.closeWaiting();
 										if(data.code == 0) {
 											varpay = data.content;
@@ -333,7 +333,7 @@
 										}
 	
 									},
-									error: function(xhr, type, errorThrown) {
+									error:function(xhr, type, errorThrown) {
 										//异常处理；
 										console.log(type);
 										console.log("----- 请求订单失败 -----");

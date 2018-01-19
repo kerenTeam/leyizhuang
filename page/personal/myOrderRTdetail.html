@@ -93,10 +93,11 @@
 			mui.plusReady(function(){
 				//获取缓存
 				var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
-				var userId = plus.storage.getItem('$userId');
+				var userId = plus.webview.currentWebview().lookCusid || plus.storage.getItem('$userId');
 				var oldToken = plus.storage.getItem('oldToken');
 				var orderNumber = plus.webview.currentWebview().orderNo;
-
+				var isButton = plus.webview.currentWebview().isButton;
+				var noButton = plus.webview.currentWebview().noButton;
 				//展开
 				$('.arrowdown').click(function(){
 					if($('.proWrapAll').hasClass('proWrapAll2')){
@@ -120,7 +121,9 @@
 						if(data.code == 0){
 							document.getElementById('main').innerHTML = template('dataS',{dataObj:data.content});
 							mui(".mui-numbox").numbox();
-
+							if(isButton == 'no' || noButton){
+								$('.footBtn,.proRight button').hide();
+							}
 						}else{
 							mui.toast(data.message);
 							document.getElementById('main').innerHTML = '<div style="text-align:center;padding:15px;">'+data.message+'</div>' ;

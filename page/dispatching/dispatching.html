@@ -155,7 +155,7 @@
 				<img class="dao shezhi" style="top: 8px;width: 36px;" src="../../images/center/shizhi.png" />
 				<div onclick="goMessage()">
 					<img class="dao" style="top: 8px;width: 36px;right: 50px;" src="../../images/center/message.svg" />
-					<span class="mui-badge mui-badge-green" style="right: 54px;position: absolute;padding: 4px;top: 6px;"></span>
+					<span class="mui-badge mui-badge-danger" id="ctMsg" style="right: 54px;position: absolute;padding: 4px;top: 6px;color: red;"></span>
 				</div>
 			</div>
 		</div>
@@ -472,6 +472,41 @@
 				var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
 				var userId = plus.storage.getItem('$userId');
 				var oldToken = plus.storage.getItem('oldToken');
+				document.addEventListener('refreshInfoC', function() {
+					showMsg(); 
+				})
+				function showMsg(){ 
+					mui.ajax(serverUrl+'/app/user/message/unread/number',{
+						data:{
+							userId:userId,
+							identityType:identityT
+						},
+						dataType:'json',
+						type:'post',
+						timeout:10000,
+						headers:{"Authorization":oldToken},
+						success:function(data,type,xhr){
+							plus.nativeUI.closeWaiting();
+							console.log('消息',data);
+					       	if(data.code == 0){
+						     	if(data.content){
+						     		var logisticMsg = data.content.logisticMsg || 0;
+						     		var notifyMsg = data.content.notifyMsg || 0;
+									if(logisticMsg > 0 || notifyMsg > 0){
+						       			mui('#ctMsg')[0].style.display = 'block';
+						       		}else{
+						       			mui('#ctMsg')[0].style.display = 'none';
+						       		}
+								}
+					       	}
+					       	plus.nativeUI.closeWaiting();
+						},
+						error:function(xhr,type,errorThrown){
+							plus.nativeUI.closeWaiting();
+							console.log('当前网络不好,请重试');
+						}
+					});
+				}
 				loadmyinfo();
 
 				/*设置*/

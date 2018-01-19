@@ -124,7 +124,7 @@
 												<span class="aClick" onclick="cancelFun('<%= list[i].orderNo%>',this)">取消订单</span>
 											<% }%>
 											<% if(list[i].status == '已完成'){%>
-												<span class="redC aClick" onclick="openReturns('<%= list[i].orderNo%>','<%= list[i].customer.customerId%>')">退货</span>
+												<span class="redC aClick" onclick="openReturns('<%= list[i].orderNo%>','<%= list[i].customerId%>')">退货</span>
 											<% }%>
 											<% if(list[i].status == '已完成' || list[i].status == '已结案'){%>
 												<% if(list[i].isEvaluated == false){%>
@@ -322,6 +322,7 @@
 				var userId = plus.storage.getItem('$userId');
 				var oldToken = plus.storage.getItem('oldToken');
 
+
 				// 支付接口
 				window.payfun = function(id, payableAmount, orderNumber) {
 					var varpay;
@@ -465,28 +466,32 @@
 			//申请退货 ==> order0.js
 			//打开订单物流  ==> order0.js
 
-			//打开订单详情
-			function openDetail(orderNo,evaluat,id){
-				openview({
-					view:'myOrderDetail.html',
-					id:'myOrderDetail',
-					extrasobj:{
-						orderNo:orderNo,
-						evaluat:evaluat,
-						cancelParentId:id
-					}
-				})
-			}
+			
 
 
 
 			mui.plusReady(function(){
 				var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
-				var userId = plus.storage.getItem('$userId');
+				var userId = plus.webview.currentWebview().lookCusid || plus.storage.getItem('$userId');
 				var oldToken = plus.storage.getItem('oldToken');
 				var SH0 = 0;/*保存的滚动条高度*/
 				var inType = plus.webview.currentWebview().type;
-
+				var noButton = plus.webview.currentWebview().isNoButton;
+				//打开订单详情
+				window.openDetail = function(orderNo,evaluat,id,cusid){
+					openview({
+						view:'myOrderDetail.html',
+						id:'myOrderDetail',
+						extrasobj:{
+							orderNo:orderNo,
+							evaluat:evaluat,
+							cancelParentId:id,
+							noButton:noButton,
+							lookCusid:userId,
+							cusId:cusid
+						}
+					})
+				}
 				//详情页面点取消,监听刷新
 				document.addEventListener('cancelrefresh2', function(event) {
 					var cancelParentId = event.detail.cancelParentId;
@@ -570,6 +575,9 @@
 											}
 										})
 										document.getElementById('infoListDiv').innerHTML = template('infoList',{list:data.content.list,nowState:tabT});
+										if(noButton == 1){
+											$('.orderBtns').empty()
+										}
 									}else{
 										document.getElementById('infoListDiv').innerHTML = '<div style="text-align: center;padding: 50px;"><img src="../../images/order/order.png" style="width: 100px;margin-bottom: 8px;" /><div class="ft13 disablecl">暂无相关订单</div></div>';
 									}
@@ -606,6 +614,9 @@
 																	}
 																})
 						                                        document.getElementById('infoListDiv').innerHTML += template('infoList',{list:data.content.list,nowState:tabT});
+						                                    	if(noButton == 1){
+																	$('.orderBtns').empty()
+																}
 						                                    }
 						                                    lazyLoad();
 						                                }

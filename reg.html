@@ -216,6 +216,7 @@
 												var oldToken = xhr.getResponseHeader('token')
 												plus.storage.setItem("oldToken", xhr.getResponseHeader('token'));
 												plus.storage.setItem("openId", openId);
+												plus.storage.setItem('userCity',data.content.cityId.toString())
 												plus.storage.removeItem('Acc_pass');
 												mui.fire(plus.webview.getWebviewById('page/goodList.html'), 'refresh');
 												mui.fire(plus.webview.getWebviewById('center.html'), 'refresh');

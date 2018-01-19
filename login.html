@@ -146,6 +146,8 @@
 										plus.storage.setItem('$userId',JSON.stringify(data.content.userId));
 										plus.storage.setItem("$identityType",JSON.stringify({'identityType':data.content.type}));
 										plus.storage.setItem("Acc_pass",JSON.stringify(Acc_pass));//保存账号密码,用于自动登录
+										plus.storage.setItem('userCity',data.content.cityId.toString())
+										
 										if(data.content.sellerType == 'SUPERVISOR'){
 											plus.storage.setItem("sellerType",'SUPERVISOR');//店长
 										}
@@ -162,7 +164,6 @@
 										}
 										var time2 = setTimeout(function(){
 											plus.nativeUI.closeWaiting();
-											mui.toast('登录成功');
 											if(data.content.type == 1){
 												openview({
 													view:'page/dispatching/dispatching.html',

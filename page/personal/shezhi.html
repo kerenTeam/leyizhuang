@@ -115,7 +115,7 @@
 			//编辑资料
 			mui('#editdata')[0].addEventListener('tap',function(){
 				openview({
-					view:'oneSetup.html'	,
+					view:'oneSetup.html',
 					id:'oneSetup'
 				});
 			})
@@ -141,13 +141,13 @@
 						}
 					}, function(e){
 						alert( "获取分享服务列表失败："+e.message+" - "+e.code );
-					} );
-		            	plus.storage.removeItem('openId');
-		            	plus.storage.removeItem('openId');
+					} ); 
+	            	plus.storage.removeItem('openId');
 					plus.storage.removeItem("oldToken");
 					plus.storage.removeItem('$userId');
 					plus.storage.removeItem("$identityType");
 					plus.storage.removeItem("sellerType");//店长
+					plus.storage.removeItem("userCity");//city
 					plus.storage.removeItem('materialList');
 					plus.storage.removeItem("Acc_pass");//保存账号密码,用于自动登录
 					mui.fire(plus.webview.getWebviewById('../goodList.html'),'refresh');

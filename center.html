@@ -157,7 +157,7 @@
 				<img class="dao shezhi" style="top: 8px;width: 36px;" src="images/center/shizhi.png" />
 				<div onclick="goMessage()">
 					<img class="dao" style="top: 8px;width: 36px;right: 50px;" src="images/center/message.svg" />
-					<span class="mui-badge mui-badge-danger" id="ctMsg" style="right: 54px;position: absolute;padding: 4px;top: 8px;background-color: red;"></span>
+					<span class="mui-badge mui-badge-danger" id="ctMsg" style="right: 54px;position: absolute;padding: 4px;top: 8px;background-color: red;display: none;"></span>
 				</div>
 
 				<div class="qiandao" onclick="qian()">签到</div>
@@ -679,11 +679,6 @@
 								if(data.code == 0) {
 									plus.nativeUI.closeWaiting();
 									if(data.content) {
-										if(data.content.cityId){
-											plus.storage.setItem('userCity',data.content.cityId.toString())
-										}else{
-											plus.storage.setItem('userCity','1')
-										}
 										if(!data.content.canSign){
 											$('.qiandao').removeAttr('onclick').html('已签到');
 										}

@@ -96,10 +96,12 @@
 							if(data.content){
 								document.getElementById('dataDiv1').innerHTML = template('dataScript1',{list:data.content});
 							}else{
-								document.getElementById('dataDiv1').innerHTML = '暂无数据';
+								document.getElementById('dataDiv1').innerHTML = '<div style="padding: 20px;text-align: center;">暂无数据</div>';
 							}
 						}else{
+							$('#loadingdiv').css('height','0px');
 							mui.toast(data.message);
+							document.getElementById('dataDiv1').innerHTML = '<div style="padding: 20px;text-align: center;">暂无数据</div>';
 						}
 					},
 					error:function(xhr,type,errorThrown){
