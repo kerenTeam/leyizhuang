@@ -126,7 +126,9 @@
 			.mui-card .p2{font-size: 14px;}
 			.mui-card .p2 img{width: 20px;position: relative;top: -1px;}
 			.mui-table-view-cell>a:not(.mui-btn){background: url(img/main/baisedikuang.png) 0 0 no-repeat;background-size: 100% 100%;padding: 1px;margin: 0;}
-			#goodsListHot{padding: 8px;}
+			#goodsListHot{padding: 10px;}
+			#goodsList{padding: 0 10px 10px 10px;}
+			#goodsList .mui-table-view-cell{padding: 10px 5px 0;}
 			#goodsListHot .mui-table-view-cell{padding: 12px 5px 0;}
 			.mui-table-view .mui-media, .mui-table-view .mui-media-body{padding: 0px 5px;}
 			.zanweiY2{overflow: hidden;padding-top: 86%;border-radius: 2px 2px 0 0;}
@@ -448,7 +450,7 @@
 
 		<!--常购清单商品列表-->
 		<div class="bgcwt">
-			<div class="goodsList padd10" id="goodsList"></div>
+			<div class="goodsList" id="goodsList"></div>
 		</div>
 		<script type="text/html" id="goodsTpl">
 			<ul class="mui-table-view">
@@ -520,24 +522,7 @@
 			<span class="mui-pull-right mui-icon mui-icon-arrowright activecl"></span>
 			<span class="mui-pull-right disablecl ft14" style="margin-top: 3px;">更多</span>
 		</div>
-		<div id="tradeList" class="bgcwt">
-				<div style="height: 10px;"></div>
-
-			<div class="mui-card" onclick="openDetail(<%=dataList[i].id%>,'<%=dataList[i].title%>')">
-				<div class="mui-card-header mui-card-media"
-					style="height:45vw;background-image:url('http://www.huarun.com/images/product/productIn_scroll.jpg')">
-				</div>
-
-				<div class="mui-card-content">
-					<div class="mui-card-content-inner">
-						<p style="color: #333;">妙想漆系列</p>
-						<p><img src="img/yanjin2.svg"/>111</p>
-					</div>
-				</div>
-			</div>
-				<br />
-
-		</div>
+		<div id="tradeList" class="bgcwt"></div>
 		<script type="text/html" id="tradeTpl">
 			<div style="height: 10px;"></div>
 			<%for(var i=0;i<dataList.length;i++){%>
@@ -623,10 +608,12 @@
 				plus.storage.setItem('clientId',clientId)
 				plus.storage.setItem('deviceId',deviceId)
 				//判断是否登陆
-				document.addEventListener('refreshid', function() {
+//				document.addEventListener('refreshid', function() {
+//					loadIndex();
+//				})
+				document.addEventListener('refreshpage', function() {
 					loadIndex();
 				})
-
 				var timeSign = null;
 				var loadNum = 0;
 				var loadNum2 = 0;
@@ -758,7 +745,7 @@
 					}
 					var timeMsg = null;
 					clearInterval(timeMsg);
-//					timeMsg = setInterval(showMsg,3000);
+					timeMsg = setInterval(showMsg,3000);
 					function showMsg(){
 						mui.fire(plus.webview.getWebviewById('center.html'),'refreshInfoC');
 						mui.ajax(serverUrl+'/app/user/message/unread/number',{
@@ -1269,10 +1256,10 @@
 					}
 
 				})
-				document.addEventListener('refreshid', function() {
-					//底部选项卡切换
-					util.toggleNview(3);
-				})
+//				document.addEventListener('refreshid', function() {
+//					//登录-》退出登录 
+//					util.toggleNview(3);
+//				})
 				document.addEventListener('refreshpage', function() {
 					//底部选项卡切换
 					util.toggleNview(0);

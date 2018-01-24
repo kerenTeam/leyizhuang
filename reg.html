@@ -223,7 +223,7 @@
 												mui.fire(plus.webview.getWebviewById('cart.html'), 'refresh');
 
 												var index = plus.webview.getLaunchWebview();
-												mui.fire(index, 'refreshid'); 
+												mui.fire(index, 'refreshpage'); 
 												plus.nativeUI.closeWaiting();
 												if(guide.value){
 													mui.ajax(serverUrl + '/app/customer/binding/seller', {
