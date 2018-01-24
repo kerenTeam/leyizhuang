@@ -64,7 +64,7 @@
 							<div class="orderList">
 								<h3 class="h3" onclick="openDetail('<%= list[i].returnNo%>')">
 									订单编号：<%= list[i].returnNo%>
-									<span><%= list[i].status%></span>
+									<span><%= list[i].statusDesc%></span>
 								</h3>
 								<p class="p1" onclick="openDetail('<%= list[i].returnNo%>')">
 									<% if(list[i].goodsImgList && list[i].goodsImgList.length){%>
@@ -106,7 +106,7 @@
 		<script src="../../js/youxd.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
 
-			
+
 
 			mui.plusReady(function(){
 				var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;

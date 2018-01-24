@@ -97,7 +97,7 @@
 								<div id="orderList<%= i%>">
 									<h3 class="h3" onclick="openDetail('<%= list[i].orderNo%>','','orderList<%= i%>')">
 										<a class="a1"><%= list[i].deliveryType%></a>
-										<span class="stateSpan"><%= list[i].status%></span>
+										<span class="stateSpan"><%= list[i].statusDesc%></span>
 									</h3>
 									<p class="p1" onclick="openDetail('<%= list[i].orderNo%>','','orderList<%= i%>')">
 										<% if(list[i].goodsImgList && list[i].goodsImgList.length){%>
@@ -116,17 +116,18 @@
 									</div>
 									<!--显示状态按钮-->
 									<div class="orderBtns">
+										<!--待付款：UNPAID，待发货：PENDING_SHIPMENT，待收货：PENDING_RECEIVE，已取消：CANCELED，取消中：CANCELING，已完成：FINISHED，拒签：REJECTED，已结案：CLOSED。-->
 										<% if(list[i].deliveryType == '送货上门' || list[i].deliveryType == '门店自提'){%>
-											<% if(list[i].status == '待付款'){%>
+											<% if(list[i].status == 'UNPAID'){%>
 												<span class="redC aClick" onclick="goToPay('<%= list[i].orderNo%>','<%= list[i].price%>')">去支付</span>
 											<% }%>
-											<% if(list[i].status == '待付款' || list[i].status == '待发货'){%>
+											<% if(list[i].status == 'UNPAID' || list[i].status == 'PENDING_SHIPMENT'){%>
 												<span class="aClick" onclick="cancelFun('<%= list[i].orderNo%>',this)">取消订单</span>
 											<% }%>
-											<% if(list[i].status == '已完成'){%>
+											<% if(list[i].status == 'FINISHED'){%>
 												<span class="redC aClick" onclick="openReturns('<%= list[i].orderNo%>','<%= list[i].customerId%>')">退货</span>
 											<% }%>
-											<% if(list[i].status == '已完成' || list[i].status == '已结案'){%>
+											<% if(list[i].status == 'FINISHED' || list[i].status == 'CLOSED'){%>
 												<% if(list[i].isEvaluated == false){%>
 													<span class="aClick" onclick="evaFun('<%= list[i].orderNo%>',this)">评价</span>
 												<% }else{%>
@@ -137,10 +138,13 @@
 										<% }%>
 
 										<% if(list[i].deliveryType == '送货上门'){%>
-											<% if(list[i].status != '待付款' && list[i].status != '已取消' && list[i].status != '取消中'){%>
+											<!--这里 状态 取反-->
+											<% if(list[i].status != 'UNPAID' && list[i].status != 'CANCELED' && list[i].status != 'CANCELING'){%>
 												<span onclick="goOrderWL('<%= list[i].orderNo%>')" class="aClick redC">查看物流</span>
 											<% }%>
 										<% }%>
+
+										<!-- 注意：还没有判断 买卷 的相关状态-->
 									</div>
 								</div>
 							</div>
@@ -466,7 +470,7 @@
 			//申请退货 ==> order0.js
 			//打开订单物流  ==> order0.js
 
-			
+
 
 
 
@@ -534,7 +538,7 @@
 					if($(this).index() == 0){
 						loadFun('');//全部
 					}else if($(this).index() == 1){
-						loadFun(1);//待付款
+						loadFun(1);//待付款 UNPAID
 					}else if($(this).index() == 2){
 						loadFun(2);//待收货
 					}else if($(this).index() == 3){
