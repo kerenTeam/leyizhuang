@@ -1078,6 +1078,7 @@
 						console.log('创建订单返回', data);
 						if(data.code == 0) {
 							mui.fire(plus.webview.getWebviewById('cart.html'), 'refresh');
+							mui.fire(plus.webview.getWebviewById('cart'), 'refresh');
 							if(data.content.isPayUp == false) {
 								$('#payMoney').html('¥' + data.content.amountPayable);
 								$('#maskInfo').fadeIn(200);
@@ -1102,6 +1103,9 @@
 									}
 									if(plus.webview.getWebviewById("chooseGift")) {
 										plus.webview.getWebviewById("chooseGift").close();
+									}
+									if(plus.webview.getWebviewById("chooseCustom")) {
+										plus.webview.getWebviewById("chooseCustom").close();
 									}
 								}, 800)
 							}
@@ -1217,6 +1221,9 @@
 												if(plus.webview.getWebviewById("chooseGift")) {
 													plus.webview.getWebviewById("chooseGift").close();
 												}
+												if(plus.webview.getWebviewById("chooseCustom")) {
+													plus.webview.getWebviewById("chooseCustom").close();
+												}
 											}, 800)
 										}, function(e) {
 											console.log("----- 支付失败 -----");
@@ -1275,6 +1282,9 @@
 												if(plus.webview.getWebviewById("chooseGift")) {
 													plus.webview.getWebviewById("chooseGift").close();
 												}
+												if(plus.webview.getWebviewById("chooseCustom")) {
+													plus.webview.getWebviewById("chooseCustom").close();
+												}
 											}, 800)
 
 											//																 
@@ -1321,6 +1331,9 @@
 				}
 				if(plus.webview.getWebviewById("chooseGift")) {
 					plus.webview.getWebviewById("chooseGift").close();
+				}
+				if(plus.webview.getWebviewById("chooseCustom")) {
+					plus.webview.getWebviewById("chooseCustom").close();
 				}
 			}, 800)
 		})

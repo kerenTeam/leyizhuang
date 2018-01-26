@@ -740,12 +740,13 @@
 						$('.guides,.worker').css('display', '')
 						$('.cusMan,.guides').css('display', 'none')
 						getIcon(2)
-					} else { //配送员
+					} else { //配送员 
 
 					}
 					var timeMsg = null;
 					clearInterval(timeMsg);
-					timeMsg = setInterval(showMsg,3000);
+					showMsg();
+					timeMsg = setInterval(showMsg,1800000);//每半小时刷新消息
 					function showMsg(){
 						mui.fire(plus.webview.getWebviewById('center.html'),'refreshInfoC');
 						mui.ajax(serverUrl+'/app/user/message/unread/number',{

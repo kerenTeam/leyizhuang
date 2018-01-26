@@ -385,7 +385,7 @@
 				"ios": {
 					"iphone": {
 						"default": "", /*iPhone3启动图片选，分辨率：320x480*/
-						"retina35": "D:/接收文件/ios/640X960.png",/*3.5英寸设备(iPhone4)启动图片，分辨率：640x960*/
+						"retina35": "unpackage/res/startPic/ios/640X960.png",/*3.5英寸设备(iPhone4)启动图片，分辨率：640x960*/
 						"retina40": "D:/接收文件/ios/640X1136.png",
 						"retina55": "D:/接收文件/ios/1242X2208.png",
 						"retina47": "D:/接收文件/ios/750X1334.png",
