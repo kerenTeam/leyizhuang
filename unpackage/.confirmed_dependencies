@@ -605,7 +605,8 @@
       "css/commonY.css",
       "js/app.js",
       "js/mui.min.js",
-      "fonts/mui.ttf"
+      "fonts/mui.ttf",
+      "js/update.js"
     ],
     "refer": [
       "page/personal/address.html",
@@ -1257,17 +1258,20 @@
   "page/guide/storePreDepositb.html": {
     "refer": [
       "page/personal/recharge.html"
-    ]
+    ],
+    "resources": []
   },
   "page/guide/customerPage.html": {
     "refer": [
       "page/personal/myOrderList.html",
       "page/personal/myOrderRTList.html"
-    ]
+    ],
+    "resources": []
   },
   "page/personal/myOrderReturns.html": {
     "refer": [
       "page/personal/myOrderRTList.html"
-    ]
+    ],
+    "resources": []
   }
 }
