@@ -131,7 +131,7 @@
 												<% if(list[i].isEvaluated == false){%>
 													<span class="aClick" onclick="evaFun('<%= list[i].orderNo%>',this)">评价</span>
 												<% }else{%>
-													<span class="aClick">已评价</span>
+													<!--<span class="aClick">已评价</span>-->
 												<% }%>
 											<% }%>
 											<span onclick="comeOnAgain('<%= list[i].orderNo%>','<%= list[i].customer.customerId%>')" class="aClick">再来一单</span>
@@ -741,7 +741,8 @@
 											resetStar();
 											$('#evaOrder').css('display','none');
 											that.onclick = null;
-											that.innerHTML = '已评价';
+											//that.innerHTML = '已评价';
+											that.style.display = 'none';
 										}else{
 											mui.toast(data.message);
 

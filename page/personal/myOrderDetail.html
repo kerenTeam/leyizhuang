@@ -177,7 +177,7 @@
 								规格：<%= detail.goodsList[i].goodsSpecification%>  单位：<%= detail.goodsList[i].goodsUnit%>
 								<% if(detail.status == '已完成' || detail.status == '已结案'){%>
 									<% if(!detail.goodsList[i].isEvaluation){%>
-										<button type="button" class="mui-btn" onclick="evaluaProduct('<%= detail.goodsList[i].goodsId%>')">评价</button>
+										<button type="button" class="mui-btn" onclick="evaluaProduct('<%= detail.goodsList[i].goodsId%>',this)">评价</button>
 									<% }else{%>
 										<button type="button" class="mui-btn">已评价</button>
 									<% }%>
@@ -282,7 +282,7 @@
 				var orderNo = plus.webview.currentWebview().orderNo;
 				var evaluat = plus.webview.currentWebview().evaluat;
 				var isButton = plus.webview.currentWebview().isButton;
-				var noButton = plus.webview.currentWebview().noButton; 
+				var noButton = plus.webview.currentWebview().noButton;
 				var cancelParentId = plus.webview.currentWebview().cancelParentId;
 
 				/*订单详情*/
@@ -454,7 +454,7 @@
 
 			}
 			//选择图片组件结束
-			function evaluaProduct(goodId){
+			function evaluaProduct(goodId,that){
 				$('#evaluaSP').css('display','table');
 				mui.plusReady(function(){
 					var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
@@ -485,6 +485,8 @@
 										plus.nativeUI.closeWaiting(); //关闭等待框
 										if(dataobj.code == 0){
 											mui.toast("评价成功！");
+											that.innerHTML = '已评价';
+											that.onclick = null;
 											$('#evaluaSP').css('display','none');
 											$('.evaluaText').val('');
 											Apic = [];

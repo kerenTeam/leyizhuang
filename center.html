@@ -815,7 +815,7 @@
 					//显示订单数量
 					showOrderNum();
 					function showOrderNum(){
-						mui.ajax(serverUrl+'/app/user/message/unread/number',{
+						mui.ajax(serverUrl+'/app/order/AppOrderQuantity',{
 							data:{ userId:userId,identityType:identityT },
 							dataType:'json',
 							type:'post',
