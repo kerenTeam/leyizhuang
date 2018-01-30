@@ -29,6 +29,9 @@
 			.fangshiMore2{display: none;}
 			#cityResult{padding: 0 !important;}
 			p{color: #555;}
+			#tuihuodizhi02 b{font-weight: initial;}
+			#tuihuodizhi02{margin-bottom: 8px;position: relative;}
+			#tuihuodizhi02 span{position: absolute;right: 2px;top: 14px;}
 		</style>
 	</head>
 
@@ -38,7 +41,7 @@
 			<h1 class="mui-title">申请退货</h1>
 		</header>
 		<script src="../../js/statusBar.js"></script>
-		<div id="main" style="padding-top: 48px !important;">
+		<div id="main" style="padding-top: 48px !important;padding-bottom: 10px;">
 			<div class="proWrapAll" id="goodsD"></div>
 			<script type="text/html" id="goodsS">
 				<% for(var i=0;i<list.length;i++){%>
@@ -84,7 +87,15 @@
 						<p id="mendianA0">地址：----</p>
 					</div>
 					<div class="fangshiMore fangshiMore2">
-						<p style="padding-bottom: 6px;">预约取货时间</p>
+						<div id="tuihuodizhi02" onclick="addAddress()">
+							<b id="AD1">张先生</b> <b id="AD2">188898767877</b>
+							<p>
+								<b id="AD4">市</b> <b id="AD5">区</b> <b id="AD6">街道</b>
+								<b id="AD7">小区</b> <b id="AD8">详细地址</b>
+							</p>
+							<span class="mui-icon mui-icon-arrowright"></span>
+						</div>
+						<p>预约取货时间</p>
 						<div id='cityResult' class="ui-alert pad10 ft15">取货时间:<span class="mui-icon mui-icon-arrowdown maincl mui-pull-right ft16"></span><span class="mui-pull-right pstime">选择</span></div>
 					</div>
 			    </div>
@@ -102,6 +113,30 @@
 		<script src="../../js/artTemplate-native.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../../js/youxd.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
+				//选择地址
+				function addAddress() {
+					mui.plusReady(function(){
+						var oneId = plus.webview.currentWebview().cusId;//导购的 客户id
+						var extrasobjS = {
+							page: 'order',
+							goType:'toReturn'
+						};
+						if(oneId){
+							extrasobjS = {
+								page: 'order',
+								ConeId:oneId,
+								CidentityT:6,
+								goType:'toReturn'
+							}
+						}
+						openview({
+							view: '../personal/address.html',
+							id: 'address',
+							extrasobj: extrasobjS
+						})
+					})
+
+				}
 			mui.plusReady(function(){
 				//获取缓存
 				var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
@@ -109,6 +144,7 @@
 				var oldToken = plus.storage.getItem('oldToken');
 				var orderNumber = plus.webview.currentWebview().orderNo;
 				var moreInfo = null;//获取用户退货方式和取货地址
+				var cusId = plus.webview.currentWebview().cusId;
 
 				/*退货方式tab*/
 				$('.typeRadio').change(function(){
@@ -121,26 +157,55 @@
 					}
 				})
 				var cityId = plus.storage.getItem('userCity');//获取城市
-				mui.ajax(serverUrl + '/app/returnOrder/delivery/address',{//退货地址
-					data:{'userId':userId,'identityType':identityT,'orderNumber':orderNumber},
-					dataType:'json',
-					type:'post',
-					timeout:10000,
-					headers:{"Authorization":oldToken},
-					success:function(data,type,xhr){
-						console.log('退货地址',data);
-						if(data.code == 0){
-							moreInfo = data.content;
-							$('#mendian0').html('请与上班时间送货到'+data.content.bookingStoreName);
-							$('#mendianA0').html('地址：'+data.content.bookingStoreAddress);
-						}else{
-							mui.toast(data.message);
-						}
-					},
-					error:function(xhr,type,errorThrown){
-						console.error('退货地址，响应失败  !');
-					}
+				window.addEventListener('readdstorage', function(event) {//选择后 刷新地址
+					showAddressI();
 				});
+				showAddressI();
+				function showAddressI(){
+					var addressData = {'userId':userId,'identityType':identityT,'orderNumber':orderNumber};
+					if(cusId){addressData = {'userId':cusId,'identityType':6,'orderNumber':orderNumber}};//如果是为了顾客
+					mui.ajax(serverUrl + '/app/returnOrder/delivery/address',{//退货地址
+						data:addressData,
+						dataType:'json',
+						type:'post',
+						timeout:10000,
+						headers:{"Authorization":oldToken},
+						success:function(data,type,xhr){
+							console.log('退货地址',data);
+							if(data.code == 0){
+								if(plus.storage.getItem("$addressStorageTH1") != null){
+									var ASTH1 = JSON.parse(plus.storage.getItem("$addressStorageTH1"))[0];
+									$('#AD1').html(ASTH1.person);
+									$('#AD2').html(ASTH1.phone);
+									$('#AD4').html(ASTH1.city);
+									$('#AD5').html(ASTH1.country);
+									$('#AD6').html(ASTH1.street);
+									$('#AD7').html(ASTH1.villageName);
+									$('#AD8').html(ASTH1.address);
+									plus.storage.removeItem("$addressStorageTH1");
+								}else{
+									moreInfo = data.content;
+									$('#mendian0').html('请与上班时间送货到'+data.content.bookingStoreName);
+									$('#mendianA0').html('地址：'+data.content.bookingStoreAddress);
+									//显示上门取货地址
+									$('#AD1').html(data.content.receiver);
+									$('#AD2').html(data.content.receiverPhone);
+									$('#AD4').html(data.content.deliveryCity);
+									$('#AD5').html(data.content.deliveryCounty);
+									$('#AD6').html(data.content.deliveryStreet);
+									$('#AD7').html(data.content.residenceName);
+									$('#AD8').html(data.content.detailedAddress);
+								}
+							}else{
+								mui.toast(data.message);
+							}
+						},
+						error:function(xhr,type,errorThrown){
+							console.error('退货地址，响应失败  !');
+						}
+					});
+				}
+
 				timeRanges();//获取时间段
 				function timeRanges() {
 					mui.ajax(serverUrl + '/app/city/get/deliveryTime', {
@@ -255,14 +320,15 @@
 						returnDeliveryInfo.returnStoreCode = moreInfo.bookingStoreCode;
 						returnDeliveryInfo.returnStoreName = moreInfo.bookingStoreName;
 						returnDeliveryInfo.returnStoreAddress = moreInfo.bookingStoreAddress;
-						returnDeliveryInfo.rejecter = moreInfo.receiver;
-						returnDeliveryInfo.rejecterPhone = moreInfo.receiverPhone;
+
+						returnDeliveryInfo.rejecter = $('#AD1').html() || moreInfo.receiver;//人
+						returnDeliveryInfo.rejecterPhone = $('#AD2').html() || moreInfo.receiverPhone;//电话
+						returnDeliveryInfo.deliveryCity = $('#AD4').html() || moreInfo.deliveryCity;//城市
+						returnDeliveryInfo.deliveryCounty = $('#AD5').html() || moreInfo.deliveryCounty;//地区
+						returnDeliveryInfo.deliveryStreet = $('#AD6').html() || moreInfo.deliveryStreet;//街道
+						returnDeliveryInfo.residenceName = $('#AD7').html() || moreInfo.residenceName;//小区
+						returnDeliveryInfo.detailedAddress = $('#AD8').html() || moreInfo.detailedAddress;//详细地址
 						returnDeliveryInfo.returnFullAddress = moreInfo.shippingAddress;
-						returnDeliveryInfo.deliveryCity = moreInfo.deliveryCity;
-						returnDeliveryInfo.deliveryCounty = moreInfo.deliveryCounty;
-						returnDeliveryInfo.deliveryStreet = moreInfo.deliveryStreet;
-						returnDeliveryInfo.residenceName = moreInfo.residenceName;
-						returnDeliveryInfo.detailedAddress = moreInfo.detailedAddress;
 
 						returnDeliveryInfo.deliveryType = backType;
 						returnDeliveryInfo.deliveryTime = deliveryTime;
@@ -317,7 +383,7 @@
 									openview({
 										view:'myOrderRTList.html',
 										id:'myOrderRTList',
-									}) 
+									})
 									var time2 = setTimeout(function(){
 										plus.webview.currentWebview().close()
 									},1000)

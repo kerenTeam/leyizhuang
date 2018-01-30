@@ -231,6 +231,10 @@
 										plus.storage.setItem('$addressStorageY2', JSON.stringify(addressStorage));
 										mui.fire(plus.webview.getWebviewById('pzOrder'),'readdstorage');//拍照下单
 									}
+									if(goType == 'toReturn'){//申请退货
+										plus.storage.setItem('$addressStorageTH1', JSON.stringify(addressStorage));
+										mui.fire(plus.webview.getWebviewById('myOrderReturns'),'readdstorage');
+									}
 									if(goType == 'order'){
 										plus.storage.setItem('$addressStorage', JSON.stringify(addressStorage));
 										var list = plus.webview.getWebviewById('workerMaterial');

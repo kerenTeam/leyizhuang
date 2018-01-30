@@ -84,7 +84,7 @@
 				var orderNo = plus.webview.currentWebview().orderNo;
 
 				mui.ajax(serverUrl + '/app/delivery/detail',{
-					data:{'orderNumber':orderNo},
+					data:{'orderNumber':orderNo,'userId':userId,'identityType':identityT},
 					dataType:'json',
 					type:'post',
 					timeout:10000,
