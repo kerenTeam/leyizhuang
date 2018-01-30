@@ -243,7 +243,7 @@
 		"runmode": "liberate",/*应用的首次启动运行模式，可取liberate或normal，liberate模式在第一次启动时将解压应用资源（Android平台File API才可正常访问_www目录）*/
 		"signature": "Sk9JTiBVUyBtYWlsdG86aHIyMDEzQGRjbG91ZC5pbw==",/*可选，保留给应用签名，暂不使用*/
 		"distribute": {
-			"plugins": {
+			"plugins": {"maps":{"amap":{"appkey_ios":"ec681bbb8b6b8fefd4d45c051d67bbd3","appkey_android":"23ebef9003e2dcb85c8bfc377a3b43d2","description":""}},
 				"share": {
 					"weixin": {
 						"appid": "wxa4e8a82e226587dd",
@@ -1085,7 +1085,8 @@
 					"js/mui.min.js",
 					"fonts/mui.ttf",
 					"img/check1.png",
-					"img/check2.png"
+					"img/check2.png",
+					"js/update.js"
 				],
 				"refer": [
 					"page/personal/address.html",
