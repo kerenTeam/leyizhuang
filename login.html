@@ -104,6 +104,16 @@
 				 	 	var systemType = 'IOS'
 					}
 					var clientId = plus.push.getClientInfo().clientid;
+					clearInterval(getClientid)
+					if(!clientId){
+						var getClientid = setInterval(function(){
+							if(!clientId){
+								clientId = plus.push.getClientInfo().clientid
+							}else{
+								clearInterval(getClientid)
+							}
+						},1000)
+					}
 					var deviceId = plus.device.uuid;
 					var loginButton = doc.getElementById('login');
 					var accountBox = doc.getElementById('account');

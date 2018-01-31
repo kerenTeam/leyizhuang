@@ -120,6 +120,13 @@
 				 kindType(categoryCode);
 				
 				 function kindType(categoryCode){
+				 	//一级分类切换 
+					$('.flexw div').unbind('click').click(function(){
+						$(this).siblings().removeClass('curActive')
+						$(this).addClass('curActive'); 
+						$('.categray>span').addClass('mui-badge mui-badge-danger actBadge')
+						kindType($(this).attr('data-id'));
+					})
 				 	document.getElementById('upload').innerHTML = '';
 				 	$(window).unbind('scroll');
 //					plus.nativeUI.showWaiting();
@@ -757,13 +764,7 @@
 						}); 
 					} 				
 				 }
-				//一级分类切换 
-				$('.flexw div').click(function(){
-					$(this).siblings().removeClass('curActive')
-					$(this).addClass('curActive'); 
-					$('.categray>span').addClass('mui-badge mui-badge-danger actBadge')
-					kindType($(this).attr('data-id'));
-				})
+				
 				function getCartNum(num){
 					var cartNum = plus.storage.getItem('cartNums') || 0;
 					cartNum = cartNum < 0 ? 0:cartNum;

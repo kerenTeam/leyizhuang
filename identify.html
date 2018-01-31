@@ -63,8 +63,8 @@
 				color: #777;
 			}
 		</style>
-		<div id="identy">
-
+		<div style="margin-top: 55%;"></div>
+		<div id="identy" style="display: ;">
 			<div class="mui-content-padded oauth-area"></div>
 			<div class="custom">顾客微信快速登录</div>
 		</div>
@@ -86,6 +86,26 @@
 			})
 
 			mui.plusReady(function() {
+				//是否打开微信登录
+//				mui.ajax(serverUrl + '/app/system/setting/weChatLoginStatus', { 
+//					dataType: 'json',
+//					type: 'post',
+//					timeout: 10000,
+//					success: function(data, type, xhr) {
+//						console.log('isWx返回', data);
+//						if(data.code == 0 && data.content.isWeChatLoginAllowed){
+//							$('#identy').show()
+//						}else{
+//							$('#identy').hide()
+//						}
+//					},
+//					error: function(xhr, type, errorThrown) {
+//						plus.nativeUI.closeWaiting();
+//						console.log('响应失败');
+//					}
+//
+//				});
+				
 				if(plus.webview.getWebviewById('shezhi')) {
 					plus.webview.getWebviewById('shezhi').close();
 				}
@@ -95,6 +115,16 @@
 			 	 	var systemType = 'IOS'
 				}
 				var clientId = plus.push.getClientInfo().clientid;
+				clearInterval(getClientid)
+				if(!clientId){
+					var getClientid = setInterval(function(){
+						if(!clientId){
+							clientId = plus.push.getClientInfo().clientid
+						}else{
+							clearInterval(getClientid)
+						}
+					},1000)
+				}
 				var deviceId = plus.device.uuid;
 				//第三方登录
 				var authBtns = ['weixin']; //配置业务支持的第三方登录

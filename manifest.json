@@ -18,7 +18,7 @@
 	"developer": {
 		"name": "",/*开发者名称*/
 		"email": "",/*开发者邮箱地址*/
-		"url": "http://www.dcloud.io"
+		"url": ""
 	},
 	"permissions": {
 		"Accelerometer": {},
@@ -386,30 +386,30 @@
 					"iphone": {
 						"default": "", /*iPhone3启动图片选，分辨率：320x480*/
 						"retina35": "unpackage/res/startPic/ios/640X960.png",/*3.5英寸设备(iPhone4)启动图片，分辨率：640x960*/
-						"retina40": "D:/接收文件/ios/640X1136.png",
-						"retina55": "D:/接收文件/ios/1242X2208.png",
-						"retina47": "D:/接收文件/ios/750X1334.png",
-						"retina55l": "D:/接收文件/ios/2208X1242.png",
-						"iphonex": "D:/接收文件/ios/1125X2436.png",
-						"iphonexl": "D:/接收文件/ios/2436X1125.png"
+						"retina40": "unpackage/res/startPic/ios/640X1136.png",
+						"retina55": "unpackage/res/startPic/ios/1242X2208.png",
+						"retina47": "unpackage/res/startPic/ios/750X1334.png",
+						"retina55l": "unpackage/res/startPic/ios/2208X1242.png",
+						"iphonex": "unpackage/res/startPic/ios/1125X2436.png",
+						"iphonexl": "unpackage/res/startPic/ios/2436X1125.png"
 					},
 					"ipad": {
-						"portrait": "D:/接收文件/ios/768X1004.png", /*iPad竖屏启动图片，分辨率：768x1004*/
-						"portrait-retina": "D:/接收文件/ios/1536X2008.png",/*iPad高分屏竖屏图片，分辨率：1536x2008*/
-						"landscape": "D:/接收文件/ios/1024X748.png", /*iPad横屏启动图片，分辨率：1024x748*/
-						"landscape-retina": "D:/接收文件/ios/2048X1496.png", /*iPad高分屏横屏启动图片，分辨率：2048x1496*/
-						"portrait7": "D:/接收文件/ios/768X1024.png", /*iPad iOS7竖屏启动图片，分辨率：768x1024*/
-						"portrait-retina7": "D:/接收文件/ios/1536X2048.png",/*iPad iOS7高分屏竖屏图片，分辨率：1536x2048*/
-						"landscape7": "D:/接收文件/ios/1024X768.png", /*iPad iOS7横屏启动图片，分辨率：1024x768*/
-						"landscape-retina7": "D:/接收文件/ios/2048X1536.png"
+						"portrait": "unpackage/res/startPic/ios/768X1004.png", /*iPad竖屏启动图片，分辨率：768x1004*/
+						"portrait-retina": "unpackage/res/startPic/ios/1536X2008.png",/*iPad高分屏竖屏图片，分辨率：1536x2008*/
+						"landscape": "unpackage/res/startPic/ios/1024X748.png", /*iPad横屏启动图片，分辨率：1024x748*/
+						"landscape-retina": "unpackage/res/startPic/ios/2048X1496.png", /*iPad高分屏横屏启动图片，分辨率：2048x1496*/
+						"portrait7": "unpackage/res/startPic/ios/768X1024.png", /*iPad iOS7竖屏启动图片，分辨率：768x1024*/
+						"portrait-retina7": "unpackage/res/startPic/ios/1536X2048.png",/*iPad iOS7高分屏竖屏图片，分辨率：1536x2048*/
+						"landscape7": "unpackage/res/startPic/ios/1024X768.png", /*iPad iOS7横屏启动图片，分辨率：1024x768*/
+						"landscape-retina7": "unpackage/res/startPic/ios/2048X1536.png"
 					}
 				},
 				"android": {
 					"mdpi": "", /*普通屏启动图片，分辨率：240x282*/
 					"ldpi": "", /*大屏启动图片，分辨率：320x442*/
-					"hdpi": "D:/接收文件/安卓/480X762.png", /*高分屏启动图片，分辨率：480x762*/
-					"xhdpi": "D:/接收文件/安卓/720X1242.png", /*720P高分屏启动图片，分辨率：720x1242*/
-					"xxhdpi": "D:/接收文件/安卓/1080X1880.png"
+					"hdpi": "unpackage/res/startPic/Android/480X762.png", /*高分屏启动图片，分辨率：480x762*/
+					"xhdpi": "unpackage/res/startPic/Android/720X1242.png", /*720P高分屏启动图片，分辨率：720x1242*/
+					"xxhdpi": "unpackage/res/startPic/Android/1080X1880.png"
 				}
 			}
 		}
