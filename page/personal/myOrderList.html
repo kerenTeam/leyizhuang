@@ -97,7 +97,7 @@
 								<div id="orderList<%= i%>">
 									<h3 class="h3" onclick="openDetail('<%= list[i].orderNo%>','','orderList<%= i%>')">
 										<a class="a1"><%= list[i].deliveryType%></a>
-										<span class="stateSpan"><%= list[i].statusDesc%></span>
+										<span class="stateSpan" status="list[i].status"><%= list[i].statusDesc%></span>
 									</h3>
 									<p class="p1" onclick="openDetail('<%= list[i].orderNo%>','','orderList<%= i%>')">
 										<% if(list[i].goodsImgList && list[i].goodsImgList.length){%>
@@ -124,6 +124,9 @@
 											<% if(list[i].status == 'UNPAID' || list[i].status == 'PENDING_SHIPMENT'){%>
 												<span class="aClick" onclick="cancelFun('<%= list[i].orderNo%>',this)">取消订单</span>
 											<% }%>
+											<% if(list[i].deliveryType == '门店自提' && list[i].status == 'PENDING_RECEIVE'){%>
+						                        <span class="aClick" onclick="cancelFun('<%= list[i].orderNo%>',this)">取消订单</span>
+						                    <% }%>
 											<% if(list[i].status == 'FINISHED'){%>
 												<span class="redC aClick" onclick="openReturns('<%= list[i].orderNo%>','<%= list[i].customerId%>')">退货</span>
 											<% }%>

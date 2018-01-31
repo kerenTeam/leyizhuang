@@ -209,6 +209,9 @@
                     <% if(detail.status == '待付款' || detail.status == '待发货'){%>
                         <span class="aClick" onclick="cancelFun('<%= detail.orderNumber%>',this)">取消订单</span>
                     <% }%>
+                    <% if(detail.deliveryType == '门店自提' && detail.status == '待收货'){%>
+                        <span class="aClick" onclick="cancelFun('<%= detail.orderNumber%>',this)">取消订单</span>
+                    <% }%>
                     <% if(detail.status == '已完成'){%>
                         <span class="redC aClick" onclick="openReturns('<%= detail.orderNumber%>','<%= detail.customer.customerId%>')">退货</span>
                     <% }%>
