@@ -196,7 +196,7 @@
 						<span class="mui-icon mui-icon-arrowdown mui-pull-right ft16"></span>
 					</div>
 				</div>
-				<div class="pad10 ft15 flexr" id="storeAddress" style="display:none;">
+				<div class="pad10 ft15 flexr afterBorder" id="storeAddress" style="display:none;">
 					<em>门店地址 </em>
 					<div class="storeAddress">
 					</div>
@@ -782,14 +782,11 @@
 								$('#freight').html('¥0');
 								//合计
 								carculate();
-								var storeStr = '<option value="">选择</option>';
-								for(var i = 0; i < data.content.storeList.length; i++) {
-									storeStr += '<option data-addr="' + data.content.storeList[i].detailedAddress + '" value="' + data.content.storeList[i].storeId + '">' + data.content.storeList[i].storeName + '</option>'
-								}
-								$('#chooseStore select').html(storeStr);
-								$('#chooseStore select').change(function() {
-									var storeId = $(this).val();
-									var curselect = $(this)
+								if(data.content.storeList.length == 1){
+									var storeStr = '<option checked data-addr="' + data.content.storeList[0].detailedAddress + '" value="' + data.content.storeList[0].storeId + '">' + data.content.storeList[0].storeName + '</option>'
+									var storeId = data.content.storeList[0].storeId;
+									$('#chooseStore select').html(storeStr);
+									var curselect = $('#chooseStore select');
 									//请求门店库存
 									mui.ajax(serverUrl + '/app/settlement/selfTakeStore/choose', {
 										data: {
@@ -816,8 +813,10 @@
 													$('.storeAddress').html('无地址')
 												}
 											} else {
-												mui.toast(data.message);
-												curselect.find('option').eq(0).attr('selected', true);
+												var message = data.message || '包含不支持自提商品'
+												mui.toast(message);
+												$("input[name='peis']").eq(0).attr('checked', false)
+												$("input[name='peis']").eq(1).prop('checked', true)
 											}
 										},
 										error: function(xhr, type, errorThrown) {
@@ -825,9 +824,55 @@
 											console.log('响应失败');
 										}
 									});
-								})
+								}else{
+									var storeStr = '<option value="">选择</option>';
+									for(var i = 0; i < data.content.storeList.length; i++) {
+										storeStr += '<option data-addr="' + data.content.storeList[i].detailedAddress + '" value="' + data.content.storeList[i].storeId + '">' + data.content.storeList[i].storeName + '</option>'
+									}
+									$('#chooseStore select').html(storeStr);
+									$('#chooseStore select').change(function() {
+										var storeId = $(this).val();
+										var curselect = $(this)
+										//请求门店库存
+										mui.ajax(serverUrl + '/app/settlement/selfTakeStore/choose', {
+											data: {
+												"userId": userId,
+												"identityType": identityT,
+												"storeId": storeId,
+												"goodsList": allGoods
+											},
+											dataType: 'json',
+											type: 'post',
+											timeout: 10000,
+											headers: {
+												"Authorization": oldToken
+											},
+											success: function(data) {
+												console.log('门店库存', data);
+												if(data.code == 0) {
+													var address = curselect.find('option:checked').attr('data-addr')
+													if(address) {
+														$('#storeAddress').show();
+														$('.storeAddress').html(address)
+													} else {
+														$('#storeAddress').show();
+														$('.storeAddress').html('无地址')
+													}
+												} else {
+													mui.toast(data.message);
+													curselect.find('option').eq(0).attr('selected', true);
+												}
+											},
+											error: function(xhr, type, errorThrown) {
+												plus.nativeUI.closeWaiting();
+												console.log('响应失败');
+											}
+										});
+									})
+								}
+								
 							} else {
-								var message = data.message || '包含不可选自提商品'
+								var message = data.message || '包含不支持自提商品'
 								mui.toast(message);
 								$("input[name='peis']").eq(0).attr('checked', false)
 								$("input[name='peis']").eq(1).prop('checked', true)

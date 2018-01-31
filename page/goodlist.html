@@ -115,11 +115,14 @@
 					$('.'+categoryCode).addClass('curActive');
 				} 
 				document.addEventListener('refresh', function() {
+					$('.flexw div').removeClass('curActive')
+				 	$('.flexw div').eq(0).addClass('curActive');
 					kindType('water'); 
 				}) 
 				 kindType(categoryCode);
 				
 				 function kindType(categoryCode){
+				 	
 				 	//一级分类切换 
 					$('.flexw div').unbind('click').click(function(){
 						$(this).siblings().removeClass('curActive')
@@ -127,6 +130,7 @@
 						$('.categray>span').addClass('mui-badge mui-badge-danger actBadge')
 						kindType($(this).attr('data-id'));
 					})
+					
 				 	document.getElementById('upload').innerHTML = '';
 				 	$(window).unbind('scroll');
 //					plus.nativeUI.showWaiting();
