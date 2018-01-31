@@ -579,6 +579,28 @@
 
 			mui.plusReady(function() {
 //				plus.storage.removeItem('lauchFlag')
+
+				if(/android/i.test(navigator.userAgent)){
+			 	 	var systemType = 'ANDROID'
+				}else{
+			 	 	var systemType = 'IOS'
+				}
+				var clientId = plus.push.getClientInfo().clientid;
+				clearInterval(getClientid)
+				if(!clientId){
+					var getClientid = setInterval(function(){
+						if(!clientId){
+							clientId = plus.push.getClientInfo().clientid
+						}else{
+							clearInterval(getClientid)
+						}
+					},1000)
+				}
+				var deviceId = plus.device.uuid;
+				plus.storage.setItem('platform',systemType)
+				plus.storage.setItem('clientId',clientId)
+				plus.storage.setItem('deviceId',deviceId)
+				
 				var showGuide = plus.storage.getItem("lauchFlag");
 				if(!showGuide) {
 					Sign();
@@ -595,18 +617,7 @@
 					plus.navigator.closeSplashscreen();
 					plus.navigator.setFullscreen(false)
 					Sign();
-				}
-
-				if(/android/i.test(navigator.userAgent)){
-			 	 	var systemType = 'ANDROID'
-				}else{
-			 	 	var systemType = 'IOS'
-				}
-				var clientId = plus.push.getClientInfo().clientid;
-				var deviceId = plus.device.uuid;
-				plus.storage.setItem('platform',systemType)
-				plus.storage.setItem('clientId',clientId)
-				plus.storage.setItem('deviceId',deviceId)
+				}  
 				//判断是否登陆
 //				document.addEventListener('refreshid', function() {
 //					loadIndex();
@@ -633,7 +644,6 @@
 							var Acc_pass = JSON.parse(plus.storage.getItem("Acc_pass")); //员工登陆
 							var openid = plus.storage.getItem("openId"); //顾客登录
 							console.log(openid);
-
 							//根据缓存密码自动登录, 重新获取Token
 							if(Acc_pass) {
 								mui.ajax(serverUrl + '/app/employee/login', {
@@ -675,9 +685,7 @@
 										console.log('获取默认token响应失败');
 									}
 								});
-							}
-							//微信自动登录
-							if(openid) {
+							}else if(openid) {//微信自动登录
 								mui.ajax(serverUrl + '/app/customer/login', {
 									data: {
 										"openId": openid,

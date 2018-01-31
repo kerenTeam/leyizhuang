@@ -60,20 +60,20 @@
 				})
 			})
 			mui('.cameraOrder')[0].addEventListener('tap',function(){
-				mui.plusReady(function() {
-					var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
-					if(identityT == 0) { //导购
-						openview({
-							view: 'page/order/chooseCustom2.html',
-							id: 'chooseCustom2',
-						})
-					} else {
+//				mui.plusReady(function() {
+//					var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
+//					if(identityT == 0) { //导购
+//						openview({
+//							view: 'page/order/chooseCustom2.html',
+//							id: 'chooseCustom2',
+//						})
+//					} else {
 						openview({
 							view: 'page/order/pzOrder.html',
 							id: 'pzOrder',
 						})
-					}
-				})
+//					}
+//				})
 			})
 		</script>
 	</body>
