@@ -266,6 +266,8 @@
 									plus.nativeUI.closeWaiting(); //关闭等待框
 									if(dataobj.code == 0){
 										mui.toast("确认收货成功！");
+										plus.webview.getWebviewById("deliveryInfo").close();
+										mui.fire(plus.webview.getWebviewById('dispatching'), 'refresh');
 										mui.back();
 									}else{
 										mui.toast(dataobj.message);

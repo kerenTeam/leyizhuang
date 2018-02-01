@@ -164,11 +164,14 @@
 										if(plus.webview.getWebviewById('identify')){
 											plus.webview.getWebviewById('identify').close();
 										}
-										var index = plus.webview.getLaunchWebview();
-										mui.fire(index,'refreshpage');
-										mui.fire(plus.webview.getWebviewById('cart.html'), 'refresh');
-										mui.fire(plus.webview.getWebviewById('page/goodList.html'),'refresh');
-										mui.fire(plus.webview.getWebviewById('center.html'),'refresh');
+										
+										if(data.content.type != 1){
+											var index = plus.webview.getLaunchWebview();
+											mui.fire(index,'refreshpage');
+											mui.fire(plus.webview.getWebviewById('cart.html'), 'refresh');
+											mui.fire(plus.webview.getWebviewById('page/goodList.html'),'refresh');
+											mui.fire(plus.webview.getWebviewById('center.html'),'refresh');
+										} 
 										if(plus.webview.getWebviewById('dispatching')) {
 											plus.webview.getWebviewById('dispatching').close();
 										}

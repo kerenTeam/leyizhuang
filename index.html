@@ -657,7 +657,7 @@
 									timeout: 10000,
 									success: function(data, type, xhr) {
 										console.log('密码自动登录返回', data);
-										if(data.code == -1) {
+										if(data.code != 0) {
 											openview({
 												view: 'identify.html',
 												id: 'identify'
@@ -670,9 +670,11 @@
 													view:'page/dispatching/dispatching.html',
 													id:'dispatching'
 												})
+											}else{
+												loadIndex();
+												util.initSubpage();
 											}
-											loadIndex();
-											util.initSubpage();
+											
 										}
 									},
 									error: function(xhr, type, errorThrown) {
