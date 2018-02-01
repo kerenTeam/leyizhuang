@@ -492,7 +492,7 @@
 						extrasobj:{
 							orderNo:orderNo,
 							evaluat:evaluat,
-							cancelParentId:id,
+							cancelParentId:id,//父元素ID
 							noButton:noButton,
 							lookCusid:userId,
 							cusId:cusid
@@ -501,7 +501,7 @@
 				}
 				//详情页面点取消,监听刷新
 				document.addEventListener('cancelrefresh2', function(event) {
-					var cancelParentId = event.detail.cancelParentId;
+					var cancelParentId = event.detail.cancelParentId;//父元素ID
 					$('#'+cancelParentId).find('.stateSpan').html('已取消');
 					$('#'+cancelParentId).find('.stateSpan2').css('display','none');
 				    $('#'+cancelParentId).find('.orderBtns').find('span').each(function(index,ele){

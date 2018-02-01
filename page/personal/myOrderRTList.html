@@ -12,8 +12,10 @@
 		<link rel="stylesheet" type="text/css" href="../../css/mui.min.css"/>
 		<link rel="stylesheet" href="../../css/resetY.css">
 		<link rel="stylesheet" href="../../css/youxd.css">
+		<link rel="stylesheet" href="../../css/feedback.css">
 		<style type="text/css">
 			body{padding-bottom: 10px;}
+
 		</style>
 	</head>
 
@@ -58,6 +60,7 @@
 					<!--内容-->
 				</div>
 				<div class="upload text-center text-xs gray" id="upload"></div>
+				<!--退货列表-->
 				<script id="infoList" type="text/html">
 					<%for(var i=0;i<list.length;i++){%>
 						<% if(nowState == '全部' || nowState == list[i].status){ %>
@@ -82,7 +85,48 @@
 									共<%= list[i].count%>件商品 退款金额：<span>¥ <%= list[i].returnPrice%></span>
 								</div>
 								<div class="orderBtns">
-									<span class="redC" onclick="cancelTHFun('<%= list[i].orderNo%>')">取消退货</span>
+									<%if(list[i].statusDesc != '已完成' && list[i].statusDesc != '已取消'){%>
+										<span class="redC" onclick="cancelTHFun('<%= list[i].returnNo%>',this)">取消退货</span>
+									<%}%>
+								</div>
+							</div>
+						<%}%>
+						<!--没有相关状态-->
+						<% if(i == list.length-1 && nowState != '全部' && nowState != list[i].status){ %>
+							<div style="text-align: center;padding: 50px;">
+								<img src="../../images/order/order.png" style="width: 100px;" />
+								<div class="ft13 disablecl">暂无相关订单</div>
+							</div>
+						<% } %>
+					<%}%>
+				</script>
+
+				<!--评价列表-->
+				<script id="infoListP2" type="text/html">
+					<%for(var i=0;i<list.length;i++){%>
+						<% if(nowState == '全部' || nowState == list[i].status){ %>
+							<div class="orderList">
+								<h3 class="h3" onclick="openDetail2('<%= list[i].orderNo%>')">
+									退单编号：<%= list[i].orderNo%>
+									<span><%= list[i].statusDesc%></span>
+								</h3>
+								<p class="p1" onclick="openDetail2('<%= list[i].orderNo%>')">
+									<% if(list[i].goodsImgList && list[i].goodsImgList.length){%>
+										<%for(var j=0; j<list[i].goodsImgList.length; j++){%>
+											<a><img class="loadPics" src="../../img/loadBack.svg" data-src="<%= list[i].goodsImgList[j]%>"/></a>
+										<%} %>
+									<% }else{%>
+										<a><img class="loadPics" src="../../img/loadBack.svg"/></a>
+									<% }%>
+									<% if(list[i].endTime){%>
+										<span>10分钟后关闭订单</span>
+									<% }%>
+								</p>
+								<div class="orderInfo">
+									共<%= list[i].count%>件商品 退款金额：<span>¥ <%= list[i].returnPrice%></span>
+								</div>
+								<div class="orderBtns">
+									<span class="redC" onclick="evaFun('<%= list[i].orderNo%>',this)">评价</span>
 								</div>
 							</div>
 						<%}%>
@@ -97,6 +141,58 @@
 				</script>
 
 			</div>
+
+			<!--订单评价DOM-->
+			<div class="cancelDiv" id="evaOrder" style="display: none;">
+				<div class="cancelCon">
+					<div class="cancelMin">
+						<div class="Dpart3" id="evaluat" style="overflow: hidden;">
+							<h4 class="fineB dingdanPJ">订单服务评价： </h4>
+							<div class="mui-content-padded">
+								<div class="vm">
+									<span>产品：</span><!--mui-icon-star-filled-->
+									<div class="icons mui-inline" style="margin-left: 6px;vertical-align: middle;display: inline;">
+										<i data-index="1" class="mui-icon mui-icon-star"></i>
+										<i data-index="2" class="mui-icon mui-icon-star"></i>
+										<i data-index="3" class="mui-icon mui-icon-star"></i>
+										<i data-index="4" class="mui-icon mui-icon-star"></i>
+										<i data-index="5" class="mui-icon mui-icon-star"></i>
+									</div>
+								</div>
+							</div>
+							<div class="mui-content-padded">
+								<div class="vm">
+									<span>物流：</span><!--mui-icon-star-filled-->
+									<div class="icons mui-inline" style="margin-left: 6px;vertical-align: middle;display: inline;">
+										<i data-index="1" class="mui-icon mui-icon-star"></i>
+										<i data-index="2" class="mui-icon mui-icon-star"></i>
+										<i data-index="3" class="mui-icon mui-icon-star"></i>
+										<i data-index="4" class="mui-icon mui-icon-star"></i>
+										<i data-index="5" class="mui-icon mui-icon-star"></i>
+									</div>
+								</div>
+							</div>
+							<div class="mui-content-padded">
+								<div class="vm">
+									<span>服务：</span><!--mui-icon-star-filled-->
+									<div class="icons mui-inline" style="margin-left: 6px;vertical-align: middle;display: inline;">
+										<i data-index="1" class="mui-icon mui-icon-star"></i>
+										<i data-index="2" class="mui-icon mui-icon-star"></i>
+										<i data-index="3" class="mui-icon mui-icon-star"></i>
+										<i data-index="4" class="mui-icon mui-icon-star"></i>
+										<i data-index="5" class="mui-icon mui-icon-star"></i>
+									</div>
+								</div>
+							</div>
+							<div class="cancelBtn">
+								<button type="button" class="mui-btn operating11">取消</button>
+								<button type="button" id="operating22" class="mui-btn mui-btn-danger ">确定</button>
+							</div>
+							<!--<button class="dingdanPingjia mui-pull-right">提交评价</button>-->
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 
 		<script src="../../js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
@@ -105,14 +201,11 @@
 		<script src="../../js/artTemplate-native.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../../js/youxd.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
-
-
-
 			mui.plusReady(function(){
 				var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
 				var userId = plus.webview.currentWebview().lookCusid || plus.storage.getItem('$userId');
 				var oldToken = plus.storage.getItem('oldToken');
-				var pingjia = plus.webview.currentWebview().type;
+				var pingjia = plus.webview.currentWebview().type;//待评价
 				var noButton = plus.webview.currentWebview().isNoButton;
 				if(pingjia){
 					mui('#mui-title1')[0].innerHTML = '待评价';
@@ -120,7 +213,7 @@
 					mui('#mui-title1')[0].innerHTML = '退货';
 				}
 				loadFun('全部');//初始化
-				//打开订单详情
+				//打开 退货 订单详情
 				window.openDetail = function(orderNo,userId){
 					openview({
 						view:'myOrderRTdetail.html',
@@ -129,6 +222,21 @@
 							orderNo:orderNo,
 							noButton:noButton,
 							lookCusid:userId
+						}
+					})
+				}
+				//打开订单详情
+				window.openDetail2 = function(orderNo,evaluat,id,cusid){
+					openview({
+						view:'myOrderDetail.html',
+						id:'myOrderDetail',
+						extrasobj:{
+							orderNo:orderNo,
+							evaluat:evaluat,
+							cancelParentId:id,//父元素ID
+							noButton:noButton,
+							lookCusid:userId,
+							cusId:cusid
 						}
 					})
 				}
@@ -148,13 +256,17 @@
 						timeout:10000,
 						headers:{"Authorization":oldToken},
 						success:function(data,type,xhr){
-							console.log('订单',data);
+							console.log(pingjia?'评价':'退货' +'订单',data);
 							var timeLoad = setInterval(function(){
 								clearTimeout(timeLoad),timeLoad = null;
 								if(data.code == 0){
 									$('#loadingdiv').css('height','0px');
 									if(data.content.list && data.content.list.length){
-										document.getElementById('infoListDiv').innerHTML = template('infoList',{list:data.content.list,nowState:tabT});
+										if(pingjia){
+											document.getElementById('infoListDiv').innerHTML = template('infoListP2',{list:data.content.list,nowState:tabT});
+										}else{
+											document.getElementById('infoListDiv').innerHTML = template('infoList',{list:data.content.list,nowState:tabT});
+										}
 										if(noButton == 1){
 											$('.orderBtns').empty()
 										}
@@ -178,11 +290,15 @@
 							                        timeout:10000,
 							                        headers:{"Authorization":oldToken},
 							                        success:function(data,type,xhr){
-							                            console.log('订单续',data);
+							                           console.log(pingjia?'评价':'退货' +'订单续',data);
 						                                if(data.code == 0){
 															$('#loadingdiv').css('height','0px');
 															if(data.content.list && data.content.list.length){
-																document.getElementById('infoListDiv').innerHTML += template('infoList',{list:data.content.list,nowState:tabT});
+																if(pingjia){
+																	document.getElementById('infoListDiv').innerHTML += template('infoListP2',{list:data.content.list,nowState:tabT});
+																}else{
+																	document.getElementById('infoListDiv').innerHTML += template('infoList',{list:data.content.list,nowState:tabT});
+																}
 																if(noButton == 1){
 																	$('.orderBtns').empty()
 																}
@@ -215,11 +331,12 @@
 					});
 				}
 
-				window.cancelTHFun = function(id){
+				//取消退货
+				window.cancelTHFun = function(id,that){
 					var isCance = confirm('确认要取消退货？');
 					if(isCance){
 						mui.ajax(serverUrl + '/app/returnOrder/cancel',{//获取取消原因
-							data:{'userId':userId,'identityType':identityT,'returnNumber':id+1},
+							data:{'userId':userId,'identityType':identityT,'returnNumber':id},
 							dataType:'json',
 							type:'post',
 							timeout:10000,
@@ -228,6 +345,7 @@
 								console.log('取消退货',data);
 								if(data.code == 0){
 									mui.toast(data.message || '取消退货成功');
+									that.style.display = 'none';
 								}else{
 									mui.toast(data.message);
 								}
@@ -236,6 +354,89 @@
 								console.error('取消退货，响应失败  !');
 							}
 						});
+					}
+				}
+
+				/*订单评价*/
+				$('.operating11').click(function(){//点取消
+					$('#evaOrder').css('display','none');
+					resetStar();
+				})
+				$('.cancelDiv').click(function(){//点遮罩
+					$('#evaOrder').css('display','none');
+					resetStar();
+				});
+				function resetStar(){//重置星级
+					$('#evaluat .mui-icon').each(function(index,ele){
+						$(ele).attr('class','mui-icon mui-icon-star')
+					})
+				}
+				var oneStar=0,twoStar=0,threeStar=0,EvaluatAble=true;
+				mui('.icons').on('tap','i',function(){
+				  	var index = parseInt(this.getAttribute("data-index"));
+				  	var parent = this.parentNode;
+				  	var children = parent.children;
+				  	if(this.classList.contains("mui-icon-star")){
+				  		for(var i=0;i<index;i++){
+			  				children[i].classList.remove('mui-icon-star');
+			  				children[i].classList.add('mui-icon-star-filled');
+				  		}
+				  	}else{
+				  		for (var i = index; i < 5; i++) {
+				  			children[i].classList.add('mui-icon-star')
+				  			children[i].classList.remove('mui-icon-star-filled')
+				  		}
+				  	}
+				  	starIndex = index;
+				  	//数据部分
+				  	oneStar = $('.mui-content-padded').eq(0).find('.mui-icon-star-filled').length;
+				  	twoStar = $('.mui-content-padded').eq(1).find('.mui-icon-star-filled').length;
+				  	threeStar = $('.mui-content-padded').eq(2).find('.mui-icon-star-filled').length;
+			  	});
+				window.evaFun = function(orderNumber,that){
+					$('#evaOrder').css('display','table');
+					document.getElementById('operating22').onclick = function(){
+						if(oneStar==0 || twoStar==0 || threeStar==0){
+							mui.toast('每项请至少选择一个星级！');
+						}else{
+							var dataObj0 = {
+								'userId':userId,
+								'identityType':identityT,
+								'productStar':oneStar,
+								'logisticsStar':twoStar,
+								'serviceStars':threeStar,
+								'orderNumber':orderNumber
+							};
+							console.log(dataObj0);
+							goEvaluation();
+							function goEvaluation(){
+								mui.ajax(serverUrl + '/app/order/evaluation/submit',{
+									data:dataObj0,
+									dataType:'json',
+									type:'post',
+									timeout:10000,
+									headers:{"Authorization":oldToken},
+									success:function(data,type,xhr){
+										console.log('订单评价'+JSON.stringify(data));
+										if(data.code == 0){
+											mui.toast(data.message || '感谢您的评价');
+											resetStar();
+											$('#evaOrder').css('display','none');
+											that.onclick = null;
+											//that.innerHTML = '已评价';
+											that.style.display = 'none';
+										}else{
+											mui.toast(data.message);
+
+										}
+									},
+									error:function(xhr,type,errorThrown){
+										console.log('响应失败  !');
+										mui.toast('当前网络不好，请重试');
+									}
+								});
+							}
+						}
 					}
 				}
 

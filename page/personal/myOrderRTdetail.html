@@ -25,7 +25,7 @@
 			.mui-btn-primary:enabled:active{border: none;} #fangshi{padding-top: 8px;padding-left: 15px;}
 			#fangshi span{line-height: 20px;display: block;} .mui-checkbox, .mui-radio { display: inline-block;}
 			.fangshiMore2{display: none;} #cityResult{padding: 0 !important;}
-			p{color: #555;} #smllInfo p{padding: 5px 15px;} .proWrapAll{height: 200px;overflow-y: scroll;margin-bottom: 0;}
+			p{color: #555;} #smllInfo p{padding: 5px 15px;} .proWrapAll{height: 160px;overflow-y: scroll;margin-bottom: 0;}
 			.proLeftTH{flex: 2 !important;} .proRightTH{flex: 5 !important;}
 			.proRight h4{min-height: 24px;} .infoBottom{padding: 15px;box-shadow: 0 -1px 1px rgba(222, 217, 217, 0.85)} .infoBottom span{float: right;color: #c7161e;}
 			.proWrapAll2{height: auto;} .thZhengce{background-color: #fff;border-top: 5px solid #eee;border-bottom: 5px solid #eee;}
@@ -47,36 +47,53 @@
 				<p class="fineB" style="box-shadow: 0 1px 1px rgba(222, 217, 217, 0.85);">申请时间：<%= dataObj.returnTime%></p>
 			</div>
 			<div class="proWrapAll" id="goodsD">
-				<div class="proWrap fineB">
-					<div class="proLeft proLeftTH">
-						<img src="http://img3.leyizhuang.com.cn/app/images/goods/2493/20170303120036450.jpg">
-					</div>
-					<div class="proRight proRightTH">
-						<h4>金牛白色PPR45度弯头20</h4>
-						<p> 规格：1 单位：1</p>
-						<div>
-							<span class="span1 span1TH">¥10</span>
-							<span class="mui-pull-right">X5</span>
+				<%for(var i=0;i<dataObj.goodsList.length;i++){%>
+					<div class="proWrap fineB">
+						<div class="proLeft proLeftTH">
+							<img src="<%= dataObj.goodsList[i].coverImageUri%>">
+						</div>
+						<div class="proRight proRightTH">
+							<h4><%= dataObj.goodsList[i].skuName%></h4>
+							<p> 规格：<%= dataObj.goodsList[i].goodsSpecification%> 单位：<%= dataObj.goodsList[i].goodsUnit%></p>
+							<div>
+								<span class="span1 span1TH">¥<%= dataObj.goodsList[i].retailPrice%></span>
+								<span class="mui-pull-right">X<%= dataObj.goodsList[i].qty%></span>
+							</div>
 						</div>
 					</div>
-				</div>
+				<%}%>
 			</div>
 			<div class="infoBottom fineT">
-				共10件商品 退款总额：¥3400  <span class="mui-icon mui-icon-arrowdown"></span><span class="arrowdown">展开</span>
+				共<%= dataObj.returnQty%>件商品 退款总额：¥<%= dataObj.totalReturnPrice%>   <span class="mui-icon mui-icon-arrowdown"></span><span class="arrowdown">展开</span>
 			</div>
 			<div id="">
-				<h3 class="thZhengce" style="text-align: right;"><span style="color: #555;float: left;">退货进度：</span> 待退款</h3>
+				<h3 class="thZhengce" style="text-align: right;"><span style="color: #555;float: left;">退货进度：</span><%= dataObj.returnStatus%> </h3>
 				<div class="beizhu">
 			    		<h5>退货原因:</h5>
 					<div>
-						<p id="mendianA0" style="padding: 5px 15px 10px;font-size: 16px;">小了，要换下</p>
+						<p id="mendianA0" style="padding: 5px 15px 10px;font-size: 16px;"><%= dataObj.reasonInfo%> </p>
 					</div>
 			    </div>
 			    <div class="beizhu">
-			    		<h5>商品退回方式:</h5>
+			    		<h5>
+			    			商品退回方式:
+			    			<%if(dataObj.deliveryType == 'HOUSE_PICK'){%>
+			    				上门取货
+		    				<%}else{%>
+		    					门店自提
+	    					<%}%>
+			    		</h5>
 					<div>
-						<p id="mendianA0" style="padding: 0px 15px 5px;font-size: 16px;">上门取货</p>
-						<p id="mendianA0" style="padding: 0px 15px 10px;font-size: 16px;"> 上门取货 上门取货 上门取货 上门取货</p>
+						<%if(dataObj.deliveryType == 'HOUSE_PICK'){%>
+							<p id="mendianA0" style="padding: 0px 15px 5px;font-size: 16px;">联系人：<%= dataObj.receiver%></p>
+							<p id="mendianA0" style="padding: 0px 15px 10px;font-size: 16px;">取货地址：<%= dataObj.shippingAddress%></p>
+							<p id="mendianA0" style="padding: 0px 15px 10px;font-size: 16px;">取货时间：<%= dataObj.deliveryTime%></p>
+						<%}else{%>
+							<p id="mendianA0" style="padding: 0px 15px 5px;font-size: 16px;">门店：<%= dataObj.bookingStoreName || '暂无'%></p>
+							<p id="mendianA0" style="padding: 0px 15px 10px;font-size: 16px;">门店电话：<%= dataObj.bookingStorePhone || '暂无'%></p>
+							<p id="mendianA0" style="padding: 0px 15px 10px;font-size: 16px;">门店地址：<%= dataObj.storeDetailedAddress || '暂无'%></p>
+						<%}%>
+
 					</div>
 			    </div>
 			</div>
@@ -98,15 +115,7 @@
 				var orderNumber = plus.webview.currentWebview().orderNo;
 				var isButton = plus.webview.currentWebview().isButton;
 				var noButton = plus.webview.currentWebview().noButton;
-				//展开
-				$('.arrowdown').click(function(){
-					if($('.proWrapAll').hasClass('proWrapAll2')){
-						$(this).html('展开');
-					}else{
-						$(this).html('收起');
-					}
-					$('.proWrapAll').toggleClass('proWrapAll2');
-				})
+
 
 
 				//退货详情
@@ -117,13 +126,22 @@
 					timeout:10000,
 					headers:{"Authorization":oldToken},
 					success:function(data,type,xhr){
-						console.log('可退商品列表',data);
+						console.log('退货详情',data);
 						if(data.code == 0){
 							document.getElementById('main').innerHTML = template('dataS',{dataObj:data.content});
 							mui(".mui-numbox").numbox();
 							if(isButton == 'no' || noButton){
 								$('.footBtn,.proRight button').hide();
 							}
+							//展开
+							$('.arrowdown').click(function(){
+								if($('.proWrapAll').hasClass('proWrapAll2')){
+									$(this).html('展开');
+								}else{
+									$(this).html('收起');
+								}
+								$('.proWrapAll').toggleClass('proWrapAll2');
+							})
 						}else{
 							mui.toast(data.message);
 							document.getElementById('main').innerHTML = '<div style="text-align:center;padding:15px;">'+data.message+'</div>' ;
