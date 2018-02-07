@@ -108,7 +108,7 @@
 											<a><img class="loadPics" src="../../img/loadBack.svg"/></a>
 										<% }%>
 										<% if(list[i].endTime){%>
-											<span class="stateSpan2">10分钟后关闭订单</span>
+											<span class="stateSpan2"><%=list[i].endTime%>分钟后关闭订单</span>
 										<% }%>
 									</p>
 									<div class="orderInfo">
@@ -374,19 +374,8 @@
 										plus.payment.request(pays[id], varpay, function(result) {
 											console.log("----- 支付成功 -----");
 											var result = JSON.stringify(result);
-											mui.fire(plus.webview.getWebviewById('cart.html'), 'refresh');
-											openview({
-												view: '../personal/myOrderList.html',
-												id: 'myOrderList'
-											})
-											setTimeout(function() {
-												if(plus.webview.getWebviewById("order")) {
-													plus.webview.getWebviewById("order").close();
-												}
-												if(plus.webview.getWebviewById("chooseGift")) {
-													plus.webview.getWebviewById("chooseGift").close();
-												}
-											}, 2000)
+											mui.fire(plus.webview.getWebviewById('center.html'),'OrderNumR');
+											plus.webview.currentWebview().reload();
 										}, function(e) {
 											console.log("----- 支付失败 -----");
 											console.log("[" + e.code + "]：" + e.message);
@@ -426,23 +415,10 @@
 										plus.payment.request(pays[id], varpay, function(result) {
 											console.log("----- 支付成功 -----", JSON.stringify(result));
 											plus.nativeUI.closeWaiting();
-											plus.nativeUI.alert("支付成功");
-											var result = JSON.stringify(result);
-											mui.fire(plus.webview.getWebviewById('cart.html'), 'refresh');
-											openview({
-												view: '../personal/myOrderList.html',
-												id: 'myOrderList'
-											})
-											setTimeout(function() {
-												if(plus.webview.getWebviewById("order")) {
-													plus.webview.getWebviewById("order").close();
-												}
-												if(plus.webview.getWebviewById("chooseGift")) {
-													plus.webview.getWebviewById("chooseGift").close();
-												}
-											}, 2000)
-
-											//
+											plus.nativeUI.alert("支付成功"); 
+											mui.fire(plus.webview.getWebviewById('center.html'),'OrderNumR');
+											plus.webview.currentWebview().reload();
+										
 										}, function(e) {
 											console.log("----- 支付失败 -----");
 											console.log("[" + e.code + "]：" + e.message);
@@ -580,6 +556,9 @@
 											if(!ele.customer || !ele.customer.customerId){
 												ele.customer = {customerId:null}
 											}
+											if(ele.endTime){
+												ele.endTime = parseInt(ele.endTime/(1000*60))
+											}
 										})
 										document.getElementById('infoListDiv').innerHTML = template('infoList',{list:data.content.list,nowState:tabT});
 										if(noButton == 1){
@@ -618,6 +597,9 @@
 																data.content.list.forEach(function(ele,index){
 																	if(!ele.customer || !ele.customer.customerId){
 																		ele.customer = {customerId:null}
+																	}
+																	if(ele.endTime){
+																		ele.endTime = parseInt(ele.endTime/(1000*60))
 																	}
 																})
 						                                        document.getElementById('infoListDiv').innerHTML += template('infoList',{list:data.content.list,nowState:tabT});
@@ -740,6 +722,7 @@
 									success:function(data,type,xhr){
 										console.log('订单评价'+JSON.stringify(data));
 										if(data.code == 0){
+											mui.fire(plus.webview.getWebviewById('center.html'),'OrderNumR');
 											mui.toast(data.message || '感谢您的评价');
 											resetStar();
 											$('#evaOrder').css('display','none');

@@ -10,10 +10,7 @@
 		<link rel="stylesheet" type="text/css" href="../css/configW.css"/>
 	</head>
  	<style type="text/css">
- 		.categray div{
- 			width: calc(100vw - 100px);
- 			vertical-align: top;
- 		}
+ 		.categray div{width:calc(100vw - 100px);vertical-align: top;}
  		.sedc span{margin-bottom:10px;font-size: 16px;}
  		.flexw div{position: relative;align-items: center;padding: 15px 0 10px;}
  		.flexw div:not(:last-child):after{position: absolute;content: '';position: absolute;width: 1px;height: 30px;background: #DDD8CD;-webkit-transform:scaleX(.3);right: 0px;top:12px;z-index: 999;}
@@ -29,7 +26,7 @@
 			<h1 class="mui-title">商品列表</h1>
 		</header>
 		<script src="../js/statusBar.js" type="text/javascript" charset="utf-8"></script>
-		<div class="gocarticon" style="display: none;">
+		<div class="gocarticon" id="div2" style="display: none;">
 			<img src="../images/whitecart.svg" alt="" />
 			<span class="mui-badge mui-badge-white">0</span>
 		</div>
@@ -73,12 +70,22 @@
 			                <%=list[i].goodsName%>
 			                <p class='mui-ellipsis ft16'>规格:<%=list[i].goodsSpecification%> &nbsp;单位:<%=list[i].goodsUnit%></p>
 				            <span class="ft18 activecl2">¥<%=list[i].retailPrice%></span>
-							<img style="display:inline-block;float:right;margin-left:5px;vertical-align:middle" data-id="<%=list[i].id%>" class="toCart" src="../images/addcart.svg"/>
-				            <div style="display:none;float:right;" class="mui-numbox" data-numbox-step='1' data-numbox-min='0'>
-							  <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
-							  <input class="mui-numbox-input" type="number" data-id="<%=list[i].id%>" value="1"/>
-							  <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
-							</div>
+							<%if(!list[i].materialQty){%>
+								<img style="display:inline-block;float:right;margin-left:5px;vertical-align:middle" data-id="<%=list[i].id%>" class="toCart" src="../images/addcart.svg"/>
+								<div style="display: none;float:right;" class="mui-numbox" data-numbox-step='1' data-numbox-min='0'>
+								  <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+								  <input class="mui-numbox-input" type="number" data-id="<%=list[i].id%>" value="1"/>
+								  <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+								</div>
+							<%}else{%>
+								<div style="float:right;" class="mui-numbox" data-numbox-step='1' data-numbox-min='0'>
+								  <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+								  <input class="mui-numbox-input" type="number" data-id="<%=list[i].id%>" value="<%=list[i].materialQty%>"/>
+								  <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+								</div>
+							<%}%>
+
+				            
 			            </div>
 			        </a>
 			    </li>
@@ -119,6 +126,9 @@
 				 	$('.flexw div').eq(0).addClass('curActive');
 					kindType('water'); 
 				}) 
+				document.addEventListener('refreshct', function() {
+					getCartNum();
+				})
 				 kindType(categoryCode);
 				
 				 function kindType(categoryCode){
@@ -138,7 +148,7 @@
 					var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
 					var userId = plus.storage.getItem('$userId'); 
 					var oldToken = plus.storage.getItem('oldToken');
-					getCartNum(0); 
+					getCartNum(); 
 					mui.ajax(serverUrl+'/app/goods/category/list',{
 						data:{
 							categoryCode:categoryCode,
@@ -275,7 +285,8 @@
 							type:'post',
 							timeout:10000,
 							success:function(data,type,xhr){ 
-								console.log('商品列表',data);
+							console.log('商品列表'+JSON.stringify(data));
+//								console.log('商品列表',data);
 								if(data.code == 0 ){
 									plus.nativeUI.closeWaiting();
 									if(data.content.list && data.content.list.length){
@@ -309,6 +320,7 @@
 										$('#goodsList').html(template('goodsTpl',{list:data.content.list}));
 										mui('.mui-numbox').numbox();
 										$('.toCart,.mui-numbox button,.mui-numbox input').click(function() {
+											$(this).select();
 											event.stopPropagation()
 										})
 										
@@ -335,7 +347,8 @@
 										})
 										
 										//加入购物车
-										$('.toCart').click(function(){
+										$('.toCart').unbind("click").click(function(){
+											event.stopPropagation();
 											var goodid = $(this).attr('data-id');
 											var cur = $(this);
 											plus.nativeUI.showWaiting();
@@ -344,7 +357,7 @@
 										})
 										
 										//数量选择 -> 加入购物车
-										$('.mui-numbox input').on('change', function() {
+										$('.mui-numbox input').unbind("change").on('change', function() {
 											plus.nativeUI.showWaiting();
 											var cur = $(this);
 											var number = $(this).val(); //当前数量
@@ -367,9 +380,7 @@
 														plus.nativeUI.closeWaiting();
 														console.log('加入购物车', data);
 														if(data.code == 0) { 
-															plus.nativeUI.toast('加入成功')
 															mui.fire(plus.webview.getWebviewById('cart.html'), 'refresh');	
-															getCartNum(1);
 														} else {
 															mui.toast(data.message)
 														}
@@ -400,7 +411,6 @@
 																console.log('删除', data);
 																if(data.code == 0) {
 																	mui.fire(plus.webview.getWebviewById('cart.html'), 'refresh'); 
-																	getCartNum(-1);
 																} else {
 																	mui.toast(data.message)
 																}
@@ -436,10 +446,9 @@
 													plus.nativeUI.closeWaiting();
 													console.log('加入购物车',data);
 													if(data.code == 0 ){
-														plus.nativeUI.toast('加入成功');
 														mui.fire(plus.webview.getWebviewById('cart.html'), 'refresh');
-														getCartNum(1);
-														hadCart(goodid,cur);
+														cur.next().show();
+														cur.hide();
 													}else{
 														mui.toast(data.message)
 													}
@@ -452,40 +461,6 @@
 											});
 										}
 										
-										function hadCart(goodid,cur){
-											//获取已有购物车数量
-											mui.ajax(serverUrl + '/app/materialList/goods/qty', {
-												data: {
-													userId: userId,
-													identityType: identityT,
-													goodsId: goodid,
-												},
-												dataType: 'json',
-												headers: {
-													"Authorization": oldToken
-												},
-												type: 'post',
-												timeout: 10000,
-												success: function(data, type, xhr) {
-													plus.nativeUI.closeWaiting(); 
-													console.log('已有购物车', data);
-													if(data.code == 0) {
-														cur.next().show();
-														cur.hide();
-														if(data.content && data.content.qty){
-															cur.next().find('input').val(data.content.qty)
-														}
-													} else {
-														mui.toast(data.message)
-													}
-			
-												},
-												error: function(xhr, type, errorThrown) {
-													plus.nativeUI.closeWaiting();
-													console.log('响应失败');
-												}
-											});
-										}
 										$(window).scroll(function() {
 											var scrollTop = $(this).scrollTop();
 											var scrollHeight = $(document).height();
@@ -546,7 +521,9 @@
 																	$('#goodsList').append(template('goodsTpl',{list:data.content.list}));
 																	mui('.mui-numbox').numbox();
 																	$('.toCart,.mui-numbox button,.mui-numbox input').click(function() {
-																		event.stopPropagation()
+																		$(this).select();
+																		event.stopPropagation();
+																		
 																	})
 																	mui("#upload")[0].innerHTML = " ";
 																	Spagenum++; //加载成功,当前页+1
@@ -584,7 +561,7 @@
 																	})
 																	
 																	//数量选择 -> 加入购物车
-																	$('.mui-numbox input').on('change', function() {
+																	$('.mui-numbox input').unbind("change").on('change', function() {
 																		plus.nativeUI.showWaiting();
 																		var cur = $(this);
 																		var number = $(this).val(); //当前数量
@@ -607,9 +584,7 @@
 																					plus.nativeUI.closeWaiting();
 																					console.log('加入购物车', data);
 																					if(data.code == 0) { 
-																						plus.nativeUI.toast('加入成功')
 																						mui.fire(plus.webview.getWebviewById('cart.html'), 'refresh');	
-																						getCartNum(1);
 																					} else {
 																						mui.toast(data.message)
 																					}
@@ -640,7 +615,6 @@
 																							console.log('删除', data);
 																							if(data.code == 0) {
 																								mui.fire(plus.webview.getWebviewById('cart.html'), 'refresh'); 
-																								getCartNum(-1);
 																							} else {
 																								mui.toast(data.message)
 																							}
@@ -676,51 +650,15 @@
 																				plus.nativeUI.closeWaiting();
 																				console.log('加入购物车',data);
 																				if(data.code == 0 ){
-																					plus.nativeUI.toast('加入成功');
 																					mui.fire(plus.webview.getWebviewById('cart.html'), 'refresh');
-																					getCartNum(1);
-																					hadCart(goodid,cur);
+																					cur.next().show();
+																					cur.hide();
 																				}else{
 																					mui.toast(data.message)
 																				}
 																				 
 																			},
 																			error:function(xhr,type,errorThrown){
-																				plus.nativeUI.closeWaiting();
-																				console.log('响应失败');
-																			}
-																		});
-																	}
-																	
-																	function hadCart(goodid,cur){
-																		//获取已有购物车数量
-																		mui.ajax(serverUrl + '/app/materialList/goods/qty', {
-																			data: {
-																				userId: userId,
-																				identityType: identityT,
-																				goodsId: goodid,
-																			},
-																			dataType: 'json',
-																			headers: {
-																				"Authorization": oldToken
-																			},
-																			type: 'post',
-																			timeout: 10000,
-																			success: function(data, type, xhr) {
-																				plus.nativeUI.closeWaiting(); 
-																				console.log('已有购物车', data);
-																				if(data.code == 0) {
-																					cur.next().show();
-																					cur.hide();
-																					if(data.content && data.content.qty){
-																						cur.next().find('input').val(data.content.qty)
-																					}
-																				} else {
-																					mui.toast(data.message)
-																				}
-										
-																			},
-																			error: function(xhr, type, errorThrown) {
 																				plus.nativeUI.closeWaiting();
 																				console.log('响应失败');
 																			}
@@ -769,10 +707,15 @@
 					} 				
 				 }
 				
-				function getCartNum(num){
+				function getCartNum(){
 					var cartNum = plus.storage.getItem('cartNums') || 0;
 					cartNum = cartNum < 0 ? 0:cartNum;
-					$('.gocarticon span').html(Number(cartNum)+num)
+					if(cartNum>0){
+						$('.gocarticon span').show();
+						$('.gocarticon span').html(cartNum)
+					}else{
+						$('.gocarticon span').hide();
+					}
 				}
 				mui('.gocarticon')[0].onclick = function(){
 					mui.fire(plus.webview.getWebviewById('cart.html'), 'refresh');
@@ -804,6 +747,40 @@
 					}
 				}
 				return res;
+			}
+		</script>
+		<script type="text/javascript">
+			// 获取节点
+		  	var block = document.getElementById("div2");
+		  	var oW,oH;
+		  	// 绑定touchstart事件
+		  	block.addEventListener("touchstart", function(e) {
+			   	console.log(e);
+			   	var touches = e.touches[0];
+			   	oW = touches.clientX - block.offsetLeft;
+			   	oH = touches.clientY - block.offsetTop;
+			   	//阻止页面的滑动默认事件
+			   	document.addEventListener("touchmove",defaultEvent,false);
+		  	},false)
+		 
+		  	block.addEventListener("touchmove", function(e) {
+			   	var touches = e.touches[0];
+			   	var oLeft = touches.clientX - oW;
+			   	var oTop = touches.clientY - oH;
+			   	if(oLeft < 0) {
+			   		oLeft = 0;
+			   	}else if(oLeft > document.documentElement.clientWidth - block.offsetWidth) {
+			    oLeft = (document.documentElement.clientWidth - block.offsetWidth);
+			   	}
+			   	block.style.left = oLeft + "px";
+			   	block.style.top = oTop + "px";
+		  	},false);
+		   
+			block.addEventListener("touchend",function() {
+			   document.removeEventListener("touchmove",defaultEvent,false);
+			},false);
+			function defaultEvent(e) {
+			   e.preventDefault();
 			}
 		</script>
 	</body>

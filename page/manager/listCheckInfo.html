@@ -216,7 +216,7 @@
 			window.manageCheck = function(isAudited){
 
 				mui.ajax(serverUrl+'/app/material/audit/manager/check',{
-					data:{'auditNo':audiono,"userID":userId,"isAudited":isAudited},
+					data:{'auditNo':audiono,"userID":userId,'identityType':identityT,"isAudited":isAudited},
 					dataType:'json',
 					type:'post',
 					timeout:10000,

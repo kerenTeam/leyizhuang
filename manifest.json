@@ -412,7 +412,7 @@
 					"xxhdpi": "unpackage/res/startPic/Android/1080X1880.png"
 				}
 			}
-		}
+		},"ads":{"rp":false,"splash":false,"push":false,"spot":false},"adid":""
 	},
 	"dependencies": {
 		"pages": {
@@ -711,7 +711,8 @@
 					"images/addcart.svg"
 				],
 				"refer": [
-					"page/goodsInfo.html"
+					"page/goodsInfo.html",
+					"cart.html"
 				],
 				"priority": 0
 			},
@@ -788,7 +789,8 @@
 					"js/artTemplate-native.js"
 				],
 				"refer": [
-					"page/goodsInfo.html"
+					"page/goodsInfo.html",
+					"cart.html"
 				],
 				"priority": 0
 			},
@@ -914,7 +916,8 @@
 					"js/default.js"
 				],
 				"refer": [
-					"page/goodsInfo.html"
+					"page/goodsInfo.html",
+					"cart.html"
 				],
 				"priority": 0
 			},
@@ -984,7 +987,9 @@
 					"css/configW.css",
 					"images/center/right.svg"
 				],
-				"refer": [],
+				"refer": [
+					"page/guide/customerPage.html"
+				],
 				"priority": 0
 			},
 			"page/manager/workerList.html": {
@@ -1152,7 +1157,9 @@
 					"iconfont/iconfont.svg",
 					"js/jquery.citysYF.js"
 				],
-				"refer": [],
+				"refer": [
+					"page/mailList.html"
+				],
 				"priority": 0
 			},
 			"page/personal/productCoupon.html": {
@@ -1622,7 +1629,8 @@
 			"page/history.html": {
 				"resources": [],
 				"refer": [
-					"page/goodsInfo.html"
+					"page/goodsInfo.html",
+					"cart.html"
 				],
 				"priority": 0
 			},
@@ -1671,7 +1679,8 @@
 					"page/dispatching/agencyFund.html",
 					"page/dispatching/addressMap.html",
 					"page/personal/palette.html",
-					"page/dispatching/dispatchingAudit.html"
+					"page/dispatching/dispatchingAudit.html",
+					"page/dispatching/returnInfo.html"
 				],
 				"priority": 0
 			},
@@ -1741,7 +1750,8 @@
 			"page/oilFast.html": {
 				"resources": [],
 				"refer": [
-					"page/goodsInfo.html"
+					"page/goodsInfo.html",
+					"cart.html"
 				],
 				"priority": 0
 			},
@@ -1776,7 +1786,8 @@
 			"page/personal/myOrderDetail.html": {
 				"resources": [],
 				"refer": [
-					"page/personal/myOrderWL.html"
+					"page/personal/myOrderWL.html",
+					"cart.html"
 				],
 				"priority": 0
 			},
@@ -1800,6 +1811,49 @@
 				"refer": [
 					"page/personal/myOrderRTList.html"
 				],
+				"priority": 0
+			},
+			"page/dispatching/returnInfo.html": {
+				"resources": [],
+				"refer": [
+					"page/dispatching/receipt.html",
+					"page/dispatching/receiptRT.html"
+				],
+				"priority": 0
+			},
+			"page/waterFast.html": {
+				"resources": [],
+				"refer": [
+					"cart.html"
+				],
+				"priority": 0
+			},
+			"page/woodFast.html": {
+				"resources": [],
+				"refer": [
+					"cart.html"
+				],
+				"priority": 0
+			},
+			"page/electricFast.html": {
+				"resources": [],
+				"refer": [
+					"cart.html"
+				],
+				"priority": 0
+			},
+			"page/tileFast.html": {
+				"resources": [],
+				"refer": [
+					"cart.html"
+				],
+				"priority": 0
+			},
+			"welcome.html": {
+				"resources": [
+					"images/welcome/wel2.png"
+				],
+				"refer": [],
 				"priority": 0
 			}
 		},

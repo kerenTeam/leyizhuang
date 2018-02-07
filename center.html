@@ -150,7 +150,7 @@
 						<div class="denlu" style="display:none ;" id="userNumber">用户id:<span style="z-index: 99;"></span></div>
 						<div class="denlu" id="onlyPs">配送数量:<span id="psNumber" style="z-index: 99;"></span></div>
 						<div class="denlu" id="onlyGuide">手机号:<span id="guidesPhone"></span> <span id='bindPhone' style="background-color: orange;color: white;font-size: 10px;padding: 2px;border-radius: 3px;display: none;">绑定手机号</span></div>
-						<div class="denlu" id="onlyCust">灯号:<span id="dengh"></span>&nbsp;&nbsp; 导购:<span id="guideName"></span><a id="guideMobile" style="display: none;" href=""><img style="width: 15px;margin-left: 5px;" src="images/center/phone.svg"/></a></div>
+						<div class="denlu" id="onlyCust">灯号:<span id="dengh"></span><br />导购:<span id="guideName"></span><a id="guideMobile" style="display: none;" href=""><img style="width: 15px;margin-left: 5px;" src="images/center/phone.svg"/></a></div>
 						<div class="denlu" id="onlymange">账户:<span id="manageMoney"></span></div>
 					</p>
 				</div>
@@ -173,22 +173,22 @@
 					<div class="" onclick="openOrder(1)">
 						<img src="images/center/waitPay.svg"/>
 						待付款
-						<em class="mui-badge orderNum mui-badge-danger">12</em>
+						<em class="mui-badge orderNum mui-badge-danger"></em>
 					</div>
 					<div class="" onclick="openOrder(2)">
 						<img src="images/center/take.svg"/>
 						待收货
-						<em class="mui-badge orderNum mui-badge-danger">22</em>
+						<em class="mui-badge orderNum mui-badge-danger"></em>
 					</div>
 					<div class="" onclick="openRTList('pingjia')">
 						<img src="images/center/cmt.svg"/>
 						待评价
-						<em class="mui-badge orderNum mui-badge-danger">3</em>
+						<em class="mui-badge orderNum mui-badge-danger"></em>
 					</div>
 					<div class="" id="tuihuo0" onclick="openRTList()">
 						<img src="images/center/backT.svg"/>
 						&nbsp;退&nbsp;&nbsp;货&nbsp;
-						<em class="mui-badge orderNum mui-badge-danger">4</em>
+						<em class="mui-badge orderNum mui-badge-danger"></em>
 					</div>
 				</div>
 			</div>
@@ -405,11 +405,7 @@
 								}
 							}) 
 					}else if(url.indexOf('&')>-1 ){//本地
-						
-//						let getUrlParam = (urlParam) => {
-//						    return new URL(location.href).searchParams.get(urlParam)
-//						}
-						
+					 
 						var localId = url.split('&')[1],
 							localUrl = url.split('&')[0],
 							localUId = url.split('&')[2] || -1; 
@@ -656,7 +652,7 @@
 							timeout:10000,
 							success:function(data,type,xhr){
 								plus.nativeUI.closeWaiting();
-								console.log('列表',data);
+								console.log('签到',data);
 								if(data.code == 0 ){
 									plus.nativeUI.closeWaiting();
 									plus.nativeUI.toast('签到成功，增加1乐币');
@@ -849,8 +845,13 @@
 						});
 					}
 
+					document.addEventListener('OrderNumR', function() {
+						showOrderNum();
+					})
 					//显示订单数量
-					showOrderNum();
+					if(identityT != 1){
+						showOrderNum();
+					}
 					function showOrderNum(){
 						mui.ajax(serverUrl+'/app/order/AppOrderQuantity',{
 							data:{ userId:userId,identityType:identityT },
@@ -863,10 +864,31 @@
 								if(data.code == 0){
 									var unpaidOrderQuantity = data.content.unpaidOrderQuantity,pendingReceiveOrderQuantity = data.content.pendingReceiveOrderQuantity,
 									    isEvaluatedOrderQuantity = data.content.isEvaluatedOrderQuantity,returningOrderQuantity = data.content.returningOrderQuantity;
-									unpaidOrderQuantity && ($('.orderNum').eq(0).html(unpaidOrderQuantity).css('display','inline-block'));
-									pendingReceiveOrderQuantity && ($('.orderNum').eq(1).html(pendingReceiveOrderQuantity).css('display','inline-block'));
-									isEvaluatedOrderQuantity && ($('.orderNum').eq(2).html(isEvaluatedOrderQuantity).css('display','inline-block'));
-									returningOrderQuantity && ($('.orderNum').eq(3).html(returningOrderQuantity).css('display','inline-block'));
+									if(unpaidOrderQuantity){
+										$('.orderNum').eq(0).html(unpaidOrderQuantity).css('display','inline-block')
+									}else{
+										$('.orderNum').eq(0).hide()
+									}
+									if(pendingReceiveOrderQuantity){
+										$('.orderNum').eq(1).html(pendingReceiveOrderQuantity).css('display','inline-block')
+									}else{
+										$('.orderNum').eq(1).hide()
+									}
+									if(isEvaluatedOrderQuantity){
+										$('.orderNum').eq(2).html(isEvaluatedOrderQuantity).css('display','inline-block')
+									}else{
+										$('.orderNum').eq(2).hide()
+									}
+									if(returningOrderQuantity){
+										$('.orderNum').eq(3).html(returningOrderQuantity).css('display','inline-block')
+									}else{
+										$('.orderNum').eq(3).hide()
+									}
+									
+//									unpaidOrderQuantity && ($('.orderNum').eq(0).html(unpaidOrderQuantity).css('display','inline-block'));
+//									pendingReceiveOrderQuantity && ($('.orderNum').eq(1).html(pendingReceiveOrderQuantity).css('display','inline-block'));
+//									isEvaluatedOrderQuantity && ($('.orderNum').eq(2).html(isEvaluatedOrderQuantity).css('display','inline-block'));
+//									returningOrderQuantity && ($('.orderNum').eq(3).html(returningOrderQuantity).css('display','inline-block'));
 								}else{
 									console.error(data.message);
 								}

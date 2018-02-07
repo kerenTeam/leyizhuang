@@ -20,19 +20,20 @@ body {
 }
 .mui-numbox { 
     width: 100px;
-    height: 29px;
+    height: 30px;
     padding:0 25px; 
     font-size:12px;
     border: 1px solid #f8f8f8;
     border-radius: 4px;
 }
 .mui-numbox [class*=btn-numbox], .mui-numbox [class*=numbox-btn]{
-	width: 30px;
-	font-size:20px;
+	width: 32px;
+	font-size:25px;
 }
 .mui-numbox .mui-input-numbox, .mui-numbox .mui-numbox-input{
 	border:none!important;
 	width: 90%!important;
+	margin: auto!important;
 }
 .flexwc{
 	background: white;
@@ -84,7 +85,7 @@ body {
 	height: 1px;
 	background-color: #EEEEEE;/*B42E28*/
 	left: 42px;
-	width: 39px;
+	width: 37px;
 	content: '';
 }
 .cartAct:after,.cartAct:before{
@@ -117,7 +118,7 @@ header{background-color: white!important;}
     text-align: center;
     color: #999;
 }
-.toCart{width: 25px;}
+.toCart{width: 30px;}
 #bottomCart{
 	position: fixed;
 	left: 0;

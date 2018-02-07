@@ -52,6 +52,7 @@
 				border-left: 1px solid #eee;
 				font-size: 16px;
 			}
+			#username,#guide{width: 70%;}
 			.mui-input-row{padding: 10px 0!important;height: 60px!important;}
 		</style>
 	</head>
@@ -70,6 +71,17 @@
 				</div>
 				<div class="mui-input-row flexr">
 					<input id='checkcode' type="text" class="mui-input-clear mui-input" placeholder="请输入验证码">
+				</div>
+				<div class="mui-input-row flexr">
+					<label style="border-right: 1px solid #EEEEEE;width: 27%;">姓名</label>
+					<input id="username" type="text" class="mui-input-clear mui-input" placeholder="请输入姓名">
+				</div>
+				<div class="mui-input-row flexr">
+					<label style="border-right: 1px solid #EEEEEE;width: 27%;">工种</label>
+					<select name="workerType" id="workerType" style="padding: 0 10px;">
+						<option value="">选择</option>
+					</select>
+					<span class="mui-icon mui-icon-arrowdown"></span>
 				</div>
 				<div class="mui-input-row flexr">
 					<label style="border-right: 1px solid #EEEEEE;width: 27%;">城市</label>
@@ -101,9 +113,10 @@
 				var reg_phone = /^1((3|4|5|8|7){1}\d{1}|70)\d{8}$/; //手机号正则;
 				var sendButton = document.getElementById('sendMail');
 				var account = document.getElementById('account');
+				var username = document.getElementById('username');
 				var checkcode = document.getElementById('checkcode');
 				var getCode = document.getElementById('getCode');
-				var cityId = $('select option:selected').val()
+				var cityId = $('#city option:selected').val()
 				var newpsd = document.getElementById('newpsd');
 				var VerCode;
 				var codePhone = '';
@@ -151,6 +164,29 @@
 					}
 
 				});
+				//获取工种
+				mui.ajax(serverUrl + '/app/customer/get/customerProfession', {
+					dataType: 'json',
+					type: 'post',
+					timeout: 10000,
+					success: function(data, type, xhr) {
+						console.log('工种列表返回', data);
+						if(data.code == 0 && data.content) {
+							var cityStr = '<option value="">选择</option>';
+							for(var i in data.content) {
+								cityStr += '<option value="' + i + '">' + data.content[i] + '</option>'
+
+							}
+							$('#workerType').html(cityStr);
+							$('#workerType option').eq(0).attr('selected', true)
+
+						}
+					},
+					error: function(xhr, type, errorThrown) {
+
+					}
+
+				});
 
 				account.addEventListener('input', function() {
 					if(reg_phone.test(account.value)) {
@@ -166,6 +202,10 @@
 						mui.toast('请输入验证码')
 					} else if(account.value != codePhone) {
 						mui.toast('请重新获取验证码')
+					} else if(!username.value) {
+						mui.toast('请输入姓名')
+					} else if(!$('#workerType').val()) {
+						mui.toast('请选择工种')
 					} else if(guide.value && !reg_phone.test(guide.value)){
 						mui.toast('请输入正确的导购手机号');
 						return;
@@ -179,7 +219,9 @@
 								'cityId': cityId,
 								"picUrl": picUrl,
 								"nickName": nick,
-								"sex": sex
+								"sex": sex,
+								"name":username.value,
+								"profession":$('#workerType').val()
 							},
 							dataType: 'json',
 							type: 'post',

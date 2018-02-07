@@ -319,6 +319,8 @@
 									});
 									//下拉加载结束
 								}else{
+									$('#loadingdiv').css('height','0px');
+									document.getElementById('infoListDiv').innerHTML = '<div style="text-align: center;padding: 50px;"><img src="../../images/order/order.png" style="width: 100px;margin-bottom: 8px;" /><div class="ft13 disablecl">'+data.message+'</div></div>';
 									mui.toast(data.message);
 								}
 							},500)
@@ -344,6 +346,7 @@
 							success:function(data,type,xhr){
 								console.log('取消退货',data);
 								if(data.code == 0){
+									mui.fire(plus.webview.getWebviewById('center.html'),'OrderNumR');
 									mui.toast(data.message || '取消退货成功');
 									that.style.display = 'none';
 								}else{

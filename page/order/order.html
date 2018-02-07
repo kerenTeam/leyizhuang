@@ -1122,6 +1122,7 @@
 					success: function(data) {
 						console.log('创建订单返回', data);
 						if(data.code == 0) {
+							mui.fire(plus.webview.getWebviewById('page/goodList.html'), 'refresh');
 							mui.fire(plus.webview.getWebviewById('cart.html'), 'refresh');
 							mui.fire(plus.webview.getWebviewById('cart'), 'refresh');
 							if(data.content.isPayUp == false) {

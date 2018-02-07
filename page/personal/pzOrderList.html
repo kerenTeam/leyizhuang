@@ -42,6 +42,7 @@
 			.mui-bar-nav~.mui-content{padding-top: 50px;}
 			.cmimg{width: 1rem;height: 1rem;}
 			.bgcee{overflow-y:scroll ;white-space: nowrap;}
+			.overel{display:inline-block;width: 50%;overflow: hidden;text-overflow: ellipsis;vertical-align: middle;}
 		</style>
 
 	</head>
@@ -73,7 +74,7 @@
 					<%for(var i=0;i<list.length;i++){%>
 						<div class="rechargeConDiv" onclick="goInfo('<%=list[i].id%>')">
 							 <div class="padd10 ft16 afterBorder">
-							 	订单编号：<%=list[i].id%>
+							 	订单编号：<span class="overel"><%=list[i].photoOrderNo%></span>
 							 	<span class="mui-pull-right mui-icon mui-icon-arrowright activecl righticon" style="margin-top: 2px;"></span>
 							 	<span class="mui-pull-right activecl"><%=list[i].status%></span>
 							 </div>
@@ -99,9 +100,9 @@
 				</script>
 				<script id="infoList2" type="text/html">
 					<%for(var i=0;i<list.length;i++){%>
-						<div class="rechargeConDiv">
+						<div class="rechargeConDiv" onclick="goInfo('<%=list[i].id%>')">
 							 <div class="padd10 ft16 afterBorder">
-							 	订单编号：<%=list[i].id%>
+							 	订单编号：<span class="overel"><%=list[i].photoOrderNo%></span>
 							 	<span class="mui-pull-right activecl"><%=list[i].status%></span>
 							 </div>
 							 <div class="padd10">

@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html class="ui-page-login">
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>确认收货</title>
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/commonY.css" />
+		<link href="../../css/style.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/configW.css" />
+		<style>
+			.area {
+				margin: 20px auto 0px auto;
+			}
+			
+			.mui-input-group:first-child {
+				margin-top: 20px;
+			}
+			
+			.mui-input-group label {
+				width: 30%;
+			}
+			
+			.mui-input-row label~input,
+			.mui-input-row label~select,
+			.mui-input-row label~textarea {
+				width: 65%;
+			}
+			
+			.mui-checkbox input[type=checkbox],
+			.mui-radio input[type=radio] {
+				top: 6px;
+			}
+			
+			.mui-content-padded {
+				margin-top: 25px;
+			}
+			
+			.mui-btn {
+				padding: 10px;
+			}
+			
+			.mui-input-row label~input,
+			.mui-input-row label~select,
+			.mui-input-row label~textarea {
+				margin-top: 1px;
+			}
+			
+			#getCode {
+				border: none;
+				border-left: 1px solid #eee;
+				font-size: 16px;
+			}
+			.mui-input-row{padding: 10px 0!important;height: 60px!important;}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">确认收货</h1>
+		</header>
+		<script src="../../js/statusBar.js" type="text/javascript" charset="utf-8"></script>
+		<div class="mui-content">
+			<div class="bgcwt">
+				<form class="mui-input-group ft16" style="margin-top: 7px;border-bottom: 0;">
+					 
+					<div class="mui-input-row flexr">
+						<label style="border-right: 1px solid #EEEEEE;width: 27%;">提货码</label>
+						<input type="text" name="" id="pickUpCode" placeholder="输入收货码" />
+					</div>
+				 
+				</form>
+				<div class="ft16" style="padding: 10px 10px 0;border-top: 5px solid #EEEEEE;">
+				备注信息
+				</div>
+				<textarea id="notice" rows="3" cols="" placeholder="输入您的备注" style="background-color: #DDDDDD;margin: 10px;width: calc(100vw - 20px);"></textarea>
+				<div class="onepic newActionWrap">
+					<img src="../../images/center/camer.svg" onclick="showAction()"  style="width: 60px;padding: 10px;" />
+				 </div>
+				 
+			</div>
+			<div class="mui-content-padded">
+				<button id='send' class="mui-btn mui-btn-block mui-btn-danger">提交</button>
+			</div>
+		</div>
+		<script src="../../js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/default.js" type="text/javascript" charset="utf-8"></script>
+		<script>
+			mui.init();
+			mui.plusReady(function() { 
+				var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
+				var userId = plus.storage.getItem('$userId');
+				var oldToken = plus.storage.getItem('oldToken');
+				var orderNumber = plus.webview.currentWebview().orderNumber;
+				var money = plus.webview.currentWebview().money;
+				var cityId = plus.storage.getItem('userCity');
+				$('#orderMoney').val('¥'+money)
+				mui.ajax(serverUrl + '/app/distributionAgent/list', {
+					data:{userId:userId,identityType:identityT,cityId:cityId},
+					dataType: 'json',
+					type: 'post',
+					timeout: 10000,
+					headers:{"Authorization":oldToken},
+					success: function(data, type, xhr) {
+						console.log('列表返回', data);
+						if(data.content && data.content.length) {
+							for(var i = 0; i < data.content.length; i++) {
+								$('#payWay').append('<span class="bdc">' + data.content[i].method + '</span>&nbsp;&nbsp;');
+							}
+							$('#payWay span').click(function(){
+								$(this).siblings().removeClass('bdcA')
+								$(this).addClass('bdcA')
+							})
+
+						}
+					},
+					error: function(xhr, type, errorThrown) {
+
+					}
+
+				});
+				  
+			});
+			//选择图片组件
+			var Apic = [],time1 = null,maxNum = 3;
+			function getImage(){//拍照并保存
+				var cmr = plus.camera.getCamera();
+				cmr.captureImage( function ( path ) {
+					plus.io.resolveLocalFileSystemURL(path,function(entry){
+						path = plus.io.convertLocalFileSystemURL(path);
+						if(0!=path.indexOf("file://")){path="file://"+path;}
+				    		var nowpic = Math.random().toString(36).substr(2) + '.jpg';
+				    		var endpic = path.split('.')[0]+"/"+nowpic;
+						plus.zip.compressImage({//压缩方法
+							src:path,
+							dst:endpic,
+							overwrite:true,
+							quality:30
+						},
+						function(obj) {
+							showImg(obj.target);
+							Apic.push(obj.target);
+						},function(error) {
+							mui.toast('图片获取错误，请重试');
+						});
+					});
+				}, function ( e ) {
+				}, {filename:"_doc/gallery/",index:1} );
+			}
+			function galleryImgsSelected(){//从相册中选择图片
+				mui.plusReady(function(){
+				    plus.gallery.pick( function(e){
+					    	clearInterval(time1);
+					    	var indexNum = 0;
+					    	var indexMax = e.files.length - 1;
+					    	time1 = setInterval(function(){
+					    		if(0!=e.files[indexNum].indexOf("file://")){e.files[indexNum]="file://"+e.files[indexNum];}
+					    		if(indexNum == indexMax){//全部压缩完毕
+					    			clearInterval(time1),time1 = null;
+					    		}
+					    		var nowpic = Math.random().toString(36).substr(2) + '.jpg';//随机字符串
+					    		var endpic = e.files[indexNum].split('.')[0]+"/" +nowpic;
+				    			plus.zip.compressImage({
+								src:e.files[indexNum],
+								dst:endpic,
+								overwrite:true,
+								quality:30
+							},
+							function(obj) {
+								Apic.push(obj.target);
+								showImg(obj.target,indexNum);
+							},function(error) {
+								mui.toast('图片获取错误，请重试');
+							});
+					    		indexNum ++;
+					    	},500)
+				    }, function ( e ) {
+				    },{filter:"image",multiple:true,maximum:maxNum-Apic.length,system:false,onmaxed:function(){//保存选择记录
+				    		mui.alert('最多选择'+maxNum+'张图片！');
+				    }});
+				})
+			}
+			function showImg(url,indexNum){//显示图片
+				if(0!=url.indexOf("file://")){url="file://"+url;}
+				if($('.newAction').length){
+					$('.newAction').eq($('.newAction').length-1).after('<a class="newAction"><img data-preview-src="" data-preview-group="1" src="'+url+'"/><span onclick="closePic(this)" class="mui-icon mui-icon-closeempty"></span></a>');
+				}else{
+					$('.onepic').prepend('<a class="newAction"><img data-preview-src="" data-preview-group="1" src="'+url+'"/><span onclick="closePic(this)" class="mui-icon mui-icon-closeempty"></span></a>');
+				}
+			}
+			function closePic(obj){
+				var nowPic = $(obj).parentsUntil('.newActionWrap').find('img').attr('src');
+				console.log($(obj).parent().html())
+				$(obj).parent().remove();
+				if(Apic.indexOf(nowPic)>-1){
+					Apic.splice($.inArray(nowPic,Apic),1);
+				}
+			}
+			function showAction(){
+				if(Apic.length  < maxNum){
+					mui.plusReady(function(){
+						plus.nativeUI.actionSheet({
+							cancel: "取消",
+							buttons: [{
+								title: "相册选择"
+							}, {
+								title: '拍照'
+							}]
+						},
+						function(e) {
+							if (e.index == 1) { //点击从相册选择
+								galleryImgsSelected();
+							} else if (e.index == 2) {
+								getImage();
+							}
+						})
+					})
+				}else{
+					mui.alert('最多选择'+maxNum+'张图片！');
+				}
+
+			}
+			
+			document.getElementById('send').onclick = function(){
+				mui.plusReady(function(){
+					var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
+					var userId = plus.storage.getItem('$userId');
+					var oldToken = plus.storage.getItem('oldToken');
+					var orderNumber = plus.webview.currentWebview().orderNumber;
+					 
+					var pickUpCode = $('#pickUpCode').val();
+					var truemoney = $('#truemoney').val();
+					var paymentMethod = $('.bdcA').text();
+					var content = $('#notice').val();
+					if(!pickUpCode){
+						mui.toast("还未填收获码呢！");
+		    	   			mui('#pickUpCode')[0].focus();
+					}else if(!truemoney){
+				    		mui.toast("还未填实收金额呢");
+		    	   			mui('#truemoney')[0].focus();
+				    	}else if(!paymentMethod){
+				    		mui.toast("还未填选择付款方式呢");
+				    	}else{
+				    		plus.nativeUI.showWaiting();
+						//发送数据开始
+						var task = plus.uploader.createUpload(serverUrl+'/app/orderArrive/confirm',
+							{ method:"POST"},
+							function(back,status){
+								if(status == 200){
+									console.log(back.responseText);
+									var dataobj = JSON.parse(back.responseText);
+									console.log('确认收货',JSON.stringify(dataobj));
+									plus.nativeUI.closeWaiting(); //关闭等待框
+									if(dataobj.code == 0){
+										mui.toast("确认收货成功！");
+										plus.webview.getWebviewById("deliveryInfo").close();
+										mui.fire(plus.webview.getWebviewById('dispatching'), 'refresh');
+										mui.back();
+									}else{
+										mui.toast(dataobj.message);
+									}
+								}else{
+									plus.nativeUI.closeWaiting();
+									mui.toast("当前网络不好，请重试！");
+									console.log('响应失败  !');
+								}
+							}
+						);
+	
+						task.setRequestHeader('Authorization',oldToken);
+						task.addData('userId',userId);
+						task.addData('identityType',identityT.toString());
+				        task.addData('orderNo',orderNumber);
+				        task.addData('pickUpCode',pickUpCode.toString());
+				        task.addData('collectionAmount',truemoney.toString());
+				        task.addData('paymentMethod',paymentMethod);
+				        task.addData('remarks',content);
+	
+						if(Apic.length){
+							console.log(Apic);
+							[].forEach.call(Apic,function(ele,index){
+								task.addFile(ele, {key:'files'});
+//								if(index == Apic.length-1){ task.start(); }
+							})
+						}
+						task.start();
+				    	}
+				})
+			}
+		</script>
+	</body>
+
+</html>

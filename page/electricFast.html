@@ -675,7 +675,8 @@
 			<aside class="btmNav flexr" style="position: fixed;bottom: 0;left: 0;width: 100%;">
 				<span id="showBtcrt" class="mui-icon mui-icon-arrowup activecl showRotate" style="padding-left: 10px;"></span>
 				<a class="dp ft16" style="color: #B62D29;text-align: center;flex: 1;">
-					<span>合计：</span><span class="totalMoney">0</span>件商品
+					<img style="display:inline-block;margin-right:10px;vertical-align:middle;width:25px" onclick="tocart()" src="../images/cart2.svg" />
+					<span>|&nbsp;&nbsp;&nbsp;合计：</span><span class="totalMoney">0</span>件商品
 				</a>
 				<a class="goOrder dp" style="background:#B62D29;color:white;padding:14px 10px;">加入下料清单</a>
 			</aside>
@@ -752,7 +753,20 @@
 			$(this).siblings().removeClass('actspan')
 			$(this).addClass('actspan')
 		})
+		function tocart(){
+			openview({
+				view: "../cart.html",
+				id:'cart',
+				extrasobj: {
+					page: "1"
+				}
+			})
+		}
 		mui.plusReady(function(){
+			$('.mui-numbox input').click(function() {
+				$(this).select();
+				event.stopPropagation()
+			})
 			//存缓存
 //			plus.storage.removeItem('$eleFastGoods')
 			var eleFastGoods = JSON.parse(plus.storage.getItem('$eleFastGoods') || '[]');

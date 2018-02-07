@@ -129,6 +129,8 @@ function cancelOF(pageType,cancelParentId){
 							console.log('取消订单',data);
 							if(data.code == 0){
 								mui.toast(data.message || '取消订单成功');
+								mui.fire(plus.webview.getWebviewById('center.html'),'OrderNumR');
+								
 								$('#cancelOrder').css('display','none');
 								resetChoose();
 								if(pageType == 'detail'){
@@ -138,9 +140,9 @@ function cancelOF(pageType,cancelParentId){
 									$(that).parentsUntil('.orderList').find('.stateSpan').html('已取消');
 									$(that).parentsUntil('.orderList').find('.stateSpan2').css('display','none');
 								    $(that).parent().find('span').each(function(index,ele){
-							    	 		if($(ele).html() != '取消订单'){
+//							    	 		if($(ele).html() != '取消订单'){
 							    	 			$(ele).css('display','none');
-							    	 		}
+//							    	 		}
 								    })
 								}
 							}else{
