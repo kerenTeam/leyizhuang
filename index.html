@@ -554,6 +554,7 @@
 		<script src="js/app.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/default.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/youxd.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/update.js" type="text/javascript" charset="utf-8"></script>
 		<script>
 			mui.init();
 			var text=null;
@@ -599,7 +600,7 @@
 				plus.storage.setItem('platform',systemType)
 				plus.storage.setItem('clientId',clientId)
 				plus.storage.setItem('deviceId',deviceId)
-				
+
 				var showGuide = plus.storage.getItem("lauchFlag");
 				if(!showGuide) {
 					Sign();
@@ -616,7 +617,7 @@
 					plus.navigator.closeSplashscreen();
 					plus.navigator.setFullscreen(false)
 					Sign();
-				}  
+				}
 				//判断是否登陆
 //				document.addEventListener('refreshid', function() {
 //					loadIndex();
@@ -673,7 +674,7 @@
 												loadIndex();
 												util.initSubpage();
 											}
-											
+
 										}
 									},
 									error: function(xhr, type, errorThrown) {
@@ -727,7 +728,8 @@
 						}
 
 					}
-
+					//app更新
+					checkUpdate(true);
 				} //登录方法结束
 
 				function loadIndex() {
@@ -749,7 +751,7 @@
 						$('.guides,.worker').css('display', '')
 						$('.cusMan,.guides').css('display', 'none')
 						getIcon(2)
-					} else { //配送员 
+					} else { //配送员
 
 					}
 					var timeMsg = null;
@@ -1260,7 +1262,7 @@
 				document.addEventListener('cart_refresh', function() {
 					//获取购物车数量
 					cartNum = plus.storage.getItem('cartNums');
-					
+
 					if(cartNum>999){
 						cartNum= '999+'
 					}
@@ -1279,7 +1281,7 @@
 
 				})
 //				document.addEventListener('refreshid', function() {
-//					//登录-》退出登录 
+//					//登录-》退出登录
 //					util.toggleNview(3);
 //				})
 				document.addEventListener('pagerefresh', function() {

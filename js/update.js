@@ -19,36 +19,6 @@ if(/android/i.test(navigator.userAgent)){
 }else{
 	typeNow = 2;
 }
-//ios提示更新(弃用)
-function checkUpdateIos(){
-	var oldtoken = plus.storage.getItem('oldToken');
-	mui.ajax(serverUrl+'/api/index/version',{
-		dataType:'json',
-		type:'post',
-		timeout:5000,
-		headers:{"token":oldtoken},
-		success:function(data,type,xhr){
-			console.log('检测更新',data);
-			console.log('检测更新'+JSON.stringify(data));
-			wgtUrl= serverUrl + data.data.android_path_url;
-			var newVer = data.data.ios_versionNum;//远程版本号
-			var newUrl = data.data.ios_path_url;//远程地址
-			if(newVer > wgtVer){//升级
-				mui.confirm('检测到有新版本，是否升级？', '提示',['是','否'], function(e) {
-					if(e.index == 0) {
-						plus.runtime.openURL(newUrl);
-					}
-				})
-            }
-
-		},
-		error:function(xhr,type,errorThrown){
-			//mui.toast('当前网络不好，请重试');
-			console.error('操作响应失败');
-		}
-	});
-}
-
 
 // android检测更新（和ios公用）
 function checkUpdate(hide,ios){
@@ -58,7 +28,7 @@ function checkUpdate(hide,ios){
 		data:{type:typeNow},
 		dataType:'json',
 		type:'post',
-		timeout:5000,
+		timeout:10000,
 		headers:{"token":oldtoken},
 		success:function(data,type,xhr){
 			console.log('检测更新'+JSON.stringify(data));
@@ -86,22 +56,21 @@ function checkUpdate(hide,ios){
 
 function downWgt(hide,downurl,ios){
 	!hide && plus.nativeUI.showWaiting('正在下载...',{width:'130px',height:'110px'});
-    console.log('下载地址全'+ oCms+"/"+downurl);
-    console.log('下载地址半' +downurl);
     if(downurl.indexOf('http') == -1){
     		downurl = oCms+"/"+downurl;
     }
+    console.log('下载地址' +downurl);
     plus.downloader.createDownload(downurl, {filename:"_doc/update/"}, function(d,status){
     		console.log('下载状态',status);
         if ( status == 200 ) {
             console.log("下载wgt成功："+d.filename);
             if(!hide){
-//	            	plus.nativeUI.confirm("下载完成，是否马上升级！",function(e){
-//	            		var sure = (e.index == 0) ? "确定" : "取消";
-//	            		if (sure == '确定') {
-//	            			installWgt(d.filename,hide); // 安装wgt包
-//	            		}
-//	            	})
+	            	/*plus.nativeUI.confirm("下载完成，是否马上升级！",function(e){
+	            		var sure = (e.index == 0) ? "确定" : "取消";
+	            		if (sure == '确定') {
+	            			installWgt(d.filename,hide); // 安装wgt包
+	            		}
+	            	})*/
 				installWgt(d.filename,hide); // 安装wgt包
             }else{
             		installWgt(d.filename,hide,ios); // 安装wgt包
@@ -122,7 +91,7 @@ function installWgt(path,hide,ios){
         console.log("安装wgt文件成功！");
         if(hide){//静默更新
 	        	if(path.indexOf('apk')>-1){
-	        		plus.nativeUI.alert("软件更新包已通过wifi预加载下载成功， 请安装新版HI集软件！",function(){
+	        		plus.nativeUI.alert("软件更新包已通过wifi预加载下载成功， 请安装新版软件！",function(){
 		            plus.runtime.quit();
 		        });
 	        }else{
