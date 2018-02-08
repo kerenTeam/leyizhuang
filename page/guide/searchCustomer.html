@@ -247,7 +247,7 @@
 				<div class="tabcontent tc1 taactive">
 
 					<%for(var i=0;i < list.length;i++){%>
-					<div class="qashadow" onclick="openDetail()">
+					<div class="qashadow" onclick="openDetail(<%=list[i].cusId%>)">
 						<div class="qtop flexr">
 							<div class="ft14" style="display: flex;align-items: center;padding: 10px 0;">
 								<img class="Avator loadPics" data-src="" src="<%=list[i].picUrl%>" />
@@ -256,6 +256,9 @@
 									<div class="maincl ft16">
 										<span class="maincl"><%=list[i].name%></span>
 										<span class="maincl"><%=list[i].mobile%></span>
+									</div>
+									<div class="ft14">
+										<span class="disablecl">工种:<%=list[i].profession || "未填写"%></span>
 									</div>
 									<div class="ft14">
 										<span class="disablecl">注册时间：<%=list[i].createTime%></span>
@@ -286,6 +289,14 @@
 
 	</body>
 	<script type="text/javascript">
+		/*打开详情*/
+		function openDetail(id){
+			openview({
+				view:'customerPage.html',
+				id:'customerPage',
+				extrasobj:{'cusid':id}
+			})
+		}
 		mui.plusReady(function() {
 			//自动弹出输入法
 			var nativeWebview, imm, InputMethodManager;

@@ -42,6 +42,7 @@
 			.mui-bar-nav~.mui-content{padding-top: 50px;}
 			.cmimg{width: 1rem;height: 1rem;}
 			.bgcee{overflow-y:scroll ;white-space: nowrap;}
+			/*.overel{display:inline-block;width: 50%;overflow: hidden;text-overflow: ellipsis;vertical-align: middle;}*/
 		</style>
 
 	</head>
@@ -72,8 +73,8 @@
 				<script id="infoList" type="text/html">
 					<%for(var i=0;i<list.length;i++){%>
 						<div class="rechargeConDiv" onclick="goInfo('<%=list[i].id%>')">
-							 <div class="padd10 ft16 afterBorder">
-							 	订单编号：<%=list[i].id%>
+							 <div class="padd10 ft15 afterBorder">
+							 	订单编号：<span class="overel"><%=list[i].photoOrderNo%></span>
 							 	<span class="mui-pull-right mui-icon mui-icon-arrowright activecl righticon" style="margin-top: 2px;"></span>
 							 	<span class="mui-pull-right activecl"><%=list[i].status%></span>
 							 </div>
@@ -99,9 +100,9 @@
 				</script>
 				<script id="infoList2" type="text/html">
 					<%for(var i=0;i<list.length;i++){%>
-						<div class="rechargeConDiv">
-							 <div class="padd10 ft16 afterBorder">
-							 	订单编号：<%=list[i].id%>
+						<div class="rechargeConDiv" onclick="goInfo('<%=list[i].id%>')">
+							 <div class="padd10 ft15 afterBorder">
+							 	订单编号：<span class="overel"><%=list[i].photoOrderNo%></span>
 							 	<span class="mui-pull-right activecl"><%=list[i].status%></span>
 							 </div>
 							 <div class="padd10">
@@ -150,6 +151,7 @@
 						loadFun(url,'tab2');
 					}
 				})
+				 
 				function loadFun(url,tabT){
 					var Spagenum = 2, Ypagenum = 1, oneSize = 10;
 					mui.ajax(serverUrl + url,{
@@ -162,9 +164,15 @@
 							console.log(data);
 							var timeLoad = setInterval(function(){
 								clearTimeout(timeLoad),timeLoad = null;
+								 
 								if(data.code == 0){
-									$('#loadingdiv').css('height','0px');
+									$('#loadingdiv').css('height','0px'); 
 									if(data.content.list && data.content.list.length){
+										data.content.list.forEach(function(ele,index){
+											if(ele.photoOrderNo){
+												ele.photoOrderNo = ele.photoOrderNo.substr(0, 5) + '****' + ele.photoOrderNo.substr(20);  
+											}
+										})
 										document.getElementById('infoListDiv').innerHTML = template('infoList2',{list:data.content.list});
 
 										//下拉加载
@@ -184,6 +192,11 @@
 							                            		console.log('订单续',data);
 						                                		if(data.code == 0){
 																if(data.content.list && data.content.list.length){
+																	data.content.list.forEach(function(ele,index){
+																		if(ele.photoOrderNo){
+																			ele.photoOrderNo = ele.photoOrderNo.substr(0, 5) + '****' + ele.photoOrderNo.substr(20);  
+																		}
+																	})
 																	document.getElementById('infoListDiv').innerHTML += template('infoList2',{list:data.content.list});
 																}
 					                               		 	}
@@ -202,6 +215,11 @@
 										//下拉加载结束
 
 									}else if(data.content && data.content.length){
+										data.content.forEach(function(ele,index){
+											if(ele.photoOrderNo){
+												ele.photoOrderNo = ele.photoOrderNo.substr(0, 5) + '****' + ele.photoOrderNo.substr(20);  
+											}
+										})
 										if(tabT == 'tab1'){
 											document.getElementById('infoListDiv').innerHTML = template('infoList',{list:data.content});
 										}else if(tabT == 'tab2'){

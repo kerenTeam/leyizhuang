@@ -14,19 +14,18 @@
 			html,
 			body {
 				background-color: #efeff4;
-			}
-			.title {
-				padding: 14px 0 10px;
-				color: #6d6d72;
-				font-size: 15px;
-			}
+			} 
 			.mui-checkbox input[type=checkbox]:checked:before, .mui-radio input[type=radio]:checked:before{color: #B62D29;}
 			.categray{padding: 10px;}
 			.mui-badge-danger{padding: 5px 10px;font-size: 14px;border-radius: 3px;background-color: #DDDDDD;color: gray;}
 	 		.actBadge{background-color: #B42E28;color: white;}
 	 		.categray span{margin: 0 10px 0 0;display: inline-block;}
 	 		.actspan{color: #B42E28;}
-	 		.afterBorder>div:first-child{color: black!important;font-weight: 600;}
+	 		.afterBorder>div:first-child{color: black!important;font-weight: 600;padding: 10px 0 10px;
+				background: #EEEEEE;
+				text-align: center;
+				width: 100vw;
+				margin-left: -10px;margin-bottom: 10px;}
 	 		.afterBorder:after{left: 5px;right: 5px;}
 	 		.maincl .flexr{text-align: center;justify-content: flex-start;}
 	 		
@@ -739,7 +738,8 @@
 			<aside class="btmNav flexr" style="position: fixed;bottom: 0;left: 0;width: 100%;">
 				<span id="showBtcrt" class="mui-icon mui-icon-arrowup activecl showRotate" style="padding-left: 10px;"></span>
 				<a class="dp ft16" style="color: #B62D29;text-align: center;flex: 1;">
-					<span>合计：</span><span class="totalMoney">0</span>件商品
+					<img style="display:inline-block;margin-right:10px;vertical-align:middle;width:25px" onclick="tocart()" src="../images/cart2.svg" />
+					<span>|&nbsp;&nbsp;&nbsp;合计：</span><span class="totalMoney">0</span>件商品
 				</a>
 				<a class="goOrder dp" style="background:#B62D29;color:white;padding:14px 10px;">加入下料清单</a>
 			</aside>
@@ -800,7 +800,20 @@
 			$(this).siblings().removeClass('bdcA')
 			$(this).addClass('bdcA')
 		})
+		function tocart(){
+			openview({
+				view: "../cart.html",
+				id:'cart',
+				extrasobj: {
+					page: "1"
+				}
+			})
+		}
 		mui.plusReady(function(){
+			$('.mui-numbox input').click(function() {
+				$(this).select();
+				event.stopPropagation()
+			})
 			//存缓存
 //			plus.storage.removeItem('$tileFastGoods')
 			var tileFastGoods = JSON.parse(plus.storage.getItem('$tileFastGoods') || '[]');

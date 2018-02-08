@@ -208,7 +208,37 @@
 							} else {
 								plus.nativeUI.closeWaiting();
 								document.getElementById('cartData').innerHTML = '<div><img src="../../images/order/order.png" style="width:30%;margin: auto;display: block;margin-top: 40%;" alt="" /><div style="color: #666;text-align: center;margin-top: 30px;font-size: 14px;">没有赠品哦</div></div>'
-
+								var idobj = JSON.parse(plus.storage.getItem('materialList') || '[]');
+								plus.storage.setItem('orderGoodsList', JSON.stringify(idobj));
+								plus.storage.setItem('giftList', '[]');
+								
+								if(identityT == 3) {
+									openview({
+										view: 'workerMaterial.html',
+										id: 'workerMaterial'
+									})
+								} else {
+									if(identityT == 0 || identityT == 4 || identityT == 5) {
+										openview({
+											view: 'order.html',
+											id: 'order',
+											extrasobj: {
+												customerId: cusId,
+											}
+										})
+									} else {
+										openview({
+											view: 'order.html',
+											id: 'order',
+										})
+									}
+								}
+								setTimeout(function() {
+									if(plus.webview.getWebviewById("chooseGift")) {
+										plus.webview.getWebviewById("chooseGift").close();
+									}
+								}, 800)
+								
 							}
 							//下一步
 							$('.goOrder').unbind('click').click(function() {

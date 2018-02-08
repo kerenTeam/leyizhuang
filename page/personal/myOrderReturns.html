@@ -379,7 +379,8 @@
 							success:function(data,type,xhr){
 								console.log('创建退货',data);
 								if(data.code == 0){
-									alert(data.message || '申请退货成功');
+									mui.fire(plus.webview.getWebviewById('center.html'),'OrderNumR');
+									mui.alert(data.message || '申请退货成功');
 									openview({
 										view:'myOrderRTList.html',
 										id:'myOrderRTList',

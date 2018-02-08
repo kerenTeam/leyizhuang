@@ -309,18 +309,18 @@
 					<div class="pad10 ft16" style="text-align: right;">订单金额小计：<span class="activecl" id="totalOrderAmount">¥--</span></div>
 					<div style="height: 10px;background: #EEEEEE;"></div>
 					<%if(platform == 'ANDROID'){%>
-						<div class="pad10 ft14 afterBorder">预存款&nbsp;&nbsp;<span class='activecl' id="preDepositb">¥--</span><input type="tel" onchange="maxC(this)" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" placeholder="请输入使用金额" name="preDepositb" class='mui-pull-right preDeposit' /></div>
+						<div class="pad10 ft14 afterBorder">预存款&nbsp;&nbsp;<span class='activecl' id="preDepositb">¥--</span><input type="tel" onchange="maxC(this)" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" placeholder="请输入使用金额" name="preDepositb" class='mui-pull-right preDeposit' oninput="inputbd()"/></div>
 						<!--only manager-->
-						<div class="pad10 ft14 afterBorder manager" style="display: none;">信用金&nbsp;&nbsp;<span class='activecl' id="credit">¥--</span><input type="tel" placeholder="请输入使用金额" name="credit" onchange="maxC(this)" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" class='mui-pull-right preDeposit' /></div>
-						<div class="pad10 ft14 afterBorder manager" style="display: none;">现金返利&nbsp;&nbsp;<span class='activecl' id="cash">¥--</span><input type="tel" placeholder="请输入使用金额" name="cash" onchange="maxC(this)" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" class='mui-pull-right preDeposit' /></div>
+						<div class="pad10 ft14 afterBorder manager" style="display: none;">信用金&nbsp;&nbsp;<span class='activecl' id="credit">¥--</span><input type="tel" placeholder="请输入使用金额" name="credit" onchange="maxC(this)" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" class='mui-pull-right preDeposit' oninput="inputbd()"/></div>
+						<div class="pad10 ft14 afterBorder manager" style="display: none;">现金返利&nbsp;&nbsp;<span class='activecl' id="cash">¥--</span><input type="tel" placeholder="请输入使用金额" name="cash" onchange="maxC(this)" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" class='mui-pull-right preDeposit' oninput="inputbd()"/></div>
 						<!--only guide-->
-						<div class="pad10 ft14 afterBorder guide" style="display: none;">信用额度&nbsp;&nbsp;<span class='activecl' id="creditVal">¥--</span><input type="tel" placeholder="请输入使用金额" name="creditVal" onchange="maxC(this)" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" class='mui-pull-right preDeposit' /></div>
+						<div class="pad10 ft14 afterBorder guide" style="display: none;">信用额度&nbsp;&nbsp;<span class='activecl' id="creditVal">¥--</span><input type="tel" placeholder="请输入使用金额" name="creditVal" onchange="maxC(this)" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" class='mui-pull-right preDeposit' oninput="inputbd()"/></div>
 						<div class="pad10 ft14 afterBorder guide" style="display: none;">代收金额&nbsp;&nbsp;<input type="tel" placeholder="请输入代收金额" name="cashHelp" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" class='mui-pull-right preDeposit' /></div>
 					<%}else{%>
-						<div class="pad10 ft14 afterBorder">预存款&nbsp;&nbsp;<span class='activecl' id="preDepositb">¥--</span><input type="number" onchange="maxC(this)" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" placeholder="请输入使用金额" name="preDepositb" class='mui-pull-right preDeposit' /></div>
-						<div class="pad10 ft14 afterBorder manager" style="display: none;">信用金&nbsp;&nbsp;<span class='activecl' id="credit">¥--</span><input type="number" placeholder="请输入使用金额" name="credit" onchange="maxC(this)" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" class='mui-pull-right preDeposit' /></div>
-						<div class="pad10 ft14 afterBorder manager" style="display: none;">现金返利&nbsp;&nbsp;<span class='activecl' id="cash">¥--</span><input type="number" placeholder="请输入使用金额" name="cash" onchange="maxC(this)" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" class='mui-pull-right preDeposit' /></div>
-						<div class="pad10 ft14 afterBorder guide" style="display: none;">信用额度&nbsp;&nbsp;<span class='activecl' id="creditVal">¥--</span><input type="number" placeholder="请输入使用金额" name="creditVal" onchange="maxC(this)" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" class='mui-pull-right preDeposit' /></div>
+						<div class="pad10 ft14 afterBorder">预存款&nbsp;&nbsp;<span class='activecl' id="preDepositb">¥--</span><input type="number" onchange="maxC(this)" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" placeholder="请输入使用金额" name="preDepositb" class='mui-pull-right preDeposit' oninput="inputbd()"/></div>
+						<div class="pad10 ft14 afterBorder manager" style="display: none;">信用金&nbsp;&nbsp;<span class='activecl' id="credit">¥--</span><input type="number" placeholder="请输入使用金额" name="credit" onchange="maxC(this)" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" class='mui-pull-right preDeposit' oninput="inputbd()"/></div>
+						<div class="pad10 ft14 afterBorder manager" style="display: none;">现金返利&nbsp;&nbsp;<span class='activecl' id="cash">¥--</span><input type="number" placeholder="请输入使用金额" name="cash" onchange="maxC(this)" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" class='mui-pull-right preDeposit' oninput="inputbd()"/></div>
+						<div class="pad10 ft14 afterBorder guide" style="display: none;">信用额度&nbsp;&nbsp;<span class='activecl' id="creditVal">¥--</span><input type="number" placeholder="请输入使用金额" name="creditVal" onchange="maxC(this)" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" class='mui-pull-right preDeposit' oninput="inputbd()"/></div>
 						<div class="pad10 ft14 afterBorder guide" style="display: none;">代收金额&nbsp;&nbsp;<input type="number" placeholder="请输入代收金额" name="cashHelp" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" class='mui-pull-right preDeposit' /></div>
 					<%}%>
 					<div style="height: 10px;background: #EEEEEE;"></div>
@@ -404,7 +404,7 @@
 				}
 			})
 		}
-
+		 
 		mui.plusReady(function() {
 			var platform = plus.storage.getItem('platform')
 			var userId = plus.storage.getItem('$userId');
@@ -458,6 +458,9 @@
 					carculate()
 				}
 				
+			}
+			window.inputbd = function(){
+				carculate()
 			}
 			if(identityT == 2) {
 				$('.selfTake').hide();
@@ -919,6 +922,7 @@
 				}
 				$('#totalOrderAmount').html(parseFloat(payTotal).toFixed(2))
 				$('.totalMoney').html(parseFloat(curTotal).toFixed(2))
+				return parseFloat(curTotal).toFixed(2);
 			}
 			//获取城市
 			var cityId = plus.storage.getItem('userCity');
@@ -997,109 +1001,94 @@
 			//支付
 			$('.goOrder').unbind('click').click(function() {
 				event.stopPropagation();
-				var deliveryType, bookingStoreId, bookingStoreName, bookingStoreAddress,
+				var endCur = carculate();
+				if(endCur >= 0){
+					var deliveryType, bookingStoreId, bookingStoreName, bookingStoreAddress,
 					receiver, receiverPhone, deliveryCity, deliveryCounty, deliveryStreet, residenceName, detailedAddress, deliveryTime, isOwnerReceiving, auditNo = plus.storage.getItem('auditNo') || '', remark;
-				remark = $('#remark').val();
-				var delivery = $("input[name='peis']:checked").val();
-				deliveryType = (delivery == 1) ? "SELF_TAKE" : "HOUSE_DELIVERY";
-				if(deliveryType == "SELF_TAKE") {
-					var storeId = $('#chooseStore select').val();
-					if(!storeId) {
-						mui.toast('还未选择门店！');
-						return;
-					} else {
-						bookingStoreId = storeId;
-						bookingStoreName = $('#chooseStore option:selected').text();
-						bookingStoreAddress = $('.storeAddress').html();
-						deliveryTime = '';
-						isOwnerReceiving = true;
-					}
-				} else {
-					var addid = $('#addid').attr('data-receiver');
-					if(!addid) {
-						mui.toast('还未选择收货地址哦！');
-						return;
-					} else {
-						receiver = $('#addid').attr('data-receiver'),
-						receiverPhone = $('#addid').attr('data-receiverPhone'),
-						deliveryCity = $('#addid').attr('data-deliveryCity'),
-						deliveryCounty = $('#addid').attr('data-deliveryCounty'),
-						deliveryStreet = $('#addid').attr('data-deliveryStreet'),
-						residenceName = $('#addid').attr('data-residenceName'),
-						detailedAddress = $('#addid').attr('data-detailedAddress');
-						if(!$('#cityResult .pstime').html()) {
-							mui.toast('还未选择配送时间哦！');
+					remark = $('#remark').val();
+					var delivery = $("input[name='peis']:checked").val();
+					deliveryType = (delivery == 1) ? "SELF_TAKE" : "HOUSE_DELIVERY";
+					if(deliveryType == "SELF_TAKE") {
+						var storeId = $('#chooseStore select').val();
+						if(!storeId) {
+							mui.toast('还未选择门店！');
 							return;
 						} else {
-							deliveryTime = $('#cityResult .pstime').html();
+							bookingStoreId = storeId;
+							bookingStoreName = $('#chooseStore option:selected').text();
+							bookingStoreAddress = $('.storeAddress').html();
+							deliveryTime = '';
+							isOwnerReceiving = true;
 						}
-						isOwnerReceiving = $('.isOwnerReceiving').prop('checked') == true ? true : false;
+					} else {
+						var addid = $('#addid').attr('data-receiver');
+						if(!addid) {
+							mui.toast('还未选择收货地址哦！');
+							return;
+						} else {
+							receiver = $('#addid').attr('data-receiver'),
+							receiverPhone = $('#addid').attr('data-receiverPhone'),
+							deliveryCity = $('#addid').attr('data-deliveryCity'),
+							deliveryCounty = $('#addid').attr('data-deliveryCounty'),
+							deliveryStreet = $('#addid').attr('data-deliveryStreet'),
+							residenceName = $('#addid').attr('data-residenceName'),
+							detailedAddress = $('#addid').attr('data-detailedAddress');
+							if(!$('#cityResult .pstime').html()) {
+								mui.toast('还未选择配送时间哦！');
+								return;
+							} else {
+								deliveryTime = $('#cityResult .pstime').html();
+							}
+							isOwnerReceiving = $('.isOwnerReceiving').prop('checked') == true ? true : false;
+						}
 					}
-				}
-				var goodsInfo = onlyGoods; //商品 （普通商品 料单商品）
-				var cashCouponIds = []; //优惠券 
-				if(identityT == 6) {
-					var cusPreDeposit = preDepositb;
-					var stPreDeposit = 0;
-				} else {
-					var cusPreDeposit = 0;
-					var stPreDeposit = preDepositb;
-				}
-				if($('#changeJf').find("input[type='checkbox']:checked").length == 1) {
-					var leBiQuantity = $('#totalJfen').text();
-				} else {
-					var leBiQuantity = 0
-				}
-				var billingInfo = {
-					"orderDiscount": orderDiscount,
-					"leBiQuantity": leBiQuantity,
-					"freight": freight,
-					"cusPreDeposit": cusPreDeposit,
-					"stPreDeposit": stPreDeposit,
-					"empCreditMoney": creditVal,
-					"storeCreditMoney": credit,
-					"storeSubvention": cash,
-					"collectionAmount": cashHelp
-				}; //账单明细
-				console.log('账单明细', billingInfo)
-				$('.hasChoosed').each(function(index) {
-					cashCouponIds.push(parseInt($(this).attr('data-id'))) 
-				}) 
-				console.log('优惠券使用', cashCouponIds)
-				var deliveryInfo = {
-					"deliveryType": deliveryType,
-					"bookingStoreId": bookingStoreId,
-					"bookingStoreName": bookingStoreName,
-					"bookingStoreAddress": bookingStoreAddress,
-					"receiver": receiver,
-					"receiverPhone": receiverPhone,
-					"deliveryCity": deliveryCity,
-					"deliveryCounty": deliveryCounty,
-					"deliveryStreet": deliveryStreet,
-					"residenceName": residenceName,
-					"detailedAddress": detailedAddress,
-					"deliveryTime": deliveryTime,
-					"isOwnerReceiving": isOwnerReceiving
-				};
-				console.log('deliveryInfo ', deliveryInfo);
-				console.log('订单参数', {
-					"cityId": cityId,
-					"identityType": identityT,
-					"userId": userId,
-					"customerId": customerId,
-					"remark": remark,
-					"goodsInfo": goodsInfo,
-					"productCouponInfo": productCouponList,
-					"promotionInfo": promotionInfo,
-					"deliveryInfo": JSON.stringify(deliveryInfo),
-					"cashCouponIds": JSON.stringify(cashCouponIds),
-					"auditNo": auditNo,
-					"billingInfo": JSON.stringify(billingInfo),
-				})
-				plus.nativeUI.showWaiting();
-				//创建订单 
-				mui.ajax(serverUrl + '/app/order/create', {
-					data: {
+					var goodsInfo = onlyGoods; //商品 （普通商品 料单商品）
+					var cashCouponIds = []; //优惠券 
+					if(identityT == 6) {
+						var cusPreDeposit = preDepositb;
+						var stPreDeposit = 0;
+					} else {
+						var cusPreDeposit = 0;
+						var stPreDeposit = preDepositb;
+					}
+					if($('#changeJf').find("input[type='checkbox']:checked").length == 1) {
+						var leBiQuantity = $('#totalJfen').text();
+					} else {
+						var leBiQuantity = 0
+					}
+					var billingInfo = {
+						"orderDiscount": orderDiscount,
+						"leBiQuantity": leBiQuantity,
+						"freight": freight,
+						"cusPreDeposit": cusPreDeposit,
+						"stPreDeposit": stPreDeposit,
+						"empCreditMoney": creditVal,
+						"storeCreditMoney": credit,
+						"storeSubvention": cash,
+						"collectionAmount": cashHelp
+					}; //账单明细
+					console.log('账单明细', billingInfo)
+					$('.hasChoosed').each(function(index) {
+						cashCouponIds.push(parseInt($(this).attr('data-id'))) 
+					}) 
+					console.log('优惠券使用', cashCouponIds)
+					var deliveryInfo = {
+						"deliveryType": deliveryType,
+						"bookingStoreId": bookingStoreId,
+						"bookingStoreName": bookingStoreName,
+						"bookingStoreAddress": bookingStoreAddress,
+						"receiver": receiver,
+						"receiverPhone": receiverPhone,
+						"deliveryCity": deliveryCity,
+						"deliveryCounty": deliveryCounty,
+						"deliveryStreet": deliveryStreet,
+						"residenceName": residenceName,
+						"detailedAddress": detailedAddress,
+						"deliveryTime": deliveryTime,
+						"isOwnerReceiving": isOwnerReceiving
+					};
+					console.log('deliveryInfo ', deliveryInfo);
+					console.log('订单参数', {
 						"cityId": cityId,
 						"identityType": identityT,
 						"userId": userId,
@@ -1107,255 +1096,278 @@
 						"remark": remark,
 						"goodsInfo": goodsInfo,
 						"productCouponInfo": productCouponList,
-						"promotionInfo":promotionInfo,
+						"promotionInfo": promotionInfo,
 						"deliveryInfo": JSON.stringify(deliveryInfo),
-					 	"cashCouponIds":JSON.stringify(cashCouponIds),
+						"cashCouponIds": JSON.stringify(cashCouponIds),
 						"auditNo": auditNo,
 						"billingInfo": JSON.stringify(billingInfo),
-					},
-					dataType: 'json',
-					type: 'post',
-					timeout: 10000,
-					headers: {
-						"Authorization": oldToken
-					},
-					success: function(data) {
-						console.log('创建订单返回', data);
-						if(data.code == 0) {
-							mui.fire(plus.webview.getWebviewById('cart.html'), 'refresh');
-							mui.fire(plus.webview.getWebviewById('cart'), 'refresh');
-							if(data.content.isPayUp == false) {
-								$('#payMoney').html('¥' + data.content.amountPayable);
-								$('#maskInfo').fadeIn(200);
-								toPay(data.content.amountPayable, data.content.orderNumber);
-							}else{
-								mui.toast('订单提交成功！！！')
-								openview({
-									view: 'orderSuccess.html',
-									id: 'orderSuccess',
-									extrasobj:{
-										orderNo:data.content.orderNumber,
-										money:0
-									}
-								})
-//								openview({
-//									view: '../personal/myOrderList.html',
-//									id: 'myOrderList'
-//								})
-								setTimeout(function() {
-									if(plus.webview.getWebviewById("order")) {
-										plus.webview.getWebviewById("order").close();
-									}
-									if(plus.webview.getWebviewById("chooseGift")) {
-										plus.webview.getWebviewById("chooseGift").close();
-									}
-									if(plus.webview.getWebviewById("chooseCustom")) {
-										plus.webview.getWebviewById("chooseCustom").close();
-									}
-								}, 800)
+					})
+					plus.nativeUI.showWaiting();
+					//创建订单 
+					mui.ajax(serverUrl + '/app/order/create', {
+						data: {
+							"cityId": cityId,
+							"identityType": identityT,
+							"userId": userId,
+							"customerId": customerId,
+							"remark": remark,
+							"goodsInfo": goodsInfo,
+							"productCouponInfo": productCouponList,
+							"promotionInfo":promotionInfo,
+							"deliveryInfo": JSON.stringify(deliveryInfo),
+						 	"cashCouponIds":JSON.stringify(cashCouponIds),
+							"auditNo": auditNo,
+							"billingInfo": JSON.stringify(billingInfo),
+						},
+						dataType: 'json',
+						type: 'post',
+						timeout: 10000,
+						headers: {
+							"Authorization": oldToken
+						},
+						success: function(data) {
+							console.log('创建订单返回', data);
+							if(data.code == 0) {
+								mui.fire(plus.webview.getWebviewById('center.html'),'OrderNumR');
+								mui.fire(plus.webview.getWebviewById('page/goodList.html'), 'refresh');
+								mui.fire(plus.webview.getWebviewById('cart.html'), 'refresh');
+								mui.fire(plus.webview.getWebviewById('cart'), 'refresh');
+								if(data.content.isPayUp == false) {
+									$('#payMoney').html('¥' + data.content.amountPayable);
+									$('#maskInfo').fadeIn(200);
+									toPay(data.content.amountPayable, data.content.orderNumber);
+								}else{
+									mui.toast('订单提交成功！！！')
+									openview({
+										view: 'orderSuccess.html',
+										id: 'orderSuccess',
+										extrasobj:{
+											orderNo:data.content.orderNumber,
+											money:0
+										}
+									})
+	//								openview({
+	//									view: '../personal/myOrderList.html',
+	//									id: 'myOrderList'
+	//								})
+									setTimeout(function() {
+										if(plus.webview.getWebviewById("order")) {
+											plus.webview.getWebviewById("order").close();
+										}
+										if(plus.webview.getWebviewById("chooseGift")) {
+											plus.webview.getWebviewById("chooseGift").close();
+										}
+										if(plus.webview.getWebviewById("chooseCustom")) {
+											plus.webview.getWebviewById("chooseCustom").close();
+										}
+									}, 800)
+								}
+								
+								plus.nativeUI.closeWaiting();
+							} else {
+								plus.nativeUI.closeWaiting();
+								mui.toast(data.message);
 							}
-							
+						},
+						error: function(xhr, type, errorThrown) {
 							plus.nativeUI.closeWaiting();
-						} else {
-							plus.nativeUI.closeWaiting();
-							mui.toast(data.message);
+							console.log('响应失败');
 						}
-					},
-					error: function(xhr, type, errorThrown) {
-						plus.nativeUI.closeWaiting();
-						console.log('响应失败');
-					}
-				});
-
-				function toPay(payableAmount, orderNumber) {
-					//系统检测获取支付通道
-					plus.payment.getChannels(function(channels) {
-						console.log("channel " + JSON.stringify(channels));
-						for(var i in channels) {
-							var channel = channels[i];
-							// 过滤掉不支持的支付通道：暂不支持360相关支付
-							if(channel.id == 'qhpay' || channel.id == 'qihoo') {
-								continue;
-							}
-							pays[channel.id] = channel;
-							if(channel.id == 'alipay') { //添加支付事件
-								document.getElementById('alipay').setAttribute('onclick', 'payfun("alipay","' + payableAmount + '","' + orderNumber + '")');
-							}
-							if(channel.id == 'wxpay') {
-								document.getElementById('wxpay').setAttribute('onclick', 'payfun("wxpay","' + payableAmount + '","' + orderNumber + '")');
-							}
-							checkServices(channel);
-						}
-					}, function(e) {
-						plus.nativeUI.alert("支付失败，请重试", null, "提示");
 					});
-
-					// 检测是否安装支付服务
-					function checkServices(pc) {
-						if(!pc.serviceReady) {
-							var txt = null;
-							switch(pc.id) {
-								case "alipay":
-									txt = "检测到系统未安装“支付宝快捷支付服务”，无法完成支付操作，是否立即安装？";
-									break;
-								default:
-									txt = "系统未安装“" + pc.description + "”服务，无法完成支付，是否立即安装？";
-									break;
+	
+					function toPay(payableAmount, orderNumber) {
+						//系统检测获取支付通道
+						plus.payment.getChannels(function(channels) {
+							console.log("channel " + JSON.stringify(channels));
+							for(var i in channels) {
+								var channel = channels[i];
+								// 过滤掉不支持的支付通道：暂不支持360相关支付
+								if(channel.id == 'qhpay' || channel.id == 'qihoo') {
+									continue;
+								}
+								pays[channel.id] = channel;
+								if(channel.id == 'alipay') { //添加支付事件
+									document.getElementById('alipay').setAttribute('onclick', 'payfun("alipay","' + payableAmount + '","' + orderNumber + '")');
+								}
+								if(channel.id == 'wxpay') {
+									document.getElementById('wxpay').setAttribute('onclick', 'payfun("wxpay","' + payableAmount + '","' + orderNumber + '")');
+								}
+								checkServices(channel);
 							}
-
-						}
-					}
-					//系统检测获取支付通道结束
-				}
-				// 支付方法
-				window.payfun = function(id, payableAmount, orderNumber) {
-					var varpay;
-					if(id == 'alipay' || id == 'wxpay') {
-						//调用支付功能
-						plus.nativeUI.showWaiting();
-						gopay(id, payableAmount, orderNumber);
-					} else {
-						plus.nativeUI.alert("当前环境不支持此支付通道！", null, "提示");
-						return;
-					}
-
-					function gopay(id, payableAmount, orderNumber) {
-						if(id == 'wxpay') {
-							//微信
-							mui.ajax(serverUrl + '/app/wechatpay/order/pay', {
-								data: {
-									userId: userId,
-									identityType: identityT.toString(),
-									amountPayable: payableAmount,
-									orderNumber: orderNumber,
-								},
-								type: 'post', //HTTP请求类型
-								headers: {
-									"Authorization": oldToken
-								},
-								timeout: 10000, //超时时间设置为10秒；
-								success: function(data) {
-									console.error(data);
-									plus.nativeUI.closeWaiting();
-									if(data.code == 0) {
-										varpay = {
-											"appid": data.content.appid,
-											"noncestr": data.content.noncestr,
-											"package": "Sign=WXPay",
-											"partnerid": data.content.partnerid,
-											"prepayid": data.content.prepayid,
-											"timestamp": parseInt(data.content.timestamp),
-											"sign": data.content.sign
-										};
-										//微信
-										plus.payment.request(pays[id], varpay, function(result) {
-											console.log("----- 支付成功 -----");
-											var result = JSON.stringify(result);
-											openview({
-												view: 'orderSuccess.html',
-												id: 'orderSuccess',
-												extrasobj:{
-													orderNo:orderNumber,
-													money:payableAmount,
-												}
-											})
-											setTimeout(function() {
-												if(plus.webview.getWebviewById("order")) {
-													plus.webview.getWebviewById("order").close();
-												}
-												if(plus.webview.getWebviewById("chooseGift")) {
-													plus.webview.getWebviewById("chooseGift").close();
-												}
-												if(plus.webview.getWebviewById("chooseCustom")) {
-													plus.webview.getWebviewById("chooseCustom").close();
-												}
-											}, 800)
-										}, function(e) {
-											console.log("----- 支付失败 -----");
-											console.log("[" + e.code + "]：" + e.message);
-											plus.nativeUI.alert("支付失败");
-										});
-									}
-
-								},
-								error: function(xhr, type, errorThrown) {
-									//异常处理；
-									console.log(type);
-									console.log("----- 请求订单失败 -----");
-									console.log(xhr.status);
-									plus.nativeUI.closeWaiting();
-									plus.nativeUI.alert("获取订单信息失败！");
+						}, function(e) {
+							plus.nativeUI.alert("支付失败，请重试", null, "提示");
+						});
+	
+						// 检测是否安装支付服务
+						function checkServices(pc) {
+							if(!pc.serviceReady) {
+								var txt = null;
+								switch(pc.id) {
+									case "alipay":
+										txt = "检测到系统未安装“支付宝快捷支付服务”，无法完成支付操作，是否立即安装？";
+										break;
+									default:
+										txt = "系统未安装“" + pc.description + "”服务，无法完成支付，是否立即安装？";
+										break;
 								}
-							});
+	
+							}
+						}
+						//系统检测获取支付通道结束
+					}
+					// 支付方法
+					window.payfun = function(id, payableAmount, orderNumber) {
+						var varpay;
+						if(id == 'alipay' || id == 'wxpay') {
+							//调用支付功能
+							plus.nativeUI.showWaiting();
+							gopay(id, payableAmount, orderNumber);
 						} else {
-							//支付宝
-							mui.ajax(serverUrl + '/app/alipay/order/pay', {
-								data: {
-									userId: userId,
-									identityType: identityT.toString(),
-									payableAmount: payableAmount,
-									orderNumber: orderNumber,
-								},
-								type: 'post', //HTTP请求类型
-								headers: {
-									"Authorization": oldToken
-								},
-								timeout: 10000, //超时时间设置为10秒；
-								success: function(data) {
-									console.error(data);
-									plus.nativeUI.closeWaiting();
-									if(data.code == 0) {
-										varpay = data.content;
-										plus.payment.request(pays[id], varpay, function(result) {
-											console.log("----- 支付成功 -----", JSON.stringify(result));
-											plus.nativeUI.closeWaiting();
-											plus.nativeUI.alert("支付成功");
-											var result = JSON.stringify(result);
-											openview({
-												view: 'orderSuccess.html',
-												id: 'orderSuccess',
-												extrasobj:{
-													orderNo:orderNumber,
-													money:payableAmount,
-													
-												}
-											})
-											setTimeout(function() {
-												if(plus.webview.getWebviewById("order")) {
-													plus.webview.getWebviewById("order").close();
-												}
-												if(plus.webview.getWebviewById("chooseGift")) {
-													plus.webview.getWebviewById("chooseGift").close();
-												}
-												if(plus.webview.getWebviewById("chooseCustom")) {
-													plus.webview.getWebviewById("chooseCustom").close();
-												}
-											}, 800)
-
-											//																 
-										}, function(e) {
-											console.log("----- 支付失败 -----");
-											console.log("[" + e.code + "]：" + e.message);
-											plus.nativeUI.closeWaiting();
-											plus.nativeUI.alert("支付失败");
-										});
-									}
-
-								},
-								error: function(xhr, type, errorThrown) {
-									//异常处理；
-									console.log(type);
-									console.log("----- 请求订单失败 -----");
-									console.log(xhr.status);
-									plus.nativeUI.closeWaiting();
-									plus.nativeUI.alert("获取订单信息失败！");
-								}
-							});
-
+							plus.nativeUI.alert("当前环境不支持此支付通道！", null, "提示");
+							return;
 						}
-					}
-
+	
+						function gopay(id, payableAmount, orderNumber) {
+							if(id == 'wxpay') {
+								//微信
+								mui.ajax(serverUrl + '/app/wechatpay/order/pay', {
+									data: {
+										userId: userId,
+										identityType: identityT.toString(),
+										amountPayable: payableAmount,
+										orderNumber: orderNumber,
+									},
+									type: 'post', //HTTP请求类型
+									headers: {
+										"Authorization": oldToken
+									},
+									timeout: 10000, //超时时间设置为10秒；
+									success: function(data) {
+										console.error(data);
+										plus.nativeUI.closeWaiting();
+										if(data.code == 0) {
+											varpay = {
+												"appid": data.content.appid,
+												"noncestr": data.content.noncestr,
+												"package": "Sign=WXPay",
+												"partnerid": data.content.partnerid,
+												"prepayid": data.content.prepayid,
+												"timestamp": parseInt(data.content.timestamp),
+												"sign": data.content.sign
+											};
+											//微信
+											plus.payment.request(pays[id], varpay, function(result) {
+												console.log("----- 支付成功 -----");
+												var result = JSON.stringify(result);
+												openview({
+													view: 'orderSuccess.html',
+													id: 'orderSuccess',
+													extrasobj:{
+														orderNo:orderNumber,
+														money:payableAmount,
+													}
+												})
+												setTimeout(function() {
+													
+													if(plus.webview.getWebviewById("order")) {
+														plus.webview.getWebviewById("order").close();
+													}
+													if(plus.webview.getWebviewById("chooseGift")) {
+														plus.webview.getWebviewById("chooseGift").close();
+													}
+													if(plus.webview.getWebviewById("chooseCustom")) {
+														plus.webview.getWebviewById("chooseCustom").close();
+													}
+												}, 800)
+											}, function(e) {
+												console.log("----- 支付失败 -----");
+												console.log("[" + e.code + "]：" + e.message);
+												plus.nativeUI.alert("支付失败");
+											});
+										}
+	
+									},
+									error: function(xhr, type, errorThrown) {
+										//异常处理；
+										console.log(type);
+										console.log("----- 请求订单失败 -----");
+										console.log(xhr.status);
+										plus.nativeUI.closeWaiting();
+										plus.nativeUI.alert("获取订单信息失败！");
+									}
+								});
+							} else {
+								//支付宝
+								mui.ajax(serverUrl + '/app/alipay/order/pay', {
+									data: {
+										userId: userId,
+										identityType: identityT.toString(),
+										payableAmount: payableAmount,
+										orderNumber: orderNumber,
+									},
+									type: 'post', //HTTP请求类型
+									headers: {
+										"Authorization": oldToken
+									},
+									timeout: 10000, //超时时间设置为10秒；
+									success: function(data) {
+										console.error(data);
+										plus.nativeUI.closeWaiting();
+										if(data.code == 0) {
+											varpay = data.content;
+											plus.payment.request(pays[id], varpay, function(result) {
+												console.log("----- 支付成功 -----", JSON.stringify(result));
+												plus.nativeUI.closeWaiting();
+												plus.nativeUI.alert("支付成功");
+												var result = JSON.stringify(result);
+												openview({
+													view: 'orderSuccess.html',
+													id: 'orderSuccess',
+													extrasobj:{
+														orderNo:orderNumber,
+														money:payableAmount,
+														
+													}
+												})
+												setTimeout(function() {
+													if(plus.webview.getWebviewById("order")) {
+														plus.webview.getWebviewById("order").close();
+													}
+													if(plus.webview.getWebviewById("chooseGift")) {
+														plus.webview.getWebviewById("chooseGift").close();
+													}
+													if(plus.webview.getWebviewById("chooseCustom")) {
+														plus.webview.getWebviewById("chooseCustom").close();
+													}
+												}, 800)
+	
+												//																 
+											}, function(e) {
+												console.log("----- 支付失败 -----");
+												console.log("[" + e.code + "]：" + e.message);
+												plus.nativeUI.closeWaiting();
+												plus.nativeUI.alert("支付失败");
+											});
+										}
+	
+									},
+									error: function(xhr, type, errorThrown) {
+										//异常处理；
+										console.log(type);
+										console.log("----- 请求订单失败 -----");
+										console.log(xhr.status);
+										plus.nativeUI.closeWaiting();
+										plus.nativeUI.alert("获取订单信息失败！");
+									}
+								});
+	
+							}
+						}
+	
+					}	
 				}
+				
+				
 
 			})
 		})

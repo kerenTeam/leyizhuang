@@ -24,6 +24,10 @@
  		.actspan{color: #B42E28;}
  	</style>
 	<body>
+		<div class="gocarticon" id="div2">
+			<img src="../images/whitecart.svg" alt="" />
+			<span class="mui-badge mui-badge-white">0</span>
+		</div>
 		<!--小分类-->
 		<div class="filter" style="background-color:white;padding:10px;font-size:14px">
 	     	<div class="categray">
@@ -51,15 +55,25 @@
 			        <a href="javascript:;">
 			            <img class="mui-media-object mui-pull-left" src="<%=list[i].coverImageUri%>">
 			            <div class="mui-media-body ft16">
-			                <%=list[i].goodsName%>
+			                <span style="word-break: break-all;white-space: normal;">
+			               		<%=list[i].goodsName%>
+			              	</span> 
 			                <p class='mui-ellipsis ft16'>规格:<%=list[i].goodsSpecification%> &nbsp;单位:<%=list[i].goodsUnit%></p>
 				            <span class="ft18 activecl2">¥<%=list[i].retailPrice%></span>
-							<img style="display:inline-block;float:right;margin-left:5px;vertical-align:middle" data-id="<%=list[i].id%>" class="toCart" src="../images/addcart.svg"/>
-				            <div style="display:none;float:right;" class="mui-numbox" data-numbox-step='1' data-numbox-min='0'>
-							  <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
-							  <input class="mui-numbox-input" type="number" data-id="<%=list[i].id%>" value="1"/>
-							  <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
-							</div>
+							<%if(!list[i].materialQty){%>
+								<img style="display:inline-block;float:right;margin-left:5px;vertical-align:middle" data-id="<%=list[i].id%>" class="toCart" src="../images/addcart.svg"/>
+								<div style="display: none;float:right;" class="mui-numbox" data-numbox-step='1' data-numbox-min='0'>
+								  <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+								  <input class="mui-numbox-input" type="number" data-id="<%=list[i].id%>" value="1"/>
+								  <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+								</div>
+							<%}else{%>
+								<div style="float:right;" class="mui-numbox" data-numbox-step='1' data-numbox-min='0'>
+								  <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+								  <input class="mui-numbox-input" type="number" data-id="<%=list[i].id%>" value="<%=list[i].materialQty%>"/>
+								  <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+								</div>
+							<%}%>
 			            </div>
 			        </a>
 			    </li>
@@ -83,6 +97,9 @@
 				
 			}
 			mui.plusReady(function(){
+				document.addEventListener('refreshct', function() {
+					getCartNum();
+				})
 				var categoryCode = plus.webview.currentWebview().ctid;
 				var pageFrom = plus.webview.currentWebview().page;
 				if(pageFrom == 1){
@@ -106,7 +123,7 @@
 					var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
 					var userId = plus.storage.getItem('$userId'); 
 					var oldToken = plus.storage.getItem('oldToken');
-					 
+					getCartNum(); 
 					mui.ajax(serverUrl+'/app/goods/category/list',{
 						data:{
 							categoryCode:categoryCode,
@@ -275,6 +292,7 @@
 										$('#goodsList').html(template('goodsTpl',{list:data.content.list}));
 										mui('.mui-numbox').numbox();
 										$('.toCart,.mui-numbox button,.mui-numbox input').click(function() {
+											$(this).select();
 											event.stopPropagation()
 										})
 										
@@ -332,7 +350,6 @@
 														plus.nativeUI.closeWaiting();
 														console.log('加入购物车', data);
 														if(data.code == 0) {
-															plus.nativeUI.toast('加入成功')			
 															mui.fire(plus.webview.getWebviewById('cart.html'), 'refresh');
 														} else {
 															mui.toast(data.message)
@@ -399,9 +416,10 @@
 													plus.nativeUI.closeWaiting();
 													console.log('加入购物车',data);
 													if(data.code == 0 ){
-														plus.nativeUI.toast('加入成功')							
 														mui.fire(plus.webview.getWebviewById('cart.html'), 'refresh');
-														hadCart(goodid,cur);
+														cur.next().show();
+														cur.hide();
+//														hadCart(goodid,cur);
 													}else{
 														mui.toast(data.message)
 													}
@@ -508,6 +526,7 @@
 																	$('#goodsList').append(template('goodsTpl',{list:data.content.list}));
 																	mui('.mui-numbox').numbox();
 																	$('.toCart,.mui-numbox button,.mui-numbox input').click(function() {
+																		$(this).select();
 																		event.stopPropagation()
 																	})
 																	mui("#upload")[0].innerHTML = " ";
@@ -569,9 +588,7 @@
 																					plus.nativeUI.closeWaiting();
 																					console.log('加入购物车', data);
 																					if(data.code == 0) { 
-																						plus.nativeUI.toast('加入成功')
 																						mui.fire(plus.webview.getWebviewById('cart.html'), 'refresh');	
-																						getCartNum(1);
 																					} else {
 																						mui.toast(data.message)
 																					}
@@ -602,7 +619,6 @@
 																							console.log('删除', data);
 																							if(data.code == 0) {
 																								mui.fire(plus.webview.getWebviewById('cart.html'), 'refresh'); 
-																								getCartNum(-1);
 																							} else {
 																								mui.toast(data.message)
 																							}
@@ -638,10 +654,10 @@
 																				plus.nativeUI.closeWaiting();
 																				console.log('加入购物车',data);
 																				if(data.code == 0 ){
-																					plus.nativeUI.toast('加入成功');
 																					mui.fire(plus.webview.getWebviewById('cart.html'), 'refresh');
-																					getCartNum(1);
-																					hadCart(goodid,cur);
+																					cur.next().show();
+																					cur.hide();
+//																					hadCart(goodid,cur);
 																				}else{
 																					mui.toast(data.message)
 																				}
@@ -730,7 +746,28 @@
 					}
 					
 				 }
-			 
+			 	function getCartNum(){
+					var cartNum = plus.storage.getItem('cartNums') || 0;
+					cartNum = cartNum < 0 ? 0:cartNum;
+					if(cartNum>0){
+						$('.gocarticon span').show();
+						$('.gocarticon span').html(cartNum)
+					}else{
+						$('.gocarticon span').hide();
+					}
+				}
+			 	mui('.gocarticon')[0].onclick = function(){
+					mui.fire(plus.webview.getWebviewById('cart.html'), 'refresh');
+					openview({
+						view: "../cart.html",
+						id:'cart',
+						extrasobj: {
+							page: "1"
+						}
+					})
+
+				 	
+				}
 			})
 			//数组去重
 			Array.prototype.unique1 = function() {

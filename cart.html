@@ -12,10 +12,12 @@
 		<link rel="stylesheet" type="text/css" href="css/style.css" />
 		<link rel="stylesheet" type="text/css" href="css/configW.css" />
 	</head>
-<style type="text/css">
-	 .goodsInfor h2{margin-bottom: 5px!important;}
-	 .selfCart dd{border-top: 5px #eee solid;}
-</style>
+	<style type="text/css">
+		 .goodsInfor h2{margin-bottom: 5px!important;}
+		 .selfCart dd{border-top: 5px #eee solid;}
+		 dd{padding: 15px 0!important;}
+		 dd .activecl2{font-size: 17px!important;
+	</style>
 	<body>
 
 		<header class="mui-bar mui-bar-nav">
@@ -180,9 +182,9 @@
 		<script src="js/default.js" type="text/javascript" charset="utf-8"></script>
 	</body>
 
-	<script>
-
+	<script> 
 		mui.plusReady(function() {
+			downRe(cartload);
 			var page = plus.webview.currentWebview().page;
 			var cusId = plus.webview.currentWebview().cusid;
 			if(!cusId){
@@ -204,7 +206,7 @@
 				$(".groupCheck").attr("disabled",true);
 				$(".groupCheck").parentsUntil('.eachGroup').find(".mui-checkbox input").attr("disabled",true);
 			});
-			var tipsCont = '<div><img src="images/blankCart.png" style="width:30%;margin: auto;display: block;margin-top: 40%;" alt="" /><div style="color: #666;text-align: center;margin-top: 30px;font-size: 14px;">你的下料清单还是空的哦</div></div>';
+			var tipsCont = '<div id="rfcart"><img src="images/blankCart.png" style="width:30%;margin: auto;display: block;margin-top: 40%;" alt="" /><div style="color: #666;text-align: center;margin-top: 30px;font-size: 14px;">你的下料清单还是空的哦</div></div>';
 			cartload();
 			function cartload() {
 				$('.editAll').show().html('编辑');
@@ -283,7 +285,11 @@
 								plus.nativeUI.closeWaiting();
 								mui('.mui-numbox').numbox();
 								$('.numberWidget,.mui-numbox button,.mui-numbox input').click(function() {
-									event.stopPropagation()
+									event.stopPropagation();
+									$(this).select();
+								})
+								$("#rfcart").click(function(){
+									cartload();
 								})
 							//编辑所有
 							$(".editAll").toggle(function() {
@@ -312,6 +318,7 @@
 								} else {
 									mui.confirm('确认删除这' + ALLcheckLength + '件商品吗？', '提示', ['取消', '确定'], function(e) {
 										if(e.index == 1) {
+											plus.nativeUI.showWaiting();
 											var delThis = $("dd").find("input[type='checkbox']:checked").parentsUntil("dl");
 											//删除选中的 购物车 缓存
 											var allgoods = '';

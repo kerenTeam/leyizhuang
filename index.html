@@ -464,12 +464,12 @@
 							<div class="titcl ft16" style="word-break: break-all;text-overflow: ellipsis;overflow: hidden;">
 								<%=list[i].goodsName%>
 							</div>
-							<p class='mui-ellipsis ft14'>规格:
+							<p class='mui-ellipsis ft15' style="padding: 5px 0;">规格:
 								<%=list[i].goodsSpecification%> &nbsp;单位:
 								<%=list[i].goodsUnit%>
 							</p>
 							<span class="activecl2 ft20">¥<%=list[i].retailPrice%></span>
-							<img style="display:inline-block;float:right;margin-left:5px;vertical-align:middle;width:22px" onclick="addcart(<%=list[i].id%>)" src="images/addcart.svg" />
+							<img style="display:inline-block;float:right;margin-right:5px;vertical-align:middle;width:28px;" onclick="addcart(<%=list[i].id%>)" src="images/addcart.svg" />
 
 						</div>
 					</a>
@@ -501,13 +501,12 @@
 							<div class="titcl ft16" style="word-break: break-all;text-overflow: ellipsis;overflow: hidden;">
 								<%=list[i].goodsName%>
 							</div>
-							<p class='mui-ellipsis ft14'>规格:
+							<p class='mui-ellipsis ft15' style="padding: 5px 0;">规格:
 								<%=list[i].goodsSpecification%> &nbsp;单位:
 								<%=list[i].goodsUnit%>
 							</p>
 							<span class="activecl2 ft20">¥<%=list[i].retailPrice%></span>
-							<img style="display:inline-block;float:right;margin-left:5px;vertical-align:middle;width:22px" onclick="addcart(<%=list[i].id%>)" src="images/addcart.svg" />
-
+							<img style="display:inline-block;float:right;margin-right:5px;vertical-align:middle;width:28px" onclick="addcart(<%=list[i].id%>)" src="images/addcart.svg" />
 						</div>
 					</a>
 				</li>
@@ -869,10 +868,7 @@
 											})
 										}
 									}
-								} else {
-									mui.toast(data.message)
 								}
-
 							},
 							error: function(xhr, type, errorThrown) {
 								plus.nativeUI.closeWaiting();
@@ -902,8 +898,6 @@
 									}
 									$('#slogan').html(slogan)
 								}
-							} else {
-								mui.toast(data.message)
 							}
 
 						},
@@ -923,7 +917,7 @@
 							if(data.code == '0'){
 								$('#huodong0').html(template('huodongS0', {list: data.activity,url:oCms}));
 							}else{
-								mui.toast(data.message)
+//								mui.toast(data.message)
 							}
 						},
 						error: function(xhr, type, errorThrown) {
@@ -1114,9 +1108,18 @@
 				})
 			}
 			function delivery(){
+//				openview({
+//					view:'page/personal/deliveryInform.html',
+//					id:'deliveryInform'
+//				})
+				//打开订单，
 				openview({
-					view:'page/personal/deliveryInform.html',
-					id:'deliveryInform'
+					view:'page/personal/myOrderList.html',
+					id: 'myOrderList',
+					extrasobj:{
+						type:2,
+						fromPage:'index'
+					}
 				})
 			}
 			//消息
@@ -1257,9 +1260,17 @@
 				document.addEventListener('cart_refresh', function() {
 					//获取购物车数量
 					cartNum = plus.storage.getItem('cartNums');
+					
 					if(cartNum>999){
 						cartNum= '999+'
 					}
+					mui.fire(plus.webview.getWebviewById('goodList'),'refreshct');
+					mui.fire(plus.webview.getWebviewById('gxbList'),'refreshct');
+					mui.fire(plus.webview.getWebviewById('oilFast.html'),'refreshct');
+					mui.fire(plus.webview.getWebviewById('collect'),'refreshct');
+					mui.fire(plus.webview.getWebviewById('ofenBuy'),'refreshct');
+					mui.fire(plus.webview.getWebviewById('hotGoods'),'refreshct');
+					mui.fire(plus.webview.getWebviewById('history'),'refreshct');
 					if(cartNum != 0){
 						drawBadge();
 					}else{
@@ -1271,11 +1282,9 @@
 //					//登录-》退出登录 
 //					util.toggleNview(3);
 //				})
-				document.addEventListener('refreshpage', function() {
-					//底部选项卡切换
+				document.addEventListener('pagerefresh', function() {
 					util.toggleNview(0);
 					util.changeSubpage(targetPage, activePage, aniShow);
-
 				})
 				var self = plus.webview.currentWebview(),
 					leftPos = Math.ceil((window.innerWidth - 60) / 2); // 设置凸起大图标为水平居中

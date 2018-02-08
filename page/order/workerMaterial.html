@@ -383,7 +383,7 @@
 							var addrObj = {};
 							if(data.code == 0){
 								mui.toast('提交成功');
-
+								mui.fire(plus.webview.getWebviewById('center.html'),'OrderNumR');
 								mui.fire(plus.webview.getWebviewById('cart.html'), 'refresh');
 								openview({
 									view:'../worker/workerlistCheck.html',

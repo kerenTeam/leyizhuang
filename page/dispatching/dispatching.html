@@ -418,6 +418,12 @@
 					id:'dispatchingAudit',
 					extrasobj:{orderNumber:audi,orderType:type}
 				})
+			}else if(type == 1){
+				openview({
+					view:'returnInfo.html',
+					id:'returnInfo',
+					extrasobj:{orderNumber:audi,orderType:type}
+				})
 			}else{
 				openview({
 					view:'deliveryInfo.html',

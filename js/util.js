@@ -80,6 +80,7 @@ var util = {
 		if(currIndex !=2){ 
 			mui.fire(plus.webview.getWebviewById('cart.html'),'refreshBtn')
 		}
+		
 		currIndex = currIndex * 2;
 		// 重绘当前tag 包括icon和text，所以执行两个重绘操作
 		util.updateSubNView(currIndex, util.options.ACTIVE_COLOR);

@@ -35,8 +35,9 @@
 			.cancelText{padding: 20px 15px 10px;}
 			.cancelBtn{margin-top: 20px;}
 			.evaluaCon textarea{height: 90px;}
-			.copyBtn{    float: right; border: none; padding: 0 !important; color: #c7161e;}
+			.copyBtn{float: right; border: none; padding: 0 !important; color: #c7161e;}
 			.dingdanPingjia{margin-top: -8px; padding: 2px 6px; border-color: #ccc; color: #c7161e;}
+			#huiC{display:inline-block!important;text-align:justify!important;width:20%;}
 		</style>
 	</head>
 
@@ -63,64 +64,72 @@
 				</h4>
 				<p>
 					下单时间：<%= detail.createTime%>
-					<span class="span2" style="color: #EE9000;"><%= detail.status%></span>
+					<span class="span2" style="color: #EE9000;"><%= detail.statusDesc%></span>
 				</p>
 			</div>
 			<div class="Dpart1 Dpart2">
-				<span class="huiC">支付方式：</span> <%= detail.payType%>
+				<span class="huiC">支付方式</span> <span class="mui-pull-right"><%= detail.payType%></span>
 			</div>
 			<div class="Dpart3">
 				<div>
-					<span class="huiC">收货人：</span><%= detail.receiver%> <%= detail.receiverPhone%>
+					<span class="huiC">收货人</span><span class="mui-pull-right"><%= detail.receiver%> <%= detail.receiverPhone%></span>
 				</div>
 				<div>
-					<span class="huiC">提货码：</span>
-					<span class=""> <%= detail.pickUpCode || '无'%> </span>
+					<span class="huiC">提货码</span>
+					<span class="mui-pull-right"> <%= detail.pickUpCode || '无'%> </span>
 				</div>
 				<div>
-					<span class="huiC">配送方式：</span> <%= detail.deliveryType%>
+					<span class="huiC">配送方式</span> <span class="mui-pull-right"><%= detail.deliveryType%></span>
+				</div>
+				<div style="overflow: hidden;">
+					<span class="huiC">配送地址</span> <span class="mui-pull-right" style="text-align: right;max-width: 75%;word-break: break-all;white-space: normal;"><%= detail.shippingAddress%></span>
 				</div>
 				<div>
-					<span class="huiC">配送地址：</span> <%= detail.shippingAddress%>
-				</div>
-				<div>
-					<span class="huiC">配送时间：</span> <%= detail.deliveryTime%>
+					<span class="huiC">配送时间</span> <span class="mui-pull-right"><%= detail.deliveryTime%></span>
 				</div>
 			</div>
 			<div class="Dpart4 Dpart3">
 				<div>
-					<span class="huiC">商品总额：</span> <span class="floL"><%= detail.BillingDetailResponse.totalPrice%>元</span>
+					<span class="huiC">商品总额</span> <span class="floL"><%= detail.BillingDetailResponse.totalPrice%>元</span>
 				</div>
 				<div>
-					<span class="huiC">运费：</span> <span class="floL"><%= detail.BillingDetailResponse.freight%>元</span>
+					<span class="huiC">运费</span> <span class="floL"><%= detail.BillingDetailResponse.freight%>元</span>
 				</div>
 				<div>
-					<span class="huiC">优惠卷抵扣：</span> <span class="floL"><%= detail.BillingDetailResponse.couponDiscount%>元</span>
+					<span class="huiC">优惠卷抵扣</span> <span class="floL"><%= detail.BillingDetailResponse.couponDiscount%>元</span>
 				</div>
 				<div>
-					<span class="huiC">会员抵扣：</span> <span class="floL"><%= detail.BillingDetailResponse.memberDiscount%>元</span>
+					<span class="huiC">会员抵扣</span> <span class="floL"><%= detail.BillingDetailResponse.memberDiscount%>元</span>
 				</div>
 				<!--<div>
-					<span class="huiC">乐豆抵扣：</span> <span class="floL"> 还没有 元</span>
+					<span class="huiC">乐豆抵扣</span> <span class="floL"> 还没有 元</span>
 				</div>-->
 				<div>
-					<span class="huiC">促销抵扣：</span> <span class="floL"><%= detail.BillingDetailResponse.promotionDiscount%>元</span>
+					<span class="huiC">促销抵扣</span> <span class="floL"><%= detail.BillingDetailResponse.promotionDiscount%>元</span>
 				</div>
 				<div>
-					<span class="huiC">信用金抵扣：</span> <span class="floL"><%= detail.BillingDetailResponse.creditMoney%>元</span>
+					<span class="huiC">
+						<%if(detail.identityT == '2'){%>
+							信用金抵扣
+						<%}else{%>
+							信用额度抵扣
+						<%}%>
+					</span> <span class="floL"><%= detail.BillingDetailResponse.creditMoney%>元</span>
+				</div>
+				
+				
+				<div>
+					<span class="huiC">产品卷抵扣</span> <span class="floL"><%= detail.BillingDetailResponse.productCouponDiscount || 0%>元</span>
 				</div>
 				<div>
-					<span class="huiC">产品卷抵扣：</span> <span class="floL"><%= detail.BillingDetailResponse.productCouponDiscount || 0%>元</span>
-				</div>
-				<div>
-					<span class="huiC">预存款抵扣：</span> <span class="floL"><%= detail.BillingDetailResponse.preDeposit%>元</span>
+					<span class="huiC">预存款抵扣</span> <span class="floL"><%= detail.BillingDetailResponse.preDeposit%>元</span>
 				</div>
 				<!--<div>
-					<span class="redC">应付金额：</span> <span class="floL redC"><%= detail.BillingDetailResponse.leBiCashDiscount%>元</span>
+					<span class="redC">应付金额</span> <span class="floL redC"><%= detail.BillingDetailResponse.leBiCashDiscount%>元</span>
 				</div>-->
 			</div>
 			<div class="fineT" style="text-align: right;background-color: #fff;margin-top: -7px;padding: 10px 15px;margin-bottom: 7px;">
-				实付款：<span class="redC"><%= detail.BillingDetailResponse.amountPayable%>元</span>
+				实付款<span class="redC"><%= detail.BillingDetailResponse.amountPayable%>元</span>
 			</div>
 			<!--订单评价-->
 			<div class="Dpart3" id="evaluat" style="display: none;">
@@ -301,6 +310,7 @@
 							if(!data.content.customer || !data.content.customer.customerId){
 								data.content.customer = {customerId:null}
 							}
+							data.content.identityT = identityT;
 							data.content.BillingDetailResponse = data.content.customerBillingDetailResponse || data.content.managerBillingDetailResponse || data.content.sellerBillingDetailResponse;
 							document.getElementById('main').innerHTML = template('mainS',{detail:data.content});
 							if(isButton == 'no' || noButton){

@@ -207,6 +207,11 @@
 							if(data.code == 0){
 								$('#loadingdiv').css('height','0px');
 								if( data.content.list && data.content.list.length){
+									data.content.list.forEach(function(ele,index){
+										if(ele.orderNumber){
+											ele.orderNumber = ele.orderNumber.substr(0, 5) + '****' + ele.orderNumber.substr(20);  
+										}
+									})
 									document.getElementById('infoListDiv').innerHTML = template('infoList',{list:data.content.list,listType:index});
 
 									//下拉加载
@@ -226,6 +231,11 @@
 							                            console.log('已审核续',data);
 						                                if(data.code == 0){
 															if( data.content.list && data.content.list.length){
+																data.content.list.forEach(function(ele,index){
+																	if(ele.orderNumber){
+																		ele.orderNumber = ele.orderNumber.substr(0, 5) + '****' + ele.orderNumber.substr(20);  
+																	}
+																})
 																document.getElementById('infoListDiv').innerHTML += template('infoList',{list:data.content.list,listType:index});
 															}
 						                                }
@@ -244,6 +254,11 @@
 									//下拉加载结束
 
 								}else if(data.content && data.content.length){
+									data.content.forEach(function(ele,index){
+										if(ele.orderNumber){
+											ele.orderNumber = ele.orderNumber.substr(0, 5) + '****' + ele.orderNumber.substr(20);  
+										}
+									})
 									document.getElementById('infoListDiv').innerHTML = template('infoList',{list:data.content,listType:index});
 								}else{
 									document.getElementById('infoListDiv').innerHTML = '<div style="text-align: center;padding: 50px;"><img src="../../images/order/order.png" style="width: 100px;" /><div class="ft13 disablecl">暂无数据</div></div>';
