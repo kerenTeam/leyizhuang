@@ -184,7 +184,7 @@
 						plus.nativeUI.closeWaiting();
 						console.log('顾客',data);
 				       	if(data.code == 0){
-					       	if(data.content.list && data.content.list.length){
+					       	if(data.content && data.content.list && data.content.list.length){
 					       		for(var i in data.content.list){
 					       			if(!data.content.list[i].picUrl){
 					       				data.content.list[i].picUrl = '../../images/10.png'
@@ -239,6 +239,8 @@
 							});
 							//下拉加载结束
 				       	}else{
+				       		document.getElementsByClassName("dyCon")[typeNum].innerHTML = ' <p style="text-align: center;">没有数据 </p>' ;
+							mui("#upload")[0].innerHTML = "";
 				       		console.error(data.message);
 				       	}
 				       	plus.nativeUI.closeWaiting();

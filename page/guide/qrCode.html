@@ -45,7 +45,7 @@
 					headers:{"Authorization":oldToken},
 					success:function(data,type,xhr){
 						console.log('二维码',data);
-						if(data.code == 0 && data.content){
+						if(data.code == 0 && data.content.qrCode){
 							mui('.imgcode')[0].src = data.content.qrCode;
 						}else{
 							mui('.imgcode')[0].src = '../../img/editset.png';

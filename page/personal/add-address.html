@@ -127,10 +127,10 @@
 								<input type="text" class="fr shuru" id="person" placeholder="请输入收货人姓名" />
 							</a>
 						</li>
-						<li class="clearfloat">
+						<li class="">
 							<a href="#">
 								<p class="fl">联系电话 <span class="redc"> *</span></p>
-								<input type="tel" class="fr shuru" id="phone" placeholder="请输入手机号码" />
+								<input type="number" class="fr shuru" id="phone" placeholder="请输入手机号码" />
 							</a>
 						</li>
 						<style type="text/css">
@@ -292,7 +292,7 @@
 					}else if(!reg_phone.test(newPhone)){
 						$('#phone').focus();
 						mui.toast('请输入正确的手机号码 !');
-					}else if(!newStreet){
+					}else if(!newStreet || newStreet.indexOf('undefined')!=-1){
 						mui.toast('所在地区不能为空!');
 					}else if(xiaoquIn == ''){
 						mui.toast('所在小区不能为空!');

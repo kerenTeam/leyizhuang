@@ -243,6 +243,8 @@
 												var result = JSON.stringify(result);
 												mui.fire(plus.webview.getWebviewById('wallet'),'refreash')
 												mui.fire(plus.webview.getWebviewById('storePreDepositb'),'refreash')
+												mui.fire(plus.webview.getWebviewById('center.html'),'refresh');
+												
 												mui.back();
 											}, function(e) {
 												console.log("----- 支付失败 -----");
@@ -287,6 +289,8 @@
 												var result = JSON.stringify(result);
 												mui.fire(plus.webview.getWebviewById('wallet'),'refreash')
 												mui.fire(plus.webview.getWebviewById('storePreDepositb'),'refreash')
+												mui.fire(plus.webview.getWebviewById('center.html'),'OrderNumR');
+												
 												mui.back();
 
 												//

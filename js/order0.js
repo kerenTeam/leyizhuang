@@ -17,6 +17,7 @@ function comeOnAgain(orderNo,cusId){
 					mui.toast(data.message || '操作成功');
 					var timeY0 = setTimeout(function(){
 						mui.fire(plus.webview.getWebviewById('cart.html'),'refresh');
+						mui.fire(plus.webview.getWebviewById('cart'),'refresh');
 						openview({
 							view:'../../cart.html',
 							id:'cart',

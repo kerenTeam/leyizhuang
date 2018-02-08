@@ -53,14 +53,14 @@
 	<body>
 		<header class="mui-bar mui-bar-nav fineB" style="padding-right: 15px;">
 			<a id="leftbtn" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-			<h1 class="mui-title">我的订单</h1>
-			<span class="mui-icon mui-icon-search mui-pull-right" id="openSearch"></span>
+			<h1 class="mui-title"></h1>
+			<span class="mui-icon mui-icon-search mui-pull-right" id="openSearch" style="display: none;"></span>
 		</header>
 		<script src="../../js/statusBar.js"></script>
 		<div id="main" style="padding-top: 48px !important;">
 			<div class="notice">
 				<!--tab切换-->
-				<div class="tab-hd tab-hdtwo" id="tabLink">
+				<div class="tab-hd tab-hdtwo" id="tabLink" style="display: none;">
 					<ul class="tab-nav">
 					  <li class="aClick" data-statusId="">全部</li>
 					  <li class="aClick" data-statusId="1">待付款</li>
@@ -329,7 +329,6 @@
 				var userId = plus.storage.getItem('$userId');
 				var oldToken = plus.storage.getItem('oldToken');
 
-
 				// 支付接口
 				window.payfun = function(id, payableAmount, orderNumber) {
 					var varpay;
@@ -374,7 +373,7 @@
 										plus.payment.request(pays[id], varpay, function(result) {
 											console.log("----- 支付成功 -----");
 											var result = JSON.stringify(result);
-											mui.fire(plus.webview.getWebviewById('center.html'),'OrderNumR');
+											mui.fire(plus.webview.getWebviewById('center.html'),'refresh');
 											plus.webview.currentWebview().reload();
 										}, function(e) {
 											console.log("----- 支付失败 -----");
@@ -416,7 +415,7 @@
 											console.log("----- 支付成功 -----", JSON.stringify(result));
 											plus.nativeUI.closeWaiting();
 											plus.nativeUI.alert("支付成功"); 
-											mui.fire(plus.webview.getWebviewById('center.html'),'OrderNumR');
+											mui.fire(plus.webview.getWebviewById('center.html'),'refresh');
 											plus.webview.currentWebview().reload();
 										
 										}, function(e) {
@@ -448,11 +447,7 @@
 			//再来一单 ==> order0.js
 			//申请退货 ==> order0.js
 			//打开订单物流  ==> order0.js
-
-
-
-
-
+ 
 			mui.plusReady(function(){
 				var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
 				var userId = plus.webview.currentWebview().lookCusid || plus.storage.getItem('$userId');
@@ -460,20 +455,33 @@
 				var SH0 = 0;/*保存的滚动条高度*/
 				var inType = plus.webview.currentWebview().type;
 				var noButton = plus.webview.currentWebview().isNoButton;
+				var fromPage = plus.webview.currentWebview().fromPage;
+				if(fromPage == 'index'){
+					$('.mui-title').html("物流");
+					$('#loadingdiv').css("margin-top",0);
+					$('#openSearch,#tabLink').hide()
+				}else{
+					$('.mui-title').html("我的订单");
+					$('#loadingdiv').css("margin-top",'42px');
+					$('#openSearch,#tabLink').show()
+				}
 				//打开订单详情
 				window.openDetail = function(orderNo,evaluat,id,cusid){
-					openview({
-						view:'myOrderDetail.html',
-						id:'myOrderDetail',
-						extrasobj:{
-							orderNo:orderNo,
-							evaluat:evaluat,
-							cancelParentId:id,//父元素ID
-							noButton:noButton,
-							lookCusid:userId,
-							cusId:cusid
-						}
-					})
+					if(fromPage != 'index'){
+						openview({
+							view:'myOrderDetail.html',
+							id:'myOrderDetail',
+							extrasobj:{
+								orderNo:orderNo,
+								evaluat:evaluat,
+								cancelParentId:id,//父元素ID
+								noButton:noButton,
+								lookCusid:userId,
+								cusId:cusid
+							}
+						})
+					}
+					
 				}
 				//详情页面点取消,监听刷新
 				document.addEventListener('cancelrefresh2', function(event) {
@@ -564,6 +572,10 @@
 										if(noButton == 1){
 											$('.orderBtns').empty()
 										}
+										if(fromPage == 'index'){
+											$('.orderBtns>span:not(:last-child)').remove();
+										}
+										
 									}else{
 										document.getElementById('infoListDiv').innerHTML = '<div style="text-align: center;padding: 50px;"><img src="../../images/order/order.png" style="width: 100px;margin-bottom: 8px;" /><div class="ft13 disablecl">暂无相关订单</div></div>';
 									}
@@ -605,6 +617,9 @@
 						                                        document.getElementById('infoListDiv').innerHTML += template('infoList',{list:data.content.list,nowState:tabT});
 						                                    	if(noButton == 1){
 																	$('.orderBtns').empty()
+																}
+						                                    	if(fromPage == 'index'){
+																	$('.orderBtns>span:not(:last-child)').remove();
 																}
 						                                    }
 						                                    lazyLoad();

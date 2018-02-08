@@ -868,10 +868,7 @@
 											})
 										}
 									}
-								} else {
-									mui.toast(data.message)
 								}
-
 							},
 							error: function(xhr, type, errorThrown) {
 								plus.nativeUI.closeWaiting();
@@ -901,8 +898,6 @@
 									}
 									$('#slogan').html(slogan)
 								}
-							} else {
-								mui.toast(data.message)
 							}
 
 						},
@@ -922,7 +917,7 @@
 							if(data.code == '0'){
 								$('#huodong0').html(template('huodongS0', {list: data.activity,url:oCms}));
 							}else{
-								mui.toast(data.message)
+//								mui.toast(data.message)
 							}
 						},
 						error: function(xhr, type, errorThrown) {
@@ -1113,9 +1108,18 @@
 				})
 			}
 			function delivery(){
+//				openview({
+//					view:'page/personal/deliveryInform.html',
+//					id:'deliveryInform'
+//				})
+				//打开订单，
 				openview({
-					view:'page/personal/deliveryInform.html',
-					id:'deliveryInform'
+					view:'page/personal/myOrderList.html',
+					id: 'myOrderList',
+					extrasobj:{
+						type:2,
+						fromPage:'index'
+					}
 				})
 			}
 			//消息
@@ -1278,7 +1282,9 @@
 //					//登录-》退出登录 
 //					util.toggleNview(3);
 //				})
-				document.addEventListener('refreshpage', function() {
+				document.addEventListener('pagerefresh', function() {
+					util.toggleNview(0);
+					util.changeSubpage(targetPage, activePage, aniShow);
 				})
 				var self = plus.webview.currentWebview(),
 					leftPos = Math.ceil((window.innerWidth - 60) / 2); // 设置凸起大图标为水平居中

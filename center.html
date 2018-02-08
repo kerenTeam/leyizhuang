@@ -150,7 +150,7 @@
 						<div class="denlu" style="display:none ;" id="userNumber">用户id:<span style="z-index: 99;"></span></div>
 						<div class="denlu" id="onlyPs">配送数量:<span id="psNumber" style="z-index: 99;"></span></div>
 						<div class="denlu" id="onlyGuide">手机号:<span id="guidesPhone"></span> <span id='bindPhone' style="background-color: orange;color: white;font-size: 10px;padding: 2px;border-radius: 3px;display: none;">绑定手机号</span></div>
-						<div class="denlu" id="onlyCust">灯号:<span id="dengh"></span><br />导购:<span id="guideName"></span><a id="guideMobile" style="display: none;" href=""><img style="width: 15px;margin-left: 5px;" src="images/center/phone.svg"/></a></div>
+						<div class="denlu" id="onlyCust">导购:<span id="guideName"></span><a id="guideMobile" style="display: none;" href=""><img style="width: 15px;margin-left: 5px;" src="images/center/phone.svg"/></a></div>
 						<div class="denlu" id="onlymange">账户:<span id="manageMoney"></span></div>
 					</p>
 				</div>
@@ -790,11 +790,11 @@
 										}else{
 											$('#guideMobile').css('display','none')
 										}
-										if(data.content.light) {
-											$('#dengh').html(data.content.light)
-										} else {
-											$('#dengh').html('无')
-										}
+//										if(data.content.light) {
+//											$('#dengh').html(data.content.light)
+//										} else {
+//											$('#dengh').html('无')
+//										}
 										if(data.content.balance){
 											$('#accoutMoney,#manageMoney,#userAct').html('¥'+data.content.balance)
 										}else{
@@ -847,6 +847,7 @@
 
 					document.addEventListener('OrderNumR', function() {
 						showOrderNum();
+						loadmyinfo();
 					})
 					//显示订单数量
 					if(identityT != 1){

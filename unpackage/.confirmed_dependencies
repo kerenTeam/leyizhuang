@@ -257,7 +257,8 @@
 			"page/guide/debateQuery.html",
 			"page/personal/signInDay.html",
 			"bannerTpl.html",
-			"welcome.html"
+			"welcome.html",
+			"page/personal/myOrderList.html"
 		]
 	},
 	"page/gxbList.html": {

@@ -124,7 +124,8 @@
 										})
 										mui('.mui-numbox').numbox();
 										//加入购物车
-										$('.toCart').click(function(){
+										$('.toCart').unbind('click').click(function(){
+											event.stopPropagation()
 											var goodid = $(this).attr('data-id');
 											var cur = $(this);
 											plus.nativeUI.showWaiting();
@@ -273,7 +274,8 @@
 																		console.log('成功+1,应到' + Spagenum);
 								                                        mui('.mui-numbox').numbox();
 								                                        //加入购物车
-								                                        $('.toCart').click(function(){
+								                                        $('.toCart').unbind('click').click(function(){
+								                                        	event.stopPropagation();
 								                                            var goodid = $(this).attr('data-id');
 								                                            var cur = $(this);
 								                                            plus.nativeUI.showWaiting();

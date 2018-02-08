@@ -45,7 +45,7 @@
 				var money = plus.webview.currentWebview().money;
 				window.goback = function(){
 					var index = plus.webview.getLaunchWebview();
-					mui.fire(index,'refreshpage');
+					mui.fire(index,'pagerefresh');
 					mui.back();
 				}
 				window.goOrderInfo = function(){
