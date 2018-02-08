@@ -15,6 +15,9 @@
 			body {
 				background-color: #efeff4;
 			}
+			.gocarticon{
+				bottom: 3.5rem;
+			}
 			.title {
 				padding: 14px 0 10px;
 				color: black;
@@ -37,6 +40,10 @@
 	</head>
 
 	<body>
+		<div class="gocarticon" id="div2">
+			<img src="../images/whitecart.svg" alt="" />
+			<span class="mui-badge mui-badge-white">0</span>
+		</div>
 		<div class="mui-content ft15" style="margin-top: 0;">
 			<div class="maincl">
 				<div class="title fttc bgcee ft15" data-id='1'>
@@ -633,8 +640,7 @@
 			<aside class="btmNav flexr" style="position: fixed;bottom: 0;left: 0;width: 100%;">
 				<span id="showBtcrt" class="mui-icon mui-icon-arrowup activecl showRotate" style="padding-left: 10px;"></span>
 				<a class="dp ft16" style="color: #B62D29;text-align: center;flex: 1;">
-					<img style="display:inline-block;margin-right:10px;vertical-align:middle;width:25px" onclick="tocart()" src="../images/cart2.svg" />
-					<span>|&nbsp;&nbsp;&nbsp;合计：</span><span class="totalMoney">0</span>件商品
+					<span>合计：</span><span class="totalMoney">0</span>件商品
 				</a>
 				<a class="goOrder dp" style="background:#B62D29;color:white;padding:14px 10px;">加入下料清单</a>
 			</aside>
@@ -695,16 +701,11 @@
 			$(this).siblings().removeClass('bdcA')
 			$(this).addClass('bdcA')
 		})
-		function tocart(){
-			openview({
-				view: "../cart.html",
-				id:'cart',
-				extrasobj: {
-					page: "1"
-				}
-			})
-		}
 		mui.plusReady(function(){
+			document.addEventListener('refreshct', function() {
+				getCartNum();
+			})
+			getCartNum();
 			$('.mui-numbox input').click(function() {
 				$(this).select();
 				event.stopPropagation()
@@ -899,6 +900,28 @@
 					mui.toast('还未选择商品哦')
 				}
 			}
+			function getCartNum(){
+				var cartNum = plus.storage.getItem('cartNums') || 0;
+				cartNum = cartNum < 0 ? 0:cartNum;
+				if(cartNum>0){
+					$('.gocarticon span').show();
+					$('.gocarticon span').html(cartNum)
+				}else{
+					$('.gocarticon span').hide();
+				}
+			}
+		 	mui('.gocarticon')[0].onclick = function(){
+				mui.fire(plus.webview.getWebviewById('cart.html'), 'refresh');
+				openview({
+					view: "../cart.html",
+					id:'cart',
+					extrasobj: {
+						page: "1"
+					}
+				})
+
+			 	
+			}
 		})
 		
 		//总选
@@ -910,6 +933,40 @@
 			}
 		})
 		
+		</script>
+		<script type="text/javascript">
+			// 获取节点
+		  	var block = document.getElementById("div2");
+		  	var oW,oH;
+		  	// 绑定touchstart事件
+		  	block.addEventListener("touchstart", function(e) {
+			   	console.log(e);
+			   	var touches = e.touches[0];
+			   	oW = touches.clientX - block.offsetLeft;
+			   	oH = touches.clientY - block.offsetTop;
+			   	//阻止页面的滑动默认事件
+			   	document.addEventListener("touchmove",defaultEvent,false);
+		  	},false)
+		 
+		  	block.addEventListener("touchmove", function(e) {
+			   	var touches = e.touches[0];
+			   	var oLeft = touches.clientX - oW;
+			   	var oTop = touches.clientY - oH;
+			   	if(oLeft < 0) {
+			   		oLeft = 0;
+			   	}else if(oLeft > document.documentElement.clientWidth - block.offsetWidth) {
+			    oLeft = (document.documentElement.clientWidth - block.offsetWidth);
+			   	}
+			   	block.style.left = oLeft + "px";
+			   	block.style.top = oTop + "px";
+		  	},false);
+		   
+			block.addEventListener("touchend",function() {
+			   document.removeEventListener("touchmove",defaultEvent,false);
+			},false);
+			function defaultEvent(e) {
+			   e.preventDefault();
+			}
 		</script>
 	</body>
 

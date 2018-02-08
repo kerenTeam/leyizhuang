@@ -132,7 +132,6 @@
 			.flexRow2{display: flex;text-align: center;padding: 8px;}
 			.flexRow2 div{width: 50%;}
 			.flexRow2 img{width: 30px;vertical-align: middle;}
-			.fineB span:first-child{display: inline-block;max-width: 70%;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;}
 
 		</style>
 	</head>
@@ -193,7 +192,7 @@
 						<%if(listType == 2){%>
 							<div class="checkList" onclick="goInfo('<%=list[i].id%>',2)">
 								<h4 class="fineB ft16">
-									<span>出货单号：<%=list[i].orderNumber%></span>
+									<span>出货单号：<%=list[i].orderNumber2%></span>
 									<span class="mui-icon mui-icon-arrowright mui-pull-right ft20 maincl"></span>
 									<span class="h4span3">
 										<%=list[i].status%>
@@ -236,7 +235,7 @@
 											</span>
 										</div>
 									</div>
-									<div class="ft15"><span class="maincl">配送地址：</span><span class="titcl"><%=list[i].distributionAddress%></span><img src="../../images/order/map.svg" onclick="goMap('<%=list[i].distributionAddress%>')" style="width: 30px;vertical-align: bottom;margin-top: 5px;" class="mui-pull-right"/></div>
+									<div class="ft15"><span class="maincl">配送地址：</span><span class="titcl"><%=list[i].distributionAddress%></span></div>
 									<div class="ft15"><span class="maincl">配送日期：</span><span class="titcl"><%=list[i].distributionTime%></span></div>
 								</div>
 
@@ -248,7 +247,7 @@
 						<%}else if(listType == 0){%>
 							<div class="checkList" onclick="goInfo('<%=list[i].orderNumber%>',0)">
 								<h4 class="fineB ft16">
-									<span>出货单号：<%=list[i].shipperNumber%></span>
+									<span>出货单号：<%=list[i].shipperNumber2%></span>
 						    			<span class="mui-icon mui-icon-arrowright mui-pull-right maincl ft20 maincl"></span>
 								</h4>
 								<div class="checkListCon clearfix afterBorder ft15">
@@ -288,7 +287,7 @@
 											</span>
 										</div>
 									</div>
-									<div class="ft15"><span class="disablecl">配送地址：</span><span class="titcl"><%=list[i].shippingAddress%></span><img src="../../images/order/map.svg" onclick="goMap('<%=list[i].shippingAddress%>')" style="width: 30px;vertical-align: bottom;margin-top: 5px;" class="mui-pull-right"/></div>
+									<div class="ft15"><span class="disablecl">配送地址：</span><span class="titcl"><%=list[i].shippingAddress%></span></div>
 									<div class="ft15"><span class="disablecl">配送日期：</span><span class="titcl"><%=list[i].deliveryTime%></span></div>
 								</div>
 
@@ -300,7 +299,7 @@
 						<%}else if(listType == 1){%>
 							<div class="checkList" onclick="goInfo('<%=list[i].returnNumber%>',1)">
 								<h4 class="fineB ft16">
-									<span>出货单号：<%=list[i].returnNumber%></span>
+									<span>出货单号：<%=list[i].returnNumber2%></span>
 						    			<span class="mui-icon mui-icon-arrowright mui-pull-right maincl ft20 maincl"></span>
 								</h4>
 								<div class="checkListCon clearfix afterBorder ft15">
@@ -340,7 +339,8 @@
 											</span>
 										</div>
 									</div>
-									<div class="ft15"><span class="disablecl">配送地址：</span><span class="titcl"><%=list[i].pickUpAddress%></span><img src="../../images/order/map.svg" onclick="goMap('<%=list[i].pickUpAddress%>')" style="width: 30px;vertical-align: bottom;margin-top: 5px;" class="mui-pull-right"/></div>
+									<div class="ft15"><span class="disablecl">配送地址：</span><span class="titcl"><%=list[i].pickUpAddress%></span></div>
+									<!--<img src="../../images/order/map.svg" onclick="goMap('<%=list[i].pickUpAddress%>')" style="width: 30px;vertical-align: bottom;margin-top: 5px;" class="mui-pull-right"/>-->
 									<div class="ft15"><span class="disablecl">配送日期：</span><span class="titcl"><%=list[i].pickUpTime%></span></div>
 								</div>
  
@@ -348,7 +348,7 @@
 						<%}else{%>
 							<div class="checkList" onclick="goInfo('<%=list[i].orderNumber%>',3)">
 								<h4 class="fineB ft16">
-									<span>出货单号：<%=list[i].shipperNumber%></span>
+									<span>出货单号：<%=list[i].shipperNumber2%></span>
 
 						    			<span class="mui-pull-right maincl maincl ft14"><%=list[i].auditStatus%><span class="mui-icon mui-icon-arrowright ft20"></span></span>
 								</h4>
@@ -389,7 +389,7 @@
 											</span>
 										</div>
 									</div>
-									<div class="ft15"><span class="disablecl">配送地址：</span><span class="titcl"><%=list[i].shippingAddress%></span><img src="../../images/order/map.svg" onclick="goMap('<%=list[i].shippingAddress%>')" style="width: 30px;vertical-align: bottom;margin-top: 5px;" class="mui-pull-right"/></div>
+									<div class="ft15"><span class="disablecl">配送地址：</span><span class="titcl"><%=list[i].shippingAddress%></span></div>
 									<div class="ft15"><span class="disablecl">配送日期：</span><span class="titcl"><%=list[i].deliveryTime%></span></div>
 								</div>
 
@@ -574,8 +574,7 @@
 						}
 					});
 				}
-			} //刷新
-
+			} //刷新 
 			$('#tabLink li').click(function(){
 				$('#tabLink li').removeClass('active');
 				$(this).addClass('active');
@@ -623,13 +622,37 @@
 								$('#loadingdiv').css('height','0px');
 								if(data.content){
 									if(index == 3 && data.content.list && data.content.list.length){
+										data.content.list.forEach(function(ele,index){
+											if(ele.orderNumber){
+												ele.orderNumber2 = ele.orderNumber.substr(0, 5) + '****' + ele.orderNumber.substr(20);  
+											}
+											if(ele.shipperNumber){
+												ele.shipperNumber2 = ele.shipperNumber.substr(0, 5) + '****' + ele.shipperNumber.substr(20);  
+											}
+											if(ele.returnNumber){
+												ele.returnNumber2 = ele.returnNumber.substr(0, 5) + '****' + ele.returnNumber.substr(8);  
+											}
+										})
 										document.getElementById('infoListDiv').innerHTML = template('infoList',{list:data.content.list,listType:index});
 									}else if(data.content.length){
+										data.content.forEach(function(ele,index){
+											if(ele.orderNumber){
+												ele.orderNumber2 = ele.orderNumber.substr(0, 5) + '****' + ele.orderNumber.substr(20);  
+											}
+											if(ele.shipperNumber){
+												ele.shipperNumber2 = ele.shipperNumber.substr(0, 5) + '****' + ele.shipperNumber.substr(20);  
+											}
+											if(ele.returnNumber){
+												ele.returnNumber2 = ele.returnNumber.substr(0, 5) + '****' + ele.returnNumber.substr(8);  
+											}
+										})
 										document.getElementById('infoListDiv').innerHTML = template('infoList',{list:data.content,listType:index});
 									}else{
 										document.getElementById('infoListDiv').innerHTML = '<div style="text-align: center;padding: 50px;"><img src="../../images/order/order.png" style="width: 100px;" /><div class="ft13 disablecl">暂无数据</div></div>';
 									}
-
+									$('a').click(function(){
+										event.stopPropagation()
+									})
 									$(window).scroll(function() {
 										var scrollTop = $(this).scrollTop();
 										var scrollHeight = $(document).height();
@@ -654,9 +677,23 @@
 																plus.nativeUI.closeWaiting();
 																if(data.content){
 								                                    if(data.content.list && data.content.list.length){
+								                                    	data.content.list.forEach(function(ele,index){
+																			if(ele.orderNumber){
+																				ele.orderNumber2 = ele.orderNumber.substr(0, 5) + '****' + ele.orderNumber.substr(20);  
+																			}
+																			if(ele.shipperNumber){
+																				ele.shipperNumber2 = ele.shipperNumber.substr(0, 5) + '****' + ele.shipperNumber.substr(20);  
+																			}
+																			if(ele.returnNumber){
+																				ele.returnNumber2 = ele.returnNumber.substr(0, 5) + '****' + ele.returnNumber.substr(8);  
+																			}
+																		})
 																		document.getElementById('infoListDiv').innerHTML += template('infoList',{list:data.content.list,listType:index});
-								                                        	mui("#upload")[0].innerHTML = " ";
+								                                        mui("#upload")[0].innerHTML = " ";
 																		Spagenum++; //加载成功,当前页+1
+																		$('a').click(function(){
+																			event.stopPropagation()
+																		})
 																		console.log('成功+1,实到' + Spagenum);
 																		console.log('成功+1,应到' + Spagenum);
 	
