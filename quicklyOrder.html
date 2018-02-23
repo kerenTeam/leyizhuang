@@ -12,7 +12,7 @@
 		.vct{width: 90%;position: fixed;color: white;text-align: center;top: 22%;left:5%;}
 		.vct img{display: block;width: 80px;margin:auto;margin-bottom: 10px;vertical-align: middle;}
 		.vct td{padding: 20px;}
-		#close{width: 30px;}
+		#close{width: 80px;padding: 20px;}
 	</style>
 	<body style="background-color:rgba(0,0,0,0.4);">
 		<table class="vct" border="0" cellspacing="" cellpadding="">
@@ -35,31 +35,40 @@
 			</tr>
 		</table>
 		<img id="close" src="images/order/closef.png" style="position: fixed;bottom: 10%;left: 50%;-webkit-transform: translateX(-50%);"/>
+		<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/mui.min.js"></script>
 		<script type="text/javascript">
 			mui.init();
-			mui('#close')[0].addEventListener('tap',function(){
+			 
+//			document.getElementById('close').onclick = function(){
+//				plus.webview.currentWebview().close();
+//			}
+			$('#close').click(function(){
 				plus.webview.currentWebview().close();
 			})
 			mui('.ofenBuy')[0].addEventListener('tap',function(){
+				event.stopPropagation();
 				openview({
 					view: 'page/ofenBuy.html',
 					id: 'ofenBuy',
 				})
 			})
 			mui('.collect')[0].addEventListener('tap',function(){
+				event.stopPropagation();
 				openview({
 					view: 'page/personal/collect.html',
 					id: 'collect',
 				})
 			})
 			mui('.quick')[0].addEventListener('tap',function(){
+				event.stopPropagation();
 				openview({
 					view: 'page/fastOrder.html',
 					id: 'fastOrder',
 				})
 			})
 			mui('.cameraOrder')[0].addEventListener('tap',function(){
+				event.stopPropagation();
 //				mui.plusReady(function() {
 //					var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
 //					if(identityT == 0) { //导购
