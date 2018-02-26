@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-		<title>个人中心</title>
+		<title>顾客中心</title>
 		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, width=device-width">
 		<meta name="apple-mobile-web-app-capable" content="yes">
 		<meta name="apple-touch-fullscreen" content="yes">
@@ -219,7 +219,6 @@
 					var identityT = 6;
 					var userId = plus.webview.currentWebview().cusid;
 					var oldToken = plus.storage.getItem('oldToken');
-					
 					//打开订单，
 					window.openOrder = function(type){
 						openview({
@@ -376,7 +375,7 @@
 					//显示订单数量
 					showOrderNum();
 					function showOrderNum(){
-						mui.ajax(serverUrl+'/app/user/message/unread/number',{
+						mui.ajax(serverUrl+'/app/order/AppOrderQuantity',{
 							data:{ userId:userId,identityType:identityT },
 							dataType:'json',
 							type:'post',
@@ -387,10 +386,26 @@
 								if(data.code == 0){
 									var unpaidOrderQuantity = data.content.unpaidOrderQuantity,pendingReceiveOrderQuantity = data.content.pendingReceiveOrderQuantity,
 									    isEvaluatedOrderQuantity = data.content.isEvaluatedOrderQuantity,returningOrderQuantity = data.content.returningOrderQuantity;
-									unpaidOrderQuantity && ($('.orderNum').eq(0).html(unpaidOrderQuantity).css('display','inline-block'));
-									pendingReceiveOrderQuantity && ($('.orderNum').eq(1).html(pendingReceiveOrderQuantity).css('display','inline-block'));
-									isEvaluatedOrderQuantity && ($('.orderNum').eq(2).html(isEvaluatedOrderQuantity).css('display','inline-block'));
-									returningOrderQuantity && ($('.orderNum').eq(3).html(returningOrderQuantity).css('display','inline-block'));
+									if(unpaidOrderQuantity){
+										$('.orderNum').eq(0).html(unpaidOrderQuantity).css('display','inline-block')
+									}else{
+										$('.orderNum').eq(0).hide()
+									}
+									if(pendingReceiveOrderQuantity){
+										$('.orderNum').eq(1).html(pendingReceiveOrderQuantity).css('display','inline-block')
+									}else{
+										$('.orderNum').eq(1).hide()
+									}
+									if(isEvaluatedOrderQuantity){
+										$('.orderNum').eq(2).html(isEvaluatedOrderQuantity).css('display','inline-block')
+									}else{
+										$('.orderNum').eq(2).hide()
+									}
+									if(returningOrderQuantity){
+										$('.orderNum').eq(3).html(returningOrderQuantity).css('display','inline-block')
+									}else{
+										$('.orderNum').eq(3).hide()
+									}
 								}else{
 									console.error(data.message);
 								}

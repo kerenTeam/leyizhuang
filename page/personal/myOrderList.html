@@ -326,9 +326,8 @@
 			mui.plusReady(function(){
 				//获取缓存
 				var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
-				var userId = plus.storage.getItem('$userId');
+				var userId = plus.webview.currentWebview().lookCusid || plus.storage.getItem('$userId');
 				var oldToken = plus.storage.getItem('oldToken');
-
 				// 支付接口
 				window.payfun = function(id, payableAmount, orderNumber) {
 					var varpay;
@@ -450,6 +449,9 @@
  
 			mui.plusReady(function(){
 				var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
+				if(plus.webview.currentWebview().lookCusid){
+					identityT = 6;
+				}
 				var userId = plus.webview.currentWebview().lookCusid || plus.storage.getItem('$userId');
 				var oldToken = plus.storage.getItem('oldToken');
 				var SH0 = 0;/*保存的滚动条高度*/

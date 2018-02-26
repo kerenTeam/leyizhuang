@@ -122,29 +122,18 @@
 						<span class="maincl">单位：</span><%=dataobj.goodsUnit%>
 					</div>  
 				</div>
-				<!--详情-->
-				<div id="goodsInfo">
-					<div class="ft16 goodstit">商品详情</div>
-					<%if(dataobj.coverImageUriList && dataobj.coverImageUriList.length){%>
-						<% for(var i=0;i<dataobj.coverImageUriList.length;i++){ %>
-							<%if(dataobj.coverImageUriList[i]){%>
-								<img src="<%=dataobj.coverImageUriList[i]%>" alt="" />
-								
-							<%}%>
-					    	<div class="mui-indicator"></div>
-					    <% } %>
-					<%}else{%>
-						<div style="text-align: center;padding: 20px;">
-							暂无数据
-						</div>
-					<%}%>
-					
-				</div>
+				
 			</script>
+				
+			<!--详情-->
+			<div id="goodsInfo">
+				<div class="ft16 goodstit">商品详情</div>
+				<div id="infoCnt"></div>
+			</div>
 			<div class="afterBorder" style="padding: 10px;background-color: white;">
 				<div class="ft17 goodstit">商品评价 <span class="mui-pull-right maincl ft14"></span></div> 
 			</div>
-			<div id="curShow" class="bgcwt" style="padding-bottom:60px;"></div>
+			<div id="curShow" class="bgcwt"></div>
     			<!--留言--> 
 		 	<script type="text/html" id="cmtTpl">
 		 		
@@ -331,14 +320,17 @@
 							}
 							document.getElementById("moll_info").innerHTML = template("infoTpl", {dataobj:data.content});
 							document.getElementById("cartObj").innerHTML = template("cartTpl", {dataobj:data.content});
+							if(data.content.goodsDetail){
+								$('#infoCnt').html(data.content.goodsDetail)
+							}else{
+								$('#infoCnt').html('<div style="font-size:14px;color:gray;padding:5%;text-align: center;">暂无详情</div>')
+							}
 							mui('.mui-numbox').numbox()
 							var gallery = mui(".mui-slider");
 							gallery.slider({
 								interval: 3000 //设置自动轮播周期为3s
 							});
-						}else{
-							
-						}
+						} 
 					}
 					if(data.code == 1000 ){
 						mui.toast(data.message)

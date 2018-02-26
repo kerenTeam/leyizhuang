@@ -42,14 +42,15 @@
 			#infoListDiv{transition: all .3s;}
 			.flexr{display: flex;justify-content: space-between;margin: 2px 0;}
 			a,a:active{color: rgb(51,51,51)!important;}
+			.mui-bar .mui-title{right: 60px!important;}
 		</style>
 	</head>
 
 	<body>
 		<header class="mui-bar mui-bar-nav fineB" style="padding-right: 15px;">
 			<a id="leftbtn" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-			<h1 class="mui-title">出货信息</h1>
-			<span class="mui-pull-right activecl" style="margin-top: 15px;" onclick="gowl()">物流状态</span>
+			<h1 class="mui-title" style="pointer-events:all">出货信息</h1>
+			<div class="mui-pull-right activecl" style="margin-top: 15px;z-index: 9999;" onclick="gowl()">物流状态</div>
 		</header>
 		<script src="../../js/statusBar.js"></script>
 
