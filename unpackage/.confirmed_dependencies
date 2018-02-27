@@ -808,7 +808,9 @@
       "js/mui.min.js",
       "js/default.js"
     ],
-    "refer": []
+    "refer": [
+      "page/personal/myOrderDetail.html"
+    ]
   },
   "page/order/chooseGift.html": {
     "resources": [
@@ -1255,7 +1257,8 @@
   },
   "page/personal/myOrderRTList.html": {
     "refer": [
-      "page/personal/myOrderRTdetail.html"
+      "page/personal/myOrderRTdetail.html",
+      "page/personal/myOrderDetail.html"
     ],
     "resources": []
   },

@@ -1023,11 +1023,12 @@
 										url:oCms
 									});
 								} else {
+									document.getElementById("tradeList").innerHTML = '<div style="text-align:center;padding:15px;font-size: 12px;">暂无数据</div>';
 									mui("#upload")[0].innerHTML = "";
 								}
 
 							}else{
-								mui.toast(data.message)
+								document.getElementById("tradeList").innerHTML = '<div style="text-align:center;padding:15px 0 40px 0;font-size: 12px;">暂无数据</div>';
 							}
 							plus.nativeUI.closeWaiting(); //关闭等待框
 						},

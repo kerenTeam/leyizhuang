@@ -56,7 +56,11 @@
 			<div id="infoListDiv"></div>
 			<script type="text/html" id="infoList">
 				<div class="checkList">
+					<h4 class="fineB ft16">
+						<span>出货单号：<%=list.orderNumber%></span>
+					</h4>
 					<div class="checkListCon clearfix afterBorder ft15">
+						
 						<div class="flexr">
 							<div>
 								<span class="disablecl">
@@ -125,10 +129,11 @@
 				var userId = plus.storage.getItem('$userId');
 				var oldToken = plus.storage.getItem('oldToken');
 				var orderNumber = plus.webview.currentWebview().orderNumber;
+				var orderNumberid = plus.webview.currentWebview().orderNumberid;
 				var ordertype = plus.webview.currentWebview().orderType;
 				plus.nativeUI.showWaiting();
 				mui.ajax(serverUrl+'/app/arrearsAudit/details',{
-					data:{userId:userId,identityType:identityT,arrearsAuditId:orderNumber},
+					data:{userId:userId,identityType:identityT,arrearsAuditId:orderNumberid},
 					dataType:'json',
 					type:'post',
 					timeout:10000,
@@ -138,6 +143,7 @@
 						if(data.code == 0){
 						 
 							if(data.content){ 
+								data.content.orderNumber=orderNumber;
 								document.getElementById('infoListDiv').innerHTML = template('infoList',{list:data.content});
 							}else{
 								document.getElementById('infoListDiv').innerHTML = '<div style="text-align: center;padding: 50px;"><img src="../../images/order/order.png" style="width: 100px;" /><div class="ft13 disablecl">暂无数据</div></div>';

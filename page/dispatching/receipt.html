@@ -65,7 +65,7 @@
 		<div class="mui-content">
 			<div class="bgcwt">
 				<form class="mui-input-group ft16" style="margin-top: 7px;border-bottom: 0;">
-					<div class="mui-input-row flexr">
+					<div class="mui-input-row flexr" id="dsm">
 						<label style="border-right: 1px solid #EEEEEE;width: 27%;">代收金额</label>
 						 <input type="text" readonly="" id="orderMoney" value="" />
 					</div>
@@ -73,11 +73,11 @@
 						<label style="border-right: 1px solid #EEEEEE;width: 27%;">提货码</label>
 						<input type="text" name="" id="pickUpCode" placeholder="输入收货码" />
 					</div>
-					<div class="mui-input-row flexr">
+					<div class="mui-input-row flexr" id="ssm">
 						<label style="border-right: 1px solid #EEEEEE;width: 27%;">实收金额</label>
 						<input type="number" name="" id="truemoney" placeholder="输入实际收款金额" />
 					</div>
-					<div class="mui-input-row flexr" style="justify-content: flex-start;">
+					<div class="mui-input-row flexr" id="fkfs" style="justify-content: flex-start;">
 						<label>付款方式</label>
 						<div id="payWay" style="flex: 1;"></div>
 					</div>
@@ -107,7 +107,10 @@
 				var orderNumber = plus.webview.currentWebview().orderNumber;
 				var money = plus.webview.currentWebview().money;
 				var cityId = plus.storage.getItem('userCity');
-				$('#orderMoney').val('¥'+money)
+				$('#orderMoney').val('¥'+money);
+				if(!money || money<=0){
+					$('#ssm,#fkfs').hide();
+				}
 				mui.ajax(serverUrl + '/app/distributionAgent/list', {
 					data:{userId:userId,identityType:identityT,cityId:cityId},
 					dataType: 'json',
@@ -240,7 +243,11 @@
 					var userId = plus.storage.getItem('$userId');
 					var oldToken = plus.storage.getItem('oldToken');
 					var orderNumber = plus.webview.currentWebview().orderNumber;
-					 
+					var money = plus.webview.currentWebview().money;
+					var flag = 0;
+					if(!money || money<=0){
+						flag = 1;
+					} 
 					var pickUpCode = $('#pickUpCode').val();
 					var truemoney = $('#truemoney').val();
 					var paymentMethod = $('.bdcA').text();
@@ -248,10 +255,10 @@
 					if(!pickUpCode){
 						mui.toast("还未填收获码呢！");
 		    	   			mui('#pickUpCode')[0].focus();
-					}else if(!truemoney){
+					}else if(!truemoney && flag != 1){
 				    		mui.toast("还未填实收金额呢");
 		    	   			mui('#truemoney')[0].focus();
-				    	}else if(!paymentMethod){
+				    	}else if(!paymentMethod && flag != 1){
 				    		mui.toast("还未填选择付款方式呢");
 				    	}else{
 				    		plus.nativeUI.showWaiting();

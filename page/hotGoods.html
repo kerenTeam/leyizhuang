@@ -279,7 +279,7 @@
 								                                            var goodid = $(this).attr('data-id');
 								                                            var cur = $(this);
 								                                            plus.nativeUI.showWaiting();
-								                                            addCart(goodid,1,cur);
+								                                            addCart2(goodid,1,cur);
 								                                        })
 								                                        //数量选择 -> 加入购物车
 								                                        $('.mui-numbox input').on('change', function() {
@@ -356,7 +356,7 @@
 
 								                                        })
 
-								                                        function addCart(goodid,num,cur){
+								                                        function addCart2(goodid,num,cur){
 								                                            mui.ajax(serverUrl+'/app/materialList/add',{
 								                                                data:{
 								                                                    userId:userId,

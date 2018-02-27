@@ -309,7 +309,7 @@
 					<div class="pad10 ft16" style="text-align: right;">订单金额小计：<span class="activecl" id="totalOrderAmount">¥--</span></div>
 					<div style="height: 10px;background: #EEEEEE;"></div>
 					<%if(platform == 'ANDROID'){%>
-						<div class="pad10 ft14 afterBorder">预存款&nbsp;&nbsp;<span class='activecl' id="preDepositb">¥--</span><input type="tel" onchange="maxC(this)" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" placeholder="请输入使用金额" name="preDepositb" class='mui-pull-right preDeposit' oninput="inputbd()"/></div>
+						<div class="pad10 ft14 afterBorder"><%if(guide ==1){%>门店<%}%>预存款&nbsp;&nbsp;<span class='activecl' id="preDepositb">¥--</span><input type="tel" onchange="maxC(this)" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" placeholder="请输入使用金额" name="preDepositb" class='mui-pull-right preDeposit' oninput="inputbd()"/></div>
 						<!--only manager-->
 						<div class="pad10 ft14 afterBorder manager" style="display: none;">信用金&nbsp;&nbsp;<span class='activecl' id="credit">¥--</span><input type="tel" placeholder="请输入使用金额" name="credit" onchange="maxC(this)" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" class='mui-pull-right preDeposit' oninput="inputbd()"/></div>
 						<div class="pad10 ft14 afterBorder manager" style="display: none;">现金返利&nbsp;&nbsp;<span class='activecl' id="cash">¥--</span><input type="tel" placeholder="请输入使用金额" name="cash" onchange="maxC(this)" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" class='mui-pull-right preDeposit' oninput="inputbd()"/></div>
@@ -317,7 +317,7 @@
 						<div class="pad10 ft14 afterBorder guide" style="display: none;">信用额度&nbsp;&nbsp;<span class='activecl' id="creditVal">¥--</span><input type="tel" placeholder="请输入使用金额" name="creditVal" onchange="maxC(this)" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" class='mui-pull-right preDeposit' oninput="inputbd()"/></div>
 						<div class="pad10 ft14 afterBorder guide" style="display: none;">代收金额&nbsp;&nbsp;<input type="tel" placeholder="请输入代收金额" name="cashHelp" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" class='mui-pull-right preDeposit' /></div>
 					<%}else{%>
-						<div class="pad10 ft14 afterBorder">预存款&nbsp;&nbsp;<span class='activecl' id="preDepositb">¥--</span><input type="number" onchange="maxC(this)" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" placeholder="请输入使用金额" name="preDepositb" class='mui-pull-right preDeposit' oninput="inputbd()"/></div>
+						<div class="pad10 ft14 afterBorder"><%if(guide == 1){%>门店<%}%>预存款&nbsp;&nbsp;<span class='activecl' id="preDepositb">¥--</span><input type="number" onchange="maxC(this)" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" placeholder="请输入使用金额" name="preDepositb" class='mui-pull-right preDeposit' oninput="inputbd()"/></div>
 						<div class="pad10 ft14 afterBorder manager" style="display: none;">信用金&nbsp;&nbsp;<span class='activecl' id="credit">¥--</span><input type="number" placeholder="请输入使用金额" name="credit" onchange="maxC(this)" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" class='mui-pull-right preDeposit' oninput="inputbd()"/></div>
 						<div class="pad10 ft14 afterBorder manager" style="display: none;">现金返利&nbsp;&nbsp;<span class='activecl' id="cash">¥--</span><input type="number" placeholder="请输入使用金额" name="cash" onchange="maxC(this)" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" class='mui-pull-right preDeposit' oninput="inputbd()"/></div>
 						<div class="pad10 ft14 afterBorder guide" style="display: none;">信用额度&nbsp;&nbsp;<span class='activecl' id="creditVal">¥--</span><input type="number" placeholder="请输入使用金额" name="creditVal" onchange="maxC(this)" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" class='mui-pull-right preDeposit' oninput="inputbd()"/></div>
@@ -445,7 +445,7 @@
 				var preDepositbc = $('input[name="preDepositb"]').val(); //预存款
 				var inputAll = Number(creditc) + Number(cashc) + Number(creditValc) +Number(preDepositbc);
 				if(inputAll > payValue){
-					mui.toast('应付款不能为负');
+					mui.toast('您输入的金额大于应付金额哦');
 					obj.value = '';
 					carculate()
 					return;
@@ -553,6 +553,10 @@
 						discount.lebi = data.content.leBi;
 						discount.cashCouponList = data.content.cashCouponList;
 						discount.productCouponList = data.content.productCouponList;
+						if(identityT == 0){
+							discount.guide = 1;
+						}
+						
 						document.getElementById('elseDiscount').innerHTML = template('elseDiscountTpl', discount);
 						plus.nativeUI.closeWaiting();
 						carculate();

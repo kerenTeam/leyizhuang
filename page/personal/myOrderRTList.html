@@ -77,9 +77,7 @@
 									<% }else{%>
 										<a><img class="loadPics" src="../../img/loadBack.svg"/></a>
 									<% }%>
-									<% if(list[i].endTime){%>
-										<span>10分钟后关闭订单</span>
-									<% }%>
+									 
 								</p>
 								<div class="orderInfo">
 									共<%= list[i].count%>件商品 退款金额：<span>¥ <%= list[i].returnPrice%></span>
@@ -118,13 +116,18 @@
 									<% }else{%>
 										<a><img class="loadPics" src="../../img/loadBack.svg"/></a>
 									<% }%>
-									<% if(list[i].endTime){%>
-										<span>10分钟后关闭订单</span>
-									<% }%>
+									
 								</p>
-								<div class="orderInfo">
-									共<%= list[i].count%>件商品 退款金额：<span>¥ <%= list[i].returnPrice%></span>
-								</div>
+								
+								<% if(pj != 1){%>
+									<div class="orderInfo">
+										共<%= list[i].count%>件商品 退款金额：<span>¥ <%= list[i].returnPrice%></span>
+									</div>
+								<% }else{%>
+									<div class="orderInfo">
+										共<%= list[i].count%>件商品 </span>
+									</div>
+								<%}%>
 								<div class="orderBtns">
 									<span class="redC" onclick="evaFun('<%= list[i].orderNo%>',this)">评价</span>
 								</div>
@@ -261,9 +264,9 @@
 								clearTimeout(timeLoad),timeLoad = null;
 								if(data.code == 0){
 									$('#loadingdiv').css('height','0px');
-									if(data.content.list && data.content.list.length){
-										if(pingjia){
-											document.getElementById('infoListDiv').innerHTML = template('infoListP2',{list:data.content.list,nowState:tabT});
+									if(data.content){
+										if(pingjia){ 
+											document.getElementById('infoListDiv').innerHTML = template('infoListP2',{list:data.content,nowState:tabT,pj:1});
 										}else{
 											document.getElementById('infoListDiv').innerHTML = template('infoList',{list:data.content.list,nowState:tabT});
 										}
@@ -293,9 +296,9 @@
 							                           console.log(pingjia?'评价':'退货' +'订单续',data);
 						                                if(data.code == 0){
 															$('#loadingdiv').css('height','0px');
-															if(data.content.list && data.content.list.length){
+															if(data.content){
 																if(pingjia){
-																	document.getElementById('infoListDiv').innerHTML += template('infoListP2',{list:data.content.list,nowState:tabT});
+																	document.getElementById('infoListDiv').innerHTML += template('infoListP2',{list:data.content,nowState:tabT,pj:1});
 																}else{
 																	document.getElementById('infoListDiv').innerHTML += template('infoList',{list:data.content.list,nowState:tabT});
 																}
@@ -422,6 +425,7 @@
 									success:function(data,type,xhr){
 										console.log('订单评价'+JSON.stringify(data));
 										if(data.code == 0){
+											mui.fire(plus.webview.getWebviewById('center.html'),'OrderNumR');
 											mui.toast(data.message || '感谢您的评价');
 											resetStar();
 											$('#evaOrder').css('display','none');

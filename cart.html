@@ -353,6 +353,7 @@
 															$('.goOrder').show();
 															mui.fire(plus.webview.getWebviewById('page/goodList.html'),'refresh');
 															mui.fire(plus.webview.getWebviewById('cart.html'),'refresh');
+															mui.fire(plus.webview.getWebviewById('gxbList'),'refresh');
 															cartload();
 														} else {
 															mui.toast(data.message)

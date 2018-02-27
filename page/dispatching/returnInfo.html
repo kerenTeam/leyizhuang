@@ -3,7 +3,7 @@
 
 	<head>
 		<meta charset="UTF-8">
-		<title>出货信息</title>
+		<title>退货信息</title>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="../../css/mui.min.css" rel="stylesheet" />
 		<link rel="stylesheet" type="text/css" href="../../css/mui.min.css"/>
@@ -48,7 +48,7 @@
 	<body>
 		<header class="mui-bar mui-bar-nav fineB" style="padding-right: 15px;">
 			<a id="leftbtn" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-			<h1 class="mui-title">出货信息</h1>
+			<h1 class="mui-title">退货信息</h1>
 			<span class="mui-pull-right activecl" style="margin-top: 15px;" onclick="gowl()">物流状态</span>
 		</header>
 		<script src="../../js/statusBar.js"></script>
@@ -97,8 +97,8 @@
 								</span>
 							</div>
 						</div>
-						<div class="ft15"><span class="disablecl">配送地址：</span><span class="titcl"><%=list.shippingAddress || list.pickUpAddress%></span></div>
-						<div class="ft15"><span class="disablecl">配送日期：</span><span class="titcl"><%=list.deliveryTime || list.pickUpTime%></span></div>
+						<div class="ft15"><span class="disablecl">取货地址：</span><span class="titcl"><%=list.shippingAddress || list.pickUpAddress%></span></div>
+						<div class="ft15"><span class="disablecl">取货日期：</span><span class="titcl"><%=list.deliveryTime || list.pickUpTime%></span></div>
 					</div>
 					<%if(list.collectionAmount){%>
 						<div class="checkListB beforeBorder">
@@ -135,7 +135,7 @@
 					
 				</div>
 				<div class="footBtn">
-					<div class="aClick" style="background-color: #B42E28;color: white;" onclick="receipt('<%=list.orderNumber%>','<%=list.collectionAmount%>')">确认收货</div>
+					<div class="aClick" style="background-color: #B42E28;color: white;" onclick="receipt('<%=list.returnNumber%>','<%=list.collectionAmount%>')">确认取货</div>
 				</div>
 			</script>
 		 	
@@ -152,14 +152,7 @@
 					id:'refuse',
 					extrasobj:{orderNumber:orderNumber}
 				})
-			}
-			function receipt(orderNumber,money){
-				openview({
-					view:'receiptRT.html',
-					id:'receiptRT',
-					extrasobj:{orderNumber:orderNumber,money:money}
-				})
-			}
+			} 
 			mui.plusReady(function(){
 				var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
 				var userId = plus.storage.getItem('$userId');
@@ -207,6 +200,28 @@
 						id:'dispatchingWl',
 						extrasobj:{orderNo:orderNumber}
 					})
+				}
+				window.receipt = function(orderNumber,money){
+					mui.ajax(serverUrl+'/app/dispatching/pickUp/enter',{
+						data:{userID:userId,identityType:identityT,returnNumber:orderNumber},
+						dataType:'json',
+						type:'post',
+						timeout:10000,
+						headers:{"Authorization":oldToken},
+						success:function(data,type,xhr){
+							console.log('确认取货 ',data);
+							if(data.code == 0){
+								mui.toast("确认取货成功！");
+								mui.fire(plus.webview.getWebviewById('dispatching'), 'refresh');
+								mui.back();
+							}else{
+								mui.toast(data.message);
+							}
+						},
+						error:function(xhr,type,errorThrown){
+							console.log('响应失败  !');
+						}
+					});
 				}
 			})
 		</script>

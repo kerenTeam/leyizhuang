@@ -146,6 +146,7 @@
 					
 				 	document.getElementById('upload').innerHTML = '';
 				 	$(window).unbind('scroll');
+				 	document.body.scrollTop = document.documentElement.scrollTop = 0;
 //					plus.nativeUI.showWaiting();
 				 	//获取缓存 
 					var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
@@ -267,9 +268,10 @@
 					var categoryId='',brandId='',typeId='',specification='';
 					var Spagenum = 2; //实到页数
 					var Ypagenum = 1; //应到页数
-					var oneSize = 5;
+					var oneSize = 15;
 					goodsList(categoryId,brandId,typeId,specification,0);
 					function goodsList(categoryId,brandId,typeId,specification,nosp){
+						 
 						plus.nativeUI.showWaiting();
 						mui.ajax(serverUrl+'/app/goods/filter',{
 							data:{
@@ -288,11 +290,10 @@
 							type:'post',
 							timeout:10000,
 							success:function(data,type,xhr){ 
-							console.log('商品列表'+JSON.stringify(data));
-//								console.log('商品列表',data);
+								console.log('商品列表',data);
 								if(data.code == 0 ){
 									plus.nativeUI.closeWaiting();
-									if(data.content.list && data.content.list.length){
+									if(data.content && data.content.list && data.content.list.length){
 										//规格
 										var spec = [];
 										for(var i in data.content.list){
@@ -328,7 +329,11 @@
 										})
 										
 										//商品 筛选
-										$('.categray span').click(function(){
+										$('.categray span').unbind('click').click(function(){
+											$(window).unbind('scroll');
+											Spagenum = 2; //实到页数
+											Ypagenum = 1; //应到页数
+				 							document.body.scrollTop = document.documentElement.scrollTop = 0;
 											$(this).parentsUntil('.filter').find('span').removeClass('actBadge actspan');
 											if($(this).hasClass('ftb')){
 												$(this).addClass('actBadge');
@@ -473,7 +478,7 @@
 											var scrollHeight = $(document).height();
 											var windowHeight = $(this).height();
 											if(scrollTop + windowHeight == scrollHeight) {
-												if(Spagenum <= data.content.pages && Spagenum == Ypagenum + 1) { //当前页小于等于总页数时请求下一页
+												if(Spagenum <= data.content.pages && Spagenum == Ypagenum + 1 && data.content.hasNextPage) { //当前页小于等于总页数时请求下一页
 													mui("#upload")[0].innerHTML = "<img src='../img/Rolling.svg' />";
 													Ypagenum++; //满足加载情况,应到页数+1
 													console.log('发起请求,实到' + Spagenum + '页');
@@ -498,7 +503,7 @@
 															console.log('商品列表',data);
 															if(data.code == 0 ){
 																plus.nativeUI.closeWaiting();
-																if(data.content.list && data.content.list.length){
+																if(data.content && data.content.list && data.content.list.length){
 																	//规格
 																	for(var i in data.content.list){
 																		if(data.content.list[i].goodsSpecification){
@@ -537,7 +542,11 @@
 																	console.log('成功+1,实到' + Spagenum);
 																	console.log('成功+1,应到' + Spagenum);
 																	//商品 筛选
-																	$('.categray span').click(function(){
+																	$('.categray span').unbind('click').click(function(){
+																		$(window).unbind('scroll');
+																		Spagenum = 2; //实到页数
+																		Ypagenum = 1; //应到页数
+				 														document.body.scrollTop = document.documentElement.scrollTop = 0;
 																		$(this).parentsUntil('.filter').find('span').removeClass('actBadge actspan');
 																		if($(this).hasClass('ftb')){
 																			$(this).addClass('actBadge');
@@ -555,6 +564,7 @@
 																		}else if($(this).attr('data-name') == 'type'){
 																			typeId = $(this).attr('data-id')
 																		}
+																		
 																		goodsList(categoryId,brandId,typeId,specification,1);
 																	})
 																	
@@ -703,6 +713,7 @@
 										});
 										
 									}else{
+										mui("#upload")[0].innerHTML = "";
 										$('#goodsList').html('<div style="text-align:center;padding:15px">暂无商品</div>') 
 									}
 								}else{

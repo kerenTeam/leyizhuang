@@ -54,6 +54,13 @@
 						</div>
 						<div class="proRight proRightTH">
 							<h4><%= dataObj.goodsList[i].skuName%></h4>
+							<div id="">
+								<%if(dataObj.goodsType == 'PRESENT'){%>
+									<em class="mui-badge mui-badge-danger" style="color: white;position: relative;top: -2px;">赠品</em>
+								<%}else if(dataObj.goodsType == 'PRODUCT_COUPON'){%>
+									<em class="mui-badge mui-badge-warning" style="color: white;position: relative;top: -2px;">产品券</em>
+								<%}%>
+							</div>
 							<p> 规格：<%= dataObj.goodsList[i].goodsSpecification%> 单位：<%= dataObj.goodsList[i].goodsUnit%></p>
 							<div>
 								<span class="span1 span1TH">¥<%= dataObj.goodsList[i].retailPrice%></span>

@@ -1302,7 +1302,9 @@
 					"js/mui.min.js",
 					"js/default.js"
 				],
-				"refer": [],
+				"refer": [
+					"page/personal/myOrderDetail.html"
+				],
 				"priority": 0
 			},
 			"page/order/chooseGift.html": {
@@ -1780,7 +1782,8 @@
 			"page/personal/myOrderRTList.html": {
 				"resources": [],
 				"refer": [
-					"page/personal/myOrderRTdetail.html"
+					"page/personal/myOrderRTdetail.html",
+					"page/personal/myOrderDetail.html"
 				],
 				"priority": 0
 			},

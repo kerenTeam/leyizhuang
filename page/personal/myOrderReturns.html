@@ -47,11 +47,18 @@
 				<% for(var i=0;i<list.length;i++){%>
 					<div class="proWrap fineB">
 						<div class="proLeft proLeftTH">
-							<img src="http://img3.leyizhuang.com.cn/app/images/goods/2493/20170303120036450.jpg">
+							<img src="<%=list[i].coverImageUri%>">
 						</div>
 						<div class="proRight proRightTH">
 							<h4><%= list[i].skuName%></h4>
 							<p> 订单数量：<%= list[i].returnPriority%> 可退数量：<%= list[i].returnableQuantity%></p>
+							<div id="">
+								<%if(list[i].goodsLine == 'PRESENT'){%>
+									<em class="mui-badge mui-badge-danger" style="color: white;position: relative;top: -2px;">赠品</em>
+								<%}else if(list[i].goodsLine == 'PRODUCT_COUPON'){%>
+									<em class="mui-badge mui-badge-warning" style="color: white;position: relative;top: -2px;">产品券</em>
+								<%}%>
+							</div>
 							<div>
 								<span class="span1 span1TH">¥<%= list[i].retailPrice%></span>
 								<div class="mui-numbox span2" data-numbox-min='0' data-numbox-max='<%= list[i].returnableQuantity%>'>

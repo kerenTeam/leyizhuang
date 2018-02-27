@@ -335,8 +335,10 @@
 					}
 
 				}, false);
+				var flag = 0;
 				//获取验证码
 				getCode.addEventListener('tap', function() {
+					flag++;
 					if(!account.value || !reg_phone.test(account.value)) {
 						mui.toast('请输入正确的手机号')
 					} else {
@@ -376,6 +378,37 @@
 								mui.toast('发送验证码失败');
 							}
 						});
+						if(flag == 1){
+							//获取顾客信息
+							mui.ajax(serverUrl+'/app/customer/get/customer/info', {
+								data: {
+									phone: account.value
+								},
+								dataType: 'json',
+								type: 'post',
+								timeout: 10000,
+								success: function(data) { 
+									console.log('获取顾客信息',data); 
+									if(data.content){
+										if(data.content.name){
+											$('#username').val(data.content.name)
+										}
+										if(data.content.customerProfession){
+											$('#workerType').val(data.content.customerProfession)
+										}
+										if(data.content.cityId){
+											$('#city').val(data.content.cityId)
+										}
+										if(data.content.salesPhone){
+											$('#guide').val(data.content.salesPhone)
+										}
+									}
+								},
+								error: function(xhr, type, errorThrown) {
+								}
+							});	
+						}
+						
 					}
 
 				})

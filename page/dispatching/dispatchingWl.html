@@ -59,16 +59,16 @@
 				<div class="huiZ f17 afterBorder" style="padding: 15px;line-height: 20px;">
 					订单编号：<span class="f17 huiZ" id='balance'><%= list.orderNumber%></span>
 				</div>
-				<div class="huiZ f17" style="padding: 15px;line-height: 20px;">
+				<!--<div class="huiZ f17" style="padding: 15px;line-height: 20px;">
 					出货单号（物流编号）：<span class="f17 huiZ" id='balance'><%= list.orderNumber%></span>
-				</div>
+				</div>-->
 
 				<div class="DWinfoList">
 					<% for(var i=0; i<list.logisticsDetail.length; i++){%>
-						<% if(list.logisticsDetail[i].logisticsType == '已签收'){%>
+						<% if(i == 0){%>
 							<div class="active">
-								<h5><%= list.logisticsDetail[i].describe%></h5>
-								<p><%= list.logisticsDetail[i].createTime%> <span> <%= list.logisticsDetail[i].logisticsType%> </span></p>
+								<h5 style="color:#B62D29"><%= list.logisticsDetail[i].describe%></h5>
+								<p class="activecl"><%= list.logisticsDetail[i].createTime%> <span style="color:#B62D29"> <%= list.logisticsDetail[i].logisticsType%> </span></p>
 								<img src="../../img/hongdian.svg"/>
 							</div>
 						<%} else{%>
@@ -146,7 +146,9 @@
 									document.getElementById('dataDiv1').innerHTML = '暂无数据';
 								}
 							}else{
+								$('#loadingdiv').css('height','0px');
 								mui.toast(data.message);
+								document.getElementById('dataDiv1').innerHTML = '<div style="padding: 20px;text-align: center;">暂无数据</div>';
 							}
 						},
 						error:function(xhr,type,errorThrown){

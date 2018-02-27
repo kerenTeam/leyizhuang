@@ -96,33 +96,7 @@
 				var oldToken = plus.storage.getItem('oldToken');
 				var orderNumber = plus.webview.currentWebview().orderNumber;
 				var money = plus.webview.currentWebview().money;
-				var cityId = plus.storage.getItem('userCity');
-				$('#orderMoney').val('¥'+money)
-				mui.ajax(serverUrl + '/app/distributionAgent/list', {
-					data:{userId:userId,identityType:identityT,cityId:cityId},
-					dataType: 'json',
-					type: 'post',
-					timeout: 10000,
-					headers:{"Authorization":oldToken},
-					success: function(data, type, xhr) {
-						console.log('列表返回', data);
-						if(data.content && data.content.length) {
-							for(var i = 0; i < data.content.length; i++) {
-								$('#payWay').append('<span class="bdc">' + data.content[i].method + '</span>&nbsp;&nbsp;');
-							}
-							$('#payWay span').click(function(){
-								$(this).siblings().removeClass('bdcA')
-								$(this).addClass('bdcA')
-							})
-
-						}
-					},
-					error: function(xhr, type, errorThrown) {
-
-					}
-
-				});
-				  
+				var cityId = plus.storage.getItem('userCity'); 
 			});
 			//选择图片组件
 			var Apic = [],time1 = null,maxNum = 3;
@@ -238,15 +212,10 @@
 					if(!pickUpCode){
 						mui.toast("还未填收获码呢！");
 		    	   			mui('#pickUpCode')[0].focus();
-					}else if(!truemoney){
-				    		mui.toast("还未填实收金额呢");
-		    	   			mui('#truemoney')[0].focus();
-				    	}else if(!paymentMethod){
-				    		mui.toast("还未填选择付款方式呢");
-				    	}else{
+					}else{
 				    		plus.nativeUI.showWaiting();
 						//发送数据开始
-						var task = plus.uploader.createUpload(serverUrl+'/app/orderArrive/confirm',
+						var task = plus.uploader.createUpload(serverUrl+'/app/dispatching/pickUp/enter',
 							{ method:"POST"},
 							function(back,status){
 								if(status == 200){
@@ -256,7 +225,7 @@
 									plus.nativeUI.closeWaiting(); //关闭等待框
 									if(dataobj.code == 0){
 										mui.toast("确认收货成功！");
-										plus.webview.getWebviewById("deliveryInfo").close();
+										plus.webview.getWebviewById("returnInfo").close();
 										mui.fire(plus.webview.getWebviewById('dispatching'), 'refresh');
 										mui.back();
 									}else{
@@ -271,9 +240,9 @@
 						);
 	
 						task.setRequestHeader('Authorization',oldToken);
-						task.addData('userId',userId);
+						task.addData('userID',userId);
 						task.addData('identityType',identityT.toString());
-				        task.addData('orderNo',orderNumber);
+				        task.addData('returnNumber',orderNumber);
 				        task.addData('pickUpCode',pickUpCode.toString());
 				        task.addData('collectionAmount',truemoney.toString());
 				        task.addData('paymentMethod',paymentMethod);
