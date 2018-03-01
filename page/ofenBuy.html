@@ -43,13 +43,13 @@
 						            <span class="ft18 activecl2">¥<%=list[i].retailPrice%></span>
 									<%if(!list[i].materialQty){%>
 										<img style="display:inline-block;float:right;margin-left:5px;vertical-align:middle" data-id="<%=list[i].id%>" class="toCart" src="../images/addcart.svg"/>
-										<div style="display: none;float:right;" class="mui-numbox" data-numbox-step='1' data-numbox-min='0'>
+										<div style="display: none;float:right;" class="mui-numbox" data-numbox-step='1' data-numbox-min='0' data-numbox-max='9999'>
 										  <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
 										  <input class="mui-numbox-input" type="number" data-id="<%=list[i].id%>" value="1"/>
 										  <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
 										</div>
 									<%}else{%>
-										<div style="float:right;" class="mui-numbox" data-numbox-step='1' data-numbox-min='0'>
+										<div style="float:right;" class="mui-numbox" data-numbox-step='1' data-numbox-min='0' data-numbox-max='9999'>
 										  <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
 										  <input class="mui-numbox-input" type="number" data-id="<%=list[i].id%>" value="<%=list[i].materialQty%>"/>
 										  <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>

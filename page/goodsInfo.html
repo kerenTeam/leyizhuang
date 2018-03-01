@@ -209,9 +209,9 @@
 							<div class="bottom clearfloat">
 								<p class="fl">购买数量</p>
 								<div class="you clearfloat fr">
-									<div class="mui-numbox margin-top" data-numbox-min="1">
+									<div class="mui-numbox margin-top" data-numbox-min="1" data-numbox-max='9999'>
 										<button class="mui-btn mui-btn-numbox-minus" type="button" disabled="">-</button>
-										<input id="test" class="mui-input-numbox" type="number" readonly="" value="" />
+										<input id="test" class="mui-input-numbox" type="number" value="" />
 										<button id="upup" class="mui-btn mui-btn-numbox-plus add" type="button">+</button>
 									</div>
 								</div>
@@ -325,7 +325,11 @@
 							}else{
 								$('#infoCnt').html('<div style="font-size:14px;color:gray;padding:5%;text-align: center;">暂无详情</div>')
 							}
-							mui('.mui-numbox').numbox()
+							mui('.mui-numbox').numbox();
+							$('.toCart,.mui-numbox button,.mui-numbox input').click(function() {
+								$(this).select();
+								event.stopPropagation()
+							})
 							var gallery = mui(".mui-slider");
 							gallery.slider({
 								interval: 3000 //设置自动轮播周期为3s

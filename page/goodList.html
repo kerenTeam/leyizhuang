@@ -11,7 +11,7 @@
 	</head>
  	<style type="text/css">
  		.categray div{width:calc(100vw - 100px);vertical-align: top;}
- 		.sedc span{margin-bottom:10px;font-size: 16px;}
+ 		.sedc span{margin-bottom:10px;font-size: 16px;padding:0 4px;border-radius: 3px;}
  		.flexw div{position: relative;align-items: center;padding: 15px 0 10px;}
  		.flexw div:not(:last-child):after{position: absolute;content: '';position: absolute;width: 1px;height: 30px;background: #DDD8CD;-webkit-transform:scaleX(.3);right: 0px;top:12px;z-index: 999;}
  		.afterBorder:after{bottom: -1px;}
@@ -74,14 +74,14 @@
 				            <span class="ft18 activecl2">¥<%=list[i].retailPrice%></span>
 							<%if(!list[i].materialQty){%>
 								<img style="display:inline-block;float:right;margin-left:5px;vertical-align:middle" data-id="<%=list[i].id%>" class="toCart" src="../images/addcart.svg"/>
-								<div style="display: none;float:right;" class="mui-numbox" data-numbox-step='1' data-numbox-min='0'>
+								<div style="display: none;float:right;" class="mui-numbox" data-numbox-step='1' data-numbox-min='0' data-numbox-max='9999'>
 								  <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
 								  <input class="mui-numbox-input" type="number" data-id="<%=list[i].id%>" value="1"/>
 								  <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
 								</div>
 							<%}else{%>
 								<img style="display:none;float:right;margin-left:5px;vertical-align:middle" data-id="<%=list[i].id%>" class="toCart" src="../images/addcart.svg"/>
-								<div style="float:right;" class="mui-numbox" data-numbox-step='1' data-numbox-min='0'>
+								<div style="float:right;" class="mui-numbox" data-numbox-step='1' data-numbox-min='0' data-numbox-max='9999'>
 								  <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
 								  <input class="mui-numbox-input" type="number" data-id="<%=list[i].id%>" value="<%=list[i].materialQty%>"/>
 								  <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
@@ -317,7 +317,7 @@
 										if(specification){
 											$('.categrayc span').each(function(){
 												if($(this).html() == specification){
-													$(this).addClass('actspan')
+													$(this).addClass('actBadge')
 												}
 											})
 										}
@@ -335,11 +335,11 @@
 											Ypagenum = 1; //应到页数
 				 							document.body.scrollTop = document.documentElement.scrollTop = 0;
 											$(this).parentsUntil('.filter').find('span').removeClass('actBadge actspan');
-											if($(this).hasClass('ftb')){
+//											if($(this).hasClass('ftb')){
 												$(this).addClass('actBadge');
-											}else{
-												$(this).addClass('actspan');
-											}
+//											}else{
+//												$(this).addClass('actspan');
+//											}
 											
 											
 											if($(this).attr('data-name') == 'category'){
@@ -526,7 +526,7 @@
 																	if(specification){
 																		$('.categrayc span').each(function(){
 																			if($(this).html() == specification){
-																				$(this).addClass('actspan')
+																				$(this).addClass('actBadge')
 																			}
 																		})
 																	}
@@ -548,11 +548,11 @@
 																		Ypagenum = 1; //应到页数
 				 														document.body.scrollTop = document.documentElement.scrollTop = 0;
 																		$(this).parentsUntil('.filter').find('span').removeClass('actBadge actspan');
-																		if($(this).hasClass('ftb')){
+//																		if($(this).hasClass('ftb')){
 																			$(this).addClass('actBadge');
-																		}else{
-																			$(this).addClass('actspan');
-																		}
+//																		}else{
+//																			$(this).addClass('actspan');
+//																		}
 																		
 																		
 																		if($(this).attr('data-name') == 'category'){
@@ -713,6 +713,7 @@
 										});
 										
 									}else{
+										$('.categrayc').html('无')
 										mui("#upload")[0].innerHTML = "";
 										$('#goodsList').html('<div style="text-align:center;padding:15px">暂无商品</div>') 
 									}

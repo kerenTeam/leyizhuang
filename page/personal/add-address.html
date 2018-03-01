@@ -146,9 +146,9 @@
 							<button id='showCityPicker3' type='button'><span class="mui-icon mui-icon-arrowdown"></span></button>
 							<div id='cityResult3' class="ui-alert"><span id="province"><b style="font-weight: 500;color: #999;">点击选择地区</b></span><span id="city"></span><span id="area"></span></div>
 						</li>
-						<li class="clearfloat">
+						<li class="clearfloat" onclick="goMap()">
 							<p class="fl">所在小区 <span class="redc"> *</span></p>
-							<input type="text" class="fr shuru" id="xiaoquIn" placeholder="请输入所在小区" />
+							<input  type="text" class="fr shuru" id="xiaoquIn" readonly="" placeholder="定位所在小区" />
 						</li>
 					</ul>
 				</div>
@@ -190,6 +190,9 @@
 
 		<!--默认按钮-->
 		<script type="text/javascript">
+			$('.back').click(function(){
+				mui.back()
+			})
 			$('.toggle').click(function(e){
 				var toggle = this;
 				e.preventDefault();
@@ -230,6 +233,71 @@
             });
 	    		/*地址结束*/
 		</script>
+		<script type="text/javascript">
+			//定位
+			var latitude=0;//经度
+			var longitude=0;//纬度
+			function goMap(){
+				openview({
+					view:encodeURI('addressMap.html?center='+longitude+','+latitude+'&key=8f29aefac8547821425571df8852f64b'),
+					id: 'addressMap',
+					extrasobj:{pageid:'add-address',longitude:longitude,latitude:latitude}
+				})
+			}
+			mui.plusReady(function(){
+				//地图定位
+				var watchId;
+				function geoInf( position ) {
+					var str = "";
+					str += "地址："+position.addresses+"\n";//获取地址信息
+					str += "坐标类型："+position.coordsType+"\n";
+					var timeflag = position.timestamp;//获取到地理位置信息的时间戳；一个毫秒数；
+					str += "时间戳："+timeflag+"\n";
+					var codns = position.coords;//获取地理坐标信息；
+					var lat = codns.latitude;//获取到当前位置的纬度；
+					str += "纬度："+lat+"\n";
+					var longt = codns.longitude;//获取到当前位置的经度
+					str += "经度："+longt+"\n";
+					var alt = codns.altitude;//获取到当前位置的海拔信息；
+					str += "海拔："+alt+"\n";
+					var accu = codns.accuracy;//地理坐标信息精确度信息；
+					str += "精确度："+accu+"\n";
+					var altAcc = codns.altitudeAccuracy;//获取海拔信息的精确度；
+					str += "海拔精确度："+altAcc+"\n";
+					var head = codns.heading;//获取设备的移动方向；
+					str += "移动方向："+head+"\n";
+					var sped = codns.speed;//获取设备的移动速度；
+					str += "移动速度："+sped;
+					console.log(JSON.stringify(position));
+					//outLine( str );
+					//alert(position.addresses);
+					longitude=(position.coords.longitude).toFixed(6);
+					latitude=(position.coords.latitude).toFixed(6);
+					 
+				}
+				// 通过定位模块获取位置信息
+				function getGeocode(){
+					//outSet( "获取定位位置信息:" );
+					plus.geolocation.getCurrentPosition( geoInf, function ( e ) {
+						outSet( "获取定位位置信息失败："+e.message );
+					},{geocode:true,provider:'amap'});
+				}
+				window.addEventListener('refreshmapstorage',function(event){ 
+					ismapStorage();
+				})
+				ismapStorage();
+				function ismapStorage(){
+					var mapStorage = JSON.parse(plus.storage.getItem('$mapStorage') || '[]'); 
+						 if(mapStorage.length==0){ 
+						 	getGeocode();
+						 } 
+						 else{
+						 	$('#xiaoquIn').val(mapStorage[0].adraddress)
+						 	plus.storage.removeItem('$mapStorage'); 
+						 }
+				} 
+			})
+		</script>
 		<script type="text/javascript" charset="utf-8">
 			function openMail(){
 				openview({
@@ -238,6 +306,7 @@
 					extrasobj:{htmlName:'add-address'}
 				})
 			}
+			
 			//导入通讯录
 			document.addEventListener('resetTel',function(){
 				var contactOne = JSON.parse(plus.storage.getItem('contactOne'));
@@ -245,7 +314,7 @@
 				document.getElementById('phone').value = contactOne[0].phone;
 				plus.storage.removeItem('contactOne');
 			})
-
+		 
 			mui.plusReady(function(){
 				//获取缓存
 				var oldToken = plus.storage.getItem('oldToken');

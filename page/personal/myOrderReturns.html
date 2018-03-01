@@ -78,14 +78,14 @@
 					<textarea id="BZCon" name="" rows="" placeholder="备注请输入备注信息" cols=""></textarea>
 			    </div>
 			    <div id="fangshi">
-			    		<span id="">
+			    		<span id="tostore">
 			    			退货方式：
 			    		</span>
-					<div class="mui-input-row mui-radio mui-left">
+					<div class="mui-input-row mui-radio mui-left tostore">
 						<label>送货至门店</label>
 						<input name="radio1" dataType='RETURN_STORE' value="送货至门店" class="typeRadio" checked type="radio">
 					</div>
-					<div class="mui-input-row mui-radio mui-left">
+					<div class="mui-input-row mui-radio mui-left smqh">
 						<label>上门取货</label>
 						<input name="radio1" dataType='HOUSE_PICK' value="上门取货" class="typeRadio" type="radio">
 					</div>
@@ -150,9 +150,15 @@
 				var userId = plus.storage.getItem('$userId');
 				var oldToken = plus.storage.getItem('oldToken');
 				var orderNumber = plus.webview.currentWebview().orderNo;
+				var deliveryType = plus.webview.currentWebview().deliveryType;
 				var moreInfo = null;//获取用户退货方式和取货地址
 				var cusId = plus.webview.currentWebview().cusId;
-
+				if(deliveryType == '门店自提'){
+					$('.smqh').hide()
+				}else if(deliveryType.indexOf('券')!=-1){
+					$('.smqh,.tostore,#tostore').hide()
+					
+				}
 				/*退货方式tab*/
 				$('.typeRadio').change(function(){
 					if ($(".typeRadio[type='radio']:checked").val() == '送货至门店') {

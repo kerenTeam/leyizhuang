@@ -7,8 +7,8 @@
 	"id": "H570519A0",/*应用的标识，创建应用时自动生成，勿手动修改*/
 	"name": "乐易装",/*应用名称，程序桌面图标名称*/
 	"version": {
-		"name": "1.1.0",/*应用版本名称*/
-		"code": "110"
+		"name": "1.1.1",/*应用版本名称*/
+		"code": "111"
 	},
 	"description": "室内设计APP",/*应用描述信息*/
 	"icons": {
@@ -689,7 +689,8 @@
 					"page/personal/signInDay.html",
 					"bannerTpl.html",
 					"welcome.html",
-					"page/personal/myOrderList.html"
+					"page/personal/myOrderList.html",
+					"consultTel.html"
 				],
 				"priority": 0
 			},
@@ -810,7 +811,8 @@
 					"images/addcart.svg"
 				],
 				"refer": [
-					"page/goodsInfo.html"
+					"page/goodsInfo.html",
+					"cart.html"
 				],
 				"priority": 0
 			},
@@ -1159,7 +1161,8 @@
 					"js/jquery.citysYF.js"
 				],
 				"refer": [
-					"page/mailList.html"
+					"page/mailList.html",
+					"page/personal/addressMap.html"
 				],
 				"priority": 0
 			},
@@ -1875,6 +1878,11 @@
 		}
 	},
 	"unpackage": [
-		"README.md"
+	  "README.md",
+	  "css/commonDZ.css",
+	  "css/cssreset-minDZ.css",
+	  "fonts/fontawesome-webfont.ttf",
+	  "fonts/iconfont.ttf",
+	  "images/user-photo.png"
 	]
 }

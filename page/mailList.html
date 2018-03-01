@@ -117,6 +117,8 @@
 			function selectWho(newValue){
 				var selectName = newValue.parentNode.querySelector('b').innerText;
 				var selectTel = newValue.innerHTML.replace(new RegExp(" ", 'g'), "");
+				selectTel = selectTel.replace('-','')
+				selectTel = selectTel.replace('-','')
 				var isSure = confirm('确定选择，'+selectName+'：'+selectTel+'?');
 				var contactOne = [{name:selectName,phone:selectTel}];
 				plus.storage.setItem("contactOne",JSON.stringify(contactOne));

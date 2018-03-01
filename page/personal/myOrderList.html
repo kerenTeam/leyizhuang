@@ -111,6 +111,9 @@
 											<span class="stateSpan2"><%=list[i].endTime%>分钟后关闭订单</span>
 										<% }%>
 									</p>
+									<div class="pad10 afterBorder">
+										地址:<%=list[i].shippingAddress%>
+									</div>
 									<div class="orderInfo">
 										共<%= list[i].count%>件商品 合计：<span>¥ <%= list[i].price%></span>
 									</div>
@@ -128,7 +131,7 @@
 						                        <span class="aClick" onclick="cancelFun('<%= list[i].orderNo%>',this)">取消订单</span>
 						                    <% }%>
 											<% if(list[i].status == 'FINISHED'){%>
-												<span class="redC aClick" onclick="openReturns('<%= list[i].orderNo%>','<%= list[i].customerId%>')">退货</span>
+												<span class="redC aClick" onclick="openReturns('<%= list[i].orderNo%>','<%= list[i].customerId%>','<%=list[i].deliveryType%>')">退货</span>
 											<% }%>
 											<% if(list[i].status == 'FINISHED' || list[i].status == 'CLOSED'){%>
 												<% if(list[i].isEvaluated == false){%>
@@ -579,7 +582,27 @@
 										}
 										
 									}else{
-										document.getElementById('infoListDiv').innerHTML = '<div style="text-align: center;padding: 50px;"><img src="../../images/order/order.png" style="width: 100px;margin-bottom: 8px;" /><div class="ft13 disablecl">暂无相关订单</div></div>';
+										if(data.content.length){
+											//没有customerId的手动加为null
+											data.content.forEach(function(ele,index){
+												if(!ele.customer || !ele.customer.customerId){
+													ele.customer = {customerId:null}
+												}
+												if(ele.endTime){
+													ele.endTime = parseInt(ele.endTime/(1000*60))
+												}
+											})
+											document.getElementById('infoListDiv').innerHTML = template('infoList',{list:data.content,nowState:tabT});
+											if(noButton == 1){
+												$('.orderBtns').empty()
+											}
+											if(fromPage == 'index'){
+												$('.orderBtns>span:not(:last-child)').remove();
+											}
+											
+										}else{
+											document.getElementById('infoListDiv').innerHTML = '<div style="text-align: center;padding: 50px;"><img src="../../images/order/order.png" style="width: 100px;margin-bottom: 8px;" /><div class="ft13 disablecl">暂无相关订单</div></div>';
+										}
 									}
 									lazyLoad();
 									//详情取消操作,刷新列表,并滚动到之前的位置

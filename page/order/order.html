@@ -315,13 +315,13 @@
 						<div class="pad10 ft14 afterBorder manager" style="display: none;">现金返利&nbsp;&nbsp;<span class='activecl' id="cash">¥--</span><input type="tel" placeholder="请输入使用金额" name="cash" onchange="maxC(this)" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" class='mui-pull-right preDeposit' oninput="inputbd()"/></div>
 						<!--only guide-->
 						<div class="pad10 ft14 afterBorder guide" style="display: none;">信用额度&nbsp;&nbsp;<span class='activecl' id="creditVal">¥--</span><input type="tel" placeholder="请输入使用金额" name="creditVal" onchange="maxC(this)" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" class='mui-pull-right preDeposit' oninput="inputbd()"/></div>
-						<div class="pad10 ft14 afterBorder guide" style="display: none;">代收金额&nbsp;&nbsp;<input type="tel" placeholder="请输入代收金额" name="cashHelp" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" class='mui-pull-right preDeposit' /></div>
+						<div class="pad10 ft14 afterBorder guide" style="display: none;">代收金额&nbsp;&nbsp;<input type="tel" placeholder="请输入代收金额" name="cashHelp" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" class='mui-pull-right preDeposit dsje' /></div>
 					<%}else{%>
 						<div class="pad10 ft14 afterBorder"><%if(guide == 1){%>门店<%}%>预存款&nbsp;&nbsp;<span class='activecl' id="preDepositb">¥--</span><input type="number" onchange="maxC(this)" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" placeholder="请输入使用金额" name="preDepositb" class='mui-pull-right preDeposit' oninput="inputbd()"/></div>
 						<div class="pad10 ft14 afterBorder manager" style="display: none;">信用金&nbsp;&nbsp;<span class='activecl' id="credit">¥--</span><input type="number" placeholder="请输入使用金额" name="credit" onchange="maxC(this)" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" class='mui-pull-right preDeposit' oninput="inputbd()"/></div>
 						<div class="pad10 ft14 afterBorder manager" style="display: none;">现金返利&nbsp;&nbsp;<span class='activecl' id="cash">¥--</span><input type="number" placeholder="请输入使用金额" name="cash" onchange="maxC(this)" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" class='mui-pull-right preDeposit' oninput="inputbd()"/></div>
 						<div class="pad10 ft14 afterBorder guide" style="display: none;">信用额度&nbsp;&nbsp;<span class='activecl' id="creditVal">¥--</span><input type="number" placeholder="请输入使用金额" name="creditVal" onchange="maxC(this)" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" class='mui-pull-right preDeposit' oninput="inputbd()"/></div>
-						<div class="pad10 ft14 afterBorder guide" style="display: none;">代收金额&nbsp;&nbsp;<input type="number" placeholder="请输入代收金额" name="cashHelp" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" class='mui-pull-right preDeposit' /></div>
+						<div class="pad10 ft14 afterBorder guide" style="display: none;">代收金额&nbsp;&nbsp;<input type="number" placeholder="请输入代收金额" name="cashHelp" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" class='mui-pull-right preDeposit dsje' /></div>
 					<%}%>
 					<div style="height: 10px;background: #EEEEEE;"></div>
 					
@@ -819,7 +819,9 @@
 													$('#storeAddress').show();
 													$('.storeAddress').html('无地址')
 												}
+												$('.dsje').hide();
 											} else {
+												$('.dsje').show();
 												var message = data.message || '包含不支持自提商品'
 												mui.toast(message);
 												$("input[name='peis']").eq(0).attr('checked', false)
@@ -827,6 +829,7 @@
 											}
 										},
 										error: function(xhr, type, errorThrown) {
+											$('.dsje').show();
 											plus.nativeUI.closeWaiting();
 											console.log('响应失败');
 										}
@@ -865,12 +868,15 @@
 														$('#storeAddress').show();
 														$('.storeAddress').html('无地址')
 													}
+													$('.dsje').hide();
 												} else {
+													$('.dsje').show();
 													mui.toast(data.message);
 													curselect.find('option').eq(0).attr('selected', true);
 												}
 											},
 											error: function(xhr, type, errorThrown) {
+												$('.dsje').show();
 												plus.nativeUI.closeWaiting();
 												console.log('响应失败');
 											}
@@ -879,6 +885,7 @@
 								}
 								
 							} else {
+								$('.dsje').show();
 								var message = data.message || '包含不支持自提商品'
 								mui.toast(message);
 								$("input[name='peis']").eq(0).attr('checked', false)
@@ -890,6 +897,7 @@
 						}
 					});
 				} else {
+					$('.dsje').show();
 					$('#chooseStore,#storeAddress').hide();
 					$('#add_info,.isowndis,#cityResult').show();
 					$('#freight').html('¥' + $('#firstFreight').val());

@@ -73,10 +73,10 @@
 									</div>
 									<span class="activecl2 ft15">¥<span class="price"><%=lists.couponsList[j].retailPrice%></span></span>
 									<div class="numberWidget">
-										<div class="mui-numbox" data-numbox-min='0' style="background-color: #F3F3F3!important;">
-											<button class="mui-btn mui-btn-numbox-minus" type="button">-</button>
-											<input class="mui-input-numbox"style="background-color: #F3F3F3!important;" data-id="<%=lists.couponsList[j].id%>" data-gid="<%=lists.couponsList[j].goodsId%>" value="<%=lists.couponsList[j].qty%>" type="number" />
-											<button class="mui-btn mui-btn-numbox-plus" type="button">+</button>
+										<div class="mui-numbox" data-numbox-min='<%=lists.couponsList[j].qty%>' data-numbox-max='<%=lists.couponsList[j].qty%>' style="background-color: #F3F3F3!important;">
+											<button class="mui-btn mui-btn-numbox-minus" type="button" disabled="true">-</button>
+											<input class="mui-input-numbox"style="background-color: #F3F3F3!important;" data-id="<%=lists.couponsList[j].id%>" data-gid="<%=lists.couponsList[j].goodsId%>" readonly="" value="<%=lists.couponsList[j].qty%>" type="number" />
+											<button class="mui-btn mui-btn-numbox-plus" type="button" disabled="true">+</button>
 										</div>
 									</div>
 								</div>
@@ -114,7 +114,7 @@
 									</div>
 									<span class="activecl2 ft15">¥<span class="price"><%=lists.goodsList[j].retailPrice%></span></span>
 									<div class="numberWidget">
-										<div class="mui-numbox" data-numbox-min='0' style="background-color: #F3F3F3!important;">
+										<div class="mui-numbox" data-numbox-min='0' data-numbox-max='9999' style="background-color: #F3F3F3!important;">
 											<button class="mui-btn mui-btn-numbox-minus" type="button">-</button>
 											<input class="mui-input-numbox"style="background-color: #F3F3F3!important;" data-id="<%=lists.goodsList[j].id%>" data-gid="<%=lists.goodsList[j].goodsId%>" value="<%=lists.goodsList[j].qty%>" type="number" />
 											<button class="mui-btn mui-btn-numbox-plus" type="button">+</button>
@@ -149,7 +149,7 @@
 							</div>
 							<span class="activecl2 ft15">¥<span class="price"><%=list[i].retailPrice%></span></span>
 							<div class="numberWidget">
-								<div class="mui-numbox" data-numbox-min='0'>
+								<div class="mui-numbox" data-numbox-min='0' data-numbox-max='9999'>
 									<button class="mui-btn mui-btn-numbox-minus" type="button">-</button>
 									<input class="mui-input-numbox" data-id="<%=list[i].id%>" data-gid="<%=list[i].goodsId%>" value="<%=list[i].qty%>" type="number" />
 									<button class="mui-btn mui-btn-numbox-plus" type="button">+</button>

@@ -39,13 +39,14 @@ function comeOnAgain(orderNo,cusId){
 }
 
 //申请退货
-function openReturns(orderNo,cusId){
+function openReturns(orderNo,cusId,type){
 	openview({
 		view:'myOrderReturns.html',
 		id:'myOrderReturns',
 		extrasobj:{
 			orderNo:orderNo,
-			cusId:cusId
+			cusId:cusId,
+			deliveryType:type
 		}
 	})
 }

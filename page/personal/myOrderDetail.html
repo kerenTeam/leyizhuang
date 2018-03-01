@@ -101,9 +101,11 @@
 				<div>
 					<span class="huiC">会员抵扣</span> <span class="floL"><%= detail.BillingDetailResponse.memberDiscount%>元</span>
 				</div>
-				<!--<div>
-					<span class="huiC">乐豆抵扣</span> <span class="floL"> 还没有 元</span>
-				</div>-->
+				<%if(detail.identityT == '6'){%>
+					<div>
+						<span class="huiC">乐币抵扣</span> <span class="floL"> <%= detail.BillingDetailResponse.leBiCashDiscount || 0%>元</span>
+					</div>
+				<%}%>
 				<div>
 					<span class="huiC">促销抵扣</span> <span class="floL"><%= detail.BillingDetailResponse.promotionDiscount%>元</span>
 				</div>

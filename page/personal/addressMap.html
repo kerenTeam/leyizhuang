@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
+
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+		<script type="text/javascript" src="http://webapi.amap.com/maps?v=1.4.4&key=8f29aefac8547821425571df8852f64b&plugin=AMap.Geocoder"></script>
+		<script src="../../js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+		<title>地图定位</title>
+		<style>
+			body {
+				position: absolute;
+				top: 0;
+				bottom: 0;
+				left: 0;
+				right: 0;
+				margin: 0;
+			}
+			
+			iframe {
+				width: 100%;
+				height: 100%;
+			}
+			
+			.main-header {
+				position: fixed;
+				top: 0;
+				height: 50px!important;
+				background: #f8f8f8;
+				z-index: 10001;
+				border-bottom: 1px solid #959595;
+				padding-top: 24px!important;
+			}
+		</style>
+	</head>
+
+	<body>
+		<iframe id="test" src='' style="margin-top: 25px;width: 100vw;height: 100vh;overflow-x: hidden;"></iframe>
+
+		<script>
+			(function() {
+
+				var temp_css;
+				temp_css = "<style type=\"text/css\">";
+				temp_css += ".main-header{height: 50px!important;padding-top: 24px!important;}";
+				temp_css += "</style>";
+				window.onload = function() {
+					//					var obj = window.frames["test"];
+					//					obj.document.body.innerHTML += temp_css;
+				}
+
+				mui.plusReady(function() {
+					var pageid = plus.webview.currentWebview().pageid;
+					var longitude = plus.webview.currentWebview().longitude;
+					var latitude = plus.webview.currentWebview().latitude;
+					var iframe = document.getElementById('test').contentWindow;
+
+					document.getElementById('test').src = 'https://m.amap.com/picker/?center=' + longitude + ',' + latitude + '&key=608d75903d29ad471362f8c58c550daf'
+
+					document.getElementById('test').onload = function() {
+						$("#test").contents().find(".back").click(function() {
+							mui.back()
+						});
+						//				$("#test").contents().find(".main-header").CSS({'padding-top': '24px','height': '50px'})
+						//document.frames['test'].document.styleSheets[0].addRule(".main-header","height:50px;padding-top:24px;");
+						iframe.postMessage('hello', 'https://m.amap.com/picker/');
+
+					};
+					window.addEventListener("message", function(e) {
+						alert('您选择了:' + e.data.name + ',' + e.data.location)
+						goback(e.data.address)
+						let NewLocation = (e.data.location).split(",")
+						alert(JSON.stringify(NewLocation))
+
+						var geocoder = new AMap.Geocoder({
+							radius: 1000,
+							extensions: "all"
+						});
+						alert(JSON.stringify(geocoder))
+						geocoder.getAddress(NewLocation, function(status, result) {
+							alert(JSON.stringify(result))
+							if(status === 'complete' && result.info === 'OK') {
+								console.log(`------------${result}----------------`)
+							}
+						});
+
+					}, false);
+
+					function goback(address) {
+						var mapStorage = JSON.parse(plus.storage.getItem('$mapStorage') || '[]');
+						var mapAddress = {};
+						mapAddress.adraddress = address;
+						mapStorage = [mapAddress];
+						plus.storage.setItem('$mapStorage', JSON.stringify(mapStorage));
+						// alert(plus.storage.getItem('$mapStorage'));
+						var list = plus.webview.getWebviewById(pageid);
+						// alert(list)
+						mui.fire(list, 'refreshmapstorage');
+						//mui.back();
+					}
+				})
+			}())
+		</script>
+
+		<script type='text/javascript'>
+				var mock = {
+					log: function(result) {
+						window.parent.setIFrameResult('log', result);
+					}
+				}
+				console = mock;
+				window.Konsole = {
+					exec: function(code) {
+						code = code || '';
+						try {
+							var result = window.eval(code);
+							window.parent.setIFrameResult('result', result);
+						} catch (e) {
+							window.parent.setIFrameResult('error', e);
+						}
+					}
+				}
+		</script>
+	</body>
+
+</html>

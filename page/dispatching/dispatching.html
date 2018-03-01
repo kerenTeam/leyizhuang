@@ -132,7 +132,7 @@
 			.flexRow2{display: flex;text-align: center;padding: 8px;}
 			.flexRow2 div{width: 50%;}
 			.flexRow2 img{width: 30px;vertical-align: middle;}
-
+			.titcl img{width: 25px;}
 		</style>
 	</head>
 	<body>
@@ -213,7 +213,7 @@
 												电话：
 											</span>
 											<span class="titcl">
-												<a class="titcl" href="tel:<%=list[i].customerPhone%>"><%=list[i].customerPhone%></a>
+												<a class="titcl" href="tel:<%=list[i].customerPhone%>"><%=list[i].customerPhone%> <img src="../../images/center/tel.svg" alt="" /></a>
 											</span>
 										</div>
 									</div>
@@ -231,11 +231,11 @@
 												电话：
 											</span>
 											<span class="titcl">
-												<a href="tel:<%=list[i].sellerPhone%>"><%=list[i].sellerPhone%></a>
+												<a href="tel:<%=list[i].sellerPhone%>"><%=list[i].sellerPhone%> <img src="../../images/center/tel.svg" alt="" /></a>
 											</span>
 										</div>
 									</div>
-									<div class="ft15"><span class="maincl">配送地址：</span><span class="titcl"><%=list[i].distributionAddress%></span></div>
+									<div class="ft15"><span class="maincl">配送地址：</span><span class="titcl"><%=list[i].distributionAddress%><img src="../../images/order/map.svg" onclick="goMap('<%=list[i].distributionAddress%>')" style="width: 30px;vertical-align: bottom;margin-top: 5px;" class="mui-pull-right"/></span></div>
 									<div class="ft15"><span class="maincl">配送日期：</span><span class="titcl"><%=list[i].distributionTime%></span></div>
 								</div>
 
@@ -265,7 +265,7 @@
 												电话：
 											</span>
 											<span class="titcl">
-												<a href="tel:<%=list[i].receiverPhone%>"><%=list[i].receiverPhone%></a>
+												<a href="tel:<%=list[i].receiverPhone%>"><%=list[i].receiverPhone%> <img src="../../images/center/tel.svg" alt="" /></a>
 											</span>
 										</div>
 									</div>
@@ -283,11 +283,11 @@
 												电话：
 											</span>
 											<span class="titcl">
-												<a href="tel:<%=list[i].sellerPhone%>"><%=list[i].sellerPhone%></a>
+												<a href="tel:<%=list[i].sellerPhone%>"><%=list[i].sellerPhone%> <img src="../../images/center/tel.svg" alt="" /></a>
 											</span>
 										</div>
 									</div>
-									<div class="ft15"><span class="disablecl">配送地址：</span><span class="titcl"><%=list[i].shippingAddress%></span></div>
+									<div class="ft15"><span class="disablecl">配送地址：</span><span class="titcl"><%=list[i].shippingAddress%><img src="../../images/order/map.svg" onclick="goMap('<%=list[i].shippingAddress%>')" style="width: 30px;vertical-align: bottom;margin-top: 5px;" class="mui-pull-right"/></span></div>
 									<div class="ft15"><span class="disablecl">配送日期：</span><span class="titcl"><%=list[i].deliveryTime%></span></div>
 								</div>
 
@@ -317,7 +317,7 @@
 												电话：
 											</span>
 											<span class="titcl">
-												<a href="tel:<%=list[i].receiverPhone%>"><%=list[i].receiverPhone%></a>
+												<a href="tel:<%=list[i].receiverPhone%>"><%=list[i].receiverPhone%> <img src="../../images/center/tel.svg" alt="" /></a>
 											</span>
 										</div>
 									</div>
@@ -335,12 +335,11 @@
 												电话：
 											</span>
 											<span class="titcl">
-												<a href="tel:<%=list[i].sellerPhone%>"><%=list[i].sellerPhone%></a>
+												<a href="tel:<%=list[i].sellerPhone%>"><%=list[i].sellerPhone%> <img src="../../images/center/tel.svg" alt="" /></a>
 											</span>
 										</div>
 									</div>
-									<div class="ft15"><span class="disablecl">取货地址：</span><span class="titcl"><%=list[i].pickUpAddress%></span></div>
-									<!--<img src="../../images/order/map.svg" onclick="goMap('<%=list[i].pickUpAddress%>')" style="width: 30px;vertical-align: bottom;margin-top: 5px;" class="mui-pull-right"/>-->
+									<div class="ft15"><span class="disablecl">取货地址：</span><span class="titcl"><%=list[i].pickUpAddress%><img src="../../images/order/map.svg" onclick="goMap('<%=list[i].pickUpAddress%>')" style="width: 30px;vertical-align: bottom;margin-top: 5px;" class="mui-pull-right"/></span></div>
 									<div class="ft15"><span class="disablecl">取货日期：</span><span class="titcl"><%=list[i].pickUpTime%></span></div>
 								</div>
  
@@ -367,7 +366,7 @@
 												电话：
 											</span>
 											<span class="titcl">
-												<a href="tel:<%=list[i].receiverPhone%>"><%=list[i].receiverPhone%></a>
+												<a href="tel:<%=list[i].receiverPhone%>"><%=list[i].receiverPhone%> <img src="../../images/center/tel.svg" alt="" /></a>
 											</span>
 										</div>
 									</div>
@@ -385,11 +384,11 @@
 												电话：
 											</span>
 											<span class="titcl">
-												<a href="tel:<%=list[i].sellerPhone%>"><%=list[i].sellerPhone%></a>
+												<a href="tel:<%=list[i].sellerPhone%>"><%=list[i].sellerPhone%> <img src="../../images/center/tel.svg" alt="" /></a>
 											</span>
 										</div>
 									</div>
-									<div class="ft15"><span class="disablecl">配送地址：</span><span class="titcl"><%=list[i].shippingAddress%></span></div>
+									<div class="ft15"><span class="disablecl">配送地址：</span><span class="titcl"><%=list[i].shippingAddress%><img src="../../images/order/map.svg" onclick="goMap('<%=list[i].shippingAddress%>')" style="width: 30px;vertical-align: bottom;margin-top: 5px;" class="mui-pull-right"/></span></div>
 									<div class="ft15"><span class="disablecl">配送日期：</span><span class="titcl"><%=list[i].deliveryTime%></span></div>
 								</div>
 
@@ -435,11 +434,11 @@
 		}
 		function goMap(address){
 			event.stopPropagation();
-//			openview({
-//				view:'addressMap.html',
-//				id:'addressMap',
-//				extrasobj:{address:address}
-//			})
+			openview({
+				view:'addressMap.html',
+				id:'addressMap',
+				extrasobj:{address:address}
+			})
 		}
 		//消息
 		function goMessage(){
@@ -576,7 +575,9 @@
 					});
 				}
 			} //刷新 
-			$('#tabLink li').click(function(){
+			$('#tabLink li').unbind('click').click(function(){
+				document.getElementById('upload').innerHTML = '';
+				$(window).unbind('scroll');
 				$('#tabLink li').removeClass('active');
 				$(this).addClass('active');
 				$('#loadingdiv').css('height','32px');

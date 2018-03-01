@@ -45,6 +45,7 @@
 				//地理编码,返回地理编码结果
 				geocoder.getLocation("成都天府五街美年广场", function(status, result) {
 					if(status === 'complete' && result.info === 'OK') {
+						alert(result)
 						geocoder_CallBack(result);
 					}
 				});

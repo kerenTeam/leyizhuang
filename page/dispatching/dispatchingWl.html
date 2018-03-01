@@ -128,6 +128,12 @@
 				var userId = plus.storage.getItem('$userId');
 				var oldToken = plus.storage.getItem('oldToken');
 				var orderNo = plus.webview.currentWebview().orderNo;
+				var isOver = plus.webview.currentWebview().isOver;
+				if(isOver == 1){
+					$('.addwl').hide();
+				}else{
+					$('.addwl').show();
+				}
 				getWl();
 				function getWl(){
 					mui.ajax(serverUrl + '/app/delivery/detail',{

@@ -67,7 +67,7 @@
 
 								<div class="checkList" onclick="goInfo('<%=list[i].orderNumber%>')">
 									<h4 class="fineB ft16">
-										<span>订单编号：<%=list[i].orderNumber%></span>
+										<span>订单编号：<%=list[i].orderNumber2%></span>
 										<span class="mui-icon mui-icon-arrowright mui-pull-right ft20 activecl"></span>
 										<span class="h4span3">
 											<%=list[i].status%>
@@ -209,7 +209,7 @@
 								if( data.content.list && data.content.list.length){
 									data.content.list.forEach(function(ele,index){
 										if(ele.orderNumber){
-											ele.orderNumber = ele.orderNumber.substr(0, 5) + '****' + ele.orderNumber.substr(20);  
+											ele.orderNumber2 = ele.orderNumber.substr(0, 5) + '****' + ele.orderNumber.substr(20);  
 										}
 									})
 									document.getElementById('infoListDiv').innerHTML = template('infoList',{list:data.content.list,listType:index});
@@ -233,7 +233,7 @@
 															if( data.content.list && data.content.list.length){
 																data.content.list.forEach(function(ele,index){
 																	if(ele.orderNumber){
-																		ele.orderNumber = ele.orderNumber.substr(0, 5) + '****' + ele.orderNumber.substr(20);  
+																		ele.orderNumber2 = ele.orderNumber.substr(0, 5) + '****' + ele.orderNumber.substr(20);  
 																	}
 																})
 																document.getElementById('infoListDiv').innerHTML += template('infoList',{list:data.content.list,listType:index});
@@ -256,7 +256,7 @@
 								}else if(data.content && data.content.length){
 									data.content.forEach(function(ele,index){
 										if(ele.orderNumber){
-											ele.orderNumber = ele.orderNumber.substr(0, 5) + '****' + ele.orderNumber.substr(20);  
+											ele.orderNumber2 = ele.orderNumber.substr(0, 5) + '****' + ele.orderNumber.substr(20);  
 										}
 									})
 									document.getElementById('infoListDiv').innerHTML = template('infoList',{list:data.content,listType:index});
@@ -276,31 +276,34 @@
 			}
 			window.checkDebate = function(isPass,arrearsAuditId){
 				event.stopPropagation();
-				plus.nativeUI.showWaiting();
-				mui.ajax(serverUrl+'/app/seller/arrearsAudit/audit',{
-					data:{'userId':userId,'identityType':identityT,'arrearsAuditId':arrearsAuditId,'result':isPass},
-					dataType:'json',
-					type:'post',
-					timeout:10000,
-					headers:{"Authorization":oldToken},
-					success:function(data,type,xhr){
-						plus.nativeUI.closeWaiting();
-						console.log('欠款审核 ',data);
-						var timeLoad = setInterval(function(){
-							clearTimeout(timeLoad),timeLoad = null;
-							if(data.code == 0){
-								mui.toast('审核成功');
-								loadFun(0);
-							}else{
-								mui.toast(data.message);
+				mui.confirm('确认审核吗？', '提示', ['取消', '确定'], function(e) {
+					if(e.index == 1) {
+						plus.nativeUI.showWaiting();
+						mui.ajax(serverUrl+'/app/seller/arrearsAudit/audit',{
+							data:{'userId':userId,'identityType':identityT,'arrearsAuditId':arrearsAuditId,'result':isPass},
+							dataType:'json',
+							type:'post',
+							timeout:10000,
+							headers:{"Authorization":oldToken},
+							success:function(data,type,xhr){
+								plus.nativeUI.closeWaiting();
+								console.log('欠款审核 ',data);
+								var timeLoad = setInterval(function(){
+									clearTimeout(timeLoad),timeLoad = null;
+									if(data.code == 0){
+										mui.toast('审核成功');
+										loadFun(0);
+									}else{
+										mui.toast(data.message);
+									}
+								},500)
+							},
+							error:function(xhr,type,errorThrown){
+								console.log('响应失败  !');
 							}
-						},500)
-					},
-					error:function(xhr,type,errorThrown){
-						console.log('响应失败  !');
+						});
 					}
-				});
-
+				}) 
 			}
 		})
 

@@ -258,7 +258,8 @@
       "page/personal/signInDay.html",
       "bannerTpl.html",
       "welcome.html",
-      "page/personal/myOrderList.html"
+      "page/personal/myOrderList.html",
+      "consultTel.html"
     ]
   },
   "page/gxbList.html": {
@@ -360,7 +361,8 @@
       "images/addcart.svg"
     ],
     "refer": [
-      "page/goodsInfo.html"
+      "page/goodsInfo.html",
+      "cart.html"
     ]
   },
   "page/goodList.html": {
@@ -685,7 +687,8 @@
       "js/jquery.citysYF.js"
     ],
     "refer": [
-      "page/mailList.html"
+      "page/mailList.html",
+      "page/personal/addressMap.html"
     ]
   },
   "page/personal/productCoupon.html": {
@@ -1299,26 +1302,31 @@
   "page/waterFast.html": {
     "refer": [
       "cart.html"
-    ]
+    ],
+    "resources": []
   },
   "page/woodFast.html": {
     "refer": [
       "cart.html"
-    ]
+    ],
+    "resources": []
   },
   "page/electricFast.html": {
     "refer": [
       "cart.html"
-    ]
+    ],
+    "resources": []
   },
   "page/tileFast.html": {
     "refer": [
       "cart.html"
-    ]
+    ],
+    "resources": []
   },
   "welcome.html": {
     "resources": [
       "images/welcome/wel2.png"
-    ]
+    ],
+    "refer": []
   }
 }

@@ -329,8 +329,8 @@
 					</div>
 					<img src="img/legray.svg" alt="" />
 				</div>
-				<div id="" class="rightBorder">
-					<div id="">
+				<div onclick="poverTel()" class="rightBorder">
+					<div>
 						咨询
 					</div>
 					<img src="img/legray.svg" alt="" />
@@ -375,7 +375,7 @@
 					</div>
 					<img src="img/legray.svg" alt="" />
 				</div>
-				<div id="" class="rightBorder">
+				<div onclick="poverTel()" class="rightBorder">
 					<div id="">
 						咨询
 					</div>
@@ -546,7 +546,7 @@
 			<%}%>
 			<br />
 		</script>
-
+		
 		<div class="upload text-center text-xs gray" id="upload"></div>
 		<script src="js/mui.min.js"></script>
 		<script src="js/util.js"></script>
@@ -576,7 +576,21 @@
 					console.log( "语音识别失败："+e.message );
 				} );
 			}
-
+			function poverTel(){
+				mui.openWindow({
+				    url:'consultTel.html',
+				    id:'consultTel',
+				    styles:{
+				  	  	background:'transparent',
+				  	  	
+				    },
+				    waiting: {autoShow:false},
+				    show:{
+				      aniShow:'slide-in-bottom',//页面显示动画，默认为”slide-in-right“；
+				     
+				    }
+				})
+			}
 			mui.plusReady(function() {
 //				plus.storage.removeItem('lauchFlag')
 
@@ -818,6 +832,7 @@
 							console.log('响应失败');
 						}
 					});
+					
 					//icon
 					function getIcon(icontype){
 						mui.ajax(oCms + '/index.php/ApiCms/iconList', {
@@ -927,6 +942,8 @@
 							console.log('响应失败');
 						}
 					});
+					
+					
 					//常购商品列表
 					mui.ajax(serverUrl + '/app/goods/often/list', {
 						data: {
@@ -1278,6 +1295,7 @@
 					mui.fire(plus.webview.getWebviewById('ofenBuy'),'refreshct');
 					mui.fire(plus.webview.getWebviewById('hotGoods'),'refreshct');
 					mui.fire(plus.webview.getWebviewById('history'),'refreshct');
+					mui.fire(plus.webview.getWebviewById('searchGoods'),'refreshct');
 					if(cartNum != 0){
 						drawBadge();
 					}else{
