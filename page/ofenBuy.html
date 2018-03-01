@@ -81,6 +81,7 @@
 				document.addEventListener('refreshct', function() {
 					getCartNum();
 				})
+				
 				var categoryCode = plus.webview.currentWebview().ctid;
 				if(categoryCode){ 
 					$('.flexw div').siblings().removeClass('curActive')
@@ -91,6 +92,9 @@
 				var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
 				var userId = plus.storage.getItem('$userId'); 
 				var oldToken = plus.storage.getItem('oldToken');
+				document.addEventListener('refresh', function() {
+					kindType(categoryCode);
+				})
 				 kindType(categoryCode);
 				 function kindType(categoryCode){
 					//商品列表
@@ -110,8 +114,18 @@
 								plus.nativeUI.closeWaiting();
 								if(data.content && data.content.length){
 									$('#goodsList').html(template('goodsTpl',{list:data.content}));
-									$('.toCart,.mui-numbox button,.mui-numbox input').click(function() {
-										$(this).select();
+									$('.toCart,.mui-numbox button').click(function() {
+										event.stopPropagation()
+									})
+									var platform = plus.storage.getItem('platform')
+									$('.mui-numbox input').click(function() {
+										if(platform == 'ANDROID'){
+											$(this).select();
+										}else{
+											$(this).focus(); 
+											$(this).get(0).selectionStart = 0; 
+											$(this).get(0).selectionEnd = $(this).get(0).value.length;
+										}
 										event.stopPropagation()
 									})
 									mui('.mui-numbox').numbox();

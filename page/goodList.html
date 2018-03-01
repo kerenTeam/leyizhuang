@@ -323,11 +323,20 @@
 										}
 										$('#goodsList').html(template('goodsTpl',{list:data.content.list}));
 										mui('.mui-numbox').numbox();
-										$('.toCart,.mui-numbox button,.mui-numbox input').click(function() {
-											$(this).select();
+										$('.toCart,.mui-numbox button').click(function() {
 											event.stopPropagation()
 										})
-										
+										var platform = plus.storage.getItem('platform')
+										$('.mui-numbox input').click(function() {
+											if(platform == 'ANDROID'){
+												$(this).select();
+											}else{
+												$(this).focus(); 
+												$(this).get(0).selectionStart = 0; 
+												$(this).get(0).selectionEnd = $(this).get(0).value.length;
+											}
+											event.stopPropagation()
+										})
 										//商品 筛选
 										$('.categray span').unbind('click').click(function(){
 											$(window).unbind('scroll');
@@ -532,10 +541,20 @@
 																	}
 																	$('#goodsList').append(template('goodsTpl',{list:data.content.list}));
 																	mui('.mui-numbox').numbox();
-																	$('.toCart,.mui-numbox button,.mui-numbox input').click(function() {
-																		$(this).select();
+																	$('.toCart,.mui-numbox button').click(function() {
 																		event.stopPropagation();
 																		
+																	})
+																	var platform = plus.storage.getItem('platform')
+																	$('.mui-numbox input').click(function() {
+																		if(platform == 'ANDROID'){
+																			$(this).select();
+																		}else{
+																			$(this).focus(); 
+																			$(this).get(0).selectionStart = 0; 
+																			$(this).get(0).selectionEnd = $(this).get(0).value.length;
+																		}
+																		event.stopPropagation()
 																	})
 																	mui("#upload")[0].innerHTML = " ";
 																	Spagenum++; //加载成功,当前页+1

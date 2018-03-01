@@ -326,8 +326,19 @@
 								$('#infoCnt').html('<div style="font-size:14px;color:gray;padding:5%;text-align: center;">暂无详情</div>')
 							}
 							mui('.mui-numbox').numbox();
-							$('.toCart,.mui-numbox button,.mui-numbox input').click(function() {
-								$(this).select();
+							$('.toCart,.mui-numbox button').click(function() {
+								event.stopPropagation()
+							})
+							
+							var platform = plus.storage.getItem('platform')
+							$('.mui-numbox input').click(function() {
+								if(platform == 'ANDROID'){
+									$(this).select();
+								}else{
+									$(this).focus(); 
+									$(this).get(0).selectionStart = 0; 
+									$(this).get(0).selectionEnd = $(this).get(0).value.length;
+								}
 								event.stopPropagation()
 							})
 							var gallery = mui(".mui-slider");

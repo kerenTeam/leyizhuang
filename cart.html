@@ -284,9 +284,19 @@
 								mui.fire(index, 'cart_refresh');
 								plus.nativeUI.closeWaiting();
 								mui('.mui-numbox').numbox();
-								$('.numberWidget,.mui-numbox button,.mui-numbox input').click(function() {
+								$('.numberWidget,.mui-numbox button').click(function() {
 									event.stopPropagation();
-									$(this).select();
+								})
+								var platform = plus.storage.getItem('platform')
+								$('.mui-numbox input').click(function() {
+									if(platform == 'ANDROID'){
+										$(this).select();
+									}else{
+										$(this).focus(); 
+										$(this).get(0).selectionStart = 0; 
+										$(this).get(0).selectionEnd = $(this).get(0).value.length;
+									}
+									event.stopPropagation()
 								})
 								$("#rfcart").click(function(){
 									cartload();
@@ -354,6 +364,16 @@
 															mui.fire(plus.webview.getWebviewById('page/goodList.html'),'refresh');
 															mui.fire(plus.webview.getWebviewById('cart.html'),'refresh');
 															mui.fire(plus.webview.getWebviewById('gxbList'),'refresh');
+															mui.fire(plus.webview.getWebviewById('oilFast.html'),'refresh');
+															mui.fire(plus.webview.getWebviewById('waterFast.html'),'refresh');
+															mui.fire(plus.webview.getWebviewById('electricFast.html'),'refresh');
+															mui.fire(plus.webview.getWebviewById('woodFast.html'),'refresh');
+															mui.fire(plus.webview.getWebviewById('tileFast.html'),'refresh');
+															mui.fire(plus.webview.getWebviewById('collect'),'refresh');
+															mui.fire(plus.webview.getWebviewById('ofenBuy'),'refresh');
+															mui.fire(plus.webview.getWebviewById('hotGoods'),'refresh');
+															mui.fire(plus.webview.getWebviewById('history'),'refresh');
+															mui.fire(plus.webview.getWebviewById('searchGoods'),'refresh');
 															cartload();
 														} else {
 															mui.toast(data.message)
@@ -462,6 +482,17 @@
 											plus.nativeUI.closeWaiting();
 											console.log('加入购物车', data);
 											if(data.code == 0) {
+												mui.fire(plus.webview.getWebviewById('gxbList'),'refresh');
+												mui.fire(plus.webview.getWebviewById('oilFast.html'),'refresh');
+												mui.fire(plus.webview.getWebviewById('waterFast.html'),'refresh');
+												mui.fire(plus.webview.getWebviewById('electricFast.html'),'refresh');
+												mui.fire(plus.webview.getWebviewById('woodFast.html'),'refresh');
+												mui.fire(plus.webview.getWebviewById('tileFast.html'),'refresh');
+												mui.fire(plus.webview.getWebviewById('collect'),'refresh');
+												mui.fire(plus.webview.getWebviewById('ofenBuy'),'refresh');
+												mui.fire(plus.webview.getWebviewById('hotGoods'),'refresh');
+												mui.fire(plus.webview.getWebviewById('history'),'refresh');
+												mui.fire(plus.webview.getWebviewById('searchGoods'),'refresh');
 												mui.fire(plus.webview.getWebviewById('goodList'),'refresh');
 												mui.fire(plus.webview.getWebviewById('page/goodList.html'),'refresh');
 											} else {

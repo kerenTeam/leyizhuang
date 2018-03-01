@@ -63,7 +63,7 @@
 								<span class="span1 span1TH">¥<%= list[i].retailPrice%></span>
 								<div class="mui-numbox span2" data-numbox-min='0' data-numbox-max='<%= list[i].returnableQuantity%>'>
 									<button class="mui-btn mui-btn-numbox-minus" type="button">-</button>
-									<input class="mui-input-numbox goodNum" data-id="<%= list[i].id%>" data-type="<%= list[i].goodsLine%>" type="number" value="0" />
+									<input class="mui-input-numbox goodNum" data-id="<%= list[i].id%>" data-type="<%= list[i].goodsLine%>" type="number" value="0"/>
 									<button class="mui-btn mui-btn-numbox-plus" type="button">+</button>
 								</div>
 							</div>
@@ -143,7 +143,7 @@
 						})
 					})
 
-				}
+				} 
 			mui.plusReady(function(){
 				//获取缓存
 				var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
@@ -153,6 +153,8 @@
 				var deliveryType = plus.webview.currentWebview().deliveryType;
 				var moreInfo = null;//获取用户退货方式和取货地址
 				var cusId = plus.webview.currentWebview().cusId;
+				var platform = plus.storage.getItem('platform')
+				
 				if(deliveryType == '门店自提'){
 					$('.smqh').hide()
 				}else if(deliveryType.indexOf('券')!=-1){
@@ -298,6 +300,16 @@
 						if(data.code == 0){
 							document.getElementById('goodsD').innerHTML = template('goodsS',{list:data.content});
 							mui(".mui-numbox").numbox();
+							$('.mui-numbox input').click(function() {
+								if(platform == 'ANDROID'){
+									$(this).select();
+								}else{
+									$(this).focus(); 
+									$(this).get(0).selectionStart = 0; 
+									$(this).get(0).selectionEnd = $(this).get(0).value.length;
+								}
+								event.stopPropagation()
+							})
 
 						}else{
 							mui.toast(data.message);

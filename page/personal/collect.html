@@ -115,9 +115,11 @@
 				var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
 				var userId = plus.storage.getItem('$userId');
 				var oldToken = plus.storage.getItem('oldToken')
-
+				var platform = plus.storage.getItem('platform')
 				plus.nativeUI.showWaiting();
-
+				document.addEventListener('refresh', function() {
+					kindType();
+				})
 				kindType();
 
 				function kindType() {
@@ -142,11 +144,21 @@
 									$('#goodsList').html(template('goodsTpl', {
 										list: data.content
 									}));
-									$('.toCart,.mui-numbox button,.mui-numbox input').click(function() {
-										$(this).select();
-										event.stopPropagation()
-									})
+									
 								mui('.mui-numbox').numbox();
+								$('.toCart,.mui-numbox button').click(function() {
+										event.stopPropagation() 
+									})
+								$('.mui-numbox input').click(function() {
+									if(platform == 'ANDROID'){
+										$(this).select();
+									}else{
+										$(this).focus(); 
+										$(this).get(0).selectionStart = 0; 
+										$(this).get(0).selectionEnd = $(this).get(0).value.length;
+									}
+									event.stopPropagation()
+								})
 								//加入购物车
 								$('.toCart').click(function(){
 									var goodid = $(this).attr('data-id');

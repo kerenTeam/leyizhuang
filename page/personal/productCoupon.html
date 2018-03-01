@@ -92,6 +92,7 @@
 				var oldToken = plus.storage.getItem('oldToken')
 				var page = plus.webview.currentWebview().page;
 				var cusId = plus.webview.currentWebview().cusid;
+				var platform = plus.storage.getItem('platform')
 				if(!cusId){
 					cusId = '';
 				}else{
@@ -122,6 +123,16 @@
 										list: data.content
 									}));
 									mui('.mui-numbox').numbox();
+									$('.mui-numbox input').click(function() {
+										if(platform == 'ANDROID'){
+											$(this).select();
+										}else{
+											$(this).focus(); 
+											$(this).get(0).selectionStart = 0; 
+											$(this).get(0).selectionEnd = $(this).get(0).value.length;
+										}
+										event.stopPropagation()
+									})
 									//使用选择
 									$('.check').click(function() {
 										event.stopPropagation();

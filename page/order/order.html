@@ -315,19 +315,25 @@
 						<div class="pad10 ft14 afterBorder manager" style="display: none;">现金返利&nbsp;&nbsp;<span class='activecl' id="cash">¥--</span><input type="tel" placeholder="请输入使用金额" name="cash" onchange="maxC(this)" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" class='mui-pull-right preDeposit' oninput="inputbd()"/></div>
 						<!--only guide-->
 						<div class="pad10 ft14 afterBorder guide" style="display: none;">信用额度&nbsp;&nbsp;<span class='activecl' id="creditVal">¥--</span><input type="tel" placeholder="请输入使用金额" name="creditVal" onchange="maxC(this)" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" class='mui-pull-right preDeposit' oninput="inputbd()"/></div>
-						<div class="pad10 ft14 afterBorder guide" style="display: none;">代收金额&nbsp;&nbsp;<input type="tel" placeholder="请输入代收金额" name="cashHelp" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" class='mui-pull-right preDeposit dsje' /></div>
+						<div class="pad10 ft14 afterBorder guide dsje" style="display: none;">代收金额&nbsp;&nbsp;<input type="tel" placeholder="请输入代收金额" name="cashHelp" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" class='mui-pull-right preDeposit' /></div>
 					<%}else{%>
 						<div class="pad10 ft14 afterBorder"><%if(guide == 1){%>门店<%}%>预存款&nbsp;&nbsp;<span class='activecl' id="preDepositb">¥--</span><input type="number" onchange="maxC(this)" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" placeholder="请输入使用金额" name="preDepositb" class='mui-pull-right preDeposit' oninput="inputbd()"/></div>
 						<div class="pad10 ft14 afterBorder manager" style="display: none;">信用金&nbsp;&nbsp;<span class='activecl' id="credit">¥--</span><input type="number" placeholder="请输入使用金额" name="credit" onchange="maxC(this)" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" class='mui-pull-right preDeposit' oninput="inputbd()"/></div>
 						<div class="pad10 ft14 afterBorder manager" style="display: none;">现金返利&nbsp;&nbsp;<span class='activecl' id="cash">¥--</span><input type="number" placeholder="请输入使用金额" name="cash" onchange="maxC(this)" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" class='mui-pull-right preDeposit' oninput="inputbd()"/></div>
 						<div class="pad10 ft14 afterBorder guide" style="display: none;">信用额度&nbsp;&nbsp;<span class='activecl' id="creditVal">¥--</span><input type="number" placeholder="请输入使用金额" name="creditVal" onchange="maxC(this)" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" class='mui-pull-right preDeposit' oninput="inputbd()"/></div>
-						<div class="pad10 ft14 afterBorder guide" style="display: none;">代收金额&nbsp;&nbsp;<input type="number" placeholder="请输入代收金额" name="cashHelp" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" class='mui-pull-right preDeposit dsje' /></div>
+						<div class="pad10 ft14 afterBorder guide dsje" style="display: none;">代收金额&nbsp;&nbsp;<input type="number" placeholder="请输入代收金额" name="cashHelp" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" class='mui-pull-right preDeposit' /></div>
 					<%}%>
 					<div style="height: 10px;background: #EEEEEE;"></div>
 					
 
 				</dl>
 			</script>
+			<div class="bgcwt flexr margBot10" data-id = "1" id="isShowNumber" style="align-items:center ;padding: 10px;">
+				<span id="">
+					销货单号
+				</span>
+				<input placeholder="请填写纸质销货单号" type="text" maxlength="20" style="width: 70%;border: 0;text-align: right;margin-bottom: 0;"  />
+			</div>
 			<textarea name="" rows="3" cols="" id='remark' placeholder="备注"></textarea>
 
 			<!--存储 第一次返回乐币 和 合计-->
@@ -529,6 +535,14 @@
 
 						if(data.content.upstairsFee) {
 							$('#upstar').html('¥' + data.content.upstairsFee)
+						}
+						if(data.content.isShowNumber) {
+							$('#isShowNumber').show()
+							$('#isShowNumber').attr('data-id',1)
+
+						}else{
+							$('#isShowNumber').hide()
+							$('#isShowNumber').attr('data-id',0)
 						}
 						if(data.content.cashCouponList && data.content.cashCouponList.length) {
 							for(var i in data.content.cashCouponList) {
@@ -1054,6 +1068,13 @@
 							isOwnerReceiving = $('.isOwnerReceiving').prop('checked') == true ? true : false;
 						}
 					}
+					var salesNumber = ''
+					if($('#isShowNumber').attr('data-id') == 1 && $('#isShowNumber input').val() == ''){
+						mui.toast("请填写纸质销货单号");
+						return;
+					}else{
+						salesNumber = $('#isShowNumber input').val();
+					}
 					var goodsInfo = onlyGoods; //商品 （普通商品 料单商品）
 					var cashCouponIds = []; //优惠券 
 					if(identityT == 6) {
@@ -1130,6 +1151,7 @@
 						 	"cashCouponIds":JSON.stringify(cashCouponIds),
 							"auditNo": auditNo,
 							"billingInfo": JSON.stringify(billingInfo),
+							"salesNumber":salesNumber
 						},
 						dataType: 'json',
 						type: 'post',
