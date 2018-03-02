@@ -113,7 +113,7 @@ function cancelOF(pageType,cancelParentId){
 				var remarksInfo = $('#remarksInfo').val();
 
 				if(!reasonInfo){
-					alert('请选择原因');
+					mui.alert('请选择原因');
 				}else{
 					var dataObj = {
 						'userId':userId,'identityType':identityT,

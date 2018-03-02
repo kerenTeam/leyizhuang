@@ -48,7 +48,9 @@
       "js/mui.enterfocus.js",
       "fonts/mui.ttf",
       "js/base64.js",
-      "js/default.js"
+      "js/default.js",
+      "css/configW.css",
+      "css/commonY.css"
     ],
     "refer": [
       "main.html",
@@ -661,7 +663,8 @@
       "js/mui.min.js",
       "js/statusBar.js",
       "fonts/mui.ttf",
-      "img/check2.png"
+      "img/check2.png",
+      "img/check1.svg"
     ],
     "refer": [
       "page/personal/address-edit.html",
@@ -774,7 +777,8 @@
     ],
     "refer": [
       "page/personal/editPhone.html",
-      "page/personal/edit_password.html"
+      "page/personal/edit_password.html",
+      "identify.html"
     ]
   },
   "page/wallet.html": {

@@ -240,7 +240,7 @@
 							console.log("发送返回",back.responseText);
 							var dataobj = JSON.parse(back.responseText);
 							if(dataobj.code == 0){
-								alert('您的订单已提交，客服会尽快跟您联系！')
+								mui.alert('您的订单已提交，客服会尽快跟您联系！')
 								openview({
 									view:'../personal/pzOrderList.html',
 									id:'pzOrderList'

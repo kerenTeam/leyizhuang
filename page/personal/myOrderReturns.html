@@ -263,7 +263,7 @@
 										cityPicker.show(function(items) {
 											$('#cityResult').attr('data-id', '1');
 											if(!items[1].text) {
-												alert('当天无可选时间段')
+												plus.nativeUI.alert('当天无可选时间段')
 											} else {
 												$('#cityResult .pstime').html(items[0].text + " " + items[1].text)
 											}
@@ -361,7 +361,7 @@
 
 					if(!goodArray.length){
 						plus.nativeUI.closeWaiting();
-						alert('请选择商品');
+						plus.nativeUI.alert('请选择商品');
 					}else{
 						if(backType == 'HOUSE_PICK'){
 							if(!deliveryTime){

@@ -313,7 +313,7 @@
 									cityPicker.show(function(items) {
 										$('#cityResult').attr('data-id', '1');
 										if(!items[1].text) {
-											alert('当天无可选时间段')
+											mui.alert('当天无可选时间段')
 										} else {
 											$('#cityResult .pstime').html(items[0].text + " " + items[1].text)
 										}

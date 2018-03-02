@@ -8,7 +8,7 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="apple-mobile-web-app-capable" content="yes" />
 		<meta name="apple-mobile-web-app-status-bar-style" content="black" />
-		<script type="text/javascript" src="http://webapi.amap.com/maps?v=1.4.4&key=8f29aefac8547821425571df8852f64b&plugin=AMap.Geocoder"></script>
+		<script type="text/javascript" src="http://webapi.amap.com/maps?v=1.4.4&key=0fa47323cf55d36d80d9ea3e11ca744e&plugin=AMap.Geocoder"></script>
 		<script src="../../js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../../js/mui.min.js" type="text/javascript" charset="utf-8"></script>
 		<title>地图定位</title>
@@ -61,29 +61,37 @@
 
 					};
 					window.addEventListener("message", function(e) {
-//						alert('您选择了:' + e.data.name + ',' + e.data.location)
-						goback(e.data.address)
+//						goback(e.data.address)
 						let NewLocation = (e.data.location).split(",")
-//						alert(JSON.stringify(NewLocation))
 
 						var geocoder = new AMap.Geocoder({
 							radius: 1000,
 							extensions: "all"
 						});
-//						alert(JSON.stringify(geocoder))
-//						geocoder.getAddress(NewLocation, function(status, result) {
-//							alert(JSON.stringify(result))
-//							if(status === 'complete' && result.info === 'OK') {
-//								console.log(`------------${result}----------------`)
-//							}
-//						});
+						geocoder.getAddress(NewLocation, function(status, result) {
+							
+							if(result.info === 'OK') {
+								var result2 = result.regeocode;
+								result = result.regeocode.addressComponent;
+								console.log(JSON.stringify(result))
+//								alert(result.address.street)
+								goback(result.province,result.city,result.district,result.township,result.street,result.streetNumber,result2.formattedAddress,result.neighborhood)
+							}
+						});
 
 					}, false);
 
-					function goback(address) {
+					function goback(pr,ct,dt,ts,st,stn,address,nb) {
 						var mapStorage = JSON.parse(plus.storage.getItem('$mapStorage') || '[]');
 						var mapAddress = {};
-						mapAddress.adraddress = address;
+						mapAddress.province = pr;
+						mapAddress.city = ct;
+						mapAddress.district = dt;
+						mapAddress.streetNumber = stn;
+						mapAddress.street = st;
+						mapAddress.township = ts;
+						mapAddress.adraddress = pr+ct+dt+ts;
+						mapAddress.neighborhood = nb;
 						mapStorage = [mapAddress];
 						plus.storage.setItem('$mapStorage', JSON.stringify(mapStorage));
 						// alert(plus.storage.getItem('$mapStorage'));
@@ -97,23 +105,23 @@
 		</script>
 
 		<script type='text/javascript'>
-				var mock = {
-					log: function(result) {
-						window.parent.setIFrameResult('log', result);
-					}
-				}
-				console = mock;
-				window.Konsole = {
-					exec: function(code) {
-						code = code || '';
-						try {
-							var result = window.eval(code);
-							window.parent.setIFrameResult('result', result);
-						} catch (e) {
-							window.parent.setIFrameResult('error', e);
-						}
-					}
-				}
+//				var mock = {
+//					log: function(result) {
+//						window.parent.setIFrameResult('log', result);
+//					}
+//				}
+//				console = mock;
+//				window.Konsole = {
+//					exec: function(code) {
+//						code = code || '';
+//						try {
+//							var result = window.eval(code);
+//							window.parent.setIFrameResult('result', result);
+//						} catch (e) {
+//							window.parent.setIFrameResult('error', e);
+//						}
+//					}
+//				}
 		</script>
 	</body>
 

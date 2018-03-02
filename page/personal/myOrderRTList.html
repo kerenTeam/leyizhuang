@@ -104,7 +104,7 @@
 						<% if(nowState == '全部' || nowState == list[i].status){ %>
 							<div class="orderList">
 								<h3 class="h3" onclick="openDetail2('<%= list[i].orderNo%>')">
-									退单编号：<%= list[i].orderNo%>
+									订单编号：<%= list[i].orderNo%>
 									<span><%= list[i].statusDesc%></span>
 								</h3>
 								<p class="p1" onclick="openDetail2('<%= list[i].orderNo%>')">
@@ -123,7 +123,7 @@
 									</div>
 								<% }else{%>
 									<div class="orderInfo">
-										共<%= list[i].count%>件商品 </span>
+										共<%= list[i].count%>件商品 合计：<span>¥ <%= list[i].price%> </span>
 									</div>
 								<%}%>
 								<div class="orderBtns">
@@ -202,6 +202,9 @@
 		<script src="../../js/artTemplate-native.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../../js/youxd.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
+			$('#evaluat').click(function(){
+				event.stopPropagation();
+			})
 			mui.plusReady(function(){
 				var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
 				var userId = plus.webview.currentWebview().lookCusid || plus.storage.getItem('$userId');

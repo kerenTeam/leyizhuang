@@ -61,17 +61,28 @@
 			<script type="text/html" id="goodsTpl">
 				<ul class="mui-table-view">
 					<%for(var i = 0 ;i<list.length;i++){%>
-						<li class="mui-table-view-cell mui-media" onclick="goInfo('<%=list[i].orderNumber%>')">
+						<li class="mui-table-view-cell mui-media">
 							<a href="javascript:;">
 								<div class="mui-media-body ft16">
-									<%=list[i].repaymentTime%>
+									<div class="maincl">
+										<span class="titcl"><%=list[i].orderNumber%></span>
+									</div>
+									<div class="maincl">
+										<span class="titcl">
+											<%=list[i].repaymentTime%>
+										</span>
+									</div>
+									<p class='mui-ellipsis maincl ft15'>
+										顾客姓名 &nbsp; &nbsp;
+										<span class="activecl">¥<%=list[i].customerName%></span>
+									</p>
 									<p class='mui-ellipsis maincl ft15'>
 										欠款还款 &nbsp; &nbsp;
 										<span class="activecl">¥<%=list[i].repaymentMoney%></span>
 									</p>
 								</div>
 							</a>
-							<span class="mui-pull-right mui-icon mui-icon-arrowright activecl righticon"></span>
+							<!--<span class="mui-pull-right mui-icon mui-icon-arrowright activecl righticon"></span>-->
 						</li>
 					<%}%>
 				</ul>

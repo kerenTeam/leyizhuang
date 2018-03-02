@@ -481,232 +481,236 @@
 					productCouponList:JSON.parse(productCouponList)
 				})
 			//获取料单商品
-			mui.ajax(serverUrl + '/app/order/enter', {
-				data: {
-					userId: userId,
-					identityType: identityT,
-					goodsList: JSON.parse(idobj),
-					customerId: customerId,
-					giftList:JSON.parse(promotionInfo),
-					productCouponList:JSON.parse(productCouponList)
-				},
-				dataType: 'json',
-				type: 'post',
-				timeout: 10000,
-				headers: {
-					"Authorization": oldToken,
-					'Content-Type': 'application/json'
-				},
-				success: function(data, type, xhr) {
-					console.log('获取料单商品', data);
-					var dataObj = {};
-					if(data.code == 0 && data.content) {
-						promotionInfo = JSON.stringify(data.content.promotionInfo);//更换选赠品时存的促销赠品
-						//显示商品
-						var goods = data.content.totalGoodsInfo;
-						
-						dataObj.totalQty = data.content.totalQty;
-						dataObj.totalPrice = data.content.totalPrice;
-						dataObj.list = goods;
-						document.getElementById('cartData').innerHTML = template('cartTpl', dataObj);
-						if(data.content.totalPrice) {
-							$('#totalPriceb').html('¥' + data.content.totalPrice)
-						} else {
-							$('#totalPriceb').html('0')
-						}
-						if(data.content.memberDiscount) {
-							$('#memberDiscount').html('¥' + data.content.memberDiscount)
-						} else {
-							$('#memberDiscount').html('¥0')
-						}
-						if(data.content.orderDiscount) {
-							$('#orderDiscount').html('¥' + data.content.orderDiscount);
-							$('#firstOrderDiscount').val(data.content.orderDiscount)
-						} else {
-							$('#orderDiscount').html('¥0')
-						}
-						if(data.content.freight) {
-							$('#freight').html('¥' + data.content.freight)
-							$('#firstFreight').val(data.content.freight)
-						} else {
-							$('#freight').html('0')
-							$('#firstFreight').val(0)
-						}
-
-						if(data.content.upstairsFee) {
-							$('#upstar').html('¥' + data.content.upstairsFee)
-						}
-						if(data.content.isShowNumber) {
-							$('#isShowNumber').show()
-							$('#isShowNumber').attr('data-id',1)
-
-						}else{
-							$('#isShowNumber').hide()
-							$('#isShowNumber').attr('data-id',0)
-						}
-						if(data.content.cashCouponList && data.content.cashCouponList.length) {
-							for(var i in data.content.cashCouponList) {
-								if(data.content.cashCouponList[i].effectiveStartTime) {
-									var date = new Date(data.content.cashCouponList[i].effectiveStartTime / 1000 * 1000);
-									Y = date.getFullYear() + '-';
-									M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
-									D = date.getDate() + ' ';
-									data.content.cashCouponList[i].effectiveStartTime = Y + M + D;
-								}
-								if(data.content.cashCouponList[i].effectiveEndTime) {
-									var date = new Date(data.content.cashCouponList[i].effectiveEndTime / 1000 * 1000);
-									Y = date.getFullYear() + '-';
-									M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
-									D = date.getDate() + ' ';
-									data.content.cashCouponList[i].effectiveEndTime = Y + M + D;
-								}
-							}
-						}
-						var discount = {};
-						discount.platform = platform;
-						discount.lebi = data.content.leBi;
-						discount.cashCouponList = data.content.cashCouponList;
-						discount.productCouponList = data.content.productCouponList;
-						if(identityT == 0){
-							discount.guide = 1;
-						}
-						
-						document.getElementById('elseDiscount').innerHTML = template('elseDiscountTpl', discount);
-						plus.nativeUI.closeWaiting();
-						carculate();
-						$('#firstLebi').val(ctlebi);
-						if(data.content.leBi) {
-							var ctlebi = data.content.leBi.rebate || 0;
-							$('#firstLebi').attr('data-id', data.content.leBi.quantity);
-						}
-						$('#changeJf input').change(function() {
-							carculate();
-						})
-						if(identityT == 0 || identityT == 4 || identityT == 5) {
-							$('.guide').show();
-						}
-						if(identityT == 2) {
-							$('.manager').show();
-						}
-						//券
-						$(".checkQuan").click(function() {
-							var cashCouponsList = [];
-							var qid = $(this).attr("data-id");
-							var curCoupon = $(this);
-							if(curCoupon.find(".quanc").css("display") == "block") {
-								curCoupon.find(".quanc").css("display", "none").removeClass('hasChoosed');
+			getMaterial();
+			function getMaterial(){
+				mui.ajax(serverUrl + '/app/order/enter', {
+					data: {
+						userId: userId,
+						identityType: identityT,
+						goodsList: JSON.parse(idobj),
+						customerId: customerId,
+						giftList:JSON.parse(promotionInfo),
+						productCouponList:JSON.parse(productCouponList)
+					},
+					dataType: 'json',
+					type: 'post',
+					timeout: 10000,
+					headers: {
+						"Authorization": oldToken,
+						'Content-Type': 'application/json'
+					},
+					success: function(data, type, xhr) {
+						console.log('获取料单商品', data);
+						var dataObj = {};
+						if(data.code == 0 && data.content) {
+							promotionInfo = JSON.stringify(data.content.promotionInfo);//更换选赠品时存的促销赠品
+							//显示商品
+							var goods = data.content.totalGoodsInfo;
+							
+							dataObj.totalQty = data.content.totalQty;
+							dataObj.totalPrice = data.content.totalPrice;
+							dataObj.list = goods;
+							document.getElementById('cartData').innerHTML = template('cartTpl', dataObj);
+							if(data.content.totalPrice) {
+								$('#totalPriceb').html('¥' + data.content.totalPrice)
 							} else {
-								curCoupon.find(".quanc").css("display", "block").addClass('hasChoosed');
-
-							};
-
-							$(".quanc").each(function() {
-								if($(this).css("display") == "block") {
-									coupon_id = $(this).attr("data-id");
-									cashCouponsList.push({
-										"id": coupon_id,
-										"qty": 1
-									})
-								}
-							})
-							var quantity = $('#firstLebi').attr('data-id');
-							var rebate = $('#firstLebi').val();
-							var totalOrderAmount = $('#firstTotal').val();
-							var lebi = {
-								"id": userId,
-								"cusId": customerId,
-								"quantity": quantity,
-								"rebate": rebate
-							};
-							//选券 返回金额
-							mui.ajax(serverUrl + '/app/order/reEnter/ccp', {
-								data: {
-									"userId": userId,
-									"identityType": identityT,
-									"customerId": customerId,
-									"totalOrderAmount": totalOrderAmount,
-									"leBi": lebi,
-									"couponsList": cashCouponsList,
-									"goodsList":JSON.parse(idobj),
-								},
-								dataType: 'json',
-								type: 'post',
-								timeout: 10000,
-								headers: {
-									"Authorization": oldToken,
-									'Content-Type': 'application/json'
-								},
-								success: function(data, type, xhr) {
-									console.log('选取优惠券返回', data);
-									if(data.code == 0 && data.content) {
-										 
-										$('#couponDiscount').val(data.content.couponDiscount);
-										if(data.content.lebi) {
-											$('#itMinus span').html('¥' + data.content.lebi.rebate)
-										}
-										carculate();
-									} else {
-										curCoupon.find(".quanc").css("display", "none");
-										mui.toast(data.message);
+								$('#totalPriceb').html('0')
+							}
+							if(data.content.memberDiscount) {
+								$('#memberDiscount').html('¥' + data.content.memberDiscount)
+							} else {
+								$('#memberDiscount').html('¥0')
+							}
+							if(data.content.orderDiscount) {
+								$('#orderDiscount').html('¥' + data.content.orderDiscount);
+								$('#firstOrderDiscount').val(data.content.orderDiscount)
+							} else {
+								$('#orderDiscount').html('¥0')
+							}
+							if(data.content.freight) {
+								$('#freight').html('¥' + data.content.freight)
+								$('#firstFreight').val(data.content.freight)
+							} else {
+								$('#freight').html('0')
+								$('#firstFreight').val(0)
+							}
+	
+							if(data.content.upstairsFee) {
+								$('#upstar').html('¥' + data.content.upstairsFee)
+							}
+							if(data.content.isShowNumber) {
+								$('#isShowNumber').show()
+								$('#isShowNumber').attr('data-id',1)
+	
+							}else{
+								$('#isShowNumber').hide()
+								$('#isShowNumber').attr('data-id',0)
+							}
+							if(data.content.cashCouponList && data.content.cashCouponList.length) {
+								for(var i in data.content.cashCouponList) {
+									if(data.content.cashCouponList[i].effectiveStartTime) {
+										var date = new Date(data.content.cashCouponList[i].effectiveStartTime / 1000 * 1000);
+										Y = date.getFullYear() + '-';
+										M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
+										D = date.getDate() + ' ';
+										data.content.cashCouponList[i].effectiveStartTime = Y + M + D;
 									}
-								},
-								error: function(xhr, type, errorThrown) {
-									console.log('响应失败  !');
+									if(data.content.cashCouponList[i].effectiveEndTime) {
+										var date = new Date(data.content.cashCouponList[i].effectiveEndTime / 1000 * 1000);
+										Y = date.getFullYear() + '-';
+										M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
+										D = date.getDate() + ' ';
+										data.content.cashCouponList[i].effectiveEndTime = Y + M + D;
+									}
 								}
-							});
-						})
-						if(data.content.totalOrderAmount) {
-							$('#firstTotal').val(data.content.totalOrderAmount)
-							$('#totalOrderAmount').html('¥' + data.content.totalOrderAmount)
-						} else {
-							$('#totalOrderAmount').html('0')
-						}
-						if(identityT == 6) {
-							if(data.content.preDeposit) {
-								$('#preDepositb').html('¥' + data.content.preDeposit)
-							} else {
-								$('#preDepositb').html('¥' + 0)
-								$('#preDepositb').next().hide()
 							}
-						} else {
-							if(data.content.storePreDeposit) {
-								$('#preDepositb').html('¥' + data.content.storePreDeposit)
-							} else {
-								$('#preDepositb').html('¥' + 0)
-								$('#preDepositb').next().hide()
+							var discount = {};
+							discount.platform = platform;
+							discount.lebi = data.content.leBi;
+							discount.cashCouponList = data.content.cashCouponList;
+							discount.productCouponList = data.content.productCouponList;
+							if(identityT == 0){
+								discount.guide = 1;
 							}
-						}
-						if(data.content.storeCreditMoney) {
-							$('#credit').html('¥' + data.content.storeCreditMoney)
+							
+							document.getElementById('elseDiscount').innerHTML = template('elseDiscountTpl', discount);
+							plus.nativeUI.closeWaiting();
+							carculate();
+							$('#firstLebi').val(ctlebi);
+							if(data.content.leBi) {
+								var ctlebi = data.content.leBi.rebate || 0;
+								$('#firstLebi').attr('data-id', data.content.leBi.quantity);
+							}
+							$('#changeJf input').change(function() {
+								carculate();
+							})
+							if(identityT == 0 || identityT == 4 || identityT == 5) {
+								$('.guide').show();
+							}
+							if(identityT == 2) {
+								$('.manager').show();
+							}
+							//券
+							$(".checkQuan").click(function() {
+								var cashCouponsList = [];
+								var qid = $(this).attr("data-id");
+								var curCoupon = $(this);
+								if(curCoupon.find(".quanc").css("display") == "block") {
+									curCoupon.find(".quanc").css("display", "none").removeClass('hasChoosed');
+								} else {
+									curCoupon.find(".quanc").css("display", "block").addClass('hasChoosed');
+	
+								};
+	
+								$(".quanc").each(function() {
+									if($(this).css("display") == "block") {
+										coupon_id = $(this).attr("data-id");
+										cashCouponsList.push({
+											"id": coupon_id,
+											"qty": 1
+										})
+									}
+								})
+								var quantity = $('#firstLebi').attr('data-id');
+								var rebate = $('#firstLebi').val();
+								var totalOrderAmount = $('#firstTotal').val();
+								var lebi = {
+									"id": userId,
+									"cusId": customerId,
+									"quantity": quantity,
+									"rebate": rebate
+								};
+								//选券 返回金额
+								mui.ajax(serverUrl + '/app/order/reEnter/ccp', {
+									data: {
+										"userId": userId,
+										"identityType": identityT,
+										"customerId": customerId,
+										"totalOrderAmount": totalOrderAmount,
+										"leBi": lebi,
+										"couponsList": cashCouponsList,
+										"goodsList":JSON.parse(idobj),
+									},
+									dataType: 'json',
+									type: 'post',
+									timeout: 10000,
+									headers: {
+										"Authorization": oldToken,
+										'Content-Type': 'application/json'
+									},
+									success: function(data, type, xhr) {
+										console.log('选取优惠券返回', data);
+										if(data.code == 0 && data.content) {
+											 
+											$('#couponDiscount').val(data.content.couponDiscount);
+											if(data.content.lebi) {
+												$('#itMinus span').html('¥' + data.content.lebi.rebate)
+											}
+											carculate();
+										} else {
+											curCoupon.find(".quanc").css("display", "none");
+											mui.toast(data.message);
+										}
+									},
+									error: function(xhr, type, errorThrown) {
+										console.log('响应失败  !');
+									}
+								});
+							})
+							if(data.content.totalOrderAmount) {
+								$('#firstTotal').val(data.content.totalOrderAmount)
+								$('#totalOrderAmount').html('¥' + data.content.totalOrderAmount)
+							} else {
+								$('#totalOrderAmount').html('0')
+							}
+							if(identityT == 6) {
+								if(data.content.preDeposit) {
+									$('#preDepositb').html('¥' + data.content.preDeposit)
+								} else {
+									$('#preDepositb').html('¥' + 0)
+									$('#preDepositb').next().hide()
+								}
+							} else {
+								if(data.content.storePreDeposit) {
+									$('#preDepositb').html('¥' + data.content.storePreDeposit)
+								} else {
+									$('#preDepositb').html('¥' + 0)
+									$('#preDepositb').next().hide()
+								}
+							}
+							if(data.content.storeCreditMoney) {
+								$('#credit').html('¥' + data.content.storeCreditMoney)
+							} else {
+								$('#credit').html('¥' + 0);
+								$('#credit').next().hide()
+							}
+							if(data.content.creditMoney) {
+								$('#creditVal').html('¥' + data.content.creditMoney)
+							} else {
+								$('#creditVal').html('¥' + 0);
+								$('#creditVal').next().hide()
+							}
+							if(data.content.storeSubvention) {
+								$('#cash').html('¥' + data.content.storeSubvention)
+							} else {
+								$('#cash').html('¥' + 0);
+								$('#cash').next().hide()
+							}
+	
 						} else {
-							$('#credit').html('¥' + 0);
-							$('#credit').next().hide()
+							mui.toast(data.message);
+							plus.nativeUI.closeWaiting();
+	
 						}
-						if(data.content.creditMoney) {
-							$('#creditVal').html('¥' + data.content.creditMoney)
-						} else {
-							$('#creditVal').html('¥' + 0);
-							$('#creditVal').next().hide()
-						}
-						if(data.content.storeSubvention) {
-							$('#cash').html('¥' + data.content.storeSubvention)
-						} else {
-							$('#cash').html('¥' + 0);
-							$('#cash').next().hide()
-						}
-
-					} else {
-						mui.toast(data.message);
+					},
+					error: function(xhr, type, errorThrown) {
+						console.log('响应失败  !');
 						plus.nativeUI.closeWaiting();
-
+	
 					}
-				},
-				error: function(xhr, type, errorThrown) {
-					console.log('响应失败  !');
-					plus.nativeUI.closeWaiting();
-
-				}
-			});
+				});
+			}
+			
 
 			//刷新地址
 			document.addEventListener('readdstorage', function(event) {
@@ -769,8 +773,44 @@
 					}
 				});
 			}
+			function getLebi(money){
+				mui.ajax(serverUrl+'/app/paymentMethods/rebate/lebi',{
+					data:{
+						userId:userId,
+						identityType:identityT,
+						goodsMoney:money
+					},
+					dataType:'json',
+					type:'post',
+					timeout:10000,
+					headers:{"Authorization":oldToken},
+					success:function(data,type,xhr){
+						plus.nativeUI.closeWaiting();
+						console.log('抵用乐币',data);
+				       	if(data.code == 0){
+					     	if(data.content){
+					     		if(data.content.rebate) {
+									$('#itMinus span').html('¥' + data.content.rebate)
+								}else{
+									$('#itMinus span').html('¥' + 0)
+									
+								}
+					     		if(data.content.quantity) {
+									$('#totalJfen').html(data.content.quantity)
+								}
+							}
+				       	}
+				       	plus.nativeUI.closeWaiting();
+					},
+					error:function(xhr,type,errorThrown){
+						plus.nativeUI.closeWaiting();
+						console.log('当前网络不好,请重试');
+					}
+				});
+			}
 			//自提 获取门店
 			$("input[name='peis']").change(function() {
+//				getMaterial();
 				var delivery = $("input[name='peis']:checked").val();
 				var goodsId = '';
 				mui.each(JSON.parse(allGoods), function(index, item) {
@@ -803,6 +843,7 @@
 								$('#freight').html('¥0');
 								//合计
 								carculate();
+								getLebi($('#totalOrderAmount').html().replace('¥', ''));
 								if(data.content.storeList.length == 1){
 									var storeStr = '<option checked data-addr="' + data.content.storeList[0].detailedAddress + '" value="' + data.content.storeList[0].storeId + '">' + data.content.storeList[0].storeName + '</option>'
 									var storeId = data.content.storeList[0].storeId;
@@ -910,12 +951,16 @@
 							console.log('响应失败  !');
 						}
 					});
+
+					
 				} else {
 					$('.dsje').show();
 					$('#chooseStore,#storeAddress').hide();
 					$('#add_info,.isowndis,#cityResult').show();
 					$('#freight').html('¥' + $('#firstFreight').val());
 					carculate();
+					getLebi($('#totalOrderAmount').html().replace('¥', ''));
+					
 				}
 			})
 			//重新计算价格
@@ -1001,7 +1046,7 @@
 									cityPicker.show(function(items) {
 										$('#cityResult').attr('data-id', '1');
 										if(!items[1].text) {
-											alert('当天无可选时间段')
+											mui.alert('当天无可选时间段')
 										} else {
 											$('#cityResult .pstime').html(items[0].text + " " + items[1].text)
 										}

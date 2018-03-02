@@ -378,36 +378,45 @@
 								mui.toast('发送验证码失败');
 							}
 						});
-						if(flag == 1){
-							//获取顾客信息
-							mui.ajax(serverUrl+'/app/customer/get/customer/info', {
-								data: {
-									phone: account.value
-								},
-								dataType: 'json',
-								type: 'post',
-								timeout: 10000,
-								success: function(data) { 
-									console.log('获取顾客信息',data); 
-									if(data.content){
-										if(data.content.name){
-											$('#username').val(data.content.name)
-										}
-										if(data.content.customerProfession){
-											$('#workerType').val(data.content.customerProfession)
-										}
-										if(data.content.cityId){
-											$('#city').val(data.content.cityId)
-										}
-										if(data.content.salesPhone){
-											$('#guide').val(data.content.salesPhone)
-										}
+						//获取顾客信息
+						mui.ajax(serverUrl+'/app/customer/get/customer/info', {
+							data: {
+								phone: account.value
+							},
+							dataType: 'json',
+							type: 'post',
+							timeout: 10000,
+							success: function(data) { 
+								console.log('获取顾客信息',data); 
+								if(data.content){
+									if(data.content.name){
+										$('#username').val(data.content.name)
+									}else{
+										$('#username').val('')
+										
 									}
-								},
-								error: function(xhr, type, errorThrown) {
+									if(data.content.customerProfession){
+										$('#workerType').val(data.content.customerProfession)
+									}else{
+										$('#workerType').val('')
+										
+									}
+									if(data.content.cityId){
+										$('#city').val(data.content.cityId)
+									}else{
+										$('#city').val('')
+										
+									}
+									if(data.content.salesPhone){
+										$('#guide').val(data.content.salesPhone)
+									}else{
+										$('#guide').val()
+									}
 								}
-							});	
-						}
+							},
+							error: function(xhr, type, errorThrown) {
+							}
+						});	
 						
 					}
 

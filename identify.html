@@ -76,7 +76,9 @@
 		<script src="js/base64.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/default.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
-			mui.init();
+			mui.init({
+			    swipeBack:false //右滑关闭功能
+			});
 			$('.employee').click(function() {
 				openview({
 					view: 'login.html',
@@ -86,6 +88,8 @@
 			})
 
 			mui.plusReady(function() {
+				var wv=plus.webview.currentWebview();
+				wv.setStyle({'popGesture':'none'});
 				//是否打开微信登录
 //				mui.ajax(serverUrl + '/app/system/setting/weChatLoginStatus', { 
 //					dataType: 'json',

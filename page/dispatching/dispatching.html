@@ -235,7 +235,7 @@
 											</span>
 										</div>
 									</div>
-									<div class="ft15"><span class="maincl">配送地址：</span><span class="titcl"><%=list[i].distributionAddress%><img src="../../images/order/map.svg" onclick="goMap('<%=list[i].distributionAddress%>')" style="width: 30px;vertical-align: bottom;margin-top: 5px;" class="mui-pull-right"/></span></div>
+									<div class="ft15"><span class="maincl">配送地址：</span><span onclick="goMap('<%=list[i].distributionAddress%>')" class="titcl"><%=list[i].distributionAddress%><img src="../../images/order/map.svg" style="width: 30px;vertical-align: bottom;margin-top: 5px;" class="mui-pull-right"/></span></div>
 									<div class="ft15"><span class="maincl">配送日期：</span><span class="titcl"><%=list[i].distributionTime%></span></div>
 								</div>
 
@@ -287,7 +287,7 @@
 											</span>
 										</div>
 									</div>
-									<div class="ft15"><span class="disablecl">配送地址：</span><span class="titcl"><%=list[i].shippingAddress%><img src="../../images/order/map.svg" onclick="goMap('<%=list[i].shippingAddress%>')" style="width: 30px;vertical-align: bottom;margin-top: 5px;" class="mui-pull-right"/></span></div>
+									<div class="ft15"><span class="disablecl">配送地址：</span><span class="titcl" onclick="goMap('<%=list[i].shippingAddress%>')"><%=list[i].shippingAddress%><img src="../../images/order/map.svg" style="width: 30px;vertical-align: bottom;margin-top: 5px;" class="mui-pull-right"/></span></div>
 									<div class="ft15"><span class="disablecl">配送日期：</span><span class="titcl"><%=list[i].deliveryTime%></span></div>
 								</div>
 
@@ -339,7 +339,7 @@
 											</span>
 										</div>
 									</div>
-									<div class="ft15"><span class="disablecl">取货地址：</span><span class="titcl"><%=list[i].pickUpAddress%><img src="../../images/order/map.svg" onclick="goMap('<%=list[i].pickUpAddress%>')" style="width: 30px;vertical-align: bottom;margin-top: 5px;" class="mui-pull-right"/></span></div>
+									<div class="ft15"><span class="disablecl">取货地址：</span><span onclick="goMap('<%=list[i].pickUpAddress%>')" class="titcl"><%=list[i].pickUpAddress%><img src="../../images/order/map.svg" style="width: 30px;vertical-align: bottom;margin-top: 5px;" class="mui-pull-right"/></span></div>
 									<div class="ft15"><span class="disablecl">取货日期：</span><span class="titcl"><%=list[i].pickUpTime%></span></div>
 								</div>
  
@@ -388,7 +388,7 @@
 											</span>
 										</div>
 									</div>
-									<div class="ft15"><span class="disablecl">配送地址：</span><span class="titcl"><%=list[i].shippingAddress%><img src="../../images/order/map.svg" onclick="goMap('<%=list[i].shippingAddress%>')" style="width: 30px;vertical-align: bottom;margin-top: 5px;" class="mui-pull-right"/></span></div>
+									<div class="ft15"><span class="disablecl">配送地址：</span><span onclick="goMap('<%=list[i].shippingAddress%>')" class="titcl"><%=list[i].shippingAddress%><img src="../../images/order/map.svg" style="width: 30px;vertical-align: bottom;margin-top: 5px;" class="mui-pull-right"/></span></div>
 									<div class="ft15"><span class="disablecl">配送日期：</span><span class="titcl"><%=list[i].deliveryTime%></span></div>
 								</div>
 
@@ -410,6 +410,9 @@
 	<script src="../../js/default.js" type="text/javascript" charset="utf-8"></script>
 	<script src="../../js/artTemplate-native.js" type="text/javascript" charset="utf-8"></script>
 	<script type="text/javascript">
+		mui.init({
+		    swipeBack:false //右滑关闭功能
+		});
 		function goInfo(audi,id,type){
 			if(type == 2){
 				openview({
@@ -461,6 +464,8 @@
 			})
 		}
 		mui.plusReady(function(){
+			var wv=plus.webview.currentWebview();
+			wv.setStyle({'popGesture':'none'});
 			var userId = plus.storage.getItem('$userId');
 			var oldToken = plus.storage.getItem("oldToken");
 			var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
@@ -594,7 +599,7 @@
 			});
 			var Spagenum = 2; //实到页数
 			var Ypagenum = 1; //应到页数
-			var 	oneSize = 8;
+			var oneSize = 5;
 			loadFun(0);
 			function loadFun(index){
 				if(index == 2){
@@ -655,75 +660,74 @@
 									$('a').click(function(){
 										event.stopPropagation()
 									})
-									$(window).scroll(function() {
-										var scrollTop = $(this).scrollTop();
-										var scrollHeight = $(document).height();
-										var windowHeight = $(this).height();
-										if(scrollTop + windowHeight == scrollHeight) {
-											if(Spagenum <= data.content.pages && Spagenum == Ypagenum + 1) { //当前页小于等于总页数时请求下一页
-												mui("#upload")[0].innerHTML = "<img src='../img/Rolling.svg' />";
-												Ypagenum++; //满足加载情况,应到页数+1
-												console.log('发起请求,实到' + Spagenum + '页');
-												console.log('发起请求,应到' + Ypagenum + '页');
-												if(index == 3){
-													data = {'userId':userId,'identityType':identityT,page:Ypagenum,size:oneSize}
-													mui.ajax(serverUrl+apiString,{
-														data:data,
-														dataType:'json',
-														headers: {"Authorization": oldToken},
-														type:'post',
-														timeout:10000,
-														success:function(data,type,xhr){
-															console.log('配送员各列表',data);
-															if(data.code == 0 ){
+									if(index == 3){
+										$(window).scroll(function() {
+											var scrollTop = $(this).scrollTop();
+											var scrollHeight = $(document).height();
+											var windowHeight = $(this).height();
+											if(scrollTop + windowHeight == scrollHeight) {
+												if(Spagenum <= data.content.pages && Spagenum == Ypagenum + 1) { //当前页小于等于总页数时请求下一页
+													mui("#upload")[0].innerHTML = "<img src='../../img/Rolling.svg' />";
+													Ypagenum++; //满足加载情况,应到页数+1
+													console.log('发起请求,实到' + Spagenum + '页');
+													console.log('发起请求,应到' + Ypagenum + '页');
+													
+														data = {'userId':userId,'identityType':identityT,page:Ypagenum,size:oneSize}
+														mui.ajax(serverUrl+apiString,{
+															data:data,
+															dataType:'json',
+															headers: {"Authorization": oldToken},
+															type:'post',
+															timeout:10000,
+															success:function(data,type,xhr){
+																console.log('配送员各列表',data);
+																if(data.code == 0 ){
+																	plus.nativeUI.closeWaiting();
+																	if(data.content){
+									                                    if(data.content.list && data.content.list.length){
+									                                    	data.content.list.forEach(function(ele,index){
+																				if(ele.orderNumber){
+																					ele.orderNumber2 = ele.orderNumber.substr(0, 5) + '****' + ele.orderNumber.substr(20);  
+																				}
+																				if(ele.shipperNumber){
+																					ele.shipperNumber2 = ele.shipperNumber.substr(0, 5) + '****' + ele.shipperNumber.substr(20);  
+																				}
+																				if(ele.returnNumber){
+																					ele.returnNumber2 = ele.returnNumber.substr(0, 5) + '****' + ele.returnNumber.substr(8);  
+																				}
+																			})
+																			document.getElementById('infoListDiv').innerHTML += template('infoList',{list:data.content.list,listType:index});
+									                                        mui("#upload")[0].innerHTML = " ";
+																			Spagenum++; //加载成功,当前页+1
+																			$('a').click(function(){
+																				event.stopPropagation()
+																			})
+																			console.log('成功+1,实到' + Spagenum);
+																			console.log('成功+1,应到' + Spagenum);
+		
+									                                    }
+									                                }
+																}else{
+																	plus.nativeUI.closeWaiting();
+																	mui.toast(data.message)
+																}
+		
+		
+															},
+															error:function(xhr,type,errorThrown){
 																plus.nativeUI.closeWaiting();
-																if(data.content){
-								                                    if(data.content.list && data.content.list.length){
-								                                    	data.content.list.forEach(function(ele,index){
-																			if(ele.orderNumber){
-																				ele.orderNumber2 = ele.orderNumber.substr(0, 5) + '****' + ele.orderNumber.substr(20);  
-																			}
-																			if(ele.shipperNumber){
-																				ele.shipperNumber2 = ele.shipperNumber.substr(0, 5) + '****' + ele.shipperNumber.substr(20);  
-																			}
-																			if(ele.returnNumber){
-																				ele.returnNumber2 = ele.returnNumber.substr(0, 5) + '****' + ele.returnNumber.substr(8);  
-																			}
-																		})
-																		document.getElementById('infoListDiv').innerHTML += template('infoList',{list:data.content.list,listType:index});
-								                                        mui("#upload")[0].innerHTML = " ";
-																		Spagenum++; //加载成功,当前页+1
-																		$('a').click(function(){
-																			event.stopPropagation()
-																		})
-																		console.log('成功+1,实到' + Spagenum);
-																		console.log('成功+1,应到' + Spagenum);
-	
-								                                    }
-								                                }
-															}else{
-																plus.nativeUI.closeWaiting();
-																mui.toast(data.message)
+																Ypagenum--; //失败是应到-1
+																mui.toast("当前网络不好请重试");
+																mui("#upload")[0].innerHTML = "";
+																console.log('响应失败');
 															}
-	
-	
-														},
-														error:function(xhr,type,errorThrown){
-															plus.nativeUI.closeWaiting();
-															Ypagenum--; //失败是应到-1
-															mui.toast("当前网络不好请重试");
-															mui("#upload")[0].innerHTML = "";
-															console.log('响应失败');
-														}
-													});
+														}); 
+												} else if(Spagenum == data.content.pages + 1) { //当前页不小于等于总页数时请求下一页
+													mui("#upload")[0].innerHTML = "到底了";
 												}
-												
-
-											} else if(Spagenum == data.content.pages + 1) { //当前页不小于等于总页数时请求下一页
-												mui("#upload")[0].innerHTML = "到底了";
 											}
-										}
-									});
+										});
+									}
 								}else{
 									document.getElementById('infoListDiv').innerHTML = '<div style="text-align: center;padding: 50px;"><img src="../../images/order/order.png" style="width: 100px;" /><div class="ft13 disablecl">暂无数据</div></div>';
 								}
