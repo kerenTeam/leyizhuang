@@ -1134,7 +1134,9 @@
 					"iconfont/iconfont.ttf",
 					"iconfont/iconfont.svg"
 				],
-				"refer": [],
+				"refer": [
+					"page/personal/addressMap.html"
+				],
 				"priority": 0
 			},
 			"page/personal/add-address.html": {
