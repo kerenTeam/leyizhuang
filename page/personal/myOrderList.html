@@ -150,7 +150,11 @@
 											<% }%>
 										<% }%>
 
-										<!-- 注意：还没有判断 买卷 的相关状态-->
+										<%if(list[i].deliveryType.indexOf('产品券')>-1){%>
+											<%if(list[i].status == "FINISHED"){%>
+												<span class="redC aClick" onclick="openReturns('<%= list[i].orderNo%>','<%= list[i].customerId%>','<%=list[i].deliveryType%>')">退货</span>
+											<%}%>
+										<%}%>
 									</div>
 								</div>
 							</div>

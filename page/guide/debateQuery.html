@@ -58,10 +58,10 @@
 				<ul class="mui-table-view">
 					<%for(var i = 0 ;i<list.length;i++){%>
 						<li class="mui-table-view-cell mui-media" id="<%=list[i].id%>">
-							<a href="javascript:;" style="margin-left: -5px;" onclick="goInfo('<%=list[i].orderNumber%>')">
-								<div class="mui-media-body ft16">
+							<a href="javascript:;" style="margin-left: -5px;">
+								<div class="mui-media-body ft14">
 									<div style="white-space: initial;word-break: break-all;max-width: 80%;">
-										订单号：<%=list[i].orderNumber%>
+										订单号:<%=list[i].orderNumber%>
 									</div>
 									<p class='mui-ellipsis maincl ft15'>顾客:
 										<%=list[i].customerName%> &nbsp;
@@ -69,7 +69,7 @@
 									</p>
 								</div>
 							</a>
-							<span class="mui-pull-right mui-icon mui-icon-arrowright activecl righticon"></span>
+							<!--<span class="mui-pull-right mui-icon mui-icon-arrowright activecl righticon"></span>-->
 
 							<img data-id="<%=list[i].orderNumber%>" class="check" src="../../images/center/uncheck.svg" alt="" />
 						</li>
@@ -126,6 +126,9 @@
 					id:'repayment',
 				})
 			}
+			$('.paychoose li').click(function(){
+				event.stopPropagation()
+			})
 			mui.plusReady(function() {
 				var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
 				var userId = plus.storage.getItem('$userId');

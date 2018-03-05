@@ -116,23 +116,22 @@
 			mui.init();
 			function selectWho(newValue){
 				var selectName = newValue.parentNode.querySelector('b').innerText;
-				var selectTel = newValue.innerHTML.replace(new RegExp(" ", 'g'), "");
-				selectTel = selectTel.replace('-','')
-				selectTel = selectTel.replace('-','')
-				var isSure = confirm('确定选择，'+selectName+'：'+selectTel+'?');
+				var selectTel = newValue.innerHTML.replace(/[^0-9]/g,"");//只保留数字
 				var contactOne = [{name:selectName,phone:selectTel}];
 				plus.storage.setItem("contactOne",JSON.stringify(contactOne));
 				var nowhtmlName = plus.webview.currentWebview().htmlName;//跳转过来的页面
-				if(isSure){
-					mui.fire(plus.webview.getWebviewById(nowhtmlName),'resetTel');
-					mui.fire(plus.webview.getWebviewById(nowhtmlName),'resetTel2');
-					plus.webview.currentWebview().close();
-				}else{
-					plus.storage.removeItem('contactOne');
-				}
+				mui.confirm('确定选择\n'+selectName+': '+selectTel,function(e){
+				    if(e.index==0){
+				    		mui.fire(plus.webview.getWebviewById(nowhtmlName),'resetTel');
+						mui.fire(plus.webview.getWebviewById(nowhtmlName),'resetTel2');
+						plus.webview.currentWebview().close();
+				    }else{
+						plus.storage.removeItem('contactOne');
+				    }
+			  	});
 				console.log(plus.storage.getItem('contactOne'));
-
 			}
+
 			document.addEventListener( "plusready", function(){
                 plus.contacts.getAddressBook(plus.contacts.ADDRESSBOOK_PHONE, function (addressbook) {
                     addressbook.find(["displayName","phoneNumbers"],function(contacts){

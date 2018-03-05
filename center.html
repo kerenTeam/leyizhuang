@@ -71,7 +71,7 @@
 				background: orange;
 				padding:2px 10px;
 				top: 66px;
-				right: 10px;
+				right: 18px;
 				position: absolute;
 			}
 			.centop span {
@@ -160,7 +160,7 @@
 					<span class="mui-badge mui-badge-danger" id="ctMsg" style="right: 54px;position: absolute;padding: 4px;top: 8px;background-color: red;display: none;"></span>
 				</div>
 
-				<div class="qiandao" onclick="qian()">签到</div>
+				<div class="qiandao">签到</div>
 			</div>
 		</div>
 		<div id="customar">
@@ -640,7 +640,7 @@
 					$('.qiandao').html('签到');
 					$('#mypic').attr('src','https://b-ssl.duitang.com/uploads/item/201710/12/20171012232816_GX5iw.thumb.224_0.jpeg')
 					//签到
-					window.qian = function(){
+					$('.qiandao').unbind('click').click(function(){
 						mui.ajax(serverUrl+'/app/customer/sign',{
 							data:{
 								userId:userId,
@@ -671,7 +671,8 @@
 								console.log('登录响应失败');
 							}
 						});
-					}
+					}) 
+					
 					document.addEventListener('refreshInfoC', function() {
 						showMsg();
 					})
@@ -759,6 +760,8 @@
 									if(data.content) {
 										if(!data.content.canSign){
 											$('.qiandao').removeAttr('onclick').html('已签到');
+										}else{
+											$('.qiandao').attr('onclick');
 										}
 										if(identityT == 6){
 											if(data.content.name) {

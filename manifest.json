@@ -7,8 +7,8 @@
 	"id": "H570519A0",/*应用的标识，创建应用时自动生成，勿手动修改*/
 	"name": "乐易装",/*应用名称，程序桌面图标名称*/
 	"version": {
-		"name": "1.13",/*应用版本名称*/
-		"code": "113"
+		"name": "1.1.4",/*应用版本名称*/
+		"code": "114"
 	},
 	"description": "室内设计APP",/*应用描述信息*/
 	"icons": {
@@ -828,7 +828,8 @@
 					"css/center.css",
 					"js/jquery.min.js",
 					"js/default.js",
-					"img/editset.png"
+					"img/editset.png",
+					"css/configW.css"
 				],
 				"refer": [
 					"page/collect.html",

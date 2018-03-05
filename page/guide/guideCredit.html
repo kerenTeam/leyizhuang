@@ -53,11 +53,16 @@
 					<script type="text/html" id="dataS0">
 						<% if(list.length){%>
 							<% for(var i=0;i<list.length;i++){%>
-								<div class="div01" onclick="openDetail('<%= list[i].referenceNumber%>')">
+								<div class="div01" onclick="openDetail('<%= list[i].referenceNumber%>')" dataKind="<%= list[i].kind%>">
 									<h4 class="h402"><%= list[i].createTime%></h4>
-									<p class="p01">订单编号：<%= list[i].referenceNumber%> <span>详情</span></p>
-									<p class="p01" style="padding-right: 30px;">顾客：<%= list[i].customerName%> <b style="float: right;">电话：<%= list[i].customerPhone%></b> </p>
-									<p class="p01"><%= list[i].type%> ：<%= list[i].changeMoney%></p>
+									<%if(list[i].kind == 'ORD_ADJUSTMENT'){%>
+										<p class="p01">订单编号：<%= list[i].referenceNumber%> <span>详情</span></p>
+										<p class="p01" style="padding-right: 30px;">顾客：<%= list[i].customerName%> <b style="float: right;">电话：<%= list[i].customerPhone%></b> </p>
+										<p class="p01"><%= list[i].type%> ：<%= list[i].changeMoney%></p>
+									<%}else{%>
+										<p class="p01"><%= list[i].type%> ：<%= list[i].changeMoney%></p>
+									<%}%>
+
 									<img src="../../img/yuan01.svg"/>
 								</div>
 							<% }%>

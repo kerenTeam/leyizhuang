@@ -104,16 +104,20 @@
 				 	 	var systemType = 'IOS'
 					}
 					var clientId = plus.push.getClientInfo().clientid;
+					console.log('clientId22 '+clientId)
 					clearInterval(getClientid)
 					if(!clientId){
 						var getClientid = setInterval(function(){
 							if(!clientId){
-								clientId = plus.push.getClientInfo().clientid
+								clientId = plus.push.getClientInfo().clientid;
+								console.log('clientId22 '+clientId)
 							}else{
 								clearInterval(getClientid)
 							}
 						},1000)
 					}
+					clientId = clientId || plus.storage.getItem('clientId') || '2a6949289914e07285a00b75f0753f59';
+					console.log('clientId22 '+clientId)
 					var deviceId = plus.device.uuid;
 					var loginButton = doc.getElementById('login');
 					var accountBox = doc.getElementById('account');

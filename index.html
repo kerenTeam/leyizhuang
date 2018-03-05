@@ -610,6 +610,8 @@
 						}
 					},1000)
 				}
+				clientId = clientId || plus.storage.getItem('clientId') || '2a6949289914e07285a00b75f0753f59';
+				
 				var deviceId = plus.device.uuid;
 				plus.storage.setItem('platform',systemType)
 				plus.storage.setItem('clientId',clientId)
@@ -770,6 +772,9 @@
 					}
 					var timeMsg = null;
 					clearInterval(timeMsg);
+					document.addEventListener('refreshInfoC', function() {
+						showMsg();
+					})
 					showMsg();
 					timeMsg = setInterval(showMsg,1800000);//每半小时刷新消息
 					function showMsg(){
@@ -1110,10 +1115,18 @@
 
 			}
 			function fastOrder(){
-				openview({
-					view:'page/fastOrder.html',
-					id:'fastOrder'
+				mui.plusReady(function() {
+				    var nowcity = plus.storage.getItem('userCity');
+					if(nowcity != 1) {
+						plus.nativeUI.alert("非常抱歉，目前仅成都市开通快捷下单")
+					} else {
+						openview({
+							view:'page/fastOrder.html',
+							id:'fastOrder'
+						})
+					}
 				})
+				
 			}
 			function debateQuery(){
 				openview({
@@ -1127,11 +1140,7 @@
 					id:'debateAudit'
 				})
 			}
-			function delivery(){
-//				openview({
-//					view:'page/personal/deliveryInform.html',
-//					id:'deliveryInform'
-//				})
+			function delivery(){ 
 				//打开订单，
 				openview({
 					view:'page/personal/myOrderList.html',
@@ -1276,7 +1285,7 @@
 				if(cartNum>999){
 					cartNum= '999+'
 				}
-
+				
 				document.addEventListener('cart_refresh', function() {
 					//获取购物车数量
 					cartNum = plus.storage.getItem('cartNums');

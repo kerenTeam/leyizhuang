@@ -138,8 +138,6 @@
 				var userId = plus.storage.getItem('$userId'); 
 				var oldToken = plus.storage.getItem('oldToken');
 				var noReadNum = plus.webview.currentWebview().noReadNum;
-				mui.fire(plus.webview.getWebviewById('message'),'refreshInfo');
-				mui.fire(plus.webview.getWebviewById('center.html'),'refreshInfoC');
 				
 				plus.nativeUI.showWaiting();//显示等待框
 					mui.ajax(serverUrl+'/app/delivery/message',{
@@ -154,10 +152,14 @@
 						success:function(data,type,xhr){
 							plus.nativeUI.closeWaiting();
 							console.log('物流消息',data);
+							var index = plus.webview.getLaunchWebview();
+							mui.fire(index,'refreshInfoC');
+							mui.fire(plus.webview.getWebviewById('message'),'refreshInfo');
+							mui.fire(plus.webview.getWebviewById('center.html'),'refreshInfoC');
 					       	if(data.code == 0){
 						       	if(data.content && data.content.length){
 						       		for(var i in data.content){
-										var dt = new Date(data.content[i].createTime).getTime();
+										var dt = new Date(data.content[i].createTime.replace(/-/g,'/')).getTime();
 										data.content[i].createTime = getDateDiff(dt);
 						       		}
 					     			var html = template("listinfo",{list:data.content,noReadNum:noReadNum});

@@ -160,6 +160,8 @@
 						success:function(data,type,xhr){
 							plus.nativeUI.closeWaiting();
 							console.log('消息',data);
+							var index = plus.webview.getLaunchWebview();
+							mui.fire(index,'refreshInfoC');
 							mui.fire(plus.webview.getWebviewById('message'),'refreshInfo');
 							mui.fire(plus.webview.getWebviewById('center.html'),'refreshInfoC');
 							mui.fire(plus.webview.getWebviewById('dispatching'),'refreshInfoC');

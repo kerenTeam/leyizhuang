@@ -332,6 +332,7 @@
 							
 							var platform = plus.storage.getItem('platform')
 							$('.mui-numbox input').click(function() {
+								event.stopPropagation()
 								if(platform == 'ANDROID'){
 									$(this).select();
 								}else{
@@ -339,7 +340,6 @@
 									$(this).get(0).selectionStart = 0; 
 									$(this).get(0).selectionEnd = $(this).get(0).value.length;
 								}
-								event.stopPropagation()
 							})
 							var gallery = mui(".mui-slider");
 							gallery.slider({
@@ -483,7 +483,7 @@
 					if(data.code == 0 ){
 					 	if(data.content && data.content.list && data.content.list.length){
 					 		for(var i in data.content.list){
-								var dt = new Date(data.content.list[i].evaluationTime).getTime();
+					 			var dt = new Date(data.content.list[i].evaluationTime.replace(/-/g,'/')).getTime();
 								data.content.list[i].evaluationTime = getDateDiff(dt);
 				       		}
 					 		mui('#curShow')[0].innerHTML = template('cmtTpl',{list:data.content.list})
@@ -512,7 +512,7 @@
 												if(data.code == 0 ){
 													if(data.content && data.content.list && data.content.list.length){
 												 		for(var i in data.content.list){
-															var dt = new Date(data.content.list[i].evaluationTime).getTime();
+												 			var dt = new Date(data.content.list[i].evaluationTime.replace(/-/g,'/')).getTime();
 															data.content.list[i].evaluationTime = getDateDiff(dt);
 											       		}
 												 		mui('#curShow')[0].innerHTML += template('cmtTpl',{list:data.content.list})

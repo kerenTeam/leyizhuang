@@ -1,11 +1,11 @@
 <!doctype html>
 <html>
-
 	<head>
 		<meta charset="UTF-8">
 		<title>退货详情</title>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/style.css" />
 		<link rel="stylesheet" type="text/css" href="../../css/configW.css"/>
 		<link rel="stylesheet" type="text/css" href="../../css/commonY.css">
 		<link rel="stylesheet" type="text/css" href="../../css/indexY.css">
@@ -29,6 +29,10 @@
 			.proLeftTH{flex: 2 !important;} .proRightTH{flex: 5 !important;}
 			.proRight h4{min-height: 24px;} .infoBottom{padding: 15px;box-shadow: 0 -1px 1px rgba(222, 217, 217, 0.85)} .infoBottom span{float: right;color: #c7161e;}
 			.proWrapAll2{height: auto;} .thZhengce{background-color: #fff;border-top: 5px solid #eee;border-bottom: 5px solid #eee;}
+			.flexwc span{margin: auto;display: block;width: 23px;line-height: 23px; margin-top: 8px;font-size: 18px;font-weight: bold;background-color: #c3c3c3;border-radius: 50%;
+				color: #fff;}
+			.flexwc span.oneActiveY{background-color: #c7161e;}
+			.cartSecond1:before,.cartSecond1:after{width: 42px;}
 		</style>
 	</head>
 
@@ -48,7 +52,7 @@
 			</div>
 			<div class="proWrapAll" id="goodsD">
 				<%for(var i=0;i<dataObj.goodsList.length;i++){%>
-					<div class="proWrap fineB afterBorder">
+					<div class="proWrap fineB">
 						<div class="proLeft proLeftTH">
 							<img src="<%= dataObj.goodsList[i].coverImageUri%>">
 						</div>
@@ -74,7 +78,53 @@
 				共<%= dataObj.returnQty%>件商品 退款总额：¥<%= dataObj.totalReturnPrice%>   <span class="mui-icon mui-icon-arrowdown"></span><span class="arrowdown">展开</span>
 			</div>
 			<div id="">
-				<h3 class="thZhengce" style="text-align: right;"><span style="color: #555;float: left;">退货进度：</span><%= dataObj.returnStatus%> </h3>
+				<div id="">
+					<h3 class="thZhengce" style="text-align: right;border-bottom:1px solid #eee"><span style="color: #555;float: left;">退货进度</span> <b style="visibility: hidden;"><%= dataObj.returnStatusDesc%></b></h3>
+
+					<%if(dataObj.returnStatusDesc.indexOf('消')>-1 ){%>
+						<div class="flexwc">
+							<%if(dataObj.returnStatusDesc == '已提交'){%>
+								<div class="cartOne"> <span class="oneActiveY">1</span> 已提交 </div>
+								<div class="cartSecond"> <span>2</span> 取消中 </div>
+								<div class="cartThird"> <span>3</span> 已取消 </div>
+							<%}else if(dataObj.returnStatusDesc == '取消中'){%>
+								<div class="cartOne"> <span class="oneActiveY">1</span> 已提交 </div>
+								<div class="cartSecond"> <span class="oneActiveY">2</span> 取消中 </div>
+								<div class="cartThird"> <span>3</span> 已取消 </div>
+							<%}else if(dataObj.returnStatusDesc == '已取消'){%>
+								<div class="cartOne"> <span class="oneActiveY">1</span> 已提交 </div>
+								<div class="cartSecond"> <span class="oneActiveY">2</span> 取消中 </div>
+								<div class="cartThird"> <span class="oneActiveY">3</span> 已取消 </div>
+							<%}%>
+						</div>
+					<%}else{%>
+						<div class="flexwc" style="overflow-x: hidden;">
+							<%if(dataObj.returnStatusDesc == '已提交'){%>
+								<div class="cartOne"> <span class="oneActiveY">1</span> 已提交 </div>
+								<div class="cartSecond cartSecond1"> <span>2</span> 退货中 </div>
+								<div class="cartThird"> <span>3</span> 待退款 </div>
+								<div class="cartThird"> <span>4</span> 已完成 </div>
+							<%}else if(dataObj.returnStatusDesc == '退货中'){%>
+								<div class="cartOne"> <span class="oneActiveY">1</span> 已提交 </div>
+								<div class="cartSecond cartSecond1"> <span class="oneActiveY">2</span> 退货中 </div>
+								<div class="cartThird"> <span>3</span> 待退款 </div>
+								<div class="cartThird"> <span>4</span> 已完成 </div>
+							<%}else if(dataObj.returnStatusDesc == '待退款'){%>
+								<div class="cartOne"> <span class="oneActiveY">1</span> 已提交 </div>
+								<div class="cartSecond cartSecond1"> <span class="oneActiveY">2</span> 退货中 </div>
+								<div class="cartThird"> <span class="oneActiveY">3</span> 待退款 </div>
+								<div class="cartThird"> <span>4</span> 已完成 </div>
+							<%}else if(dataObj.returnStatusDesc == '已完成'){%>
+								<div class="cartOne"> <span class="oneActiveY">1</span> 已提交 </div>
+								<div class="cartSecond cartSecond1"> <span class="oneActiveY">2</span> 退货中 </div>
+								<div class="cartThird"> <span class="oneActiveY">3</span> 待退款 </div>
+								<div class="cartThird"> <span class="oneActiveY">4</span> 已完成 </div>
+							<%}%>
+						</div>
+					<%}%>
+
+					<h3 class="thZhengce" id="openStatusD" data-num='<%= dataObj.returnNumber%>' style="text-align: right;border-top:1px solid #eee">进度详情></h3>
+				</div>
 				<div class="beizhu">
 			    		<h5>退货原因:</h5>
 					<div>
@@ -149,6 +199,18 @@
 									$(this).html('收起');
 								}
 								$('.proWrapAll').toggleClass('proWrapAll2');
+							})
+							//进度详情
+							$('#openStatusD').click(function(){
+								var orderNum = document.getElementById('openStatusD').getAttribute('data-num');
+								openview({
+									view:'myOrderWL.html',
+									id:'myOrderWL',
+									extrasobj:{
+										orderNo:orderNum,
+										type:'tuihuo'
+									}
+								})
 							})
 						}else{
 							mui.toast(data.message);

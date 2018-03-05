@@ -15,6 +15,7 @@
 			body{background-color: #fff;}
 			header.mui-bar{z-index: 200;}
 			.mui-content{background-color: #fff;}
+			.DWavatar img{height: 1rem;}
 		</style>
 
 	</head>
@@ -39,7 +40,12 @@
 				</div>
 				<div class="DWsmallInfo">
 					<div class="DWavatar">
-						<img src="https://gss0.bdstatic.com/94o3dSag_xI4khGkpoWK1HF6hhy/baike/w%3D268%3Bg%3D0/sign=c52a26b62234349b74066983f1d172f3/80cb39dbb6fd52663011fbb8a118972bd4073660.jpg"/>
+						<%if(list.pictuerUrl){%>
+							<img src="<%= list.pictuerUrl%>"/>
+						<%}else{%>
+							<img src="https://gss0.bdstatic.com/94o3dSag_xI4khGkpoWK1HF6hhy/baike/w%3D268%3Bg%3D0/sign=c52a26b62234349b74066983f1d172f3/80cb39dbb6fd52663011fbb8a118972bd4073660.jpg"/>
+						<%}%>
+
 					</div>
 					<div class="DWsmallInfoCon">
 						<p><%= list.deliveryName%></p>
@@ -82,9 +88,19 @@
 				var userId = plus.storage.getItem('$userId');
 				var oldToken = plus.storage.getItem('oldToken');
 				var orderNo = plus.webview.currentWebview().orderNo;
+				var typego = plus.webview.currentWebview().type;
 
-				mui.ajax(serverUrl + '/app/delivery/detail',{
-					data:{'orderNumber':orderNo,'userId':userId,'identityType':identityT},
+				var jiekou = '/app/delivery/detail';
+				var dataObj = {'orderNumber':orderNo,'userId':userId,'identityType':identityT};
+				//退货进度详情
+				if(typego == 'tuihuo'){
+					jiekou = '/app/delivery/return/detail';
+					dataObj = {'userId':userId,'identityType':identityT,'orderNumber':orderNo};
+					mui('.mui-title')[0].innerHTML = '进度详情';
+				}
+
+				mui.ajax(serverUrl + jiekou,{
+					data:dataObj,
 					dataType:'json',
 					type:'post',
 					timeout:10000,
