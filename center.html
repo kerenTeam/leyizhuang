@@ -66,13 +66,13 @@
 				border-radius: 2px;
 			}
 			.qiandao{
-				font-size: 14px;
-				border-radius: 2px;
-				background: orange;
-				padding:2px 10px;
-				top: 66px;
-				right: 18px;
-				position: absolute;
+				font-size: 16px;
+			    border-radius: 2px;
+			    background: orange;
+			    padding: 5px 12px 4px;
+			    top: 66px;
+			    right: 18px;
+			    position: absolute;
 			}
 			.centop span {
 				display: inline-block;
@@ -378,7 +378,7 @@
 
 			</div>
 
-		</div> 
+		</div>
 		<script type="text/javascript">
 			window.onscroll = function() {
 				if(document.body.scrollTop > 25) {
@@ -395,9 +395,9 @@
 		<script src="js/default.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
 			//推送
-			function bannerGo(url,info){ 
-				mui.plusReady(function(){ 
-					if(url.indexOf('http')>-1 || url.indexOf('HTTP')>-1){//远程 
+			function bannerGo(url,info){
+				mui.plusReady(function(){
+					if(url.indexOf('http')>-1 || url.indexOf('HTTP')>-1){//远程
 							openview({//用于banner页面
 								view: 'bannerTpl.html',
 								id: "bannerTpl",
@@ -405,12 +405,12 @@
 									bannerUrl: url,
 									bannerName: info
 								}
-							}) 
+							})
 					}else if(url.indexOf('&')>-1 ){//本地
-					 
+
 						var localId = url.split('&')[1],
 							localUrl = url.split('&')[0],
-							localUId = url.split('&')[2] || -1; 
+							localUId = url.split('&')[2] || -1;
 							alert(localUrl+" "+localId+" "+localUId)
 						if(plus.storage.getItem('oldToken')){
 							 openview({
@@ -430,10 +430,10 @@
 								view: 'identify.html',
 								id: 'identify'
 							})
-						} 
+						}
 					}
 				})
-				
+
 			}
 			document.addEventListener( "plusready", function(){
 			    // 监听点击消息事件
@@ -501,6 +501,7 @@
 						type:type
 					}
 				})
+
 			}
 			//顾客 收藏
 			function goCollect(){
@@ -674,8 +675,8 @@
 								console.log('登录响应失败');
 							}
 						});
-					}) 
-					
+					})
+
 					document.addEventListener('refreshInfoC', function() {
 						showMsg();
 					})
@@ -897,7 +898,7 @@
 									}else{
 										$('.orderNum').eq(3).hide()
 									}
-									
+
 //									unpaidOrderQuantity && ($('.orderNum').eq(0).html(unpaidOrderQuantity).css('display','inline-block'));
 //									pendingReceiveOrderQuantity && ($('.orderNum').eq(1).html(pendingReceiveOrderQuantity).css('display','inline-block'));
 //									isEvaluatedOrderQuantity && ($('.orderNum').eq(2).html(isEvaluatedOrderQuantity).css('display','inline-block'));
@@ -911,7 +912,7 @@
 							}
 						});
 					}
-					
+
 					function waitCheck(){
 						mui.ajax(serverUrl+'/app/material/audit/manager/list',{
 							data:{'userID':userId,'status':1,'identityType':identityT,'page':1,'size':5},
@@ -920,14 +921,14 @@
 							timeout:10000,
 							headers:{"Authorization":oldToken},
 							success:function(data,type,xhr){
-								console.log('待审核',data); 
+								console.log('待审核',data);
 									if(data.code == 0){
 										if(data.content.total){
 											$('#waitCheck').show().html(data.content.total)
 										}else{
 											$('#waitCheck').hide().html('')
 										}
-									} 
+									}
 							},
 							error:function(xhr,type,errorThrown){
 								console.log('响应失败  !');

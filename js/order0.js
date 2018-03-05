@@ -100,13 +100,15 @@ function cancelOF(pageType,cancelParentId){
 			$(".reasonInfo[type='radio']:checked").attr("checked",false);
 		}
 		window.cancelFun = function(orderNumber,that){
-			var isCance = confirm(
-					'1、订单一旦取消后，无法恢复。\n'+
-					'2、订单取消后，已支付的金额将会在一个工作日内原路退还。\n'+
-					'3、限时促销等购买优惠可能一并取消。\n'+
-					'4、因商品已分拣等原因可能会导致订单取消失败。'
-				);
-			isCance && $('#cancelOrder').css('display','table');
+			var isCanceInfo = '1、订单一旦取消后，无法恢复。\n'+
+				'2、订单取消后，已支付的金额将会在一个工作日内原路退还。\n'+
+				'3、限时促销等购买优惠可能一并取消。\n'+
+				'4、因商品已分拣等原因可能会导致订单取消失败。';
+			mui.confirm(isCanceInfo,function(e){
+			    if(e.index==0){
+			    		$('#cancelOrder').css('display','table');
+			    }
+		  	});
 			//点确定
 			document.getElementsByClassName('operating3')[0].onclick = function(){
 				var reasonInfo = $(".reasonInfo[type='radio']:checked").val();
@@ -132,7 +134,7 @@ function cancelOF(pageType,cancelParentId){
 							if(data.code == 0){
 								mui.toast(data.message || '取消订单成功');
 								mui.fire(plus.webview.getWebviewById('center.html'),'OrderNumR');
-								
+
 								$('#cancelOrder').css('display','none');
 								resetChoose();
 								if(pageType == 'detail'){

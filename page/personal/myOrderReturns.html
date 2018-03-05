@@ -51,7 +51,7 @@
 						</div>
 						<div class="proRight proRightTH">
 							<h4><%= list[i].skuName%></h4>
-							<p> 订单数量：<%= list[i].returnPriority%> 可退数量：<%= list[i].returnableQuantity%></p>
+							<p> 订单数量：<%= list[i].orderQuantity%> 可退数量：<%= list[i].returnableQuantity%></p>
 							<div id="">
 								<%if(list[i].goodsLine == 'PRESENT'){%>
 									<em class="mui-badge mui-badge-danger" style="color: white;position: relative;top: -2px;">赠品</em>
@@ -95,15 +95,15 @@
 					</div>
 					<div class="fangshiMore fangshiMore2">
 						<div id="tuihuodizhi02" onclick="addAddress()">
-							<b id="AD1">张先生</b> <b id="AD2">188898767877</b>
-							<p>
+							<b id="AD1">---</b> <b id="AD2">---</b>
+							<p style="margin-right: 20px;">
 								<b id="AD4">市</b> <b id="AD5">区</b> <b id="AD6">街道</b>
 								<b id="AD7">小区</b> <b id="AD8">详细地址</b>
 							</p>
 							<span class="mui-icon mui-icon-arrowright"></span>
 						</div>
 						<p>预约取货时间</p>
-						<div id='cityResult' class="ui-alert pad10 ft15">取货时间:<span class="mui-icon mui-icon-arrowdown maincl mui-pull-right ft16"></span><span class="mui-pull-right pstime">选择</span></div>
+						<div id='cityResult' class="ui-alert pad10 ft15" style="min-height: 22px;"><span class="mui-pull-left pstime">选择</span><span class="mui-icon mui-icon-arrowdown maincl mui-pull-left ft16"></span></div>
 					</div>
 			    </div>
 			    <div style="text-align: center;">
@@ -143,7 +143,7 @@
 						})
 					})
 
-				} 
+				}
 			mui.plusReady(function(){
 				//获取缓存
 				var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
@@ -158,7 +158,7 @@
 					$('.smqh').hide()
 				}else if(deliveryType.indexOf('券')!=-1){
 					$('.smqh,.tostore,#tostore').hide()
-					
+
 				}
 				/*退货方式tab*/
 				$('.typeRadio').change(function(){
@@ -303,8 +303,8 @@
 								if(platform == 'ANDROID'){
 									$(this).select();
 								}else{
-									$(this).focus(); 
-									$(this).get(0).selectionStart = 0; 
+									$(this).focus();
+									$(this).get(0).selectionStart = 0;
 									$(this).get(0).selectionEnd = $(this).get(0).value.length;
 								}
 								event.stopPropagation()

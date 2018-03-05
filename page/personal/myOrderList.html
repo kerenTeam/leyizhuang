@@ -63,7 +63,7 @@
 				<div class="tab-hd tab-hdtwo" id="tabLink" style="display: none;">
 					<ul class="tab-nav">
 					  <li class="aClick" data-statusId="">全部</li>
-					  <li class="aClick" data-statusId="1">待付款</li>
+					  <li class="aClick" data-statusId="1">待发货</li>
 					  <li class="aClick" data-statusId="1">待收货</li>
 					  <li class="aClick" data-statusId="1">已完成</li>
 					  <li class="aClick" data-statusId="1">已取消</li>
@@ -420,10 +420,10 @@
 										plus.payment.request(pays[id], varpay, function(result) {
 											console.log("----- 支付成功 -----", JSON.stringify(result));
 											plus.nativeUI.closeWaiting();
-											plus.nativeUI.alert("支付成功"); 
+											plus.nativeUI.alert("支付成功");
 											mui.fire(plus.webview.getWebviewById('center.html'),'refresh');
 											plus.webview.currentWebview().reload();
-										
+
 										}, function(e) {
 											console.log("----- 支付失败 -----");
 											console.log("[" + e.code + "]：" + e.message);
@@ -453,7 +453,7 @@
 			//再来一单 ==> order0.js
 			//申请退货 ==> order0.js
 			//打开订单物流  ==> order0.js
- 
+
 			mui.plusReady(function(){
 				var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
 				if(plus.webview.currentWebview().lookCusid){
@@ -465,7 +465,7 @@
 				var inType = plus.webview.currentWebview().type;
 				var noButton = plus.webview.currentWebview().isNoButton;
 				var fromPage = plus.webview.currentWebview().fromPage;
-				if(fromPage == 'index'){
+				if(fromPage == 'index' || inType == 1){
 					$('.mui-title').html("物流");
 					$('#loadingdiv').css("margin-top",0);
 					$('#openSearch,#tabLink').hide()
@@ -474,6 +474,7 @@
 					$('#loadingdiv').css("margin-top",'42px');
 					$('#openSearch,#tabLink').show()
 				}
+				if(inType == 1){$('.mui-title').html("待付款");}
 				//打开订单详情
 				window.openDetail = function(orderNo,evaluat,id,cusid){
 //					if(fromPage != 'index'){
@@ -490,7 +491,7 @@
 							}
 						})
 //					}
-					
+
 				}
 				//详情页面点取消,监听刷新
 				document.addEventListener('cancelrefresh2', function(event) {
@@ -534,7 +535,7 @@
 					if($(this).index() == 0){
 						loadFun('');//全部
 					}else if($(this).index() == 1){
-						loadFun(1);//待付款 UNPAID
+						loadFun(6);//待发货
 					}else if($(this).index() == 2){
 						loadFun(2);//待收货
 					}else if($(this).index() == 3){
@@ -584,7 +585,7 @@
 										if(fromPage == 'index'){
 											$('.orderBtns>span:not(:last-child)').remove();
 										}
-										
+
 									}else{
 										if(data.content.length){
 											//没有customerId的手动加为null
@@ -603,7 +604,7 @@
 											if(fromPage == 'index'){
 												$('.orderBtns>span:not(:last-child)').remove();
 											}
-											
+
 										}else{
 											document.getElementById('infoListDiv').innerHTML = '<div style="text-align: center;padding: 50px;"><img src="../../images/order/order.png" style="width: 100px;margin-bottom: 8px;" /><div class="ft13 disablecl">暂无相关订单</div></div>';
 										}

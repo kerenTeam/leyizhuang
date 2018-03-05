@@ -74,6 +74,15 @@
 				<div>
 					<span class="huiC">收货人</span><span class="mui-pull-right"><%= detail.receiver%> <%= detail.receiverPhone || '无'%></span>
 				</div>
+				<%if(detail.isOwnerReceiving){%>
+					<div>
+						<span class="huiC">是否主家收货</span><span class="mui-pull-right">是</span>
+					</div>
+				<%}else{%>
+					<div>
+						<span class="huiC">是否主家收货</span><span class="mui-pull-right">否</span>
+					</div>
+				<%}%>
 				<div>
 					<span class="huiC">提货码</span>
 					<span class="mui-pull-right"> <%= detail.pickUpCode || '无'%> </span>
@@ -88,6 +97,16 @@
 					<span class="huiC">配送时间</span> <span class="mui-pull-right"><%= detail.deliveryTime || '无'%></span>
 				</div>
 			</div>
+			<%if(detail.customer && detail.customer.customerId){%>
+				<div class="Dpart3">
+					<div>
+						<span class="huiC">顾客</span> <span class="mui-pull-right"><%= detail.customer.customerName || '无'%></span>
+					</div>
+					<div>
+						<span class="huiC">顾客电话</span> <span class="mui-pull-right"><%= detail.customer.customerPhone || '无'%></span>
+					</div>
+				</div>
+			<%}%>
 			<div class="Dpart4 Dpart3">
 				<div>
 					<span class="huiC">商品总额</span> <span class="floL"><%= detail.BillingDetailResponse.totalPrice%>元</span>
@@ -118,8 +137,8 @@
 						<%}%>
 					</span> <span class="floL"><%= detail.BillingDetailResponse.creditMoney || 0%>元</span>
 				</div>
-				
-				
+
+
 				<div>
 					<span class="huiC">产品卷抵扣</span> <span class="floL"><%= detail.BillingDetailResponse.productCouponDiscount || 0%>元</span>
 				</div>
@@ -234,7 +253,7 @@
                         <span onclick="goOrderWL('<%= detail.orderNumber%>')" class="aClick redC">查看物流</span>
                     <% }%>
                 <% }%>
-                
+
                 <%if(detail.deliveryType.indexOf('产品券')>-1){%>
 					<%if(detail.status == "FINISHED"){%>
 						<span class="redC aClick" onclick="openReturns('<%= detail.orderNumber%>','<%= detail.customerId%>','<%= detail.deliveryType%>')">退货</span>
