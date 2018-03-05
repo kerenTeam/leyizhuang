@@ -1799,7 +1799,8 @@
 				"resources": [],
 				"refer": [
 					"page/personal/myOrderWL.html",
-					"cart.html"
+					"cart.html",
+					"page/personal/myOrderReturns.html"
 				],
 				"priority": 0
 			},
@@ -1867,6 +1868,13 @@
 					"images/welcome/wel2.png"
 				],
 				"refer": [],
+				"priority": 0
+			},
+			"page/personal/myOrderRTdetail.html": {
+				"resources": [],
+				"refer": [
+					"page/personal/myOrderWL.html"
+				],
 				"priority": 0
 			}
 		},
