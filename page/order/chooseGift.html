@@ -147,8 +147,8 @@
 				//获取赠品
 				mui.ajax(serverUrl + '/app/gift/list', {
 					data: {
-						userId: 1,
-						identityType: 6,
+						userId: userId,
+						identityType: identityT,
 						goodsArray: idobj
 					},
 					dataType: 'json',
