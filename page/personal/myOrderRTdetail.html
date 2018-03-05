@@ -29,10 +29,13 @@
 			.proLeftTH{flex: 2 !important;} .proRightTH{flex: 5 !important;}
 			.proRight h4{min-height: 24px;} .infoBottom{padding: 15px;box-shadow: 0 -1px 1px rgba(222, 217, 217, 0.85)} .infoBottom span{float: right;color: #c7161e;}
 			.proWrapAll2{height: auto;} .thZhengce{background-color: #fff;border-top: 5px solid #eee;border-bottom: 5px solid #eee;}
-			.flexwc span{margin: auto;display: block;width: 23px;line-height: 23px; margin-top: 8px;font-size: 18px;font-weight: bold;background-color: #c3c3c3;border-radius: 50%;
-				color: #fff;}
+			.flexwc span{margin: auto;display: block;width: 14px;line-height: 14px; margin-top: 14px;font-size: 12px;font-weight: bold;background-color: #c3c3c3;border-radius: 50%;
+				color: #fff;margin-bottom: 5px;}
 			.flexwc span.oneActiveY{background-color: #c7161e;}
 			.cartSecond1:before,.cartSecond1:after{width: 42px;}
+			.flexwc span.mui-icon-loop{background-color: transparent;color: #c3c3c3;position: absolute;top: 1px;left: 6px;font-size: 27px;}
+			.flexwc span.loopAc{color: #c7161e;}
+			.flexwc span.loopOther{padding-right: 2px;position: relative;left: 1px;}
 		</style>
 	</head>
 
@@ -84,41 +87,41 @@
 					<%if(dataObj.returnStatusDesc.indexOf('消')>-1 ){%>
 						<div class="flexwc">
 							<%if(dataObj.returnStatusDesc == '已提交'){%>
-								<div class="cartOne"> <span class="oneActiveY">1</span> 已提交 </div>
-								<div class="cartSecond"> <span>2</span> 取消中 </div>
-								<div class="cartThird"> <span>3</span> 已取消 </div>
+								<div class="cartOne"> <span class="oneActiveY">1</span> 已提交 <span class="mui-icon mui-icon-loop loopAc"></span></div>
+								<div class="cartSecond"> <span>2</span> 取消中 <span class="mui-icon mui-icon-loop"></span></div>
+								<div class="cartThird"> <span>3</span> 已取消 <span class="mui-icon mui-icon-loop"></span></div>
 							<%}else if(dataObj.returnStatusDesc == '取消中'){%>
-								<div class="cartOne"> <span class="oneActiveY">1</span> 已提交 </div>
-								<div class="cartSecond"> <span class="oneActiveY">2</span> 取消中 </div>
-								<div class="cartThird"> <span>3</span> 已取消 </div>
+								<div class="cartOne"> <span class="oneActiveY">1</span> 已提交 <span class="mui-icon mui-icon-loop loopAc"></span></div>
+								<div class="cartSecond"> <span class="oneActiveY">2</span> 取消中 <span class="mui-icon mui-icon-loop loopAc"></span></div>
+								<div class="cartThird"> <span>3</span> 已取消 <span class="mui-icon mui-icon-loop"></span></div>
 							<%}else if(dataObj.returnStatusDesc == '已取消'){%>
-								<div class="cartOne"> <span class="oneActiveY">1</span> 已提交 </div>
-								<div class="cartSecond"> <span class="oneActiveY">2</span> 取消中 </div>
-								<div class="cartThird"> <span class="oneActiveY">3</span> 已取消 </div>
+								<div class="cartOne"> <span class="oneActiveY">1</span> 已提交 <span class="mui-icon mui-icon-loop loopAc"></span></div>
+								<div class="cartSecond"> <span class="oneActiveY">2</span> 取消中 <span class="mui-icon mui-icon-loop loopAc"></span></div>
+								<div class="cartThird"> <span class="oneActiveY">3</span> 已取消 <span class="mui-icon mui-icon-loop loopAc"></span></div>
 							<%}%>
 						</div>
 					<%}else{%>
 						<div class="flexwc" style="overflow-x: hidden;">
 							<%if(dataObj.returnStatusDesc == '已提交'){%>
-								<div class="cartOne"> <span class="oneActiveY">1</span> 已提交 </div>
-								<div class="cartSecond cartSecond1"> <span>2</span> 退货中 </div>
-								<div class="cartThird"> <span>3</span> 待退款 </div>
-								<div class="cartThird"> <span>4</span> 已完成 </div>
+								<div class="cartOne"> <span class="oneActiveY">1</span> 已提交 <span class="mui-icon mui-icon-loop loopAc"></span></div>
+								<div class="cartSecond cartSecond1"> <span>2</span> 退货中 <span class="mui-icon mui-icon-loop"></span></div>
+								<div class="cartThird"> <span>3</span> 待退款 <span class="mui-icon mui-icon-loop"></span></div>
+								<div class="cartThird"> <span class="loopOther">4</span> 已完成 <span class="mui-icon mui-icon-loop"></span></div>
 							<%}else if(dataObj.returnStatusDesc == '退货中'){%>
-								<div class="cartOne"> <span class="oneActiveY">1</span> 已提交 </div>
-								<div class="cartSecond cartSecond1"> <span class="oneActiveY">2</span> 退货中 </div>
-								<div class="cartThird"> <span>3</span> 待退款 </div>
-								<div class="cartThird"> <span>4</span> 已完成 </div>
+								<div class="cartOne"> <span class="oneActiveY">1</span> 已提交 <span class="mui-icon mui-icon-loop loopAc"></span></div>
+								<div class="cartSecond cartSecond1"> <span class="oneActiveY">2</span> 退货中 <span class="mui-icon mui-icon-loop loopAc"></span></div>
+								<div class="cartThird"> <span>3</span> 待退款 <span class="mui-icon mui-icon-loop"></span></div>
+								<div class="cartThird"> <span class="loopOther">4</span> 已完成 <span class="mui-icon mui-icon-loop"></span></div>
 							<%}else if(dataObj.returnStatusDesc == '待退款'){%>
-								<div class="cartOne"> <span class="oneActiveY">1</span> 已提交 </div>
-								<div class="cartSecond cartSecond1"> <span class="oneActiveY">2</span> 退货中 </div>
-								<div class="cartThird"> <span class="oneActiveY">3</span> 待退款 </div>
-								<div class="cartThird"> <span>4</span> 已完成 </div>
+								<div class="cartOne"> <span class="oneActiveY">1</span> 已提交 <span class="mui-icon mui-icon-loop loopAc"></span></div>
+								<div class="cartSecond cartSecond1"> <span class="oneActiveY">2</span> 退货中 <span class="mui-icon mui-icon-loop loopAc"></span></div>
+								<div class="cartThird"> <span class="oneActiveY">3</span> 待退款 <span class="mui-icon mui-icon-loop loopAc"></span></div>
+								<div class="cartThird"> <span class="loopOther">4</span> 已完成 <span class="mui-icon mui-icon-loop"></span></div>
 							<%}else if(dataObj.returnStatusDesc == '已完成'){%>
-								<div class="cartOne"> <span class="oneActiveY">1</span> 已提交 </div>
-								<div class="cartSecond cartSecond1"> <span class="oneActiveY">2</span> 退货中 </div>
-								<div class="cartThird"> <span class="oneActiveY">3</span> 待退款 </div>
-								<div class="cartThird"> <span class="oneActiveY">4</span> 已完成 </div>
+								<div class="cartOne"> <span class="oneActiveY">1</span> 已提交 <span class="mui-icon mui-icon-loop loopAc"></span></div>
+								<div class="cartSecond cartSecond1"> <span class="oneActiveY">2</span> 退货中 <span class="mui-icon mui-icon-loop loopAc"></span></div>
+								<div class="cartThird"> <span class="oneActiveY">3</span> 待退款 <span class="mui-icon mui-icon-loop loopAc"></span></div>
+								<div class="cartThird"> <span class="oneActiveY loopOther">4</span> 已完成 <span class="mui-icon mui-icon-loop loopAc"></span></div>
 							<%}%>
 						</div>
 					<%}%>
