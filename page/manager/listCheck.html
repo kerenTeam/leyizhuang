@@ -46,7 +46,7 @@
 				<div class="tab-hd tab-hdtwo" id="tabLink" style="position: fixed;top: 70px;width: 100%;height: 40px;z-index: 999;">
 					<ul class="tab-nav">
 					  <li class="active aClick " data-statusId="">全部</li>
-					  <li class="aClick" data-statusId="1">待审核</li>
+					  <li class="aClick" data-statusId="1">待审核<span id="waitCheck" style="display: none;" class="mui-badge mui-badge-danger"></span></li>
 					  <li class="aClick" data-statusId="2">已审核</li>
 					  <li class="aClick" data-statusId="3">已取消</li>
 					</ul>
@@ -134,6 +134,12 @@
 			var userId = plus.storage.getItem('$userId');
 			var oldToken = plus.storage.getItem("oldToken");
 			var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
+			var waitCheck = plus.webview.currentWebview().waitCheck;
+			if(waitCheck){
+				$('#waitCheck').show().html(waitCheck)
+			}else{
+				$('#waitCheck').hide();
+			}
 			$('#tabLink li').click(function(){
 				$('#tabLink li').removeClass('active');
 				$(this).addClass('active');
@@ -146,7 +152,7 @@
 
 			})
 			document.addEventListener('refresh', function(event) {
-				loadFun('');
+				 plus.webview.currentWebview().reload()
 			});
 			loadFun('');
 			function loadFun(index){
@@ -164,6 +170,14 @@
 						var timeLoad = setInterval(function(){
 							clearTimeout(timeLoad),timeLoad = null;
 							if(data.code == 0){
+								if(index == 1){
+									if(data.content.total){
+										$('#waitCheck').show().html(data.content.total)
+									}else{
+										$('#waitCheck').hide().html('')
+									}
+								}
+								
 								$('#loadingdiv').css('height','0px');
 								if(data.content.list && data.content.list.length){
 									document.getElementById('infoListDiv').innerHTML = template('infoList',{list:data.content.list});

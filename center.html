@@ -323,7 +323,9 @@
 					</div>
 					<div class="afterBorder" onclick="listCheck()">
 						<img src="images/center/mmaterial.svg"/>料单审核
-						<span class="mui-icon mui-icon-arrowright mui-pull-right maincl ft20 maincl"></span>
+						<span id="waitCheck" style="display: none;" class="mui-badge mui-badge-danger"></span>
+						<span class="mui-icon mui-icon-arrowright mui-pull-right maincl ft20 maincl">
+						</span>
 					</div>
 					<div class="afterBorder" onclick="goworker()">
 						<img src="images/center/worker.svg"/>工人
@@ -409,7 +411,7 @@
 						var localId = url.split('&')[1],
 							localUrl = url.split('&')[0],
 							localUId = url.split('&')[2] || -1; 
-//							alert(localUrl+" "+localId+" "+localUId)
+							alert(localUrl+" "+localId+" "+localUId)
 						if(plus.storage.getItem('oldToken')){
 							 openview({
 								view: localUrl,
@@ -512,6 +514,7 @@
 				openview({
 					view:'page/manager/listCheck.html',
 					id: 'listCheck',
+					extrasobj:{'waitCheck':$('#waitCheck').html()}
 				})
 			}
 			function qrcode(){
@@ -852,9 +855,15 @@
 						showOrderNum();
 						loadmyinfo();
 					})
+					document.addEventListener('checkRf', function() {
+						waitCheck()
+					})
 					//显示订单数量
 					if(identityT != 1){
 						showOrderNum();
+					}
+					if(identityT == 2){
+						waitCheck()
 					}
 					function showOrderNum(){
 						mui.ajax(serverUrl+'/app/order/AppOrderQuantity',{
@@ -902,7 +911,29 @@
 							}
 						});
 					}
-
+					
+					function waitCheck(){
+						mui.ajax(serverUrl+'/app/material/audit/manager/list',{
+							data:{'userID':userId,'status':1,'identityType':identityT,'page':1,'size':5},
+							dataType:'json',
+							type:'post',
+							timeout:10000,
+							headers:{"Authorization":oldToken},
+							success:function(data,type,xhr){
+								console.log('待审核',data); 
+									if(data.code == 0){
+										if(data.content.total){
+											$('#waitCheck').show().html(data.content.total)
+										}else{
+											$('#waitCheck').hide().html('')
+										}
+									} 
+							},
+							error:function(xhr,type,errorThrown){
+								console.log('响应失败  !');
+							}
+						});
+					}
 				} //刷新
 			});
 			var backButtonPress = 0;

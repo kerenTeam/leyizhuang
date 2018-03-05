@@ -227,7 +227,7 @@
 						 	mui.toast('审核成功')
 							mui.fire(plus.webview.getWebviewById('cart.html'), 'refresh');
 						 	mui.fire(plus.webview.getWebviewById('listCheck'), 'refresh');
-
+							mui.fire(plus.webview.getWebviewById('center.html'),'checkRf');
 						 	if(isAudited){
 						 		mui.ajax(serverUrl+'/app/material/audit/manager/transform/materialList',{
 									data:{'userID':userId,'identityType':identityT,"auditNo":audiono},
@@ -241,7 +241,7 @@
 											openview({
 										 		view:'../../cart.html',
 										 		id:'cart',
-										 		extrasobj:{page:'listCheckInfo'}
+										 		extrasobj:{page:1}
 										 	})
 										}
 									},
