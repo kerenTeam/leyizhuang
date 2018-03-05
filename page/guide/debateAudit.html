@@ -176,6 +176,9 @@
 			var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
 
 			$('#tabLink li').click(function(){
+				document.getElementById('upload').innerHTML = '';
+				$(window).unbind('scroll');
+				document.getElementById('infoListDiv').innerHTML='';
 				$('#tabLink li').removeClass('active');
 				$(this).addClass('active');
 				$('#loadingdiv').css('height','32px');

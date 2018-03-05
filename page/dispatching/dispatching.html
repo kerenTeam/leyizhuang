@@ -25,6 +25,7 @@
 				width: 0!important;
 				height: 0!important;
 				opacity: 1!important;
+				padding-bottom: 0!important;
 			}
 			.white {
 				color: #FFFFFF !important;
@@ -580,9 +581,16 @@
 					});
 				}
 			} //刷新 
+			var Spagenum = 2; //实到页数
+			var Ypagenum = 1; //应到页数
+			var oneSize = 5;
 			$('#tabLink li').unbind('click').click(function(){
 				document.getElementById('upload').innerHTML = '';
 				$(window).unbind('scroll');
+				document.getElementById('infoListDiv').innerHTML='';
+				Spagenum = 2; //实到页数
+				Ypagenum = 1; //应到页数
+				oneSize = 5;
 				$('#tabLink li').removeClass('active');
 				$(this).addClass('active');
 				$('#loadingdiv').css('height','32px');
@@ -597,9 +605,7 @@
 			document.addEventListener('refresh', function(event) {
 				loadFun(0);
 			});
-			var Spagenum = 2; //实到页数
-			var Ypagenum = 1; //应到页数
-			var oneSize = 5;
+			
 			loadFun(0);
 			function loadFun(index){
 				if(index == 2){
@@ -640,33 +646,15 @@
 												ele.returnNumber2 = ele.returnNumber.substr(0, 5) + '****' + ele.returnNumber.substr(8);  
 											}
 										})
+										var pages = data.content.pages;
 										document.getElementById('infoListDiv').innerHTML = template('infoList',{list:data.content.list,listType:index});
-									}else if(data.content.length){
-										data.content.forEach(function(ele,index){
-											if(ele.orderNumber){
-												ele.orderNumber2 = ele.orderNumber.substr(0, 5) + '****' + ele.orderNumber.substr(20);  
-											}
-											if(ele.shipperNumber){
-												ele.shipperNumber2 = ele.shipperNumber.substr(0, 5) + '****' + ele.shipperNumber.substr(20);  
-											}
-											if(ele.returnNumber){
-												ele.returnNumber2 = ele.returnNumber.substr(0, 5) + '****' + ele.returnNumber.substr(8);  
-											}
-										})
-										document.getElementById('infoListDiv').innerHTML = template('infoList',{list:data.content,listType:index});
-									}else{
-										document.getElementById('infoListDiv').innerHTML = '<div style="text-align: center;padding: 50px;"><img src="../../images/order/order.png" style="width: 100px;" /><div class="ft13 disablecl">暂无数据</div></div>';
-									}
-									$('a').click(function(){
-										event.stopPropagation()
-									})
-									if(index == 3){
 										$(window).scroll(function() {
+											
 											var scrollTop = $(this).scrollTop();
 											var scrollHeight = $(document).height();
 											var windowHeight = $(this).height();
 											if(scrollTop + windowHeight == scrollHeight) {
-												if(Spagenum <= data.content.pages && Spagenum == Ypagenum + 1) { //当前页小于等于总页数时请求下一页
+												if(Spagenum <= pages && Spagenum == Ypagenum + 1) { //当前页小于等于总页数时请求下一页
 													mui("#upload")[0].innerHTML = "<img src='../../img/Rolling.svg' />";
 													Ypagenum++; //满足加载情况,应到页数+1
 													console.log('发起请求,实到' + Spagenum + '页');
@@ -722,12 +710,32 @@
 																console.log('响应失败');
 															}
 														}); 
-												} else if(Spagenum == data.content.pages + 1) { //当前页不小于等于总页数时请求下一页
+												} else if(Spagenum == pages + 1) { //当前页不小于等于总页数时请求下一页
 													mui("#upload")[0].innerHTML = "到底了";
 												}
 											}
 										});
+									
+									}else if(data.content.length){
+										data.content.forEach(function(ele,index){
+											if(ele.orderNumber){
+												ele.orderNumber2 = ele.orderNumber.substr(0, 5) + '****' + ele.orderNumber.substr(20);  
+											}
+											if(ele.shipperNumber){
+												ele.shipperNumber2 = ele.shipperNumber.substr(0, 5) + '****' + ele.shipperNumber.substr(20);  
+											}
+											if(ele.returnNumber){
+												ele.returnNumber2 = ele.returnNumber.substr(0, 5) + '****' + ele.returnNumber.substr(8);  
+											}
+										})
+										document.getElementById('infoListDiv').innerHTML = template('infoList',{list:data.content,listType:index});
+									}else{
+										document.getElementById('infoListDiv').innerHTML = '<div style="text-align: center;padding: 50px;"><img src="../../images/order/order.png" style="width: 100px;" /><div class="ft13 disablecl">暂无数据</div></div>';
 									}
+									$('a').click(function(){
+										event.stopPropagation()
+									}) 
+										
 								}else{
 									document.getElementById('infoListDiv').innerHTML = '<div style="text-align: center;padding: 50px;"><img src="../../images/order/order.png" style="width: 100px;" /><div class="ft13 disablecl">暂无数据</div></div>';
 								}
