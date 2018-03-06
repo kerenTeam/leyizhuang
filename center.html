@@ -408,7 +408,7 @@
 
 			//推送
 			function bannerGo(url,info){
-//				alert(url+' '+info);
+				mui.alert(url+' '+info);
 				mui.plusReady(function(){
 					if(url.indexOf('http')>-1 || url.indexOf('HTTP')>-1){//远程
 							openview({//用于banner页面
@@ -419,12 +419,12 @@
 									bannerName: info
 								}
 							})
-					}else if(url.indexOf('&')>-1 ){//本地
+					}else{//本地
 
 						var localId = url.split('&')[1],
 							localUrl = url.split('&')[0],
 							localUId = url.split('&')[2] || -1;
-							alert(localUrl+" "+localId+" "+localUId)
+							mui.alert(localUrl+" "+localId+" "+localUId)
 						if(plus.storage.getItem('oldToken')){
 							 openview({
 								view: localUrl,
