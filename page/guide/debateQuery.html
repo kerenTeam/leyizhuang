@@ -71,7 +71,7 @@
 							</a>
 							<!--<span class="mui-pull-right mui-icon mui-icon-arrowright activecl righticon"></span>-->
 
-							<img data-id="<%=list[i].orderNumber%>" class="check" src="../../images/center/uncheck.svg" alt="" />
+							<img data-id="<%=list[i].orderNumber%>" data-money="<%=list[i].arrearageMoney%>" class="check" src="../../images/center/uncheck.svg" alt="" />
 						</li>
 
 					<%}%>
@@ -89,7 +89,9 @@
 		<div id="maskInfo" style="display: none;">
 			<!-- 可选择菜单 -->
 			<ul class="paychoose ft16">
-
+				<li class="fttc padd10 afterBorder ft16 activecl">
+						应付金额：<span id="payMoney">---</span>
+				</li>
 				<li class="padd10 afterBorder" id="alipay">
 					<img src="../../images/order/alipay.svg" />支付宝
 				</li>
@@ -186,6 +188,7 @@
 									})
 									$('#useCoupon').click(function(){
 										var id = $('.choosed').attr('data-id');
+										$('#payMoney').html('￥'+$('.choosed').attr('data-money'))
 										$('#maskInfo').fadeIn(200);
 										toPay(id);
 									})

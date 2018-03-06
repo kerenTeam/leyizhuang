@@ -398,12 +398,12 @@
 //			mui('#mypic')[0].onclick = function(){
 //				plus.push.clear();
 //				//plus.push.createMessage( "title", '{"banner": "page/personal/myOrderWL.html&CD_XN20180105165333296343","info": "推送跳转页面","type":"localIos"}', {cover:false} );
-//				plus.push.createMessage("哈哈","{'banner':'page/personal/myOrderWL.html&CD_XN20180105165333296343','info':'推送跳转页面','type':'localIos'}", {cover:false});
+//				plus.push.createMessage("哈哈","{'banner':'page/guide/debateAudit.html','info':'推送跳转页面','type':'localIos'}", {cover:false});
 //			}
 
 			//推送
 			function bannerGo(url,info){
-				console.log(url,info);
+//				alert(url+' '+info);
 				mui.plusReady(function(){
 					if(url.indexOf('http')>-1 || url.indexOf('HTTP')>-1){//远程
 							openview({//用于banner页面
