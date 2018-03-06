@@ -33,7 +33,8 @@
 			.flexr{display: flex;justify-content: space-between;margin: 2px 0;}
 			a,a:active{color: rgb(51,51,51)!important;}
 			.flexRow2 img{width: 30px;vertical-align: middle;margin-right: 10px;}
-			.flexr > div{width: 50%;}
+			.telAd{width: 25px;vertical-align: middle;}
+			/*.flexr > div{width: 50%;}*/
 			.fineB span:first-child{display: inline-block;max-width: 70%;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;}
 		</style>
 	</head>
@@ -88,7 +89,7 @@
 													电话：
 												</span>
 												<span class="titcl">
-													<a class="titcl" href="tel:<%=list[i].customerPhone%>"><%=list[i].customerPhone%></a>
+													<a class="titcl" href="tel:<%=list[i].customerPhone%>"><%=list[i].customerPhone%><img class="telAd" src="../../images/center/tel.svg"/></a>
 												</span>
 											</div>
 										</div>
@@ -106,7 +107,7 @@
 													电话：
 												</span>
 												<span class="titcl">
-													<%=list[i].deliveryPhone%>
+													<a class="titcl" href="tel:<%=list[i].deliveryPhone%>"><%=list[i].deliveryPhone%><img class="telAd" src="../../images/center/tel.svg"/></a>
 												</span>
 											</div>
 										</div>
@@ -220,7 +221,7 @@
 										}
 									})
 									document.getElementById('infoListDiv').innerHTML = template('infoList',{list:data.content.list,listType:index});
-
+									$('a').click(function(){event.stopPropagation()})
 									//下拉加载
 									$(window).scroll(function() {
 										var scrollTop = SH0 = $(this).scrollTop(),scrollHeight = $(document).height(),windowHeight = $(this).height();
@@ -244,6 +245,8 @@
 																	}
 																})
 																document.getElementById('infoListDiv').innerHTML += template('infoList',{list:data.content.list,listType:index});
+																$('a').click(function(){event.stopPropagation()})
+																
 															}
 						                                }
 							                             document.getElementById('upload').innerHTML = '';
@@ -267,6 +270,8 @@
 										}
 									})
 									document.getElementById('infoListDiv').innerHTML = template('infoList',{list:data.content,listType:index});
+									$('a').click(function(){event.stopPropagation()})
+									
 								}else{
 									document.getElementById('infoListDiv').innerHTML = '<div style="text-align: center;padding: 50px;"><img src="../../images/order/order.png" style="width: 100px;" /><div class="ft13 disablecl">暂无数据</div></div>';
 								}

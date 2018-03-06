@@ -57,7 +57,7 @@
 									<h4 class="h402" data-test="<%= list[i].kind%>"><%= list[i].createTime%></h4>
 									<%if(list[i].kind == 'ORD_ADJUSTMENT'){%>
 										<p class="p01">订单编号：<%= list[i].referenceNumber%> <span>详情</span></p>
-										<p class="p01" style="padding-right: 30px;">顾客：<%= list[i].customerName%> <b style="float: right;">电话：<%= list[i].customerPhone%></b> </p>
+										<p class="p01" style="padding-right: 30px;">顾客：<%= list[i].customerName%> <b style="float: right;">电话：<a class="titcl" href="tel:<%=list[i].customerPhone%>" onclick="event.stopPropagation()"><%= list[i].customerPhone%></a></b> </p>
 										<p class="p01"><%= list[i].type%> ：<%= list[i].changeMoney%></p>
 									<%}else{%>
 										<p class="p01"><%= list[i].type%> ：<%= list[i].changeMoney%></p>

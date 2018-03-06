@@ -428,7 +428,7 @@
 			
 			var pays = {};
 			console.log('idobj ', idobj)
-			console.log('onlyGoods ', onlyGoods)
+			console.log('allGoods ', allGoods)
 			console.log('productCouponList ', productCouponList)
 			console.log('promotionInfo ', promotionInfo)
 			window.materialList = function() {
@@ -698,7 +698,59 @@
 							}
 	
 						} else {
+							if(data.content && data.content.totalGoodsInfo){
+								//显示商品
+								var goods = data.content.totalGoodsInfo;
+								
+								dataObj.totalQty = data.content.totalQty;
+								dataObj.totalPrice = data.content.totalPrice;
+								dataObj.list = goods;
+								document.getElementById('cartData').innerHTML = template('cartTpl', dataObj);
+								if(data.content.totalPrice) {
+									$('#totalPriceb').html('¥' + data.content.totalPrice)
+								} else {
+									$('#totalPriceb').html('0')
+								}
+								if(data.content.memberDiscount) {
+									$('#memberDiscount').html('¥' + data.content.memberDiscount)
+								} else {
+									$('#memberDiscount').html('¥0')
+								}
+								if(data.content.orderDiscount) {
+									$('#orderDiscount').html('¥' + data.content.orderDiscount);
+									$('#firstOrderDiscount').val(data.content.orderDiscount)
+								} else {
+									$('#orderDiscount').html('¥0')
+								}
+								if(data.content.freight) {
+									$('#freight').html('¥' + data.content.freight)
+									$('#firstFreight').val(data.content.freight)
+								} else {
+									$('#freight').html('0')
+									$('#firstFreight').val(0)
+								}
+								if(data.content.totalOrderAmount) {
+									$('#firstTotal').val(data.content.totalOrderAmount)
+									$('#totalOrderAmount').html('¥' + data.content.totalOrderAmount)
+									$('.totalMoney').html('¥' + data.content.totalOrderAmount)
+								} else {
+									$('.totalMoney').html(0)
+									$('#totalOrderAmount').html('0')
+								}
+								if(data.content.upstairsFee) {
+									$('#upstar').html('¥' + data.content.upstairsFee)
+								}
+								if(data.content.isShowNumber) {
+									$('#isShowNumber').show()
+									$('#isShowNumber').attr('data-id',1)
+		
+								}else{
+									$('#isShowNumber').hide()
+									$('#isShowNumber').attr('data-id',0)
+								}
+							}
 							mui.toast(data.message);
+							$('.goOrder').unbind('click')
 							plus.nativeUI.closeWaiting();
 	
 						}

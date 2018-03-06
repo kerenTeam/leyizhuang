@@ -9,9 +9,9 @@
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
 		<meta name="format-detection" content="telephone=no">
 		<meta name="format-detection" content="address=no">
+		<link rel="stylesheet" type="text/css" href="../../css/mui.min.css"/>
 		<link rel="stylesheet" type="text/css" href="../../css/commonY.css">
 		<link rel="stylesheet" type="text/css" href="../../css/indexY.css">
-		<link rel="stylesheet" type="text/css" href="../../css/mui.min.css"/>
 		<link rel="stylesheet" href="../../css/resetY.css">
 		<link rel="stylesheet" type="text/css" href="../../css/configW.css"/>
 		<script type="text/javascript" src="../../js/jquery.min.js"></script>
@@ -28,7 +28,7 @@
 			.checkList h4{font-size: 14px;padding: 12px 10px;}
 			.checkList h4 .h4span3{float: right;color: #B62D29;}
 			.checkList h4 .h4span2{margin-left: 3%;}
-			.checkListCon{padding: 10px;overflow-y: scroll;white-space: nowrap;}
+			.checkListCon{padding: 10px;white-space: nowrap;}
 			.checkListCon img{width: 23%;float: left;margin-left: 1.6%;}
 			.checkListDZ{padding: 10px;color: #757575;}
 			.checkListB{padding: 10px 20px;text-align: right;}
@@ -63,7 +63,7 @@
 				<script id="infoList" type="text/html">
 					<%for(var i=0;i<list.length;i++){%>
 						<div class="checkList" onclick="goInfo('<%=list[i].auditNo%>',<%=list[i].status%>)">
-							<h4 class="fineB">
+							<h4 class="afterBorder">
 								<span>料单编号：<%=list[i].auditNo%></span>
 								<!--<span class="h4span2">提交人:
 									<%if(list[i].worker){%>
@@ -101,9 +101,9 @@
 									<button type="button" class="mui-btn mui-btn" onclick="delet('<%=list[i].auditNo%>')">取消</button>
 								<%}else if(list[i].status == 2){%>
 									<%if(list[i].isAudited){%>
-										<button type="button" class="mui-btn mui-btn-danger mui-btn-outlined">审核通过</button>
+										<img style="width: 60px;margin-top: -15px;" src="../../images/center/pass.png"/>
 									<%}else{%>
-										<button type="button" class="mui-btn mui-btn-danger mui-btn-outlined">未通过</button>
+										<img style="width: 60px;margin-top: -15px;" src="../../images/center/unpass.png"/>
 									<%}%>
 								<%}else if(list[i].status == 3){%>
 									<button type="button" class="mui-btn mui-btn">已取消</button>

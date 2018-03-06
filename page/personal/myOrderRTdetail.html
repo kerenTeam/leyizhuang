@@ -146,12 +146,12 @@
 					<div>
 						<%if(dataObj.deliveryType == 'HOUSE_PICK'){%>
 							<p id="mendianA0" style="padding: 0px 15px 5px;font-size: 16px;">联系人：<%= dataObj.receiver%></p>
-							<p id="mendianA0" style="padding: 0px 15px 5px;font-size: 16px;">联系电话：<%= dataObj.receiverPhone%></p>
+							<p id="mendianA0" style="padding: 0px 15px 5px;font-size: 16px;">联系电话：<a href="tel:<%=dataObj.receiverPhone%>"><%= dataObj.receiverPhone%></a></p>
 							<p id="mendianA0" style="padding: 0px 15px 10px;font-size: 16px;">取货地址：<%= dataObj.shippingAddress%></p>
 							<p id="mendianA0" style="padding: 0px 15px 10px;font-size: 16px;">取货时间：<%= dataObj.deliveryTime%></p>
 						<%}else{%>
 							<p id="mendianA0" style="padding: 0px 15px 5px;font-size: 16px;">门店：<%= dataObj.bookingStoreName || '暂无'%></p>
-							<p id="mendianA0" style="padding: 0px 15px 10px;font-size: 16px;">门店电话：<%= dataObj.bookingStorePhone || '暂无'%></p>
+							<p id="mendianA0" style="padding: 0px 15px 10px;font-size: 16px;">门店电话：<a href="tel:<%=dataObj.bookingStorePhone%>"><%= dataObj.bookingStorePhone || '暂无'%></a></p>
 							<p id="mendianA0" style="padding: 0px 15px 10px;font-size: 16px;">门店地址：<%= dataObj.storeDetailedAddress || '暂无'%></p>
 						<%}%>
 

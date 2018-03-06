@@ -72,7 +72,7 @@
 			</div>
 			<div class="Dpart3">
 				<div>
-					<span class="huiC">收货人</span><span class="mui-pull-right"><%= detail.receiver%> <%= detail.receiverPhone || '无'%></span>
+					<span class="huiC">收货人</span><span class="mui-pull-right"><%= detail.receiver%> <a href="tel:<%=detail.receiverPhone%>"><%= detail.receiverPhone || '无'%></a></span>
 				</div>
 				<%if(detail.isOwnerReceiving){%>
 					<div>
@@ -103,7 +103,7 @@
 						<span class="huiC">顾客</span> <span class="mui-pull-right"><%= detail.customer.customerName || '无'%></span>
 					</div>
 					<div>
-						<span class="huiC">顾客电话</span> <span class="mui-pull-right"><%= detail.customer.customerPhone || '无'%></span>
+						<span class="huiC">顾客电话</span> <span class="mui-pull-right"><a href="tel:<%=detail.customer.customerPhone%>"><%= detail.customer.customerPhone || '无'%></a></span>
 					</div>
 				</div>
 			<%}%>
