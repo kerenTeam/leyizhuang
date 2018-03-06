@@ -252,8 +252,7 @@
 										gift.push({
 											id: $(this).attr('data-id'),
 											qty: $(this).parent().parent().find('.mui-input-numbox').val(),
-											goodsLineType: true,
-											isProCouponGoods:false
+											goodsLineType: 'PRESENT',
 										})
 									})
 									var newList = idobj.concat(gift);

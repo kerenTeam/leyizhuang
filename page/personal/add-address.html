@@ -353,8 +353,9 @@
 					var newProvince='';
 					var newCity='';
 					var newArea='';
-					
+					var newStreet = '';
 					var mapStorage = JSON.parse(plus.storage.getItem('$mapStorage') || '[]'); 
+					console.log('dddjj',mapStorage)
 					 if(mapStorage.length){
 					 	if(mapStorage[0].province){
 					 		newProvince = mapStorage[0].province
@@ -365,9 +366,12 @@
 					 	if(mapStorage[0].district){
 					 		newArea = mapStorage[0].district
 					 	} 
+					 	if(mapStorage[0].township){
+					 		newStreet = mapStorage[0].township
+					 	} 
 					 }
 					
-					var newStreet = document.getElementById('localadd').innerText;/*街道*/
+
 					var xiaoquIn = document.getElementById('xiaoquIn').value;/*小区*/
 
 					var reg_phone = /^1((3|4|5|8|7){1}\d{1}|70)\d{8}$/;//手机号正则
@@ -386,7 +390,7 @@
 						mui.toast('详细地址不能为空!');
 						$('#newAddress').focus();
 					}else{
-						console.log({
+						console.log('kk',{
 								'userId': userId,
 								'identityType': identityT,
 								'deliveryName':newPerson,
@@ -421,7 +425,7 @@
 								if(data.code == 0){
 									plus.nativeUI.alert("添加地址成功");
 									mui.fire(plus.webview.getWebviewById('address'),'refreshAd');
-									plus.webview.currentWebview().close();
+//									plus.webview.currentWebview().close();
 								}else{
 									mui.toast(data.message);
 								}
