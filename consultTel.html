@@ -62,7 +62,12 @@
 								}
 								$('.alltel').html(tel)
 								$('.alltel div:last-child').removeClass('afterBorder')
+							}else{
+								$('.alltel').html('暂无客服联系电话')
 							}
+						}else{
+								$('.alltel').html('<div class="afterBorder">暂无客服联系电话</div>')
+							
 						}
 					},
 					error: function(xhr, type, errorThrown) {
