@@ -73,7 +73,7 @@
 
 							<img data-id="<%=list[i].orderNumber%>" class="check" src="../../images/center/uncheck.svg" alt="" />
 						</li>
-						
+
 					<%}%>
 				</ul>
 			</script>
@@ -89,7 +89,7 @@
 		<div id="maskInfo" style="display: none;">
 			<!-- 可选择菜单 -->
 			<ul class="paychoose ft16">
-				 
+
 				<li class="padd10 afterBorder" id="alipay">
 					<img src="../../images/order/alipay.svg" />支付宝
 				</li>
@@ -125,6 +125,11 @@
 					view:'repayment.html',
 					id:'repayment',
 				})
+			}
+			//支付成功回调
+			function payOk(message){
+				mui.alert(message || '还款成功');
+				repayment();
 			}
 			$('.paychoose li').click(function(){
 				event.stopPropagation()
@@ -179,7 +184,7 @@
 											$('#useCoupon').attr('disabled', true)
 										}
 									})
-									$('#useCoupon').click(function(){ 
+									$('#useCoupon').click(function(){
 										var id = $('.choosed').attr('data-id');
 										$('#maskInfo').fadeIn(200);
 										toPay(id);
@@ -200,7 +205,7 @@
 							console.log('登录响应失败');
 						}
 					});
-					
+
 					function toPay(orderNumber) {
 						//系统检测获取支付通道
 						plus.payment.getChannels(function(channels) {
@@ -223,7 +228,7 @@
 						}, function(e) {
 							plus.nativeUI.alert("支付失败，请重试", null, "提示");
 						});
-	
+
 						// 检测是否安装支付服务
 						function checkServices(pc) {
 							if(!pc.serviceReady) {
@@ -236,10 +241,10 @@
 										txt = "系统未安装“" + pc.description + "”服务，无法完成支付，是否立即安装？";
 										break;
 								}
-	
+
 							}
 						}
-						//系统检测获取支付通道结束 
+						//系统检测获取支付通道结束
 					}
 					// 支付方法
 					window.payfun = function(id,orderNumber) {
@@ -252,7 +257,7 @@
 							plus.nativeUI.alert("当前环境不支持此支付通道！", null, "提示");
 							return;
 						}
-	
+
 						function gopay(id,orderNumber) {
 							console.log(id+' '+orderNumber)
 							if(id == 'wxpay') {
@@ -286,13 +291,16 @@
 												console.log("----- 支付成功 -----");
 												var result = JSON.stringify(result);
 												kindType();
+												payOk(data.message);
 											}, function(e) {
 												console.log("----- 支付失败 -----");
 												console.log("[" + e.code + "]：" + e.message);
 												plus.nativeUI.alert("支付失败");
 											});
+										}else{
+											mui.toast(data.message);
 										}
-	
+
 									},
 									error: function(xhr, type, errorThrown) {
 										//异常处理；
@@ -327,14 +335,17 @@
 												plus.nativeUI.alert("支付成功");
 												var result = JSON.stringify(result);
 												kindType();
+												payOk(data.message);
 											}, function(e) {
 												console.log("----- 支付失败 -----");
 												console.log("[" + e.code + "]：" + e.message);
 												plus.nativeUI.closeWaiting();
 												plus.nativeUI.alert("支付失败");
 											});
+										}else{
+											mui.toast(data.message);
 										}
-	
+
 									},
 									error:function(xhr, type, errorThrown) {
 										//异常处理；
@@ -345,10 +356,10 @@
 										plus.nativeUI.alert("获取订单信息失败！");
 									}
 								});
-	
+
 							}
 						}
-	
+
 					}
 
 				}
@@ -358,7 +369,7 @@
 				event.stopPropagation()
 			})
 			$('.closeMask').click(function() {
-				event.preventDefault(); 
+				event.preventDefault();
 				$('#maskInfo').fadeOut(200);
 			})
 		</script>

@@ -77,7 +77,7 @@
 									<% }else{%>
 										<a><img class="loadPics" src="../../img/loadBack.svg"/></a>
 									<% }%>
-									 
+
 								</p>
 								<div class="orderInfo">
 									共<%= list[i].count%>件商品 退款金额：<span>¥ <%= list[i].returnPrice%></span>
@@ -97,7 +97,7 @@
 							</div>
 						<% } %>
 					<%}%>
-				</script> 
+				</script>
 				<!--评价列表-->
 				<script id="infoListP2" type="text/html">
 					<%for(var i=0;i<list.length;i++){%>
@@ -115,7 +115,7 @@
 									<% }else{%>
 										<a><img class="loadPics" src="../../img/loadBack.svg"/></a>
 									<% }%>
-									
+
 								</p>
 								<% if(pj != 1){%>
 									<div class="orderInfo">
@@ -265,9 +265,9 @@
 								clearTimeout(timeLoad),timeLoad = null;
 								if(data.code == 0){
 									$('#loadingdiv').css('height','0px');
-									if(data.content){
-										if(pingjia){ 
-											document.getElementById('infoListDiv').innerHTML = template('infoListP2',{list:data.content,nowState:tabT,pj:1});
+									if(data.content.list && data.content.list.length){
+										if(pingjia){
+											document.getElementById('infoListDiv').innerHTML = template('infoListP2',{list:data.content.list,nowState:tabT,pj:1});
 										}else{
 											document.getElementById('infoListDiv').innerHTML = template('infoList',{list:data.content.list,nowState:tabT});
 										}
@@ -298,8 +298,8 @@
 						                                if(data.code == 0){
 															$('#loadingdiv').css('height','0px');
 															if(data.content){
-																if(pingjia){
-																	document.getElementById('infoListDiv').innerHTML += template('infoListP2',{list:data.content,nowState:tabT,pj:1});
+																if(data.content.list && data.content.list.length){
+																	document.getElementById('infoListDiv').innerHTML += template('infoListP2',{list:data.content.list,nowState:tabT,pj:1});
 																}else{
 																	document.getElementById('infoListDiv').innerHTML += template('infoList',{list:data.content.list,nowState:tabT});
 																}

@@ -120,8 +120,8 @@
 				var contactOne = [{name:selectName,phone:selectTel}];
 				plus.storage.setItem("contactOne",JSON.stringify(contactOne));
 				var nowhtmlName = plus.webview.currentWebview().htmlName;//跳转过来的页面
-				mui.confirm('确定选择\n'+selectName+': '+selectTel,function(e){
-				    if(e.index==0){
+				mui.confirm(selectName+': '+selectTel,'确定选择',['取消','确定'],function(e){
+				    if(e.index==1){
 				    		mui.fire(plus.webview.getWebviewById(nowhtmlName),'resetTel');
 						mui.fire(plus.webview.getWebviewById(nowhtmlName),'resetTel2');
 						plus.webview.currentWebview().close();

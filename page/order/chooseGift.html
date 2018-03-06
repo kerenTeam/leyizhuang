@@ -54,7 +54,7 @@
 
 				<dt data-id="<%=list[i].promotionId%>" data-enjoyTimes="<%=list[i].enjoyTimes%>" data-max="<%=list[i].maxChooseNumber%>">
 					<!--<div class="mui-checkbox"><input name="checkbox" class="groupCheck cssp" type="checkbox"></div>-->
-					<div class="shopName" style="white-space: nowrap;overflow: hidden;max-width:2.5rem;">
+					<div class="shopName" style="white-space: nowrap;overflow: hidden;max-width:89%;">
 						<%=list[i].promotionTitle%> 最多可选<%=list[i].maxChooseNumber%>个商品 --
 						<%if(list[i].isGiftOptionalQty){%>
 							可任选数量
@@ -84,7 +84,7 @@
 							</div>
 							<span class="activecl2 ft15">¥<span class="price"><%=list[i].giftList[j].retailPrice%></span></span>
 							<div class="numberWidget">
-								
+
 									<%if(list[i].isGiftOptionalQty){%>
 										<div class="mui-numbox" data-numbox-min='1'>
 											<button class="mui-btn mui-btn-numbox-minus" type="button">-</button>
@@ -98,7 +98,7 @@
 											<button class="mui-btn mui-btn-numbox-plus" type="button">+</button>
 										</div>
 									<%}%>
-								
+
 							</div>
 						</div>
 
@@ -211,7 +211,7 @@
 								var idobj = JSON.parse(plus.storage.getItem('materialList') || '[]');
 								plus.storage.setItem('orderGoodsList', JSON.stringify(idobj));
 								plus.storage.setItem('giftList', '[]');
-								
+
 								if(identityT == 3) {
 									openview({
 										view: 'workerMaterial.html',
@@ -238,7 +238,7 @@
 										plus.webview.getWebviewById("chooseGift").close();
 									}
 								}, 800)
-								
+
 							}
 							//下一步
 							$('.goOrder').unbind('click').click(function() {
@@ -285,7 +285,7 @@
 									}
 								})
 								plus.storage.setItem('giftList', JSON.stringify(giftList));
-								
+
 								if(identityT == 3) {
 									openview({
 										view: 'workerMaterial.html',
