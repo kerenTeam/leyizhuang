@@ -115,14 +115,14 @@
 										地址:<%=list[i].shippingAddress%>
 									</div>
 									<div class="orderInfo">
-										共<%= list[i].count%>件商品 合计：<span>¥ <%= list[i].price%></span>
+										共<%= list[i].count%>件商品 合计：<span>¥ <%= list[i].amountPayable%></span>
 									</div>
 									<!--显示状态按钮-->
 									<div class="orderBtns">
 										<!--待付款：UNPAID，待发货：PENDING_SHIPMENT，待收货：PENDING_RECEIVE，已取消：CANCELED，取消中：CANCELING，已完成：FINISHED，拒签：REJECTED，已结案：CLOSED。-->
 										<% if(list[i].deliveryType == '送货上门' || list[i].deliveryType == '门店自提'){%>
 											<% if(list[i].status == 'UNPAID'){%>
-												<span class="redC aClick" onclick="goToPay('<%= list[i].orderNo%>','<%= list[i].price%>')">去支付</span>
+												<span class="redC aClick" onclick="goToPay('<%= list[i].orderNo%>','<%= list[i].amountPayable%>')">去支付</span>
 											<% }%>
 											<% if(list[i].status == 'UNPAID' || list[i].status == 'PENDING_SHIPMENT'){%>
 												<span class="aClick" onclick="cancelFun('<%= list[i].orderNo%>',this)">取消订单</span>

@@ -546,7 +546,7 @@
 			<%}%>
 			<br />
 		</script>
-		
+
 		<div class="upload text-center text-xs gray" id="upload"></div>
 		<script src="js/mui.min.js"></script>
 		<script src="js/util.js"></script>
@@ -582,12 +582,12 @@
 				    id:'consultTel',
 				    styles:{
 				  	  	background:'transparent',
-				  	  	
+
 				    },
 				    waiting: {autoShow:false},
 				    show:{
 				      aniShow:'slide-in-bottom',//页面显示动画，默认为”slide-in-right“；
-				     
+
 				    }
 				})
 			}
@@ -611,7 +611,7 @@
 					},1000)
 				}
 				clientId = clientId || plus.storage.getItem('clientId') || '2a6949289914e07285a00b75f0753f59';
-				
+
 				var deviceId = plus.device.uuid;
 				plus.storage.setItem('platform',systemType)
 				plus.storage.setItem('clientId',clientId)
@@ -837,7 +837,7 @@
 							console.log('响应失败');
 						}
 					});
-					
+
 					//icon
 					function getIcon(icontype){
 						mui.ajax(oCms + '/index.php/ApiCms/iconList', {
@@ -947,8 +947,8 @@
 							console.log('响应失败');
 						}
 					});
-					
-					
+
+
 					//常购商品列表
 					mui.ajax(serverUrl + '/app/goods/often/list', {
 						data: {
@@ -1126,7 +1126,7 @@
 						})
 					}
 				})
-				
+
 			}
 			function debateQuery(){
 				openview({
@@ -1140,7 +1140,7 @@
 					id:'debateAudit'
 				})
 			}
-			function delivery(){ 
+			function delivery(){
 				//打开订单，
 				openview({
 					view:'page/personal/myOrderList.html',
@@ -1285,7 +1285,7 @@
 				if(cartNum>999){
 					cartNum= '999+'
 				}
-				
+
 				document.addEventListener('cart_refresh', function() {
 					//获取购物车数量
 					cartNum = plus.storage.getItem('cartNums');
@@ -1316,6 +1316,7 @@
 //					//登录-》退出登录
 //					util.toggleNview(3);
 //				})
+
 				document.addEventListener('pagerefresh', function() {
 					util.toggleNview(0);
 					util.changeSubpage(targetPage, activePage, aniShow);
@@ -1458,12 +1459,12 @@
 					    id:'quicklyOrder',
 					    styles:{
 					  	  	background:'transparent',
-					  	  	
+
 					    },
 					    waiting: {autoShow:false},
 					    show:{
 					      aniShow:'slide-in-bottom',//页面显示动画，默认为”slide-in-right“；
-					     
+
 					    }
 					})
 				});
