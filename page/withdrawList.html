@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<title>申请列表</title>
+		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, width=device-width">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-touch-fullscreen" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="format-detection" content="telephone=no">
+		<meta name="format-detection" content="address=no">
+		<link rel="stylesheet" type="text/css" href="../css/mui.min.css" />
+		<link rel="stylesheet" type="text/css" href="../css/commonY.css">
+		<link rel="stylesheet" type="text/css" href="../css/indexY.css">
+		<link rel="stylesheet" href="../css/resetY.css">
+		<link rel="stylesheet" type="text/css" href="../css/configW.css" />
+		<script type="text/javascript" src="../js/jquery.min.js"></script>
+		<script src="../js/mui.min.js" type="text/javascript"></script>
+		<style type="text/css">
+			.notice li.active {
+				border-bottom: 2px solid #B62D29;
+				box-sizing: border-box;
+				color: #B62D29;
+			}
+			
+			.tab-hd {
+				height: 45px !important;
+				border-bottom: 1px solid #EFEFF4 !important;
+			}
+			
+			.tab-nav li {
+				height: 45px !important;
+			}
+			
+			body {
+				background-color: #f3f3f3;
+			}
+			
+			.mui-bar-nav {
+				box-shadow: none !important;
+			}
+			
+			header.mui-bar {
+				z-index: 200;
+			}
+			
+			.notice .tab-hdtwo li {
+				width: 20%;
+			}
+			
+			.checkList {
+				background-color: #fff;
+				margin-top: 10px;
+			}
+			
+			.checkList h4 {
+				font-size: 14px;
+				padding: 12px 10px;
+			}
+			
+			.checkList h4 .h4span3 {
+				float: right;
+				color: #B62D29;
+			}
+			
+			.checkList h4 .h4span2 {
+				margin-left: 3%;
+			}
+			
+			.checkListCon {
+				padding: 10px;
+				white-space: nowrap;
+			}
+			
+			.checkListCon img {
+				width: 23%;
+				float: left;
+				margin-left: 1.6%;
+			}
+			
+			.checkListDZ {
+				padding: 10px;
+				color: #757575;
+			}
+			
+			.checkListB {
+				padding: 10px 20px;
+				text-align: right;
+			}
+			
+			#infoListDiv {
+				transition: all .3s;
+			}
+			
+			.padd5 {
+				padding: 5px 0;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav fineB fineB1">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left bigSize"></a>
+			<h1 class="mui-title">申请列表</h1>
+		</header>
+		<script src="../js/statusBar.js"></script>
+		<!--状态栏-->
+		<div id="main" style="padding-top: 0!important;">
+			<div class="notice">
+				<div class="tab-hd tab-hdtwo" id="tabLink" style="position: fixed;top: 70px;width: 100%;height: 40px;z-index: 999;">
+					<ul class="tab-nav">
+						<li class="active aClick" data-statusId="0">待审核<span id="waitCheck" style="display: none;" class="mui-badge mui-badge-danger"></span></li>
+						<li class="aClick" data-statusId="1">申请通过</li>
+						<li class="aClick" data-statusId="2">申请退回</li>
+						<li class="aClick" data-statusId="3">已打款</li>
+						<li class="aClick" data-statusId="4">已取消</li>
+					</ul>
+				</div>
+				<!--列表loading-->
+				<div id="loadingdiv" style="text-align: center;font-size: 14px;height:32px;
+					line-height: 30px;color: #666;-webkit-transition: all .3s;overflow: hidden;margin-top: 40px;">
+					<img style="width: 30px;margin-top:5px;" src="../img/Rolling.svg" />
+				</div>
+				<!--列表loading结束-->
+				<div id="infoListDiv">
+					<!--内容-->
+				</div>
+				<div class="upload text-center text-xs gray" id="upload"></div>
+				<script id="infoList" type="text/html">
+					<%for(var i=0;i<list.length;i++){%>
+					<div class="checkList">
+						<h4 class="afterBorder">
+								<span class="ft13">申请单号：<%=list[i].applyNo%></span>
+								<span class="h4span3">
+									<%if(list[i].status == 'CHECKING'){%>
+										待审核
+									<%}else if(list[i].status == 'CHECKPASS'){%>
+										申请通过
+									<%}else if(list[i].status == 'CHECKRETURN'){%>
+										申请退回
+									<%}else if(list[i].status == 'REMITED'){%>
+										已打款
+									<%}else if(list[i].status == 'CANCEL'){%>
+										已取消
+									<%}%>
+								</span>
+							</h4>
+						<div class="pad10 maincl ft16">
+							<div class="padd5">
+								申请时间：
+								<%=list[i].createTime%>
+							</div>
+							<div class="padd5">
+								提现金额：￥
+								<%=list[i].withdrawAmount%>
+							</div>
+							<div class="padd5">
+								转出账号：
+								支付宝
+								<%=list[i].account%>
+							</div>
+							<div class="padd5">
+								联系人：
+								<%=list[i].applyStName || list[i].applyCusName%>
+								<a class="ft16" href="tel:<%=list[i].applyStPhone || list[i].applyCusPhone%>">
+									<%=list[i].applyStPhone || list[i].applyCusPhone%> <img style="width: 25px;" src="../images/center/tel.svg" alt="" /></a>
+							</div>
+						</div>
+						<%if(list[i].status == 'CHECKING'){%>
+							<div class="pad15 beforeBorder" style="overflow: hidden;" onclick="cancel('<%=list[i].id%>',<%=statusIndex%>)">
+								<button type="button" class="mui-btn mui-btn-danger mui-pull-right">取消</button>
+							</div>
+
+						<%}%>
+					</div>
+					<%}%>
+
+				</script>
+			</div>
+		</div>
+	</body>
+	<script src="../js/default.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../js/artTemplate-native.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		function goInfo(audi, status) {
+			openview({
+				view: 'listCheckInfo.html',
+				id: 'listCheckInfo',
+				extrasobj: {
+					audioNo: audi,
+					audioStatus: status
+				}
+			})
+		}
+		mui.plusReady(function() {
+			var userId = plus.storage.getItem('$userId');
+			var oldToken = plus.storage.getItem("oldToken");
+			var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
+console.log('token',oldToken)
+			$('#tabLink li').click(function() {
+				$('#tabLink li').removeClass('active');
+				$(this).addClass('active');
+				$('#loadingdiv').css('height', '32px');
+				loadFun($(this).index());
+			})
+			document.addEventListener('refresh', function(event) {
+				plus.webview.currentWebview().reload()
+			});
+			loadFun(0);
+			window.cancel = function(applyId,statusIndex){
+				mui.confirm('确认取消申请吗？', '提示', ['取消', '确定'], function(e) {
+					if(e.index == 1) {
+						plus.nativeUI.showWaiting();
+						if(identityT == 6){
+							var url = '/app/user/cus/apply/cancel';
+							var apidata = {"applyId":applyId,"identityType":identityT,cusId:userId}
+						}else{
+							var url = '/app/user/st/apply/cancel';
+							var apidata = {"applyId":applyId,"identityType":identityT,stId:userId}
+						}
+						mui.ajax(serverUrl+url, { //改密
+							data: apidata,
+							dataType: 'json',
+							type: 'post',
+							timeout: 10000,
+							headers: {
+								"Authorization": oldToken
+							},
+							success: function(data) {
+								console.log('取消提现返回' + JSON.stringify(data));
+								if(data.code == 0) {
+									plus.nativeUI.closeWaiting();
+									mui.toast("已取消提现");
+									loadFun(statusIndex)
+								} else {
+									plus.nativeUI.closeWaiting();
+									mui.toast(data.message);
+								}
+							},
+							error: function(xhr, type, errorThrown) {
+								plus.nativeUI.closeWaiting();
+								console.log('提现响应失败');
+							}
+						});
+					}
+				})
+			}
+			function loadFun(index) {
+				var Spagenum = 2,
+					Ypagenum = 1,
+					oneSize = 6;
+				if(identityT == 6) {
+					var url = '/app/user/cus/apply/list';
+					var apiData = {
+						'cusId': userId,
+						'status': index,
+						'identityType': identityT,
+						'page': 1,
+						'size': oneSize
+					}
+				} else {
+					var url = '/app/user/st/apply/list';
+					var apiData = {
+						'stId': userId,
+						'status': index,
+						'identityType': identityT,
+						'page': 1,
+						'size': oneSize
+					}
+				}
+				document.getElementById('upload').innerHTML = document.getElementById('infoListDiv').innerHTML = " ";
+				$(window).unbind('scroll');
+				mui.ajax(serverUrl + url, {
+					data: apiData,
+					dataType: 'json',
+					type: 'post',
+					timeout: 10000,
+					headers: {
+						"Authorization": oldToken
+					},
+					success: function(data, type, xhr) {
+						console.log("申请列表", data);
+						var timeLoad = setInterval(function() {
+							clearTimeout(timeLoad), timeLoad = null;
+							if(data.code == 0) {
+								$('#loadingdiv').css('height', '0px');
+								if(data.content.list && data.content.list.length) {
+									for(var i in data.content.list){
+										var dt2 = new Date(data.content.list[i].createTime);
+										var date2 = [
+										  [dt2.getFullYear(), dt2.getMonth() + 1, dt2.getDate()].join('-'),
+										  [dt2.getHours(), dt2.getMinutes(), dt2.getSeconds()].join(':')
+										].join(' ').replace(/(?=\b\d\b)/g, '0'); // 正则补零
+										data.content.list[i].createTime = date2;
+									}
+									document.getElementById('infoListDiv').innerHTML = template('infoList', {
+										list: data.content.list,statusIndex:index
+									});
+									//下拉加载
+									$(window).scroll(function() {
+										if(identityT == 6) {
+											url = '/app/user/cus/apply/list';
+											apiData = {
+												'cusId': userId,
+												'status': index,
+												'identityType': identityT,
+												'page': Spagenum,
+												'size': oneSize
+											}
+										} else {
+											url = '/app/user/st/apply/list';
+											apiData = {
+												'stId': userId,
+												'status': index,
+												'identityType': identityT,
+												'page': Spagenum,
+												'size': oneSize
+											}
+										}
+										var scrollTop = SH0 = $(this).scrollTop(),
+											scrollHeight = $(document).height(),
+											windowHeight = $(this).height();
+										if(scrollTop + windowHeight == scrollHeight) {
+											if(Spagenum <= data.content.pages && Spagenum == Ypagenum + 1) { //当前页小于等于总页数时请求下一页
+												document.getElementById('upload').innerHTML = "<img src='../img/Rolling.svg' />";
+												Ypagenum++;
+												console.log('发起请求,实到' + Spagenum + '页');
+												console.log('发起请求,应到' + Ypagenum + '页');
+												mui.ajax(serverUrl + url, {
+													data: apiData,
+													dataType: 'json',
+													type: 'post',
+													timeout: 10000,
+													headers: {
+														"Authorization": oldToken
+													},
+													success: function(data, type, xhr) {
+														console.log('续申请列表', data);
+														if(data.code == 0) {
+															if(data.content.list && data.content.list.length) {
+																for(var i in data.content.list){
+																	var dt2 = new Date(data.content.list[i].createTime);
+																	var date2 = [
+																	  [dt2.getFullYear(), dt2.getMonth() + 1, dt2.getDate()].join('-'),
+																	  [dt2.getHours(), dt2.getMinutes(), dt2.getSeconds()].join(':')
+																	].join(' ').replace(/(?=\b\d\b)/g, '0'); // 正则补零
+																	data.content.list[i].createTime = date2;
+																}
+																document.getElementById('infoListDiv').innerHTML += template('infoList', {
+																	list: data.content.list,statusIndex:index
+																});
+															}
+														}
+														document.getElementById('upload').innerHTML = '';
+														Spagenum++;
+														console.log('成功+1,实到' + Spagenum);
+														console.log('成功+1,应到' + Spagenum);
+													},
+													error: function(xhr, type, errorThrown) {
+														Ypagenum--;
+														document.getElementById('upload').innerHTML = '';
+													}
+												});
+											} else if(Spagenum == data.content.pages + 1) { //当前页不小于等于总页数时请求下一页
+												document.getElementById('upload').innerHTML = "没有更多了";
+											}
+										}
+									});
+									//下拉加载结束
+								} else {
+									document.getElementById('infoListDiv').innerHTML = '<div style="text-align: center;padding: 50px;"><img src="../images/order/order.png" style="width: 100px;" /><div class="ft13 disablecl">暂无数据</div></div>';
+								}
+
+							} else {
+								mui.toast(data.message);
+							}
+						}, 500)
+					},
+					error: function(xhr, type, errorThrown) {
+						console.log('响应失败  !');
+					}
+				});
+			}
+
+		})
+	</script>
+
+</html>

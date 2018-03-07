@@ -395,11 +395,11 @@
 		<script src="js/default.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
 			//测试推送
-//			mui('#mypic')[0].onclick = function(){
-//				plus.push.clear();
-//				//plus.push.createMessage( "title", '{"banner": "page/personal/myOrderWL.html&CD_XN20180105165333296343","info": "推送跳转页面","type":"localIos"}', {cover:false} );
-//				plus.push.createMessage("哈哈","{'banner':'page/guide/debateAudit.html','info':'推送跳转页面','type':'localIos'}", {cover:false});
-//			}
+			mui('#mypic')[0].onclick = function(){
+				plus.push.clear();
+				plus.push.createMessage( "欠款审核", '{"banner": "page/guide/debateAudit.html","info": "推送跳转页面","type":"localIos"}', {cover:false} );
+//				plus.push.createMessage("哈哈","{'banner':'page/guide/debateAudit.html&1','info':'推送跳转页面','type':'localIos'}", {cover:false});
+			}
 
 //			mui('#mypic')[0].onclick = function(){
 //
@@ -408,7 +408,7 @@
 
 			//推送
 			function bannerGo(url,info){
-				mui.alert(url+' '+info);
+//				mui.alert(url+' '+info);
 				mui.plusReady(function(){
 					if(url.indexOf('http')>-1 || url.indexOf('HTTP')>-1){//远程
 							openview({//用于banner页面
@@ -424,7 +424,7 @@
 						var localId = url.split('&')[1],
 							localUrl = url.split('&')[0],
 							localUId = url.split('&')[2] || -1;
-							mui.alert(localUrl+" "+localId+" "+localUId)
+//							mui.alert(localUrl+" "+localId+" "+localUId)
 						if(plus.storage.getItem('oldToken')){
 							 openview({
 								view: localUrl,
@@ -448,41 +448,46 @@
 				})
 
 			}
-			document.addEventListener( "plusready", function(){
-			    // 监听点击消息事件
-			    plus.push.addEventListener( "click", function( pushInfo ) {
-			    		console.log('监听click消息' , pushInfo);
-			    		if(JSON.stringify(pushInfo).indexOf('body')==-1){
-			    			//安卓点击，ios receive消息的本地点击
-			    			var pushMsg = JSON.parse(pushInfo.payload);
-						bannerGo(pushMsg.banner,pushMsg.info,'one');
-			    		}else{
-			    			//ios后台对应的 点击
-						var pushMsg = pushInfo.payload.payload;
-						bannerGo(pushMsg.banner,pushMsg.info,'one');
-			    		}
-			    }, false );
-
-			    // 监听在线消息事件（ios）
-			    plus.push.addEventListener( "receive", function( pushInfo ) {
-			    		//IOS : receive => 创建本地消息 => 点击友执行上面监听的click事件
-			    		console.log('监听receive消息' + JSON.stringify(pushInfo));
-			    		//3. IOS平台本地创建本地消息会触发“receive”事件，如何和服务器发送的消息进行区分.
-			    		//答： 用户在创建IOS本地消息是可以在“payload”节点添加特殊标记对消息进行区分
-			    		if(JSON.stringify(pushInfo).indexOf('localIos') == -1){
-			    			if (pushInfo.aps == null || pushInfo.aps == 'null' || !pushInfo.aps) {//receive模式接收到在线APNS消息
-				        		pushInfo.payload.type = 'localIos';
-							var payloadLocal = JSON.stringify(pushInfo.payload);
-				        		plus.push.createMessage( pushInfo.title, payloadLocal, {cover:false} );
-				        } else {
-				        		pushInfo.payload.payload.type = 'localIos';
-							var payloadLocal = JSON.stringify(pushInfo.payload.payload);
-				        		plus.push.createMessage( pushInfo.payload.title, payloadLocal, {cover:false} );
-				        }
-			    		}
-			    }, false );
-
-			}, false );
+				clearInterval(getClientid)
+				document.addEventListener( "plusready", function(){
+			var getClientid = setInterval(function(){
+					
+				    // 监听点击消息事件
+				    plus.push.addEventListener( "click", function( pushInfo ) {
+				    		console.log('监听click消息' , pushInfo);
+				    		if(JSON.stringify(pushInfo).indexOf('body')==-1){
+				    			//安卓点击，ios receive消息的本地点击
+				    			var pushMsg = JSON.parse(pushInfo.payload);
+							bannerGo(pushMsg.banner,pushMsg.info,'one');
+				    		}else{
+				    			//ios后台对应的 点击
+							var pushMsg = pushInfo.payload.payload;
+							bannerGo(pushMsg.banner,pushMsg.info,'one');
+				    		}
+				    }, false );
+	
+				    // 监听在线消息事件（ios）
+				    plus.push.addEventListener( "receive", function( pushInfo ) {
+				    		//IOS : receive => 创建本地消息 => 点击友执行上面监听的click事件
+				    		console.log('监听receive消息' + JSON.stringify(pushInfo));
+				    		//3. IOS平台本地创建本地消息会触发“receive”事件，如何和服务器发送的消息进行区分.
+				    		//答： 用户在创建IOS本地消息是可以在“payload”节点添加特殊标记对消息进行区分
+				    		if(JSON.stringify(pushInfo).indexOf('localIos') == -1){
+				    			if (pushInfo.aps == null || pushInfo.aps == 'null' || !pushInfo.aps) {//receive模式接收到在线APNS消息
+					        		pushInfo.payload.type = 'localIos';
+								var payloadLocal = JSON.stringify(pushInfo.payload);
+					        		plus.push.createMessage( pushInfo.title, payloadLocal, {cover:false} );
+					        } else {
+					        		pushInfo.payload.payload.type = 'localIos';
+								var payloadLocal = JSON.stringify(pushInfo.payload.payload);
+					        		plus.push.createMessage( pushInfo.payload.title, payloadLocal, {cover:false} );
+					        }
+				    		}
+				    }, false );
+	
+			},1000)
+				}, false );
+			
 			//推送结束
 
 		</script>
