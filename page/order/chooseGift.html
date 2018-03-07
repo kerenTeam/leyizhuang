@@ -52,10 +52,13 @@
 			<%for(var i = 0 ;i < list.length ; i++){%>
 			<dl class="cart">
 
-				<dt data-id="<%=list[i].promotionId%>" data-enjoyTimes="<%=list[i].enjoyTimes%>" data-max="<%=list[i].maxChooseNumber%>">
+				<dt style="height: 0.5rem;line-height: 1.6;padding: 3px;background-color:papayawhip ;" data-id="<%=list[i].promotionId%>" data-enjoyTimes="<%=list[i].enjoyTimes%>" data-max="<%=list[i].maxChooseNumber%>">
 					<!--<div class="mui-checkbox"><input name="checkbox" class="groupCheck cssp" type="checkbox"></div>-->
 					<div class="shopName" style="white-space: nowrap;overflow: hidden;max-width:89%;">
-						<%=list[i].promotionTitle%> 最多可选<%=list[i].maxChooseNumber%>个商品 --
+						<div id="">
+							<%=list[i].promotionTitle%>
+						</div>
+						最多可选<%=list[i].maxChooseNumber%>个商品 --
 						<%if(list[i].isGiftOptionalQty){%>
 							可任选数量
 						<%}else{%>

@@ -425,7 +425,7 @@
 								if(data.code == 0){
 									plus.nativeUI.alert("添加地址成功");
 									mui.fire(plus.webview.getWebviewById('address'),'refreshAd');
-//									plus.webview.currentWebview().close();
+									plus.webview.currentWebview().close();
 								}else{
 									mui.toast(data.message);
 								}

@@ -283,11 +283,26 @@
 //								var newArea = $('.areas1 option:selected').html();/*区*/
 //								var newStreet = $('.towns1 option:selected').html();/*街道*/
 								var defaultAddress = $('#acquiescence').hasClass('toggle--off');//默认地址
-								var newProvince = ' ';
-								var newCity = document.getElementById('province').innerHTML;
-								var newArea = document.getElementById('city').innerHTML;
-								var newStreet = document.getElementById('area').innerHTML;/*街道*/
-
+								 
+								var newCity='';
+								var newArea='';
+								var newStreet = '';
+								var mapStorage = JSON.parse(plus.storage.getItem('$mapStorage') || '[]'); 
+								console.log('dddjj',mapStorage)
+								 if(mapStorage.length){
+								 	if(mapStorage[0].province){
+								 		newProvince = mapStorage[0].province
+								 	}
+								 	if(mapStorage[0].city){
+								 		newCity = mapStorage[0].city
+								 	}
+								 	if(mapStorage[0].district){
+								 		newArea = mapStorage[0].district
+								 	} 
+								 	if(mapStorage[0].township){
+								 		newStreet = mapStorage[0].township
+								 	} 
+								 }
 								var xiaoquIn = document.getElementById('xiaoquIn').value;
 
 								var reg_phone = /^1((3|4|5|8|7){1}\d{1}|70)\d{8}$/;//手机号正则

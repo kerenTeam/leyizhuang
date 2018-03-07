@@ -50,6 +50,7 @@
 		<header class="mui-bar mui-bar-nav fineB" style="padding-right: 15px;">
 			<a id="leftbtn" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<h1 class="mui-title">门店预存款</h1>
+			<span class="mui-pull-right" style="margin-top: 12px;font-size: 16px!important;" onclick="tixian()">提现</span>
 		</header>
 		<script src="../../js/statusBar.js" type="text/javascript" charset="utf-8"></script>
 		<div class="mui-content">
@@ -103,7 +104,14 @@
 		<script src="../../js/artTemplate-native.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
 			mui.init();
-
+			function tixian(){
+				var mm = $('#balance').html().replace(/[^0-9]/g,"");
+				openview({
+					view:"../withdrawDeposit.html",
+					id:"withdrawDeposit",
+					extrasobj:{"balance":mm}
+				})
+			}
 			mui.plusReady(function(){
 				//获取缓存
 				var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;

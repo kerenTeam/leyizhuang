@@ -1809,7 +1809,8 @@
 			"page/guide/storePreDepositb.html": {
 				"resources": [],
 				"refer": [
-					"page/personal/recharge.html"
+					"page/personal/recharge.html",
+					"page/withdrawDeposit.html"
 				],
 				"priority": 0
 			},

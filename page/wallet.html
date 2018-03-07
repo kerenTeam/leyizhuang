@@ -105,9 +105,12 @@
 		<script type="text/javascript">
 			mui.init();
 			function tixian(){
+				var mm = $('#balance').html().replace(/[^0-9]/g,"");
 				openview({
 					view:"withdrawDeposit.html",
-					id:"withdrawDeposit" 
+					id:"withdrawDeposit",
+					extrasobj:{"balance":mm}
+					
 				})
 			}
 			mui.plusReady(function(){

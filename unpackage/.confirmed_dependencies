@@ -1284,7 +1284,8 @@
   },
   "page/guide/storePreDepositb.html": {
     "refer": [
-      "page/personal/recharge.html"
+      "page/personal/recharge.html",
+      "page/withdrawDeposit.html"
     ],
     "resources": []
   },

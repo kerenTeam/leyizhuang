@@ -405,12 +405,17 @@
 //
 //				mui.fire(plus.webview.getWebviewById('HBuilder'),'pagerefresh');
 //			}
-
+			var getClientid = null;
 			//推送
 			function bannerGo(url,info){
 //				mui.alert(url+' '+info);
 				mui.plusReady(function(){
-					if(url.indexOf('http')>-1 || url.indexOf('HTTP')>-1){//远程
+					if(url.indexOf('http')>-1 || url.indexOf('HTTP')>-1){//远程 
+						clearInterval(getClientid)
+						
+						if(plus.webview.getWebviewById('bannerTpl')){
+							plus.webview.getWebviewById('bannerTpl').close()
+						}else{
 							openview({//用于banner页面
 								view: 'bannerTpl.html',
 								id: "bannerTpl",
@@ -419,24 +424,35 @@
 									bannerName: info
 								}
 							})
-					}else{//本地
+						}
 
+							
+					}else{//本地
+						clearInterval(getClientid)
 						var localId = url.split('&')[1],
 							localUrl = url.split('&')[0],
 							localUId = url.split('&')[2] || -1;
 //							mui.alert(localUrl+" "+localId+" "+localUId)
+						var cuweb = localUrl.replace('.html','')
+						
 						if(plus.storage.getItem('oldToken')){
-							 openview({
-								view: localUrl,
-								create: true,
-								extrasobj: {
-									type:localId,//订单列表
-									orderNo:localId,//订单详情
-									orderNo:localId,//物流详情
-									goodId:localId,//商品主页
-									tradeId:localId,//帖子详情： 帖子id
-								}
-							})
+//							if(plus.webview.getWebviewById(cuweb)){
+//								plus.webview.getWebviewById(cuweb).close()
+//							}else{
+								openview({
+									view: localUrl,
+									id:cuweb,
+									create: true,
+									extrasobj: {
+										type:localId,//订单列表
+										orderNo:localId,//订单详情
+										orderNo:localId,//物流详情
+										goodId:localId,//商品主页
+										tradeId:localId,//帖子详情： 帖子id
+									}
+								})
+//							}
+							 
 						}else{//没登陆直接打开登录页面
 							mui.toast('请登录');
 							openview({
@@ -448,9 +464,8 @@
 				})
 
 			}
-				clearInterval(getClientid)
 				document.addEventListener( "plusready", function(){
-			var getClientid = setInterval(function(){
+			getClientid = setInterval(function(){
 					
 				    // 监听点击消息事件
 				    plus.push.addEventListener( "click", function( pushInfo ) {
