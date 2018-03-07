@@ -425,7 +425,8 @@
       "page/guide/debateQuery.html",
       "page/personal/myOrderRTList.html",
       "page/guide/qrCode.html",
-      "page/guide/storePreDepositb.html"
+      "page/guide/storePreDepositb.html",
+      "page/personal/myOrderWL.html"
     ]
   },
   "cart.html": {
@@ -795,7 +796,8 @@
       "js/jquery.min.js"
     ],
     "refer": [
-      "page/personal/recharge.html"
+      "page/personal/recharge.html",
+      "page/withdrawDeposit.html"
     ]
   },
   "page/manager/backMoney.html": {
@@ -1340,6 +1342,13 @@
   "page/personal/myOrderRTdetail.html": {
     "refer": [
       "page/personal/myOrderWL.html"
-    ]
+    ],
+    "resources": []
+  },
+  "page/withdrawDeposit.html": {
+    "refer": [
+      "page/withdrawList.html"
+    ],
+    "resources": []
   }
 }

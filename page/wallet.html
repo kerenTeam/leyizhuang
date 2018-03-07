@@ -47,9 +47,10 @@
 	</head>
 
 	<body>
-		<header class="mui-bar mui-bar-nav fineB" style="padding-right: 15px;">
+		<header class="mui-bar mui-bar-nav fineB" style="padding-right: 15px;pointer-events: all;">
 			<a id="leftbtn" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-			<h1 class="mui-title">钱包</h1>
+			<h1 class="mui-title" style="pointer-events: all;">钱包</h1>
+			<span class="mui-pull-right" style="margin-top: 12px;font-size: 16px!important;" onclick="tixian()">提现</span>
 		</header>
 		<script src="../js/statusBar.js" type="text/javascript" charset="utf-8"></script>
 		<div class="mui-content">
@@ -103,7 +104,12 @@
 		<script src="../js/artTemplate-native.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
 			mui.init();
-
+			function tixian(){
+				openview({
+					view:"withdrawDeposit.html",
+					id:"withdrawDeposit" 
+				})
+			}
 			mui.plusReady(function(){
 				//获取缓存
 				var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
@@ -118,6 +124,7 @@
 				mui('#recharge')[0].onclick = function(){
 					openview({
 						view:"personal/recharge.html",
+						id:'recharge',
 						extrasobj:{money:$('#balance').text()}
 					})
 				}

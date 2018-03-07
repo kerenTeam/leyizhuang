@@ -383,6 +383,7 @@
 	bottom: 0;
     background: #cacaca;
     -webkit-transform: scaleY(.3);
+    transform: scaleY(.3);
 }
 .beforeBorder:after{
 	position: absolute;
@@ -393,6 +394,7 @@
 	top: 0;
     background: #cacaca;
     -webkit-transform: scaleY(.3);
+    transform: scaleY(.3);
 }
 .rightBorder:after{
 	position: absolute;
@@ -403,6 +405,7 @@
 	bottom: 0px;
     background: #cacaca;
     -webkit-transform: scaleX(.3);
+    transform: scaleX(.3);
 }
 .zanwei{
 	position: relative;

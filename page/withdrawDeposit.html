@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html class="ui-page-login">
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>余额转出申请</title>
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../css/commonY.css"/>
+		<link href="css/style.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../css/configW.css"/>
+		<style>
+			.area {
+				margin: 20px auto 0px auto;
+			}
+			
+			.mui-input-group:first-child {
+				margin-top: 20px;
+			}
+			
+			.mui-input-group label {
+				width: 36%;
+				border-right: 1px solid #EEEEEE;
+			}
+			
+			.mui-input-row label~input,
+			.mui-input-row label~select,
+			.mui-input-row label~textarea {
+				width: 60%;
+			}
+			
+			.mui-checkbox input[type=checkbox],
+			.mui-radio input[type=radio] {
+				top: 6px;
+			}
+			
+			.mui-content-padded {
+				margin-top: 25px;
+			}
+			
+			.mui-btn {
+				padding: 10px;
+			}
+			
+			.mui-input-row label~input,
+			.mui-input-row label~select,
+			.mui-input-row label~textarea {
+				margin-top: 1px;
+			}
+			.mui-input-row{padding: 10px 0!important;height: 60px!important;}
+			.tct{text-align: center;}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">余额转出申请</h1>
+			<span class="mui-pull-right" style="margin-top: 12px;font-size: 16px!important;" onclick="tixianList()">申请列表</span>
+		</header>
+		<script src="../js/statusBar.js" type="text/javascript" charset="utf-8"></script>
+		<div class="mui-content">
+			<form class="mui-input-group ft16" style="margin-top: 6px;">
+
+				<div class="mui-input-row">
+					<label>申请人</label>
+					<input id='pepoles' type="text" class="mui-input-clear mui-input" placeholder="请填写真实姓名">
+					 
+				</div>  
+				<div class="mui-input-row">
+					<label>联系方式</label>
+					<input id='telway' type="number" class="mui-input-clear mui-input" placeholder="请输入11位电话号码">
+				</div>
+				<div class="mui-input-row">
+					<label>支付宝账号</label>
+					<input id='aliaccount' type="text" class="mui-input-clear mui-input" placeholder="邮箱/手机号码">
+				</div>
+				<div class="mui-input-row">
+					<label>申请转出金额</label>
+					<input id='mostDraw' min="0" type="number" class="mui-input-clear mui-input" placeholder="">
+				</div>
+				<div class="padd10 activecl tct" id="">
+					最多可转出 <span id="mostMoney"></span>元
+				</div>
+			</form>
+			<div class="mui-content-padded">
+				<button id='sendMail' class="mui-btn mui-btn-block mui-btn-danger">提交</button>
+			</div>
+		</div>
+		<script src="../js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/default.js"></script>
+		<script>
+			mui.init();
+			function tixianList(){
+				openview({
+					view:"withdrawList.html",
+					id:"withdrawList" 
+				})
+			}
+			mui.plusReady(function() {
+				var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
+				var userId = plus.storage.getItem('$userId');
+				var oldToken = plus.storage.getItem('oldToken');
+				var sendButton = document.getElementById('sendMail');
+				var pepoles = document.getElementById('pepoles');
+				var telway = document.getElementById('telway');
+				var aliaccount = document.getElementById('aliaccount');
+				var mostDraw = document.getElementById('mostDraw');
+				var reg_phone = /^1((3|4|5|8|7){1}\d{1}|70)\d{8}$/;//手机号正则;
+				//个人信息
+				mui.ajax(serverUrl+'/app/user/homepage', {
+					data: {
+						userId: userId,
+						identityType: identityT
+					},
+					dataType: 'json',
+					headers: {
+						"Authorization": oldToken
+					},
+					type: 'post',
+					timeout: 10000,
+					success: function(data, type, xhr) {
+						console.log('个人信息', data);
+						if(data.code == 0) {
+							plus.nativeUI.closeWaiting();
+							if(data.content) {
+								if(data.content.name){
+									$('#pepoles').val(data.content.name);
+								}
+								if(data.content.mobile){
+									$('#telway').val(data.content.mobile);
+								}
+								if(data.content.balance){
+									$('#mostMoney').html('¥'+data.content.balance);
+									$('#mostDraw').attr("max",data.content.balance)
+								}else{
+									$('#mostDraw').attr("max",0)
+									$('#mostMoney').html(0)
+								}  
+							}
+						} else {
+							mui.toast(data.message)
+						}
+
+					},
+					error: function(xhr, type, errorThrown) {
+						plus.nativeUI.closeWaiting();
+						console.log('登录响应失败');
+					}
+				});
+				
+				
+				sendButton.addEventListener('tap', function() {
+
+					if(!pepoles.value) {
+						mui.toast('请输入申请人姓名')
+					} else if(!reg_phone.test(telway.value)) {
+						mui.toast('请输入正确的手机号')
+					}else if(!aliaccount.value) {
+						mui.toast('请输入支付宝账号')
+					} else if(!mostDraw.value) {
+						mui.toast('请输入提现金额')
+					} else if(Number(mostDraw.value) > Number($('#mostMoney').html())) {
+						mui.toast('最多提现'+$('#mostMoney').html()+"元")
+					} else { 
+						if(identityT == 6){
+							var url = '/app/user/cus/apply/withdraw'
+						}else{
+							var url = '/app/user/st/apply/withdraw'
+						}
+						plus.nativeUI.showWaiting();
+						mui.ajax(serverUrl+url, { //改密
+							data: {
+								"id": userId,
+								"identityType": identityT,
+								"realName":pepoles.value,
+								"realPhone":telway.value,
+								"accountType":"ALIPAY",
+								"account":aliaccount.value,
+								"amount":mostDraw.value
+							},
+							dataType: 'json',
+							type: 'post',
+							timeout: 15000,
+							headers: {
+								"Authorization": oldToken
+							},
+							success: function(data) {
+								console.log('提现返回' + JSON.stringify(data));
+								if(data.code == 0) {
+									plus.nativeUI.closeWaiting();
+									mui.fire(plus.webview.getWebviewById('wallet'),'refreash')
+									plus.nativeUI.alert("申请已经提交，工作人员会在1-2个工作日内进行处理，财务打款后系统会以短信的方式进行通知用户")
+									mui.back();
+								} else {
+									plus.nativeUI.closeWaiting();
+									mui.toast(data.message);
+								}
+							},
+							error: function(xhr, type, errorThrown) {
+								plus.nativeUI.closeWaiting();
+								console.log('提现响应失败');
+							}
+						});
+					}
+
+				}, false);
+
+			});
+		</script>
+	</body>
+
+</html>

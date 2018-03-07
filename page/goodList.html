@@ -21,8 +21,8 @@
  		.actspan{color: #B42E28;}
  		#end {
             position: fixed;
-            bottom: 100px;
-            right: calc(100vw * 0.25);
+            bottom: -100px;
+            right: calc(100vw * 0.3);
             width: 10px;
             height: 10px;
             visibility: hidden;
@@ -338,10 +338,22 @@
 										$('.toCart,.mui-numbox button').click(function() {
 											event.stopPropagation();
 										})
-										$('.mui-numbox-btn-plus').click(function() {
+										$('.toCart,.mui-numbox-btn-plus').unbind('click').click(function(event) {
 											event.stopPropagation();
-											var cur = $(this).get(0);
-											fly(cur);
+											var offset = $('#end').offset(),
+								                flyer = $('<img style="width:15px;" class="u-flyer" src="https://avatars3.githubusercontent.com/u/1778935?v=4"/>');
+									            flyer.fly({
+									                start: {
+									                    left:event.pageX,
+									                    top: event.pageY
+									                },
+									                end: {
+									                    left: offset.left,
+									                    top: offset.top,
+									                    // width: 20,
+									                    // height: 20
+									                }
+									            }); 
 										})
 										var platform = plus.storage.getItem('platform')
 										$('.mui-numbox input').click(function() {
@@ -562,24 +574,22 @@
 																		event.stopPropagation();
 																		
 																	})
-																	$('.mui-numbox-btn-plus').click(function() {
+																	$('.toCart,.mui-numbox-btn-plus').unbind('click').click(function(event) {
 																		event.stopPropagation();
-																		var cur = $(this).get(0);
-																		alert(cur.pageX)
 																		var offset = $('#end').offset(),
-														                flyer = $('<img style="width:15px;" class="u-flyer" src="https://avatars3.githubusercontent.com/u/1778935?v=4"/>');
-															            flyer.fly({
-															                start: {
-															                    left: cur.pageX,
-															                    top: cur.pageY
-															                },
-															                end: {
-															                    left: offset.left,
-															                    top: offset.top,
-															                    // width: 20,
-															                    // height: 20
-															                }
-															            });
+															                flyer = $('<img style="width:15px;" class="u-flyer" src="https://avatars3.githubusercontent.com/u/1778935?v=4"/>');
+																            flyer.fly({
+																                start: {
+																                    left:event.pageX,
+																                    top: event.pageY
+																                },
+																                end: {
+																                    left: offset.left,
+																                    top: offset.top,
+																                    // width: 20,
+																                    // height: 20
+																                }
+																            }); 
 																	})
 																	var platform = plus.storage.getItem('platform')
 																	$('.mui-numbox input').click(function() {

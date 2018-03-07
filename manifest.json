@@ -7,8 +7,8 @@
 	"id": "H570519A0",/*应用的标识，创建应用时自动生成，勿手动修改*/
 	"name": "乐易装",/*应用名称，程序桌面图标名称*/
 	"version": {
-		"name": "1.1.7",/*应用版本名称*/
-		"code": "117"
+		"name": "1.1.9",/*应用版本名称*/
+		"code": "119"
 	},
 	"description": "室内设计APP",/*应用描述信息*/
 	"icons": {
@@ -656,7 +656,8 @@
 					"js/default.js",
 					"css/configW.css",
 					"img/balls.svg",
-					"cart.html"
+					"cart.html",
+					"center.html"
 				],
 				"refer": [
 					"html/tab-webview-subpage-contact.html",
@@ -665,7 +666,6 @@
 					"page/ofenBuy.html",
 					"page/searchGoods.html",
 					"page/hotGoods.html",
-					"center.html",
 					"page/collect.html",
 					"page/personal/collect.html",
 					"page/goodsInfo.html",
@@ -857,7 +857,8 @@
 					"page/guide/debateQuery.html",
 					"page/personal/myOrderRTList.html",
 					"page/guide/qrCode.html",
-					"page/guide/storePreDepositb.html"
+					"page/guide/storePreDepositb.html",
+					"page/personal/myOrderWL.html"
 				],
 				"priority": 0
 			},
@@ -1285,7 +1286,8 @@
 					"js/jquery.min.js"
 				],
 				"refer": [
-					"page/personal/recharge.html"
+					"page/personal/recharge.html",
+					"page/withdrawDeposit.html"
 				],
 				"priority": 0
 			},
@@ -1874,6 +1876,13 @@
 				"resources": [],
 				"refer": [
 					"page/personal/myOrderWL.html"
+				],
+				"priority": 0
+			},
+			"page/withdrawDeposit.html": {
+				"resources": [],
+				"refer": [
+					"page/withdrawList.html"
 				],
 				"priority": 0
 			}
