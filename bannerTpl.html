@@ -57,6 +57,7 @@
 				}
 
 				mui('#shareBtn')[0].onclick = function(){
+
 					//示例
 					var msg = {
 						title:'分享测试',
@@ -66,7 +67,10 @@
 						pictures:['https://b-ssl.duitang.com/uploads/item/201709/08/20170908120614_mN5TE.thumb.224_0.jpeg']
 
 					};
-					showSfun1(msg,function(){},function(){});
+					var msg2 = {
+						pictures:["https://b-ssl.duitang.com/uploads/item/201709/08/20170908120614_mN5TE.thumb.224_0.jpeg"]
+					}
+					showSfun1(msg2,function(){},function(){});
 				}
 			})
 //			document.getElementById('iframe').src = localStorage.Burlname;

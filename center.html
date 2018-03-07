@@ -395,16 +395,9 @@
 		<script src="js/default.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
 			//测试推送
-//			mui('#mypic')[0].onclick = function(){
-//				plus.push.clear();
-//				//plus.push.createMessage( "title", '{"banner": "page/personal/myOrderWL.html&CD_XN20180105165333296343","info": "推送跳转页面","type":"localIos"}', {cover:false} );
-//				plus.push.createMessage("哈哈","{'banner':'page/guide/debateAudit.html','info':'推送跳转页面','type':'localIos'}", {cover:false});
-//			}
-
-//			mui('#mypic')[0].onclick = function(){
-//
-//				mui.fire(plus.webview.getWebviewById('HBuilder'),'pagerefresh');
-//			}
+			/*mui('#mypic')[0].onclick = function(){
+				plus.push.createMessage( "title", '{"banner": "page/personal/myOrderWL.html&CD_XN20180105165333296343","info": "推送跳转页面","type":"localIos"}', {cover:false} );
+			}*/
 
 			//推送
 			function bannerGo(url,info){
@@ -453,7 +446,7 @@
 			    plus.push.addEventListener( "click", function( pushInfo ) {
 			    		console.log('监听click消息' , pushInfo);
 			    		if(JSON.stringify(pushInfo).indexOf('body')==-1){
-			    			//安卓点击，ios receive消息的本地点击
+			    			//安卓点击，ios receive（前台）消息的本地点击
 			    			var pushMsg = JSON.parse(pushInfo.payload);
 						bannerGo(pushMsg.banner,pushMsg.info,'one');
 			    		}else{

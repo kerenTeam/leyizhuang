@@ -10,26 +10,30 @@
 		<link rel="stylesheet" type="text/css" href="../../css/configW.css"/>
 	</head>
 	<style type="text/css">
-		.qrcode{width: 70%;margin:40px auto;height: calc(100vw * 0.7);border-radius: 3px;padding: 10px;overflow: hidden;}
+		.qrcode{width: 70%;margin:40px auto;border-radius: 3px;padding: 10px;overflow: hidden;}
 		.imgcode{width: 100%;height: 100%;}
 	</style>
 
 	<body class='bgcwt'>
 		<header class="mui-bar mui-bar-nav fineB">
 		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left bigSize" style="margin-left: 0;"></a>
-		    <h1 class="mui-title">二维码</h1>  
+		    <h1 class="mui-title">二维码</h1>
+			<span class="mui-pull-right ft15 fenxiangCode" style="line-height: 50px;">
+				分享
+			</span>
 		</header>
 		<script src="../../js/statusBar.js" type="text/javascript" charset="utf-8"></script>
 		<div class="mui-content bgcwt">
 			<div class="qrcode pad15 bgcwt">
-				 <img class="imgcode" src="" data-preview-src="" data-preview-group="1"/>
+				 <img class="imgcode" src="../../img/Spinner.svg" data-preview-src="" data-preview-group="1"/>
 			</div>
-			
+
 		</div>
 		<script src="../../js/mui.min.js"></script>
 		<script src="../../js/mui.zoom.js"></script>
 		<script src="../../js/mui.previewimage.js"></script>
 		<script src="../../js/default.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/youxd.js"></script>
 		<script type="text/javascript">
 			mui.init();
 			mui.plusReady(function(){
@@ -49,13 +53,25 @@
 							mui('.imgcode')[0].src = data.content.qrCode;
 						}else{
 							mui('.imgcode')[0].src = '../../img/editset.png';
-							
+
 						}
 					},
 					error:function(xhr,type,errorThrown){
 						console.log('响应失败  !');
 					}
 				});
+				mui('.fenxiangCode')[0].onclick = function(){
+					if(mui('.imgcode')[0].src.indexOf('http')>-1){
+						var msg2 = {
+							myIsIndex2:true,
+							pictures:[mui('.imgcode')[0].src]
+						}
+						showSfun1(msg2,function(){},function(){});
+					}else{
+						mui.toast('图片加载中，请稍等一下');
+					}
+
+				}
 			})
 			mui.previewImage();
 		</script>

@@ -33,6 +33,7 @@
 			.checkListDZ{padding: 10px;color: #757575;}
 			.checkListB{padding: 10px 20px;text-align: right;}
 			#infoListDiv{transition: all .3s;}
+
 		</style>
 	</head>
 	<body>
@@ -177,7 +178,7 @@
 										$('#waitCheck').hide().html('')
 									}
 								}
-								
+
 								$('#loadingdiv').css('height','0px');
 								if(data.content.list && data.content.list.length){
 									document.getElementById('infoListDiv').innerHTML = template('infoList',{list:data.content.list});

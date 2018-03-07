@@ -132,6 +132,8 @@ function showSfun1(msg,fun1,fun0){
 		var pathStr = '';
 		if(msg.myIsIndex){
 			pathStr = '../';
+		}else if(msg.myIsIndex2){
+			pathStr = '../../';
 		}
 		if(!/android/i.test(navigator.userAgent)){
 			msg.thumbs = msg.pictures = [''];
@@ -229,7 +231,7 @@ function showSfun1(msg,fun1,fun0){
 	})
 }
 
-	//示例
+	// 链接示例
 	//var msg = {
 	//	title:'分享测试',
 	//	content:'分享测试内容',
@@ -238,5 +240,10 @@ function showSfun1(msg,fun1,fun0){
 	//	pictures:['https://b-ssl.duitang.com/uploads/item/201709/08/20170908120614_mN5TE.thumb.224_0.jpeg']
 	//
 	//};
+
+	// 分享图片示例
+	/*var msg2 = {
+		pictures:["https://b-ssl.duitang.com/uploads/item/201709/08/20170908120614_mN5TE.thumb.224_0.jpeg"]
+	}*/
 	//showSfun1(msg,function(){},function(){});
 //分享结束
