@@ -195,6 +195,7 @@
 								if(data.code == 0) {
 									plus.nativeUI.closeWaiting();
 									mui.fire(plus.webview.getWebviewById('wallet'),'refreash')
+									mui.fire(plus.webview.getWebviewById('storePreDepositb'),'refreash')
 									plus.nativeUI.alert("申请已经提交，工作人员会在1-2个工作日内进行处理，财务打款后系统会以短信的方式进行通知用户")
 									mui.back();
 								} else {
