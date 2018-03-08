@@ -517,15 +517,15 @@
 								$('#totalPriceb').html('0')
 							}
 							if(data.content.memberDiscount) {
-								$('#memberDiscount').html('¥' + data.content.memberDiscount)
+								$('#memberDiscount').html('-¥' + data.content.memberDiscount)
 							} else {
-								$('#memberDiscount').html('¥0')
+								$('#memberDiscount').html('0')
 							}
 							if(data.content.orderDiscount) {
-								$('#orderDiscount').html('¥' + data.content.orderDiscount);
+								$('#orderDiscount').html('-¥' + data.content.orderDiscount);
 								$('#firstOrderDiscount').val(data.content.orderDiscount)
 							} else {
-								$('#orderDiscount').html('¥0')
+								$('#orderDiscount').html('0')
 							}
 							if(data.content.freight) {
 								$('#freight').html('¥' + data.content.freight)
@@ -712,15 +712,15 @@
 									$('#totalPriceb').html('0')
 								}
 								if(data.content.memberDiscount) {
-									$('#memberDiscount').html('¥' + data.content.memberDiscount)
+									$('#memberDiscount').html('-¥' + data.content.memberDiscount)
 								} else {
-									$('#memberDiscount').html('¥0')
+									$('#memberDiscount').html('0')
 								}
 								if(data.content.orderDiscount) {
-									$('#orderDiscount').html('¥' + data.content.orderDiscount);
+									$('#orderDiscount').html('-¥' + data.content.orderDiscount);
 									$('#firstOrderDiscount').val(data.content.orderDiscount)
 								} else {
-									$('#orderDiscount').html('¥0')
+									$('#orderDiscount').html('0')
 								}
 								if(data.content.freight) {
 									$('#freight').html('¥' + data.content.freight)
@@ -1020,8 +1020,8 @@
 
 			function carculate() {
 				orderAll = $('#totalPriceb').html().replace('¥', ''); //订单金额
-				memberDiscount = $('#memberDiscount').html().replace('¥', ''); //会员折扣
-				orderDiscount = $('#orderDiscount').html().replace('¥', ''); //订单折扣
+				memberDiscount = $('#memberDiscount').html().replace('-¥', ''); //会员折扣
+				orderDiscount = $('#orderDiscount').html().replace('-¥', ''); //订单折扣
 				freight = $('#freight').html().replace('¥', ''); //运费
 				couponDiscount = $('#couponDiscount').val(); //优惠券折扣
 				credit = $('input[name="credit"]').val(); //信用金

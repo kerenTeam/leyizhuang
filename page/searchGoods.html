@@ -221,7 +221,7 @@
 				$("input").val($(this).text());
 				doSearch($.trim($(this).text()))
 			})
-
+				 
 			//搜索方法
 			$("input").focus(function() {
 				$(".latest").css("display", "block");
@@ -262,7 +262,9 @@
 			var userId = plus.storage.getItem('$userId');
 			var oldToken = plus.storage.getItem("oldToken");
 			var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
-
+			document.addEventListener('refresh', function() {
+				doSearch($.trim($('.fsearch').text()))
+			})
 			function doSearch(words) {
 				document.addEventListener('refreshct', function() {
 					getCartNum();
