@@ -777,7 +777,9 @@
 					"css/style.css",
 					"js/artTemplate-native.js"
 				],
-				"refer": [],
+				"refer": [
+					"cart.html"
+				],
 				"priority": 0
 			},
 			"page/hotGoods.html": {
