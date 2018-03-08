@@ -13,35 +13,37 @@
 			.area {
 				margin: 20px auto 0px auto;
 			}
-			
+
 			.mui-input-group:first-child {
 				margin-top: 20px;
 			}
-			
+
 			.mui-input-group label {
 				width: 36%;
 				border-right: 1px solid #EEEEEE;
+				position: relative;
 			}
-			
+			.redc{position: absolute;color: #B62D29;}
+
 			.mui-input-row label~input,
 			.mui-input-row label~select,
 			.mui-input-row label~textarea {
 				width: 60%;
 			}
-			
+
 			.mui-checkbox input[type=checkbox],
 			.mui-radio input[type=radio] {
 				top: 6px;
 			}
-			
+
 			.mui-content-padded {
 				margin-top: 25px;
 			}
-			
+
 			.mui-btn {
 				padding: 10px;
 			}
-			
+
 			.mui-input-row label~input,
 			.mui-input-row label~select,
 			.mui-input-row label~textarea {
@@ -49,6 +51,9 @@
 			}
 			.mui-input-row{padding: 10px 0!important;height: 60px!important;}
 			.tct{text-align: center;}
+			#pepoles::-webkit-input-placeholder {
+			    font-size: 14px;
+			}
 		</style>
 	</head>
 
@@ -63,20 +68,19 @@
 			<form class="mui-input-group ft16" style="margin-top: 6px;">
 
 				<div class="mui-input-row">
-					<label>申请人</label>
-					<input id='pepoles' type="text" class="mui-input-clear mui-input" placeholder="请填写真实姓名">
-					 
-				</div>  
+					<label>申请人<span class="redc"> *</span></label>
+					<input id='pepoles' type="text" class="mui-input-clear mui-input" placeholder="请填写支付宝账号的真实姓名">
+				</div>
 				<div class="mui-input-row">
-					<label>联系方式</label>
+					<label>联系方式<span class="redc"> *</span></label></label>
 					<input id='telway' type="number" class="mui-input-clear mui-input" placeholder="请输入11位电话号码">
 				</div>
 				<div class="mui-input-row">
-					<label>支付宝账号</label>
+					<label>支付宝账号<span class="redc"> *</span></label></label>
 					<input id='aliaccount' type="text" class="mui-input-clear mui-input" placeholder="邮箱/手机号码">
 				</div>
 				<div class="mui-input-row">
-					<label>申请转出金额</label>
+					<label>申请转出金额<span class="redc"> *</span></label></label>
 					<input id='mostDraw' min="0" type="number" class="mui-input-clear mui-input" placeholder="">
 				</div>
 				<div class="padd10 activecl tct" id="">
@@ -95,7 +99,7 @@
 			function tixianList(){
 				openview({
 					view:"withdrawList.html",
-					id:"withdrawList" 
+					id:"withdrawList"
 				})
 			}
 			mui.plusReady(function() {
@@ -127,7 +131,7 @@
 							plus.nativeUI.closeWaiting();
 							if(data.content) {
 								if(data.content.name){
-									$('#pepoles').val(data.content.name);
+									//$('#pepoles').val(data.content.name);
 								}
 								if(data.content.mobile){
 									$('#telway').val(data.content.mobile);
@@ -141,7 +145,7 @@
 								}else{
 									$('#mostDraw').attr("max",0)
 									$('#mostMoney').html(0)
-								}  
+								}
 							}
 						} else {
 							mui.toast(data.message)
@@ -153,8 +157,8 @@
 						console.log('登录响应失败');
 					}
 				});
-				
-				
+
+
 				sendButton.addEventListener('tap', function() {
 
 					if(!pepoles.value) {
@@ -167,7 +171,7 @@
 						mui.toast('请输入提现金额')
 					} else if(Number(mostDraw.value) > Number($('#mostMoney').html())) {
 						mui.toast('最多提现'+$('#mostMoney').html()+"元")
-					} else { 
+					} else {
 						if(identityT == 6){
 							var url = '/app/user/cus/apply/withdraw'
 						}else{

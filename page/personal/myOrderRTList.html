@@ -79,6 +79,9 @@
 									<% }%>
 
 								</p>
+								<!--<div class="pad10 afterBorder">
+									地址:<%=list[i].shippingAddress%>
+								</div>-->
 								<div class="orderInfo">
 									共<%= list[i].count%>件商品 退款金额：<span>¥ <%= list[i].returnPrice%></span>
 								</div>
@@ -117,6 +120,9 @@
 									<% }%>
 
 								</p>
+								<div class="pad10 afterBorder">
+									地址:<%=list[i].shippingAddress%>
+								</div>
 								<% if(pj != 1){%>
 									<div class="orderInfo">
 										共<%= list[i].count%>件商品 退款金额：<span>¥ <%= list[i].returnPrice%></span>
