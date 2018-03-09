@@ -13,40 +13,40 @@
 			.area {
 				margin: 20px auto 0px auto;
 			}
-			
+
 			.mui-input-group:first-child {
 				margin-top: 20px;
 			}
-			
+
 			.mui-input-group label {
 				width: 30%;
 			}
-			
+
 			.mui-input-row label~input,
 			.mui-input-row label~select,
 			.mui-input-row label~textarea {
 				width: 65%;
 			}
-			
+
 			.mui-checkbox input[type=checkbox],
 			.mui-radio input[type=radio] {
 				top: 6px;
 			}
-			
+
 			.mui-content-padded {
 				margin-top: 25px;
 			}
-			
+
 			.mui-btn {
 				padding: 10px;
 			}
-			
+
 			.mui-input-row label~input,
 			.mui-input-row label~select,
 			.mui-input-row label~textarea {
 				margin-top: 1px;
 			}
-			
+
 			#getCode {
 				border: none;
 				border-left: 1px solid #eee;
@@ -83,13 +83,13 @@
 					</div>
 				</form>
 				<div class="ft16" style="padding: 10px 10px 0;border-top: 5px solid #EEEEEE;">
-				状态备注	
+				状态备注
 				</div>
-				<textarea id="notice" rows="3" cols="" placeholder="输入您的备注" style="background-color: #DDDDDD;margin: 10px;width: calc(100vw - 20px);"></textarea>
+				<textarea id="notice" rows="3" placeholder="输入您的备注（最大可输入字数255字）" maxlength="255" style="background-color: #DDDDDD;margin: 10px;width: calc(100vw - 20px);"></textarea>
 				<div class="onepic newActionWrap">
 					<img src="../../images/center/camer.svg" onclick="showAction()"  style="width: 60px;padding: 10px;" />
 				 </div>
-				 
+
 			</div>
 			<div class="mui-content-padded">
 				<button id='send' class="mui-btn mui-btn-block mui-btn-danger">提交</button>
@@ -100,7 +100,7 @@
 		<script src="../../js/default.js" type="text/javascript" charset="utf-8"></script>
 		<script>
 			mui.init();
-			mui.plusReady(function() { 
+			mui.plusReady(function() {
 				var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
 				var userId = plus.storage.getItem('$userId');
 				var oldToken = plus.storage.getItem('oldToken');
@@ -135,7 +135,7 @@
 					}
 
 				});
-				  
+
 			});
 			//选择图片组件
 			var Apic = [],time1 = null,maxNum = 3;
@@ -236,7 +236,7 @@
 				}
 
 			}
-			
+
 			document.getElementById('send').onclick = function(){
 				mui.plusReady(function(){
 					var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
@@ -247,7 +247,7 @@
 					var flag = 0;
 					if(!money || money<=0){
 						flag = 1;
-					} 
+					}
 					var pickUpCode = $('#pickUpCode').val();
 					var truemoney = $('#truemoney').val();
 					var paymentMethod = $('.bdcA').text();
@@ -286,7 +286,7 @@
 								}
 							}
 						);
-	
+
 						task.setRequestHeader('Authorization',oldToken);
 						task.addData('userId',userId);
 						task.addData('identityType',identityT.toString());
@@ -295,7 +295,7 @@
 				        task.addData('collectionAmount',truemoney.toString());
 				        task.addData('paymentMethod',paymentMethod);
 				        task.addData('remarks',content);
-	
+
 						if(Apic.length){
 							console.log(Apic);
 							[].forEach.call(Apic,function(ele,index){

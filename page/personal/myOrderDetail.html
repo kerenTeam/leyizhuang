@@ -115,18 +115,54 @@
 					<span class="huiC">运费</span> <span class="floL"><%= detail.BillingDetailResponse.freight%>元</span>
 				</div>
 				<div>
-					<span class="huiC">优惠卷抵扣</span> <span class="floL"><%= detail.BillingDetailResponse.couponDiscount%>元</span>
+					<span class="huiC">优惠券抵扣</span> <span class="floL">
+						<%if(detail.BillingDetailResponse.couponDiscount>0){%>
+							-<%= detail.BillingDetailResponse.couponDiscount%>元
+						<%}else{%>
+							<%= detail.BillingDetailResponse.couponDiscount%>元
+						<%}%>
+					</span>
 				</div>
 				<div>
-					<span class="huiC">会员抵扣</span> <span class="floL"><%= detail.BillingDetailResponse.memberDiscount%>元</span>
+					<span class="huiC">会员抵扣</span> <span class="floL">
+						<%if(detail.BillingDetailResponse.memberDiscount>0){%>
+							-<%= detail.BillingDetailResponse.memberDiscount%>元
+						<%}else{%>
+							<%= detail.BillingDetailResponse.memberDiscount%>元
+						<%}%>
+					</span>
 				</div>
 				<%if(detail.identityT == '6'){%>
 					<div>
-						<span class="huiC">乐币抵扣</span> <span class="floL"> <%= detail.BillingDetailResponse.leBiCashDiscount || 0%>元</span>
+						<span class="huiC">乐币抵扣</span> <span class="floL">
+							<%if(detail.BillingDetailResponse.leBiCashDiscount>0){%>
+								-<%= detail.BillingDetailResponse.leBiCashDiscount%>元
+							<%}else{%>
+								<%= detail.BillingDetailResponse.leBiCashDiscount%>元
+							<%}%>
+						</span>
+					</div>
+				<%}%>
+				<!--装饰公司经理查看订单详情，增加现金返利折扣金额显示-->
+				<%if(detail.identityT == '2'){%>
+					<div>
+						<span class="huiC">现金返利折扣</span> <span class="floL">
+							<%if(detail.BillingDetailResponse.subvention>0){%>
+								-<%= detail.BillingDetailResponse.subvention%>元
+							<%}else{%>
+								<%= detail.BillingDetailResponse.subvention%>元
+							<%}%>
+						</span>
 					</div>
 				<%}%>
 				<div>
-					<span class="huiC">促销抵扣</span> <span class="floL"><%= detail.BillingDetailResponse.promotionDiscount%>元</span>
+					<span class="huiC">促销抵扣</span> <span class="floL">
+						<%if(detail.BillingDetailResponse.promotionDiscount>0){%>
+							-<%= detail.BillingDetailResponse.promotionDiscount%>元
+						<%}else{%>
+							<%= detail.BillingDetailResponse.promotionDiscount%>元
+						<%}%>
+					</span>
 				</div>
 				<div>
 					<span class="huiC">
@@ -135,15 +171,32 @@
 						<%}else{%>
 							信用额度抵扣
 						<%}%>
-					</span> <span class="floL"><%= detail.BillingDetailResponse.creditMoney || 0%>元</span>
+					</span> <span class="floL">
+						<%if(detail.BillingDetailResponse.creditMoney>0){%>
+							-<%= detail.BillingDetailResponse.creditMoney || 0%>元
+						<%}else{%>
+							<%= detail.BillingDetailResponse.creditMoney || 0%>元
+						<%}%>
+					</span>
 				</div>
 
-
 				<div>
-					<span class="huiC">产品卷抵扣</span> <span class="floL"><%= detail.BillingDetailResponse.productCouponDiscount || 0%>元</span>
+					<span class="huiC">产品券抵扣</span> <span class="floL">
+						<%if(detail.BillingDetailResponse.productCouponDiscount>0){%>
+							-<%= detail.BillingDetailResponse.productCouponDiscount || 0%>元
+						<%}else{%>
+							<%= detail.BillingDetailResponse.productCouponDiscount || 0%>元
+						<%}%>
+					</span>
 				</div>
 				<div>
-					<span class="huiC">预存款抵扣</span> <span class="floL"><%= detail.BillingDetailResponse.preDeposit%>元</span>
+					<span class="huiC">预存款抵扣</span> <span class="floL">
+						<%if(detail.BillingDetailResponse.preDeposit>0){%>
+							-<%= detail.BillingDetailResponse.preDeposit%>元
+						<%}else{%>
+							<%= detail.BillingDetailResponse.preDeposit%>元
+						<%}%>
+					</span>
 				</div>
 				<!--<div>
 					<span class="redC">应付金额</span> <span class="floL redC"><%= detail.BillingDetailResponse.leBiCashDiscount%>元</span>
@@ -205,7 +258,7 @@
 							<h4><%= detail.goodsList[i].skuName%></h4>
 							<p>
 								规格：<%= detail.goodsList[i].goodsSpecification%>  单位：<%= detail.goodsList[i].goodsUnit%>
-								<% if(detail.status == '已完成' || detail.status == '已结案'){%>
+								<% if(detail.statusDesc == '已完成' || detail.statusDesc == '已结案'){%>
 									<% if(!detail.goodsList[i].isEvaluation){%>
 										<button type="button" class="mui-btn" onclick="evaluaProduct('<%= detail.goodsList[i].goodsId%>',this)">评价</button>
 									<% }else{%>
@@ -232,24 +285,25 @@
 				<%} %>
 			</div>
 			<div class="footBtn">
+				<!--待付款：UNPAID，待发货：PENDING_SHIPMENT，待收货：PENDING_RECEIVE，已取消：CANCELED，取消中：CANCELING，已完成：FINISHED，拒签：REJECTED，已结案：CLOSED。-->
 				<% if(detail.deliveryType == '送货上门' || detail.deliveryType == '门店自提'){%>
-                    <% if(detail.status == '待付款'){%>
+                    <% if(detail.status == 'UNPAID'){%>
                         <!--<span class="redC aClick" onclick="goToPay('<%= detail.orderNumber%>','<%= detail.price%>')">去支付</span>-->
                     <% }%>
-                    <% if(detail.status == '待付款' || detail.status == '待发货'){%>
+                    <% if(detail.status == 'UNPAID' || detail.status == 'PENDING_SHIPMENT'){%>
                         <span class="aClick" onclick="cancelFun('<%= detail.orderNumber%>',this)">取消订单</span>
                     <% }%>
-                    <% if(detail.deliveryType == '门店自提' && detail.status == '待收货'){%>
+                    <% if(detail.deliveryType == '门店自提' && detail.status == 'PENDING_RECEIVE'){%>
                         <span class="aClick" onclick="cancelFun('<%= detail.orderNumber%>',this)">取消订单</span>
                     <% }%>
-                    <% if(detail.status == '已完成'){%>
+                    <% if(detail.status == 'FINISHED'){%>
                         <span class="redC aClick" onclick="openReturns('<%= detail.orderNumber%>','<%= detail.customer.customerId%>')">退货</span>
                     <% }%>
                     <span onclick="comeOnAgain('<%= detail.orderNumber%>','<%= detail.customer.customerId%>')" class="aClick">再来一单</span>
                 <% }%>
 
                 <% if(detail.deliveryType == '送货上门'){%>
-                    <% if(detail.status != '待付款' && detail.status != '已取消' && detail.status != '取消中'){%>
+                    <% if(detail.status != 'UNPAID' && detail.status != 'CANCELED' && detail.status != 'CANCELING'){%>
                         <span onclick="goOrderWL('<%= detail.orderNumber%>')" class="aClick redC">查看物流</span>
                     <% }%>
                 <% }%>
@@ -267,7 +321,7 @@
 			<div class="cancelCon">
 				<div class="cancelMin">
 					<div class="cancelText evaluaCon">
-						<textarea class="evaluaText" placeholder="评价商品成功，乐易装奖励你乐豆！"></textarea>
+						<textarea class="evaluaText" placeholder="评价商品成功，乐易装奖励你乐豆！（最大可输入字数255字）" maxlength="255"></textarea>
 					</div>
 					<div class="uppics clearfix" id="uppics2">
 				        <div class="onepic newActionWrap">

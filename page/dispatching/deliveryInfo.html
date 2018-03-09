@@ -9,7 +9,7 @@
 		<link rel="stylesheet" type="text/css" href="../../css/mui.min.css"/>
 		<link rel="stylesheet" type="text/css" href="../../css/commonY.css">
 		<link rel="stylesheet" type="text/css" href="../../css/configW.css"/>
-		<style type="text/css"> 
+		<style type="text/css">
 			.Dpart1{padding: 15px 15px 5px;background-color: #fff;line-height: 2.5;margin-bottom: 7px;}
 			.Dpart1 h4{font-size: 16px;}
 			.Dpart1 h4 span{color: #AC0100;}
@@ -44,7 +44,7 @@
 			a,a:active{color: rgb(51,51,51)!important;}
 			.mui-bar .mui-title{right: 60px!important;}
 			.titcl img{width: 25px;vertical-align: middle;}
-			
+
 		</style>
 	</head>
 
@@ -108,11 +108,11 @@
 						  <span class="titcl">代收款：</span><span class="activecl">¥<%=list.collectionAmount%></span>
 						</div>
 					<%}%>
-					
+
 				</div>
-				 
+
 				<div class="proWrapAll" style="margin-top: 10px;">
-					<div class="afterBorder ft15" style="padding: 10px;">
+					<div class="afterBorder ft15 typeShowYou" style="padding: 10px;">
 						订单编号：<%=list.returnNumber%>
 					</div>
 					<%for(var i = 0 ;i<list.goodsList.length;i++){%>
@@ -135,15 +135,15 @@
 							</div>
 						</div>
 					<%}%>
-					
+
 				</div>
 				<div class="footBtn">
 					<div class="aClick maincl" style="background-color: #DDDDDD;" onclick="refuse('<%=list.orderNumber%>')">拒收</div>
 					<div class="aClick" style="background-color: #B42E28;color: white;" onclick="receipt('<%=list.orderNumber%>','<%=list.collectionAmount%>')">确认收货</div>
 				</div>
 			</script>
-		 	
-			
+
+
 		</div>
 		<script src="../../js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../../js/mui.min.js"></script>
@@ -175,7 +175,7 @@
 				}else{
 				 	var	isOver = 0
 				}
-				
+
 				plus.nativeUI.showWaiting();
 				mui.ajax(serverUrl+'/app/dispatching/shipper/detail',{
 					data:{userID:userId,identityType:identityT,orderNumber:orderNumber},
@@ -186,16 +186,20 @@
 					success:function(data,type,xhr){
 						console.log('出货信息 ',data);
 						if(data.code == 0){
-						 
-							if(data.content && data.content.goodsList){ 
+
+							if(data.content && data.content.goodsList){
 								document.getElementById('infoListDiv').innerHTML = template('infoList',{list:data.content});
 								if(ordertype == 0){
 									$('.footBtn .maincl').show();
-								}else{ 
+								}else{
 									$('.footBtn').hide();
 								}
 							}else{
 								document.getElementById('infoListDiv').innerHTML = '<div style="text-align: center;padding: 50px;"><img src="../../images/order/order.png" style="width: 100px;" /><div class="ft13 disablecl">暂无数据</div></div>';
+							}
+							//配送员待配送的出货信息页面订单编号去掉
+							if(ordertype == 0){
+								mui('.typeShowYou')[0].innerHTML = '商品列表';
 							}
 							plus.nativeUI.closeWaiting()
 						}else{
@@ -206,7 +210,7 @@
 						console.log('响应失败  !');
 					}
 				});
-				
+
 				window.gowl = function(){
 					openview({
 						view:"dispatchingWl.html",

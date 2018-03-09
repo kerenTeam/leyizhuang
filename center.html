@@ -395,11 +395,11 @@
 		<script src="js/default.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
 			//测试推送
-			mui('#mypic')[0].onclick = function(){
-				plus.push.clear();
-				plus.push.createMessage( "欠款审核", '{"banner": "page/guide/debateAudit.html&1","info": "推送跳转页面","type":"localIos"}', {cover:false} );
-//				plus.push.createMessage("哈哈","{'banner':'page/guide/debateAudit.html&1','info':'推送跳转页面','type':'localIos'}", {cover:false});
-			}
+//			mui('#mypic')[0].onclick = function(){
+//				plus.push.clear();
+//				plus.push.createMessage( "欠款审核", '{"banner": "page/guide/debateAudit.html&1","info": "推送跳转页面","type":"localIos"}', {cover:false} );
+////				plus.push.createMessage("哈哈","{'banner':'page/guide/debateAudit.html&1','info':'推送跳转页面','type':'localIos'}", {cover:false});
+//			}
 
 //			mui('#mypic')[0].onclick = function(){
 //
@@ -456,7 +456,7 @@
 				    			//安卓点击，ios receive消息的本地点击
 //				    			var  pushMsg = JSON.parse(pushInfo.payload);
 				    			var pushMsg = pushInfo.payload;
-				    			
+
 							bannerGo(pushMsg.banner,pushMsg.info,'one');
 				    		}else{
 				    			//ios后台对应的 点击
@@ -464,7 +464,7 @@
 							bannerGo(pushMsg.banner,pushMsg.info,'one');
 				    		}
 				    }, false );
-	
+
 				    // 监听在线消息事件（ios）
 				    plus.push.addEventListener( "receive", function( pushInfo ) {
 				    		//IOS : receive => 创建本地消息 => 点击友执行上面监听的click事件
@@ -484,7 +484,7 @@
 				    		}
 				    }, false );
 				}, false );
-			
+
 			//推送结束
 
 		</script>

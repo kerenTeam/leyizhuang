@@ -13,40 +13,40 @@
 			.area {
 				margin: 20px auto 0px auto;
 			}
-			
+
 			.mui-input-group:first-child {
 				margin-top: 20px;
 			}
-			
+
 			.mui-input-group label {
 				width: 30%;
 			}
-			
+
 			.mui-input-row label~input,
 			.mui-input-row label~select,
 			.mui-input-row label~textarea {
 				width: 65%;
 			}
-			
+
 			.mui-checkbox input[type=checkbox],
 			.mui-radio input[type=radio] {
 				top: 6px;
 			}
-			
+
 			.mui-content-padded {
 				margin-top: 25px;
 			}
-			
+
 			.mui-btn {
 				padding: 10px;
 			}
-			
+
 			.mui-input-row label~input,
 			.mui-input-row label~select,
 			.mui-input-row label~textarea {
 				margin-top: 1px;
 			}
-			
+
 			#getCode {
 				border: none;
 				border-left: 1px solid #eee;
@@ -74,7 +74,7 @@
 					</div>
 				</form>
 				<br />
-				<textarea name="" rows="3" cols="" placeholder="输入拒收原因" style="background-color: #DDDDDD;margin: 10px;width: calc(100vw - 20px);"></textarea>
+				<textarea rows="3" placeholder="输入拒收原因（最大可输入字数255字）" maxlength="255" style="background-color: #DDDDDD;margin: 10px;width: calc(100vw - 20px);"></textarea>
 				<!--<img src="../../images/center/camer.svg" style="width: 60px;padding: 10px;" />-->
 				<br /><br />
 			</div>
@@ -87,12 +87,12 @@
 		<script src="../../js/default.js" type="text/javascript" charset="utf-8"></script>
 		<script>
 			mui.init();
-			mui.plusReady(function() { 
+			mui.plusReady(function() {
 				var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
 				var userId = plus.storage.getItem('$userId');
 				var oldToken = plus.storage.getItem('oldToken');
 				var orderNumber = plus.webview.currentWebview().orderNumber;
-				
+
 				mui.ajax(serverUrl + '/app/denyOrder/denyReasons', {
 					data:{userId:userId,identityType:identityT},
 					dataType: 'json',
@@ -114,9 +114,9 @@
 					},
 					error: function(xhr, type, errorThrown) {
 
-					} 
+					}
 				});
-				mui('#sendMail')[0].onclick = function(){ 
+				mui('#sendMail')[0].onclick = function(){
 					if($('select').val() == '选择'){
 						mui.toast('还未选择退货原因！！！');
 						return;
@@ -131,23 +131,23 @@
 							headers:{"Authorization":oldToken},
 							success: function(data, type, xhr) {
 								console.log('拒收返回', data);
-								if(data.code == 0) { 
+								if(data.code == 0) {
 									mui.toast('拒收成功');
 									plus.webview.getWebviewById("deliveryInfo").close();
 									mui.fire(plus.webview.getWebviewById('dispatching'), 'refresh');
 									mui.back();
 								}else{
 									mui.toast(data.message);
-									
+
 								}
 							},
 							error: function(xhr, type, errorThrown) {
-		
-							} 
+
+							}
 						});
 					}
 				}
-  
+
 			});
 		</script>
 	</body>

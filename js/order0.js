@@ -104,8 +104,8 @@ function cancelOF(pageType,cancelParentId){
 				'2、订单取消后，已支付的金额将会在一个工作日内原路退还。\n'+
 				'3、限时促销等购买优惠可能一并取消。\n'+
 				'4、因商品已分拣等原因可能会导致订单取消失败。';
-			mui.confirm(isCanceInfo,function(e){
-			    if(e.index==0){
+			mui.confirm(isCanceInfo,'提示',['取消','确定'],function(e){
+			    if(e.index==1){
 			    		$('#cancelOrder').css('display','table');
 			    }
 		  	});
