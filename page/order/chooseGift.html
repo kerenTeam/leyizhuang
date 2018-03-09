@@ -164,6 +164,7 @@
 						console.log('获取赠品', data);
 						var dataObj = {};
 						if(data.code == 0 && data.content) {
+							var sysDeliveryType = data.content.sysDeliveryType;
 							if(data.content.promotionsGiftList && data.content.promotionsGiftList.length && data.content.promotionsGiftList[0].giftList && data.content.promotionsGiftList[0].giftList.length) {
 								document.getElementById('cartData').innerHTML = template('cartTpl', {
 									list: data.content.promotionsGiftList
@@ -202,7 +203,7 @@
 												num+=Number($(this).parentsUntil('dl').find('.mui-input-numbox').val());
 												if(num > max){
 													mui.toast('当前促销活动已超过最大可选商品！！！')
-													$('.mui-numbox input').val($('.mui-numbox input').val()-1)
+													$(this).parentsUntil('dl').find('.mui-input-numbox').val($(this).parentsUntil('dl').find('.mui-input-numbox').val()-1)
 												}
 											})
 									}
@@ -227,12 +228,16 @@
 											id: 'order',
 											extrasobj: {
 												customerId: cusId,
+												sysDeliveryType:sysDeliveryType
 											}
 										})
 									} else {
 										openview({
 											view: 'order.html',
 											id: 'order',
+											extrasobj: {
+												sysDeliveryType:sysDeliveryType
+											}
 										})
 									}
 								}
@@ -300,12 +305,16 @@
 											id: 'order',
 											extrasobj: {
 												customerId: cusId,
+												sysDeliveryType:sysDeliveryType
 											}
 										})
 									} else {
 										openview({
 											view: 'order.html',
 											id: 'order',
+											extrasobj: {
+												sysDeliveryType:sysDeliveryType
+											}
 										})
 									}
 								}
@@ -313,6 +322,7 @@
 						} else {
 							mui.toast(data.message);
 							plus.nativeUI.closeWaiting();
+							plus.webview.currentWebview().close();
 
 						}
 					},

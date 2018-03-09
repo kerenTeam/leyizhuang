@@ -460,7 +460,8 @@
 							bannerGo(pushMsg.banner,pushMsg.info,'one');
 				    		}else{
 				    			//ios后台对应的 点击
-							var pushMsg = pushInfo.payload.payload;
+//							var pushMsg = pushInfo.payload.payload;
+							var pushMsg = pushInfo.payload;
 							bannerGo(pushMsg.banner,pushMsg.info,'one');
 				    		}
 				    }, false );
@@ -645,6 +646,7 @@
 			}
 
 			mui.plusReady(function() {
+				downRe(Refresh);
 				document.addEventListener('refresh', function() {
 					Refresh();
 				})

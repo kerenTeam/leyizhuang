@@ -102,6 +102,8 @@
 										plus.storage.removeItem("userCity");//city
 										plus.storage.removeItem('materialList');
 										plus.storage.removeItem("Acc_pass");//保存账号密码,用于自动登录
+										plus.storage.removeItem("rankCode");
+										
 										mui.fire(plus.webview.getWebviewById('../goodList.html'),'refresh');
 										mui.fire(plus.webview.getWebviewById('center.html'),'refresh');
 										if(plus.webview.getWebviewById('identify')){

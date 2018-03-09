@@ -20,7 +20,7 @@
 	<body style="padding-bottom: 0px;">
 		<header class="mui-bar mui-bar-nav" style="padding-right: 15px;">
 			<a id="leftbtn" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-			<h1 class="mui-title">热门商品</h1>
+			<h1 class="mui-title">专供商品</h1>
 		</header>
 		<script src="../js/statusBar.js" type="text/javascript" charset="utf-8"></script>
 		<div class="gocarticon" id="div2">
@@ -84,16 +84,12 @@
 					getCartNum();
 				})
 				var categoryCode = plus.webview.currentWebview().ctid;
-				if(categoryCode){
-					$('.flexw div').siblings().removeClass('curActive')
-					$('.'+categoryCode).addClass('curActive');
-				}
+				 
 				plus.nativeUI.showWaiting();
-				document.addEventListener('refresh', function() {
+				document.addEventListener('refreshsd', function() {
 					kindType(categoryCode);
 				})
 				downRe(kindType);
-				
 				 kindType(categoryCode);
 				 function kindType(categoryCode){
 				 	var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
@@ -103,7 +99,7 @@
 					var Ypagenum = 1; //应到页数
 					var oneSize = 10;
 					//商品列表
-					mui.ajax(serverUrl+'/app/goods/hot/list',{
+					mui.ajax(serverUrl+'/app/goods/rank/list',{
 						data:{
 //							categoryCode:categoryCode,
 							userId:userId,
@@ -439,6 +435,8 @@
 									$('#goodsList').html('<div style="text-align:center;padding:15px">暂无商品</div>')
 								}
 							}else{
+								$('#goodsList').html('<div style="text-align:center;padding:15px">暂无商品</div>')
+								plus.nativeUI.closeWaiting();
 								mui.toast(data.message)
 							}
 

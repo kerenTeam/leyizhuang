@@ -261,7 +261,8 @@
       "bannerTpl.html",
       "welcome.html",
       "page/personal/myOrderList.html",
-      "consultTel.html"
+      "consultTel.html",
+      "page/specialGoods.html"
     ]
   },
   "page/gxbList.html": {
@@ -890,7 +891,8 @@
     ],
     "refer": [
       "page/order/chooseGift.html",
-      "page/mailList.html"
+      "page/mailList.html",
+      "page/guide/qrCode.html"
     ]
   },
   "page/order/materialList.html": {
@@ -1209,7 +1211,8 @@
       "page/personal/myOrderWL.html",
       "page/personal/myOrderDetail.html",
       "page/personal/signInDay.html",
-      "page/personal/myOrderReturns.html"
+      "page/personal/myOrderReturns.html",
+      "cart.html"
     ],
     "resources": []
   },
@@ -1353,5 +1356,11 @@
       "page/withdrawList.html"
     ],
     "resources": []
+  },
+  "page/specialGoods.html": {
+    "refer": [
+      "cart.html",
+      "page/goodsInfo.html"
+    ]
   }
 }

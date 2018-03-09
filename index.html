@@ -272,7 +272,9 @@
 				</div>
 			<%}%>
 		</script>
-
+		<div class="specialGoods" style="display:none;margin: 10px 10px -5px 10px;" onclick="specialGoods()">
+			<img src="images/index/specialGoods.png" style="width: 100%;margin: 0;"/>
+		</div>
 		<div class="padd10" id="huodong0"></div>
 		<script type="text/html" id="huodongS0">
 			<img class='huodongImg' src="<%= url%><%= list.pic%>" onclick="bannerGo('<%= list.linkurl%>','<%= list.title%>')"/>
@@ -576,6 +578,7 @@
 					console.log( "语音识别失败："+e.message );
 				} );
 			}
+			
 			function poverTel(){
 				mui.openWindow({
 				    url:'consultTel.html',
@@ -717,6 +720,7 @@
 										if(data.code == 0 && data.content.isExist) {
 											plus.nativeUI.closeWaiting();
 											plus.storage.setItem("oldToken", xhr.getResponseHeader('token'));
+											plus.storage.setItem("rankCode", data.content.rankCode);
 											util.initSubpage();
 											loadIndex();
 										} else if(data.code == -1) {
@@ -747,13 +751,17 @@
 					//app更新
 					checkUpdate(true);
 				} //登录方法结束
-
+				downRe(loadIndex);
 				function loadIndex() {
 					//获取缓存
 				    var nowcity = plus.storage.getItem('userCity');
 					var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
 					var userId = plus.storage.getItem('$userId');
 					var oldToken = plus.storage.getItem('oldToken');
+					var rankCode = plus.storage.getItem('rankCode');
+					if(rankCode){
+						$('.specialGoods').show();
+					}
 					//切换板块
 					if(identityT == 0 || identityT == 4 || identityT == 5) { //导购
 						$('.guides').css('display', '')
@@ -1128,6 +1136,12 @@
 				})
 
 			}
+			function specialGoods(){
+				openview({
+					view:'page/specialGoods.html',
+					id:'specialGoods'
+				})
+			}
 			function debateQuery(){
 				openview({
 					view:'page/guide/debateQuery.html',
@@ -1303,6 +1317,7 @@
 					mui.fire(plus.webview.getWebviewById('collect'),'refreshct');
 					mui.fire(plus.webview.getWebviewById('ofenBuy'),'refreshct');
 					mui.fire(plus.webview.getWebviewById('hotGoods'),'refreshct');
+					mui.fire(plus.webview.getWebviewById('specialGoods'),'refreshct');
 					mui.fire(plus.webview.getWebviewById('history'),'refreshct');
 					mui.fire(plus.webview.getWebviewById('searchGoods'),'refreshct');
 					if(cartNum != 0){

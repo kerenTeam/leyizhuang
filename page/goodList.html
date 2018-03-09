@@ -137,6 +137,8 @@
 				if(!categoryCode){
 					categoryCode = 'water';
 				}
+				
+				downRe(kindTyperf);
 				if(categoryCode){
 					$('.flexw div').siblings().removeClass('curActive')
 					$('.'+categoryCode).addClass('curActive');
@@ -149,8 +151,10 @@
 				document.addEventListener('refreshct', function() {
 					getCartNum();
 				})
+				function kindTyperf(){
+					kindType($('.curActive').attr('data-id'));
+				}
 				 kindType(categoryCode);
-
 				 function kindType(categoryCode){
 
 				 	//一级分类切换

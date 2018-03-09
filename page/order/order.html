@@ -181,7 +181,7 @@
 						<label>自提</label>
 						<input name="peis" type="radio" value="1">
 					</div>
-					<div class="mui-input-row mui-radio mui-left mui-pull-right psw">
+					<div class="mui-input-row mui-radio mui-left mui-pull-right psw sssm">
 						<label>送货上门</label>
 						<input name="peis" type="radio" value="2" checked="">
 					</div>
@@ -367,6 +367,9 @@
 					<li class="pad10 afterBorder">
 						<img src="../../images/order/bankpay.svg" />银联支付
 					</li>
+					<li class="pad10 afterBorder" id="facePay" style="display: none;">
+						<img src="../../images/order/facePay.svg" />货到付款
+					</li>
 					<li class="closeMask fttc pad10">
 						取消
 					</li>
@@ -422,10 +425,31 @@
 			var productCouponList = plus.storage.getItem('productCouponList');//产品券商品
 			var promotionInfo = plus.storage.getItem('giftList');//促销赠品
 			var customerId = plus.webview.currentWebview().customerId || '';
+			var sysDeliveryType = plus.webview.currentWebview().sysDeliveryType;
 			if(plus.storage.getItem('auditNo') && plus.storage.getItem('remark')){
 				$('#remark').val(plus.storage.getItem('remark'));
 			}
-
+			if(sysDeliveryType == 'SELF_TAKE'){
+				mui.confirm('订单存在库存不足商品，是否切换自提方式', '提示', ['返回', '确定'], function(e) {
+					if(e.index == 1) {
+						$('.sssm').hide();
+						$('.selfTake').show().attr('checked',true);
+						$(".selfTake input").trigger("click");
+					}else{
+						setTimeout(function(){
+							if(plus.webview.getWebviewById("chooseCustom")) {
+								plus.webview.getWebviewById("chooseCustom").close();
+							}
+							if(plus.webview.getWebviewById("chooseGift")) {
+								plus.webview.getWebviewById("chooseGift").close();
+							}
+							if(plus.webview.getWebviewById("order")) {
+								plus.webview.getWebviewById("order").close();
+							}
+						},0)
+					}
+				})
+			}
 			var pays = {};
 			console.log('idobj ', idobj)
 			console.log('allGoods ', allGoods)
@@ -930,7 +954,9 @@
 												$('.dsje').hide();
 											} else {
 												if(identityT != 6){$('.dsje').show();}
-												var message = data.message || '包含不支持自提商品'
+												var message = data.message || '包含不支持自提商品';
+												$('#chooseStore').hide();
+												$('#add_info').show();
 												mui.toast(message);
 												$("input[name='peis']").eq(0).attr('checked', false)
 												$("input[name='peis']").eq(1).prop('checked', true)
@@ -978,6 +1004,8 @@
 													}
 													$('.dsje').hide();
 												} else {
+													$('#add_info').show();
+													$('#chooseStore').hide()
 													if(identityT != 6){$('.dsje').show();}
 													mui.toast(data.message);
 													curselect.find('option').eq(0).attr('selected', true);
@@ -993,6 +1021,7 @@
 								}
 
 							} else {
+								$('#chooseStore').hide()
 								if(identityT != 6){$('.dsje').show();}
 								var message = data.message || '包含不支持自提商品'
 								mui.toast(message);
@@ -1264,6 +1293,24 @@
 								mui.fire(plus.webview.getWebviewById('page/goodList.html'), 'refresh');
 								mui.fire(plus.webview.getWebviewById('cart.html'), 'refresh');
 								mui.fire(plus.webview.getWebviewById('cart'), 'refresh');
+								mui.fire(plus.webview.getWebviewById('goodList'),'refresh');
+								mui.fire(plus.webview.getWebviewById('gxbList'),'refresh');
+								mui.fire(plus.webview.getWebviewById('oilFast.html'),'refresh');
+								mui.fire(plus.webview.getWebviewById('waterFast.html'),'refresh');
+								mui.fire(plus.webview.getWebviewById('electricFast.html'),'refresh');
+								mui.fire(plus.webview.getWebviewById('woodFast.html'),'refresh');
+								mui.fire(plus.webview.getWebviewById('tileFast.html'),'refresh');
+								mui.fire(plus.webview.getWebviewById('collect'),'refresh');
+								mui.fire(plus.webview.getWebviewById('ofenBuy'),'refresh');
+								mui.fire(plus.webview.getWebviewById('specialGoods'),'refreshsd');
+								mui.fire(plus.webview.getWebviewById('hotGoods'),'refresh');
+								mui.fire(plus.webview.getWebviewById('history'),'refresh');
+								mui.fire(plus.webview.getWebviewById('searchGoods'),'refreshscgd');
+								if(data.content.isCashDelivery){
+									$('#facePay').show();
+								}else{
+									$('#facePay').hide();
+								}
 								if(data.content.isPayUp == false) {
 									$('#payMoney').html('¥' + data.content.amountPayable);
 									$('#maskInfo').fadeIn(200);
@@ -1308,6 +1355,9 @@
 					});
 
 					function toPay(payableAmount, orderNumber) {
+						
+						document.getElementById('facePay').setAttribute('onclick', 'facePayF("' + payableAmount + '","' + orderNumber + '")');
+						
 						//系统检测获取支付通道
 						plus.payment.getChannels(function(channels) {
 							console.log("channel " + JSON.stringify(channels));
@@ -1348,6 +1398,55 @@
 						//系统检测获取支付通道结束
 					}
 					// 支付方法
+					//1 货到付款
+					window.facePayF = function(payableAmount,orderNumber){
+						mui.ajax(serverUrl + '/app/order/handle/cashDelivery', {
+							data: {
+								userId: userId,
+								identityType: identityT.toString(),
+//								amountPayable: payableAmount,
+								orderNumber: orderNumber,
+							},
+							type: 'post', //HTTP请求类型
+							headers: {
+								"Authorization": oldToken
+							},
+							timeout: 10000, //超时时间设置为10秒；
+							success: function(data) {
+								console.error(data);
+								plus.nativeUI.closeWaiting();
+								if(data.code == 0) { 
+									openview({
+										view: 'orderSuccess.html',
+										id: 'orderSuccess',
+										extrasobj:{
+											orderNo:orderNumber,
+											money:payableAmount,
+										}
+									})
+									setTimeout(function() {
+										if(plus.webview.getWebviewById("order")) {
+											plus.webview.getWebviewById("order").close();
+										}
+										if(plus.webview.getWebviewById("chooseGift")) {
+											plus.webview.getWebviewById("chooseGift").close();
+										}
+										if(plus.webview.getWebviewById("chooseCustom")) {
+											plus.webview.getWebviewById("chooseCustom").close();
+										}
+									}, 800)
+								}else{
+									plus.nativeUI.alert("支付失败");
+								}
+
+							},
+							error: function(xhr, type, errorThrown) {
+								//异常处理；
+								console.log(type); 
+							}
+						});
+					}
+					//2微信 支付宝
 					window.payfun = function(id, payableAmount, orderNumber) {
 						var varpay;
 						if(id == 'alipay' || id == 'wxpay') {

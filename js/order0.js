@@ -15,14 +15,24 @@ function comeOnAgain(orderNo,cusId){
 				console.log('再来一单',data);
 				if(data.code == 0){
 					mui.toast(data.message || '操作成功');
+					mui.fire(plus.webview.getWebviewById('cart.html'),'refresh');
+					mui.fire(plus.webview.getWebviewById('cart'),'refresh');
+					openview({
+						view:'../../cart.html',
+						id:'cart',
+						extrasobj:{page:1,cusid:cusId}
+					})
 					var timeY0 = setTimeout(function(){
-						mui.fire(plus.webview.getWebviewById('cart.html'),'refresh');
-						mui.fire(plus.webview.getWebviewById('cart'),'refresh');
-						openview({
-							view:'../../cart.html',
-							id:'cart',
-							extrasobj:{page:1,cusid:cusId}
-						})
+						
+						if(plus.webview.getWebviewById("orderSuccess")) {
+							plus.webview.getWebviewById("orderSuccess").close();
+						}
+						if(plus.webview.getWebviewById("myOrderList")) {
+							plus.webview.getWebviewById("myOrderList").close();
+						}
+						if(plus.webview.getWebviewById("myOrderDetail")) {
+							plus.webview.getWebviewById("myOrderDetail").close();
+						}
 					},500)
 				}else{
 					mui.toast(data.message || '操作失败');
