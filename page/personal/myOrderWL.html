@@ -96,8 +96,10 @@
 				if(typego == 'tuihuo'){
 					jiekou = '/app/delivery/return/detail';
 					dataObj = {'userId':userId,'identityType':identityT,'orderNumber':orderNo};
+//					dataObj = {'userId':53,'identityType':0,'orderNumber':'T20180301151948484'};
 					mui('.mui-title')[0].innerHTML = '物流详情';
 				}
+				console.log(dataObj);
 
 				mui.ajax(serverUrl + jiekou,{
 					data:dataObj,

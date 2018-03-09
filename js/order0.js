@@ -99,7 +99,7 @@ function cancelOF(pageType,cancelParentId){
 		function resetChoose(){//重置勾选
 			$(".reasonInfo[type='radio']:checked").attr("checked",false);
 		}
-		window.cancelFun = function(orderNumber,that){
+		window.cancelFun = function(orderNumber,that,fun0){
 			var isCanceInfo = '1、订单一旦取消后，无法恢复。\n'+
 				'2、订单取消后，已支付的金额将会在一个工作日内原路退还。\n'+
 				'3、限时促销等购买优惠可能一并取消。\n'+
@@ -148,6 +148,8 @@ function cancelOF(pageType,cancelParentId){
 							    	 			$(ele).css('display','none');
 //							    	 		}
 								    })
+								    //刷新列表的回调函数
+								    if(fun0){fun0()};
 								}
 							}else{
 								mui.toast(data.message);

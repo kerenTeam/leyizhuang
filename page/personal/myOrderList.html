@@ -125,10 +125,10 @@
 												<span class="redC aClick" onclick="goToPay('<%= list[i].orderNo%>','<%= list[i].amountPayable%>')">去支付</span>
 											<% }%>
 											<% if(list[i].status == 'UNPAID' || list[i].status == 'PENDING_SHIPMENT'){%>
-												<span class="aClick" onclick="cancelFun('<%= list[i].orderNo%>',this)">取消订单</span>
+												<span class="aClick" onclick="NewcancelFun('<%= list[i].orderNo%>',this)">取消订单</span>
 											<% }%>
 											<% if(list[i].deliveryType == '门店自提' && list[i].status == 'PENDING_RECEIVE'){%>
-						                        <span class="aClick" onclick="cancelFun('<%= list[i].orderNo%>',this)">取消订单</span>
+						                        <span class="aClick" onclick="NewcancelFun('<%= list[i].orderNo%>',this)">取消订单</span>
 						                    <% }%>
 											<% if(list[i].status == 'FINISHED'){%>
 												<span class="redC aClick" onclick="openReturns('<%= list[i].orderNo%>','<%= list[i].customerId%>','<%=list[i].deliveryType%>')">退货</span>
@@ -493,6 +493,29 @@
 //					}
 
 				}
+
+				//新的取消订单,妈的非要刷新,傻逼
+				window.NewcancelFun = function(pageType,cancelParentId){
+					cancelFun(pageType,cancelParentId,function(){
+						//刷新当前列表
+						$('#tabLink li').each(function(index,ele){
+							if($(ele).hasClass('active')){
+								if(index == 0){
+									loadFun('');//全部
+								}else if(index == 1){
+									loadFun(6);//待发货
+								}else if(index == 2){
+									loadFun(2);//待收货
+								}else if(index == 3){
+									loadFun(3);//已完成
+								}else if(index == 4){
+									loadFun(4);//已取消
+								}
+							}
+						})
+					});
+				}
+
 				//详情页面点取消,监听刷新
 				document.addEventListener('cancelrefresh2', function(event) {
 					var cancelParentId = event.detail.cancelParentId;//父元素ID
@@ -555,6 +578,9 @@
 					if(condition){//搜索字段
 						nowApi = '/app/order/search';
 						nowData = {'userID':userId,'identityType':identityT,'showStatus':tabT,'condition':condition}
+					}else if(fromPage == 'index'){
+						nowApi = '/app/delivery/logistics/list';
+						nowData = {'userId':userId,'identityType':identityT,'page':1,'size':oneSize};
 					}
 					mui.ajax(serverUrl + nowApi,{
 						data:nowData,
@@ -624,6 +650,9 @@
 												Ypagenum++; //满足加载情况,应到页数+1
 												console.log('发起请求,实到' + Spagenum + '页');console.log('发起请求,应到' + Ypagenum + '页');
 												nowData = {'userID':userId,'identityType':identityT,'showStatus':tabT,'page':Ypagenum,'size':oneSize};
+												if(fromPage == 'index'){
+													nowData = {'userId':userId,'identityType':identityT,'page':Ypagenum,'size':oneSize};
+												}
 												mui.ajax(serverUrl + nowApi,{
 							                        data:nowData,
 							                        dataType:'json',

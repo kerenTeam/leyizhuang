@@ -114,6 +114,8 @@ window.bannerGo = function(url, name, route) {
 
 /*自定义分享*/
 var shares=null;
+var iosLinkPicFlag = false;
+var iosLinkPicSum = 0;
 mui.plusReady(function(){
 	plus.share.getServices(function(s){
 		shares={};
@@ -127,7 +129,7 @@ mui.plusReady(function(){
 	});
 })
 
-function showSfun1(msg,fun1,fun0){
+function showSfun1(msg,fun1,fun0,iosLinkPic,fun3){
 	if(!document.getElementById('shareWrap10')){
 		var pathStr = '';
 		if(msg.myIsIndex){
@@ -183,31 +185,38 @@ function showSfun1(msg,fun1,fun0){
 	document.getElementsByClassName('shareWrap1')[0].style.opacity = '1';
 	document.getElementsByClassName('Scontent1')[0].style.opacity = '1';
 	document.getElementsByClassName('Scontent1')[0].style.bottom = '0px';
-	function shareAction(sb) {
+	function shareAction(sb,index) {
 		if(!sb||!sb.s){
 			mui.toast('无效的分享服务！');
 			return;
 		}
 		msg.extra = {scene:sb.x}//区分微信 还是朋友圈 有效
 		if(sb.s.authenticated){
-			shareMessage(msg, sb.s);
+			shareMessage(msg, sb.s,index);
 			hideSfun1();
 		}else{
 			sb.s.authorize(function(){//新浪微博止步于此
-				shareMessage(msg,sb.s);
+				shareMessage(msg,sb.s,index);
 			}, function(e){
 				mui.toast('授权失败');
 				hideSfun1();
 			});
 		}
 	}
-	function shareMessage(msg, s){
+	function shareMessage(msg, s,index){
 		s.send(msg, function(){
 			mui.toast('分享成功');
 			if(fun1){fun1()};
 		}, function(e){//alert('分享到"'+s.description+'"失败: '+JSON.stringify(e))
-			mui.toast('分享失败');
+			//兼容ios分享远程图片 第一次 分享失败
 			if(fun0){fun0()};
+			if(iosLinkPic){
+				if(fun3){fun3(index)};
+			}else{
+				mui.toast('分享失败');
+			}
+
+
 		});
 	}
 	// 分享链接
@@ -221,7 +230,7 @@ function showSfun1(msg,fun1,fun0){
 		ss&&shareBts.push({title:'QQ',s:ss});
 		ss=shares['sinaweibo'];
 		ss&&shareBts.push({title:'新浪微博',s:ss});
-		shareAction(shareBts[index]);/*调用分享*/
+		shareAction(shareBts[index],index);/*调用分享*/
 	}
 	var shareBtns = document.getElementsByClassName('shareBtn');
 	[].forEach.call(shareBtns,function(ele,index){

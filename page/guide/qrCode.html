@@ -8,6 +8,8 @@
 		<link href="../../css/mui.min.css" rel="stylesheet" />
 		<link rel="stylesheet" type="text/css" href="../../css/commonY.css"/>
 		<link rel="stylesheet" type="text/css" href="../../css/configW.css"/>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/youxd.js"></script>
 	</head>
 	<style type="text/css">
 		.qrcode{width: 70%;margin:40px auto;border-radius: 3px;padding: 10px;overflow: hidden;}
@@ -29,11 +31,10 @@
 			</div>
 
 		</div>
-		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/jquery.min.js"></script>
 		<script src="../../js/mui.zoom.js"></script>
 		<script src="../../js/mui.previewimage.js"></script>
 		<script src="../../js/default.js" type="text/javascript" charset="utf-8"></script>
-		<script src="../../js/youxd.js"></script>
 		<script type="text/javascript">
 			mui.init();
 			mui.plusReady(function(){
@@ -51,6 +52,7 @@
 						console.log('二维码',data);
 						if(data.code == 0 && data.content.qrCode){
 							mui('.imgcode')[0].src = data.content.qrCode;
+							console.log(mui('.imgcode')[0].src)
 						}else{
 							mui('.imgcode')[0].src = '../../img/editset.png';
 
@@ -60,13 +62,22 @@
 						console.log('响应失败  !');
 					}
 				});
+				var isIosflag = 0;
 				mui('.fenxiangCode')[0].onclick = function(){
 					if(mui('.imgcode')[0].src.indexOf('http')>-1){
 						var msg2 = {
 							myIsIndex2:true,
 							pictures:[mui('.imgcode')[0].src]
 						}
-						showSfun1(msg2,function(){},function(){});
+						showSfun1(msg2,function(){isIosflag++},function(){isIosflag++},true,function(index){
+							//ios分享第一次点击分享会失败，我做了个 递归调用，让他 自动 再点一次
+							if(!/android/i.test(navigator.userAgent)){
+								if(isIosflag<2){
+									mui('.fenxiangCode')[0].onclick();
+									document.getElementsByClassName('shareBtn')[index].onclick();
+								}
+							}
+						});
 					}else{
 						mui.toast('图片加载中，请稍等一下');
 					}

@@ -305,9 +305,11 @@
 															$('#loadingdiv').css('height','0px');
 															if(data.content){
 																if(data.content.list && data.content.list.length){
-																	document.getElementById('infoListDiv').innerHTML += template('infoListP2',{list:data.content.list,nowState:tabT,pj:1});
-																}else{
-																	document.getElementById('infoListDiv').innerHTML += template('infoList',{list:data.content.list,nowState:tabT});
+																	if(pingjia){
+																		document.getElementById('infoListDiv').innerHTML += template('infoListP2',{list:data.content.list,nowState:tabT,pj:1});
+																	}else{
+																		document.getElementById('infoListDiv').innerHTML += template('infoList',{list:data.content.list,nowState:tabT});
+																	}
 																}
 																if(noButton == 1){
 																	$('.orderBtns').empty()
