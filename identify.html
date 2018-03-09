@@ -191,6 +191,7 @@
 												'identityType': '6'
 											}));
 											plus.storage.setItem("oldToken", xhr.getResponseHeader('token'));
+											plus.storage.setItem("rankCode", data.content.rankCode);
 											plus.storage.setItem("openId", openID);
 											plus.storage.setItem('userCity',data.content.cityId.toString())
 											plus.storage.removeItem('Acc_pass');

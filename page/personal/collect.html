@@ -73,7 +73,7 @@
 									<img style="display:inline-block;float:right;margin-left:5px;vertical-align:middle" data-id="<%=list[i].id%>" class="toCart" src="../../images/addcart.svg"/>
 									<div style="display: none;float:right;" class="mui-numbox" data-numbox-step='1' data-numbox-min='0' data-numbox-max='9999'>
 									  <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
-									  <input class="mui-numbox-input" type="number" data-id="<%=list[i].id%>" value="1"/>
+									  <input class="mui-numbox-input" type="number" data-id="<%=list[i].id%>" value="0"/>
 									  <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
 									</div>
 								<%}else{%>
@@ -281,10 +281,16 @@
 										if($(this).html() == '编辑') {
 											$(this).html('取消'); 
 											$('#deleteCollect,.check').show();
-											$('.toCart').hide();
+											$('.toCart,.mui-numbox').hide();
 										} else {
 											$(this).html('编辑');
-											$('.toCart').show();
+											$('.mui-numbox').each(function(){
+												if($(this).find('input').val()>0){
+													$(this).show();
+												}else{
+													$(this).prev().show()
+												}
+											})
 											$('#deleteCollect,.check').hide();
 											$('#deleteCollect').attr('disabled', true);
 											$('.check').attr('src', '../../images/center/uncheck.svg');

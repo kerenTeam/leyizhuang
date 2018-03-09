@@ -1,0 +1,14 @@
+<svg version="1.1" id="图层_1" x="0px" y="0px" width="500px" height="102px" viewBox="0 0 500 102" enable-background="new 0 0 500 102" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xml="http://www.w3.org/XML/1998/namespace">
+  <g>
+    <polygon fill="#DBB15D" points="500,69.964 417.702,69.964 417.702,0 500,0 481.44,34.983 	" class="color c1"/>
+    <polygon fill="#DBB15D" points="0,69.964 82.297,69.964 82.297,0 0,0 18.559,34.983 	" class="color c1"/>
+  </g>
+  <g>
+    <polygon fill="#C69B4F" points="455.195,36.174 417.702,0 397.598,51 	" class="color c2"/>
+    <polygon fill="#C69B4F" points="44.804,36.174 82.297,0 102.401,51 	" class="color c2"/>
+  </g>
+  <g>
+    <path fill="#EFCB73" d="M431.622,102c-118.021-42.715-247.166-42.715-365.188,0C58.576,80.059,50.719,58.116,42.86,36.174
+		c133.258-48.231,279.076-48.231,412.335,0C447.337,58.116,439.479,80.059,431.622,102z" class="color c3"/>
+  </g>
+</svg>

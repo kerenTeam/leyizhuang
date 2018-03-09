@@ -372,9 +372,10 @@
 															mui.fire(plus.webview.getWebviewById('tileFast.html'),'refresh');
 															mui.fire(plus.webview.getWebviewById('collect'),'refresh');
 															mui.fire(plus.webview.getWebviewById('ofenBuy'),'refresh');
+															mui.fire(plus.webview.getWebviewById('specialGoods'),'refreshsd');
 															mui.fire(plus.webview.getWebviewById('hotGoods'),'refresh');
 															mui.fire(plus.webview.getWebviewById('history'),'refresh');
-															mui.fire(plus.webview.getWebviewById('searchGoods'),'refresh');
+															mui.fire(plus.webview.getWebviewById('searchGoods'),'refreshscgd');
 															cartload();
 														} else {
 															mui.toast(data.message)
@@ -492,6 +493,7 @@
 												mui.fire(plus.webview.getWebviewById('collect'),'refresh');
 												mui.fire(plus.webview.getWebviewById('ofenBuy'),'refresh');
 												mui.fire(plus.webview.getWebviewById('hotGoods'),'refresh');
+												mui.fire(plus.webview.getWebviewById('specialGoods'),'refreshsd');
 												mui.fire(plus.webview.getWebviewById('history'),'refresh');
 												mui.fire(plus.webview.getWebviewById('searchGoods'),'refresh');
 												mui.fire(plus.webview.getWebviewById('goodList'),'refresh');
@@ -539,6 +541,7 @@
 														mui.fire(plus.webview.getWebviewById('goodList'),'refresh');
 														mui.fire(plus.webview.getWebviewById('page/goodList.html'),'refresh');
 														mui.fire(plus.webview.getWebviewById('cart.html'), 'refresh');
+														mui.fire(plus.webview.getWebviewById('specialGoods'),'refreshsd');
 														mui.fire(plus.webview.getWebviewById('cart'), 'refresh');
 													} else {
 														mui.toast(data.message)

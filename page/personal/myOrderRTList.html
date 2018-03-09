@@ -250,6 +250,10 @@
 						}
 					})
 				}
+				downRe(loadFunrf);
+				function loadFunrf(){
+					loadFun('全部')
+				}
 				function loadFun(tabT,condition){//搜索和tab切换 ，公用一个加载方法
 					var Spagenum = 2, Ypagenum = 1, oneSize = 10;
 					document.getElementById('infoListDiv').innerHTML = '';

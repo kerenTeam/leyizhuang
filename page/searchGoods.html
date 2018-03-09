@@ -262,7 +262,7 @@
 			var userId = plus.storage.getItem('$userId');
 			var oldToken = plus.storage.getItem("oldToken");
 			var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
-			document.addEventListener('refresh', function() {
+			document.addEventListener('refreshscgd', function() {
 				doSearch($.trim($('.fsearch').text()))
 			})
 			function doSearch(words) {

@@ -132,6 +132,9 @@
 			function payOk(message){
 				mui.alert(message || '还款成功');
 				repayment();
+				setTimeout(function(){
+					plus.webview.currentWebview().close();
+				},500)
 			}
 			$('.paychoose li').click(function(){
 				event.stopPropagation()

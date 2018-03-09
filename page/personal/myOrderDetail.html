@@ -164,31 +164,35 @@
 						<%}%>
 					</span>
 				</div>
-				<div>
-					<span class="huiC">
-						<%if(detail.identityT == '2'){%>
-							信用金抵扣
-						<%}else{%>
-							信用额度抵扣
-						<%}%>
-					</span> <span class="floL">
-						<%if(detail.BillingDetailResponse.creditMoney>0){%>
-							-<%= detail.BillingDetailResponse.creditMoney || 0%>元
-						<%}else{%>
-							<%= detail.BillingDetailResponse.creditMoney || 0%>元
-						<%}%>
-					</span>
-				</div>
-
-				<div>
-					<span class="huiC">产品券抵扣</span> <span class="floL">
-						<%if(detail.BillingDetailResponse.productCouponDiscount>0){%>
-							-<%= detail.BillingDetailResponse.productCouponDiscount || 0%>元
-						<%}else{%>
-							<%= detail.BillingDetailResponse.productCouponDiscount || 0%>元
-						<%}%>
-					</span>
-				</div>
+				<%if(detail.identityT != '6'){%>
+					<div>
+						<span class="huiC">
+							<%if(detail.identityT == '2'){%>
+								信用金抵扣
+							<%}else{%>
+								信用额度抵扣
+							<%}%>
+						</span> <span class="floL">
+							<%if(detail.BillingDetailResponse.creditMoney>0){%>
+								-<%= detail.BillingDetailResponse.creditMoney || 0%>元
+							<%}else{%>
+								<%= detail.BillingDetailResponse.creditMoney || 0%>元
+							<%}%>
+						</span>
+					</div>
+				<%}%>
+				
+				<%if(detail.identityT != '2'){%>
+					<div>
+						<span class="huiC">产品券抵扣</span> <span class="floL">
+							<%if(detail.BillingDetailResponse.productCouponDiscount>0){%>
+								-<%= detail.BillingDetailResponse.productCouponDiscount || 0%>元
+							<%}else{%>
+								<%= detail.BillingDetailResponse.productCouponDiscount || 0%>元
+							<%}%>
+						</span>
+					</div>
+				<%}%>
 				<div>
 					<span class="huiC">预存款抵扣</span> <span class="floL">
 						<%if(detail.BillingDetailResponse.preDeposit>0){%>
@@ -377,7 +381,9 @@
 				var isButton = plus.webview.currentWebview().isButton;
 				var noButton = plus.webview.currentWebview().noButton;
 				var cancelParentId = plus.webview.currentWebview().cancelParentId;
-
+				if(plus.webview.getWebviewById("orderSuccess")) {
+					plus.webview.getWebviewById("orderSuccess").close();
+				}
 				/*订单详情*/
 				mui.ajax(serverUrl + '/app/order/detail',{
 					data:{'userID':userId,'identityType':identityT,'orderNumber':orderNo},
