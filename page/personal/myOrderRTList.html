@@ -86,7 +86,7 @@
 									共<%= list[i].count%>件商品 退款金额：<span>¥ <%= list[i].returnPrice%></span>
 								</div>
 								<div class="orderBtns">
-									<%if(list[i].statusDesc != '已完成' && list[i].statusDesc != '已取消'){%>
+									<%if(list[i].statusDesc != '已完成' && list[i].statusDesc != '已取消' && list[i].statusDesc != '待退款' && list[i].statusDesc != '取消中'){%>
 										<span class="redC" onclick="cancelTHFun('<%= list[i].returnNo%>',this)">取消退货</span>
 									<%}%>
 								</div>

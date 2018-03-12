@@ -267,50 +267,37 @@
 												var index = plus.webview.getLaunchWebview();
 												mui.fire(index, 'refreshpage'); 
 												plus.nativeUI.closeWaiting();
-												if(guide.value){
-													mui.ajax(serverUrl + '/app/customer/binding/seller', {
-														data: {
-															userId: userId,
-															guidePhone: guide.value,
-															identityType:'6'
-														},
-														dataType: 'json',
-														headers: {
-															"Authorization": oldToken
-														},
-														type: 'post',
-														timeout: 10000,
-														success: function(data, type, xhr) {
-															plus.nativeUI.closeWaiting();
-															console.log('绑定返回', data);
-															if(data.code == 0) {
-																if(data.content.isExist){ 
-																}else{
-																	plus.nativeUI.alert('导购不存在')
-																}
-																if(plus.webview.getWebviewById('reg')){
-																	plus.webview.getWebviewById('reg').close();
-																}
-																plus.webview.currentWebview().close(); 
-																plus.nativeUI.closeWaiting();
-															}else{
-																mui.toast(data.message)
+												mui.ajax(serverUrl + '/app/customer/binding/seller', {
+													data: {
+														userId: userId,
+														guidePhone: guide.value,
+														identityType:'6'
+													},
+													dataType: 'json',
+													headers: {
+														"Authorization": oldToken
+													},
+													type: 'post',
+													timeout: 10000,
+													success: function(data, type, xhr) {
+														plus.nativeUI.closeWaiting();
+														console.log('绑定返回', data);
+														if(data.code == 0) {
+															if(plus.webview.getWebviewById('reg')){
+																plus.webview.getWebviewById('reg').close();
 															}
-								
-														},
-														error: function(xhr, type, errorThrown) {
+															plus.webview.currentWebview().close(); 
 															plus.nativeUI.closeWaiting();
-															mui.toast(type)
+														}else{
+															mui.toast(data.message)
 														}
-													});
-												}else{
-													if(plus.webview.getWebviewById('reg')){
-														plus.webview.getWebviewById('reg').close();
+							
+													},
+													error: function(xhr, type, errorThrown) {
+														plus.nativeUI.closeWaiting();
+														mui.toast(type)
 													}
-													plus.webview.currentWebview().close(); 
-												}
-												 
-
+												});
 											}
 
 										},

@@ -426,6 +426,7 @@
 			var promotionInfo = plus.storage.getItem('giftList');//促销赠品
 			var customerId = plus.webview.currentWebview().customerId || '';
 			var sysDeliveryType = plus.webview.currentWebview().sysDeliveryType;
+//			alert(sysDeliveryType)
 			if(plus.storage.getItem('auditNo') && plus.storage.getItem('remark')){
 				$('#remark').val(plus.storage.getItem('remark'));
 			}
@@ -637,7 +638,8 @@
 								})
 								var quantity = $('#firstLebi').attr('data-id');
 								var rebate = $('#firstLebi').val();
-								var totalOrderAmount = $('#firstTotal').val();
+								var totalOrderAmount = Number($('#firstTotal').val()) - Number($('#freight').html().replace('¥', ''));
+//								alert(totalOrderAmount)
 								var lebi = {
 									"id": userId,
 									"cusId": customerId,
@@ -950,13 +952,13 @@
 													$('#storeAddress').show();
 													$('.storeAddress').html('无地址')
 												}
-
 												$('.dsje').hide();
 											} else {
 												if(identityT != 6){$('.dsje').show();}
 												var message = data.message || '包含不支持自提商品';
-												$('#chooseStore').hide();
-												$('#add_info').show();
+												$('#chooseStore,#storeAddress').hide();
+												$('#add_info,.isowndis,#cityResult').show();
+												$('#freight').html('¥' + $('#firstFreight').val());
 												mui.toast(message);
 												$("input[name='peis']").eq(0).attr('checked', false)
 												$("input[name='peis']").eq(1).prop('checked', true)
@@ -1005,7 +1007,8 @@
 													$('.dsje').hide();
 												} else {
 													$('#add_info').show();
-													$('#chooseStore').hide()
+													$('#chooseStore').hide();
+													$('#freight').html('¥' + $('#firstFreight').val());
 													if(identityT != 6){$('.dsje').show();}
 													mui.toast(data.message);
 													curselect.find('option').eq(0).attr('selected', true);
@@ -1021,7 +1024,9 @@
 								}
 
 							} else {
-								$('#chooseStore').hide()
+								$('#chooseStore').hide();
+								$('#freight').html('¥' + $('#firstFreight').val());
+								
 								if(identityT != 6){$('.dsje').show();}
 								var message = data.message || '包含不支持自提商品'
 								mui.toast(message);
@@ -1305,7 +1310,6 @@
 								mui.fire(plus.webview.getWebviewById('specialGoods'),'refreshsd');
 								mui.fire(plus.webview.getWebviewById('hotGoods'),'refresh');
 								mui.fire(plus.webview.getWebviewById('history'),'refresh');
-								mui.fire(plus.webview.getWebviewById('searchGoods'),'refreshscgd');
 								if(data.content.isCashDelivery){
 									$('#facePay').show();
 								}else{
