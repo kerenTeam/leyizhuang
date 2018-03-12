@@ -334,7 +334,7 @@
 				</span>
 				<input placeholder="请填写纸质销货单号" type="text" maxlength="20" style="width: 70%;border: 0;text-align: right;margin-bottom: 0;"  />
 			</div>
-			<textarea rows="3" id='remark' placeholder="备注信息（最大可输入字数255字）" maxlength="255"></textarea>
+			<textarea rows="3" id='remark' placeholder="备注信息（最大可输入字数120字）" maxlength="255"></textarea>
 
 			<!--存储 第一次返回乐币 和 合计-->
 			<input type="hidden" id="firstLebi" data-id='' value="" />
@@ -1026,7 +1026,7 @@
 							} else {
 								$('#chooseStore').hide();
 								$('#freight').html('¥' + $('#firstFreight').val());
-								
+
 								if(identityT != 6){$('.dsje').show();}
 								var message = data.message || '包含不支持自提商品'
 								mui.toast(message);
@@ -1359,9 +1359,9 @@
 					});
 
 					function toPay(payableAmount, orderNumber) {
-						
+
 						document.getElementById('facePay').setAttribute('onclick', 'facePayF("' + payableAmount + '","' + orderNumber + '")');
-						
+
 						//系统检测获取支付通道
 						plus.payment.getChannels(function(channels) {
 							console.log("channel " + JSON.stringify(channels));
@@ -1419,7 +1419,7 @@
 							success: function(data) {
 								console.error(data);
 								plus.nativeUI.closeWaiting();
-								if(data.code == 0) { 
+								if(data.code == 0) {
 									openview({
 										view: 'orderSuccess.html',
 										id: 'orderSuccess',
@@ -1446,7 +1446,7 @@
 							},
 							error: function(xhr, type, errorThrown) {
 								//异常处理；
-								console.log(type); 
+								console.log(type);
 							}
 						});
 					}

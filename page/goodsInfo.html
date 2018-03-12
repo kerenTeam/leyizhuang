@@ -9,12 +9,12 @@
 		<meta name="apple-touch-fullscreen" content="yes">
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
 		<meta name="format-detection" content="telephone=no">
-		<meta name="format-detection" content="address=no">  
-		<link rel="stylesheet" type="text/css" href="../css/mui.min.css"/> 
-		<link rel="stylesheet" type="text/css" href="../css/commonY.css"> 
+		<meta name="format-detection" content="address=no">
+		<link rel="stylesheet" type="text/css" href="../css/mui.min.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/commonY.css">
 		<link rel="stylesheet" href="../css/resetY.css" />
 		 <link rel="stylesheet" type="text/css" href="../css/style.css"/>
-		<link rel="stylesheet" type="text/css" href="../css/configW.css"/> 
+		<link rel="stylesheet" type="text/css" href="../css/configW.css"/>
 	</head>
 	<style type="text/css">
 		.baocun{text-align:right;}
@@ -57,7 +57,7 @@
 		.dynamicPic2{width: 50%;padding-top: 48%;}
 		.dynamicPic3{width: 33%;padding-top: 31%;}
 		.dynamicPic img{width: 100%;}
-		#maskInfo{z-index:99999;position:fixed;top:0;left:0;width:100%;bottom:0;background-color:rgba(0,0,0,.5)}	
+		#maskInfo{z-index:99999;position:fixed;top:0;left:0;width:100%;bottom:0;background-color:rgba(0,0,0,.5)}
 		.dynamicPic span{display: inline-block;position: absolute;top: 2%;left: 2%;width: 96%;height: 96%;background-color: #F3F3F3;overflow: hidden;}
 		.mui-slider-item img{
 			width: 100%!important;
@@ -68,8 +68,11 @@
 		.specif div{flex: 1;}
 		.goodstit{padding:0 10px;border-left: 5px solid #AE0100;margin: 5px 0;}
 		#collt img{vertical-align: middle;width: 25px;}
-		.cmtImg{padding: 10px 0;} 
+		.cmtImg{padding: 10px 0;}
 		.cmtImg img{width: 4em;height: 4em;border-radius: 3px;display: inline-block;}
+		/*大的购物车图标*/
+       .mui-numbox{width: 106px;height: 34px;padding: 0px 34px;}
+       .mui-numbox .mui-input-numbox, .mui-numbox .mui-numbox-input{font-size: 14px;}
 	</style>
 
 	<body>
@@ -81,7 +84,7 @@
 		<script src="../js/statusBar.js"></script><!--状态栏-->
 		<div class="mui-content">
 			<div id="moll_info"></div>
-			
+
 			<script type="text/html" id="infoTpl">
 				<div class="mui-slider">
 					<!--轮播图-->
@@ -91,7 +94,7 @@
 						    <div class="mui-slider-item mui-slider-item-duplicate">
 						    	<img src="<%= dataobj.rotationImageUriList[dataobj.rotationImageUriList.length-1] %>" onerror="javascript:this.src='../images/img.svg';" />
 						    </div>
-							<% for(var i=0;i<dataobj.rotationImageUriList.length;i++){ %> 
+							<% for(var i=0;i<dataobj.rotationImageUriList.length;i++){ %>
 						    	<div class="mui-slider-item">
 						    		<img src="<%=dataobj.rotationImageUriList[i] %>"  onerror="javascript:this.src='../images/img.svg';"/>
 						    	</div>
@@ -106,7 +109,7 @@
 							<% for(var i=0;i<dataobj.rotationImageUriList.length-1;i++){ %>
 						    	<div class="mui-indicator"></div>
 						    <% } %>
-			            </div> 
+			            </div>
 					<%}%>
 				</div>
 				<!--轮播图结束-->
@@ -120,26 +123,26 @@
 					</div>
 					<div>
 						<span class="maincl">单位：</span><%=dataobj.goodsUnit%>
-					</div>  
+					</div>
 				</div>
-				
+
 			</script>
-				
+
 			<!--详情-->
 			<div id="goodsInfo">
 				<div class="ft16 goodstit">商品详情</div>
 				<div id="infoCnt"></div>
 			</div>
 			<div class="afterBorder" style="padding: 10px;background-color: white;">
-				<div class="ft17 goodstit">商品评价 <span class="mui-pull-right maincl ft14"></span></div> 
+				<div class="ft17 goodstit">商品评价 <span class="mui-pull-right maincl ft14"></span></div>
 			</div>
 			<div id="curShow" class="bgcwt"></div>
-    			<!--留言--> 
+    			<!--留言-->
 		 	<script type="text/html" id="cmtTpl">
-		 		
+
 		 		<%for(var i=0;i<list.length;i++){%>
 		 			<%if(list[i].isShow){%>
-			 			<div class="follow"> 
+			 			<div class="follow">
 							<div class="fchidl2">
 								<img src="<%=list[i].picUrl%>" class="userAvator"/>
 								<div class="butright">
@@ -156,14 +159,14 @@
 						            	<%}%>
 					            		</div>
 					            	<%}%>
-					           </div> 
+					           </div>
 							</div>
 						</div>
 		 			<%}%>
 					<%}%>
-		 	</script> 
+		 	</script>
 			<div class="upload text-center text-xs gray" id="upload" style="padding-bottom: 50px;z-index: 9999;"></div>
-		 	
+
 		</div>
 
 		<!--底部-->
@@ -175,13 +178,13 @@
 			</div>
 			<a href="javascript:;" class="opbb" onclick="toshare()">
 				加入下料清单
-			</a> 
+			</a>
 		</div>
-		
+
 		<!--购物车弹出内容-->
-		
+
 		<div class="am-share">
-			<div id="cartObj"></div>	
+			<div id="cartObj"></div>
 			<script type="text/html" id="cartTpl">
 				<div class="am-share-footer">
 					<span class="share_btn">
@@ -192,7 +195,7 @@
 					<div class="sdetail clearfloat">
 						<div class="top clearfloat">
 							<div class="tu clearfloat fl">
-								<img src="<%=dataobj.rotationImageUriList[0] %>" data-preview-src="" /> 
+								<img src="<%=dataobj.rotationImageUriList[0] %>" data-preview-src="" />
 							</div>
 							<div class="you clearfloat fl">
 								<div class="tit overflow_clear">
@@ -200,7 +203,7 @@
 								</div>
 								<div>规格：<em><%=dataobj.goodsSpecification%></em> 单位：<em><%=dataobj.goodsUnit%></em></div>
 								<span>
-									<b id="priceChange">¥ <%=dataobj.price%></b> 
+									<b id="priceChange">¥ <%=dataobj.price%></b>
 								</span>
 							</div>
 						</div>
@@ -210,7 +213,7 @@
 								<p class="fl">购买数量</p>
 								<div class="you clearfloat fr">
 									<div class="mui-numbox margin-top" data-numbox-min="1" data-numbox-max='9999'>
-										<button class="mui-btn mui-btn-numbox-minus" type="button" disabled="">-</button>
+										<button class="mui-btn mui-btn-numbox-minus" type="button" disabled="" style="padding-bottom: 6px;color: #555;">-</button>
 										<input id="test" class="mui-input-numbox" type="number" value="" />
 										<button id="upup" class="mui-btn mui-btn-numbox-plus add" type="button">+</button>
 									</div>
@@ -220,11 +223,11 @@
 					</div>
 				</div>
 			</script>
-			
+
 			<a class="shop-btn db">确定</a>
 		</div>
 
-		
+
 	 </body>
 	<script type="text/javascript" src="../js/jquery.min.js"></script>
 	<script src="../js/mui.min.js"></script>
@@ -235,7 +238,7 @@
 	<script type="text/javascript">
 		//购物车弹出/关闭
 		function toshare(){
-			$(".am-share").addClass("am-modal-active");	
+			$(".am-share").addClass("am-modal-active");
 			if($(".sharebg").length>0){
 				$(".sharebg").addClass("sharebg-active");
 			}else{
@@ -243,10 +246,10 @@
 				$(".sharebg").addClass("sharebg-active");
 			}
 			$(".sharebg-active,.share_btn").click(function(){
-				$(".am-share").removeClass("am-modal-active");	
+				$(".am-share").removeClass("am-modal-active");
 				setTimeout(function(){
-					$(".sharebg-active").removeClass("sharebg-active");	
-					$(".sharebg").remove();	
+					$(".sharebg-active").removeClass("sharebg-active");
+					$(".sharebg").remove();
 				},300);
 			})
 		}
@@ -257,13 +260,13 @@
 			if(!goodid){
 				mui.toast('未返回商品id')
 			}
-			//获取缓存 
+			//获取缓存
 			var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
-			var userId = plus.storage.getItem('$userId'); 
+			var userId = plus.storage.getItem('$userId');
 			var oldToken = plus.storage.getItem('oldToken');
 			plus.nativeUI.showWaiting();
 //			alert(goodid+' '+identityT+' '+userId)
-			
+
 			//增加浏览记录
 			mui.ajax(serverUrl+'/app/user/browseHistory/add',{
 				data:{
@@ -275,7 +278,7 @@
 				headers: {"Authorization": oldToken},
 				type:'post',
 				timeout:10000,
-				success:function(data,type,xhr){ 
+				success:function(data,type,xhr){
 					plus.nativeUI.closeWaiting();
 					plus.nativeUI.closeWaiting();
 					console.log('增加浏览记录',data);
@@ -289,7 +292,7 @@
 					console.log('响应失败');
 				}
 			});
-			
+
 			//商品详情
 			mui.ajax(serverUrl+'/app/goods/get/goodsDetail',{
 				data:{
@@ -301,7 +304,7 @@
 				headers: {"Authorization": oldToken},
 				type:'post',
 				timeout:10000,
-				success:function(data,type,xhr){ 
+				success:function(data,type,xhr){
 					plus.nativeUI.closeWaiting();
 					console.log('商品详情',data);
 					if(data.code == 0 ){
@@ -316,7 +319,7 @@
 										data.content.rotationImageUriList[i] = '../images/img.svg'
 									}
 								}
-										 
+
 							}
 							document.getElementById("moll_info").innerHTML = template("infoTpl", {dataobj:data.content});
 							document.getElementById("cartObj").innerHTML = template("cartTpl", {dataobj:data.content});
@@ -329,15 +332,15 @@
 							$('.toCart,.mui-numbox button').click(function() {
 								event.stopPropagation()
 							})
-							
+
 							var platform = plus.storage.getItem('platform')
 							$('.mui-numbox input').click(function() {
 								event.stopPropagation()
 								if(platform == 'ANDROID'){
 									$(this).select();
 								}else{
-									$(this).focus(); 
-									$(this).get(0).selectionStart = 0; 
+									$(this).focus();
+									$(this).get(0).selectionStart = 0;
 									$(this).get(0).selectionEnd = $(this).get(0).value.length;
 								}
 							})
@@ -345,14 +348,14 @@
 							gallery.slider({
 								interval: 3000 //设置自动轮播周期为3s
 							});
-						} 
+						}
 					}
 					if(data.code == 1000 ){
 						mui.toast(data.message)
 					}else if(data.code == -1 ){
 						mui.toast(data.message)
 					}
-					 
+
 				},
 				error:function(xhr,type,errorThrown){
 					plus.nativeUI.closeWaiting();
@@ -360,7 +363,7 @@
 					console.log('响应失败');
 				}
 			});
-			
+
 		    	//收藏
 		    	$('#collt').click(function(){
 		    		if($(this).attr('data-id') == 0){
@@ -374,7 +377,7 @@
 						headers: {"Authorization": oldToken},
 						type:'post',
 						timeout:10000,
-						success:function(data,type,xhr){ 
+						success:function(data,type,xhr){
 							plus.nativeUI.closeWaiting();
 							console.log('收藏返回',data);
 							if(data.code == 0 ){
@@ -388,7 +391,7 @@
 							}else if(data.code == -1 ){
 								mui.toast(data.message)
 							}
-							 
+
 						},
 						error:function(xhr,type,errorThrown){
 							plus.nativeUI.closeWaiting();
@@ -406,7 +409,7 @@
 						headers: {"Authorization": oldToken},
 						type:'post',
 						timeout:10000,
-						success:function(data,type,xhr){ 
+						success:function(data,type,xhr){
 							plus.nativeUI.closeWaiting();
 							console.log('收藏返回',data);
 							if(data.code == 0 ){
@@ -420,7 +423,7 @@
 							}else if(data.code == -1 ){
 								mui.toast(data.message)
 							}
-							 
+
 						},
 						error:function(xhr,type,errorThrown){
 							plus.nativeUI.closeWaiting();
@@ -428,9 +431,9 @@
 						}
 					});
 		    		}
-		    		
+
 		    	})
-	    
+
 			//加入购物车
 			$('.shop-btn').unbind("click").click(function(){
 				mui.ajax(serverUrl+'/app/materialList/add',{
@@ -443,18 +446,18 @@
 					headers: {"Authorization": oldToken},
 					type:'post',
 					timeout:10000,
-					success:function(data,type,xhr){ 
+					success:function(data,type,xhr){
 						plus.nativeUI.closeWaiting();
 						console.log('加入购物车',data);
 						if(data.code == 0 ){
 							plus.nativeUI.toast('加入成功')
 							$(".am-share").removeClass("am-modal-active");
-							$(".sharebg ").removeClass("sharebg-active");							
+							$(".sharebg ").removeClass("sharebg-active");
 							mui.fire(plus.webview.getWebviewById('cart.html'), 'refresh');
 						}else{
 							mui.toast(data.message)
 						}
-						 
+
 					},
 					error:function(xhr,type,errorThrown){
 						plus.nativeUI.closeWaiting();
@@ -477,7 +480,7 @@
 				headers: {"Authorization": oldToken},
 				type:'post',
 				timeout:10000,
-				success:function(data,type,xhr){ 
+				success:function(data,type,xhr){
 					plus.nativeUI.closeWaiting();
 					console.log('评论列表',data);
 					if(data.code == 0 ){
@@ -543,7 +546,7 @@
 					}else{
 						mui.toast(data.message)
 					}
-					 
+
 				},
 				error:function(xhr,type,errorThrown){
 					plus.nativeUI.closeWaiting();
@@ -551,17 +554,17 @@
 					console.log('响应失败');
 				}
 			});
-		}) 
-		
-		//发布时间判断 
+		})
+
+		//发布时间判断
 		var minute = 1000 * 60;
 		var hour = minute * 60;
 		var day = hour * 24;
 		var halfamonth = day * 15;
 		var month = day * 30;
-		function getDateDiff(dateTimeStamp){ 
-			var now = new Date().getTime(); 
-			var diffValue = now - dateTimeStamp; 
+		function getDateDiff(dateTimeStamp){
+			var now = new Date().getTime();
+			var diffValue = now - dateTimeStamp;
 			var monthC =diffValue/month;
 			var weekC =diffValue/(7*day);
 			var dayC =diffValue/day;
@@ -581,13 +584,13 @@
 			 }
 			 else if(minC>=1){
 			 result=parseInt(minC) +"分钟前";
-			 }else{ 
+			 }else{
 			 result="刚刚";
 			 }
 			return result;
 		}
-		mui.previewImage(); 
-		
+		mui.previewImage();
+
 	</script>
 
 </html>

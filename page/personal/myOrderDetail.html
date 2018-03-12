@@ -16,7 +16,7 @@
 		<script src="../../js/order0.js"></script>
 		<style type="text/css">
 			body{background-color: #F8F9FA;font-size: 15px;}
-			#main{margin-top: 50px;padding-bottom: 10px;}
+			#main{margin-top: 49px;padding-bottom: 10px;}
 			.cancelBtn button {margin-right: 15px;margin-left: 0;}
 			.cancelBtn {text-align: right;}
 			/*图片组件*/
@@ -38,6 +38,12 @@
 			.copyBtn{float: right; border: none; padding: 0 !important; color: #c7161e;}
 			.dingdanPingjia{margin-top: -8px; padding: 2px 6px; border-color: #ccc; color: #c7161e;}
 			#huiC{display:inline-block!important;text-align:justify!important;width:20%;}
+			.tihuoma{height: 46px;line-height: 48px;padding: 0 15px;font-size: 18px;font-weight: bold;color: #fff;
+			    background: #ff4b1f;  /* fallback for old browsers */
+background: -webkit-linear-gradient(to right, #1fddff, #ff4b1f);  /* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(to right, #1fddff, #ff4b1f); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+			}
 		</style>
 	</head>
 
@@ -57,6 +63,11 @@
 			<!--列表loading结束-->
 		</div>
 		<script type="text/html" id="mainS">
+			<%if(detail.pickUpCode){%>
+				<div class="tihuoma">
+					订单提货码 ：<span style="float: right;font-size: 22px;"><%= detail.pickUpCode%></span>
+				</div>
+			<%}%>
 			<div class="Dpart1">
 				<h4 style="font-size: 15px !important;line-height: 1.6;">
 					订单编号：<a id="copyDiv" style="color: #555;"><%= detail.orderNumber%></a>
@@ -83,10 +94,10 @@
 						<span class="huiC">是否主家收货</span><span class="mui-pull-right">否</span>
 					</div>
 				<%}%>
-				<div>
+				<!--<div>
 					<span class="huiC">提货码</span>
 					<span class="mui-pull-right"> <%= detail.pickUpCode || '无'%> </span>
-				</div>
+				</div>-->
 				<div>
 					<span class="huiC">配送方式</span> <span class="mui-pull-right"><%= detail.deliveryType || '无'%></span>
 				</div>
@@ -181,7 +192,7 @@
 						</span>
 					</div>
 				<%}%>
-				
+
 				<%if(detail.identityT != '2'){%>
 					<div>
 						<span class="huiC">产品券抵扣</span> <span class="floL">
@@ -325,7 +336,7 @@
 			<div class="cancelCon">
 				<div class="cancelMin">
 					<div class="cancelText evaluaCon">
-						<textarea class="evaluaText" placeholder="评价商品成功，乐易装奖励你乐豆！（最大可输入字数255字）" maxlength="255"></textarea>
+						<textarea class="evaluaText" placeholder="请您输入评价！（最大可输入字数120字）" maxlength="255"></textarea>
 					</div>
 					<div class="uppics clearfix" id="uppics2">
 				        <div class="onepic newActionWrap">
@@ -421,6 +432,7 @@
 						    clipboard.on('error', function(e) {
 						        console.log('失败',e);
 						    });
+						    //复制结束
 
 						}else{
 							mui.toast(data.message);

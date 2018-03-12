@@ -86,8 +86,16 @@
 									共<%= list[i].count%>件商品 退款金额：<span>¥ <%= list[i].returnPrice%></span>
 								</div>
 								<div class="orderBtns">
-									<%if(list[i].statusDesc != '已完成' && list[i].statusDesc != '已取消' && list[i].statusDesc != '待退款' && list[i].statusDesc != '取消中'){%>
-										<span class="redC" onclick="cancelTHFun('<%= list[i].returnNo%>',this)">取消退货</span>
+									<!--orderDeliveryType == '送货上门 HOUSE_DELIVERY' ，配送单 ===== 已提交，退货中 -->
+									<!--orderDeliveryType == '门店自提 SELF_TAKE' ，自提单 ===== 已提交 -->
+									<%if(list[i].orderDeliveryType == 'HOUSE_DELIVERY'){%>
+										<%if(list[i].statusDesc == '已提交' || list[i].statusDesc == '退货中'){%>
+											<span class="redC" onclick="cancelTHFun('<%= list[i].returnNo%>',this)">取消退货</span>
+										<%}%>
+									<%}else if(list[i].orderDeliveryType == 'SELF_TAKE'){%>
+										<%if(list[i].statusDesc == '已提交'){%>
+											<span class="redC" onclick="cancelTHFun('<%= list[i].returnNo%>',this)">取消退货</span>
+										<%}%>
 									<%}%>
 								</div>
 							</div>
@@ -351,29 +359,30 @@
 
 				//取消退货
 				window.cancelTHFun = function(id,that){
-					var isCance = confirm('确认要取消退货？');
-					if(isCance){
-						mui.ajax(serverUrl + '/app/returnOrder/cancel',{//获取取消原因
-							data:{'userId':userId,'identityType':identityT,'returnNumber':id},
-							dataType:'json',
-							type:'post',
-							timeout:10000,
-							headers:{"Authorization":oldToken},
-							success:function(data,type,xhr){
-								console.log('取消退货',data);
-								if(data.code == 0){
-									mui.fire(plus.webview.getWebviewById('center.html'),'OrderNumR');
-									mui.toast(data.message || '取消退货成功');
-									that.style.display = 'none';
-								}else{
-									mui.toast(data.message);
+					mui.confirm('确认要取消退货？','提示',['取消','确定'],function(e){
+					    if(e.index==1){
+					    		mui.ajax(serverUrl + '/app/returnOrder/cancel',{//获取取消原因
+								data:{'userId':userId,'identityType':identityT,'returnNumber':id},
+								dataType:'json',
+								type:'post',
+								timeout:10000,
+								headers:{"Authorization":oldToken},
+								success:function(data,type,xhr){
+									console.log('取消退货',data);
+									if(data.code == 0){
+										mui.fire(plus.webview.getWebviewById('center.html'),'OrderNumR');
+										mui.toast(data.message || '取消退货成功');
+										that.style.display = 'none';
+									}else{
+										mui.toast(data.message);
+									}
+								},
+								error:function(xhr,type,errorThrown){
+									console.error('取消退货，响应失败  !');
 								}
-							},
-							error:function(xhr,type,errorThrown){
-								console.error('取消退货，响应失败  !');
-							}
-						});
-					}
+							});
+					    }
+				  	});
 				}
 
 				/*订单评价*/

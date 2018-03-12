@@ -19,7 +19,7 @@
 			body{background-color: #f3f3f3;padding-bottom: 10px;}
 			.mui-bar-nav{box-shadow: none !important;}
 			header.mui-bar{z-index: 200;}
-			.notice .tab-hdtwo li {width: 50%;border: 1px solid #CECFCF;border-radius: 3px;}
+			.notice .tab-hdtwo li {width: 33.3%;border: 1px solid #CECFCF;border-radius: 3px;}
 			.checkList{background-color: #fff;margin-top: 10px;}
 			.checkList h4{font-size: 14px;padding: 12px 10px;}
 			.checkList h4 .h4span3{float: right;color: red;}
@@ -50,7 +50,7 @@
 		<header class="mui-bar mui-bar-nav fineB" style="padding-right: 15px;">
 			<a id="leftbtn" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<h1 class="mui-title">门店预存款</h1>
-			<span class="mui-pull-right" style="margin-top: 12px;font-size: 16px!important;" onclick="tixian()">提现</span>
+			<span class="mui-pull-right" style="margin-top: 12px;font-size: 16px!important;" onclick="tixian()">余额转出</span>
 		</header>
 		<script src="../../js/statusBar.js" type="text/javascript" charset="utf-8"></script>
 		<div class="mui-content">
@@ -65,7 +65,8 @@
 				<div class="tab-hd tab-hdtwo" id="tabLink">
 					<ul class="tab-nav">
 					  <li class="active aClick " data-statusId="">充值记录</li>
-					  <li class="aClick" data-statusId="1">消费记录</li>
+					  <li class="aClick" style="border-radius: 0px;" data-statusId="1">消费记录</li>
+					  <li class="aClick" data-statusId="1">返利明细</li>
 					</ul>
 				</div>
 				<!--列表loading-->
@@ -95,6 +96,16 @@
 						</div>
 					<%}%>
 				</script>
+				<script id="infoList3" type="text/html">
+					<%for(var i=0;i<list.length;i++){%>
+						<div class="rechargeConDiv">
+							<p>返利时间: <%= list[i].createTime%></p>
+							<p>订单编号: <%= list[i].orderNumber%></p>
+							<p>返利金额: <%= list[i].changeMoney%></p>
+							<p>返利方式: <%= list[i].type%></p>
+						</div>
+					<%}%>
+				</script>
 			</div>
 		</div>
 		<div class="upload text-center text-xs gray" id="upload"></div>
@@ -119,7 +130,7 @@
 				var oldToken = plus.storage.getItem('oldToken');
 				var sellerType = plus.storage.getItem('sellerType');
 				plus.nativeUI.showWaiting();
-				
+
 				if(sellerType == 'SUPERVISOR'){
 					var api = '/app/store/preDepositBalance'
 				}
@@ -185,11 +196,16 @@
 								var url = '/app/store/preDeposit/recharge/log';
 							}
 							loadFun(url,'tab1');
-						}else{
+						}else if($(this).index() == 1){
 							if(sellerType == 'SUPERVISOR'){
 								var url = '/app/store/preDeposit/consumption/log';
 							}
 							loadFun(url,'tab2');
+						}else{
+							if(sellerType == 'SUPERVISOR'){
+								var url = '/app/store/rebate/log';//返利明细
+							}
+							loadFun(url,'tab3');
 						}
 					})
 					function loadFun(url,tabT){
@@ -205,7 +221,7 @@
 							timeout:10000,
 							headers:{"Authorization":oldToken},
 							success:function(data,type,xhr){
-								console.log(data);
+								console.log(tabT,data);
 								var timeLoad = setInterval(function(){
 									clearTimeout(timeLoad),timeLoad = null;
 									if(data.code == 0){
@@ -215,6 +231,8 @@
 												document.getElementById('infoListDiv').innerHTML = template('infoList',{list:data.content.list});
 											}else if(tabT == 'tab2'){
 												document.getElementById('infoListDiv').innerHTML = template('infoList2',{list:data.content.list});
+											}else if(tabT == 'tab3'){
+												document.getElementById('infoListDiv').innerHTML = template('infoList3',{list:data.content.list});
 											}
 
 											$(window).scroll(function() {
@@ -243,6 +261,8 @@
 							                                                document.getElementById('infoListDiv').innerHTML += template('infoList',{list:data.content.list});
 							                                            }else if(tabT == 'tab2'){
 							                                                document.getElementById('infoListDiv').innerHTML += template('infoList2',{list:data.content.list});
+							                                            }else if(tabT == 'tab3'){
+							                                                document.getElementById('infoListDiv').innerHTML += template('infoList3',{list:data.content.list});
 							                                            }
 							                                        }
 							                                    }else{
