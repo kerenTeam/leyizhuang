@@ -167,7 +167,11 @@
 				}else{
 					var url = '/app/dispatching/pickUp/detail';
 					var datajson={userID:userId,identityType:identityT,returnNumber:orderNumber}
-					
+				} 
+				if(ordertype == 3){
+				 	var	isOver = 1
+				}else{
+				 	var	isOver = 0
 				}
 				plus.nativeUI.showWaiting();
 				mui.ajax(serverUrl+url,{
@@ -186,6 +190,9 @@
 							}else{
 								document.getElementById('infoListDiv').innerHTML = '<div style="text-align: center;padding: 50px;"><img src="../../images/order/order.png" style="width: 100px;" /><div class="ft13 disablecl">暂无数据</div></div>';
 							}
+							if(ordertype == 3){
+								$('.footBtn').hide()
+							}
 							plus.nativeUI.closeWaiting()
 						}else{
 							mui.toast(data.message);
@@ -200,7 +207,7 @@
 					openview({
 						view:"dispatchingWl.html",
 						id:'dispatchingWl',
-						extrasobj:{orderNo:orderNumber}
+						extrasobj:{orderNo:orderNumber,isOver:isOver}
 					})
 				}
 				window.receipt = function(orderNumber,money){

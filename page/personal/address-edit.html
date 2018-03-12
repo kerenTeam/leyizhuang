@@ -261,11 +261,10 @@
 						if(thisAddArray[k].id == adId){
 							$('#person').attr('value',thisAddArray[k].deliveryName);
 							$('#phone').attr('value',thisAddArray[k].deliveryPhone);
-							$('#localadd').html(thisAddArray[k].deliveryStreet)
+							$('#localadd').html(thisAddArray[k].deliveryCity +thisAddArray[k].deliveryCounty +thisAddArray[k].deliveryStreet)
 							$('#province').html(thisAddArray[k].deliveryCity + " "); /*市*/
 							$('#city').html(thisAddArray[k].deliveryCounty + " "); /*区*/
 							$('#area').html(thisAddArray[k].deliveryStreet); /*街道*/
-
 							$('#xiaoquIn').attr('value',thisAddArray[k].villageName); /*小区*/
 							$('#address').html(thisAddArray[k].detailedAddress); /*详细地址*/
 							if(thisAddArray[k].isDefault){ /*显示默认地址*/
