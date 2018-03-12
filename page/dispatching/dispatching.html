@@ -348,7 +348,7 @@
 
 							</div>
 						<%}else{%>
-							<div class="checkList" onclick="goInfo('<%=list[i].orderNumber%>','',3)">
+							<div class="checkList" onclick="goInfo('<%=list[i].orderNumber%>','<%=list[i].isOrderOrReturnOrder%>',3)">
 								<h4 class="fineB ft16">
 									<span>出货单号：<%=list[i].orderNumber2%></span>
 
@@ -435,6 +435,21 @@
 					id:'returnInfo',
 					extrasobj:{orderNumber:audi,orderType:type}
 				})
+			}else if(type == 3){
+				if(id == 'y'){
+					openview({
+						view:'deliveryInfo.html',
+						id:'deliveryInfo',
+						extrasobj:{orderNumber:audi,orderType:type}
+					})
+				}else{
+					openview({
+						view:'returnInfo.html',
+						id:'returnInfo',
+						extrasobj:{orderNumber:audi,orderType:type}
+					})
+				}
+				
 			}else{
 				openview({
 					view:'deliveryInfo.html',
@@ -480,6 +495,7 @@
 			var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
 			document.addEventListener('refresh', function() {
 				Refresh();
+				loadFun($('.active').index());
 			})
 			Refresh();
 			function Refresh() { //刷新
@@ -589,16 +605,11 @@
 					});
 				}
 			} //刷新
-			var Spagenum = 2; //实到页数
-			var Ypagenum = 1; //应到页数
-			var oneSize = 5;
+		
 			$('#tabLink li').unbind('click').click(function(){
 				document.getElementById('upload').innerHTML = '';
 				$(window).unbind('scroll');
-				document.getElementById('infoListDiv').innerHTML='';
-				Spagenum = 2; //实到页数
-				Ypagenum = 1; //应到页数
-				oneSize = 5;
+				document.getElementById('infoListDiv').innerHTML=''; 
 				$('#tabLink li').removeClass('active');
 				$(this).addClass('active');
 				$('#loadingdiv').css('height','32px');
@@ -609,13 +620,12 @@
 					view:'../../center.html',
 					id:'center'
 				})
-			})
-			document.addEventListener('refresh', function(event) {
-				loadFun(0);
-			});
-
+			}) 
 			loadFun(0);
 			function loadFun(index){
+				var Spagenum = 2; //实到页数
+				var Ypagenum = 1; //应到页数
+				var oneSize = 5;
 				if(index == 2){
 					var apiString = '/app/arrearsAudit/list';
 					var data = {'userId':userId,'identityType':identityT}

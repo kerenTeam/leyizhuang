@@ -113,6 +113,13 @@
 				var mostDraw = document.getElementById('mostDraw');
 				var reg_phone = /^1((3|4|5|8|7){1}\d{1}|70)\d{8}$/;//手机号正则
 				var balancecc = plus.webview.currentWebview().balance;
+				if(balancecc){
+					$('#mostMoney').html(balancecc);
+//					$('#mostDraw').attr("max",balancecc)
+				}else{
+					$('#mostDraw').attr("max",0)
+					$('#mostMoney').html(0)
+				}
 				//个人信息
 				mui.ajax(serverUrl+'/app/user/homepage', {
 					data: {
@@ -136,16 +143,16 @@
 								if(data.content.mobile){
 									$('#telway').val(data.content.mobile);
 								}
-								if(data.content.balance){
-									$('#mostMoney').html('¥'+data.content.balance);
-									$('#mostDraw').attr("max",data.content.balance)
-								}else if(balancecc){
-									$('#mostMoney').html('¥'+balancecc);
-									$('#mostDraw').attr("max",balancecc)
-								}else{
-									$('#mostDraw').attr("max",0)
-									$('#mostMoney').html(0)
-								}
+//								if(data.content.balance){
+//									$('#mostMoney').html('¥'+data.content.balance);
+//									$('#mostDraw').attr("max",data.content.balance)
+//								}else if(balancecc){
+//									$('#mostMoney').html('¥'+balancecc);
+//									$('#mostDraw').attr("max",balancecc)
+//								}else{
+//									$('#mostDraw').attr("max",0)
+//									$('#mostMoney').html(0)
+//								}
 							}
 						} else {
 							mui.toast(data.message)
@@ -201,7 +208,14 @@
 									mui.fire(plus.webview.getWebviewById('wallet'),'refreash')
 									mui.fire(plus.webview.getWebviewById('storePreDepositb'),'refreash')
 									plus.nativeUI.alert("申请已经提交，工作人员会在1-2个工作日内进行处理，财务打款后系统会以短信的方式进行通知用户")
-									mui.back();
+									openview({
+										view:'withdrawList.html',
+										id:'withdrawList',
+									})
+									setTimeout(function(){
+										plus.webview.currentWebview().close();
+									},500)
+									
 								} else {
 									plus.nativeUI.closeWaiting();
 									mui.toast(data.message);
