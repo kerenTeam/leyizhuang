@@ -749,6 +749,11 @@
 							}
 
 						} else {
+							mui.toast(data.message);
+							if(sysDeliveryType != 'SELF_TAKE'){
+								$('.goOrder').unbind('click')
+							} 
+							plus.nativeUI.closeWaiting();
 							if(data.content && data.content.totalGoodsInfo){
 								promotionInfo = JSON.stringify(data.content.promotionInfo);//更换选赠品时存的促销赠品
 								//显示商品
@@ -944,13 +949,17 @@
 									$('#cash').next().hide()
 								}
 							}
-							mui.toast(data.message);
 							if(sysDeliveryType != 'SELF_TAKE'){
-								$('.goOrder').unbind('click')
+								setTimeout(function(){
+									if(plus.webview.getWebviewById("chooseCustom")) {
+										plus.webview.getWebviewById("chooseCustom").close();
+									}
+									if(plus.webview.getWebviewById("chooseGift")) {
+										plus.webview.getWebviewById("chooseGift").close();
+									}
+									plus.webview.currentWebview().close();
+								},0)
 							}
-							
-							plus.nativeUI.closeWaiting();
-
 						}
 					},
 					error: function(xhr, type, errorThrown) {

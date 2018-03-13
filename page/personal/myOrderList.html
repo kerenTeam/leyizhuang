@@ -286,9 +286,42 @@
 				$('#maskInfo').fadeOut(200);
 			})
 			function goToPay(orderNo,money){
-				$('#payMoney').html('¥' + money);
-				$('#maskInfo').fadeIn(200);
-				toPay(money, orderNo)
+				mui.plusReady(function(){
+					var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
+					var userId = plus.storage.getItem('$userId');
+					var oldToken = plus.storage.getItem('oldToken');
+					console.log(oldToken)
+					mui.ajax(serverUrl+'/app/order/verify/timeout',{
+						data: {
+							userId: userId,
+							identityType: identityT,
+							orderNumber:orderNo
+						},
+						dataType: 'json',
+						type: 'post',
+						timeout: 10000,
+						headers: {
+							"Authorization": oldToken,
+						},
+						success:function(data,type,xhr){
+							plus.nativeUI.closeWaiting();
+							console.log('过期否',data);
+							if(data.code == 0 ){ 
+								$('#payMoney').html('¥' + money);
+								$('#maskInfo').fadeIn(200);
+								toPay(money, orderNo)
+							}else{
+								mui.toast(data.message)
+								plus.webview.currentWebview().reload();
+							}
+						},
+						error:function(xhr,type,errorThrown){
+							plus.nativeUI.closeWaiting();
+							mui.toast(type)
+							console.log('响应失败');
+						}
+					});
+				})
 			}
 			//系统检测获取支付通道
 			function toPay(payableAmount, orderNumber) {
@@ -567,21 +600,6 @@
 						loadFun(4);//已取消
 					}
 				})
-				downRe(crload);
-				function crload(){
-					var curindex = $('#tabLink li.active').index()
-					if(curindex == 0){
-						loadFun('');//全部
-					}else if(curindex == 1){
-						loadFun(6);//待发货
-					}else if(curindex == 2){
-						loadFun(2);//待收货
-					}else if(curindex == 3){
-						loadFun(3);//已完成
-					}else if(curindex == 4){
-						loadFun(4);//已取消
-					}
-				}
 				function loadFun(tabT,condition,cancelrefresh){//搜索和tab切换 ，公用一个加载方法
 					var Spagenum = 2, Ypagenum = 1, oneSize = 10;
 					document.getElementById('infoListDiv').innerHTML = '';

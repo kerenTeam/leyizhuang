@@ -28,7 +28,9 @@ body {
 }
 .mui-numbox [class*=btn-numbox], .mui-numbox [class*=numbox-btn]{
 	width: 32px;
-	font-size:25px;
+	font-size: 30px;
+    line-height: 0.5;
+    text-align: center
 }
 .mui-numbox .mui-input-numbox, .mui-numbox .mui-numbox-input{
 	border:none!important;
