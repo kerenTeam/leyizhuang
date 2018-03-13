@@ -115,7 +115,16 @@
 						<% if(nowState == '全部' || nowState == list[i].status){ %>
 							<div class="orderList">
 								<h3 class="h3" onclick="openDetail2('<%= list[i].orderNo%>')">
-									订单编号：<%= list[i].orderNo%>
+									配送方式：
+									<b style="float: right;font-weight: 500;color: #c7161e;">
+										<%if(list[i].deliveryType == 'HOUSE_DELIVERY'){%>
+											上门取货
+										<%}else if(list[i].deliveryType == 'SELF_TAKE'){%>
+											门店自提
+										<%}else{%>
+											购买产品券
+										<%}%>
+									</b>
 									<span><%= list[i].statusDesc%></span>
 								</h3>
 								<p class="p1" onclick="openDetail2('<%= list[i].orderNo%>')">
@@ -268,6 +277,7 @@
 					$('#loadingdiv').css('height','32px');
 					var nowApi = '/app/returnOrder/list';
 					var nowData = {'userId':userId,'identityType':identityT,'showStatus':3,'page':1,'size':oneSize};
+					//var nowData = {'userId':53,'identityType':6,'showStatus':3,'page':1,'size':oneSize};
 					if(pingjia){
 						nowApi = '/app/order/list/pending/evaluation';
 					}

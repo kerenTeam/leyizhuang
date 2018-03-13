@@ -292,8 +292,8 @@
 						task.addData('identityType',identityT.toString());
 				        task.addData('orderNo',orderNumber);
 				        task.addData('pickUpCode',pickUpCode.toString());
-				        task.addData('collectionAmount',truemoney.toString());
-				        task.addData('paymentMethod',paymentMethod);
+				        task.addData('collectionAmount',truemoney.toString() || " ");
+				        task.addData('paymentMethod',paymentMethod || " ");
 				        task.addData('remarks',content);
 
 						if(Apic.length){

@@ -187,7 +187,7 @@ function showSfun1(msg,fun1,fun0,iosLinkPic,fun3){
 	document.getElementsByClassName('Scontent1')[0].style.bottom = '0px';
 	function shareAction(sb,index) {
 		if(!sb||!sb.s){
-			mui.toast('无效的分享服务！');
+			mui.toast('无效的分享服务，请安装对应软件客户端！');
 			return;
 		}
 		msg.extra = {scene:sb.x}//区分微信 还是朋友圈 有效

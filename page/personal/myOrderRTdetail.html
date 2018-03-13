@@ -141,8 +141,10 @@
 			    			商品退回方式:
 			    			<%if(dataObj.deliveryType == 'HOUSE_PICK'){%>
 			    				工地取货
-		    				<%}else{%>
+		    				<%}else if(dataObj.deliveryType == 'RETURN_STORE'){%>
 		    					退货到店
+	    					<%}else{%>
+	    						暂无
 	    					<%}%>
 			    		</h5>
 					<div>
