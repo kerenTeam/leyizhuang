@@ -1361,6 +1361,7 @@
     "refer": [
       "cart.html",
       "page/goodsInfo.html"
-    ]
+    ],
+    "resources": []
   }
 }

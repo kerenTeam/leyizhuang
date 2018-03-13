@@ -632,20 +632,46 @@
 												openview({
 													view:'page/order/chooseGift.html',
 													id:'chooseGift',
+													autoShow:false,
 													extrasobj:{cusId:cusId}
 												})
 											}else{
 												openview({
 													view: 'page/order/chooseCustom.html',
-													id: 'chooseCustom'
+													id: 'chooseCustom',
 												})
 											}
 
 										} else if(identityT == 3) {
-											openview({
-												view: 'page/order/workerMaterial.html',
-												id: 'workerMaterial'
-											})
+											mui.ajax(serverUrl+'/app/goodsMoney/worker',{
+												data:{
+													userId:userId,
+													identityType:identityT,
+													custoermId:cusId,
+													goodsList:goodlists
+												},
+												dataType:'json',
+												type:'post',
+												timeout:10000,
+												headers:{"Authorization":oldToken,'Content-Type':'application/json'},
+												success:function(data,type,xhr){
+													console.log('获取料单商品',data);
+													var dataObj = {};
+													if(data.code == 0){ 
+														openview({
+															view: 'page/order/workerMaterial.html',
+															id: 'workerMaterial'
+														})
+													}else{
+														mui.toast(data.message);
+													}
+												},
+												error:function(xhr,type,errorThrown){
+													console.log('响应失败  !');
+													plus.nativeUI.closeWaiting();
+								
+												}
+											});
 										} else {
 											openview({
 												view: 'page/order/chooseGift.html',

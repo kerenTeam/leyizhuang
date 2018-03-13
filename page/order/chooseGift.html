@@ -226,6 +226,7 @@
 										openview({
 											view: 'order.html',
 											id: 'order',
+											autoShow:false,
 											extrasobj: {
 												customerId: cusId,
 												sysDeliveryType:sysDeliveryType
@@ -235,6 +236,7 @@
 										openview({
 											view: 'order.html',
 											id: 'order',
+											autoShow:false,
 											extrasobj: {
 												sysDeliveryType:sysDeliveryType
 											}
@@ -303,6 +305,7 @@
 										openview({
 											view: 'order.html',
 											id: 'order',
+											autoShow:false,
 											extrasobj: {
 												customerId: cusId,
 												sysDeliveryType:sysDeliveryType
@@ -312,6 +315,7 @@
 										openview({
 											view: 'order.html',
 											id: 'order',
+											autoShow:false,
 											extrasobj: {
 												sysDeliveryType:sysDeliveryType
 											}
@@ -322,10 +326,13 @@
 						} else {
 							mui.toast(data.message);
 							plus.nativeUI.closeWaiting();
-							if(plus.webview.getWebviewById("chooseCustom")) {
-								plus.webview.getWebviewById("chooseCustom").close();
-							}
-							plus.webview.currentWebview().close();
+							setTimeout(function(){
+								if(plus.webview.getWebviewById("chooseCustom")) {
+									plus.webview.getWebviewById("chooseCustom").close();
+								}
+								plus.webview.currentWebview().close();
+							},2000)
+							
 
 						}
 					},
