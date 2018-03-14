@@ -97,7 +97,7 @@
 			</form>
 			<div style="color:#FF5053;padding: 15px;font-size: 14px;">
 				<div>温馨提示：城市选定后无法更改！</div>
-				<input type="checkbox" name="" id="protocol" value="" style="vertical-align: middle;" checked="" /><span style="color: gray;">《用户注册协议》</span>
+				<input type="checkbox" name="" id="protocol" value="" style="vertical-align: middle;" checked="" /><span style="color: gray;" onclick="goProt()">《用户注册协议》</span>
 			</div>
 			<div class="mui-content-padded">
 				<button id='sendMail' class="mui-btn mui-btn-block mui-btn-danger">注册</button>
@@ -109,6 +109,12 @@
 		<script src="js/default.js" type="text/javascript" charset="utf-8"></script>
 		<script>
 			mui.init();
+			function goProt(){
+				openview({
+					view:"page/agreement.html",
+					id:"agreement"
+				})
+			}
 			mui.plusReady(function() {
 				var reg_phone = /^1((3|4|5|8|7){1}\d{1}|70)\d{8}$/; //手机号正则;
 				var sendButton = document.getElementById('sendMail');
@@ -196,7 +202,7 @@
 				}, false);
 
 				sendButton.addEventListener('tap', function() {
-					newUsername = username.value.replace(/[^\x00-\xff]/g, "**");
+					newUsername = $.trim(username.value).replace(/[^\x00-\xff]/g, "**");
 					if(!account.value || !reg_phone.test(account.value)) {
 						mui.toast('请输入正确的手机号')
 					} else if(!checkcode.value) {
@@ -205,8 +211,8 @@
 						mui.toast('请重新获取验证码')
 					} else if(!newUsername) {
 						mui.toast('请输入姓名')
-					} else if(newUsername.length >= 10) {
-						mui.toast('姓名最多输入5个字符')
+					} else if(newUsername.length > 10) {
+						mui.toast('姓名最多输入5个汉字或者10个字母')
 					} else if(!$('#workerType').val()) {
 						mui.toast('请选择工种')
 					} else if(guide.value && !reg_phone.test(guide.value)){
@@ -223,7 +229,7 @@
 								"picUrl": picUrl,
 								"nickName": nick,
 								"sex": sex,
-								"name":username.value,
+								"name":username.value.replace(/[ ]/g,""),
 								"profession":$('#workerType').val()
 							},
 							dataType: 'json',

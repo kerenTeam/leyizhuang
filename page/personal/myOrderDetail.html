@@ -85,7 +85,7 @@ background: linear-gradient(to right, #1fddff, #ff4b1f); /* W3C, IE 10+/ Edge, F
 				<div>
 					<span class="huiC">收货人</span><span class="mui-pull-right"><%= detail.receiver%> <a href="tel:<%=detail.receiverPhone%>"><%= detail.receiverPhone || '无'%></a></span>
 				</div>
-				<%if(detail.isOwnerReceiving){%>
+				<!--<%if(detail.isOwnerReceiving){%>
 					<div>
 						<span class="huiC">是否主家收货</span><span class="mui-pull-right">是</span>
 					</div>
@@ -93,7 +93,7 @@ background: linear-gradient(to right, #1fddff, #ff4b1f); /* W3C, IE 10+/ Edge, F
 					<div>
 						<span class="huiC">是否主家收货</span><span class="mui-pull-right">否</span>
 					</div>
-				<%}%>
+				<%}%>-->
 				<!--<div>
 					<span class="huiC">提货码</span>
 					<span class="mui-pull-right"> <%= detail.pickUpCode || '无'%> </span>

@@ -112,7 +112,8 @@
     "refer": [
       "bindGuide.html",
       "page/goodList.html",
-      "center.html"
+      "center.html",
+      "page/agreement.html"
     ]
   },
   "forget_password.html": {
@@ -631,7 +632,8 @@
       "page/personal/editPhone.html",
       "page/personal/accountSafe.html",
       "page/goodList.html",
-      "page/personal/storeBelong.html"
+      "page/personal/storeBelong.html",
+      "page/about.html"
     ]
   },
   "page/personal/address-edit.html": {
