@@ -947,7 +947,7 @@
 							plus.nativeUI.closeWaiting();
 							console.log('快捷下单', data);
 							if(data.code == 0) { 
-								mui.toast('下单成功');
+								mui.toast('加入下料清单成功');
 								mui.fire(plus.webview.getWebviewById('cart.html'), 'refresh');
 								$('.mui-numbox-input').val(0);
 								$("#btcart").find("input[type='checkbox']:checked").each(function(index){

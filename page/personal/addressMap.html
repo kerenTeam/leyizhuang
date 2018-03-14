@@ -11,6 +11,7 @@
 		<script type="text/javascript" src="http://webapi.amap.com/maps?v=1.4.4&key=0fa47323cf55d36d80d9ea3e11ca744e&plugin=AMap.Geocoder"></script>
 		<script src="../../js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../../js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/default.js" type="text/javascript" charset="utf-8"></script>
 		<title>地图定位</title>
 		<style>
 			body {
@@ -46,20 +47,39 @@
 			(function() {
  
 				mui.plusReady(function() {
+					var nowcity = plus.storage.getItem('userCity');
 					var pageid = plus.webview.currentWebview().pageid;
 					var longitude = plus.webview.currentWebview().longitude;
 					var latitude = plus.webview.currentWebview().latitude;
 					var iframe = document.getElementById('test').contentWindow;
-
 					document.getElementById('test').src = 'https://m.amap.com/picker/?center=' + longitude + ',' + latitude + '&key=608d75903d29ad471362f8c58c550daf'
-
-					document.getElementById('test').onload = function() {
-						$("#test").contents().find(".back").click(function() {
-							mui.back()
-						});
-						iframe.postMessage('hello', 'https://m.amap.com/picker/');
-
-					};
+					var cityName;
+					//获取城市
+					mui.ajax(serverUrl + '/app/city/list', {
+						dataType: 'json',
+						type: 'post',
+						timeout: 10000,
+						success: function(data, type, xhr) {
+							console.log('城市列表返回', data);
+							if(data.content && data.content.length) { 
+								for(var i = 0; i < data.content.length; i++) { 
+									if(nowcity == data.content[i].cityId){
+										cityName = data.content[i].cityName;
+										document.getElementById('test').onload = function() {
+											iframe.postMessage('hello', 'https://m.amap.com/picker/');
+											$("#test").contents().find(".back").click(function() {
+												mui.back()
+											});
+										}
+									}
+								} 
+							}
+						},
+						error: function(xhr, type, errorThrown) {
+	
+						}
+	
+					});
 					window.addEventListener("message", function(e) {
 //						goback(e.data.address)
 						let NewLocation = (e.data.location).split(",")
@@ -74,8 +94,20 @@
 								var result2 = result.regeocode;
 								result = result.regeocode.addressComponent;
 								console.log(JSON.stringify(result))
-//								alert(result.address.street)
-								goback(result.province,result.city,result.district,result.township,result.street,result.streetNumber,result2.formattedAddress,result.neighborhood)
+								if(result.city){
+									if(result.city != cityName){
+										mui.toast('只能定位当前省市哦');
+									}else{
+										goback(result.province,result.city,result.district,result.township,result.street,result.streetNumber,result2.formattedAddress,result.neighborhood)
+									}
+								}else{
+									if(result.province != cityName){
+										mui.toast('只能定位当前省市哦');
+									}else{
+										goback(result.province,result.city,result.district,result.township,result.street,result.streetNumber,result2.formattedAddress,result.neighborhood)
+									}
+								}
+
 							}
 						});
 

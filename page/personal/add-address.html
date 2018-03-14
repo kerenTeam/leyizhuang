@@ -144,14 +144,9 @@
 							#demo3 div p:after{content: '∨';position: absolute;right: 10px;color: #666;}
 
 						</style>
-						<li class="clearfloat" id="mapAddress" style="display: none;">
-							<p class="fl">所在地区 <span class="redc"> *</span></p>
-							<button id='showCityPicker3' type='button'><span class="mui-icon mui-icon-arrowdown"></span></button>
-							<div id='cityResult3' class="ui-alert"><span id="province"><b style="font-weight: 500;color: #999;">点击选择地区</b></span><span id="city"></span><span id="area"></span></div>
-						</li>
 						<li class="clearfloat"style="display: flex;align-items: center;justify-content: space-between;height: auto;">
 							<div class="">所在地区 <span class="redc"> *</span></div>
-							<div class="writecmt" id="localadd" style="width: 68%;" placeholder="请输入市区街道或者点击图标定位" style="-webkit-user-select: text;" contenteditable="true"></div>
+							<div class="writecmt" oninput="delStorge()" id="localadd" style="width: 68%;" placeholder="请输入市区街道或者点击图标定位" style="-webkit-user-select: text;" contenteditable="true"></div>
 							<img src="../../images/marker_01.png" onclick="goMap()" style="width: 20px;" alt="" />
 						</li>
 						<li class="clearfloat" id="localaddmap">
@@ -172,29 +167,7 @@
 		<script src="../../js/mui.picker.minY.js"></script>
 		<script src="../../js/city.data-3Y.js" type="text/javascript" charset="utf-8"></script>
 		<!--<script src="http://oyba5duuu.bkt.clouddn.com/city.data-3Y.js" type="text/javascript" charset="utf-8"></script>-->
-		<script>
-			(function($, doc) {
-				$.init();
-				$.ready(function() {
-					//地址选择三级联动
-					var cityPicker3 = new $.PopPicker({
-						layer: 3
-					});
-					cityPicker3.setData(cityData3);
-					var showCityPickerButton = doc.getElementById('showCityPicker3');
-					var cityResult3 = doc.getElementById('cityResult3');
-					showCityPickerButton.addEventListener('tap', function(event) {
-						cityPicker3.show(function(items) {
-							doc.getElementById('province').innerText = (items[0] || {}).text + " ";
-							doc.getElementById('city').innerText =  (items[1] || {}).text + " ";
-							doc.getElementById('area').innerText = (items[2] || {}).text + " ";
-							//返回 false 可以阻止选择框的关闭
-							//return false;
-						});
-					}, false);
-				});
-			})(mui, document);
-		</script>
+		
 
 		<!--默认按钮-->
 		<script type="text/javascript">
@@ -210,37 +183,7 @@
 				}, 200)
 			});
 		</script>
-		<script type="text/javascript">
-			/*四级地址*/
-			var $town = $('#demo3 select[name="town"]');
-            var townFormat = function(info){
-                $town.hide().empty();
-                if(info['code']%1e4&&info['code']<7e5){ //是否为“区”且不是港澳台地区
-                    $.ajax({
-                        url:'http://passer-by.com/data_location/town/'+info['code']+'.json',
-                        dataType:'json',
-                        success:function(town){
-                            $town.show();
-                            for(i in town){
-                                    $town.append('<option value="'+i+'">'+town[i]+'</option>');
-                            }
-                        }
-                    });
-                }
-            };
-            $('#demo3').citys({
-                province:'四川',
-//              city:'成都',
-//              area:'青羊',
-                onChange:function(info){
-                    townFormat(info);
-                }
-            },function(api){
-                var info = api.getInfo();
-                townFormat(info);
-            });
-	    		/*地址结束*/
-		</script>
+		 
 		<script type="text/javascript">
 			//定位
 			var latitude=0;//经度
@@ -256,7 +199,7 @@
 				plus.storage.removeItem('$mapStorage'); 
 				
 				//地图定位
-				var watchId;
+				var watchId,oldLength;
 				function geoInf( position ) {
 					var str = "";
 					str += "地址："+position.addresses+"\n";//获取地址信息
@@ -307,7 +250,13 @@
 						 	$('#address').val(mapStorage[0].street+mapStorage[0].streetNumber)
 
 						 }
+						oldLength = $('.writecmt').text().length;						
 				} 
+				window.delStorge = function(){
+					if($('.writecmt').text().length < oldLength){
+						plus.storage.removeItem('$mapStorage')
+					}
+				}
 			})
 		</script>
 		<script type="text/javascript" charset="utf-8">
@@ -325,8 +274,7 @@
 				document.getElementById('person').value = contactOne[0].name;
 				document.getElementById('phone').value = contactOne[0].phone;
 				plus.storage.removeItem('contactOne');
-			})
-		 
+			})  
 			mui.plusReady(function(){
 				//获取缓存
 				plus.storage.removeItem('$mapStorage'); 
@@ -338,7 +286,7 @@
 				if(plus.webview.currentWebview().ConeId){
 					$('#contactDiv0').css('display','block');
 				}
-
+				
 				//点击保存新增地址
 				window.save = function(){
 					var newPerson = document.getElementById('person').value;
@@ -373,7 +321,19 @@
 					 		newStreet = mapStorage[0].township
 					 	} 
 					 }
-					
+					 
+					 
+					 if($.trim($('#localadd').html())[2]=="省"){
+						 newProvince = newProvince || $('#localadd').html().substr(0,3);
+						 newCity = newCity || $('#localadd').html().substr(3,3);
+						 newArea = newArea || $('#localadd').html().substr(6,3);
+						 newStreet = newStreet ||$('#localadd').html().slice(9)+' ';
+					 }else{
+						 newProvince = newProvince || ' ';
+						 newCity = newCity || $('#localadd').html().substr(0,3);
+						 newArea = newArea || $('#localadd').html().substr(3,3);
+						 newStreet = newStreet ||$('#localadd').html().slice(6)+' ';
+					 }
 
 					var xiaoquIn = document.getElementById('xiaoquIn').value;/*小区*/
 

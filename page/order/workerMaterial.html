@@ -121,14 +121,14 @@
 
 			</div>
 			<div id='cityResult' data-id = '0' class="ui-alert pad10 afterBorder ft15">配送时间<span class="mui-icon mui-icon-arrowdown maincl mui-pull-right ft16"></span><span class="mui-pull-right pstime">选择</span></div>
-			<div class="mui-input-row mui-checkbox ft15 isowndis">
+			<!--<div class="mui-input-row mui-checkbox ft15 isowndis">
 				<label style="padding: 18px 10px;">是否主家收货</label>
 				<input name="checkbox1" style="top: 12px;right: 12px;" id="isOwner" class="mui-pull-right isOwnerReceiving" value="Item 1" type="checkbox" checked>
 			</div>
 			<div class="pad10 ft13 isowndis bgcee maincl" style="overflow: hidden;">
 				<div class="mui-pull-left">温馨提示：</div>
 				<div class="mui-pull-left" style="width: 80%;word-break:break-all;">若收货人为主家，系统将在出货打印单中自动隐藏折扣信息</div>
-			</div>
+			</div>-->
 			<textarea name="" id="other" maxlength="100" cols="30" rows="4" placeholder="备注"></textarea>
 		</div>
 
@@ -348,14 +348,14 @@
 				var detad = $('#addid').attr('data-detailedAddress')
 				var receiver = $('#addid').attr('data-receiver')
 				var pstime = $('#cityResult .pstime').html();//配送时间
-				var isOwner= $('#isOwner').attr('checked');
+//				var isOwner= $('#isOwner').attr('checked');
 
 				console.log('idobj ',idobj)
-				if(isOwner == 'checked'){
-					isOwnerReceive = 1
-				}else{
-					isOwnerReceive = 0
-				}
+//				if(isOwner == 'checked'){
+//					isOwnerReceive = 1
+//				}else{
+//					isOwnerReceive = 0
+//				}
 				if(!pstime || pstime == '选择'){
 					mui.toast('请选择配送时间')
 				}else{
@@ -372,7 +372,7 @@
 							residenceName:residenceName,
 							detailedAddress:detad,
 							reservationDeliveryTime:pstime,
-							isOwnerReceiving:isOwnerReceive,
+//							isOwnerReceiving:isOwnerReceive,
 							remark:$('#other').val(),
 						},
 						dataType:'json',

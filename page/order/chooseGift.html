@@ -326,12 +326,10 @@
 						} else {
 							mui.toast(data.message);
 							plus.nativeUI.closeWaiting();
-//							setTimeout(function(){
-								if(plus.webview.getWebviewById("chooseCustom")) {
-									plus.webview.getWebviewById("chooseCustom").close();
-								}
-								plus.webview.currentWebview().close();
-//							},2000)
+							if(plus.webview.getWebviewById("chooseCustom")) {
+								plus.webview.getWebviewById("chooseCustom").close();
+							}
+							plus.webview.currentWebview().close();
 							
 
 						}

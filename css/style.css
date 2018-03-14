@@ -27,14 +27,14 @@ body {
     border-radius: 4px;
 }
 .mui-numbox [class*=btn-numbox], .mui-numbox [class*=numbox-btn]{
-	width: 37px;
+	width: 34px;
 	font-size: 30px;
     line-height: 0.5;
     text-align: center
 }
 .mui-numbox .mui-input-numbox, .mui-numbox .mui-numbox-input{
 	border:none!important;
-	width: 90%!important;
+	width: 98%!important;
 	margin: auto!important;
 }
 .flexwc{
