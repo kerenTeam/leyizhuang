@@ -27,7 +27,7 @@ body {
     border-radius: 4px;
 }
 .mui-numbox [class*=btn-numbox], .mui-numbox [class*=numbox-btn]{
-	width: 32px;
+	width: 37px;
 	font-size: 30px;
     line-height: 0.5;
     text-align: center

@@ -99,6 +99,10 @@
 			#contactBtn{float: right;font-size: 15px;padding: 5px;}
 			.mui-btn-primary:enabled:active{border: 1px solid #c7161e;background-color: #c7161e;}
 			#cityResult3 span{color: #666;}
+			.writecmt:empty:before{
+			    content: attr(placeholder);
+			    color:#999;
+			}
 		</style>
 	</head>
 
@@ -145,13 +149,12 @@
 							<button id='showCityPicker3' type='button'><span class="mui-icon mui-icon-arrowdown"></span></button>
 							<div id='cityResult3' class="ui-alert"><span id="province"><b style="font-weight: 500;color: #999;">点击选择地区</b></span><span id="city"></span><span id="area"></span></div>
 						</li>
-						<li class="clearfloat" onclick="goMap()" style="display: flex;align-items: center;justify-content: space-between;">
+						<li class="clearfloat"style="display: flex;align-items: center;justify-content: space-between;height: auto;">
 							<div class="">所在地区 <span class="redc"> *</span></div>
-							<div class="" id="localadd" style="max-width: 70%;">
-								点击定位
-							</div>
+							<div class="writecmt" id="localadd" style="width: 68%;" placeholder="请输入市区街道或者点击图标定位" style="-webkit-user-select: text;" contenteditable="true"></div>
+							<img src="../../images/marker_01.png" onclick="goMap()" style="width: 20px;" alt="" />
 						</li>
-						<li class="clearfloat">
+						<li class="clearfloat" id="localaddmap">
 							<p class="fl">所在小区 <span class="redc"> *</span></p>
 							<input type="text" class="fr shuru" id="xiaoquIn" placeholder="填写小区" />
 						</li>
@@ -381,7 +384,7 @@
 					}else if(!reg_phone.test(newPhone)){
 						$('#phone').focus();
 						mui.toast('请输入正确的手机号码 !');
-					}else if(!newStreet || newStreet.indexOf('undefined')!=-1 || newStreet=='点击定位'){
+					}else if(!newStreet || newStreet.indexOf('undefined')!=-1 || newStreet=='请输入或者点击图标定位'){
 						mui.toast('所在地区不能为空!');
 					}else if(xiaoquIn == ''){
 						mui.toast('所在小区不能为空!');

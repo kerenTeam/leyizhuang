@@ -203,7 +203,7 @@
 									<div class="flexr">
 										<div>
 											<span class="disablecl">
-												顾客：
+												联系人：
 											</span>
 											<span class="titcl">
 												<%=list[i].customerName%>
@@ -256,7 +256,7 @@
 									<div class="flexr">
 										<div>
 											<span class="disablecl">
-												顾客：
+												联系人：
 											</span>
 											<span class="titcl">
 												<%=list[i].receiver%>
@@ -309,7 +309,7 @@
 									<div class="flexr">
 										<div>
 											<span class="disablecl">
-												顾客：
+												联系人：
 											</span>
 											<span class="titcl">
 												<%=list[i].receiver%>
@@ -350,7 +350,7 @@
 						<%}else{%>
 							<div class="checkList" onclick="goInfo('<%=list[i].orderNumber%>','<%=list[i].isOrderOrReturnOrder%>',3)">
 								<h4 class="fineB ft16">
-									<span>出货单号：<%=list[i].orderNumber2%></span>
+									<span><%if(list[i].tui){%>退货单号<%}else{%>出货单号<%}%>：<%=list[i].orderNumber2%></span>
 
 						    			<span class="mui-pull-right maincl maincl ft14"><%=list[i].auditStatus%><span class="mui-icon mui-icon-arrowright ft20"></span></span>
 								</h4>
@@ -358,7 +358,7 @@
 									<div class="flexr">
 										<div>
 											<span class="disablecl">
-												顾客：
+												联系人：
 											</span>
 											<span class="titcl">
 												<%=list[i].receiver%>
@@ -662,6 +662,7 @@
 										data.content.list.forEach(function(ele,index){
 											if(ele.orderNumber){
 												if(ele.orderNumber[0] == 'T'){
+													ele.tui = 1;
 													ele.orderNumber2 = ele.orderNumber.substr(0, 5) + '****' + ele.orderNumber.substr(8);
 												}else{
 													ele.orderNumber2 = ele.orderNumber.substr(0, 5) + '****' + ele.orderNumber.substr(20);
@@ -705,6 +706,7 @@
 									                                    	data.content.list.forEach(function(ele,index){
 																				if(ele.orderNumber){
 																					if(ele.orderNumber[0] == 'T'){
+																						ele.tui = 1;
 																						ele.orderNumber2 = ele.orderNumber.substr(0, 5) + '****' + ele.orderNumber.substr(8);
 																					}else{
 																						ele.orderNumber2 = ele.orderNumber.substr(0, 5) + '****' + ele.orderNumber.substr(20);

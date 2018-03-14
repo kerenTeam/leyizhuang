@@ -115,15 +115,15 @@
 						<% if(nowState == '全部' || nowState == list[i].status){ %>
 							<div class="orderList">
 								<h3 class="h3" onclick="openDetail2('<%= list[i].orderNo%>')">
-									配送方式：
-									<b style="float: right;font-weight: 500;color: #c7161e;">
-										<%if(list[i].deliveryType == 'HOUSE_DELIVERY'){%>
-											上门取货
-										<%}else if(list[i].deliveryType == 'SELF_TAKE'){%>
-											门店自提
-										<%}else{%>
-											购买产品券
-										<%}%>
+									<%if(list[i].deliveryType == 'HOUSE_DELIVERY'){%>
+										上门取货
+									<%}else if(list[i].deliveryType == 'SELF_TAKE'){%>
+										门店自提
+									<%}else{%>
+										购买产品券
+									<%}%>
+									<b style="float: right;color: #c7161e;font-weight: 400;">
+										待评价
 									</b>
 									<span><%= list[i].statusDesc%></span>
 								</h3>
@@ -294,6 +294,11 @@
 								if(data.code == 0){
 									$('#loadingdiv').css('height','0px');
 									if(data.content.list && data.content.list.length){
+										data.content.list.forEach(function(ele,index){
+											if(ele.orderNo){
+												ele.orderNo2 = ele.orderNo.substr(0, 5) + '****' + ele.orderNo.substr(20);
+											} 
+										})
 										if(pingjia){
 											document.getElementById('infoListDiv').innerHTML = template('infoListP2',{list:data.content.list,nowState:tabT,pj:1});
 										}else{
@@ -327,6 +332,11 @@
 															$('#loadingdiv').css('height','0px');
 															if(data.content){
 																if(data.content.list && data.content.list.length){
+																	data.content.list.forEach(function(ele,index){
+																		if(ele.orderNo){
+																			ele.orderNo2 = ele.orderNo.substr(0, 5) + '****' + ele.orderNo.substr(20);
+																		} 
+																	})
 																	if(pingjia){
 																		document.getElementById('infoListDiv').innerHTML += template('infoListP2',{list:data.content.list,nowState:tabT,pj:1});
 																	}else{
