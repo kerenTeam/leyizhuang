@@ -69,7 +69,7 @@
 							myIsIndex2:true,
 							pictures:[mui('.imgcode')[0].src]
 						}
-						showSfun1(msg2,function(){isIosflag++},function(){isIosflag++},true,function(index){
+						showSfun1(msg2,function(){isIosflag++},function(){isIosflag++;},true,function(index){
 							//ios分享第一次点击分享会失败，我做了个 递归调用，让他 自动 再点一次
 							if(!/android/i.test(navigator.userAgent)){
 								if(isIosflag<2){

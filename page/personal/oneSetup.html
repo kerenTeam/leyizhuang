@@ -169,7 +169,7 @@
 					<li class="clearfloat profession" style="display: none;">
 						<a href="#">
 							<p class="fl">工种</p>
-							<span class="mui-icon mui-icon-arrowdown mui-pull-right ft16" style="top:5px;"></span> 
+							<span class="mui-icon mui-icon-arrowdown mui-pull-right ft16" style="top:5px;"></span>
 							<select id = "profession" style="padding: 0;direction: rtl!important;width: 120px;margin-top: 15px;">
 							  <option value="">选择</option>
 							</select>
@@ -178,7 +178,7 @@
 					<li class="clearfloat sgo" style="display: none;">
 						<a href="#">
 							<p class="fl">门店</p>
-							<span class="mui-icon mui-icon-arrowdown mui-pull-right ft16" style="top:5px;"></span> 
+							<span class="mui-icon mui-icon-arrowdown mui-pull-right ft16" style="top:5px;"></span>
 							<select id = "store" style="padding: 0;direction: rtl!important;width: 120px;margin-top: 15px;">
 							  <option value="">选择</option>
 							</select>
@@ -187,7 +187,7 @@
 					<li class="clearfloat sgo noguide" style="display: none;">
 						<a href="#">
 							<p class="fl">导购</p>
-							<span class="mui-icon mui-icon-arrowdown mui-pull-right ft16" style="top:5px;"></span> 
+							<span class="mui-icon mui-icon-arrowdown mui-pull-right ft16" style="top:5px;"></span>
 							<select id = "guide" style="padding: 0;direction: rtl!important;width: 120px;margin-top: 15px;">
 							  <option value="">选择</option>
 							</select>
@@ -208,15 +208,19 @@
 		</div>-->
 	</body>
 	<script src="../../js/mui.min.js"></script>
-	<script src="../../js/mui.picker.min.js"></script>
+	<script src="../../js/mui.picker.minNew.js"></script>
 	<script src="../../js/default.js" type="text/javascript" charset="utf-8"></script>
 	<script src="../../js/artTemplate-native.js"></script>
 	<script src="../../js/jquery.min.js"></script>
 	<script type="text/javascript">
 		//选择日期
 		function openTime(nowthis){
-			var dtPicker = new mui.DtPicker({type:'date'});
-		    dtPicker.show(function (selectItems) {
+			var dtpicker = new mui.DtPicker({
+			    type: "date",//设置日历初始视图模式
+			    beginDate: new Date(1950, 01, 01),//设置开始日期
+			    endDate: new Date(),//设置结束日期
+			})
+		    dtpicker.show(function (selectItems) {
 		    		console.log(selectItems.value);
 		    		nowthis.innerHTML = selectItems.value;
 		    })
@@ -251,7 +255,7 @@
 			if(identityT == 6){
 				$(".profession").show();
 			}
-			
+
 			//显示既有信息
 			mui.ajax(serverUrl+'/app/user/setting/get/information',{
 				data:{"userId":userId,'identityType':identityT},
@@ -308,7 +312,7 @@
 										var curpr = 0;
 										for(var i in data.content) {
 											cityStr += '<option value="' + i + '">' + data.content[i] + '</option>'
-											
+
 											if(profession && profession == i){
 												curpr = i
 											}
@@ -316,16 +320,16 @@
 										}
 										$('#profession').html(cityStr);
 										$('#profession').val(curpr)
-										
+
 									}
 								},
 								error: function(xhr, type, errorThrown) {
-			
+
 								}
-			
+
 							});
 						}
-						
+
 					}else{
 						mui.toast(data.message);
 						console.log(data.message);
@@ -337,7 +341,7 @@
 					mui.toast('响应失败 ');
 				}
 			});
-			
+
 			function showStore(){
 				//门店
 				mui.ajax(serverUrl+'/app/user/setting/storeSeller/get', {
@@ -370,17 +374,17 @@
 								if(data.content.storeId){
 									$('#store option').eq(curstore+1).attr('selected',true);
 								}
-								
+
 								//导购
 								getGuide(data.content.storeId,data.content.sellerId);
-								 
+
 								$('#store').change(function(){
 									getGuide($(this).val(),0);
-									
+
 								})
 							}else{
 								$('#store').html('<option value="">无门店</option>');
-								
+
 							}
 						}else{
 							mui.toast(data.message)
@@ -409,7 +413,7 @@
 							console.log('导购',data);
 							if(data.code == 0 && data.content) {
 								if(data.content && data.content.length){
-									var guideStr = '<option value="">选择</option>'; 
+									var guideStr = '<option value="">选择</option>';
 									for (var i = 0;i<data.content.length;i++) {
 										guideStr += '<option value="'+data.content[i].sellerId+'">'+data.content[i].sellerName+'</option>'
 										if(data.content[i].sellerId == curguide){
@@ -420,7 +424,7 @@
 									$('#guide option').eq(curguide+1).attr('selected',true);
 								}else{
 									$('#guide').html('<option value="">无导购</option>');
-									
+
 								}
 							}else{
 								mui.toast(data.message)
