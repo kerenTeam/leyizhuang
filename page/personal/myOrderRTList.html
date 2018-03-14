@@ -297,7 +297,7 @@
 										data.content.list.forEach(function(ele,index){
 											if(ele.orderNo){
 												ele.orderNo2 = ele.orderNo.substr(0, 5) + '****' + ele.orderNo.substr(20);
-											} 
+											}
 										})
 										if(pingjia){
 											document.getElementById('infoListDiv').innerHTML = template('infoListP2',{list:data.content.list,nowState:tabT,pj:1});
@@ -335,7 +335,7 @@
 																	data.content.list.forEach(function(ele,index){
 																		if(ele.orderNo){
 																			ele.orderNo2 = ele.orderNo.substr(0, 5) + '****' + ele.orderNo.substr(20);
-																		} 
+																		}
 																	})
 																	if(pingjia){
 																		document.getElementById('infoListDiv').innerHTML += template('infoListP2',{list:data.content.list,nowState:tabT,pj:1});

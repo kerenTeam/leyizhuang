@@ -395,19 +395,15 @@
 		<script src="js/default.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
 			//测试推送
-//			mui('#mypic')[0].onclick = function(){
-//				plus.push.clear();
-//				plus.push.createMessage( "欠款审核", '{"banner": "page/guide/debateAudit.html&1","info": "推送跳转页面","type":"localIos"}', {cover:false} );
-////				plus.push.createMessage("哈哈","{'banner':'page/guide/debateAudit.html&1','info':'推送跳转页面','type':'localIos'}", {cover:false});
-//			}
+			/*mui('#mypic')[0].onclick = function(){
+				plus.push.clear();
+				plus.push.createMessage( "欠款审核", '{"banner": "page/guide/debateAudit.html&1","info": "推送跳转页面","type":"localIos"}', {cover:false} );
+				//plus.push.createMessage("哈哈","{'banner':'page/guide/debateAudit.html&1','info':'推送跳转页面','type':'localIos'}", {cover:false});
+			}*/
 
-//			mui('#mypic')[0].onclick = function(){
-//
-//				mui.fire(plus.webview.getWebviewById('HBuilder'),'pagerefresh');
-//			}
 			//推送
 			function bannerGo(url,info){
-//				mui.alert(url+' '+info);
+				//mui.alert(url+' '+info);
 				mui.plusReady(function(){
 					if(url.indexOf('http')>-1 || url.indexOf('HTTP')>-1){//远程
 							openview({//用于banner页面

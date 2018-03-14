@@ -120,7 +120,6 @@ mui.plusReady(function(){
 	plus.share.getServices(function(s){
 		shares={};
 		for(var i in s){
-			//console.error('成功')
 			var t=s[i];
 			shares[t.id]=t;
 		}
@@ -128,6 +127,13 @@ mui.plusReady(function(){
 		outSet('获取分享服务列表失败：'+e.message);
 	});
 })
+var time11 = setInterval(function(){
+	console.log(123456);
+	if(shares.qq && shares.sinaweibo && shares.tencentweibo && shares.weixin){
+		clearInterval(time11);
+	}
+	console.error('shares___',shares);
+},100)
 
 function showSfun1(msg,fun1,fun0,iosLinkPic,fun3){
 	if(!document.getElementById('shareWrap10')){

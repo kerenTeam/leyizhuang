@@ -146,10 +146,10 @@
 				<div class="mui-col-sm-4 mui-col-xs-4" style="padding-top: 18px;position: relative;left: 3px;"><img src="https://b-ssl.duitang.com/uploads/item/201710/12/20171012232816_GX5iw.thumb.224_0.jpeg" class="myInfo" id="mypic" /></div>
 				<div class="mui-col-sm-8 mui-col-xs-8 writing">
 					<p class="centop">
-						<div class="denlu">用户名:<span id="userName" style="z-index: 99;"></span></div>
-						<div class="denlu">用户id:<span id="userNumber" style="z-index: 99;"></span></div>
+						<div class="denlu">用户名：<span id="userName" style="z-index: 99;"></span></div>
+						<div class="denlu">用户id：<span id="userNumber" style="z-index: 99;"></span></div>
 						<div class="denlu" id="onlyPs">配送数量：<span id="psNumber" style="z-index: 99;"></span></div>
-						<div class="denlu" id="onlyGuide">手机号：<span id="guidesPhone"></span> <span id='bindPhone' style="background-color: orange;color: white;font-size: 10px;padding: 2px;border-radius: 3px;display: none;">绑定手机号</span></div>
+						<div class="denlu" id="onlyGuide">手&nbsp;&nbsp;机&nbsp;&nbsp;号：<span id="guidesPhone"></span> <span id='bindPhone' style="background-color: orange;color: white;font-size: 10px;padding: 2px;border-radius: 3px;display: none;">绑定手机号</span></div>
 					</p>
 				</div>
 				<img class="dao shezhi" style="top: 8px;width: 36px;" src="../../images/center/shizhi.png" />
@@ -221,7 +221,7 @@
 									<div class="flexr">
 										<div>
 											<span class="disablecl">
-												导购：
+												导&nbsp;&nbsp;&nbsp;&nbsp;购：
 											</span>
 											<span class="titcl">
 												<%=list[i].sellerName%>
@@ -274,7 +274,7 @@
 									<div class="flexr">
 										<div>
 											<span class="disablecl">
-												导购：
+												导&nbsp;&nbsp;&nbsp;&nbsp;购：
 											</span>
 											<span class="titcl">
 												<%=list[i].sellerName%>
@@ -327,7 +327,7 @@
 									<div class="flexr">
 										<div>
 											<span class="disablecl">
-												导购：
+												导&nbsp;&nbsp;&nbsp;&nbsp;购：
 											</span>
 											<span class="titcl">
 												<%=list[i].sellerName%>
@@ -376,7 +376,7 @@
 									<div class="flexr">
 										<div>
 											<span class="disablecl">
-												导购：
+												导&nbsp;&nbsp;&nbsp;&nbsp;购：
 											</span>
 											<span class="titcl">
 												<%=list[i].sellerName%>
@@ -449,7 +449,7 @@
 						extrasobj:{orderNumber:audi,orderType:type}
 					})
 				}
-				
+
 			}else{
 				openview({
 					view:'deliveryInfo.html',
@@ -497,7 +497,7 @@
 			var userId = plus.storage.getItem('$userId');
 			var oldToken = plus.storage.getItem("oldToken");
 			var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
-			
+
 			Refresh();
 			function Refresh() { //刷新
 				//获取缓存
@@ -606,11 +606,11 @@
 					});
 				}
 			} //刷新
-		
+
 			$('#tabLink li').unbind('click').click(function(){
 				document.getElementById('upload').innerHTML = '';
 				$(window).unbind('scroll');
-				document.getElementById('infoListDiv').innerHTML=''; 
+				document.getElementById('infoListDiv').innerHTML='';
 				$('#tabLink li').removeClass('active');
 				$(this).addClass('active');
 				$('#loadingdiv').css('height','32px');
@@ -621,11 +621,11 @@
 					view:'../../center.html',
 					id:'center'
 				})
-			}) 
+			})
 			loadFun(0);
 			function loadFun(index){
 				$(window).unbind('scroll');
-				document.getElementById('infoListDiv').innerHTML=''; 
+				document.getElementById('infoListDiv').innerHTML='';
 				userId = plus.storage.getItem('$userId');
 				oldToken = plus.storage.getItem("oldToken");
 				identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
@@ -668,7 +668,7 @@
 													ele.orderNumber2 = ele.orderNumber.substr(0, 5) + '****' + ele.orderNumber.substr(20);
 												}
 
-											} 
+											}
 											if(ele.shipperNumber){
 												ele.shipperNumber2 = ele.shipperNumber.substr(0, 5) + '****' + ele.shipperNumber.substr(20);
 											}
@@ -712,7 +712,7 @@
 																						ele.orderNumber2 = ele.orderNumber.substr(0, 5) + '****' + ele.orderNumber.substr(20);
 																					}
 																				}
-																				
+
 																				if(ele.shipperNumber){
 																					ele.shipperNumber2 = ele.shipperNumber.substr(0, 5) + '****' + ele.shipperNumber.substr(20);
 																				}
