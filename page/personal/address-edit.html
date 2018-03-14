@@ -262,9 +262,10 @@
 							$('#person').attr('value',thisAddArray[k].deliveryName);
 							$('#phone').attr('value',thisAddArray[k].deliveryPhone);
 							$('#localadd').html(thisAddArray[k].deliveryCity +thisAddArray[k].deliveryCounty +thisAddArray[k].deliveryStreet)
+							$('#localadd').attr("data-id",thisAddArray[k].deliveryStreet)
 							$('#province').html(thisAddArray[k].deliveryCity + " "); /*市*/
-							$('#city').html(thisAddArray[k].deliveryCounty + " "); /*区*/
-							$('#area').html(thisAddArray[k].deliveryStreet); /*街道*/
+							$('#city').html(thisAddArray[k].deliveryCity + " "); /*区*/
+							$('#area').html(thisAddArray[k].deliveryCounty); /*街道*/
 							$('#xiaoquIn').attr('value',thisAddArray[k].villageName); /*小区*/
 							$('#address').html(thisAddArray[k].detailedAddress); /*详细地址*/
 							if(thisAddArray[k].isDefault){ /*显示默认地址*/
@@ -277,12 +278,11 @@
 								var newPerson = document.getElementById('person').value;
 								var newPhone = document.getElementById('phone').value;
 								var newAddress = document.getElementById('address').value;
-//								var newProvince = $('.provinces1 option:selected').html();/*省*/
+								var newProvince = '';
 //								var newCity = $('.citys1 option:selected').html(); /*市*/
 //								var newArea = $('.areas1 option:selected').html();/*区*/
 //								var newStreet = $('.towns1 option:selected').html();/*街道*/
 								var defaultAddress = $('#acquiescence').hasClass('toggle--off');//默认地址
-								 
 								var newCity='';
 								var newArea='';
 								var newStreet = '';
@@ -302,6 +302,10 @@
 								 		newStreet = mapStorage[0].township
 								 	} 
 								 }
+								 newProvince = newProvince || $('#province').html();
+								 newCity = newCity || $('#city').html();
+								 newArea = newArea || $('#area').html();
+								 newStreet = newStreet || $('#localadd').attr("data-id")
 								var xiaoquIn = document.getElementById('xiaoquIn').value;
 
 								var reg_phone = /^1((3|4|5|8|7){1}\d{1}|70)\d{8}$/;//手机号正则
@@ -327,7 +331,7 @@
 											'id':adId,
 											'deliveryName': newPerson,
 											'deliveryPhone': newPhone,
-											'deliveryProvince':newProvince,
+//											'deliveryProvince':newProvince,
 											'deliveryCity':newCity,
 											'deliveryCounty':newArea,
 											'detailedAddress':newAddress,

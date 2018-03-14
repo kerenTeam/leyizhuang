@@ -203,7 +203,7 @@
 									<div class="flexr">
 										<div>
 											<span class="disablecl">
-												顾客：
+												联系人：
 											</span>
 											<span class="titcl">
 												<%=list[i].customerName%>
@@ -256,7 +256,7 @@
 									<div class="flexr">
 										<div>
 											<span class="disablecl">
-												顾客：
+												联系人：
 											</span>
 											<span class="titcl">
 												<%=list[i].receiver%>
@@ -309,7 +309,7 @@
 									<div class="flexr">
 										<div>
 											<span class="disablecl">
-												顾客：
+												联系人：
 											</span>
 											<span class="titcl">
 												<%=list[i].receiver%>
@@ -350,7 +350,7 @@
 						<%}else{%>
 							<div class="checkList" onclick="goInfo('<%=list[i].orderNumber%>','<%=list[i].isOrderOrReturnOrder%>',3)">
 								<h4 class="fineB ft16">
-									<span>出货单号：<%=list[i].orderNumber2%></span>
+									<span><%if(list[i].tui){%>退货单号<%}else{%>出货单号<%}%>：<%=list[i].orderNumber2%></span>
 
 						    			<span class="mui-pull-right maincl maincl ft14"><%=list[i].auditStatus%><span class="mui-icon mui-icon-arrowright ft20"></span></span>
 								</h4>
@@ -358,7 +358,7 @@
 									<div class="flexr">
 										<div>
 											<span class="disablecl">
-												顾客：
+												联系人：
 											</span>
 											<span class="titcl">
 												<%=list[i].receiver%>
@@ -488,15 +488,16 @@
 			})
 		}
 		mui.plusReady(function(){
+			document.addEventListener('refresh', function() {
+				Refresh();
+				loadFun($('.active').index());
+			})
 			var wv=plus.webview.currentWebview();
 			wv.setStyle({'popGesture':'none'});
 			var userId = plus.storage.getItem('$userId');
 			var oldToken = plus.storage.getItem("oldToken");
 			var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
-			document.addEventListener('refresh', function() {
-				Refresh();
-				loadFun($('.active').index());
-			})
+			
 			Refresh();
 			function Refresh() { //刷新
 				//获取缓存
@@ -623,6 +624,11 @@
 			}) 
 			loadFun(0);
 			function loadFun(index){
+				$(window).unbind('scroll');
+				document.getElementById('infoListDiv').innerHTML=''; 
+				userId = plus.storage.getItem('$userId');
+				oldToken = plus.storage.getItem("oldToken");
+				identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
 				var Spagenum = 2; //实到页数
 				var Ypagenum = 1; //应到页数
 				var oneSize = 5;
@@ -655,8 +661,14 @@
 									if(index == 3 && data.content.list && data.content.list.length){
 										data.content.list.forEach(function(ele,index){
 											if(ele.orderNumber){
-												ele.orderNumber2 = ele.orderNumber.substr(0, 5) + '****' + ele.orderNumber.substr(20);
-											}
+												if(ele.orderNumber[0] == 'T'){
+													ele.tui = 1;
+													ele.orderNumber2 = ele.orderNumber.substr(0, 5) + '****' + ele.orderNumber.substr(8);
+												}else{
+													ele.orderNumber2 = ele.orderNumber.substr(0, 5) + '****' + ele.orderNumber.substr(20);
+												}
+
+											} 
 											if(ele.shipperNumber){
 												ele.shipperNumber2 = ele.shipperNumber.substr(0, 5) + '****' + ele.shipperNumber.substr(20);
 											}
@@ -693,8 +705,14 @@
 									                                    if(data.content.list && data.content.list.length){
 									                                    	data.content.list.forEach(function(ele,index){
 																				if(ele.orderNumber){
-																					ele.orderNumber2 = ele.orderNumber.substr(0, 5) + '****' + ele.orderNumber.substr(20);
+																					if(ele.orderNumber[0] == 'T'){
+																						ele.tui = 1;
+																						ele.orderNumber2 = ele.orderNumber.substr(0, 5) + '****' + ele.orderNumber.substr(8);
+																					}else{
+																						ele.orderNumber2 = ele.orderNumber.substr(0, 5) + '****' + ele.orderNumber.substr(20);
+																					}
 																				}
+																				
 																				if(ele.shipperNumber){
 																					ele.shipperNumber2 = ele.shipperNumber.substr(0, 5) + '****' + ele.shipperNumber.substr(20);
 																				}

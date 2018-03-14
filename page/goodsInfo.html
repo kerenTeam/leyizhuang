@@ -73,6 +73,7 @@
 		/*大的购物车图标*/
        .mui-numbox{width: 106px;height: 34px;padding: 0px 34px;}
        .mui-numbox .mui-input-numbox, .mui-numbox .mui-numbox-input{font-size: 14px;}
+       .mui-numbox [class*=btn-numbox], .mui-numbox [class*=numbox-btn]{line-height: 0.4!important;}
 	</style>
 
 	<body>
@@ -213,9 +214,9 @@
 								<p class="fl">购买数量</p>
 								<div class="you clearfloat fr">
 									<div class="mui-numbox margin-top" data-numbox-min="1" data-numbox-max='9999'>
-										<button class="mui-btn mui-btn-numbox-minus" type="button" disabled="" style="padding-bottom: 6px;color: #555;">-</button>
+										<button class="mui-btn mui-btn-numbox-minus" type="button" disabled="" style="padding-bottom: 6px;color: #555;" style="padding-top: 1px;">-</button>
 										<input id="test" class="mui-input-numbox" type="number" value="" />
-										<button id="upup" class="mui-btn mui-btn-numbox-plus add" type="button">+</button>
+										<button id="upup" class="mui-btn mui-btn-numbox-plus add" type="button" style="padding-bottom: 3px;">+</button>
 									</div>
 								</div>
 							</div>

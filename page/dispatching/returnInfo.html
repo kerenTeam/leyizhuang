@@ -60,13 +60,13 @@
 			<script type="text/html" id="infoList">
 				<div class="checkList">
 					<h4 class="fineB ft16">
-						<span>退货单号：<%=list.shipperNumber || list.returnNumber%></span>
+						<span><span id="nameType">退货单号</span>：<%=list.shipperNumber || list.returnNumber%></span>
 					</h4>
 					<div class="checkListCon clearfix afterBorder ft15">
 						<div class="flexr">
 							<div>
 								<span class="disablecl">
-									顾客：
+									联系人：
 								</span>
 								<span class="titcl">
 									<%=list.receiver%>
@@ -169,7 +169,7 @@
 					var datajson={userID:userId,identityType:identityT,returnNumber:orderNumber}
 				} 
 				if(ordertype == 3){
-				 	var	isOver = 1
+				 	var	isOver = 1;
 				}else{
 				 	var	isOver = 0
 				}

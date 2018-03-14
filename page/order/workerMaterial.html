@@ -203,6 +203,7 @@
 					}else{
 						mui.toast(data.message);
 						plus.nativeUI.closeWaiting();
+						plus.webview.currentWebview().close();
 
 					}
 				},

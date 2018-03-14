@@ -74,7 +74,7 @@
 				</div>
 				<div class="mui-input-row flexr">
 					<label style="border-right: 1px solid #EEEEEE;width: 27%;">姓名</label>
-					<input id="username" type="text" class="mui-input-clear mui-input" placeholder="请输入姓名">
+					<input id="username" type="text" class="mui-input-clear mui-input" placeholder="请输入姓名,最多5个字符">
 				</div>
 				<div class="mui-input-row flexr">
 					<label style="border-right: 1px solid #EEEEEE;width: 27%;">工种</label>
@@ -196,14 +196,17 @@
 				}, false);
 
 				sendButton.addEventListener('tap', function() {
+					newUsername = username.value.replace(/[^\x00-\xff]/g, "**");
 					if(!account.value || !reg_phone.test(account.value)) {
 						mui.toast('请输入正确的手机号')
 					} else if(!checkcode.value) {
 						mui.toast('请输入验证码')
 					} else if(account.value != codePhone) {
 						mui.toast('请重新获取验证码')
-					} else if(!username.value) {
+					} else if(!newUsername) {
 						mui.toast('请输入姓名')
+					} else if(newUsername.length >= 10) {
+						mui.toast('姓名最多输入5个字符')
 					} else if(!$('#workerType').val()) {
 						mui.toast('请选择工种')
 					} else if(guide.value && !reg_phone.test(guide.value)){

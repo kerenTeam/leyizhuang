@@ -505,7 +505,7 @@
 			var myname = mui('#myname')[0].value || null;
 			var Nextbtnval = document.getElementById("Nextbtn").options[window.document.getElementById("Nextbtn").selectedIndex].text;
 			var shengri = $('#shengri').html();
-			if(shengri == "点击编辑"){
+			if($.trim(shengri) == "点击编辑"){
 				shengri = '';
 			}
 			var storeId = $('#store').val();
