@@ -31,7 +31,8 @@
 				 <div class="padd10 bgcwt afterBorder">
 				 	<div class="disablecl">订单号：</div>
 				 	<div class="">
-				 		<div><%=list.photoOrderNo%></div>
+				 		<div><%=list.photoOrderNo%> <span class="aClick2 copyBtn" id="copyBtn" style="float: right;display: inline-block;padding: 1px 5px;color: #EE9000;">复制</span> </div>
+
 				 	</div>
 				 </div>
 				  <div class="padd10 bgcwt afterBorder">
@@ -56,6 +57,7 @@
 	<script src="../../js/mui.previewimage.js"></script>
 	<script src="../../js/artTemplate-native.js" type="text/javascript" charset="utf-8"></script>
 	<script src="../../js/default.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../js/clipboard.min.js" type="text/javascript" charset="utf-8"></script>
 	<script type="text/javascript">
 		mui.init();
 		mui.plusReady(function(){
@@ -76,6 +78,21 @@
 						if(data.content){
 							document.getElementById('infoListDiv').innerHTML = template('infoList',{list:data.content});
 							plus.nativeUI.closeWaiting();
+							//复制方法
+							var photoOrderNo = data.content.photoOrderNo;
+					        var clipboard = new Clipboard('.copyBtn', {
+					        		text: function() {
+						            return photoOrderNo;
+						        }
+						    });
+						    clipboard.on('success', function(e) {
+						    		mui.toast('复制成功');
+						        console.log('成功'+e.text);
+						    });
+						    clipboard.on('error', function(e) {
+						        console.log('失败',e);
+						    });
+						    //复制结束
 						}else{
 							plus.nativeUI.closeWaiting();
 							document.getElementById('infoListDiv').innerHTML = '<div style="text-align: center;padding: 50px;"><img src="../../images/order/order.png" style="width: 100px;" /><div class="ft13 disablecl">暂无数据</div></div>';
