@@ -249,6 +249,7 @@
 				<div class="pad_5 ft15 maincl">商品金额<span class='mui-pull-right pad_r10' id="totalPriceb">¥--</span> </div>
 				<div class="pad_5 ft15 maincl">会员折扣<span class='mui-pull-right pad_r10' id="memberDiscount">¥--</span></div>
 				<div class="pad_5 ft15 maincl">订单折扣<span class='mui-pull-right pad_r10' id="orderDiscount">¥--</span></div>
+				<div class="pad_5 ft15 maincl proCouponDiscount" style="display: none;">产品券折扣<span class='mui-pull-right pad_r10' id="proCouponDiscount">¥--</span></div>
 				<div class="pad_5 ft15 maincl">运费<span class='mui-pull-right pad_r10' id="freight">¥--</span></div>
 				<div class="pad_5 ft15 maincl">上楼费<span class='mui-pull-right pad_r10' id="upstar">依现实情况收取</span></div>
 
@@ -578,6 +579,17 @@
 							} else {
 								$('#orderDiscount').html('0')
 							}
+							if(identityT == 0 || identityT == 6){
+								$('.proCouponDiscount').show();
+								if(data.content.proCouponDiscount){
+									$('#proCouponDiscount').html('-¥' + data.content.proCouponDiscount);
+								}else{
+									$('#proCouponDiscount').html('0');
+								}
+							}else{
+								$('.proCouponDiscount').hide()
+							}
+							
 							if(data.content.freight) {
 								$('#freight').html('¥' + data.content.freight)
 								$('#firstFreight').val(data.content.freight)
@@ -629,6 +641,11 @@
 							carculate();
 							$('#firstLebi').val(ctlebi);
 							if(data.content.leBi) {
+								if(data.content.leBi.rebate < 0){
+									$('#coupon').hide();
+								}else{
+									$('#coupon').show();
+								}
 								var ctlebi = data.content.leBi.rebate || 0;
 								$('#firstLebi').attr('data-id', data.content.leBi.quantity);
 							}
@@ -695,6 +712,11 @@
 
 											$('#couponDiscount').val(data.content.couponDiscount);
 											if(data.content.lebi) {
+												if(data.content.lebi < 0){
+													$('#coupon').hide();
+												}else{
+													$('#coupon').show();
+												}
 												$('#itMinus span').html('¥' + data.content.lebi.rebate)
 											}
 											carculate();
@@ -896,6 +918,11 @@
 	
 												$('#couponDiscount').val(data.content.couponDiscount);
 												if(data.content.lebi) {
+													if(data.content.lebi.rebate < 0){
+														$('#coupon').hide();
+													}else{
+														$('#coupon').show();
+													}
 													$('#itMinus span').html('¥' + data.content.lebi.rebate)
 												}
 												carculate();
@@ -1049,6 +1076,11 @@
 				       	if(data.code == 0){
 					     	if(data.content){
 					     		if(data.content.rebate) {
+					     			if(data.content.rebate < 0){
+										$('#coupon').hide();
+									}else{
+										$('#coupon').show();
+									}
 									$('#itMinus span').html('¥' + data.content.rebate)
 								}else{
 									$('#itMinus span').html('¥' + 0)
@@ -1243,7 +1275,7 @@
 				$('.isownTips').hide();
 				$('.isowndis').css('margin-bottom','10px')
 			}
-			var orderAll, memberDiscount, orderDiscount, freight, couponDiscount, credit, cash, creditVal, cashHelp, preDepositb, lebi;
+			var orderAll, memberDiscount, orderDiscount, freight, couponDiscount, credit, cash, creditVal, cashHelp, preDepositb, lebi ,proCouponDiscountv = 0;
 
 			function carculate() {
 				orderAll = $('#totalPriceb').html().replace('¥', ''); //订单金额
@@ -1251,6 +1283,9 @@
 				orderDiscount = $('#orderDiscount').html().replace('-¥', ''); //订单折扣
 				freight = $('#freight').html().replace('¥', ''); //运费
 				couponDiscount = $('#couponDiscount').val(); //优惠券折扣
+				if(identityT == 0 || identityT == 6){
+					proCouponDiscountv =  $('#proCouponDiscount').html().replace('-¥', '');
+				}
 				credit = $('input[name="credit"]').val(); //信用金
 				cash = $('input[name="cash"]').val(); //现金返利
 				creditVal = $('input[name="creditVal"]').val(); //信用额度
@@ -1261,8 +1296,8 @@
 				} else {
 					lebi = 0
 				}
-				var payTotal = Number(orderAll) - Number(memberDiscount) - Number(orderDiscount) + Number(freight) - Number(couponDiscount) - Number(lebi);
-				var curTotal = Number(orderAll) - Number(memberDiscount) - Number(orderDiscount) + Number(freight) - Number(couponDiscount) - Number(lebi) - Number(credit) - Number(cash) - Number(creditVal) - Number(preDepositb);
+				var payTotal = Number(orderAll) - Number(memberDiscount) - Number(orderDiscount) + Number(freight) - Number(couponDiscount) -Number(proCouponDiscountv) - Number(lebi);
+				var curTotal = Number(orderAll) - Number(memberDiscount) - Number(orderDiscount) + Number(freight) - Number(couponDiscount) -Number(proCouponDiscountv) - Number(lebi) - Number(credit) - Number(cash) - Number(creditVal) - Number(preDepositb);
 				//				alert(orderAll + ' ' + memberDiscount + ' ' + orderDiscount + ' ' + freight + ' ' + couponDiscount + " " + lebi);
 				if(payTotal<0){
 					payTotal = 0

@@ -116,7 +116,7 @@
 					</div>
 				<%}else{%>
 				 	<% for(var i=0;i<addressLi.length;i++){ %>
-				    	<div class="addlist clearfloat"data-addid="<%= addressLi[i].id %>" data-person="<%= addressLi[i].deliveryName %>" data-phone="<%= addressLi[i].deliveryPhone %>" data-pv="<%= addressLi[i].deliveryProvince %>" data-ct="<%= addressLi[i].deliveryCity %>" data-cty="<%= addressLi[i].deliveryCounty %>" data-st="<%= addressLi[i].deliveryStreet %>" data-villageName="<%= addressLi[i].villageName %>" data-adi="<%= addressLi[i].detailedAddress %>">
+				    	<div class="addlist clearfloat" data-addid="<%= addressLi[i].id %>" data-person="<%= addressLi[i].deliveryName %>" data-phone="<%= addressLi[i].deliveryPhone %>" data-pv="<%= addressLi[i].deliveryProvince || '' %>" data-ct="<%= addressLi[i].deliveryCity %>" data-cty="<%= addressLi[i].deliveryCounty %>" data-st="<%= addressLi[i].deliveryStreet %>" data-villageName="<%= addressLi[i].villageName %>" data-adi="<%= addressLi[i].detailedAddress %>">
 				    		<div class="top clearfloat box-s">
 				    			<ul>
 				    				<li>
@@ -124,7 +124,7 @@
 				    					<span class="fr"><%= addressLi[i].deliveryPhone %></span>
 				    				</li>
 				    				<li>
-				    					<%= addressLi[i].deliveryCity %><%= addressLi[i].deliveryCounty %> <%= addressLi[i].deliveryStreet %> <%= addressLi[i].villageName %> <%= addressLi[i].detailedAddress %>
+				    					<%= addressLi[i].deliveryProvince || ''%><%= addressLi[i].deliveryCity%><%= addressLi[i].deliveryCounty%> <%= addressLi[i].deliveryStreet%> <%= addressLi[i].villageName %> <%= addressLi[i].detailedAddress %>
 				    				</li>
 				    			</ul>
 				    		</div>

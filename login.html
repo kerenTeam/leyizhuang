@@ -178,9 +178,11 @@
 										}else{
 											var index = plus.webview.getLaunchWebview();
 											mui.fire(index,'refreshpage');
+											index.reload()
 											mui.fire(plus.webview.getWebviewById('cart.html'), 'refresh');
 											mui.fire(plus.webview.getWebviewById('page/goodList.html'),'refresh');
 											mui.fire(plus.webview.getWebviewById('center.html'),'refresh');
+											plus.webview.getWebviewById('center.html').reload()
 											if(plus.webview.getWebviewById('dispatching')) {
 												plus.webview.getWebviewById('dispatching').close();
 											}

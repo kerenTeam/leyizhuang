@@ -1,0 +1,324 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>业绩查看（导购）</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/commonY.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/configW.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/youxd.css"/>
+		<style type="text/css">
+			.mui-bar-nav.mui-bar .mui-icon {color: #555!important;margin-left: 0px;}
+			.circle{background: #E73A38; width: 200px;height: 200px;position: absolute;border-radius: 50%;}
+			.circle2{background: #F8937E; width: 200px;height: 200px;position: absolute;border-radius: 50%;}
+			.quotaRecord .div01 span{display: none;}
+			.totalEdu{left: 79px!important;}
+			li.active{border-bottom: 2px solid #B62D29;box-sizing: border-box;color: #B62D29;}
+			.tab-hd{height: 45px !important;border-bottom: 1px solid #EFEFF4 !important;}
+			.tab-nav li{height: 45px !important;display: inline-block;}
+			.mui-bar-nav{box-shadow: 1px 0px 1px #eee !important;}
+			header.mui-bar{z-index: 200;}
+		    .tab-hdtwo li {width: 49%!important;font-size: 16px!important;line-height: 45px;text-align: center;}
+			.rank{font-style: italic;font-weight: 600;font-size: 20px;}
+			.flexr{display: flex;justify-content: space-around;align-items: center;}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav" style="padding-right: 15px;">
+			<a id="leftbtn" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">业绩查看</h1>
+			<a class="mui-pull-right editAll"></a>
+		</header>
+		<script src="../../js/statusBar.js"></script>
+		<div class="mui-content">
+			<div id="TS" style="text-align: center;font-size: 18px;color: orangered;margin-top: 20px;margin-bottom: -10px;">
+				桶数销量
+			</div>
+			<div class="circle" style="left:50%;-webkit-transform: translateX(-50%);margin-top: 40px;">
+				
+				<div class="pie_left">
+					<div class="left"></div>
+				</div>
+				<div class="pie_right">
+					<div class="right"></div>
+				</div>
+				<div class="mask"><span class="ft20" style="color: #E73A38;" id="availableBalance">---</span></div>
+				<div class="totalEdu">达标率</div>
+			</div> 
+			<div id="quotaPWrap" style="margin-top: 40px;">
+				<div class="quotaP1 fineB" id="limitbalance">
+					目标桶数: <span>---</span>
+				</div>
+				<div class="quotaP1 fineB" id="tempbalance">
+					实际桶数: <span>---</span>
+				</div>
+				<div id="HYS" style="text-align: center;font-size: 18px;color: #F8937E;margin-top: 30px;margin-bottom: -10px;">
+					活跃会员数销量
+				</div>
+				<div class="circle2" style="left:50%;-webkit-transform: translateX(-50%);margin-top: 40px;">
+					<div class="pie_left">
+						<div class="left"></div>
+					</div>
+					<div class="pie_right">
+						<div class="right"></div>
+					</div>
+					<div class="mask"><span class="ft20" style="color: #F8937E;" id="availableBalance2">---</span></div>
+					<div class="totalEdu">达标率</div>
+				</div>
+				<div style="margin-top: 280px;">
+					<div class="quotaP1 fineB" id="limitbalance2">
+						目标会员数: <span>---</span>
+					</div>
+					<div class="quotaP1 fineB" id="tempbalance2">
+						实际会员数: <span>---</span>
+					</div>
+				</div>
+				<div id="TS" style="background-color: #EEEEEE;text-align: center;font-size: 18px;color: #445252;margin-top: 20px;padding: 10px;">
+					排行榜
+				</div>
+				<div class="tab-hd tab-hdtwo bgcwt" id="tabLink" style="z-index: 99;">
+					<ul class="tab-nav ft16">
+					  <li class="active aClick " data-statusId="0">分公司</li>
+					  <li class="aClick" data-statusId="1">集团</li>
+					</ul>
+				</div>
+				<div class="notice">
+
+					<!--列表loading-->
+					<div id="loadingdiv" style="text-align: center;font-size: 14px;height:32px;
+						line-height: 30px;color: #666;-webkit-transition: all .3s;overflow: hidden;">
+						<img style="width: 30px;margin-top:5px;" src="../../img/Rolling.svg"/>
+					</div>
+					<!--列表loading结束-->
+					<div id="infoListDiv"><!--内容-->
+					</div>
+					<div class="upload text-center text-xs gray" id="upload"></div>
+					<script id="infoList" type="text/html">
+						<%for(var i=0;i<list.length;i++){%>
+
+								<div class="checkList" onclick="goInfo('<%=list[i].orderNumber%>')">
+									 
+									<div class="checkListCon afterBorder ft15">
+										<div class="flexr">
+											<div class="ft14">
+												第
+												<span class="activecl rank">
+													<%=list[i].rank%>
+												</span>
+												名
+											</div>  
+											<div class="ft14">
+												<%=list[i].name%> 
+											</div>
+											<div class="ft14">
+												<%=list[i].finishQty%>桶
+											</div>
+										</div>
+									</div>
+
+								</div>
+
+						<%}%>
+
+					</script>
+				</div>
+				<div class="upload text-center text-xs gray" id="upload"></div>
+			</div>
+
+		</div>
+
+
+
+		<script src="../../js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/default.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/artTemplate-native.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			mui.init();
+		 
+			function addPercent(num) {
+				if(num > 100) return;
+				var c = document.getElementsByClassName("circle")[0];
+				//c.getElementsByTagName("span")[0].innerHTML = num;
+				num = num * 3.6;
+				if(num <= 180) {
+					c.getElementsByClassName("right")[0].style.transform = "rotate(" + num + "deg)";
+				} else {
+					c.getElementsByClassName("right")[0].style.transform = "rotate(180deg)";
+					c.getElementsByClassName("left")[0].style.transform = "rotate(" + (num - 180) + "deg)";
+				}
+
+			}
+			function addPercent2(num) {
+				if(num > 100) return;
+				var c = document.getElementsByClassName("circle2")[0];
+				//c.getElementsByTagName("span")[0].innerHTML = num;
+				num = num * 3.6;
+				if(num <= 180) {
+					c.getElementsByClassName("right")[0].style.transform = "rotate(" + num + "deg)";
+				} else {
+					c.getElementsByClassName("right")[0].style.transform = "rotate(180deg)";
+					c.getElementsByClassName("left")[0].style.transform = "rotate(" + (num - 180) + "deg)";
+				}
+
+			}
+
+			mui.plusReady(function() {
+				//获取缓存
+				var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
+				var userId = plus.storage.getItem('$userId');
+				var oldToken = plus.storage.getItem('oldToken');
+				plus.nativeUI.showWaiting();
+				mui.ajax(serverUrl + '/app/statistics/personal', {
+					data: {
+						sellerId: userId,
+						identityType: identityT,
+						flag:'TS'
+					},
+					dataType: 'json',
+					headers: {
+						"Authorization": oldToken
+					},
+					type: 'post',
+					timeout: 10000,
+					success: function(data, type, xhr) {
+						plus.nativeUI.closeWaiting();
+						console.log('桶数销量', data);
+						if(data.code == 0) {
+							plus.nativeUI.closeWaiting();
+							if(data.content) {
+								$('#limitbalance span').html(data.content.targetQty+'桶')
+								$('#tempbalance span').html(data.content.finishQty+'桶')
+
+								var count = (data.content.finishQty / data.content.targetQty) * 100,
+									i = 0;
+								$('#availableBalance2').html(data.content.finishChance * 100 .toFixed(2)+'%')
+									
+								var t = setInterval(function() {
+									if(i < count) {
+										addPercent(++i);
+									}
+
+								}, 10);
+
+							}
+
+						}
+						if(data.code == 1000) {
+							mui.toast(data.message)
+						} else if(data.code == -1) {
+							mui.toast(data.message)
+						}
+
+					},
+					error: function(xhr, type, errorThrown) {
+						plus.nativeUI.closeWaiting();
+						mui.toast(type)
+						console.log('登录响应失败');
+					}
+				});
+				 
+				mui.ajax(serverUrl + '/app/statistics/personal', {
+					data: {
+						sellerId: userId,
+						identityType: identityT,
+						flag:'HYS'
+					},
+					dataType: 'json',
+					headers: {
+						"Authorization": oldToken
+					},
+					type: 'post',
+					timeout: 10000,
+					success: function(data, type, xhr) {
+						plus.nativeUI.closeWaiting();
+						console.log('活跃数销量', data);
+						if(data.code == 0) {
+							plus.nativeUI.closeWaiting();
+							if(data.content) {
+								$('#limitbalance2 span').html(data.content.targetQty+'个')
+								$('#tempbalance2 span').html(data.content.finishQty+'个')
+
+								var count = (data.content.finishQty / data.content.targetQty) * 100,
+									i = 0;
+								$('#availableBalance').html(data.content.finishChance * 100 .toFixed(2)+'%')
+									
+								var t = setInterval(function() {
+									if(i < count) {
+										addPercent2(++i);
+									}
+
+								}, 10);
+
+							}
+
+						}
+						if(data.code == 1000) {
+							mui.toast(data.message)
+						} else if(data.code == -1) {
+							mui.toast(data.message)
+						}
+
+					},
+					error: function(xhr, type, errorThrown) {
+						plus.nativeUI.closeWaiting();
+						mui.toast(type)
+						console.log('登录响应失败');
+					}
+				});
+
+				$('#tabLink li').click(function(){
+					document.getElementById('upload').innerHTML = '';
+					$(window).unbind('scroll');
+					document.getElementById('infoListDiv').innerHTML='';
+					$('#tabLink li').removeClass('active');
+					$(this).addClass('active');
+					$('#loadingdiv').css('height','32px');
+					loadFun($(this).index());
+				})
+				loadFun(0);
+				function loadFun(index){
+					var Spagenum = 2, Ypagenum = 1, oneSize = 10;
+					if(index == 0){
+						var apiData = {'sellerId':userId,'identityType':identityT,'flag':'FGS'};
+					}else{
+						var apiData = {'sellerId':userId,'identityType':identityT,'flag':'JT'};
+					}
+					mui.ajax(serverUrl+'/app/statistics/rank',{
+						data:apiData,
+						dataType:'json',
+						type:'post',
+						timeout:10000,
+						headers:{"Authorization":oldToken},
+						success:function(data,type,xhr){
+							console.log('排名 ',data);
+							var timeLoad = setInterval(function(){
+								clearTimeout(timeLoad),timeLoad = null;
+								if(data.code == 0){
+									$('#loadingdiv').css('height','0px');
+									if(data.content && data.content.length){ 
+										document.getElementById('infoListDiv').innerHTML = template('infoList',{list:data.content,listType:index});
+										$('a').click(function(){event.stopPropagation()})
+										
+									}else{
+										document.getElementById('infoListDiv').innerHTML = '<div style="text-align: center;padding: 50px;"><img src="../../images/order/order.png" style="width: 100px;" /><div class="ft13 disablecl">暂无数据</div></div>';
+									}
+	
+								}else{
+									mui.toast(data.message);
+								}
+							},500)
+						},
+						error:function(xhr,type,errorThrown){
+							console.log('响应失败  !');
+						}
+					});
+				}
+			})
+		</script>
+	</body>
+
+</html>

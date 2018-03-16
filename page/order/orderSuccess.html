@@ -44,7 +44,17 @@
 				console.log(orderNo)
 				var money = plus.webview.currentWebview().money;
 				window.goback = function(){
+					if(plus.webview.getWebviewById('cart')){
+						plus.webview.getWebviewById('cart').close()
+					}
+					if(plus.webview.getWebviewById('listCheck')){
+						plus.webview.getWebviewById('listCheck').close()
+					}
+					if(plus.webview.getWebviewById('listCheckInfo')){
+						plus.webview.getWebviewById('listCheckInfo').close()
+					}
 					var index = plus.webview.getLaunchWebview();
+					index.reload()
 					mui.fire(index,'pagerefresh');
 					mui.back();
 				}

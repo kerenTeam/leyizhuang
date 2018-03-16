@@ -51,35 +51,15 @@
 					var pageid = plus.webview.currentWebview().pageid;
 					var longitude = plus.webview.currentWebview().longitude;
 					var latitude = plus.webview.currentWebview().latitude;
+					var cprovince = plus.webview.currentWebview().province;
 					var iframe = document.getElementById('test').contentWindow;
 					document.getElementById('test').src = 'https://m.amap.com/picker/?center=' + longitude + ',' + latitude + '&key=608d75903d29ad471362f8c58c550daf'
-					var cityName;
-					//获取城市
-					mui.ajax(serverUrl + '/app/city/list', {
-						dataType: 'json',
-						type: 'post',
-						timeout: 10000,
-						success: function(data, type, xhr) {
-							console.log('城市列表返回', data);
-							if(data.content && data.content.length) { 
-								for(var i = 0; i < data.content.length; i++) { 
-									if(nowcity == data.content[i].cityId){
-										cityName = data.content[i].cityName;
-										document.getElementById('test').onload = function() {
-											iframe.postMessage('hello', 'https://m.amap.com/picker/');
-											$("#test").contents().find(".back").click(function() {
-												mui.back()
-											});
-										}
-									}
-								} 
-							}
-						},
-						error: function(xhr, type, errorThrown) {
-	
-						}
-	
-					});
+					document.getElementById('test').onload = function() {
+						iframe.postMessage('hello', 'https://m.amap.com/picker/');
+						$("#test").contents().find(".back").click(function() {
+							mui.back()
+						});
+					}
 					window.addEventListener("message", function(e) {
 //						goback(e.data.address)
 						let NewLocation = (e.data.location).split(",")
@@ -94,15 +74,15 @@
 								var result2 = result.regeocode;
 								result = result.regeocode.addressComponent;
 								console.log(JSON.stringify(result))
-								if(result.city){
-									if(result.city != cityName){
-										mui.toast('只能定位当前省市哦');
+								if(result.province){
+									if(result.province != cprovince){
+										mui.toast('只能定位当前所在省哦');
 									}else{
 										goback(result.province,result.city,result.district,result.township,result.street,result.streetNumber,result2.formattedAddress,result.neighborhood)
 									}
 								}else{
-									if(result.province != cityName){
-										mui.toast('只能定位当前省市哦');
+									if(result.city != cprovince){
+										mui.toast('只能定位当前所在省哦');
 									}else{
 										goback(result.province,result.city,result.district,result.township,result.street,result.streetNumber,result2.formattedAddress,result.neighborhood)
 									}
