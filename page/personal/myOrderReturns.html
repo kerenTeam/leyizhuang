@@ -32,6 +32,7 @@
 			#tuihuodizhi02 b{font-weight: initial;}
 			#tuihuodizhi02{margin-bottom: 8px;position: relative;}
 			#tuihuodizhi02 span{position: absolute;right: 2px;top: 14px;}
+			.promotion{padding: 10px 15px;padding-bottom: 0;margin-bottom: -13px;color: #c7161e;}
 		</style>
 	</head>
 
@@ -45,26 +46,31 @@
 			<div class="proWrapAll" id="goodsD"></div>
 			<script type="text/html" id="goodsS">
 				<% for(var i=0;i<list.length;i++){%>
-					<div class="proWrap fineB">
-						<div class="proLeft proLeftTH">
-							<img src="<%=list[i].coverImageUri%>">
-						</div>
-						<div class="proRight proRightTH">
-							<h4><%= list[i].skuName%></h4>
-							<p> 订单数量：<%= list[i].orderQuantity%> 可退数量：<%= list[i].returnableQuantity%></p>
-							<div id="">
-								<%if(list[i].goodsLine == 'PRESENT'){%>
-									<em class="mui-badge mui-badge-danger" style="color: white;position: relative;top: -2px;">赠品</em>
-								<%}else if(list[i].goodsLine == 'PRODUCT_COUPON'){%>
-									<em class="mui-badge mui-badge-warning" style="color: white;position: relative;top: -2px;">产品券</em>
-								<%}%>
+					<div class="proWrapWs">
+						<%if(list[i].promotionTitle){%>
+							<h5 class="promotion"><%= list[i].promotionTitle%></h5>
+						<%}%>
+						<div class="proWrap fineB">
+							<div class="proLeft proLeftTH">
+								<img src="<%=list[i].coverImageUri%>">
 							</div>
-							<div>
-								<span class="span1 span1TH">¥<%= list[i].returnPrice%></span>
-								<div class="mui-numbox span2" data-numbox-min='0' data-numbox-max='<%= list[i].returnableQuantity%>'>
-									<button class="mui-btn mui-btn-numbox-minus" type="button">-</button>
-									<input class="mui-input-numbox goodNum" data-id="<%= list[i].id%>" data-type="<%= list[i].goodsLine%>" type="number" value="0"/>
-									<button class="mui-btn mui-btn-numbox-plus" type="button">+</button>
+							<div class="proRight proRightTH">
+								<h4><%= list[i].skuName%></h4>
+								<p> 订单数量：<%= list[i].orderQuantity%> 可退数量：<%= list[i].returnableQuantity%></p>
+								<div id="">
+									<%if(list[i].goodsLine == 'PRESENT'){%>
+										<em class="mui-badge mui-badge-danger" style="color: white;position: relative;top: -2px;">赠品</em>
+									<%}else if(list[i].goodsLine == 'PRODUCT_COUPON'){%>
+										<em class="mui-badge mui-badge-warning" style="color: white;position: relative;top: -2px;">产品券</em>
+									<%}%>
+								</div>
+								<div>
+									<span class="span1 span1TH">¥<%= list[i].returnPrice%></span>
+									<div class="mui-numbox span2" data-numbox-min='0' data-numbox-max='<%= list[i].returnableQuantity%>'>
+										<button class="mui-btn mui-btn-numbox-minus" type="button">-</button>
+										<input class="mui-input-numbox goodNum" data-id="<%= list[i].id%>" data-type="<%= list[i].goodsLine%>" type="tel" value="0"/>
+										<button class="mui-btn mui-btn-numbox-plus" type="button">+</button>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -81,19 +87,19 @@
 			    		<span id="tostore">
 			    			退货方式：
 			    		</span>
-					<div class="mui-input-row mui-radio mui-left tostore">
-						<label>送货至门店</label>
-						<input name="radio1" dataType='RETURN_STORE' value="送货至门店" class="typeRadio" checked type="radio">
-					</div>
-					<div class="mui-input-row mui-radio mui-left smqh">
+			    		<div class="mui-input-row mui-radio mui-left smqh">
 						<label>上门取货</label>
-						<input name="radio1" dataType='HOUSE_PICK' value="上门取货" class="typeRadio" type="radio">
+						<input name="radio1" dataType='HOUSE_PICK' value="上门取货" class="typeRadio" checked type="radio">
 					</div>
-					<div class="fangshiMore">
+					<div class="mui-input-row mui-radio mui-left tostore zhimendian">
+						<label>送货至门店</label>
+						<input name="radio1" dataType='RETURN_STORE' value="送货至门店" class="typeRadio" type="radio">
+					</div>
+					<div class="fangshiMore fangshiMore2">
 						<p id="mendian0" style="padding-bottom: 6px;">请与上班时间送货到---</p>
 						<p id="mendianA0">地址：----</p>
 					</div>
-					<div class="fangshiMore fangshiMore2">
+					<div class="fangshiMore ">
 						<div id="tuihuodizhi02" onclick="addAddress()">
 							<b id="AD1">---</b> <b id="AD2">---</b>
 							<p style="margin-right: 20px;">
@@ -155,11 +161,13 @@
 				var cusId = plus.webview.currentWebview().cusId;
 				var platform = plus.storage.getItem('platform');
 				if(deliveryType == '门店自提'){
-					$('.smqh').hide()
+					$('.smqh').hide();
 				}else if(deliveryType && deliveryType.indexOf('券')!=-1){
-					$('.smqh,.tostore,#tostore').hide()
+					$('.smqh,.tostore,#tostore').hide();
 
 				}
+				//装饰公司申请退货页面无送货至门店
+				if(identityT == 2){$('.zhimendian').hide();}
 				/*退货方式tab*/
 				$('.typeRadio').change(function(){
 					if ($(".typeRadio[type='radio']:checked").val() == '送货至门店') {

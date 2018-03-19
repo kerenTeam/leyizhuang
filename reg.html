@@ -13,40 +13,40 @@
 			.area {
 				margin: 20px auto 0px auto;
 			}
-			
+
 			.mui-input-group:first-child {
 				margin-top: 20px;
 			}
-			
+
 			.mui-input-group label {
 				width: 30%;
 			}
-			
+
 			.mui-input-row label~input,
 			.mui-input-row label~select,
 			.mui-input-row label~textarea {
 				width: 65%;
 			}
-			
+
 			.mui-checkbox input[type=checkbox],
 			.mui-radio input[type=radio] {
 				top: 6px;
 			}
-			
+
 			.mui-content-padded {
 				margin-top: 25px;
 			}
-			
+
 			.mui-btn {
 				padding: 10px;
 			}
-			
+
 			.mui-input-row label~input,
 			.mui-input-row label~select,
 			.mui-input-row label~textarea {
 				margin-top: 1px;
 			}
-			
+
 			#getCode {
 				border: none;
 				border-left: 1px solid #eee;
@@ -66,7 +66,7 @@
 		<div class="mui-content">
 			<form class="mui-input-group ft16" style="margin-top: 7px;">
 				<div class="mui-input-row flexr" id="phone">
-					<input id='account' type="text" class="mui-input-clear mui-input" placeholder="请输入手机号">
+					<input id='account' type="tel" class="mui-input-clear mui-input" placeholder="请输入手机号">
 					<label style="padding:4px 0px"><button type="button" id="getCode">获取验证码</button></label>
 				</div>
 				<div class="mui-input-row flexr">
@@ -146,7 +146,7 @@
 			 	 	var systemType = 'IOS'
 				}
 				var clientId = plus.push.getClientInfo().clientid;
-				var deviceId = plus.device.uuid; 
+				var deviceId = plus.device.uuid;
 				//获取城市
 				mui.ajax(serverUrl + '/app/city/list', {
 					dataType: 'json',
@@ -256,7 +256,7 @@
 											if(data.code == 0 && data.content.isExist) {
 												plus.nativeUI.closeWaiting();
 												var userId =data.content.userId;
-												
+
 												plus.storage.setItem('$userId', JSON.stringify(data.content.userId))
 												plus.storage.setItem("$identityType", JSON.stringify({
 													'identityType': '6'
@@ -274,7 +274,7 @@
 												mui.fire(plus.webview.getWebviewById('cart.html'), 'refresh');
 
 												var index = plus.webview.getLaunchWebview();
-												mui.fire(index, 'refreshpage'); 
+												mui.fire(index, 'refreshpage');
 												plus.nativeUI.closeWaiting();
 												mui.ajax(serverUrl + '/app/customer/binding/seller', {
 													data: {
@@ -295,12 +295,12 @@
 															if(plus.webview.getWebviewById('reg')){
 																plus.webview.getWebviewById('reg').close();
 															}
-															plus.webview.currentWebview().close(); 
+															plus.webview.currentWebview().close();
 															plus.nativeUI.closeWaiting();
 														}else{
 															mui.toast(data.message)
 														}
-							
+
 													},
 													error: function(xhr, type, errorThrown) {
 														plus.nativeUI.closeWaiting();
@@ -320,7 +320,7 @@
 
 								} else {
 									plus.nativeUI.closeWaiting();
-									mui.toast(data.message); 
+									mui.toast(data.message);
 								}
 							},
 							error: function(xhr, type, errorThrown) {
@@ -356,7 +356,7 @@
 							}
 						}, 1000)
 
-						//发送验证码 
+						//发送验证码
 						mui.ajax(serverUrl+'/app/sms/verifyCode/send', {
 							data: {
 								mobile: account.value
@@ -382,26 +382,26 @@
 							dataType: 'json',
 							type: 'post',
 							timeout: 10000,
-							success: function(data) { 
-								console.log('获取顾客信息',data); 
+							success: function(data) {
+								console.log('获取顾客信息',data);
 								if(data.content){
 									if(data.content.name){
 										$('#username').val(data.content.name)
 									}else{
 										$('#username').val('')
-										
+
 									}
 									if(data.content.customerProfession){
 										$('#workerType').val(data.content.customerProfession)
 									}else{
 										$('#workerType').val('')
-										
+
 									}
 									if(data.content.cityId){
 										$('#city').val(data.content.cityId)
 									}else{
 										$('#city').val('')
-										
+
 									}
 									if(data.content.salesPhone){
 										$('#guide').val(data.content.salesPhone)
@@ -412,8 +412,8 @@
 							},
 							error: function(xhr, type, errorThrown) {
 							}
-						});	
-						
+						});
+
 					}
 
 				})

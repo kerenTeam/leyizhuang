@@ -115,7 +115,7 @@
 										地址:<%=list[i].shippingAddress%>
 									</div>
 									<div class="orderInfo">
-										共<%= list[i].count%>件商品 合计：<span>¥ <%= list[i].price%></span>
+										共<%= list[i].count%>件商品 商品总额：<span>¥ <%= list[i].price%></span>
 									</div>
 									<!--显示状态按钮-->
 									<div class="orderBtns">
@@ -306,7 +306,7 @@
 						success:function(data,type,xhr){
 							plus.nativeUI.closeWaiting();
 							console.log('过期否',data);
-							if(data.code == 0 ){ 
+							if(data.code == 0 ){
 								$('#payMoney').html('¥' + money);
 								$('#maskInfo').fadeIn(200);
 								toPay(money, orderNo)

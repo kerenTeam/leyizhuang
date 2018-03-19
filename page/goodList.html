@@ -137,10 +137,10 @@
 				if(!categoryCode){
 					categoryCode = 'water';
 				}
-				
+
 				downRe(kindTyperf);
 				if(categoryCode){
-					$('.flexw div').siblings().removeClass('curActive')
+					$('.flexw div').siblings().removeClass('curActive');
 					$('.'+categoryCode).addClass('curActive');
 				}
 				document.addEventListener('refresh', function() {
