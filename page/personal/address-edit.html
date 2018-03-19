@@ -183,11 +183,15 @@
 			var longitude=0;//纬度
 			var cprovince;
 			function goMap(){
-				openview({
-					view:encodeURI('addressMap.html?center='+longitude+','+latitude+'&key=8f29aefac8547821425571df8852f64b'),
-					id: 'addressMap',
-					extrasobj:{pageid:'address-edit',longitude:longitude,latitude:latitude,province:cprovince}
-				})
+				if(!cprovince){
+					mui.toast('定位失败请重试或者手动输入')
+				}else{
+					openview({
+						view:encodeURI('addressMap.html?center='+longitude+','+latitude+'&key=8f29aefac8547821425571df8852f64b'),
+						id: 'addressMap',
+						extrasobj:{pageid:'address-edit',longitude:longitude,latitude:latitude,province:cprovince}
+					})
+				}
 			}
 			mui.plusReady(function(){
 				plus.storage.removeItem('$mapStorage'); 
