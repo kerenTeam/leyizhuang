@@ -230,6 +230,9 @@
 			})
 			mui.plusReady(function(){
 				var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
+				if(plus.webview.currentWebview().lookCusid){
+					identityT = 6;
+				}
 				var userId = plus.webview.currentWebview().lookCusid || plus.storage.getItem('$userId');
 				var oldToken = plus.storage.getItem('oldToken');
 				var pingjia = plus.webview.currentWebview().type;//待评价

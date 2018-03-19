@@ -129,7 +129,25 @@
 												</span>
 											</div>
 										</div>
-										<div class="ft15"><span class="disablecl">支付方式：</span><span class="titcl"><%=list[i].paymentMethod%></span></div>
+										<div class="flexr">
+											<div>
+												<span class="disablecl">
+													代收金额：
+												</span>
+												<span class="titcl">
+													¥<%=list[i].agencyMoney%>
+												</span>
+											</div>
+											<div id="">
+												<span class="disablecl">
+													实收金额：
+												</span>
+												<span class="titcl">
+													¥<%=list[i].realMoney%>
+												</span>
+											</div>
+										</div>
+										<div class="ft15"><span class="disablecl">支付方式：</span><span class="titcl"><%=list[i].paymentMethod || '无'%></span></div>
 										<div class="ft15"><span class="disablecl">申请日期：</span><span class="titcl"><%=list[i].createTime%></span></div>
 									</div>
 

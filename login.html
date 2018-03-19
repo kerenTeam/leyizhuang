@@ -161,7 +161,6 @@
 										plus.storage.setItem("$identityType",JSON.stringify({'identityType':data.content.type}));
 										plus.storage.setItem("Acc_pass",JSON.stringify(Acc_pass));//保存账号密码,用于自动登录
 										plus.storage.setItem('userCity',data.content.cityId.toString())
-										
 										if(data.content.sellerType == 'SUPERVISOR'){
 											plus.storage.setItem("sellerType",'SUPERVISOR');//店长
 										}
@@ -176,10 +175,11 @@
 												id:'dispatching'
 											})
 										}else{
+											mui.fire(plus.webview.getWebviewById('cart.html'), 'refresh');
+											plus.webview.getWebviewById('cart.html').reload()
 											var index = plus.webview.getLaunchWebview();
 											mui.fire(index,'refreshpage');
 											index.reload()
-											mui.fire(plus.webview.getWebviewById('cart.html'), 'refresh');
 											mui.fire(plus.webview.getWebviewById('page/goodList.html'),'refresh');
 											mui.fire(plus.webview.getWebviewById('center.html'),'refresh');
 											plus.webview.getWebviewById('center.html').reload()

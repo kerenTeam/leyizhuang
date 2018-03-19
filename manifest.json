@@ -712,7 +712,8 @@
 					"page/personal/myOrderList.html",
 					"consultTel.html",
 					"page/specialGoods.html",
-					"page/guide/achievement.html"
+					"page/guide/achievement.html",
+					"funGuide.html"
 				],
 				"priority": 0
 			},

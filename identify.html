@@ -195,13 +195,14 @@
 											plus.storage.setItem("openId", openID);
 											plus.storage.setItem('userCity',data.content.cityId.toString())
 											plus.storage.removeItem('Acc_pass');
+											
 											mui.fire(plus.webview.getWebviewById('page/goodList.html'), 'refresh');
 											mui.fire(plus.webview.getWebviewById('center.html'), 'refresh');
 											plus.webview.getWebviewById('center.html').reload()
 											mui.fire(plus.webview.getWebviewById('cart.html'), 'refresh');
+											plus.webview.getWebviewById('cart.html').reload()
 											var index = plus.webview.getLaunchWebview();
 											index.reload()
-											
 											mui.fire(index, 'refreshpage');
 											if(plus.webview.getWebviewById('reg')) {
 												plus.webview.getWebviewById('reg').close();

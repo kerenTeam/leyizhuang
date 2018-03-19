@@ -23,6 +23,7 @@
 		    .tab-hdtwo li {width: 49%!important;font-size: 16px!important;line-height: 45px;text-align: center;}
 			.rank{font-style: italic;font-weight: 600;font-size: 20px;}
 			.flexr{display: flex;justify-content: space-around;align-items: center;}
+			.tbtwo{display: none;}
 		</style>
 	</head>
 
@@ -34,10 +35,19 @@
 		</header>
 		<script src="../../js/statusBar.js"></script>
 		<div class="mui-content">
-			<div id="TS" style="text-align: center;font-size: 18px;color: orangered;margin-top: 20px;margin-bottom: -10px;">
-				桶数销量
+			<div style="background-color: #EEEEEE;text-align: center;font-size: 18px;color: #445252;margin-top: 0px;padding: 10px;">
+				达标率
 			</div>
-			<div class="circle" style="left:50%;-webkit-transform: translateX(-50%);margin-top: 40px;">
+			<div class="tab-hd tab-hdtwo bgcwt" id="tabLink2" style="z-index: 99;">
+				<ul class="tab-nav ft16">
+				  <li class="active aClick " data-statusId="0">高端桶数</li>
+				  <li class="aClick" data-statusId="1">高端活跃会员数</li>
+				</ul>
+			</div>
+			<!--<div id="TS" style="text-align: center;font-size: 18px;color: orangered;margin-top: 20px;margin-bottom: -10px;">
+				高端桶数
+			</div>-->
+			<div class="circle tbone" style="left:50%;-webkit-transform: translateX(-50%);margin-top: 40px;">
 				
 				<div class="pie_left">
 					<div class="left"></div>
@@ -48,35 +58,36 @@
 				<div class="mask"><span class="ft20" style="color: #E73A38;" id="availableBalance">---</span></div>
 				<div class="totalEdu">达标率</div>
 			</div> 
-			<div id="quotaPWrap" style="margin-top: 40px;">
-				<div class="quotaP1 fineB" id="limitbalance">
-					目标桶数: <span>---</span>
+			<div class="circle2 tbtwo" style="left:50%;-webkit-transform: translateX(-50%);margin-top: 40px;">
+				<div class="pie_left">
+					<div class="left"></div>
 				</div>
-				<div class="quotaP1 fineB" id="tempbalance">
-					实际桶数: <span>---</span>
+				<div class="pie_right">
+					<div class="right"></div>
 				</div>
-				<div id="HYS" style="text-align: center;font-size: 18px;color: #F8937E;margin-top: 30px;margin-bottom: -10px;">
-					活跃会员数销量
+				<div class="mask"><span class="ft20" style="color: #F8937E;" id="availableBalance2">---</span></div>
+				<div class="totalEdu">达标率</div>
+			</div>
+			<div id="quotaPWrap" style="margin-top: 80px;">
+				<div class="quotaP1 fineB tbone" id="limitbalance">
+					目标桶数<span>---</span>
 				</div>
-				<div class="circle2" style="left:50%;-webkit-transform: translateX(-50%);margin-top: 40px;">
-					<div class="pie_left">
-						<div class="left"></div>
-					</div>
-					<div class="pie_right">
-						<div class="right"></div>
-					</div>
-					<div class="mask"><span class="ft20" style="color: #F8937E;" id="availableBalance2">---</span></div>
-					<div class="totalEdu">达标率</div>
+				<div class="quotaP1 fineB tbone" id="tempbalance">
+					实际桶数<span>---</span>
 				</div>
-				<div style="margin-top: 280px;">
+				<!--<div id="HYS" style="text-align: center;font-size: 18px;color: #F8937E;margin-top: 30px;margin-bottom: -10px;">
+					高端活跃会员数
+				</div>-->
+				
+				<div class="tbtwo">
 					<div class="quotaP1 fineB" id="limitbalance2">
-						目标会员数: <span>---</span>
+						目标会员数<span>---</span>
 					</div>
 					<div class="quotaP1 fineB" id="tempbalance2">
-						实际会员数: <span>---</span>
+						实际会员数<span>---</span>
 					</div>
 				</div>
-				<div id="TS" style="background-color: #EEEEEE;text-align: center;font-size: 18px;color: #445252;margin-top: 20px;padding: 10px;">
+				<div style="background-color: #EEEEEE;text-align: center;font-size: 18px;color: #445252;margin-top: 20px;padding: 10px;">
 					排行榜
 				</div>
 				<div class="tab-hd tab-hdtwo bgcwt" id="tabLink" style="z-index: 99;">
@@ -124,6 +135,9 @@
 						<%}%>
 
 					</script>
+				</div>
+				<div class="mui-pull-right padd10 activecl2">
+					*业绩数据每日0点更新
 				</div>
 				<div class="upload text-center text-xs gray" id="upload"></div>
 			</div>
@@ -269,7 +283,18 @@
 						console.log('登录响应失败');
 					}
 				});
-
+				$('#tabLink2 li').click(function(){
+					$('#tabLink2 li').removeClass('active');
+					$(this).addClass('active');
+					if($(this).index() == 0){
+						$('.tbone').show()
+						$('.tbtwo').hide()
+					}else{
+						$('.tbtwo').show()
+						$('.tbone').hide()
+						
+					}
+				})
 				$('#tabLink li').click(function(){
 					document.getElementById('upload').innerHTML = '';
 					$(window).unbind('scroll');

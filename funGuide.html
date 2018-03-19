@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>功能指引</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+
+		<link rel="stylesheet" href="css/mui.min.css">
+		<link rel="stylesheet" href="css/style.css" />
+		<link rel="stylesheet" type="text/css" href="css/configW.css"/>
+		
+		<style>
+			img{width: 100%;}
+			.indexSearch{
+				background-color: white;font-size: 12px;height: 33px;border-radius: 20px;text-align: center;line-height: 30px;
+			}
+			.message {position: absolute;top: 32px;right: 20px;width: 6%;}
+			
+			.close {
+				position: absolute;
+				width: 160px;
+				left: 50%;
+				margin-left: -80px;
+				bottom: 20%;
+				padding: 10px;
+				color: #fff;
+				border-color: #fff;
+				border-radius: 50px;
+				color: white!important;
+				font-size: 16px;
+			}
+			#close2{bottom: 40%;}
+			.flexw img{
+				display: block;
+				width: 30px;
+				height: 30px;
+				margin: auto;
+			} 
+			.flexw div{color: white!important;z-index: 9999;}
+			.imgb {
+				margin: 5px auto; 
+				width: 60px;
+				height: 60px;
+				padding: 15px;
+				border-radius: 50%;
+			}
+			#iconData{color: white;}
+			#bottgd:after{
+				content: '快速分类进入列表';
+				position: absolute;
+				color: white;
+				bottom: 62px;
+				width: 100%;
+				white-space: nowrap;
+				left: 50%;
+				font-size: 14px;
+				margin-left: -40px;
+				
+			}
+			#bottgd2:after{
+				content: '在这里查看已挑选的产品';
+				position: absolute;
+				color: white;
+				bottom: 150px;
+				width: 100%;
+				white-space: nowrap;
+				left: 30%;
+				font-size: 14px;
+				margin-left: -40px;
+				
+			}
+		</style>
+	</head>
+
+	<body style="background-color:rgba(0,0,0,0.8);">
+		<div id="content">
+			<!--<img src="images/index/indexG1.png"/>-->
+			<div id="gd1"  style="position: relative;">
+				<div class="searchBox" style="z-index:1;position: absolute;top: 27px;left: 20px;width: 80%;">
+					<div class="indexSearch">
+						<span class="mui-icon mui-icon-search" style="vertical-align: middle;font-size:20px;padding-top: 7px;float: left;padding-left: 10px;"></span>
+					</div>
+				</div>
+				<div>
+					<img src="images/center/message.svg" onclick="goMessage()" class="message"/>
+					<span class="mui-badge mui-badge-danger" id="ctMsg" style="right: 20px;position: absolute;padding: 4px;bottom: 29px;background-color: red;display: none;"></span>
+				</div>
+				<img src="images/index/fingler.svg" style="width: 22%;z-index: 9999;position: absolute;top: 60px;left: 50px;"/>
+				<div style="position: absolute;top: 150px;left: 50px;color: white;font-size: 14px;">
+					点击这里输入关键字，查找自己想要的商品
+				</div>
+			</div>
+			<div id="gd2" style="margin-top: 54%;display: none;position: relative;">
+				<div class="">
+					<div class="flexw paddv10 ftype" id="iconData" style="margin-top:0;background: none!important;color: white;">
+						<div data-id="water">
+							<div class="imgb" style="background-color:#B62D29"><img src="images/s.svg" alt="" /></div>水
+						</div>
+						<div data-id="electric">
+							<div class="imgb" style="background-color:#B62D29"><img src="images/d.svg" alt="" /></div>电
+						</div>
+						<div data-id="wood">
+							<div class="imgb" style="background-color:#B62D29"><img src="images/m.svg" alt="" /></div>木
+						</div>
+						<div data-id="tile">
+							<div class="imgb" style="background-color:#B62D29"><img src="images/w.svg" alt="" /></div>瓦
+						</div>
+						<div data-id="oil">
+							<div class="imgb" style="background-color:#B62D29"><img src="images/y.svg" alt="" /></div>油
+						</div>
+					</div>
+				</div>
+				<img src="images/index/fingler.svg" style="width: 22%;z-index: 9999;position: absolute;top: 80%;left: 40%;"/>
+				<div style="position: absolute;top: 140%;left:0;color: white;font-size: 14px;right: 0;text-align: center;">
+					按类别挑选自己想要的商品
+				</div>
+				<!--<div id="bottgd" style="position: fixed;bottom: 0;width: 15%;height: 50px;border: 1px dashed white;left: 25%;">
+					
+				</div>-->
+			</div>
+			<div id="gd3" style="display: none;">
+				 
+				<img src="images/index/fingler.svg" style="width: 22%;z-index: 9999;position: absolute;top: 80%;left: 60%;-webkit-transform: rotateX(180deg);"/>
+				 
+				<div id="bottgd2" style="position: fixed;bottom: 0;width: 15%;height: 50px;border: 1px dashed white;left: 60%;">
+					
+				</div>
+			</div>
+				
+	
+	
+			<button id='close' class="mui-btn mui-btn-warning mui-btn-outlined close">我知道了</button>
+			<button id='close1' class="mui-btn mui-btn-warning mui-btn-outlined close" style="display: none;">我知道了</button>
+			<button id='close2' class="mui-btn mui-btn-warning mui-btn-outlined close" style="display: none;">我知道了</button>
+		</div>
+		<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/mui.min.js"></script>
+		<script>
+			mui.back = function() {};
+			mui.plusReady(function() {
+				if(mui.os.ios){
+					plus.navigator.setFullscreen(true);
+				}
+				plus.navigator.closeSplashscreen();
+			});
+			//立即体验按钮点击事件
+			document.getElementById("close").addEventListener('tap', function(event) {
+				document.getElementById("gd1").style.display = 'none';
+				document.getElementById("gd2").style.display = 'block';
+				this.style.display = 'none';
+				document.getElementById("close1").style.display = 'block';
+			}, false);
+			document.getElementById("close1").addEventListener('tap', function(event) {
+				document.getElementById("gd2").style.display = 'none';
+				document.getElementById("gd3").style.display = 'block';
+				this.style.display = 'none';
+				document.getElementById("close2").style.display = 'block';
+			}, false);
+			document.getElementById("close2").addEventListener('tap', function(event) {
+				plus.storage.setItem("funGuide1", "true");
+				plus.navigator.setFullscreen(false);
+				plus.webview.currentWebview().close();
+			}, false);
+		</script>
+	</body>
+
+</html>

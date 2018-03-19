@@ -319,7 +319,7 @@ background: linear-gradient(to right, #1fddff, #ff4b1f); /* W3C, IE 10+/ Edge, F
 
                 <% if(detail.deliveryType == '送货上门'){%>
                     <% if(detail.status != 'UNPAID' && detail.status != 'CANCELED' && detail.status != 'CANCELING'){%>
-                        <span onclick="goOrderWL('<%= detail.orderNumber%>')" class="aClick redC">查看物流</span>
+                        <span onclick="goOrderWL('<%= detail.orderNumber%>')" class="aClick redC lookwl">查看物流</span>
                     <% }%>
                 <% }%>
 
@@ -411,8 +411,11 @@ background: linear-gradient(to right, #1fddff, #ff4b1f); /* W3C, IE 10+/ Edge, F
 							data.content.identityT = identityT;
 							data.content.BillingDetailResponse = data.content.customerBillingDetailResponse || data.content.managerBillingDetailResponse || data.content.sellerBillingDetailResponse;
 							document.getElementById('main').innerHTML = template('mainS',{detail:data.content});
-							if(isButton == 'no' || noButton){
+							if(isButton == 'no'){
 								$('.footBtn,.proRight button').hide();
+							}
+							if(noButton){
+								$('.footBtn>span:not(.lookwl)').remove();
 							}
 							//显示订单评价
 							if(data.content.logisticsStar || data.content.productStar || data.content.serviceStars){

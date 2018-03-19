@@ -25,12 +25,14 @@ body {
     font-size:12px;
     border: 1px solid #f8f8f8;
     border-radius: 4px;
+    background-color: none!important;
+	z-index: 0;
 }
 .mui-numbox [class*=btn-numbox], .mui-numbox [class*=numbox-btn]{
 	width: 34px;
 	font-size: 30px;
     line-height: 0.5;
-    text-align: center
+    text-align: center;
 }
 .mui-numbox .mui-input-numbox, .mui-numbox .mui-numbox-input{
 	border:none!important;

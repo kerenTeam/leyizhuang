@@ -617,23 +617,27 @@
 				var deviceId = plus.device.uuid;
 				plus.storage.setItem('platform',systemType)
 				plus.storage.setItem('clientId',clientId)
-				plus.storage.setItem('deviceId',deviceId)
-
+				plus.storage.setItem('deviceId',deviceId) 
 				var showGuide = plus.storage.getItem("lauchFlag");
+				var funGuide1 = plus.storage.getItem("funGuide1");
 				if(!showGuide) {
-					Sign();
 					//延迟的原因：优先打开启动导航页面，避免资源争夺
+					setTimeout(function() {
+						Sign();
+					},0);
 					setTimeout(function() {
 						openview({
 							view:'welcome.html',
 							id:'welcome'
 						})
 					}, 200);
+					
+					
 				}else{
 					//有值，说明已经显示过了，无需显示；
 					//关闭splash页面；
-					plus.navigator.closeSplashscreen();
-					plus.navigator.setFullscreen(false)
+//					plus.navigator.closeSplashscreen();
+					plus.navigator.setFullscreen(false);
 					Sign();
 				}
 				//判断是否登陆
@@ -1110,6 +1114,24 @@
 					}
 
 				}
+				//功能指引 1
+				if(showGuide && !funGuide1){
+//						setTimeout(function() {
+						mui.openWindow({
+						    url:'funGuide.html',
+						    id:'funGuide',
+						    styles:{
+						  	  	background:'transparent',
+		
+						    },
+						    waiting: {autoShow:false},
+						    show:{
+						      aniShow:'fade-in',//页面显示动画，默认为”slide-in-right“；
+		
+						    }
+						})
+//						}, 0);	
+				}
 			});
 
 			function bannerto(id,url,name,type){
@@ -1314,7 +1336,6 @@
 				document.addEventListener('cart_refresh', function() {
 					//获取购物车数量
 					cartNum = plus.storage.getItem('cartNums');
-
 					if(cartNum>999){
 						cartNum= '999+'
 					}

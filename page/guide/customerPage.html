@@ -160,8 +160,8 @@
 						<div class="denlu" style="display:none ;" id="userNumber">用户id:<span style="z-index: 99;"></span></div>
 						<div class="denlu" id="onlyCust">灯号:<span id="dengh"></span><br />导购:<span id="guideName"></span><a id="guideMobile" style="display: none;" href=""><img style="width: 15px;margin-left: 5px;" src="../../images/center/phone.svg"/></a></div>
 					</p>
-					<div onclick="changeCusType()" style="position: absolute;top: 60px;right: 0px;padding: 8px;background: white;color: black;border-radius: 5px;font-size: 14px;">
-						修改顾客类型
+					<div id="changeM" onclick="changeCusType()" style="position: absolute;top: 60px;right: 0px;padding: 8px;background: white;color: black;border-radius: 5px;font-size: 14px;display: none;">
+						转为会员
 					</div>
 				</div> 
 			</div>
@@ -222,8 +222,10 @@
 					//获取缓存
 					var identityT = 6;
 					var userId = plus.webview.currentWebview().cusid;
+					var cusLight = plus.webview.currentWebview().cusLight;
 					var oldToken = plus.storage.getItem('oldToken');
 					//打开订单，
+					
 					window.openOrder = function(type){
 						openview({
 							view:'../personal/myOrderList.html',
@@ -236,35 +238,41 @@
 						})
 					}
 					window.changeCusType = function(){
-						plus.nativeUI.showWaiting()
-						mui.ajax(serverUrl+'/app/customer/update/type', {
-							data: {
-								userId: userId,
-								identityType: identityT
-							},
-							dataType: 'json',
-							headers: {
-								"Authorization": oldToken
-							},
-							type: 'post',
-							timeout: 10000,
-							success: function(data, type, xhr) {
-								plus.nativeUI.closeWaiting();
-								
-								console.log('顾客类型', data);
-								if(data.code == 0) {
-									plus.nativeUI.closeWaiting();
-									plus.webview.currentWebview().reload()
-								} else {
-									mui.toast(data.message)
-								}
-
-							},
-							error: function(xhr, type, errorThrown) {
-								plus.nativeUI.closeWaiting();
-								console.log('登录响应失败');
+						mui.confirm('确认将此顾客修改为会员吗？', '提示', ['取消', '确定'], function(e) {
+							if(e.index == 1) {
+								plus.nativeUI.showWaiting()
+								mui.ajax(serverUrl+'/app/customer/update/type', {
+									data: {
+										userId: userId,
+										identityType: identityT
+									},
+									dataType: 'json',
+									headers: {
+										"Authorization": oldToken
+									},
+									type: 'post',
+									timeout: 10000,
+									success: function(data, type, xhr) {
+										plus.nativeUI.closeWaiting();
+										
+										console.log('顾客类型', data);
+										if(data.code == 0) {
+											mui.toast('修改成功')
+											plus.nativeUI.closeWaiting();
+											plus.webview.currentWebview().reload()
+										} else {
+											mui.toast(data.message)
+										}
+		
+									},
+									error: function(xhr, type, errorThrown) {
+										plus.nativeUI.closeWaiting();
+										console.log('登录响应失败');
+									}
+								}); 
 							}
-						}); 
+						})
+						
 					}
 					//退货
 					window.openRTList = function(type){
@@ -342,7 +350,13 @@
 										if(data.content.mobile) {
 											plus.storage.setItem('mobile',data.content.mobile);
 										}
+										
 										if(data.content.customerType) {
+											if(data.content.customerType != "会员"){
+												$("#changeM").show()
+											}else{
+												$("#changeM").hide()
+											}
 											$('#customerType').html(data.content.customerType)
 										}else{
 											$('#customerType').html('无')
@@ -357,11 +371,16 @@
 										}else{
 											$('#guideMobile').css('display','none')
 										}
-										if(data.content.light) {
-											$('#dengh').html(data.content.light)
-										} else {
-											$('#dengh').html('无')
+										if(cusLight){
+											$('#dengh').html(cusLight)
+										}else{
+											if(data.content.light) {
+												$('#dengh').html(data.content.light)
+											} else {
+												$('#dengh').html('无')
+											}
 										}
+										
 										if(data.content.balance){
 											$('#accoutMoney,#manageMoney,#userAct').html('¥'+data.content.balance)
 										}else{

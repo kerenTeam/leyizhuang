@@ -85,7 +85,7 @@
 				<script type="text/html" id="listDataS">
 				<%for(var i=0;i<dataList.length;i++){%>
 
-					<div class="qashadow" data-id="<%=dataList[i].light%>" onclick="openDetail(<%=dataList[i].cusId%>)">
+					<div class="qashadow" data-id="<%=dataList[i].light%>" onclick="openDetail(<%=dataList[i].cusId%>,'<%=dataList[i].light%>')">
 						<div class="qtop flexr">
 							<div class="ft14" style="display: flex;align-items: center;">
 								<img class="Avator loadPics" data-src="" src="<%=dataList[i].picUrl%>"/>
@@ -119,11 +119,11 @@
 	 <script src="../../js/default.js" type="text/javascript" charset="utf-8"></script>
 	 <script type="text/javascript">
 	 	/*打开详情*/
-		function openDetail(id){
+		function openDetail(id,light){
 			openview({
 				view:'customerPage.html',
 				id:'customerPage',
-				extrasobj:{'cusid':id}
+				extrasobj:{'cusid':id,'cusLight':light}
 			})
 		}
 		//搜索

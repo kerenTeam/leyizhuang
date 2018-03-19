@@ -146,7 +146,7 @@
 										<% if(list[i].deliveryType == '送货上门'){%>
 											<!--这里 状态 取反-->
 											<% if(list[i].status != 'UNPAID' && list[i].status != 'CANCELED' && list[i].status != 'CANCELING'){%>
-												<span onclick="goOrderWL('<%= list[i].orderNo%>')" class="aClick redC">查看物流</span>
+												<span onclick="goOrderWL('<%= list[i].orderNo%>')" class="aClick redC lookwl">查看物流</span>
 											<% }%>
 										<% }%>
 
@@ -639,7 +639,9 @@
 										})
 										document.getElementById('infoListDiv').innerHTML = template('infoList',{list:data.content.list,nowState:tabT});
 										if(noButton == 1){
-											$('.orderBtns').empty()
+//											$('.orderBtns').empty()
+											$('.orderBtns>span:not(.lookwl)').remove();
+											
 										}
 										if(fromPage == 'index'){
 											$('.orderBtns>span:not(:last-child)').remove();
@@ -658,7 +660,8 @@
 											})
 											document.getElementById('infoListDiv').innerHTML = template('infoList',{list:data.content,nowState:tabT});
 											if(noButton == 1){
-												$('.orderBtns').empty()
+//												$('.orderBtns').empty()
+												$('.orderBtns>span:not(.lookwl)').remove();
 											}
 											if(fromPage == 'index'){
 												$('.orderBtns>span:not(:last-child)').remove();
@@ -708,7 +711,8 @@
 																})
 						                                        document.getElementById('infoListDiv').innerHTML += template('infoList',{list:data.content.list,nowState:tabT});
 						                                    	if(noButton == 1){
-																	$('.orderBtns').empty()
+//																	$('.orderBtns').empty()
+																	$('.orderBtns>span:not(.lookwl)').remove();
 																}
 						                                    	if(fromPage == 'index'){
 																	$('.orderBtns>span:not(:last-child)').remove();
