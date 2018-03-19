@@ -22,7 +22,7 @@
  		#end {
             position: fixed;
             bottom: -100px;
-            right: calc(100vw * 0.3);
+            right: calc(100vw * 0.35);
             width: 10px;
             height: 10px;
             visibility: hidden;
@@ -347,23 +347,27 @@
 										$('.toCart,.mui-numbox button').click(function() {
 											event.stopPropagation();
 										})
-										$('.toCart,.mui-numbox-btn-plus').unbind('click').click(function(event) {
-											event.stopPropagation();
-											var offset = $('#end').offset(),
-								                flyer = $('<img style="width:15px;" class="u-flyer" src="https://avatars3.githubusercontent.com/u/1778935?v=4"/>');
-									            flyer.fly({
-									                start: {
-									                    left:event.pageX,
-									                    top: event.pageY
-									                },
-									                end: {
-									                    left: offset.left,
-									                    top: offset.top,
-									                    // width: 20,
-									                    // height: 20
-									                }
-									            });
-										})
+										if(!pageFrom){
+											$('.mui-numbox-btn-plus').click(function(event) {
+												event.stopPropagation();
+												var cur = $(this);
+												var offset = $('#end').offset(),
+									                flyer = $('<img style="width:20px;" src="../images/center/circlebt.svg"/>');
+										            flyer.fly({
+										                start: {
+										                    left:cur.offset().left,
+										                    top: cur.offset().top - $(document).scrollTop()
+										                },
+										                end: {
+										                    left: offset.left,
+										                    top: offset.top,
+										                    // width: 20,
+										                    // height: 20
+										                }
+										            });
+											})
+										}
+										
 										var platform = plus.storage.getItem('platform')
 										$('.mui-numbox input').click(function() {
 											if(platform == 'ANDROID'){
@@ -403,6 +407,26 @@
 
 										//加入购物车
 										$('.toCart').unbind("click").click(function(){
+											if(!pageFrom){
+												$('.mui-numbox-btn-plus').click(function(event) {
+													event.stopPropagation();
+													var cur = $(this);
+													var offset = $('#end').offset(),
+										                flyer = $('<img style="width:20px;" src="../images/center/circlebt.svg"/>');
+											            flyer.fly({
+											                start: {
+											                    left:cur.offset().left,
+											                    top: cur.offset().top - $(document).scrollTop()
+											                },
+											                end: {
+											                    left: offset.left,
+											                    top: offset.top,
+											                    // width: 20,
+											                    // height: 20
+											                }
+											            });
+												})
+											}
 											event.stopPropagation();
 											var goodid = $(this).attr('data-id');
 											var cur = $(this);
@@ -581,25 +605,27 @@
 																	mui('.mui-numbox').numbox();
 																	$('.toCart,.mui-numbox button').click(function() {
 																		event.stopPropagation();
-
 																	})
-																	$('.toCart,.mui-numbox-btn-plus').unbind('click').click(function(event) {
-																		event.stopPropagation();
-																		var offset = $('#end').offset(),
-															                flyer = $('<img style="width:15px;" class="u-flyer" src="https://avatars3.githubusercontent.com/u/1778935?v=4"/>');
-																            flyer.fly({
-																                start: {
-																                    left:event.pageX,
-																                    top: event.pageY
-																                },
-																                end: {
-																                    left: offset.left,
-																                    top: offset.top,
-																                    // width: 20,
-																                    // height: 20
-																                }
-																            });
-																	})
+																	if(!pageFrom){
+																		$('.mui-numbox-btn-plus').click(function(event) {
+																			event.stopPropagation();
+																			var cur = $(this);
+																			var offset = $('#end').offset(),
+																                flyer = $('<img style="width:20px;" src="../images/center/circlebt.svg"/>');
+																	            flyer.fly({
+																	                start: {
+																	                    left:cur.offset().left,
+																	                    top: cur.offset().top - $(document).scrollTop()
+																	                },
+																	                end: {
+																	                    left: offset.left,
+																	                    top: offset.top,
+																	                    // width: 20,
+																	                    // height: 20
+																	                }
+																	            });
+																		})
+																	}
 																	var platform = plus.storage.getItem('platform')
 																	$('.mui-numbox input').click(function() {
 																		if(platform == 'ANDROID'){
@@ -644,17 +670,37 @@
 
 																	//加入购物车
 																	$('.toCart').unbind('click').click(function(){
+																		if(!pageFrom){
+																			$('.mui-numbox-btn-plus').click(function(event) {
+																				event.stopPropagation();
+																				var cur = $(this);
+																				var offset = $('#end').offset(),
+																	                flyer = $('<img style="width:20px;" src="../images/center/circlebt.svg"/>');
+																		            flyer.fly({
+																		                start: {
+																		                    left:cur.offset().left,
+																		                    top: cur.offset().top - $(document).scrollTop()
+																		                },
+																		                end: {
+																		                    left: offset.left,
+																		                    top: offset.top,
+																		                    // width: 20,
+																		                    // height: 20
+																		                }
+																		            });
+																			})
+																		}
 																		event.stopPropagation();
 																		var goodid = $(this).attr('data-id');
 																		var cur = $(this);
-																		plus.nativeUI.showWaiting();
+//																		plus.nativeUI.showWaiting();
 																		addCart2(goodid,1,cur);
 
 																	})
 
 																	//数量选择 -> 加入购物车
 																	$('.mui-numbox input').unbind("change").on('change', function() {
-																		plus.nativeUI.showWaiting();
+//																		plus.nativeUI.showWaiting();
 																		var cur = $(this);
 																		var number = $(this).val(); //当前数量
 																		var goodsid = $(this).attr("data-id"); //当前商品id

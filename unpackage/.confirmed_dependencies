@@ -263,7 +263,8 @@
       "welcome.html",
       "page/personal/myOrderList.html",
       "consultTel.html",
-      "page/specialGoods.html"
+      "page/specialGoods.html",
+      "page/guide/achievement.html"
     ]
   },
   "page/gxbList.html": {
@@ -430,7 +431,8 @@
       "page/personal/myOrderRTList.html",
       "page/guide/qrCode.html",
       "page/guide/storePreDepositb.html",
-      "page/personal/myOrderWL.html"
+      "page/personal/myOrderWL.html",
+      "page/gxb.html"
     ]
   },
   "cart.html": {

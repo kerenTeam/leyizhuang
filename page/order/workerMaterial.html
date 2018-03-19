@@ -385,7 +385,21 @@
 							if(data.code == 0){
 								mui.toast('提交成功');
 								mui.fire(plus.webview.getWebviewById('center.html'),'OrderNumR');
+								mui.fire(plus.webview.getWebviewById('page/goodList.html'), 'refresh');
 								mui.fire(plus.webview.getWebviewById('cart.html'), 'refresh');
+								mui.fire(plus.webview.getWebviewById('cart'), 'refresh');
+								mui.fire(plus.webview.getWebviewById('goodList'),'refresh');
+								mui.fire(plus.webview.getWebviewById('gxbList'),'refresh');
+								mui.fire(plus.webview.getWebviewById('oilFast.html'),'refresh');
+								mui.fire(plus.webview.getWebviewById('waterFast.html'),'refresh');
+								mui.fire(plus.webview.getWebviewById('electricFast.html'),'refresh');
+								mui.fire(plus.webview.getWebviewById('woodFast.html'),'refresh');
+								mui.fire(plus.webview.getWebviewById('tileFast.html'),'refresh');
+								mui.fire(plus.webview.getWebviewById('collect'),'refresh');
+								mui.fire(plus.webview.getWebviewById('ofenBuy'),'refresh');
+								mui.fire(plus.webview.getWebviewById('specialGoods'),'refreshsd');
+								mui.fire(plus.webview.getWebviewById('hotGoods'),'refresh');
+								mui.fire(plus.webview.getWebviewById('history'),'refresh');
 								openview({
 									view:'../worker/workerlistCheck.html',
 									id:'workerlistCheck'

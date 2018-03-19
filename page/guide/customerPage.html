@@ -53,7 +53,7 @@
 			}
 			#userBox {
 				background-color: #eca4a6;
-				padding: 33px 0 27px;
+				padding: 23px 0 19px;
 				position: relative;
 				top: 30px;
 			}
@@ -152,13 +152,17 @@
 			<!--<div id="beijing2"></div>-->
 			<div id="fixdtop"></div>
 			<div class="content clearfloat fl mui-row white">
-				<div class="mui-col-sm-4 mui-col-xs-4" style="padding-top: 28px;position: relative;left: 3px;"><img src="../../images/10.png" class="myInfo" id="mypic" /></div>
+				<div class="mui-col-sm-4 mui-col-xs-4" style="padding-top: 44px;position: relative;left: 3px;"><img src="../../images/10.png" class="myInfo" id="mypic" /></div>
 				<div class="mui-col-sm-8 mui-col-xs-8 writing">
 					<p class="centop">
 						<div class="denlu">用户名:<span id="userName" style="z-index: 99;"></span></div>
+						<div>顾客类型:<span id="customerType"></span></div>
 						<div class="denlu" style="display:none ;" id="userNumber">用户id:<span style="z-index: 99;"></span></div>
 						<div class="denlu" id="onlyCust">灯号:<span id="dengh"></span><br />导购:<span id="guideName"></span><a id="guideMobile" style="display: none;" href=""><img style="width: 15px;margin-left: 5px;" src="../../images/center/phone.svg"/></a></div>
 					</p>
+					<div onclick="changeCusType()" style="position: absolute;top: 60px;right: 0px;padding: 8px;background: white;color: black;border-radius: 5px;font-size: 14px;">
+						修改顾客类型
+					</div>
 				</div> 
 			</div>
 		</div>
@@ -230,6 +234,37 @@
 								lookCusid:userId
 							}
 						})
+					}
+					window.changeCusType = function(){
+						plus.nativeUI.showWaiting()
+						mui.ajax(serverUrl+'/app/customer/update/type', {
+							data: {
+								userId: userId,
+								identityType: identityT
+							},
+							dataType: 'json',
+							headers: {
+								"Authorization": oldToken
+							},
+							type: 'post',
+							timeout: 10000,
+							success: function(data, type, xhr) {
+								plus.nativeUI.closeWaiting();
+								
+								console.log('顾客类型', data);
+								if(data.code == 0) {
+									plus.nativeUI.closeWaiting();
+									plus.webview.currentWebview().reload()
+								} else {
+									mui.toast(data.message)
+								}
+
+							},
+							error: function(xhr, type, errorThrown) {
+								plus.nativeUI.closeWaiting();
+								console.log('登录响应失败');
+							}
+						}); 
 					}
 					//退货
 					window.openRTList = function(type){
@@ -306,6 +341,11 @@
 										}
 										if(data.content.mobile) {
 											plus.storage.setItem('mobile',data.content.mobile);
+										}
+										if(data.content.customerType) {
+											$('#customerType').html(data.content.customerType)
+										}else{
+											$('#customerType').html('无')
 										}
 										if(data.content.guideName) {
 											$('#guideName').html(data.content.guideName)

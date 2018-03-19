@@ -43,8 +43,11 @@
 				var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
 				var userId = plus.storage.getItem('$userId'); 
 				var oldToken = plus.storage.getItem('oldToken');
+				var nowcity = plus.storage.getItem('userCity');
+				
 				//商品列表
 				mui.ajax(serverUrl+'/app/process/list',{
+					data:{cityId:nowcity},
 					dataType:'json',
 					headers: {"Authorization":oldToken},
 					type:'post',

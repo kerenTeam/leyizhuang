@@ -84,6 +84,8 @@
 			}
 			.redc{color: red!important;}
 			.data ul li span{color: #666;}
+			.curADD input{display: inline-block;width: 25%;font-size:14px;height: 30px;padding: 5px;text-align: center;margin: 0;}
+			
 		</style>
 	</head>
 	<body>
@@ -131,17 +133,23 @@
 				                </div>
 				            </div>
 						</li>-->
-
-						<li class="clearfloat" style="display: none;">
-								<p class="fl">所在地区  <span class="redc"> *</span></p>
-								<button id='showCityPicker3' type='button'><span class="mui-icon mui-icon-arrowdown"></span></button>
-								<div id='cityResult3' class="ui-alert"><span id="province"></span><span id="city"></span><span id="area"></span></div>
-						</li>
-						<li class="clearfloat" onclick="goMap()" style="display: flex;align-items: center;justify-content: space-between;">
+ 
+						<li class="clearfloat" style="display: flex;align-items: center;justify-content: space-between;">
 							<div class="">所在地区 <span class="redc"> *</span></div>
-							<div class="" id="localadd" style="max-width: 70%;">
+							<div style="display: none;" class="" id="localadd" style="max-width: 70%;">
 								点击定位
 							</div>
+							<div class="curADD" style="width: 68%;">
+								<input type="text" id="provenceW"  value="" placeholder="省"/> -	
+								<input type="text" id="cityW" value="" placeholder="市"/> -	
+								<input type="text" id="districtW" value="" placeholder="区"/>	
+							</div>
+							<img src="../../images/marker_01.png" onclick="goMap()" style="width: 20px;" alt="" />
+							
+						</li>
+						<li class="clearfloat">
+							<p class="fl">所在街道 <span class="redc"> *</span></p>
+							<input type="text" class="fr shuru" id="jieW" placeholder="填写街道" />
 						</li>
 						<li class="clearfloat">
 								<p class="fl">所在小区  <span class="redc"> *</span></p>
@@ -173,11 +181,12 @@
 			//定位
 			var latitude=0;//经度
 			var longitude=0;//纬度
+			var cprovince;
 			function goMap(){
 				openview({
 					view:encodeURI('addressMap.html?center='+longitude+','+latitude+'&key=8f29aefac8547821425571df8852f64b'),
 					id: 'addressMap',
-					extrasobj:{pageid:'address-edit',longitude:longitude,latitude:latitude}
+					extrasobj:{pageid:'address-edit',longitude:longitude,latitude:latitude,province:cprovince}
 				})
 			}
 			mui.plusReady(function(){
@@ -211,7 +220,7 @@
 					//alert(position.addresses);
 					longitude=(position.coords.longitude).toFixed(6);
 					latitude=(position.coords.latitude).toFixed(6);
-					 
+					cprovince = position.address.province;
 				}
 				// 通过定位模块获取位置信息
 				function getGeocode(){
@@ -231,6 +240,10 @@
 						 } 
 						 else{
 						 	$('#localadd').html(mapStorage[0].adraddress)
+						 	$('#provenceW').val(mapStorage[0].province)
+						 	$('#cityW').val(mapStorage[0].city)
+						 	$('#jieW').val(mapStorage[0].township)
+						 	$('#districtW').val(mapStorage[0].district)
 						 	$('#xiaoquIn').val(mapStorage[0].neighborhood)
 						 	$('#address').val(mapStorage[0].street+mapStorage[0].streetNumber)
 
@@ -263,9 +276,10 @@
 							$('#phone').attr('value',thisAddArray[k].deliveryPhone);
 							$('#localadd').html(thisAddArray[k].deliveryCity +thisAddArray[k].deliveryCounty +thisAddArray[k].deliveryStreet)
 							$('#localadd').attr("data-id",thisAddArray[k].deliveryStreet)
-							$('#province').html(thisAddArray[k].deliveryCity + " "); /*市*/
-							$('#city').html(thisAddArray[k].deliveryCity + " "); /*区*/
-							$('#area').html(thisAddArray[k].deliveryCounty); /*街道*/
+							$('#provenceW').val(thisAddArray[k].deliveryProvince)
+						 	$('#cityW').val(thisAddArray[k].deliveryCity)
+						 	$('#jieW').val(thisAddArray[k].deliveryStreet)
+						 	$('#districtW').val(thisAddArray[k].deliveryCounty)
 							$('#xiaoquIn').attr('value',thisAddArray[k].villageName); /*小区*/
 							$('#address').html(thisAddArray[k].detailedAddress); /*详细地址*/
 							if(thisAddArray[k].isDefault){ /*显示默认地址*/
@@ -277,35 +291,13 @@
 							window.save = function(){
 								var newPerson = document.getElementById('person').value;
 								var newPhone = document.getElementById('phone').value;
-								var newAddress = document.getElementById('address').value;
-								var newProvince = '';
-//								var newCity = $('.citys1 option:selected').html(); /*市*/
-//								var newArea = $('.areas1 option:selected').html();/*区*/
-//								var newStreet = $('.towns1 option:selected').html();/*街道*/
+								var newAddress = document.getElementById('address').value; 
 								var defaultAddress = $('#acquiescence').hasClass('toggle--off');//默认地址
-								var newCity='';
-								var newArea='';
-								var newStreet = '';
-								var mapStorage = JSON.parse(plus.storage.getItem('$mapStorage') || '[]'); 
-								console.log('dddjj',mapStorage)
-								 if(mapStorage.length){
-								 	if(mapStorage[0].province){
-								 		newProvince = mapStorage[0].province
-								 	}
-								 	if(mapStorage[0].city){
-								 		newCity = mapStorage[0].city
-								 	}
-								 	if(mapStorage[0].district){
-								 		newArea = mapStorage[0].district
-								 	} 
-								 	if(mapStorage[0].township){
-								 		newStreet = mapStorage[0].township
-								 	} 
-								 }
-								 newProvince = newProvince || $('#province').html();
-								 newCity = newCity || $('#city').html();
-								 newArea = newArea || $('#area').html();
-								 newStreet = newStreet || $('#localadd').attr("data-id")
+								 
+								var newProvince=$('#provenceW').val();
+								var newCity=$('#cityW').val();
+								var newArea=$('#districtW').val();
+								var newStreet = $('#jieW').val();
 								var xiaoquIn = document.getElementById('xiaoquIn').value;
 
 								var reg_phone = /^1((3|4|5|8|7){1}\d{1}|70)\d{8}$/;//手机号正则
@@ -315,11 +307,14 @@
 								}else if(!newPerson){
 									$('#person').focus();
 									mui.toast('收货人不能为空!');
+								}else if(!newProvince || !newCity || !newArea){
+									mui.toast('所在省市区不能为空!');
+								}else if(newStreet == ''){
+									mui.toast('所在街道不能为空!');
+									$('#xiaoquIn').focus();
 								}else if(xiaoquIn == ''){
 									mui.toast('所在小区不能为空!');
 									$('#xiaoquIn').focus();
-								}else if(!newStreet){
-									mui.toast('所在地区不能为空!');
 								}else if(newAddress == ''){
 									$('#newAddress').focus();
 									mui.toast('详细地址不能为空!');
@@ -369,30 +364,7 @@
 
 
 		})();
-    </script>
-    <!--地址三级联动-->
-    <script>
-		(function($, doc) {
-			$.init();
-			$.ready(function() {
-				//地址选择三级联动
-				var cityPicker3 = new $.PopPicker({
-					layer: 3
-				});
-				cityPicker3.setData(cityData3);
-				var showCityPickerButton = doc.getElementById('showCityPicker3');
-				var cityResult3 = doc.getElementById('cityResult3');
-				showCityPickerButton.addEventListener('tap', function(event) {
-					cityPicker3.show(function(items) {
-						doc.getElementById('province').innerText = (items[0] || {}).text + " ";
-						doc.getElementById('city').innerText =  (items[1] || {}).text + " ";
-						doc.getElementById('area').innerText = (items[2] || {}).text + " ";
-						//return false;
-					});
-				}, false);
-			});
-		})(mui, document);
-	</script>
+    </script> 
 	<!--默认按钮-->
 	<script type="text/javascript">
 	$('.toggle').click(function(e){

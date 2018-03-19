@@ -395,9 +395,9 @@
 					</div>
 					<img src="img/legray.svg" alt="" />
 				</div>
-				<div class="gxb paddv10 rightBorder">
+				<div class="achievement paddv10 rightBorder">
 					<div id="">
-						工序包
+						业绩查看
 					</div>
 					<img src="img/legray.svg" alt="" />
 				</div>
@@ -642,6 +642,7 @@
 //					loadIndex();
 //				})
 				document.addEventListener('refreshpage', function() {
+					Sign()
 					loadIndex();
 				})
 				var timeSign = null;
@@ -691,7 +692,7 @@
 												})
 											}else{
 												loadIndex();
-												util.initSubpage();
+//												util.initSubpage();
 											}
 
 										}
@@ -720,8 +721,13 @@
 										if(data.code == 0 && data.content.isExist) {
 											plus.nativeUI.closeWaiting();
 											plus.storage.setItem("oldToken", xhr.getResponseHeader('token'));
-											plus.storage.setItem("rankCode", data.content.rankCode);
-											util.initSubpage();
+											if(data.content.rankCode){
+												plus.storage.setItem("rankCode", data.content.rankCode);
+											}else{
+												plus.storage.removeItem("rankCode");
+											}
+
+//											util.initSubpage();
 											loadIndex();
 										} else if(data.code == -1) {
 											plus.nativeUI.closeWaiting();
@@ -1252,6 +1258,12 @@
 					id: 'gxb',
 				})
 			})
+			$('.achievement').click(function(){
+				openview({
+					view: 'page/guide/achievement.html',
+					id: 'achievement',
+				})
+			})
 			function goodsInfo(id) {
 				openview({
 					view: 'page/goodsInfo.html',
@@ -1331,7 +1343,10 @@
 //					//登录-》退出登录
 //					util.toggleNview(3);
 //				})
-
+				document.addEventListener('refreshpage', function() {
+					util.toggleNview(0);
+					util.changeSubpage(targetPage, activePage, aniShow);
+				})
 				document.addEventListener('pagerefresh', function() {
 					util.toggleNview(0);
 					util.changeSubpage(targetPage, activePage, aniShow);
@@ -1403,7 +1418,7 @@
 				}, {
 					tag: 'font',
 					id: 'icon',
-					text: '去下单', //此为字体图标Unicode码'\e600'转换为'\ue600'
+					text: '活动促销', //此为字体图标Unicode码'\e600'转换为'\ue600'
 					position: {
 						top: '22px',
 						left: '5px',

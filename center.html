@@ -131,6 +131,7 @@
 				z-index: 100;
 			}
 			.orderEBtn div{position: relative;}
+			.orderEBtn img{width: 30px;}
 			.orderEBtn .mui-badge{position: absolute;top: -2px;right: -1px;font-style: normal;padding: 2px 5px;}
 			.orderNum{display: none;}
 		</style>
@@ -186,7 +187,7 @@
 						<em class="mui-badge orderNum mui-badge-danger"></em>
 					</div>
 					<div class="" id="tuihuo0" onclick="openRTList()">
-						<img src="images/center/backT.svg"/>
+						<img src="images/center/backT.svg" style="width: 25px;"/>
 						&nbsp;退&nbsp;&nbsp;货&nbsp;
 						<em class="mui-badge orderNum mui-badge-danger"></em>
 					</div>
@@ -239,20 +240,20 @@
 
 				<div class="flexRow2">
 					<div class="afterBorder" onclick="goCollect()">
-						<img src="images/center/collect.svg"/>商品收藏
+						<img src="images/center/collect.svg" style="background-color: #C9AF98;"/>商品收藏
 						<span class="mui-icon mui-icon-arrowright mui-pull-right maincl ft20 maincl"></span>
 					</div>
 					<div class="mb10" onclick="paizhaoOrder()">
-						<img src="images/center/camer.svg"/>拍照下单
+						<img src="images/center/camer.svg" style="background-color: #ED8A63;"/>拍照下单
 						<span class="mui-icon mui-icon-arrowright mui-pull-right maincl ft20 maincl"></span>
 					</div>
 					<div class="afterBorder" onclick="openPalette()">
-						<img src="images/center/color.svg"/>调色板
+						<img src="images/center/color.svg" style="background-color: #E2B9B3;"/>调色板
 						<span class="mui-icon mui-icon-arrowright mui-pull-right maincl ft20 maincl"></span>
 					</div>
 
 					<div class="mb10" onclick="lookHistory()">
-						<img src="images/center/look.svg"/>浏览记录
+						<img src="images/center/look.svg" style="background-color: #839973;"/>浏览记录
 						<span class="mui-icon mui-icon-arrowright mui-pull-right maincl ft20 maincl"></span>
 					</div>
 				</div>
@@ -261,47 +262,51 @@
 			<div class="centerList guiderN"  style="display: none;">
 				<div class="flexRow2">
 					<div class="afterBorder" onclick="guideCredit()">
-						<img src="images/center/credit.svg"/>信用额度
+						<img src="images/center/credit.svg" style="background-color: #FFB85F;"/>信用额度
 						<span class="mui-icon mui-icon-arrowright mui-pull-right maincl ft20 maincl"></span>
 					</div>
 					<div onclick="storePreDepositb()" id="storePreDepositb" style="display: none;" class="afterBorder">
-						<img src="images/center/paycheck.svg"/>门店预存款
+						<img src="images/center/paycheck.svg" style="background-color: #E9AFA3;"/>门店预存款
 						<span class="mui-icon mui-icon-arrowright mui-pull-right maincl ft20 maincl"></span>
 					</div>
 					<div class="afterBorder" onclick="debateQuery()">
-						<img src="images/center/debate.svg"/>欠款查询
+						<img src="images/center/debate.svg" style="background-color: #AEC5EB;"/>欠款查询
 						<span class="mui-icon mui-icon-arrowright mui-pull-right maincl ft20 maincl"></span>
 					</div>
-					<div onclick="debateAudit()" class="mb10">
-						<img src="images/center/paycheck.svg"/>欠款审核
+					<div onclick="debateAudit()" class="afterBorder">
+						<img src="images/center/paycheck.svg" style="background-color: #FF7A5A;"/>欠款审核
+						<span class="mui-icon mui-icon-arrowright mui-pull-right maincl ft20 maincl"></span>
+					</div>
+					<div onclick="gxb()" class="mb10">
+						<img src="images/center/mmaterial.svg" style="background-color: #FF7A5A;"/>工序包
 						<span class="mui-icon mui-icon-arrowright mui-pull-right maincl ft20 maincl"></span>
 					</div>
 
 
 					<div class="afterBorder" onclick="paizhaoOrder()">
-						<img src="images/center/camer.svg"/>拍照下单
+						<img src="images/center/camer.svg" style="background-color: #ED8A63;"/>拍照下单
 						<span class="mui-icon mui-icon-arrowright mui-pull-right maincl ft20 maincl"></span>
 					</div>
 					<div class="afterBorder" onclick="goCollect()">
-						<img src="images/center/collect.svg"/>商品收藏
+						<img src="images/center/collect.svg" style="background-color: #C9AF98;"/>商品收藏
 						<span class="mui-icon mui-icon-arrowright mui-pull-right maincl ft20 maincl"></span>
 					</div>
 					<div class="afterBorder" onclick="toMyCustomer()">
-						<img src="images/center/cust.svg"/>我的顾客
+						<img src="images/center/cust.svg" style="background-color: #CA6259;"/>我的顾客
 						<span class="mui-icon mui-icon-arrowright mui-pull-right maincl ft20 maincl"></span>
 					</div>
 					<div onclick="qrcode()" class="mb10">
-						<img src="images/center/qrcode.svg"/>我的二维码
+						<img src="images/center/qrcode.svg" style="background-color: #8EBD99;"/>我的二维码
 						<span class="mui-icon mui-icon-arrowright mui-pull-right maincl ft20 maincl"></span>
 					</div>
 
 					<div class="afterBorder" onclick="openPalette()">
-						<img src="images/center/color.svg"/>调色板
+						<img src="images/center/color.svg" style="background-color: #E2B9B3;"/>调色板
 						<span class="mui-icon mui-icon-arrowright mui-pull-right maincl ft20 maincl"></span>
 					</div>
 
 					<div class="mb10" onclick="lookHistory()">
-						<img src="images/center/look.svg"/>浏览记录
+						<img src="images/center/look.svg" style="background-color: #839973;"/>浏览记录
 						<span class="mui-icon mui-icon-arrowright mui-pull-right maincl ft20 maincl"></span>
 					</div>
 				</div>
@@ -310,39 +315,39 @@
 			<div class="centerList manageN"  style="display: none;">
 				<div class="flexRow2">
 					<div class="afterBorder" onclick="wallet()">
-						<img src="images/center/mywallet.svg"/>我的钱包
+						<img src="images/center/mywallet.svg" style="background-color: #DF7782;"/>我的钱包
 						<span class="mui-icon mui-icon-arrowright mui-pull-right maincl ft20 maincl"></span>
 					</div>
 					<div class="mb10" onclick="backMoney()">
-						<img src="images/center/credit.svg"/>信用额度
+						<img src="images/center/credit.svg" style="background-color: #EECD86;"/>信用额度
 						<span class="mui-icon mui-icon-arrowright mui-pull-right maincl ft20 maincl"></span>
 					</div>
 					<div class="afterBorder" onclick="goCollect()">
-						<img src="images/center/collect.svg"/>商品收藏
+						<img src="images/center/collect.svg" style="background-color: #C9AF98;"/>商品收藏
 						<span class="mui-icon mui-icon-arrowright mui-pull-right maincl ft20 maincl"></span>
 					</div>
 					<div class="afterBorder" onclick="listCheck()">
-						<img src="images/center/mmaterial.svg"/>料单审核
+						<img src="images/center/mmaterial.svg" style="background-color: #EB6E44;"/>料单审核
 						<span id="waitCheck" style="display: none;" class="mui-badge mui-badge-danger"></span>
 						<span class="mui-icon mui-icon-arrowright mui-pull-right maincl ft20 maincl">
 						</span>
 					</div>
 					<div class="afterBorder" onclick="goworker()">
-						<img src="images/center/worker.svg"/>工人
+						<img src="images/center/worker.svg" style="background-color: #CDB599;"/>工人
 						<span class="mui-icon mui-icon-arrowright mui-pull-right maincl ft20 maincl"></span>
 					</div>
 					<div class="mb10" onclick="paizhaoOrder()">
-						<img src="images/center/camer.svg"/>拍照下单
+						<img src="images/center/camer.svg" style="background-color: #ED8A63;"/>拍照下单
 						<span class="mui-icon mui-icon-arrowright mui-pull-right maincl ft20 maincl"></span>
 					</div>
 
 					<div class="afterBorder" onclick="openPalette()">
-						<img src="images/center/color.svg"/>调色板
+						<img src="images/center/color.svg" style="background-color: #E2B9B3;"/>调色板
 						<span class="mui-icon mui-icon-arrowright mui-pull-right maincl ft20 maincl"></span>
 					</div>
 
 					<div class="mb10" onclick="lookHistory()">
-						<img src="images/center/look.svg"/>浏览记录
+						<img src="images/center/look.svg" style="background-color: #839973;"/>浏览记录
 						<span class="mui-icon mui-icon-arrowright mui-pull-right maincl ft20 maincl"></span>
 					</div>
 				</div>
@@ -352,24 +357,24 @@
 				<div class="flexRow2">
 
 					<div class="afterBorder" onclick="goworkerMaterial()">
-						<img src="images/center/material.svg"/>料单申请
+						<img src="images/center/material.svg" style="background-color: #72B095;"/>料单申请
 						<span class="mui-icon mui-icon-arrowright mui-pull-right maincl ft20 maincl"></span>
 					</div>
 					<div class="afterBorder" onclick="paizhaoOrder()">
-						<img src="images/center/camer.svg"/>拍照下单
+						<img src="images/center/camer.svg" style="background-color: #ED8A63;"/>拍照下单
 						<span class="mui-icon mui-icon-arrowright mui-pull-right maincl ft20 maincl"></span>
 					</div>
 					<div class="mb10" onclick="goCollect()">
-						<img src="images/center/collect.svg"/>商品收藏
+						<img src="images/center/collect.svg" style="background-color: #C9AF98;"/>商品收藏
 						<span class="mui-icon mui-icon-arrowright mui-pull-right maincl ft20 maincl"></span>
 					</div>
 					<div class="afterBorder" onclick="openPalette()">
-						<img src="images/center/color.svg"/>调色板
+						<img src="images/center/color.svg" style="background-color: #E2B9B3;"/>调色板
 						<span class="mui-icon mui-icon-arrowright mui-pull-right maincl ft20 maincl"></span>
 					</div>
 
 					<div class="" onclick="lookHistory()">
-						<img src="images/center/look.svg"/>浏览记录
+						<img src="images/center/look.svg" style="background-color: #839973;"/>浏览记录
 						<span class="mui-icon mui-icon-arrowright mui-pull-right maincl ft20 maincl"></span>
 					</div>
 
@@ -591,6 +596,12 @@
 				openview({
 					view:'page/guide/storePreDepositb.html',
 					id:'storePreDepositb'
+				})
+			}
+			function gxb(){
+				openview({
+					view: 'page/gxb.html',
+					id: 'gxb',
 				})
 			}
 			//经理-> 工人列表
