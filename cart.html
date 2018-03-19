@@ -16,7 +16,7 @@
 		 .goodsInfor h2{margin-bottom: 5px!important;}
 		 .selfCart dd{border-top: 5px #eee solid;}
 		 dd{padding: 15px 0!important;}
-		 dd .activecl2{font-size: 17px!important;
+		 dd .activecl2{font-size: 17px!important;}
 	</style>
 	<body>
 
@@ -182,7 +182,7 @@
 		<script src="js/default.js" type="text/javascript" charset="utf-8"></script>
 	</body>
 
-	<script> 
+	<script>
 		mui.plusReady(function() {
 			downRe(cartload);
 			var page = plus.webview.currentWebview().page;
@@ -241,7 +241,7 @@
 									if(data.content.auditListRes.remark){
 										plus.storage.setItem('remark',data.content.auditListRes.remark);
 									}
-									if(data.content.auditListRes.receiverPhone && data.content.auditListRes.receiver && data.content.auditListRes.deliveryCity){ 
+									if(data.content.auditListRes.receiverPhone && data.content.auditListRes.receiver && data.content.auditListRes.deliveryCity){
 										var audnoAddrObj = {};
 										audnoAddrObj.person = data.content.auditListRes.receiver;
 										audnoAddrObj.phone = data.content.auditListRes.receiverPhone;
@@ -292,8 +292,8 @@
 									if(platform == 'ANDROID'){
 										$(this).select();
 									}else{
-										$(this).focus(); 
-										$(this).get(0).selectionStart = 0; 
+										$(this).focus();
+										$(this).get(0).selectionStart = 0;
 										$(this).get(0).selectionEnd = $(this).get(0).value.length;
 									}
 									event.stopPropagation()
@@ -394,7 +394,7 @@
 							});
 
 							//单组 全选
-							$('dl dt .mui-checkbox').click(function() { 
+							$('dl dt .mui-checkbox').click(function() {
 								if($(this).find("input").is(':checked')) {
 									$(this).parentsUntil(".eachGroup").find("input").attr("checked", true);
 									var allLength = $("dd").length;
@@ -455,7 +455,7 @@
 										$("#cartData dl.cart input").attr("checked", true);
 									}
 								}
-								
+
 								countFuc();
 							})
 							//数量选择
@@ -598,8 +598,8 @@
 											if(gdtype == 'ld'){
 												var auditNo = $(this).attr('data-auditNo');
 												plus.storage.setItem('auditNo',auditNo);
-											} 
-											
+											}
+
 											var goodsLineType = 'GOODS';
 											justGoods.push({
 												id: gid,
@@ -677,24 +677,24 @@
 																			id: 'chooseCustom',
 																		})
 																	}
-																} else { 
+																} else {
 																	mui.toast(data.message)
 																}
 															},
 															error: function(xhr, type, errorThrown) {
 																console.log('响应失败  !');
 																plus.nativeUI.closeWaiting();
-														
+
 															}
 														});
-													} else { 
+													} else {
 														mui.toast(data.message)
 													}
 												},
 												error: function(xhr, type, errorThrown) {
 													console.log('响应失败  !');
 													plus.nativeUI.closeWaiting();
-							
+
 												}
 											});
 
@@ -713,7 +713,7 @@
 												success:function(data,type,xhr){
 													console.log('获取料单商品',data);
 													var dataObj = {};
-													if(data.code == 0){ 
+													if(data.code == 0){
 														openview({
 															view: 'page/order/workerMaterial.html',
 															id: 'workerMaterial'
@@ -725,7 +725,7 @@
 												error:function(xhr,type,errorThrown){
 													console.log('响应失败  !');
 													plus.nativeUI.closeWaiting();
-								
+
 												}
 											});
 										} else {
@@ -771,27 +771,27 @@
 																		id: 'chooseGift',
 						//												autoShow:false,
 																	})
-																} else { 
+																} else {
 																	mui.toast(data.message)
 																}
 															},
 															error: function(xhr, type, errorThrown) {
 																console.log('响应失败  !');
 																plus.nativeUI.closeWaiting();
-														
+
 															}
 														});
-													} else { 
+													} else {
 														mui.toast(data.message)
 													}
 												},
 												error: function(xhr, type, errorThrown) {
 													console.log('响应失败  !');
 													plus.nativeUI.closeWaiting();
-							
+
 												}
 											});
-											
+
 										}
 
 									} else { //没登陆直接打开登录页面

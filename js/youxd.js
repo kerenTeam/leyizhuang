@@ -127,14 +127,13 @@ mui.plusReady(function(){
 		outSet('获取分享服务列表失败：'+e.message);
 	});
 })
-var time11 = setInterval(function(){
+/*var time11 = setInterval(function(){
 	console.log(123456);
 	if(shares.qq && shares.sinaweibo && shares.tencentweibo && shares.weixin){
 		clearInterval(time11);
 	}
 	console.error('shares___',shares);
-},100)
-
+},100)*/
 function showSfun1(msg,fun1,fun0,iosLinkPic,fun3){
 	if(!document.getElementById('shareWrap10')){
 		var pathStr = '';
@@ -164,7 +163,7 @@ function showSfun1(msg,fun1,fun0,iosLinkPic,fun3){
 					'<img src="'+pathStr+'img/share/QQ.png" class="aClick2"/>'+
 					'<br />QQ(空间)'+
 				'</div>'+
-				'<div class="mui-col-sm-3 mui-col-xs-3 shareBtn">'+
+				'<div class="mui-col-sm-3 mui-col-xs-3 shareBtn" style="display:none">'+
 					'<img src="'+pathStr+'img/share/weibo.png" class="aClick2"/>'+
 					'<br />新浪微博'+
 				'</div>'+

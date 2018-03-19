@@ -7,8 +7,8 @@ body {
 }
 .mui-content{height: 100%;}
 .flexw{background-color:#fff;display: flex;align-items: center;justify-content: space-around;text-align: center;}
-.flexw div{font-size:16px;color:#333;padding:15px 0;flex:1;box-size:border-box}	
-.curActive{border-bottom:2px solid #B42E28;box-sizing:border-box;color: #B42E28!important;} 
+.flexw div{font-size:16px;color:#333;padding:15px 0;flex:1;box-size:border-box}
+.curActive{border-bottom:2px solid #B42E28;box-sizing:border-box;color: #B42E28!important;}
 .categray{margin:5px 0;}
 .categray div{display:inline-block;}
 .categray span{display:inline-block;margin:0 10px}
@@ -18,10 +18,10 @@ body {
     width: 75px!important;
     height: 75px!important;
 }
-.mui-numbox { 
+.mui-numbox {
     width: 100px;
     height: 30px;
-    padding:0 25px; 
+    padding:0 25px;
     font-size:12px;
     border: 1px solid #f8f8f8;
     border-radius: 4px;
@@ -50,6 +50,8 @@ body {
 	display: block;
 	width: 30px;
 	margin-top: 5px;
+	position: relative;
+	z-index: 100;
 }
 .cartSecond,.cartOne,.cartThird{
 	position: relative;
@@ -92,7 +94,7 @@ body {
 }
 .cartAct:after,.cartAct:before{
 	background-color: #B42E28;/*B42E28*/
-	
+
 }
 .flexr{display:flex;width:100%;background-color:white;justify-content:space-between;color: #303030;align-items: center;}
 .qtop img{width: 20px!important;}
@@ -148,7 +150,7 @@ header{background-color: white!important;}
 	height: 3.2rem;
 	width: 3.2rem;
 	background-color: #B62D29;
-	border-radius: 50%; 
+	border-radius: 50%;
 	box-sizing: border-box;
 	z-index: 999;
 	padding: 0;
@@ -169,14 +171,14 @@ header{background-color: white!important;}
 	width: 100%;
 	bottom: 0;
 	background-color: rgba(0, 0, 0, .5)
-} 
+}
 .paychoose {
 	background-color: white;
 	bottom: 0!important;
 	position: absolute;
 	right: 0;
 	left: 0;
-} 
+}
 .paychoose img {
 	width: 40px;
 	margin: 0 10px 0 5px;
