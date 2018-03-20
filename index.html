@@ -1348,6 +1348,7 @@
 					mui.fire(plus.webview.getWebviewById('specialGoods'),'refreshct');
 					mui.fire(plus.webview.getWebviewById('history'),'refreshct');
 					mui.fire(plus.webview.getWebviewById('searchGoods'),'refreshct');
+					drawBadge('hide');
 					if(cartNum != 0){
 						drawBadge();
 					}else{
@@ -1356,6 +1357,7 @@
 
 				}) 
 				document.addEventListener('refreshpage', function() {
+					drawBadge('hide');
 					util.toggleNview(0);
 					util.changeSubpage(targetPage, activePage, aniShow);
 				})
@@ -1497,11 +1499,11 @@
 				var active_color = '#fff';
 				drawNativeIcon.addEventListener('click', function(e) {
 					mui.openWindow({
+//					    url:'promotion.html',
 					    url:'quicklyOrder.html',
 					    id:'quicklyOrder',
 					    styles:{
 					  	  	background:'transparent',
-
 					    },
 					    waiting: {autoShow:false},
 					    show:{
