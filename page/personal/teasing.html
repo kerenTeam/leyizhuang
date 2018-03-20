@@ -119,6 +119,7 @@
 
 			    	},800)
 			    }, function ( e ) {
+			    		mui.alert('读取相册失败 \n 请在设置中允许我们读取你的相册！');
 			    },{filter:"image",multiple:true,maximum:1,selected:lfs,system:false,onmaxed:function(){//保存选择记录
 			    }});
 				function showImg(url,indexNum){//显示图片

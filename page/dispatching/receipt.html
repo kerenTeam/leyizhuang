@@ -161,6 +161,7 @@
 						});
 					});
 				}, function ( e ) {
+					mui.alert('拍照失败 \n 请在设置中允许我们使用你的照相机！');
 				}, {filename:"_doc/gallery/",index:1} );
 			}
 			function galleryImgsSelected(){//从相册中选择图片
@@ -191,6 +192,7 @@
 					    		indexNum ++;
 					    	},500)
 				    }, function ( e ) {
+				    		mui.alert('读取相册失败 \n 请在设置中允许我们读取你的相册！');
 				    },{filter:"image",multiple:true,maximum:maxNum-Apic.length,system:false,onmaxed:function(){//保存选择记录
 				    		mui.alert('最多选择'+maxNum+'张图片！');
 				    }});
@@ -272,7 +274,7 @@
 									console.log('确认收货',JSON.stringify(dataobj));
 									plus.nativeUI.closeWaiting(); //关闭等待框
 									if(dataobj.code == 0){
-										mui.toast("确认收货成功！");
+										mui.toast("确认收货成功！");//提示清单
 										plus.webview.getWebviewById("deliveryInfo").close();
 										mui.fire(plus.webview.getWebviewById('dispatching'), 'refresh');
 										mui.back();

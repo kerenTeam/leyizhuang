@@ -132,7 +132,7 @@
 							success: function(data, type, xhr) {
 								console.log('拒收返回', data);
 								if(data.code == 0) {
-									mui.toast('拒收成功');
+									mui.toast('拒收成功');//提示清单
 									plus.webview.getWebviewById("deliveryInfo").close();
 									mui.fire(plus.webview.getWebviewById('dispatching'), 'refresh');
 									mui.back();

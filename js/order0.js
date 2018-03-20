@@ -23,7 +23,7 @@ function comeOnAgain(orderNo,cusId){
 						extrasobj:{page:1,cusid:cusId}
 					})
 					var timeY0 = setTimeout(function(){
-						
+
 						if(plus.webview.getWebviewById("orderSuccess")) {
 							plus.webview.getWebviewById("orderSuccess").close();
 						}
@@ -142,7 +142,7 @@ function cancelOF(pageType,cancelParentId){
 						success:function(data,type,xhr){
 							console.log('取消订单',data);
 							if(data.code == 0){
-								mui.toast(data.message || '取消订单成功');
+								mui.toast(data.message || '取消订单成功');//提示清单
 								mui.fire(plus.webview.getWebviewById('center.html'),'OrderNumR');
 
 								$('#cancelOrder').css('display','none');

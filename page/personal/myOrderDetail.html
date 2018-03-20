@@ -493,6 +493,7 @@ background: linear-gradient(to right, #1fddff, #ff4b1f); /* W3C, IE 10+/ Edge, F
 						});
 					});
 				}, function ( e ) {
+					mui.alert('拍照失败 \n 请在设置中允许我们使用你的照相机！');
 				}, {filename:"_doc/gallery/",index:1} );
 			}
 			function galleryImgsSelected(){//从相册中选择图片
@@ -523,6 +524,7 @@ background: linear-gradient(to right, #1fddff, #ff4b1f); /* W3C, IE 10+/ Edge, F
 					    		indexNum ++;
 					    	},500)
 				    }, function ( e ) {
+				    		mui.alert('读取相册失败 \n 请在设置中允许我们读取你的相册！');
 				    },{filter:"image",multiple:true,maximum:maxNum-Apic.length,system:false,onmaxed:function(){//保存选择记录
 				    		mui.alert('最多选择'+maxNum+'张图片！');
 				    }});

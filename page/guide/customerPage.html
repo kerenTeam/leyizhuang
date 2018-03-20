@@ -163,7 +163,7 @@
 					<div id="changeM" onclick="changeCusType()" style="position: absolute;top: 60px;right: 0px;padding: 8px;background: white;color: black;border-radius: 5px;font-size: 14px;display: none;">
 						转为会员
 					</div>
-				</div> 
+				</div>
 			</div>
 		</div>
 		<div id="customar">
@@ -194,7 +194,7 @@
 						<em class="mui-badge orderNum mui-badge-danger">4</em>
 					</div>
 				</div>
-			</div> 
+			</div>
 		</div>
 
 
@@ -214,8 +214,8 @@
 		<script src="../../js/artTemplate-native.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../../js/default.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
-			
-			
+
+
 			mui.plusReady(function() {
 				Refresh();
 				function Refresh() { //刷新
@@ -225,7 +225,7 @@
 					var cusLight = plus.webview.currentWebview().cusLight;
 					var oldToken = plus.storage.getItem('oldToken');
 					//打开订单，
-					
+
 					window.openOrder = function(type){
 						openview({
 							view:'../personal/myOrderList.html',
@@ -254,25 +254,25 @@
 									timeout: 10000,
 									success: function(data, type, xhr) {
 										plus.nativeUI.closeWaiting();
-										
+
 										console.log('顾客类型', data);
 										if(data.code == 0) {
-											mui.toast('修改成功')
+											mui.toast('修改成功')//提示清单
 											plus.nativeUI.closeWaiting();
 											plus.webview.currentWebview().reload()
 										} else {
 											mui.toast(data.message)
 										}
-		
+
 									},
 									error: function(xhr, type, errorThrown) {
 										plus.nativeUI.closeWaiting();
 										console.log('登录响应失败');
 									}
-								}); 
+								});
 							}
 						})
-						
+
 					}
 					//退货
 					window.openRTList = function(type){
@@ -285,8 +285,8 @@
 								lookCusid:userId
 							}
 						})
-					}	
-					
+					}
+
 					$('#mypic').attr('src','../../img/editset.png')
 
 					loadmyinfo();
@@ -306,7 +306,7 @@
 						$('.centerList,.orderType,#onlymange,#onlyCust,.qiandao').hide();
 						$('#onlyPs,#onlyGuide,#userNumber').show();
 					}
-					 
+
 					function loadmyinfo() {
 						//个人信息
 						mui.ajax(serverUrl+'/app/user/homepage', {
@@ -329,7 +329,7 @@
 											plus.storage.setItem('userCity',data.content.cityId.toString())
 										}else{
 											plus.storage.setItem('userCity','1')
-										} 
+										}
 										if(identityT == 6){
 											if(data.content.name) {
 												$('#userName').html(data.content.name)
@@ -350,7 +350,7 @@
 										if(data.content.mobile) {
 											plus.storage.setItem('mobile',data.content.mobile);
 										}
-										
+
 										if(data.content.customerType) {
 											if(data.content.customerType != "会员"){
 												$("#changeM").show()
@@ -380,7 +380,7 @@
 												$('#dengh').html('无')
 											}
 										}
-										
+
 										if(data.content.balance){
 											$('#accoutMoney,#manageMoney,#userAct').html('¥'+data.content.balance)
 										}else{

@@ -132,7 +132,7 @@ mui.plusReady(function(){
 	if(shares.qq && shares.sinaweibo && shares.tencentweibo && shares.weixin){
 		clearInterval(time11);
 	}
-	console.error('shares___',shares);
+	console.error('shares___',JSON.stringify(shares));
 },100)*/
 function showSfun1(msg,fun1,fun0,iosLinkPic,fun3){
 	if(!document.getElementById('shareWrap10')){

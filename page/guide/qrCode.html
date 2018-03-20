@@ -90,7 +90,8 @@
 				var isIosflag = 0;
 
 
-				mui('.fenxiangCode')[0].onclick = function(){
+				mui('.fenxiangCode')[0].onclick = function(up){
+					if(/android/i.test(navigator.userAgent)){isIosflag = 0;}
 					if(mui('.imgcode')[0].src.indexOf('http')>-1){
 						var msg2 = {
 							myIsIndex2:true,
@@ -105,8 +106,17 @@
 								}
 							}
 						});*/
+						showSfun1(msg2,function(){isIosflag++},function(){isIosflag++;if(isIosflag == 2){mui.toast('分享失败,请安装对应软件客户端！');}},true,function(index){
+							//ios分享第一次点击分享会失败，我做了个 递归调用，让他 自动 再点一次
+							if(!/android/i.test(navigator.userAgent)){
+								if(isIosflag<2){
+									mui('.fenxiangCode')[0].onclick();
+									document.getElementsByClassName('shareBtn')[index].onclick();
+								}
+							}
+						});
 
-						showSfun1(msg2);
+						//showSfun1(msg2);
 					}else{
 						mui.toast('图片加载中，请稍等一下');
 					}

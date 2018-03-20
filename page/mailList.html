@@ -34,6 +34,7 @@
 			}
 			.mui-indexed-list-item b{display: inline-block; margin-bottom: 8px;}
 			/*.mui-bar-nav{box-shadow: none !important;}*/
+			.noList{color: #555;padding: 15px;text-align:center;font-size: 18px;background: transparent;line-height: 30px;}
 		</style>
 	</head>
 
@@ -145,52 +146,59 @@
                         	var FLA = [];
                         	var haveJin = false;
                         	var erliu = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'];
-						twoMail.forEach(function(ele,index){
-							var firstLetter = goPinyin(ele.displayName);
-							if(FLA.indexOf(firstLetter)==-1){
-								if(erliu.indexOf(firstLetter)>-1){
-									FLA.push(firstLetter);
-								}else{
-									if(FLA.indexOf('#')==-1){
-										haveJin = true;
-										//FLA.push('#');
-									}
-								}
-							}
-							erliu.forEach(function(ele2,index2){
-								if(firstLetter == ele2){
-									if(!contactObj[ele2]){
-										contactObj[ele2] = [];
-										contactObj[ele2].push(ele);
-									}else{
-										contactObj[ele2].push(ele);
-									}
-								}
+                        	if(twoMail.length){
 
-							})
-							//除了字母外的特殊字符
-							if(erliu.indexOf(firstLetter)==-1){
-								if(!contactObj['#']){
-									contactObj['#'] = [];
-									contactObj['#'].push(ele);
-								}else{
-									contactObj['#'].push(ele);
+							twoMail.forEach(function(ele,index){
+								var firstLetter = goPinyin(ele.displayName);
+								if(FLA.indexOf(firstLetter)==-1){
+									if(erliu.indexOf(firstLetter)>-1){
+										FLA.push(firstLetter);
+									}else{
+										if(FLA.indexOf('#')==-1){
+											haveJin = true;
+											//FLA.push('#');
+										}
+									}
 								}
+								erliu.forEach(function(ele2,index2){
+									if(firstLetter == ele2){
+										if(!contactObj[ele2]){
+											contactObj[ele2] = [];
+											contactObj[ele2].push(ele);
+										}else{
+											contactObj[ele2].push(ele);
+										}
+									}
+
+								})
+								//除了字母外的特殊字符
+								if(erliu.indexOf(firstLetter)==-1){
+									if(!contactObj['#']){
+										contactObj['#'] = [];
+										contactObj['#'].push(ele);
+									}else{
+										contactObj['#'].push(ele);
+									}
+								}
+							})
+							var FLAEnd = FLA.sort();
+							if(haveJin){
+								FLAEnd.push('#');
+							}else{
+								//mui('#teshu')[0].style.display = 'none';
 							}
-						})
-						var FLAEnd = FLA.sort();
-						if(haveJin){
-							FLAEnd.push('#');
-						}else{
-							//mui('#teshu')[0].style.display = 'none';
-						}
-						console.log('FLA-list1',FLAEnd);
-						console.log('contactObj-obj0',contactObj);
-						document.getElementById('contactDiv').innerHTML = template('contactS',{obj0:contactObj,list1:FLAEnd});
+							console.log('FLA-list1',FLAEnd);
+							console.log('contactObj-obj0',contactObj);
+							document.getElementById('contactDiv').innerHTML = template('contactS',{obj0:contactObj,list1:FLAEnd});
+
+                        	}else{
+                        		document.getElementById('contactDiv').innerHTML = '<h3 class="noList">你还没有联系人</h3>';
+                        	}
                     }, function () {
                         console.error("error");
                     },{multiple:true});
                 },function(e){
+                		document.getElementById('contactDiv').innerHTML = '<h3 class="noList">读取失败 <br> 请在设置中允许我们访问你的通讯录！</h3>';
                     console.error("Get address book failed: " + e.message);
                 });
             }, false );

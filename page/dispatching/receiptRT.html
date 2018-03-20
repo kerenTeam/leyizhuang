@@ -13,40 +13,40 @@
 			.area {
 				margin: 20px auto 0px auto;
 			}
-			
+
 			.mui-input-group:first-child {
 				margin-top: 20px;
 			}
-			
+
 			.mui-input-group label {
 				width: 30%;
 			}
-			
+
 			.mui-input-row label~input,
 			.mui-input-row label~select,
 			.mui-input-row label~textarea {
 				width: 65%;
 			}
-			
+
 			.mui-checkbox input[type=checkbox],
 			.mui-radio input[type=radio] {
 				top: 6px;
 			}
-			
+
 			.mui-content-padded {
 				margin-top: 25px;
 			}
-			
+
 			.mui-btn {
 				padding: 10px;
 			}
-			
+
 			.mui-input-row label~input,
 			.mui-input-row label~select,
 			.mui-input-row label~textarea {
 				margin-top: 1px;
 			}
-			
+
 			#getCode {
 				border: none;
 				border-left: 1px solid #eee;
@@ -65,7 +65,7 @@
 		<div class="mui-content">
 			<div class="bgcwt">
 				<form class="mui-input-group ft16" style="margin-top: 7px;border-bottom: 0;">
-					 
+
 					<div class="mui-input-row flexr">
 						<label style="border-right: 1px solid #EEEEEE;width: 27%;">提货码</label>
 						<input type="text" name="" id="pickUpCode" placeholder="输入提货码" />
@@ -78,7 +78,7 @@
 				<div class="onepic newActionWrap">
 					<img src="../../images/center/camer.svg" onclick="showAction()"  style="width: 60px;padding: 10px;" />
 				 </div>
-				 
+
 			</div>
 			<div class="mui-content-padded">
 				<button id='send' class="mui-btn mui-btn-block mui-btn-danger">提交</button>
@@ -89,13 +89,13 @@
 		<script src="../../js/default.js" type="text/javascript" charset="utf-8"></script>
 		<script>
 			mui.init();
-			mui.plusReady(function() { 
+			mui.plusReady(function() {
 				var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
 				var userId = plus.storage.getItem('$userId');
 				var oldToken = plus.storage.getItem('oldToken');
 				var orderNumber = plus.webview.currentWebview().orderNumber;
 				var money = plus.webview.currentWebview().money;
-				var cityId = plus.storage.getItem('userCity'); 
+				var cityId = plus.storage.getItem('userCity');
 			});
 			//选择图片组件
 			var Apic = [],time1 = null,maxNum = 3;
@@ -121,6 +121,7 @@
 						});
 					});
 				}, function ( e ) {
+					mui.alert('拍照失败 \n 请在设置中允许我们使用你的照相机！');
 				}, {filename:"_doc/gallery/",index:1} );
 			}
 			function galleryImgsSelected(){//从相册中选择图片
@@ -151,6 +152,7 @@
 					    		indexNum ++;
 					    	},500)
 				    }, function ( e ) {
+				    		mui.alert('读取相册失败 \n 请在设置中允许我们读取你的相册！');
 				    },{filter:"image",multiple:true,maximum:maxNum-Apic.length,system:false,onmaxed:function(){//保存选择记录
 				    		mui.alert('最多选择'+maxNum+'张图片！');
 				    }});
@@ -196,14 +198,14 @@
 				}
 
 			}
-			
+
 			document.getElementById('send').onclick = function(){
 				mui.plusReady(function(){
 					var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
 					var userId = plus.storage.getItem('$userId');
 					var oldToken = plus.storage.getItem('oldToken');
 					var orderNumber = plus.webview.currentWebview().orderNumber;
-					 
+
 					var pickUpCode = $('#pickUpCode').val();
 					var truemoney = $('#truemoney').val();
 					var paymentMethod = $('.bdcA').text();
@@ -237,7 +239,7 @@
 								}
 							}
 						);
-	
+
 						task.setRequestHeader('Authorization',oldToken);
 						task.addData('userID',userId);
 						task.addData('identityType',identityT.toString());
@@ -246,7 +248,7 @@
 				        task.addData('collectionAmount',truemoney.toString());
 				        task.addData('paymentMethod',paymentMethod);
 				        task.addData('remarks',content);
-	
+
 						if(Apic.length){
 							console.log(Apic);
 							[].forEach.call(Apic,function(ele,index){
