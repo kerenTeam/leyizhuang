@@ -44,9 +44,10 @@
 		<iframe id="test" src='' style="margin-top: 25px;width: 100vw;height: 100vh;overflow-x: hidden;"></iframe>
 
 		<script>
-			(function() {
+//			(function() {
  
 				mui.plusReady(function() {
+					plus.nativeUI.closeWaiting()
 					var nowcity = plus.storage.getItem('userCity');
 					var pageid = plus.webview.currentWebview().pageid;
 					var longitude = plus.webview.currentWebview().longitude;
@@ -113,27 +114,7 @@
 						mui.back();
 					}
 				})
-			}())
-		</script>
-
-		<script type='text/javascript'>
-//				var mock = {
-//					log: function(result) {
-//						window.parent.setIFrameResult('log', result);
-//					}
-//				}
-//				console = mock;
-//				window.Konsole = {
-//					exec: function(code) {
-//						code = code || '';
-//						try {
-//							var result = window.eval(code);
-//							window.parent.setIFrameResult('result', result);
-//						} catch (e) {
-//							window.parent.setIFrameResult('error', e);
-//						}
-//					}
-//				}
+//			}())
 		</script>
 	</body>
 

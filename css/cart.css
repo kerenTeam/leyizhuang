@@ -831,6 +831,7 @@ nav .userIcon:before {
 .cart dd .goodsInfor h2 {
 	margin: 0;
 	overflow: hidden;
+	line-height: 1.2;
 }
 
 .cart dd .goodsInfor h2 a {

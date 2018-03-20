@@ -49,12 +49,6 @@
 		"Runtime": {},
 		"XMLHttpRequest": {},
 		"Zip": {},
-
-
-
-
-
-
 		"Webview": {},
 		"NativeUI": {},
 		"Navigator": {},
@@ -71,7 +65,29 @@
 		"Geolocation": {},
 		"Payment": {},
 		"Push": {},
-		"Share": {}
+		"Share": {},
+		"NSLocationWhenInUseUsageDescription":{
+            "description":"我们需要通过读取您的地理位置信息来确定你当前所在的的城市，并展示准确的信息。"
+        },
+        "NSLocationAlwaysUsageDescription":{
+            "description":"我们需要通过读取您的地理位置信息来确定你当前所在的的城市，并展示准确的信息。"
+        },
+        "NSPhotoLibraryAddUsageDescription":{
+            "description":"我们需要向您的相册添加图片来保存您喜欢的照片，并展示准确的信息。"
+        },
+        "NSCameraUsageDescription":{
+            "description":"我们需要使用你的相机拍摄照片，当你需要发布上传图片的时候。"
+        },
+        "NSPhotoLibraryUsageDescription":{
+            "description":"我们需要读取您的相册来保存您喜欢的照片。"
+        },
+        "NSMicrophoneUsageDescription":{
+            "description":"我们需要使用您的麦克风录制音频进行语音聊天。"
+        },
+        "NSContactsUsageDescription":{
+            "description":"我们需要通过读取您的通讯录信息查看谁在使用乐易装。"
+        },
+		"Audio": {}
 	},
 	"plus": {
 		"statusbar": {
@@ -246,9 +262,9 @@
 			"plugins": {
 				"maps": {
 					"amap": {
-						"appkey_ios": "ec681bbb8b6b8fefd4d45c051d67bbd3",
-						"appkey_android": "23ebef9003e2dcb85c8bfc377a3b43d2",
-						"description": ""
+						"appkey_ios": "000e53bec87c29f897592c66507dfb86",
+						"appkey_android": "f5e36be3a8900b3fd2869a960c275824",
+						"description": "高德地图"
 					}
 				},
 				"share": {
@@ -298,7 +314,16 @@
 				"password": "",/*iOS应用打包个人证书导入密码*/
 				"p12": "",/*iOS应用打包个人证书，打包配置文件关联的个人证书*/
 				"devices": "universal",/*iOS应用支持的设备类型，可取值iphone/ipad/universal*/
-				"frameworks": []
+				"frameworks": [],
+				"plistcmds": [
+		          "Set :NSContactsUsageDescription 我们需要通过读取您的通讯录信息查看谁在使用乐易装。",
+		          "Set :NSMicrophoneUsageDescription 我们需要使用您的麦克风录制音频进行语音聊天。",
+		          "Set :NSPhotoLibraryUsageDescription 我们需要读取您的相册来保存您喜欢的照片。",
+		          "Set :NSCameraUsageDescription 我们需要使用你的相机拍摄照片，当你需要上传图片的时候。",
+		          "Set :NSPhotoLibraryAddUsageDescription 我们需要向您的相册添加图片来保存您喜欢的照片，并展示准确的信息。",
+		          "Set :NSLocationAlwaysUsageDescription 我们需要通过读取您的地理位置信息来确定你当前所在的的城市，并展示准确的信息。",
+		          "Set :NSLocationWhenInUseUsageDescription 我们需要通过读取您的地理位置信息来确定你当前所在的的城市，并展示准确的信息。"
+		        ]
 			},
 			"google": {
 				"packagename": "",/*Android应用包名，如io.dcloud.HelloH5*/

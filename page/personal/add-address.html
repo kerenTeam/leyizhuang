@@ -103,6 +103,31 @@
 			    content: attr(placeholder);
 			    color:#999;
 			}
+			#mapguide:after{
+				content: '点击定位快速输入地址';
+				position: absolute;
+				color: white;
+				bottom: 52%;
+				width: 100%;
+				white-space: nowrap;
+				right: -40%;
+				font-size: 14px;
+				margin-left: -40px;
+				
+			}
+			.close {
+				position: absolute;
+				width: 160px;
+				left: 50%;
+				margin-left: -80px;
+				bottom: 20%;
+				padding: 10px;
+				color: #fff;
+				border-color: #fff;
+				border-radius: 50px;
+				color: white!important;
+				font-size: 16px;
+			}
 			.curADD input{display: inline-block;width: 25%;font-size:14px;height: 30px;padding: 5px;text-align: center;margin: 0;}
 		</style>
 	</head>
@@ -153,7 +178,7 @@
 								<input type="text" id="cityW" value="" placeholder="市"/> -	
 								<input type="text" id="districtW" value="" placeholder="区"/>	
 							</div>
-							<img src="../../images/marker_01.png" onclick="goMap()" style="width: 20px;" alt="" />
+							<img src="../../images/marker_01.png" id="lcmap" style="width: 20px;" alt="" />
 						</li>
 						<li class="clearfloat">
 							<p class="fl">所在街道 <span class="redc"> *</span></p>
@@ -173,7 +198,16 @@
 			    	</div>
 		    </div>
 		</div>
-
+		<div id="mapguide" style="position: fixed;top: 0;left: 0;width: 100%;bottom: 0;background: rgba(0,0,0,0.6);z-index:999;display: none;">
+			<img src="../../images/index/fingler.svg" style="width: 22%;z-index: 9999;position: absolute;bottom: 48%;left: 80%;"/>
+			<div id="bottgd2" style="position: fixed;top: 34%;width: 18%;height: 45px;border: 1px dashed white;right: 0;background-color: white;">
+				<div style="color:;font-size: 10px;text-align: center;margin-top: 5px;">
+					<img src="../../images/marker_01.png" style="width: 20px;"/>
+				</div>
+			</div>
+			<button id='close' class="mui-btn mui-btn-warning mui-btn-outlined close">我知道了</button>
+			
+		</div>
 		<script src="../../js/mui.picker.minY.js"></script>
 		<script src="../../js/city.data-3Y.js" type="text/javascript" charset="utf-8"></script>
 		<!--<script src="http://oyba5duuu.bkt.clouddn.com/city.data-3Y.js" type="text/javascript" charset="utf-8"></script>-->
@@ -199,9 +233,12 @@
 			var latitude=0;//经度
 			var longitude=0;//纬度
 			var cprovince;
-			function goMap(){
+			document.getElementById("lcmap").addEventListener('tap', function(event) {
+				plus.nativeUI.showWaiting()
+//			function goMap(){
 				if(!cprovince){
-					mui.toast('定位失败请重试或者手动输入')
+					mui.toast('未开启定位权限，请到设置中开启或者重试，实在不行就手动输入吧');
+					plus.nativeUI.closeWaiting()
 				}else{
 					openview({
 						view:encodeURI('addressMap.html?center='+longitude+','+latitude+'&key=8f29aefac8547821425571df8852f64b'),
@@ -210,7 +247,8 @@
 					})
 				}
 				
-			}
+//			}
+			}, false);
 			mui.plusReady(function(){
 				plus.storage.removeItem('$mapStorage'); 
 				
@@ -295,13 +333,22 @@
 				document.getElementById('phone').value = contactOne[0].phone;
 				plus.storage.removeItem('contactOne');
 			})  
+			
 			mui.plusReady(function(){
 				//获取缓存
 				plus.storage.removeItem('$mapStorage'); 
 				var oldToken = plus.storage.getItem('oldToken');
 				var userId = plus.webview.currentWebview().ConeId || plus.storage.getItem('$userId');
 				var identityT = plus.webview.currentWebview().CidentityT || JSON.parse(plus.storage.getItem("$identityType")).identityType;
-
+				var mapguide = plus.storage.getItem("mapguide");
+				if(!mapguide){
+					$('#mapguide').show()	
+				}
+				document.getElementById("close").addEventListener('tap', function(event) {
+				document.getElementById("mapguide").style.display = 'none';
+				document.getElementById("close").style.display = 'none';
+				plus.storage.setItem("mapguide", "true");
+			}, false);
 				//导购模式（加入通讯录导入功能）
 				if(plus.webview.currentWebview().ConeId){
 					$('#contactDiv0').css('display','block');

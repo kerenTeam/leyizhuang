@@ -15,6 +15,12 @@
 		<link href="../../css/mui.picker.minY.css" rel="stylesheet" />
 		<link href="../../css/mui.poppicker.css" rel="stylesheet" />
 	</head>
+	<style type="text/css">
+		.cart dd {
+			font-family: "微软雅黑";
+			border-bottom: none;
+		}
+	</style>
 
 	<body>
 
@@ -26,49 +32,52 @@
 		<!--状态栏-->
 		<div style="height:50px;"></div>
 		<div class="flexwc">
-				<div class="cartOne cartAct">
-					<img src="../../images/order/c1.svg" /> 下料清单
-				</div>
-				<div class="cartSecond cartAct">
-					<img src="../../images/order/c2.svg" /> 挑选赠品
-				</div>
-				<div class="cartThird cartAct">
-					<img src="../../images/order/c3.svg" /> 订单结算
-				</div>
+			<div class="cartOne cartAct">
+				<img src="../../images/order/c1.svg" /> 下料清单
 			</div>
+			<div class="cartSecond cartAct">
+				<img src="../../images/order/c2.svg" /> 挑选赠品
+			</div>
+			<div class="cartThird cartAct">
+				<img src="../../images/order/c3.svg" /> 订单结算
+			</div>
+		</div>
 
 		<div id="cartData" data-id=""></div>
 		<script type="text/html" id="cartTpl">
 
 			<dl class="cart mb10">
-				<%for(var i=0;i<list.length;i++){%>
-					<dd>
-						<a class="goodsPic" style="margin-left: auto;"><img src="<%=list[i].coverImageUri%>" onerror="javascript:this.src='../../images/img.svg';" /></a>
+				<div style="max-height: 300px;overflow-y: scroll;">
+					<%for(var i=0;i<list.length;i++){%>
+					<dd class="afterBorder goodsbgc">
+						<a class="goodsPic" style="margin-left: auto;"><img src="<%=list[i].coverImageUri%>" onerror="javascript:this.src='../../img/editset.png';" /></a>
 						<div class="goodsInfor" style="margin-left: 0.9rem!important;">
-							<h2>
-						    		<a><%=list[i].goodsName%></a>
-						    		<%if(list[i].hasGift){%>
-						    			<em class="mui-badge mui-badge-danger mui-pull-right" style="color: white;">包含赠品</em>
-						    		<%}%>
-						   	</h2>
+							<span class="ft15 goodname"><%=list[i].goodsName%></span>
+							<%if(list[i].goodsLineType == 'PRESENT'){%>
+							<em class="mui-badge mui-badge-danger mui-pull-right" style="color: white;">赠品</em>
+							<%}else if(list[i].goodsLineType == 'PRODUCT_COUPON'){%>
+							<em class="mui-badge mui-badge-warning mui-pull-right" style="color: white;">产品券</em>
+							<%}%>
 							<div class="priceArea">
-								<div class="extraBrief">
-									单位：<%=list[i].goodsUnit%>；规格：<%=list[i].goodsSpecification%>
+								<div class="maincl ft14">
+									单位：
+									<%=list[i].goodsUnit%>；规格：
+									<%=list[i].goodsSpecification%>
 								</div>
-								<strong>¥<span class="price"><%=list[i].retailPrice%></span></strong>
-								<div class="numberWidget">
+								<span class="ft18 activecl2">¥<span class="price"><%=list[i].retailPrice%></span></span>
+								<div class="mui-pull-right">
 									<span class="num">x<%=list[i].goodsQty%></span>
 								</div>
 							</div>
-
+	
 						</div>
 					</dd>
-				<%}%>
-
-
-				<div class="pad10 ft15">
-					共<span id='totalGoods' class="activecl"><%=totalQty%></span>件商品 订单总金额：<span class="activecl" id="totalPrice">¥<%=totalPrice%></span> <span class="mui-pull-right activecl" onclick="materialList()">查看全部</span>
+					<%}%>
 				</div>
+				<div class="pad10 ft16">
+					共<span id='totalGoods' class="activecl"><%=totalQty%></span>件商品 <span class="mui-pull-right">商品总金额：<span class="activecl" id="totalPrice">¥<%=totalPrice%></span><span class="mui-icon mui-icon-arrowright maincl ft18" onclick="materialList()"></span></span>
+				</div>
+
 				<div style="clear: both;"></div>
 			</dl>
 		</script>
@@ -81,27 +90,25 @@
 			</div>
 			<div style="clear: both;"></div>
 			<div style="background-color: white;margin: 5px 0;">
-			<div id="add_info"></div>
-			<script type="text/html" id="addrTpl">
-				<%if(obj.length==0){%>
-				<div class="qtop flexr pad10 afterBorder" onclick="address()">
-					<img src="../../images/order/map.svg" style="margin-right: 10px;"/>
-					<div style="flex: 1;">
-						<div class="maincl ft16">
-							<span class="maincl"></span>
-							<span class="maincl"></span>
+				<div id="add_info"></div>
+				<script type="text/html" id="addrTpl">
+					<%if(obj.length==0){%>
+					<div class="qtop flexr pad10 afterBorder" onclick="address()">
+						<img src="../../images/order/map.svg" style="margin-right: 10px;" />
+						<div style="flex: 1;">
+							<div class="maincl ft16">
+								<span class="maincl"></span>
+								<span class="maincl"></span>
+							</div>
+							<div class="ft16">
+								<span class="maincl">请选择收获地址</span>
+							</div>
 						</div>
-						<div class="ft16">
-							<span class="maincl">请选择收获地址</span>
-						</div>
+						<span class="mui-icon mui-icon-arrowright maincl ft20"></span>
 					</div>
-					<div class="">
-						<img src="../../images/center/right.svg" alt="" />
-					</div>
-				</div>
-				<%}else{%>
+					<%}else{%>
 					<div class="qtop flexr pad10 afterBorder" onclick="address()" id="addid" data-id="<%=obj[0].id%>" data-receiver="<%=obj[0].person%>" data-receiverPhone="<%=obj[0].phone%>" data-deliveryCity="<%=obj[0].city%>" data-deliveryCounty="<%=obj[0].country%>" data-deliveryStreet="<%=obj[0].street%>" data-residenceName="<%=obj[0].villageName%>" data-detailedAddress="<%=obj[0].address%>">
-						<img src="../../images/order/map.svg" style="margin-right: 10px;"/>
+						<img src="../../images/order/map.svg" style="margin-right: 10px;" />
 						<div style="flex: 1;">
 							<div class="maincl ft16">
 								<span class="maincl"><%=obj[0].person%></span>
@@ -111,16 +118,15 @@
 								<span class="maincl"><%=obj[0].province%><%=obj[0].city%><%=obj[0].country%><%=obj[0].street%><%=obj[0].villageName%><%=obj[0].address%></span>
 							</div>
 						</div>
-						<div class="">
-							<img src="../../images/center/right.svg" alt="" />
-						</div>
+						<span class="mui-icon mui-icon-arrowright maincl ft20" style="margin-top: 3px;"></span>
+						 
 					</div>
 
-				<%}%>
-			</script>
+					<%}%>
+				</script>
 
 			</div>
-			<div id='cityResult' data-id = '0' class="ui-alert pad10 afterBorder ft15">配送时间<span class="mui-icon mui-icon-arrowdown maincl mui-pull-right ft16"></span><span class="mui-pull-right pstime">选择</span></div>
+			<div id='cityResult' data-id='0' class="ui-alert pad10 afterBorder ft15">配送时间<span class="mui-icon mui-icon-arrowdown maincl mui-pull-right ft16"></span><span class="mui-pull-right pstime">选择</span></div>
 			<!--<div class="mui-input-row mui-checkbox ft15 isowndis">
 				<label style="padding: 18px 10px;">是否主家收货</label>
 				<input name="checkbox1" style="top: 12px;right: 12px;" id="isOwner" class="mui-pull-right isOwnerReceiving" value="Item 1" type="checkbox" checked>
@@ -129,7 +135,7 @@
 				<div class="mui-pull-left">温馨提示：</div>
 				<div class="mui-pull-left" style="width: 80%;word-break:break-all;">若收货人为主家，系统将在出货打印单中自动隐藏折扣信息</div>
 			</div>-->
-			<textarea name="" id="other" maxlength="100" cols="30" rows="4" placeholder="备注"></textarea>
+			<textarea name="" id="other" maxlength="100" cols="30" rows="4" placeholder="备注信息（最大可输入字数120字）" maxlength="120"></textarea>
 		</div>
 
 		<!--bottom nav-->
@@ -163,7 +169,7 @@
 				id: 'address',
 				extrasobj: {
 					page: 'order',
-					goType:'order'
+					goType: 'order'
 				}
 			})
 		}
@@ -174,40 +180,43 @@
 			var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
 			var idobj = plus.storage.getItem('goodlists');
 			var customerId = plus.webview.currentWebview().customerId || '';
-			
+
 			plus.nativeUI.showWaiting();
 			//获取料单商品
-			mui.ajax(serverUrl+'/app/goodsMoney/worker',{
-				data:{
-					userId:userId,
-					identityType:identityT,
-					custoermId:customerId,
-					goodsList:JSON.parse(idobj)
+			mui.ajax(serverUrl + '/app/goodsMoney/worker', {
+				data: {
+					userId: userId,
+					identityType: identityT,
+					custoermId: customerId,
+					goodsList: JSON.parse(idobj)
 				},
-				dataType:'json',
-				type:'post',
-				timeout:10000,
-				headers:{"Authorization":oldToken,'Content-Type':'application/json'},
-				success:function(data,type,xhr){
-					console.log('获取料单商品',data);
+				dataType: 'json',
+				type: 'post',
+				timeout: 10000,
+				headers: {
+					"Authorization": oldToken,
+					'Content-Type': 'application/json'
+				},
+				success: function(data, type, xhr) {
+					console.log('获取料单商品', data);
 					var dataObj = {};
-					if(data.code == 0){
+					if(data.code == 0) {
 						//显示商品
-						var goods = data.content.totalGoodsInfo ;
+						var goods = data.content.totalGoodsInfo;
 						dataObj.totalQty = data.content.totalQty;
 						dataObj.totalPrice = data.content.totalPrice;
 						dataObj.list = goods;
 
-						document.getElementById('cartData').innerHTML = template('cartTpl',dataObj);
+						document.getElementById('cartData').innerHTML = template('cartTpl', dataObj);
 						plus.nativeUI.closeWaiting();
-					}else{
+					} else {
 						mui.toast(data.message);
 						plus.nativeUI.closeWaiting();
 						plus.webview.currentWebview().close();
 
 					}
 				},
-				error:function(xhr,type,errorThrown){
+				error: function(xhr, type, errorThrown) {
 					console.log('响应失败  !');
 					plus.nativeUI.closeWaiting();
 
@@ -219,71 +228,76 @@
 			});
 			orderAdd();
 			//显示地址
-			function orderAdd(){
+			function orderAdd() {
 				//默认地址
-				mui.ajax(serverUrl+'/app/user/deliveryAddress/default',{
-					data:{
-						userId:userId,
-						identityType:identityT
+				mui.ajax(serverUrl + '/app/user/deliveryAddress/default', {
+					data: {
+						userId: userId,
+						identityType: identityT
 					},
-					dataType:'json',
-					type:'post',
-					timeout:10000,
-					headers:{"Authorization":oldToken},
-					success:function(data,type,xhr){
-						console.log('默认地址',data);
+					dataType: 'json',
+					type: 'post',
+					timeout: 10000,
+					headers: {
+						"Authorization": oldToken
+					},
+					success: function(data, type, xhr) {
+						console.log('默认地址', data);
 						var addrObj = {};
-						if(data.code == 0 && data.content){
+						if(data.code == 0 && data.content) {
 							if(plus.storage.getItem("$addressStorage") != null) {
 								addrObj.obj = JSON.parse(plus.storage.getItem("$addressStorage"));
-							}else{
-								var defultAddress ={};
-									defultAddress.id = data.content.id;
-									defultAddress.person = data.content.deliveryName;
-									defultAddress.phone = data.content.deliveryPhone;
-									defultAddress.province = data.content.deliveryProvince;
-									defultAddress.city = data.content.deliveryCity;
-									defultAddress.country = data.content.deliveryCounty;
-									defultAddress.street = data.content.deliveryStreet;
-									defultAddress.villageName = data.content.villageName;
-									defultAddress.address = data.content.detailedAddress;
-									addrObj.obj = [defultAddress];
+							} else {
+								var defultAddress = {};
+								defultAddress.id = data.content.id;
+								defultAddress.person = data.content.deliveryName;
+								defultAddress.phone = data.content.deliveryPhone;
+								defultAddress.province = data.content.deliveryProvince;
+								defultAddress.city = data.content.deliveryCity;
+								defultAddress.country = data.content.deliveryCounty;
+								defultAddress.street = data.content.deliveryStreet;
+								defultAddress.villageName = data.content.villageName;
+								defultAddress.address = data.content.detailedAddress;
+								addrObj.obj = [defultAddress];
 							}
 							document.getElementById("add_info").innerHTML = template("addrTpl", addrObj);
 							plus.storage.removeItem("$addressStorage")
 
-						}else{
-								console.log('缓存地址',data);
-								addrObj.obj = JSON.parse(plus.storage.getItem("$addressStorage")) || [];
-								document.getElementById("add_info").innerHTML = template("addrTpl", addrObj);
+						} else {
+							console.log('缓存地址', data);
+							addrObj.obj = JSON.parse(plus.storage.getItem("$addressStorage")) || [];
+							document.getElementById("add_info").innerHTML = template("addrTpl", addrObj);
 
 						}
 					},
-					error:function(xhr,type,errorThrown){
+					error: function(xhr, type, errorThrown) {
 						console.log('响应失败  !');
 					}
 				});
 
-//				plus.storage.removeItem("$addressStorage")
+				//				plus.storage.removeItem("$addressStorage")
 			}
 			//获取城市
 			var cityId = plus.storage.getItem('userCity');
 			//获取时间段
 			timeRanges();
-			function timeRanges(){
-				mui.ajax(serverUrl+'/app/city/get/deliveryTime',{
-					data:{
-						cityId:cityId
+
+			function timeRanges() {
+				mui.ajax(serverUrl + '/app/city/get/deliveryTime', {
+					data: {
+						cityId: cityId
 					},
-					dataType:'json',
-					type:'post',
-					timeout:10000,
-					headers:{"Authorization":oldToken},
-					success:function(data,type,xhr){
-						console.log('获取时间段',data);
+					dataType: 'json',
+					type: 'post',
+					timeout: 10000,
+					headers: {
+						"Authorization": oldToken
+					},
+					success: function(data, type, xhr) {
+						console.log('获取时间段', data);
 						var dataObj = {};
-						if(data.code == 0){
-							if(data.content && data.content.length){
+						if(data.code == 0) {
+							if(data.content && data.content.length) {
 								var cityData = [];
 								var cflag = 0;
 								mui.each(data.content, function(index, item) {
@@ -304,7 +318,7 @@
 									})
 									cityData.push(eachday)
 								})
-								console.log('cityData ',cityData);
+								console.log('cityData ', cityData);
 								var cityPicker = new mui.PopPicker({
 									layer: 2
 								});
@@ -323,13 +337,13 @@
 								//-----------------------------------------
 							}
 							plus.nativeUI.closeWaiting();
-						}else{
+						} else {
 							mui.toast(data.message);
 							plus.nativeUI.closeWaiting();
 
 						}
 					},
-					error:function(xhr,type,errorThrown){
+					error: function(xhr, type, errorThrown) {
 						console.log('响应失败  !');
 						plus.nativeUI.closeWaiting();
 
@@ -338,7 +352,7 @@
 			}
 
 			//工人提交物料审核单
-			$('#dibu').click(function(){
+			$('#dibu').click(function() {
 				var receiver = $('#addid').attr('data-receiver')
 				var receiverPhone = $('#addid').attr('data-receiverPhone')
 				var deliveryCity = $('#addid').attr('data-deliveryCity')
@@ -347,71 +361,73 @@
 				var deliveryStreet = $('#addid').attr('data-deliveryStreet')
 				var detad = $('#addid').attr('data-detailedAddress')
 				var receiver = $('#addid').attr('data-receiver')
-				var pstime = $('#cityResult .pstime').html();//配送时间
-//				var isOwner= $('#isOwner').attr('checked');
+				var pstime = $('#cityResult .pstime').html(); //配送时间
+				//				var isOwner= $('#isOwner').attr('checked');
 
-				console.log('idobj ',idobj)
-//				if(isOwner == 'checked'){
-//					isOwnerReceive = 1
-//				}else{
-//					isOwnerReceive = 0
-//				}
-				if(!pstime || pstime == '选择'){
+				console.log('idobj ', idobj)
+				//				if(isOwner == 'checked'){
+				//					isOwnerReceive = 1
+				//				}else{
+				//					isOwnerReceive = 0
+				//				}
+				if(!pstime || pstime == '选择') {
 					mui.toast('请选择配送时间')
-				}else{
-					mui.ajax(serverUrl+'/app/material/audit/save',{
-						data:{
-							userID:userId,
-							identityType:identityT,
-							goodsList:idobj,
-							receiver:receiver,
-							receiverPhone:receiverPhone,
-							deliveryCity:deliveryCity,
-							deliveryCounty:deliveryCounty,
-							deliveryStreet:deliveryStreet,
-							residenceName:residenceName,
-							detailedAddress:detad,
-							reservationDeliveryTime:pstime,
-//							isOwnerReceiving:isOwnerReceive,
-							remark:$('#other').val(),
+				} else {
+					mui.ajax(serverUrl + '/app/material/audit/save', {
+						data: {
+							userID: userId,
+							identityType: identityT,
+							goodsList: idobj,
+							receiver: receiver,
+							receiverPhone: receiverPhone,
+							deliveryCity: deliveryCity,
+							deliveryCounty: deliveryCounty,
+							deliveryStreet: deliveryStreet,
+							residenceName: residenceName,
+							detailedAddress: detad,
+							reservationDeliveryTime: pstime,
+							//							isOwnerReceiving:isOwnerReceive,
+							remark: $('#other').val(),
 						},
-						dataType:'json',
-						type:'post',
-						timeout:10000,
-						headers:{"Authorization":oldToken},
-						success:function(data,type,xhr){
-							console.log('提交审核',data);
+						dataType: 'json',
+						type: 'post',
+						timeout: 10000,
+						headers: {
+							"Authorization": oldToken
+						},
+						success: function(data, type, xhr) {
+							console.log('提交审核', data);
 							var addrObj = {};
-							if(data.code == 0){
+							if(data.code == 0) {
 								mui.toast('提交成功');
-								mui.fire(plus.webview.getWebviewById('center.html'),'OrderNumR');
+								mui.fire(plus.webview.getWebviewById('center.html'), 'OrderNumR');
 								mui.fire(plus.webview.getWebviewById('page/goodList.html'), 'refresh');
 								mui.fire(plus.webview.getWebviewById('cart.html'), 'refresh');
 								mui.fire(plus.webview.getWebviewById('cart'), 'refresh');
-								mui.fire(plus.webview.getWebviewById('goodList'),'refresh');
-								mui.fire(plus.webview.getWebviewById('gxbList'),'refresh');
-								mui.fire(plus.webview.getWebviewById('oilFast.html'),'refresh');
-								mui.fire(plus.webview.getWebviewById('waterFast.html'),'refresh');
-								mui.fire(plus.webview.getWebviewById('electricFast.html'),'refresh');
-								mui.fire(plus.webview.getWebviewById('woodFast.html'),'refresh');
-								mui.fire(plus.webview.getWebviewById('tileFast.html'),'refresh');
-								mui.fire(plus.webview.getWebviewById('collect'),'refresh');
-								mui.fire(plus.webview.getWebviewById('ofenBuy'),'refresh');
-								mui.fire(plus.webview.getWebviewById('specialGoods'),'refreshsd');
-								mui.fire(plus.webview.getWebviewById('hotGoods'),'refresh');
-								mui.fire(plus.webview.getWebviewById('history'),'refresh');
+								mui.fire(plus.webview.getWebviewById('goodList'), 'refresh');
+								mui.fire(plus.webview.getWebviewById('gxbList'), 'refresh');
+								mui.fire(plus.webview.getWebviewById('oilFast.html'), 'refresh');
+								mui.fire(plus.webview.getWebviewById('waterFast.html'), 'refresh');
+								mui.fire(plus.webview.getWebviewById('electricFast.html'), 'refresh');
+								mui.fire(plus.webview.getWebviewById('woodFast.html'), 'refresh');
+								mui.fire(plus.webview.getWebviewById('tileFast.html'), 'refresh');
+								mui.fire(plus.webview.getWebviewById('collect'), 'refresh');
+								mui.fire(plus.webview.getWebviewById('ofenBuy'), 'refresh');
+								mui.fire(plus.webview.getWebviewById('specialGoods'), 'refreshsd');
+								mui.fire(plus.webview.getWebviewById('hotGoods'), 'refresh');
+								mui.fire(plus.webview.getWebviewById('history'), 'refresh');
 								openview({
-									view:'../worker/workerlistCheck.html',
-									id:'workerlistCheck'
+									view: '../worker/workerlistCheck.html',
+									id: 'workerlistCheck'
 								})
 								setTimeout(function() {
 									plus.webview.currentWebview().close();
 								}, 500)
-							}else{
+							} else {
 								mui.toast(data.message);
 							}
 						},
-						error:function(xhr,type,errorThrown){
+						error: function(xhr, type, errorThrown) {
 							console.log('响应失败  !');
 						}
 					});
@@ -421,4 +437,5 @@
 
 		})
 	</script>
+
 </html>
