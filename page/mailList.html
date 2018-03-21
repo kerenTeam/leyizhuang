@@ -191,8 +191,8 @@
 							console.log('contactObj-obj0',contactObj);
 							document.getElementById('contactDiv').innerHTML = template('contactS',{obj0:contactObj,list1:FLAEnd});
 
-                        	}else{
-                        		document.getElementById('contactDiv').innerHTML = '<h3 class="noList">你还没有联系人</h3>';
+                        }else{
+                        		document.getElementById('contactDiv').innerHTML = '<h3 class="noList">读取失败 <br> 请在设置中允许我们访问你的通讯录！</h3>';
                         	}
                     }, function () {
                         console.error("error");

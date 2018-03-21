@@ -81,6 +81,9 @@
 		<header class="mui-bar mui-bar-nav" id="header">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left bigSize back"></a>
 			<h1 class="mui-title findUser">商品详情</h1>
+			<span class="mui-pull-right ft15 fenxiangBtn1" style="line-height: 50px;">
+				分享
+			</span>
 		</header>
 		<script src="../js/statusBar.js"></script><!--状态栏-->
 		<div class="mui-content">
@@ -236,6 +239,7 @@
 	<script src="../js/mui.previewimage.js"></script>
 	<script src="../js/artTemplate-native.js"></script>
 	<script src="../js/default.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../js/youxd.js" type="text/javascript" charset="utf-8"></script>
 	<script type="text/javascript">
 		//购物车弹出/关闭
 		function toshare(){
@@ -351,6 +355,26 @@
 								interval: 3000 //设置自动轮播周期为3s
 							});
 						}
+						//分享
+						mui('.fenxiangBtn1')[0].onclick = function(){
+							if(data.content){
+								console.log('商品详情2',JSON.stringify(data));
+								//示例
+								var url = 'http://119.27.182.129/lyzWeb0/page/goodsInfo.html',
+								    dataInfo = JSON.stringify(data),
+								    infoTxt = data.content.skuName || '乐意装';
+								var msg = {
+									myIsIndex:true,
+									title:infoTxt,
+									content:infoTxt,
+									href:url+'?dataInfo='+dataInfo
+								};
+								showSfun1(msg,function(){},function(){});
+							}else{
+								mui.toast('无效的分享内容');
+							}
+						}
+						//分享结束
 					}
 					if(data.code == 1000 ){
 						mui.toast(data.message)
