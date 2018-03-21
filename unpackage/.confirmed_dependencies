@@ -265,7 +265,8 @@
       "consultTel.html",
       "page/specialGoods.html",
       "page/guide/achievement.html",
-      "funGuide.html"
+      "funGuide.html",
+      "promotion.html"
     ]
   },
   "page/gxbList.html": {
@@ -1368,5 +1369,10 @@
       "page/goodsInfo.html"
     ],
     "resources": []
+  },
+  "promotion.html": {
+    "resources": [
+      "%3C%\u003dlist[i].coverImageUri%%3E"
+    ]
   }
 }

@@ -738,7 +738,8 @@
 					"consultTel.html",
 					"page/specialGoods.html",
 					"page/guide/achievement.html",
-					"funGuide.html"
+					"funGuide.html",
+					"promotion.html"
 				],
 				"priority": 0
 			},
@@ -1947,6 +1948,13 @@
 					"cart.html",
 					"page/goodsInfo.html"
 				],
+				"priority": 0
+			},
+			"promotion.html": {
+				"resources": [
+					"%3C%\u003dlist[i].coverImageUri%%3E"
+				],
+				"refer": [],
 				"priority": 0
 			}
 		},
