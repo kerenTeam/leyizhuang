@@ -6,197 +6,362 @@
 		<title></title>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="css/mui.min.css" rel="stylesheet" />
-		<link rel="stylesheet" type="text/css" href="css/commonY.css"/>
+		<link rel="stylesheet" type="text/css" href="css/commonY.css" />
 		<!--<link rel="stylesheet" href="css/style.css" />-->
-		<link rel="stylesheet" type="text/css" href="css/configW.css"/>
+		<link rel="stylesheet" type="text/css" href="css/configW.css" />
 	</head>
-	<style type="text/css"> 
-		.vct{width: 90%;position: fixed;color: white;text-align: center;top: 22%;left:5%;}
-		.vct img{display: block;width: 80px;margin:auto;margin-bottom: 10px;vertical-align: middle;}
-		.vct td{padding: 20px;}
-		#close{width: 80px;padding: 20px;}
-		.imgpt{
-				position: relative;
-				width: 100%;
-				padding-top: 65%;
-				overflow: hidden;
-			}
-			.imgpt img{
-				position: absolute;
-				top: 0;
-				left: 0;
-				width: 100%;
-				height: 100%;
-			}
-			.clasfyItem{
-				position: absolute;
-				top: 50%;
-				-webkit-transform: translateY(-50%);
-				left: 0;
-				right: 0;
-				text-align: center;
-				line-height: 3;
-			}
-			.clasfyItem .itemName{
-				color: white;
-				font-size: 0.2rem;
-				font-weight: 400;
-			} 
-			.trangle{
-				position: absolute;
-			    bottom: 0;
-			    left: 0.2rem;
-			    width: 0px;
-			    height: 0px;
-			    border-top: 11px solid transparent;
-			    border-right: 11px solid transparent;
-			    border-bottom: 11px solid white;
-			    border-left: 11px solid transparent;
-			}
-			.npbk{
-		 	    overflow-x: hidden; 
-			  	width: 100%; 
-			  	width: 100vw; 
-			 	position: relative;
-			 	left: 50%;
-			 	right: 50%;
-			 	margin-left: -50vw;
-			 	margin-right: -50vw;
-			}
-			.npbk ul{
-				margin: 10px 0px 10px 15px; 
-				position: relative;
-				white-space: nowrap;
-				overflow-x: scroll;
-			}
-			.npbk ul:not(:last-of-type):after{
-				position: absolute;
-				content: '';
-				height: 1px;
-				-webkit-transform: scaleY(0.3);
-				background-color: #EEEEEE;
-				left: 0;
-				right: 0;
-				bottom: 0;
-				transform-origin: bottom;
-			} 
-		 	.nplist{
-		 		width: 1.3rem;
-		 		/*height: 1.3rem;*/ 
-		 		text-align: center;
-		 		display: inline-block;
-		 		margin-bottom: 10px;
-		 		/*border: 1px solid #efefef;*/
-				box-shadow: 0px 0 5px 0px rgba(0,0,0,0.1);
-		 		margin-left: 5px;
-		 	}
-		 	.nplast{  
-		 		height: 1.3rem;
-		 		/*text-align: center;*/
-		 		line-height: 1.3rem;
-		 		color: #f53c42 ;
-		 		border: 1px solid #eee;
-		 		position: absolute;
-		 		top: 0; 
-		 	}
-		 	.nplist h4{
-		 		color: black;
-		 		font-size: 0.14rem;
-		 		width: 1rem;
-		 		line-height:2;
-			    text-overflow: ellipsis;
-			    white-space: nowrap;
-			    overflow: hidden;
-			    margin: auto;
-		 	}
-		 	.npimg{
-		 		position: relative;
-				width: 100%;
-				padding-top:100%;
-				overflow: hidden;
-		 	} 
-		 	.npimg img{
-		 		position: absolute;
-				top: 0;
-				left: 0;
-				width: 100%;
-				height: 100%;
-		 	}
-		 	.nprice{
-		 		font-size: 0.12rem;
-		 		color: #f53c42;
-		 		line-height: 1.5;
-		 	}
-		  
-		 	.itemGo{
-		 		background: none;
-		 		color: white;
-		 		border-radius: 50px;
-		 		font-size: 1rem;
-		 		border-color: #B62D29;
-		 		padding: 5px 15px;
-		 		color: #B62D29;
-		 	}
-		 	.titpr{text-overflow: ellipsis;overflow: hidden;white-space: nowrap;max-width: 100px;}
-		 	.titprg{display:block!important;width:100%!important;max-width:none;height:auto}
-		 	.mui-media{margin:0 10px;display: inline-block!important;}
+	<style type="text/css">
+		.vct {
+			width: 90%;
+			position: fixed;
+			color: white;
+			text-align: center;
+			top: 22%;
+			left: 5%;
+		}
+		
+		.vct img {
+			display: block;
+			width: 80px;
+			margin: auto;
+			margin-bottom: 10px;
+			vertical-align: middle;
+		}
+		
+		.vct td {
+			padding: 20px;
+		}
+		
+		#close {
+			width: 80px;
+			padding: 20px;
+		}
+		
+		.imgpt {
+			position: relative;
+			width: 100%;
+			padding-top: 54%;
+			overflow: hidden;
+		}
+		
+		.imgpt img {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+		}
+		
+		.clasfyItem {
+			position: absolute;
+			top: 50%;
+			-webkit-transform: translateY(-50%);
+			left: 0;
+			right: 0;
+			text-align: center;
+			line-height: 3;
+		}
+		
+		.clasfyItem .itemName {
+			color: white;
+			font-size: 0.2rem;
+			font-weight: 400;
+		}
+		
+		.trangle {
+			position: absolute;
+			bottom: 0;
+			left: 1.2rem;
+			width: 0px;
+			height: 0px;
+			border-top: 11px solid transparent;
+			border-right: 11px solid transparent;
+			border-bottom: 11px solid white;
+			border-left: 11px solid transparent;
+		}
+		
+		.npbk {
+			overflow-x: hidden;
+			width: 100vw;
+			position: relative;
+			left: 50%;
+			right: 50%;
+			margin-left: -50vw;
+			margin-right: -50vw;
+		}
+		
+		.npbk ul {
+			margin: 10px 0px 10px 5px;
+			position: relative;
+			white-space: nowrap;
+			overflow-x: scroll;
+		}
+		
+		.npbk ul:not(:last-of-type):after {
+			position: absolute;
+			content: '';
+			height: 1px;
+			-webkit-transform: scaleY(0.3);
+			background-color: #EEEEEE;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			transform-origin: bottom;
+		}
+		
+		.nplist {
+			width: 1.3rem;
+			/*height: 1.3rem;*/
+			text-align: center;
+			display: inline-block;
+			margin-bottom: 10px;
+			/*border: 1px solid #efefef;*/
+			box-shadow: 0px 0 5px 0px rgba(0, 0, 0, 0.1);
+			margin-left: 5px;
+		}
+		
+		.nplast {
+			height: 1.3rem;
+			/*text-align: center;*/
+			line-height: 1.3rem;
+			color: #f53c42;
+			border: 1px solid #eee;
+			position: absolute;
+			top: 0;
+		}
+		
+		.nplist h4 {
+			color: black;
+			font-size: 0.14rem;
+			width: 1rem;
+			line-height: 2;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			overflow: hidden;
+			margin: auto;
+		}
+		
+		.npimg {
+			position: relative;
+			width: 100%;
+			padding-top: 100%;
+			overflow: hidden;
+		}
+		
+		.npimg img {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+		}
+		
+		.nprice {
+			font-size: 0.12rem;
+			color: #f53c42;
+			line-height: 1.5;
+		}
+		
+		.itemGo {
+			background: none;
+			color: white;
+			border-radius: 50px;
+			font-size: 1rem;
+			border-color: #B62D29;
+			padding: 5px 15px;
+			color: #B62D29;
+		}
+		
+		.titpr {
+			white-space: normal;
+			max-width: 100px;
+			line-height: 1.5em;
+			height:3em;
+			word-break: break-all;
+			margin-bottom: 5px;
+			display: -webkit-box;
+			-webkit-box-orient: vertical;
+			-webkit-line-clamp: 2;
+			overflow: hidden;
+
+		}
+		
+		.titprg {
+			display: block!important;
+			width: 100%!important;
+			max-width: none;
+			height: auto
+		}
+		
+		.mui-media {
+			margin: 0 10px;
+			display: inline-block!important;
+			width: 25%;
+		}
+		.typeDis{margin-bottom: 10px;}
 	</style>
+
 	<body>
 		<header class="mui-bar mui-bar-nav">
-			<a class="headbar mui-action-back mui-icon mui-icon-left-nav mui-pull-left normalSize"></a>
+			<a class="headbar mui-action-back mui-icon mui-icon-arrowdown mui-pull-left" style="background-color: #EEEEEE;border-radius: 50%;width: 35px!important;height: 35px;line-height: 35px!important;text-align: center;margin: 5px 10px!important;"></a>
 			<h1 class="mui-title">活动促销</h1>
 		</header>
 		<script src="js/statusBar.js" type="text/javascript" charset="utf-8"></script>
-		<div class="mui-content">
-			<div id="scroller">
-				<div id="classify">
-					<div class="typeDis" style="background-color: #fff;">
-							<div class="imgpt" onclick="goList()">
-								<img src="https://haitao.nosdn1.127.net/UTOCB3NLXpAT2mrt3.17-3.23%20ZpCW%20iy1VkkrgvH2H9cRa-APPS4norlT1803161851_960_480.jpg?imageView&thumbnail=640x0&quality=75&type=webp" alt="" />
-							 	<div class="clasfyItem">
-							 		<div class="itemName">kk</div>
-							 		<button type="button" class="mui-btn itemGo ">
-										入场疯抢 >
-									</button>
-							 	</div>
-							 	<div class="trangle"></div>
-							</div>
-							<!--二级分类-->
-							<div class="npbk"> 
-				 				<div class="secClassfy" onclick="goList()">
-				 					<ul class="" style="border-top: none!important;">
-										<li class="mui-media bgcwt" onclick="goodsInfo()">
-											<a href="javascript:;" style="border-top: none!important;">
-												<div class="zanwei zanweiY2">
-													<img class="mui-media-object titprg" src="https://pop.nosdn.127.net/ea84b418-8f73-462c-8755-8eed3595fcdf?imageView&thumbnail=400x0&quality=75&type=webp">
-												</div>
-												<div class="mui-media-body" style="font-size:12px">
-													<div class="titcl ft16 titpr">ddddxxxddddd </div>
-													<!--<p class='mui-ellipsis ft15' style="padding: 5px 0;">规格:xxx &nbsp;单位:xxx</p>-->
-													<span class="activecl2 ft20">¥8</span>
-													<img style="display:inline-block;float:right;margin-right:5px;vertical-align:middle;width:28px" onclick="addcart()" src="images/addcart.svg" />
-												</div>
-											</a>
-										</li>
-										 
-									</ul>
-				 				</div>
-							</div>
+		<div class="mui-content" style="padding-top: 50px;">
+			<div id="classify">
+				<div class="typeDis" style="background-color: #fff;">
+					<div class="imgpt" onclick="goList()">
+						<img src="http://www.huarun.com/upload/temp/img/20160602/142150-979.jpg" alt="" />
+						<!--<div class="clasfyItem">
+						 		<div class="itemName">kk</div>
+						 		<button type="button" class="mui-btn itemGo ">
+									入场疯抢 >
+								</button>
+						 	</div>-->
+						<div class="trangle"></div>
+					</div>
+					<!--二级分类-->
+					<div class="npbk">
+						<div class="secClassfy" onclick="goList()">
+							<ul class="" style="border-top: none!important;">
+								<li class="mui-media bgcwt" onclick="goodsInfo()">
+									<a href="javascript:;" style="border-top: none!important;">
+										<div class="zanwei zanweiY2">
+											<img class="mui-media-object titprg" src="http://www.huarun.com/upload/temp/img/20171206/202404-118.png">
+										</div>
+										<div class="mui-media-body" style="font-size:12px">
+											<div class="titcl ft14 titpr">妙想A+纯环保儿童水性木器漆</div>
+											<!--<p class='ft14'>规格:xxx &nbsp;单位:xxx</p>-->
+											<span class="activecl2 ft20">¥8</span>
+											<img style="display:inline-block;float:right;margin-right:5px;vertical-align:middle;width:28px" onclick="addcart()" src="images/addcart.svg" />
+										</div>
+									</a>
+								</li>
+								<li class="mui-media bgcwt" onclick="goodsInfo()">
+									<a href="javascript:;" style="border-top: none!important;">
+										<div class="zanwei zanweiY2">
+											<img class="mui-media-object titprg" src="http://www.huarun.com/upload/temp/img/20171206/202532-813.png">
+										</div>
+										<div class="mui-media-body" style="font-size:12px">
+											<div class="titcl ft14 titpr">盈润晶彩清味金装PU木器漆</div>
+
+											<span class="activecl2 ft20">¥8</span>
+											<img style="display:inline-block;float:right;margin-right:5px;vertical-align:middle;width:28px" onclick="addcart()" src="images/addcart.svg" />
+										</div>
+									</a>
+								</li>
+								<li class="mui-media bgcwt" onclick="goodsInfo()">
+									<a href="javascript:;" style="border-top: none!important;">
+										<div class="zanwei zanweiY2">
+											<img class="mui-media-object titprg" src="http://www.huarun.com/upload/temp/img/20170928/144326-344.png">
+										</div>
+										<div class="mui-media-body" style="font-size:12px">
+											<div class="titcl ft14 titpr">妙想A+纯环保儿童水性木器漆<</div>
+											<!--<p class='ft14'>规格:xxx &nbsp;单位:xxx</p>-->
+											<span class="activecl2 ft20">¥8</span>
+											<img style="display:inline-block;float:right;margin-right:5px;vertical-align:middle;width:28px" onclick="addcart()" src="images/addcart.svg" />
+										</div>
+									</a>
+								</li>
+								<li class="mui-media bgcwt" onclick="goodsInfo()">
+									<a href="javascript:;" style="border-top: none!important;">
+										<div class="zanwei zanweiY2">
+											<img class="mui-media-object titprg" src="http://www.huarun.com/upload/temp/img/20171206/202532-813.png">
+										</div>
+										<div class="mui-media-body" style="font-size:12px">
+											<div class="titcl ft14 titpr">盈润晶彩清味金装PU木器漆</div>
+
+											<span class="activecl2 ft20">¥8</span>
+											<img style="display:inline-block;float:right;margin-right:5px;vertical-align:middle;width:28px" onclick="addcart()" src="images/addcart.svg" />
+										</div>
+									</a>
+								</li>
+							</ul>
 						</div>
-						 
+					</div>
 				</div>
-				 
-			</div>	
+				<div class="typeDis" style="background-color: #fff;">
+					<div class="imgpt" onclick="goList()">
+						<img src="http://www.huarun.com/upload/temp/img/20151103/193714-273.jpg" alt="" />
+						<!--<div class="clasfyItem">
+						 		<div class="itemName">kk</div>
+						 		<button type="button" class="mui-btn itemGo ">
+									入场疯抢 >
+								</button>
+						 	</div>-->
+						<div class="trangle"></div>
+					</div>
+					<!--二级分类-->
+					<div class="npbk">
+						<div class="secClassfy" onclick="goList()">
+							<ul class="" style="border-top: none!important;">
+								<li class="mui-media bgcwt" onclick="goodsInfo()">
+									<a href="javascript:;" style="border-top: none!important;">
+										<div class="zanwei zanweiY2">
+											<img class="mui-media-object titprg" src="http://pop.nosdn.127.net/ea84b418-8f73-462c-8755-8eed3595fcdf?imageView&thumbnail=400x0&quality=75&type=webp">
+										</div>
+										<div class="mui-media-body" style="font-size:12px">
+											<div class="titcl ft14 titpr">xxxdsdfd等待nnn</div>
+											<!--<p class='ft14'>规格:xxx &nbsp;单位:xxx</p>-->
+											<span class="activecl2 ft20">¥8</span>
+											<img style="display:inline-block;float:right;margin-right:5px;vertical-align:middle;width:28px" onclick="addcart()" src="images/addcart.svg" />
+										</div>
+									</a>
+								</li>
+								<li class="mui-media bgcwt" onclick="goodsInfo()">
+									<a href="javascript:;" style="border-top: none!important;">
+										<div class="zanwei zanweiY2">
+											<img class="mui-media-object titprg" src="https://pop.nosdn.127.net/ea84b418-8f73-462c-8755-8eed3595fcdf?imageView&thumbnail=400x0&quality=75&type=webp">
+										</div>
+										<div class="mui-media-body" style="font-size:12px">
+											<div class="titcl ft14 titpr">xxxdsdfd等待</div>
+
+											<span class="activecl2 ft20">¥8</span>
+											<img style="display:inline-block;float:right;margin-right:5px;vertical-align:middle;width:28px" onclick="addcart()" src="images/addcart.svg" />
+										</div>
+									</a>
+								</li>
+								<li class="mui-media bgcwt" onclick="goodsInfo()">
+									<a href="javascript:;" style="border-top: none!important;">
+										<div class="zanwei zanweiY2">
+											<img class="mui-media-object titprg" src="https://pop.nosdn.127.net/ea84b418-8f73-462c-8755-8eed3595fcdf?imageView&thumbnail=400x0&quality=75&type=webp">
+										</div>
+										<div class="mui-media-body" style="font-size:12px">
+											<div class="titcl ft14 titpr">xxxdsdfd等待</div>
+
+											<span class="activecl2 ft20">¥8</span>
+											<img style="display:inline-block;float:right;margin-right:5px;vertical-align:middle;width:28px" onclick="addcart()" src="images/addcart.svg" />
+										</div>
+									</a>
+								</li>
+								<li class="mui-media bgcwt" onclick="goodsInfo()">
+									<a href="javascript:;" style="border-top: none!important;">
+										<div class="zanwei zanweiY2">
+											<img class="mui-media-object titprg" src="https://pop.nosdn.127.net/ea84b418-8f73-462c-8755-8eed3595fcdf?imageView&thumbnail=400x0&quality=75&type=webp">
+										</div>
+										<div class="mui-media-body" style="font-size:12px">
+											<div class="titcl ft14 titpr">xxxdsdfd等待</div>
+
+											<span class="activecl2 ft20">¥8</span>
+											<img style="display:inline-block;float:right;margin-right:5px;vertical-align:middle;width:28px" onclick="addcart()" src="images/addcart.svg" />
+										</div>
+									</a>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+
+			</div> 
 		</div>
 		<!--<img id="close" src="images/order/closef.png" style="position: fixed;bottom: 10%;left: 50%;-webkit-transform: translateX(-50%);"/>-->
 		<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/mui.min.js"></script>
 		<script type="text/javascript">
 			mui.init();
-			$('#close').click(function(){
+			$('#close').click(function() {
 				plus.webview.currentWebview().close();
 			})
-		
 		</script>
 	</body>
 

@@ -643,27 +643,27 @@
 													console.log('gift',data)
 													if(data.code == 0 && data.content) {
 														var sysDeliveryType = data.content.sysDeliveryType;
-														mui.ajax(serverUrl + '/app/order/enter', {
-															data: {
-																userId: userId,
-																identityType: identityT,
-																goodsList: goodlists,
-																customerId: 1,
-																giftList:[],
-																productCouponList:productCouponList,
-																sysDeliveryType:sysDeliveryType
-															},
-															dataType: 'json',
-															type: 'post',
-															timeout: 10000,
-															headers: {
-																"Authorization": oldToken,
-																'Content-Type': 'application/json'
-															},
-															success: function(data, type, xhr) {
-																console.log('获取料单商品', data);
-																var dataObj = {};
-																if(data.code == 0 && data.content) {
+//														mui.ajax(serverUrl + '/app/order/enter', {
+//															data: {
+//																userId: userId,
+//																identityType: identityT,
+//																goodsList: goodlists,
+//																customerId: '1',
+//																giftList:[],
+//																productCouponList:productCouponList,
+//																sysDeliveryType:sysDeliveryType
+//															},
+//															dataType: 'json',
+//															type: 'post',
+//															timeout: 10000,
+//															headers: {
+//																"Authorization": oldToken,
+//																'Content-Type': 'application/json'
+//															},
+//															success: function(data, type, xhr) {
+//																console.log('获取料单商品', data);
+//																var dataObj = {};
+//																if(data.code == 0 && data.content) {
 																	if(cusId){
 																		openview({
 																			view:'page/order/chooseGift.html',
@@ -677,18 +677,18 @@
 																			id: 'chooseCustom',
 																		})
 																	}
-																} else {
-																	mui.toast(data.message)
-																}
-															},
-															error: function(xhr, type, errorThrown) {
-																console.log('响应失败  !');
-																plus.nativeUI.closeWaiting();
-
-															}
-														});
+//																} else {
+//																	plus.nativeUI.alert(data.message);
+//																}
+//															},
+//															error: function(xhr, type, errorThrown) {
+//																console.log('响应失败  !');
+//																plus.nativeUI.closeWaiting();
+//
+//															}
+//														});
 													} else {
-														mui.toast(data.message)
+														plus.nativeUI.alert(data.message);
 													}
 												},
 												error: function(xhr, type, errorThrown) {
@@ -719,7 +719,7 @@
 															id: 'workerMaterial'
 														})
 													}else{
-														mui.toast(data.message);
+														plus.nativeUI.alert(data.message);
 													}
 												},
 												error:function(xhr,type,errorThrown){
@@ -744,45 +744,45 @@
 												success: function(data, type, xhr) {
 													console.log('gift',data)
 													if(data.code == 0 && data.content) {
-														var sysDeliveryType = data.content.sysDeliveryType;
-														mui.ajax(serverUrl + '/app/order/enter', {
-															data: {
-																userId: userId,
-																identityType: identityT,
-																goodsList: goodlists,
-																customerId: '',
-																giftList:[],
-																productCouponList:productCouponList,
-																sysDeliveryType:sysDeliveryType
-															},
-															dataType: 'json',
-															type: 'post',
-															timeout: 10000,
-															headers: {
-																"Authorization": oldToken,
-																'Content-Type': 'application/json'
-															},
-															success: function(data, type, xhr) {
-																console.log('获取料单商品', data);
-																var dataObj = {};
-																if(data.code == 0 && data.content) {
+//														var sysDeliveryType = data.content.sysDeliveryType;
+//														mui.ajax(serverUrl + '/app/order/enter', {
+//															data: {
+//																userId: userId,
+//																identityType: identityT,
+//																goodsList: goodlists,
+//																customerId: '',
+//																giftList:[],
+//																productCouponList:productCouponList,
+//																sysDeliveryType:sysDeliveryType
+//															},
+//															dataType: 'json',
+//															type: 'post',
+//															timeout: 10000,
+//															headers: {
+//																"Authorization": oldToken,
+//																'Content-Type': 'application/json'
+//															},
+//															success: function(data, type, xhr) {
+//																console.log('获取料单商品', data);
+//																var dataObj = {};
+//																if(data.code == 0 && data.content) {
 																	openview({
 																		view: 'page/order/chooseGift.html',
 																		id: 'chooseGift',
 						//												autoShow:false,
 																	})
-																} else {
-																	mui.toast(data.message)
-																}
-															},
-															error: function(xhr, type, errorThrown) {
-																console.log('响应失败  !');
-																plus.nativeUI.closeWaiting();
-
-															}
-														});
+//																} else {
+//																	plus.nativeUI.alert(data.message);
+//																}
+//															},
+//															error: function(xhr, type, errorThrown) {
+//																console.log('响应失败  !');
+//																plus.nativeUI.closeWaiting();
+//
+//															}
+//														});
 													} else {
-														mui.toast(data.message)
+														plus.nativeUI.alert(data.message);
 													}
 												},
 												error: function(xhr, type, errorThrown) {

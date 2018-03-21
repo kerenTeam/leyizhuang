@@ -184,7 +184,7 @@
 										checkedGd.each(function(){
 											num+=Number($(this).parentsUntil('dl').find('.mui-input-numbox').val());
 											if(num > max){
-												mui.toast('当前促销活动已超过最大可选商品！！！')
+												plus.nativeUI.alert('当前促销活动已超过最大可选商品！！！')
 												cur.prop('checked',false)
 											}
 										})
@@ -202,7 +202,7 @@
 											checkedGd.each(function(){
 												num+=Number($(this).parentsUntil('dl').find('.mui-input-numbox').val());
 												if(num > max){
-													mui.toast('当前促销活动已超过最大可选商品！！！')
+													plus.nativeUI.alert('当前促销活动已超过最大可选商品！！！')
 													$(this).parentsUntil('dl').find('.mui-input-numbox').val($(this).parentsUntil('dl').find('.mui-input-numbox').val()-1)
 												}
 											})
@@ -324,7 +324,7 @@
 								}
 							})
 						} else {
-							mui.toast(data.message);
+							plus.nativeUI.alert(data.message);
 							plus.nativeUI.closeWaiting();
 							if(plus.webview.getWebviewById("chooseCustom")) {
 								plus.webview.getWebviewById("chooseCustom").close();

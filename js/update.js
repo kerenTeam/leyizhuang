@@ -114,7 +114,9 @@ function installWgt(path,hide,ios){
 		            plus.runtime.restart();
 		        });
 	        	} else{
-	        		plus.nativeUI.alert("安装失败["+e.code+"]："+e.message);
+//	        		plus.nativeUI.alert("安装失败["+e.code+"]："+e.message);
+					console.log("安装失败["+e.code+"]："+e.message)
+					plus.nativeUI.toast('升级失败')
 	        	}
         }
         //!hide && plus.nativeUI.alert("安装失败["+e.code+"]："+e.message);
