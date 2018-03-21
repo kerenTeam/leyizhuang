@@ -357,26 +357,24 @@
 						}
 						//分享
 						mui('.fenxiangBtn1')[0].onclick = function(){
-							console.log('商品详情2',JSON.stringify(data));
-
-						//示例
-						var url = 'http://119.27.182.129/lyzWeb0/page/goodsInfo.html';
-						var dataInfo = JSON.stringify(data);
-						var msg = {
-							myIsIndex:true,
-							title:'分享测试',
-							content:'分享测试内容',
-							href:url+'?dataInfo='+dataInfo,
-							thumbs:['https://b-ssl.duitang.com/uploads/item/201709/08/20170908120614_mN5TE.thumb.224_0.jpeg'],
-							pictures:['https://b-ssl.duitang.com/uploads/item/201709/08/20170908120614_mN5TE.thumb.224_0.jpeg']
-
-						};
-						var msg2 = {
-							pictures:["https://b-ssl.duitang.com/uploads/item/201709/08/20170908120614_mN5TE.thumb.224_0.jpeg"]
+							if(data.content){
+								console.log('商品详情2',JSON.stringify(data));
+								//示例
+								var url = 'http://119.27.182.129/lyzWeb0/page/goodsInfo.html',
+								    dataInfo = JSON.stringify(data),
+								    infoTxt = data.content.skuName || '乐意装';
+								var msg = {
+									myIsIndex:true,
+									title:infoTxt,
+									content:infoTxt,
+									href:url+'?dataInfo='+dataInfo
+								};
+								showSfun1(msg,function(){},function(){});
+							}else{
+								mui.toast('无效的分享内容');
+							}
 						}
-						showSfun1(msg,function(){},function(){});
-					}
-
+						//分享结束
 					}
 					if(data.code == 1000 ){
 						mui.toast(data.message)
