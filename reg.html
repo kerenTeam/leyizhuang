@@ -399,13 +399,15 @@
 
 									}
 									if(data.content.cityId){
-										$('#city').attr('disabled',true).val(data.content.cityId)
+										$('#city').val(data.content.cityId);
+										$('#city').attr('disabled',true)
 									}else{
 										$('#city').val('')
 
 									}
 									if(data.content.salesPhone){
-										$('#guide').attr('readonly',true).val(data.content.salesPhone)
+										$('#guide').val(data.content.salesPhone)
+										$('#guide').attr('readonly',true)
 									}else{
 										$('#guide').val()
 									}
