@@ -44,7 +44,7 @@
 
 		/*搜索*/
 		.search{height:60px;background-color:#f3f3f3;}
-		.searchBox{position:relative;margin:auto;width:76%;height:100%;}
+		.searchBox{position:relative;margin:auto;width:80%;height:100%;}
 		.searchBox img:first-child{width:100%;max-height:50px;}
 		.searchBox .searchIcon,.searchBox img:first-child{position:absolute;top:50%;z-index:1;-webkit-transform:translateY(-50%);}
 		.searchBox .searchIcon{left:10px;width:13px;}
@@ -63,7 +63,7 @@
 				<div class="searchBox">
 					<img src="../../images/searchBar.png"/>
 					<img class="searchIcon" src="../../images/search.png"/>
-					<div style="position: absolute;left: 30px;font-size: 12px;top:50%;-webkit-transform: translateY(-50%);">
+					<div style="position: absolute;left: 30px;font-size: 14px;top:50%;-webkit-transform: translateY(-50%);">
 						请输入顾客姓名、手机号
 					</div>
 				</div>
@@ -88,7 +88,12 @@
 					<div class="qashadow" data-id="<%=dataList[i].light%>" onclick="openDetail(<%=dataList[i].cusId%>,'<%=dataList[i].light%>')">
 						<div class="qtop flexr">
 							<div class="ft14" style="display: flex;align-items: center;">
-								<img class="Avator loadPics" data-src="" src="<%=dataList[i].picUrl%>"/>
+								<%if(dataList[i].picUrl && dataList[i].picUrl.indexOf('http')>-1){%>
+									<img class="Avator loadPics" data-src="" src="<%=dataList[i].picUrl%>"/>
+								<%}else{%>
+									<img class="Avator loadPics" data-src="" src="../../images/10.png"/>
+								<%}%>
+
 
 								<div style="flex: 1;margin-left: 10px;">
 									<div class="maincl ft16">

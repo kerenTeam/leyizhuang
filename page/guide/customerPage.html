@@ -341,10 +341,10 @@
 											$('#userNumber span').html(data.content.number)
 										}
 
-										if(data.content.picUrl) {
+										if(data.content.picUrl && data.content.picUrl.indexOf('http')>-1) {
 											$('#mypic').attr('src', data.content.picUrl)
 										}else{
-											$('#mypic').attr('src', '../../img/editset.png')
+											$('#mypic').attr('src', '../../images/10.png')
 
 										}
 										if(data.content.mobile) {
