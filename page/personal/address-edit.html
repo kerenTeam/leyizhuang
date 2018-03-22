@@ -85,7 +85,7 @@
 			.redc{color: red!important;}
 			.data ul li span{color: #666;}
 			.curADD input{display: inline-block;width: 25%;font-size:14px;height: 30px;padding: 5px;text-align: center;margin: 0;}
-			
+
 		</style>
 	</head>
 	<body>
@@ -109,7 +109,7 @@
 						</li>
 						<li class="clearfloat">
 								<p class="fl">联系电话  <span class="redc"> *</span></p>
-								<input type="number" class="fr shuru" id="phone"/>
+								<input type="tel" class="fr shuru" id="phone"/>
 						</li>
 						<style type="text/css">
 							.dizhiX{display: flex;height: auto !important;}
@@ -133,19 +133,19 @@
 				                </div>
 				            </div>
 						</li>-->
- 
+
 						<li class="clearfloat" style="display: flex;align-items: center;justify-content: space-between;">
 							<div class="">所在地区 <span class="redc"> *</span></div>
 							<div style="display: none;" class="" id="localadd" style="max-width: 70%;">
 								点击定位
 							</div>
 							<div class="curADD" style="width: 68%;">
-								<input type="text" id="provenceW"  value="" placeholder="省"/> -	
-								<input type="text" id="cityW" value="" placeholder="市"/> -	
-								<input type="text" id="districtW" value="" placeholder="区"/>	
+								<input type="text" id="provenceW"  value="" placeholder="省"/> -
+								<input type="text" id="cityW" value="" placeholder="市"/> -
+								<input type="text" id="districtW" value="" placeholder="区"/>
 							</div>
 							<img src="../../images/marker_01.png" onclick="goMap()" style="width: 20px;" alt="" />
-							
+
 						</li>
 						<li class="clearfloat">
 							<p class="fl">所在街道 <span class="redc"> *</span></p>
@@ -196,8 +196,8 @@
 				}
 			}
 			mui.plusReady(function(){
-				plus.storage.removeItem('$mapStorage'); 
-				
+				plus.storage.removeItem('$mapStorage');
+
 				//地图定位
 				var watchId;
 				function geoInf( position ) {
@@ -235,15 +235,15 @@
 						outSet( "获取定位位置信息失败："+e.message );
 					},{geocode:true,provider:'amap'});
 				}
-				window.addEventListener('refreshmapstorage',function(event){ 
+				window.addEventListener('refreshmapstorage',function(event){
 					ismapStorage();
 				})
 				ismapStorage();
 				function ismapStorage(){
-					var mapStorage = JSON.parse(plus.storage.getItem('$mapStorage') || '[]'); 
-						 if(mapStorage.length==0){ 
+					var mapStorage = JSON.parse(plus.storage.getItem('$mapStorage') || '[]');
+						 if(mapStorage.length==0){
 						 	getGeocode();
-						 } 
+						 }
 						 else{
 						 	$('#localadd').html(mapStorage[0].adraddress)
 						 	$('#provenceW').val(mapStorage[0].province)
@@ -254,7 +254,7 @@
 						 	$('#address').val(mapStorage[0].street+mapStorage[0].streetNumber)
 
 						 }
-				} 
+				}
 			})
 		</script>
 	<script type="text/javascript" charset="utf-8">
@@ -297,9 +297,9 @@
 							window.save = function(){
 								var newPerson = document.getElementById('person').value;
 								var newPhone = document.getElementById('phone').value;
-								var newAddress = document.getElementById('address').value; 
+								var newAddress = document.getElementById('address').value;
 								var defaultAddress = $('#acquiescence').hasClass('toggle--off');//默认地址
-								 
+
 								var newProvince=$('#provenceW').val();
 								var newCity=$('#cityW').val();
 								var newArea=$('#districtW').val();
@@ -370,7 +370,7 @@
 
 
 		})();
-    </script> 
+    </script>
 	<!--默认按钮-->
 	<script type="text/javascript">
 	$('.toggle').click(function(e){

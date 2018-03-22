@@ -208,7 +208,7 @@ body{padding-bottom: 0px;}
     font-size: 13px;
     margin-top: -19px;
 }
-.quotaRecord .div01 img{
+.quotaRecord .div01 img.img1{
     position: absolute;
     width: 15px;
     left: -9px;

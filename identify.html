@@ -54,7 +54,7 @@
 				/*position: fixed;*/
 				/*bottom: 10%;*/
 				width: auto;
-				padding: 5px 20px;
+				padding: 6px 23px;
 				font-size: 16px;
 				border-radius: 25px;
 				background-color: #f7f7f7;
@@ -91,7 +91,7 @@
 				var wv=plus.webview.currentWebview();
 				wv.setStyle({'popGesture':'none'});
 				//是否打开微信登录
-//				mui.ajax(serverUrl + '/app/system/setting/weChatLoginStatus', { 
+//				mui.ajax(serverUrl + '/app/system/setting/weChatLoginStatus', {
 //					dataType: 'json',
 //					type: 'post',
 //					timeout: 10000,
@@ -109,7 +109,7 @@
 //					}
 //
 //				});
-				
+
 				if(plus.webview.getWebviewById('shezhi')) {
 					plus.webview.getWebviewById('shezhi').close();
 				}
@@ -126,7 +126,7 @@
 						if(!clientId){
 							clientId = plus.push.getClientInfo().clientid;
 							console.log('clientId '+clientId)
-							
+
 						}else{
 							clearInterval(getClientid)
 						}
@@ -195,7 +195,7 @@
 											plus.storage.setItem("openId", openID);
 											plus.storage.setItem('userCity',data.content.cityId.toString())
 											plus.storage.removeItem('Acc_pass');
-											
+
 											mui.fire(plus.webview.getWebviewById('page/goodList.html'), 'refresh');
 											mui.fire(plus.webview.getWebviewById('center.html'), 'refresh');
 											plus.webview.getWebviewById('center.html').reload()

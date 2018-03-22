@@ -135,6 +135,7 @@ mui.plusReady(function(){
 	console.error('shares___',JSON.stringify(shares));
 },100)*/
 function showSfun1(msg,fun1,fun0,iosLinkPic,fun3){
+	var iosHideQQ = false;
 	if(!document.getElementById('shareWrap10')){
 		var pathStr = '';
 		if(msg.myIsIndex){
@@ -142,8 +143,11 @@ function showSfun1(msg,fun1,fun0,iosLinkPic,fun3){
 		}else if(msg.myIsIndex2){
 			pathStr = '../../';
 		}
-		if(!/android/i.test(navigator.userAgent)){
+		if(!/android/i.test(navigator.userAgent)){//ios环境
 			msg.thumbs = msg.pictures = [''];
+			if(msg.iosHideQQ){
+				iosHideQQ = true;
+			}
 		}
 		var shareWrap10 = document.createElement('div');
 		shareWrap10.id = 'shareWrap10';
@@ -159,7 +163,7 @@ function showSfun1(msg,fun1,fun0,iosLinkPic,fun3){
 					'<img src="'+pathStr+'img/share/pengyouquan.png" class="aClick2"/>'+
 					'<br />朋友圈'+
 				'</div>'+
-				'<div class="mui-col-sm-3 mui-col-xs-3 shareBtn">'+
+				'<div class="mui-col-sm-3 mui-col-xs-3 shareBtn" id="shareQQ">'+
 					'<img src="'+pathStr+'img/share/QQ.png" class="aClick2"/>'+
 					'<br />QQ(空间)'+
 				'</div>'+
@@ -171,7 +175,11 @@ function showSfun1(msg,fun1,fun0,iosLinkPic,fun3){
 			'</div>'+
 			'<h3 id="cancelS1" class="h4 fineT aClick2">取消</h3>'+
 		'</div>';
+
 		document.body.appendChild(shareWrap10);
+		if(iosHideQQ && mui('#shareQQ')[0]){
+			mui('#shareQQ')[0].style.display = 'none';
+		}
 	}
 
 	function hideSfun1(){
