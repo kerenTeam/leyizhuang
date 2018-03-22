@@ -54,17 +54,20 @@
 		
 		.clasfyItem {
 			position: absolute;
-			top: 50%;
-			-webkit-transform: translateY(-50%);
+			top: 0;
 			left: 0;
 			right: 0;
+			bottom: 0;
 			text-align: center;
-			line-height: 3;
+			display: flex;
+			align-items: center;
+    		justify-content: center;
+			background-color: rgba(0,0,0,0.3);
+			-webkit-transition: all 0.5 ease;
 		}
-		
 		.clasfyItem .itemName {
 			color: white;
-			font-size: 0.2rem;
+			font-size: 20px;
 			font-weight: 400;
 		}
 		
@@ -161,17 +164,7 @@
 			color: #f53c42;
 			line-height: 1.5;
 		}
-		
-		.itemGo {
-			background: none;
-			color: white;
-			border-radius: 50px;
-			font-size: 1rem;
-			border-color: #B62D29;
-			padding: 5px 15px;
-			color: #B62D29;
-		}
-		
+		 
 		.titpr {
 			white-space: normal;
 			max-width: 100px;
@@ -208,159 +201,172 @@
 		</header>
 		<script src="js/statusBar.js" type="text/javascript" charset="utf-8"></script>
 		<div class="mui-content" style="padding-top: 50px;">
-			<div id="classify">
-				<div class="typeDis" style="background-color: #fff;">
-					<div class="imgpt" onclick="goList()">
-						<img src="http://www.huarun.com/upload/temp/img/20160602/142150-979.jpg" alt="" />
-						<!--<div class="clasfyItem">
-						 		<div class="itemName">kk</div>
-						 		<button type="button" class="mui-btn itemGo ">
-									入场疯抢 >
-								</button>
-						 	</div>-->
+			<div id="classify"></div> 
+			<script type="text/html" id="classifyTpl">
+				<%for(var i = 0 ;i < list.length ; i++){%>
+				 <div class="typeDis" style="background-color: #fff;">
+					<div class="imgpt aClick" onclick="goList(<%=list[i].promotionId%>,'<%=list[i].promotionTitle%>')">
+						<img src="<%=list[i].picUrl || 'img/legray.svg'%>" alt="" />
+						<div class="clasfyItem">
+						 		<div class="itemName"><%=list[i].promotionTitle%></div>
+						 	</div>
 						<div class="trangle"></div>
 					</div>
-					<!--二级分类-->
 					<div class="npbk">
-						<div class="secClassfy" onclick="goList()">
+						<div class="secClassfy">
 							<ul class="" style="border-top: none!important;">
-								<li class="mui-media bgcwt" onclick="goodsInfo()">
-									<a href="javascript:;" style="border-top: none!important;">
-										<div class="zanwei zanweiY2">
-											<img class="mui-media-object titprg" src="http://www.huarun.com/upload/temp/img/20171206/202404-118.png">
-										</div>
-										<div class="mui-media-body" style="font-size:12px">
-											<div class="titcl ft14 titpr">妙想A+纯环保儿童水性木器漆</div>
-											<!--<p class='ft14'>规格:xxx &nbsp;单位:xxx</p>-->
-											<span class="activecl2 ft20">¥8</span>
-											<img style="display:inline-block;float:right;margin-right:5px;vertical-align:middle;width:28px" onclick="addcart()" src="images/addcart.svg" />
-										</div>
-									</a>
-								</li>
-								<li class="mui-media bgcwt" onclick="goodsInfo()">
-									<a href="javascript:;" style="border-top: none!important;">
-										<div class="zanwei zanweiY2">
-											<img class="mui-media-object titprg" src="http://www.huarun.com/upload/temp/img/20171206/202532-813.png">
-										</div>
-										<div class="mui-media-body" style="font-size:12px">
-											<div class="titcl ft14 titpr">盈润晶彩清味金装PU木器漆</div>
-
-											<span class="activecl2 ft20">¥8</span>
-											<img style="display:inline-block;float:right;margin-right:5px;vertical-align:middle;width:28px" onclick="addcart()" src="images/addcart.svg" />
-										</div>
-									</a>
-								</li>
-								<li class="mui-media bgcwt" onclick="goodsInfo()">
-									<a href="javascript:;" style="border-top: none!important;">
-										<div class="zanwei zanweiY2">
-											<img class="mui-media-object titprg" src="http://www.huarun.com/upload/temp/img/20170928/144326-344.png">
-										</div>
-										<div class="mui-media-body" style="font-size:12px">
-											<div class="titcl ft14 titpr">妙想A+纯环保儿童水性木器漆<</div>
-											<!--<p class='ft14'>规格:xxx &nbsp;单位:xxx</p>-->
-											<span class="activecl2 ft20">¥8</span>
-											<img style="display:inline-block;float:right;margin-right:5px;vertical-align:middle;width:28px" onclick="addcart()" src="images/addcart.svg" />
-										</div>
-									</a>
-								</li>
-								<li class="mui-media bgcwt" onclick="goodsInfo()">
-									<a href="javascript:;" style="border-top: none!important;">
-										<div class="zanwei zanweiY2">
-											<img class="mui-media-object titprg" src="http://www.huarun.com/upload/temp/img/20171206/202532-813.png">
-										</div>
-										<div class="mui-media-body" style="font-size:12px">
-											<div class="titcl ft14 titpr">盈润晶彩清味金装PU木器漆</div>
-
-											<span class="activecl2 ft20">¥8</span>
-											<img style="display:inline-block;float:right;margin-right:5px;vertical-align:middle;width:28px" onclick="addcart()" src="images/addcart.svg" />
-										</div>
-									</a>
-								</li>
+								<%if(list[i].goodsList.length){%>
+									<%if(list[i].goodsList.length<=8){%>
+										<%for(var j = 0 ; j < list[i].goodsList.length ; j++){%>
+											<li class="mui-media bgcwt" onclick="goodsInfo(<%=list[i].goodsList[j].goodsId%>)">
+												<a href="javascript:;" style="border-top: none!important;">
+													<div class="zanwei zanweiY2">
+														<img class="mui-media-object titprg" src="<%=list[i].goodsList[j].coverImageUri || 'img/editset.png'%>">
+													</div>
+													<div class="mui-media-body" style="font-size:12px">
+														<div class="titcl ft14 titpr"><%=list[i].goodsList[j].skuName%></div>
+														<!--<p class='ft14'>规格:xxx &nbsp;单位:xxx</p>-->
+														<span class="activecl2 ft20">¥<%=list[i].goodsList[j].retailPrice%></span>
+														<img style="display:inline-block;float:right;margin-right:5px;vertical-align:middle;width:28px" onclick="addcart(<%=list[i].goodsList[j].goodsId%>)" src="images/addcart.svg" />
+													</div>
+												</a>
+											</li>
+										<%}%>
+									<%}else{%>
+										<%for(var j = 0 ; j < 8 ; j++){%>
+											<li class="mui-media bgcwt" onclick="goodsInfo(<%=list[i].goodsList[j].goodsId%>)">
+												<a href="javascript:;" style="border-top: none!important;">
+													<div class="zanwei zanweiY2">
+														<img class="mui-media-object titprg" src="<%=list[i].goodsList[j].coverImageUri || 'img/editset.png'%>">
+													</div>
+													<div class="mui-media-body" style="font-size:12px">
+														<div class="titcl ft14 titpr"><%=list[i].goodsList[j].skuName%></div>
+														<!--<p class='ft14'>规格:xxx &nbsp;单位:xxx</p>-->
+														<span class="activecl2 ft20">¥<%=list[i].goodsList[j].retailPrice%></span>
+														<img style="display:inline-block;float:right;margin-right:5px;vertical-align:middle;width:28px" onclick="addcart(<%=list[i].goodsList[j].goodsId%>)" src="images/addcart.svg" />
+													</div>
+												</a>
+											</li>
+										<%}%>
+									<%}%>
+									<li class="mui-media bgcwt" style="vertical-align: top;" onclick="goList(<%=list[i].promotionId%>,'<%=list[i].promotionTitle%>')">
+										<a href="javascript:;" style="border-top: none!important;">
+											<div class="zanwei zanweiY2" style="margin-top: -10px;" style="background-color: #EEEEEE!important;">
+												查看更多
+											</div>
+											 
+										</a>
+									</li>
+								<%}else{%>
+									<div style="text-align:center;padding:20px;font-size: 12px;">暂无活动促销商品</div>
+								<%}%>
+								 
 							</ul>
 						</div>
 					</div>
-				</div>
-				<div class="typeDis" style="background-color: #fff;">
-					<div class="imgpt" onclick="goList()">
-						<img src="http://www.huarun.com/upload/temp/img/20151103/193714-273.jpg" alt="" />
-						<!--<div class="clasfyItem">
-						 		<div class="itemName">kk</div>
-						 		<button type="button" class="mui-btn itemGo ">
-									入场疯抢 >
-								</button>
-						 	</div>-->
-						<div class="trangle"></div>
-					</div>
-					<!--二级分类-->
-					<div class="npbk">
-						<div class="secClassfy" onclick="goList()">
-							<ul class="" style="border-top: none!important;">
-								<li class="mui-media bgcwt" onclick="goodsInfo()">
-									<a href="javascript:;" style="border-top: none!important;">
-										<div class="zanwei zanweiY2">
-											<img class="mui-media-object titprg" src="http://pop.nosdn.127.net/ea84b418-8f73-462c-8755-8eed3595fcdf?imageView&thumbnail=400x0&quality=75&type=webp">
-										</div>
-										<div class="mui-media-body" style="font-size:12px">
-											<div class="titcl ft14 titpr">xxxdsdfd等待nnn</div>
-											<!--<p class='ft14'>规格:xxx &nbsp;单位:xxx</p>-->
-											<span class="activecl2 ft20">¥8</span>
-											<img style="display:inline-block;float:right;margin-right:5px;vertical-align:middle;width:28px" onclick="addcart()" src="images/addcart.svg" />
-										</div>
-									</a>
-								</li>
-								<li class="mui-media bgcwt" onclick="goodsInfo()">
-									<a href="javascript:;" style="border-top: none!important;">
-										<div class="zanwei zanweiY2">
-											<img class="mui-media-object titprg" src="https://pop.nosdn.127.net/ea84b418-8f73-462c-8755-8eed3595fcdf?imageView&thumbnail=400x0&quality=75&type=webp">
-										</div>
-										<div class="mui-media-body" style="font-size:12px">
-											<div class="titcl ft14 titpr">xxxdsdfd等待</div>
-
-											<span class="activecl2 ft20">¥8</span>
-											<img style="display:inline-block;float:right;margin-right:5px;vertical-align:middle;width:28px" onclick="addcart()" src="images/addcart.svg" />
-										</div>
-									</a>
-								</li>
-								<li class="mui-media bgcwt" onclick="goodsInfo()">
-									<a href="javascript:;" style="border-top: none!important;">
-										<div class="zanwei zanweiY2">
-											<img class="mui-media-object titprg" src="https://pop.nosdn.127.net/ea84b418-8f73-462c-8755-8eed3595fcdf?imageView&thumbnail=400x0&quality=75&type=webp">
-										</div>
-										<div class="mui-media-body" style="font-size:12px">
-											<div class="titcl ft14 titpr">xxxdsdfd等待</div>
-
-											<span class="activecl2 ft20">¥8</span>
-											<img style="display:inline-block;float:right;margin-right:5px;vertical-align:middle;width:28px" onclick="addcart()" src="images/addcart.svg" />
-										</div>
-									</a>
-								</li>
-								<li class="mui-media bgcwt" onclick="goodsInfo()">
-									<a href="javascript:;" style="border-top: none!important;">
-										<div class="zanwei zanweiY2">
-											<img class="mui-media-object titprg" src="https://pop.nosdn.127.net/ea84b418-8f73-462c-8755-8eed3595fcdf?imageView&thumbnail=400x0&quality=75&type=webp">
-										</div>
-										<div class="mui-media-body" style="font-size:12px">
-											<div class="titcl ft14 titpr">xxxdsdfd等待</div>
-
-											<span class="activecl2 ft20">¥8</span>
-											<img style="display:inline-block;float:right;margin-right:5px;vertical-align:middle;width:28px" onclick="addcart()" src="images/addcart.svg" />
-										</div>
-									</a>
-								</li>
-							</ul>
-						</div>
-					</div>
-				</div>
-
-			</div> 
+				</div> 
+				<%}%>
+			</script>
 		</div>
 		<!--<img id="close" src="images/order/closef.png" style="position: fixed;bottom: 10%;left: 50%;-webkit-transform: translateX(-50%);"/>-->
 		<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/mui.min.js"></script>
+		<script src="js/artTemplate-native.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/default.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
 			mui.init();
 			$('#close').click(function() {
 				plus.webview.currentWebview().close();
+			})
+			function goodsInfo(id) {
+				openview({
+					view: 'page/goodsInfo.html',
+					id: 'goodsInfo',
+					extrasobj: {
+						goodId: id
+					}
+				})
+
+			}
+			function goList(listid,name) {
+				openview({
+					view: 'promotionInfo.html',
+					id: 'promotionInfo',
+					extrasobj: {
+						listId: listid,
+						listname: name
+					}
+				})
+
+			}
+			mui.plusReady(function(){
+				plus.nativeUI.showWaiting();
+				//加入购物车
+				window.addcart = function(goodid) {
+					event.stopPropagation();
+					plus.nativeUI.showWaiting();
+					mui.ajax(serverUrl + '/app/materialList/add', {
+						data: {
+							userId: userId,
+							identityType: identityT,
+							params: goodid + '-' + 1
+						},
+						dataType: 'json',
+						headers: {
+							"Authorization": oldToken
+						},
+						type: 'post',
+						timeout: 10000,
+						success: function(data, type, xhr) {
+							plus.nativeUI.closeWaiting();
+							console.log('加入购物车', data);
+							if(data.code == 0) {
+								plus.nativeUI.toast('加入成功')
+								mui.fire(plus.webview.getWebviewById('cart.html'), 'refresh');
+
+							} else {
+								mui.toast(data.message)
+							}
+
+						},
+						error: function(xhr, type, errorThrown) {
+							plus.nativeUI.closeWaiting();
+							mui.toast(type)
+							console.log('响应失败');
+						}
+					});
+				}
+				
+				var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
+				var userId = plus.storage.getItem('$userId');
+				var oldToken = plus.storage.getItem('oldToken');
+				mui.ajax(serverUrl+'/app/act/list',{
+					data:{
+						userId:userId,
+						identityType:identityT,
+					},
+					dataType:'json',
+					type:'post',
+					timeout:10000,
+					headers:{"Authorization":oldToken},
+					success:function(data,type,xhr){
+						plus.nativeUI.closeWaiting();
+						console.log('活动促销',data);
+				       	if(data.code == 0){
+					     	if(data.content && data.content.length){
+					     	  $('#classify').html(template('classifyTpl', {list:data.content}));
+							}else{
+								$('#classify').html('<div style="text-align:center;padding:15px;font-size: 12px;">暂无活动促销</div>')
+							}
+				       	}
+				       	plus.nativeUI.closeWaiting();
+					},
+					error:function(xhr,type,errorThrown){
+						plus.nativeUI.closeWaiting();
+						console.log('当前网络不好,请重试');
+					}
+				});
+			
 			})
 		</script>
 	</body>

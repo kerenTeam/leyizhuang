@@ -376,6 +376,7 @@
 															mui.fire(plus.webview.getWebviewById('hotGoods'),'refresh');
 															mui.fire(plus.webview.getWebviewById('history'),'refresh');
 															mui.fire(plus.webview.getWebviewById('searchGoods'),'refreshscgd');
+															mui.fire(plus.webview.getWebviewById('promotionInfo'),'refresh');
 															cartload();
 														} else {
 															mui.toast(data.message)
@@ -498,6 +499,7 @@
 												mui.fire(plus.webview.getWebviewById('searchGoods'),'refresh');
 												mui.fire(plus.webview.getWebviewById('goodList'),'refresh');
 												mui.fire(plus.webview.getWebviewById('page/goodList.html'),'refresh');
+												mui.fire(plus.webview.getWebviewById('promotionInfo'),'refresh');
 											} else {
 												mui.toast(data.message)
 											}
@@ -543,6 +545,7 @@
 														mui.fire(plus.webview.getWebviewById('cart.html'), 'refresh');
 														mui.fire(plus.webview.getWebviewById('specialGoods'),'refreshsd');
 														mui.fire(plus.webview.getWebviewById('cart'), 'refresh');
+														mui.fire(plus.webview.getWebviewById('promotionInfo'),'refresh');
 													} else {
 														mui.toast(data.message)
 													}

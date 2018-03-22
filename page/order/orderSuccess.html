@@ -53,6 +53,12 @@
 					if(plus.webview.getWebviewById('listCheckInfo')){
 						plus.webview.getWebviewById('listCheckInfo').close()
 					}
+					if(plus.webview.getWebviewById('promotionInfo')){
+						plus.webview.getWebviewById('promotionInfo').close()
+					}
+					if(plus.webview.getWebviewById('promotion')){
+						plus.webview.getWebviewById('promotion').close()
+					}
 					var index = plus.webview.getLaunchWebview();
 					index.reload()
 					mui.fire(index,'pagerefresh');

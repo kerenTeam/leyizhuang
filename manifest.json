@@ -1954,7 +1954,18 @@
 				"resources": [
 					"%3C%\u003dlist[i].coverImageUri%%3E"
 				],
-				"refer": [],
+				"refer": [
+					"page/goodsInfo.html",
+					"promotionInfo.html"
+				],
+				"priority": 0
+			},
+			"promotionInfo.html": {
+				"resources": [],
+				"refer": [
+					"page/goodsInfo.html",
+					"cart.html"
+				],
 				"priority": 0
 			}
 		},

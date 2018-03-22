@@ -1373,6 +1373,17 @@
   "promotion.html": {
     "resources": [
       "%3C%\u003dlist[i].coverImageUri%%3E"
+    ],
+    "refer": [
+      "page/goodsInfo.html",
+      "promotionInfo.html"
     ]
+  },
+  "promotionInfo.html": {
+    "refer": [
+      "page/goodsInfo.html",
+      "cart.html"
+    ],
+    "resources": []
   }
 }

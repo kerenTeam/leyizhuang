@@ -273,7 +273,12 @@
 			<%}%>
 		</script>
 		<div class="specialGoods" style="display:none;margin: 10px 10px -5px 10px;" onclick="specialGoods()">
-			<img src="images/index/specialGoods.png" style="width: 100%;margin: 0;"/>
+			<!--<div style="background-color: rgb(253, 229, 107);padding: 12px 0 8px 0;text-align: center;border-radius: 3px;color: rgb(253, 115, 52);font-weight: 700;font-size: 18px;">
+				专供商品
+				<div style="font-size: 12px;color:cornflowerblue;font-weight: 400;">专家智慧 · 信赖之选</div>
+			</div>-->
+			<!--<img src="images/index/special2.png" style="width: 100%;"/>-->
+			<img src="images/index/special3.png" style="width: 100%;"/>
 		</div>
 		<div class="padd10" id="huodong0"></div>
 		<script type="text/html" id="huodongS0">
@@ -1348,6 +1353,7 @@
 					mui.fire(plus.webview.getWebviewById('specialGoods'),'refreshct');
 					mui.fire(plus.webview.getWebviewById('history'),'refreshct');
 					mui.fire(plus.webview.getWebviewById('searchGoods'),'refreshct');
+					mui.fire(plus.webview.getWebviewById('promotionInfo'),'refreshct');
 					drawBadge('hide');
 					if(cartNum != 0){
 						drawBadge();

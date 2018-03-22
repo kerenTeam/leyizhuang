@@ -108,6 +108,7 @@
 		    height: 35px;
 		    margin: 3px 0;
 		}
+		.hotSearch span{background-color: #EEEEEE;}
 	</style>
 
 	<body>
@@ -125,7 +126,19 @@
 			</div>
 		</header>
 		<script src="../js/statusBar.js" type="text/javascript" charset="utf-8"></script>
-		<div id="record">暂无搜索记录</div>
+		<div class="history">
+			<span class="activecl">热门搜索</span>
+			<div class="clear"></div>
+			<div class="hisList hotSearch">
+				<span>五合一</span>
+				<span>健康</span>
+				<span>面漆</span>
+				<span>白底漆</span>
+				<span>环保</span>
+				<span>底漆</span>
+			</div>
+		</div>
+		<div id="record"></div>
 		<script id="recordTpt" type="text/html">
 			<%if(data.length==0){%>
 			<div class="searchRecord">
@@ -158,7 +171,7 @@
 					<%for(var i = 0 ;i<list.length;i++){%>
 					<li class="mui-table-view-cell mui-media" id="<%=list[i].id%>" onclick="goodsInfo(<%=list[i].id%>)">
 						<a href="javascript:;">
-							<img class="mui-media-object mui-pull-left" src="<%=list[i].coverImageUri%>">
+							<img class="mui-media-object mui-pull-left" src="<%=list[i].coverImageUri || '../img/editset.png'%>">
 							<div class="mui-media-body ft16">
 								<%=list[i].goodsName%>
 								<p class='mui-ellipsis ft16'>规格:
@@ -224,7 +237,7 @@
 				$("#container").css("display", "none");
 				$(".searchOut").css("display", "block");
 				$("input").val($(this).text());
-				doSearch($.trim($(this).text()))
+				submitTest()
 			})
 				 
 			//搜索方法
