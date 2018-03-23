@@ -10,28 +10,33 @@
 
 	<body>
 		<style type="text/css">
-			body{background-color: #fff;}
-			#identy {
+			body{position: absolute;width: 100%;height: 100%;background: url(img/regBackpng-min.png) 0 0 no-repeat;background-size: 112%;}
+			/*#identy {
 				margin-top: 55%;
-			}
+			}*/
 			.oauth-area {
 				text-align: center;
 				width: 100%;
 				padding: 0px;
 				margin: 0px;
-				min-height: 60px;
-				background: url(img/Spinner.svg) center center no-repeat;
+				/*min-height: 60px;*/
+				background: url(img/Spinner.svg) 20px center no-repeat;
 				background-size: 50px;
 			}
 			.oauth-area .oauth-btn {
-				display: inline-block;
-				width: 60px;
-				height: 60px;
-				background-size: 60px 60px;
-				background-position: center center;
-				background-repeat: no-repeat;
-				vertical-align: middle;
-				border-radius: 50%;
+			    display: inline-block;
+			    width: 30px;
+			    height: 30px;
+			    background-size: 30px 30px;
+			    background-position: 30px center;
+			    background-repeat: no-repeat;
+			    vertical-align: middle;
+			    /* border-radius: 50%; */
+			    position: absolute;
+			    width: 100%;
+			    height: 100%;
+			    left: 0;
+			    top: 0;
 			}
 			.oauth-area .oauth-btn:active {
 				border: solid 1px #aaa;
@@ -51,24 +56,78 @@
 			    color: #666;
 			}
 			.employee{
-				/*position: fixed;*/
-				/*bottom: 10%;*/
 				width: auto;
 				padding: 6px 23px;
 				font-size: 16px;
 				border-radius: 25px;
 				background-color: #f7f7f7;
 				border-color: #e8e8e8;
-				/*border: none;*/
 				color: #777;
 			}
+
+			.tableDiv{display: table;width: 100%;height: 100%;}
+			.tableCell{display: table-cell;vertical-align:middle;padding: 0px 10%;}
+			.gukeLogin{padding: 15% 0 26%;text-align: center;background-color: rgba(255, 255, 255, 0.37);border-radius: 5px;}
+			.gukeLogin p{color: #fff;font-size: 14px;margin-bottom: 10%;}
+			.btnone{
+		        font-size: 17px;
+			    color: #fff;
+			    width: 69%;
+			    padding: 9px;
+			    margin: 0 auto;
+			    /*background-color: #a72f2e !important;*/
+			    background-color: rgba(76, 175, 80, 0.72) !important;
+			    border-radius: 5px;
+			    position: relative;
+			    padding-left: 30px;
+			}
+			.btnone img{
+			    width: 14%;
+			    vertical-align: middle;
+			    margin-right: 6%;
+			}
+			.yuangongLogin{text-align: center;color: #fff;}
+			.yuangongLogin p{color: #fff;font-size: 14px;position: relative;display: -webkit-flex;margin: 12% 0;}
+			.yuangongLogin p span{display: inline-block;
+			    height: 1px;
+			    background-color: #fff;
+			    -webkit-flex:1;
+			    position: relative;
+			    top: 10px;
+			}
+			.yuangongLogin p b{position: relative;width: 80px;font-weight: initial;}
+			.btnone2{background-color: rgba(255, 255, 255, 0.37) !important;color: #fff;padding-left: 9px;}
+			.btnone:active{background-color: rgba(167, 47, 46, 0.7) !important;transition: all .3s;}
+			.logo11{width: 24%;margin-bottom: 10%;}
 		</style>
-		<div style="margin-top: 55%;"></div>
-		<div id="identy" style="display: ;">
+		<!--<div id="identy" >
 			<div class="mui-content-padded oauth-area"></div>
 			<div class="custom">顾客微信快速登录</div>
 		</div>
-		<button type="button" class="mui-btn mui-btn-block employee">员工登录</button>
+		<button type="button" class="mui-btn mui-btn-block employee">员工登录</button>-->
+
+		<div class="tableDiv">
+			<div class="tableCell">
+				<div class="gukeLogin" id="identy">
+					<img class="logo11" src="img/logo11.png"/>
+					<p>顾客微信快速登录</p>
+					<div class="btnone mui-content-padded oauth-area">
+						<!--<img src="img/weixinbaise.svg"/>-->
+						顾客登录
+					</div>
+				</div>
+				<div class="yuangongLogin">
+					<p>
+						<span></span>
+						<b>员工登录</b>
+						<span></span>
+					</p>
+					<div class="btnone btnone2 employee">
+						员工登录
+					</div>
+				</div>
+			</div>
+		</div>
 
 		<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/mui.min.js"></script>
@@ -152,11 +211,13 @@
 							btn.setAttribute('class', 'oauth-btn' + (!isInstalled && service.id === 'weixin' ? (' disabled') : ''));
 							btn.authId = service.id;
 							$('.oauth-area').css('background','none');
-							btn.style.backgroundImage = 'url("images/' + service.id + '.svg")'
+//							btn.innerHTML = btn.style
+							btn.style.backgroundImage = 'url("img/weixinbaise.svg")'
 							oauthArea.appendChild(btn);
 						}
 					}
 					mui(oauthArea).on('tap', '.oauth-btn', function() {
+						plus.nativeUI.showWaiting();
 						if(this.classList.contains('disabled')) {
 							plus.nativeUI.toast('您尚未安装微信客户端');
 							return;
