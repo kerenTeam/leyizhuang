@@ -94,6 +94,7 @@
 				<div class="mui-input-row flexr">
 					<label style="border-right: 1px solid #EEEEEE;width: 27%;">服务导购</label>
 					<input id="guide" type="tel" class="mui-input-clear mui-input" placeholder="请输入导购手机号（选填）">
+					<input style="display: none;" id="guide2" type="tel" class="mui-input" placeholder="请输入导购手机号（选填）">
 				</div>
 			</form>
 			<div style="color:#FF5053;padding: 15px;font-size: 14px;">
@@ -406,10 +407,13 @@
 
 									}
 									if(data.content.salesPhone){
-										$('#guide').val(data.content.salesPhone)
+										$('#guide').val(data.content.salesPhone).hide()
 										$('#guide').attr('readonly',true)
+										$('#guide2').show().val(data.content.salesPhone)
+										$('#guide2').attr('readonly',true)
 									}else{
-										$('#guide').val()
+										$('#guide').show().val()
+										$('#guide2').val().hide()
 									}
 								}
 							},
