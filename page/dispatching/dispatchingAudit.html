@@ -40,7 +40,8 @@
 			.checkListDZ{padding: 10px 0;color: #757575;font-size: 16px;}
 			.checkListB{padding: 10px 20px;text-align: right;}
 			#infoListDiv{transition: all .3s;}
-			.flexr{display: flex;justify-content: space-between;margin: 2px 0;}
+			.flexr{display: flex;justify-content: space-around;margin: 2px 0;}
+			.flexr>div{flex: 1;}
 			a,a:active{color: rgb(51,51,51)!important;}
 		</style>
 	</head>
@@ -64,7 +65,7 @@
 						<div class="flexr">
 							<div>
 								<span class="disablecl">
-									代收款：
+									代&nbsp;&nbsp;收&nbsp;&nbsp;款：
 								</span>
 								<span class="titcl">
 									¥<%=list.agencyMoney%>
@@ -72,7 +73,7 @@
 							</div>
 							<div id="">
 								<span class="disablecl">
-									实际收款金额：
+									实收金额：
 								</span>
 								<span class="titcl">
 									¥<%=list.realMoney%>
