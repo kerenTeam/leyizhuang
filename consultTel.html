@@ -18,7 +18,7 @@
 	<body style="background-color:rgba(0,0,0,0.4);">
 		 <div id="close" style="position: fixed;top: 0;bottom: 0;left: 0;right: 0;width: 100%;">
 		 	<div class="alltel">
-				
+				<p class="afterBorder ft12 maincl fttc padd10">服务时间:8:30am - 9:00pm</p>
 			</div> 
 		 </div>
 			
@@ -60,7 +60,7 @@
 								for(var i in data.content){
 									tel += '<div class="afterBorder"><a href="tel:'+data.content[i].supportHotline+'"><div style="font-size:13px;color:black">'+data.content[i].name+'</div>'+data.content[i].supportHotline+'</a></div>'
 								}
-								$('.alltel').html(tel)
+								$('.alltel').append(tel)
 								$('.alltel div:last-child').removeClass('afterBorder')
 							}else{
 								$('.alltel').html('暂无客服联系电话')

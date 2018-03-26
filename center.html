@@ -384,6 +384,7 @@
 			</div>
 
 		</div>
+		<div id="pushTest"></div>
 		<script type="text/javascript">
 			window.onscroll = function() {
 				if(document.body.scrollTop > 25) {
@@ -458,17 +459,17 @@
 				    plus.push.addEventListener( "click", function( pushInfo ) {
 				    		console.log('监听click消息' , pushInfo);
 				    		if(JSON.stringify(pushInfo).indexOf('body')==-1){
-				    			//安卓点击，ios receive消息的本地点击
-//				    			var  pushMsg = JSON.parse(pushInfo.payload);
-				    			var pushMsg = pushInfo.payload;
-
-							bannerGo(pushMsg.banner,pushMsg.info,'one');
+				    			//安卓点击，ios receive消息的本地点击 
+								if(/android/i.test(navigator.userAgent)){
+							 	 	var pushMsg = pushInfo.payload;
+								}else{
+				    				var pushMsg = JSON.parse(pushInfo.payload);
+								}	
+								bannerGo(pushMsg.banner,pushMsg.info,'one');
 				    		}else{
 				    			//ios后台对应的 点击
-//							var pushMsg = pushInfo.payload.payload;
-//alert(pushInfo.payload.payload)
-//alert(pushInfo.payload)
-							var pushMsg = pushInfo.payload;
+							var pushMsg = pushInfo.payload.payload;
+//							var pushMsg = pushInfo.payload;
 							bannerGo(pushMsg.banner,pushMsg.info,'one');
 				    		}
 				    }, false );

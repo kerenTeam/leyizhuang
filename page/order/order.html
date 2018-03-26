@@ -218,7 +218,7 @@
 						<span class="mui-icon mui-icon-arrowright maincl ft20" style="margin-top: 3px;"></span>
 					</div>
 					<%}else{%>
-					<div class="qtop flexr pad10" onclick="address()" id="addid" data-receiver="<%=obj[0].person%>" data-receiverPhone="<%=obj[0].phone%>" data-deliveryCity="<%=obj[0].city%>" data-deliveryCounty="<%=obj[0].country%>" data-deliveryStreet="<%=obj[0].street%>" data-residenceName="<%=obj[0].villageName%>" data-detailedAddress="<%=obj[0].address%>">
+					<div class="qtop flexr pad10" onclick="address()" id="addid" data-receiver="<%=obj[0].person%>" data-receiverPhone="<%=obj[0].phone%>" data-deliveryProvince="<%=obj[0].province%>" data-deliveryCity="<%=obj[0].city%>" data-deliveryCounty="<%=obj[0].country%>" data-deliveryStreet="<%=obj[0].street%>" data-residenceName="<%=obj[0].villageName%>" data-detailedAddress="<%=obj[0].address%>">
 						<img src="../../images/order/map.svg" style="margin-right: 10px;"/>
 						<div style="flex: 1;">
 							<div class="ft15">
@@ -1413,6 +1413,7 @@
 						} else {
 							receiver = $('#addid').attr('data-receiver'),
 							receiverPhone = $('#addid').attr('data-receiverPhone'),
+							deliveryProvince = $('#addid').attr('data-deliveryProvince'),
 							deliveryCity = $('#addid').attr('data-deliveryCity'),
 							deliveryCounty = $('#addid').attr('data-deliveryCounty'),
 							deliveryStreet = $('#addid').attr('data-deliveryStreet'),
@@ -1471,6 +1472,7 @@
 						"bookingStoreAddress": bookingStoreAddress,
 						"receiver": receiver,
 						"receiverPhone": receiverPhone,
+						"deliveryProvince":deliveryProvince,
 						"deliveryCity": deliveryCity,
 						"deliveryCounty": deliveryCounty,
 						"deliveryStreet": deliveryStreet,
