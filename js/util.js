@@ -22,6 +22,8 @@ var util = {
 				bounce: 'vertical',
 	        		bounceBackground:'#DCDCDC',//灰色
 	        		popGesture: 'close',
+	        		scrollIndicator:'vertical',//滚动条显示
+          		userSelect:false//用户是否可选择内容
 			},
 			subpages = util.options.subpages,
 			self = plus.webview.currentWebview(),
@@ -77,10 +79,10 @@ var util = {
 	 * 点击重绘底部tab （view控件）
 	 */
 	toggleNview: function(currIndex) {
-		if(currIndex !=2){ 
+		if(currIndex !=2){
 			mui.fire(plus.webview.getWebviewById('cart.html'),'refreshBtn')
 		}
-		
+
 		currIndex = currIndex * 2;
 		// 重绘当前tag 包括icon和text，所以执行两个重绘操作
 		util.updateSubNView(currIndex, util.options.ACTIVE_COLOR);
