@@ -10,7 +10,7 @@
 
 	<body>
 		<style type="text/css">
-			body{position: absolute;width: 100%;height: 100%;background: url(img/regBackpng-min.png) 0 0 no-repeat;background-size: 112%;}
+			body{position: absolute;width: 100%;height: 100%;background: url(img/regBackpng-min.png) 0 0 ;background-size: 100%;}
 			/*#identy {
 				margin-top: 55%;
 			}*/
@@ -55,7 +55,7 @@
 			    font-size: 14px;
 			    color: #666;
 			}
-			.employee{
+			/*.employee{
 				width: auto;
 				padding: 6px 23px;
 				font-size: 16px;
@@ -63,7 +63,7 @@
 				background-color: #f7f7f7;
 				border-color: #e8e8e8;
 				color: #777;
-			}
+			}*/
 
 			.tableDiv{display: table;width: 100%;height: 100%;}
 			.tableCell{display: table-cell;vertical-align:middle;padding: 0px 10%;}
@@ -100,19 +100,21 @@
 			.btnone:active{background-color: rgba(167, 47, 46, 0.7) !important;transition: all .3s;}
 			.logo11{width: 24%;margin-bottom: 10%;}
 		</style>
+
+		<!--第一版-->
 		<!--<div id="identy" >
 			<div class="mui-content-padded oauth-area"></div>
 			<div class="custom">顾客微信快速登录</div>
 		</div>
 		<button type="button" class="mui-btn mui-btn-block employee">员工登录</button>-->
 
-		<div class="tableDiv">
+		<!--第二版-->
+		<!--<div class="tableDiv">
 			<div class="tableCell">
-				<div class="gukeLogin" id="identy">
+				<div class="gukeLogin">
 					<img class="logo11" src="img/logo11.png"/>
 					<p>顾客微信快速登录</p>
 					<div class="btnone mui-content-padded oauth-area">
-						<!--<img src="img/weixinbaise.svg"/>-->
 						顾客登录
 					</div>
 				</div>
@@ -127,6 +129,16 @@
 					</div>
 				</div>
 			</div>
+		</div>-->
+		<style type="text/css">
+			.login2Btns{position: absolute;width: 100%;left: 0;bottom: 17%;text-align: center;}
+			.login2Btns button{display: inline-block;width: 44%;margin: 3%;padding: 2.8% 0 2.5%;font-size: 16px;border: none;color: #fff;}
+			.btn21{background-color: #b9afad;}
+			.btn22{background-color: #c91018;}
+		</style>
+		<div class="login2Btns">
+			<button class="btn21 employee"  style="margin-right: 1%;">员工登录</button>
+			<button class="btn22" id="weixinLogin" style="margin-left: 1%;">微信快速登录</button>
 		</div>
 
 		<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
@@ -198,125 +210,120 @@
 				//第三方登录
 				var authBtns = ['weixin']; //配置业务支持的第三方登录
 				var auths = {};
-				var oauthArea = document.querySelector('.oauth-area');
 				plus.oauth.getServices(function(services) {
 					for(var i in services) {
-						console.log(services);
 						var service = services[i];
 						auths[service.id] = service;
 						if(~authBtns.indexOf(service.id)) {
 							var isInstalled = app.isInstalled(service.id);
-							var btn = document.createElement('div');
-							//如果微信未安装，则为不启用状态
-							btn.setAttribute('class', 'oauth-btn' + (!isInstalled && service.id === 'weixin' ? (' disabled') : ''));
+							var btn = document.getElementById('weixinLogin');
+							btn.setAttribute('class', 'btn22' + (!isInstalled && service.id === ' weixin' ? (' disabled') : ''));
 							btn.authId = service.id;
-							$('.oauth-area').css('background','none');
-//							btn.innerHTML = btn.style
-							btn.style.backgroundImage = 'url("img/weixinbaise.svg")'
-							oauthArea.appendChild(btn);
 						}
 					}
-					mui(oauthArea).on('tap', '.oauth-btn', function() {
+					mui('#weixinLogin')[0].onclick = function() {
 						plus.nativeUI.showWaiting();
 						if(this.classList.contains('disabled')) {
 							plus.nativeUI.toast('您尚未安装微信客户端');
 							return;
-						}
-						var auth = auths[this.authId];
-						var waiting = plus.nativeUI.showWaiting();
-						auth.login(function() {
-							waiting.close();
-							auth.getUserInfo(function() {
-								var name = auth.userInfo.nickname || auth.userInfo.name;
-								var openID = auth.userInfo.openid;
-								var picUrl = auth.userInfo.headimgurl,
-									nickName = auth.userInfo.nickname,
-									sex = auth.userInfo.sex;
-								console.log(openID);
-								mui.ajax(serverUrl + '/app/customer/login', {
-									data: {
-										"openId": openID,
-										"deviceId":deviceId,
-										"clientId":clientId,
-										"systemType":systemType
-									},
-									dataType: 'json',
-									type: 'post',
-									timeout: 10000,
-									success: function(data, type, xhr) {
-										console.log('登录返回', data);
-										if(data.code == 0 && data.content.isExist) {
-											plus.nativeUI.closeWaiting();
-											plus.storage.setItem('$userId',JSON.stringify(data.content.userId))
-											plus.storage.setItem("$identityType", JSON.stringify({
-												'identityType': '6'
-											}));
-											plus.storage.setItem("oldToken", xhr.getResponseHeader('token'));
-											plus.storage.setItem("rankCode", data.content.rankCode);
-											plus.storage.setItem("openId", openID);
-											plus.storage.setItem('userCity',data.content.cityId.toString())
-											plus.storage.removeItem('Acc_pass');
-
-											mui.fire(plus.webview.getWebviewById('page/goodList.html'), 'refresh');
-											mui.fire(plus.webview.getWebviewById('center.html'), 'refresh');
-											plus.webview.getWebviewById('center.html').reload()
-											mui.fire(plus.webview.getWebviewById('cart.html'), 'refresh');
-											plus.webview.getWebviewById('cart.html').reload()
-											var index = plus.webview.getLaunchWebview();
-											index.reload()
-											mui.fire(index, 'refreshpage');
-											if(plus.webview.getWebviewById('reg')) {
-												plus.webview.getWebviewById('reg').close();
-											}
-											if(plus.webview.getWebviewById('login')) {
-												plus.webview.getWebviewById('login').close();
-											}
-											if(plus.webview.getWebviewById('dispatching')) {
-												plus.webview.getWebviewById('dispatching').close();
-											}
-
-											var time2 = setTimeout(function() {
+						}else if(!this.authId){
+							mui.toast('请稍后，正在检测是否安装微信！');
+						}else{
+							var auth = auths[this.authId];
+							var waiting = plus.nativeUI.showWaiting();
+							auth.login(function() {
+								waiting.close();
+								auth.getUserInfo(function() {
+									var name = auth.userInfo.nickname || auth.userInfo.name;
+									var openID = auth.userInfo.openid;
+									var picUrl = auth.userInfo.headimgurl,
+										nickName = auth.userInfo.nickname,
+										sex = auth.userInfo.sex;
+									console.log(openID);
+									mui.ajax(serverUrl + '/app/customer/login', {
+										data: {
+											"openId": openID,
+											"deviceId":deviceId,
+											"clientId":clientId,
+											"systemType":systemType
+										},
+										dataType: 'json',
+										type: 'post',
+										timeout: 10000,
+										success: function(data, type, xhr) {
+											console.log('登录返回', data);
+											if(data.code == 0 && data.content.isExist) {
 												plus.nativeUI.closeWaiting();
-												mui.toast('登录成功');
-												plus.webview.currentWebview().close();
-											}, 100)
+												plus.storage.setItem('$userId',JSON.stringify(data.content.userId))
+												plus.storage.setItem("$identityType", JSON.stringify({
+													'identityType': '6'
+												}));
+												plus.storage.setItem("oldToken", xhr.getResponseHeader('token'));
+												plus.storage.setItem("rankCode", data.content.rankCode);
+												plus.storage.setItem("openId", openID);
+												plus.storage.setItem('userCity',data.content.cityId.toString())
+												plus.storage.removeItem('Acc_pass');
 
-										} else if(data.code == -1) {
+												mui.fire(plus.webview.getWebviewById('page/goodList.html'), 'refresh');
+												mui.fire(plus.webview.getWebviewById('center.html'), 'refresh');
+												plus.webview.getWebviewById('center.html').reload()
+												mui.fire(plus.webview.getWebviewById('cart.html'), 'refresh');
+												plus.webview.getWebviewById('cart.html').reload()
+												var index = plus.webview.getLaunchWebview();
+												index.reload()
+												mui.fire(index, 'refreshpage');
+												if(plus.webview.getWebviewById('reg')) {
+													plus.webview.getWebviewById('reg').close();
+												}
+												if(plus.webview.getWebviewById('login')) {
+													plus.webview.getWebviewById('login').close();
+												}
+												if(plus.webview.getWebviewById('dispatching')) {
+													plus.webview.getWebviewById('dispatching').close();
+												}
+
+												var time2 = setTimeout(function() {
+													plus.nativeUI.closeWaiting();
+													mui.toast('登录成功');
+													plus.webview.currentWebview().close();
+												}, 100)
+
+											} else if(data.code == -1) {
+												plus.nativeUI.closeWaiting();
+												mui.toast(data.message);
+												//去注册
+												openview({
+													view: 'reg.html',
+													id: 'reg',
+													extrasobj: {
+														openid: openID,
+														picurl: picUrl,
+														sex: sex,
+														nick: name
+													},
+												})
+											}
+
+										},
+										error: function(xhr, type, errorThrown) {
 											plus.nativeUI.closeWaiting();
-											mui.toast(data.message);
-											//去注册
-											openview({
-												view: 'reg.html',
-												id: 'reg',
-												extrasobj: {
-													openid: openID,
-													picurl: picUrl,
-													sex: sex,
-													nick: name
-												},
-											})
+											console.log('登录响应失败');
 										}
 
-									},
-									error: function(xhr, type, errorThrown) {
-										plus.nativeUI.closeWaiting();
-										console.log('登录响应失败');
-									}
+									});
 
+								}, function(e) {
+									plus.nativeUI.toast("获取用户信息失败：" + e.message);
 								});
-
 							}, function(e) {
-								plus.nativeUI.toast("获取用户信息失败：" + e.message);
+								waiting.close();
+								plus.nativeUI.toast("登录认证失败：" + e.message);
 							});
-						}, function(e) {
 							waiting.close();
-							plus.nativeUI.toast("登录认证失败：" + e.message);
-						});
-						waiting.close();
-					});
+						}
+					};
 				}, function(e) {
 					waiting.close();
-					oauthArea.style.display = 'none';
 					plus.nativeUI.toast("获取登录认证失败：" + e.message);
 				});
 			})

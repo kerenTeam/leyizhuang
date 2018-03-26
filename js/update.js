@@ -61,9 +61,9 @@ function downWgt(hide,downurl,ios){
     }
     console.log('下载地址' +downurl);
     plus.downloader.createDownload(downurl, {filename:"_doc/update/"}, function(d,status){
+    		console.log('下载对象',d);
     		console.log('下载状态',status);
         if ( status == 200 ) {
-            console.log("下载wgt成功："+d.filename);
             if(!hide){
 	            	/*plus.nativeUI.confirm("下载完成，是否马上升级！",function(e){
 	            		var sure = (e.index == 0) ? "确定" : "取消";
@@ -114,9 +114,8 @@ function installWgt(path,hide,ios){
 		            plus.runtime.restart();
 		        });
 	        	} else{
-//	        		plus.nativeUI.alert("安装失败["+e.code+"]："+e.message);
-					console.log("安装失败["+e.code+"]："+e.message)
-					plus.nativeUI.toast('升级失败')
+					console.error("安装失败["+e.code+"]："+e.message);
+					plus.nativeUI.toast('升级失败');
 	        	}
         }
         //!hide && plus.nativeUI.alert("安装失败["+e.code+"]："+e.message);
