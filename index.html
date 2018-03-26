@@ -591,7 +591,6 @@
 				  	  	background:'transparent',
 				  	  	bounce: 'vertical',
 				        bounceBackground:'#DCDCDC',//灰色
-				        popGesture: 'close',
 
 				    },
 				    waiting: {autoShow:false},
@@ -1371,6 +1370,7 @@
 					util.changeSubpage(targetPage, activePage, aniShow);
 				})
 				document.addEventListener('pagerefresh', function() {
+					drawBadge('hide');
 					util.toggleNview(0);
 					util.changeSubpage(targetPage, activePage, aniShow);
 				})

@@ -38,7 +38,7 @@
 					        <a href="javascript:;">
 					            <img class="mui-media-object mui-pull-left" src="<%=list[i].coverImageUri || '../img/editset.png'%>">
 					            <div class="mui-media-body ft16">
-					                <%=list[i].goodsName%>
+					                <div style="word-break: break-all;white-space: normal;"><%=list[i].goodsName%></div>
 					                <p class='mui-ellipsis ft16'>规格:<%=list[i].goodsSpecification%> &nbsp;单位:<%=list[i].goodsUnit%></p>
 						            <span class="activecl2 ft18">¥<%=list[i].retailPrice%></span>
 									<%if(!list[i].materialQty){%>

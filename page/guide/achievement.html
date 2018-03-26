@@ -13,6 +13,7 @@
 			.mui-bar-nav.mui-bar .mui-icon {color: #555!important;margin-left: 0px;}
 			.circle{background: #E73A38; width: 200px;height: 200px;position: absolute;border-radius: 50%;}
 			.circle2{background: #F8937E; width: 200px;height: 200px;position: absolute;border-radius: 50%;}
+			.circle3{background: #8EBD99; width: 200px;height: 200px;position: absolute;border-radius: 50%;}
 			.quotaRecord .div01 span{display: none;}
 			.totalEdu{left: 79px!important;}
 			li.active{border-bottom: 2px solid #B62D29;box-sizing: border-box;color: #B62D29;}
@@ -20,10 +21,11 @@
 			.tab-nav li{height: 45px !important;display: inline-block;}
 			.mui-bar-nav{box-shadow: 1px 0px 1px #eee !important;}
 			header.mui-bar{z-index: 200;}
-		    .tab-hdtwo li {width: 49%!important;font-size: 16px!important;line-height: 45px;text-align: center;}
+		    #tabLink li {width: 49%!important;font-size: 16px!important;line-height: 45px;text-align: center;}
+		    #tabLink2 li {width: 32.6%!important;font-size: 16px!important;line-height: 45px;text-align: center;}
 			.rank{font-style: italic;font-weight: 600;font-size: 20px;}
 			.flexr{display: flex;justify-content: space-around;align-items: center;}
-			.tbtwo{display: none;}
+			.tbtwo,.tbthird{display: none;}
 		</style>
 	</head>
 
@@ -35,13 +37,15 @@
 		</header>
 		<script src="../../js/statusBar.js"></script>
 		<div class="mui-content">
-			<div style="background-color: #EEEEEE;text-align: center;font-size: 18px;color: #445252;margin-top: 0px;padding: 10px;">
-				达标率
+			<div id="curMonth" class="ft16 fttc padd10 activecl2"></div>
+			<div style="background-color: #EEEEEE;text-align: center;font-size: 17px;color: #445252;margin-top: 0px;padding: 10px;">
+				当月高端达标率
 			</div>
 			<div class="tab-hd tab-hdtwo bgcwt" id="tabLink2" style="z-index: 99;">
 				<ul class="tab-nav ft14">
-				  <li class="active aClick " data-statusId="0">当月高端桶数</li>
-				  <li class="aClick" data-statusId="1">当月高端活跃会员数</li>
+				  <li class="active aClick " data-statusId="0">桶数</li>
+				  <li class="aClick" data-statusId="1">活跃会员数</li>
+				  <li class="aClick" data-statusId="1">开发会员数</li>
 				</ul>
 			</div>
 			<!--<div id="TS" style="text-align: center;font-size: 18px;color: orangered;margin-top: 20px;margin-bottom: -10px;">
@@ -68,6 +72,16 @@
 				<div class="mask"><span class="ft20" style="color: #F8937E;" id="availableBalance2">---</span></div>
 				<div class="totalEdu">达标率</div>
 			</div>
+			<div class="circle3 tbthird" style="left:50%;-webkit-transform: translateX(-50%);margin-top: 40px;">
+				<div class="pie_left">
+					<div class="left"></div>
+				</div>
+				<div class="pie_right">
+					<div class="right"></div>
+				</div>
+				<div class="mask"><span class="ft20" style="color: #8EBD99;" id="availableBalance3">---</span></div>
+				<div class="totalEdu">达标率</div>
+			</div>
 			<div id="quotaPWrap" style="margin-top: 80px;">
 				<div class="quotaP1 fineB tbone" id="limitbalance">
 					目标桶数<span>---</span>
@@ -84,6 +98,14 @@
 						目标会员数<span>---</span>
 					</div>
 					<div class="quotaP1 fineB" id="tempbalance2">
+						实际会员数<span>---</span>
+					</div>
+				</div>
+				<div class="tbthird">
+					<div class="quotaP1 fineB" id="limitbalance3">
+						目标会员数<span>---</span>
+					</div>
+					<div class="quotaP1 fineB" id="tempbalance3">
 						实际会员数<span>---</span>
 					</div>
 				</div>
@@ -218,119 +240,194 @@
 				}
 
 			}
+			function addPercent3(num) {
+				if(num > 100) return;
+				var c = document.getElementsByClassName("circle3")[0];
+				//c.getElementsByTagName("span")[0].innerHTML = num;
+				num = num * 3.6;
+				if(num <= 180) {
+					c.getElementsByClassName("right")[0].style.transform = "rotate(" + num + "deg)";
+				} else {
+					c.getElementsByClassName("right")[0].style.transform = "rotate(180deg)";
+					c.getElementsByClassName("left")[0].style.transform = "rotate(" + (num - 180) + "deg)";
+				}
 
+			}
 			mui.plusReady(function() {
 				//获取缓存
 				var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
 				var userId = plus.storage.getItem('$userId');
 				var oldToken = plus.storage.getItem('oldToken');
 				plus.nativeUI.showWaiting();
-				mui.ajax(serverUrl + '/app/statistics/personal', {
-					data: {
-						sellerId: userId,
-						identityType: identityT,
-						flag:'TS'
-					},
-					dataType: 'json',
-					headers: {
-						"Authorization": oldToken
-					},
-					type: 'post',
-					timeout: 10000,
-					success: function(data, type, xhr) {
-						plus.nativeUI.closeWaiting();
-						console.log('桶数销量', data);
-						if(data.code == 0) {
+				getOne();
+				$('#curMonth').html(new Date().getFullYear()+'年'+(new Date().getMonth()+1)+'月')
+				function getOne(){
+					mui.ajax(serverUrl + '/app/statistics/personal', {
+						data: {
+							sellerId: userId,
+							identityType: identityT,
+							flag:'TS'
+						},
+						dataType: 'json',
+						headers: {
+							"Authorization": oldToken
+						},
+						type: 'post',
+						timeout: 10000,
+						success: function(data, type, xhr) {
 							plus.nativeUI.closeWaiting();
-							if(data.content) {
-								$('#limitbalance span').html(data.content.targetQty+'桶')
-								$('#tempbalance span').html(data.content.finishQty+'桶')
-
-								var count = (data.content.finishQty / data.content.targetQty) * 100,
-									i = 0;
-								$('#availableBalance2').html(data.content.finishChance * 100 .toFixed(2)+'%')
-									
-								var t = setInterval(function() {
-									if(i < count) {
-										addPercent(++i);
-									}
-
-								}, 10);
-
+							console.log('桶数销量', data);
+							if(data.code == 0) {
+								plus.nativeUI.closeWaiting();
+								if(data.content) {
+									$('#limitbalance span').html(data.content.targetQty+'桶')
+									$('#tempbalance span').html(data.content.finishQty+'桶')
+	
+									var count = (data.content.finishQty / data.content.targetQty) * 100,
+										i = 0;
+									$('#availableBalance').html(data.content.finishChance * 100 .toFixed(2)+'%')
+										
+									var t = setInterval(function() {
+										if(i < count) {
+											addPercent(++i);
+										}
+	
+									}, 10);
+	
+								}
+	
 							}
-
-						}
-						if(data.code == 1000) {
-							mui.toast(data.message)
-						} else if(data.code == -1) {
-							mui.toast(data.message)
-						}
-
-					},
-					error: function(xhr, type, errorThrown) {
-						plus.nativeUI.closeWaiting();
-						mui.toast(type)
-						console.log('登录响应失败');
-					}
-				});
-				 
-				mui.ajax(serverUrl + '/app/statistics/personal', {
-					data: {
-						sellerId: userId,
-						identityType: identityT,
-						flag:'HYS'
-					},
-					dataType: 'json',
-					headers: {
-						"Authorization": oldToken
-					},
-					type: 'post',
-					timeout: 10000,
-					success: function(data, type, xhr) {
-						plus.nativeUI.closeWaiting();
-						console.log('活跃数销量', data);
-						if(data.code == 0) {
+							if(data.code == 1000) {
+								mui.toast(data.message)
+							} else if(data.code == -1) {
+								mui.toast(data.message)
+							}
+	
+						},
+						error: function(xhr, type, errorThrown) {
 							plus.nativeUI.closeWaiting();
-							if(data.content) {
-								$('#limitbalance2 span').html(data.content.targetQty+'个')
-								$('#tempbalance2 span').html(data.content.finishQty+'个')
-
-								var count = (data.content.finishQty / data.content.targetQty) * 100,
-									i = 0;
-								$('#availableBalance').html(data.content.finishChance * 100 .toFixed(2)+'%')
-									
-								var t = setInterval(function() {
-									if(i < count) {
-										addPercent2(++i);
-									}
-
-								}, 10);
-
+							mui.toast(type)
+							console.log('登录响应失败');
+						}
+					});
+				}
+				getTwo() 
+				function getTwo(){
+					mui.ajax(serverUrl + '/app/statistics/personal', {
+						data: {
+							sellerId: userId,
+							identityType: identityT,
+							flag:'HYS'
+						},
+						dataType: 'json',
+						headers: {
+							"Authorization": oldToken
+						},
+						type: 'post',
+						timeout: 10000,
+						success: function(data, type, xhr) {
+							plus.nativeUI.closeWaiting();
+							console.log('活跃数销量', data);
+							if(data.code == 0) {
+								plus.nativeUI.closeWaiting();
+								if(data.content) {
+									$('#limitbalance2 span').html(data.content.targetQty+'个')
+									$('#tempbalance2 span').html(data.content.finishQty+'个')
+	
+									var count = (data.content.finishQty / data.content.targetQty) * 100,
+										i = 0;
+									$('#availableBalance2').html(data.content.finishChance * 100 .toFixed(2)+'%')
+										
+									var t = setInterval(function() {
+										if(i < count) {
+											addPercent2(++i);
+										}
+	
+									}, 10);
+	
+								}
+	
 							}
-
+							if(data.code == 1000) {
+								mui.toast(data.message)
+							} else if(data.code == -1) {
+								mui.toast(data.message)
+							}
+	
+						},
+						error: function(xhr, type, errorThrown) {
+							plus.nativeUI.closeWaiting();
+							mui.toast(type)
+							console.log('登录响应失败');
 						}
-						if(data.code == 1000) {
-							mui.toast(data.message)
-						} else if(data.code == -1) {
-							mui.toast(data.message)
+					});
+				}
+				getThird()
+				function getThird(){
+					mui.ajax(serverUrl + '/app/statistics/personal', {
+						data: {
+							sellerId: userId,
+							identityType: identityT,
+							flag:'XKF'
+						},
+						dataType: 'json',
+						headers: {
+							"Authorization": oldToken
+						},
+						type: 'post',
+						timeout: 10000,
+						success: function(data, type, xhr) {
+							plus.nativeUI.closeWaiting();
+							console.log('新开发销量', data);
+							if(data.code == 0) {
+								plus.nativeUI.closeWaiting();
+								if(data.content) {
+									$('#limitbalance3 span').html(data.content.targetQty+'个')
+									$('#tempbalance3 span').html(data.content.finishQty+'个')
+	
+									var count = (data.content.finishQty / data.content.targetQty) * 100,
+										i = 0;
+									$('#availableBalance3').html(data.content.finishChance * 100 .toFixed(2)+'%')
+										
+									var t = setInterval(function() {
+										if(i < count) {
+											addPercent3(++i);
+										}
+	
+									}, 10);
+	
+								}
+	
+							}
+							if(data.code == 1000) {
+								mui.toast(data.message)
+							} else if(data.code == -1) {
+								mui.toast(data.message)
+							}
+	
+						},
+						error: function(xhr, type, errorThrown) {
+							plus.nativeUI.closeWaiting();
+							mui.toast(type)
+							console.log('登录响应失败');
 						}
-
-					},
-					error: function(xhr, type, errorThrown) {
-						plus.nativeUI.closeWaiting();
-						mui.toast(type)
-						console.log('登录响应失败');
-					}
-				});
+					});
+				}
 				$('#tabLink2 li').click(function(){
 					$('#tabLink2 li').removeClass('active');
 					$(this).addClass('active');
 					if($(this).index() == 0){
+//						getOne()
 						$('.tbone').show()
-						$('.tbtwo').hide()
+						$('.tbtwo,.tbthird').hide()
+					}else if($(this).index() == 2){
+//						getThird()
+						$('.tbthird').show()
+						$('.tbone,.tbtwo').hide()
 					}else{
+//						getTwo();
 						$('.tbtwo').show()
-						$('.tbone').hide()
+						$('.tbone,.tbthird').hide()
 						
 					}
 				})

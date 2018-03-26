@@ -152,11 +152,13 @@
 					getCartNum();
 				})
 				function kindTyperf(){
+					$('.flexw div').removeClass('curActive')
+				 	$('.flexw div').eq(0).addClass('curActive');
 					kindType($('.curActive').attr('data-id'));
 				}
 				 kindType(categoryCode);
 				 function kindType(categoryCode){
-
+					
 				 	//一级分类切换
 					$('.flexw div').unbind('click').click(function(){
 						$(this).siblings().removeClass('curActive')
@@ -174,6 +176,7 @@
 					var userId = plus.storage.getItem('$userId');
 					var oldToken = plus.storage.getItem('oldToken');
 					getCartNum();
+					//全部类别
 					mui.ajax(serverUrl+'/app/goods/category/list',{
 						data:{
 							categoryCode:categoryCode,
@@ -326,12 +329,16 @@
 										spec = spec.unique1();
 										console.log('spec',spec);
 										var str='';
-										if(!nosp){
-											for(var i = 0;i<spec.length;i++){
-												str+='<span data-name = "specification" data-id="'+spec[i]+'">'+spec[i]+'</span>';
+										if(spec.length){
+											if(!nosp){
+												for(var i = 0;i<spec.length;i++){
+													str+='<span data-name = "specification" data-id="'+spec[i]+'">'+spec[i]+'</span>';
+												}
+											}else{
+												str = plus.storage.getItem('specification');
 											}
 										}else{
-											str = plus.storage.getItem('specification');
+											var str='无';
 										}
 										plus.storage.setItem('specification',str)
 										$('.categrayc').html(str);

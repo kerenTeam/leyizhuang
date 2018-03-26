@@ -50,6 +50,10 @@
 							$('.mui-title,#title').html(data.content.title);
 							$('#content').html(data.content.content)
 							$('p img').removeAttr('style')
+							$('#content img').each(function(){
+								var oldSrc = $(this).attr('src');
+								$(this).attr('src',oCms+oldSrc)
+							})
 						}else{
 							document.getElementById("tradeList").innerHTML = '<div style="text-align:center;padding:15px;font-size: 12px;">暂无数据</div>'
 						}
