@@ -267,7 +267,7 @@ background: linear-gradient(to right, #1fddff, #ff4b1f); /* W3C, IE 10+/ Edge, F
 				<%for(var i=0;i<detail.goodsList.length;i++){ %>
 					<div class="proWrap fineB">
 						<div class="proLeft">
-							<img src="<%= detail.goodsList[i].coverImageUri%>"/>
+							<img src="<%= detail.goodsList[i].coverImageUri || '../../img/editset.png'%>"/>
 						</div>
 						<div class="proRight">
 							<h4><%= detail.goodsList[i].skuName%></h4>

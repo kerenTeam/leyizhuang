@@ -58,7 +58,7 @@
 				<%for(var i=0;i<dataObj.goodsList.length;i++){%>
 					<div class="proWrap fineB">
 						<div class="proLeft proLeftTH">
-							<img src="<%= dataObj.goodsList[i].coverImageUri%>">
+							<img src="<%= dataObj.goodsList[i].coverImageUri || '../../img/editset.png'%>">
 						</div>
 						<div class="proRight proRightTH">
 							<h4><%= dataObj.goodsList[i].skuName%></h4>

@@ -142,6 +142,8 @@ function showSfun1(msg,fun1,fun0,iosLinkPic,fun3){
 			pathStr = '../';
 		}else if(msg.myIsIndex2){
 			pathStr = '../../';
+		}else if(msg.myIsIndex3){
+			pathStr = '';
 		}
 		if(!/android/i.test(navigator.userAgent)){//ios环境
 			msg.thumbs = msg.pictures = [''];
@@ -183,6 +185,7 @@ function showSfun1(msg,fun1,fun0,iosLinkPic,fun3){
 	}
 
 	function hideSfun1(){
+		document.getElementsByClassName('shareWrap1')[0].style.display = "none"
 		document.getElementsByClassName('shareWrap1')[0].style.zIndex = '-1';
 		document.getElementsByClassName('shareWrap1')[0].style.opacity = '0';
 		document.getElementsByClassName('Scontent1')[0].style.opacity = '0';
@@ -194,6 +197,7 @@ function showSfun1(msg,fun1,fun0,iosLinkPic,fun3){
 	document.getElementsByClassName('shareWrap1')[0].onclick = function(){
 		hideSfun1();
 	}
+	document.getElementsByClassName('shareWrap1')[0].style.display = "block"
 	document.getElementsByClassName('shareWrap1')[0].style.zIndex = '999';
 	document.getElementsByClassName('shareWrap1')[0].style.opacity = '1';
 	document.getElementsByClassName('Scontent1')[0].style.opacity = '1';

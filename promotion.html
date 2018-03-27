@@ -62,7 +62,7 @@
 			display: flex;
 			align-items: center;
     		justify-content: center;
-			background-color: rgba(0,0,0,0.3);
+			/*background-color: rgba(0,0,0,0.3);*/
 			-webkit-transition: all 0.5 ease;
 		}
 		.clasfyItem .itemName {
@@ -363,7 +363,7 @@
 					},
 					error:function(xhr,type,errorThrown){
 						plus.nativeUI.closeWaiting();
-						console.log('当前网络不好,请重试');
+						mui.alert('当前网络不好,请重试');
 					}
 				});
 			

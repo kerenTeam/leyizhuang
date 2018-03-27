@@ -148,7 +148,7 @@
 		 			<%if(list[i].isShow){%>
 			 			<div class="follow">
 							<div class="fchidl2">
-								<img src="<%=list[i].picUrl%>" class="userAvator"/>
+								<img src="<%=list[i].picUrl || '../images/10.png'%>" class="userAvator"/>
 								<div class="butright">
 									<div class="btop">
 						            		<b class="ft16"><%=list[i].evaluationName ||'匿名'%></b> <span class="disablecl"><%=list[i].evaluationTime%></span>

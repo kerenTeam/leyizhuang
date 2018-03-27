@@ -13,7 +13,7 @@
 			.mui-bar-nav.mui-bar .mui-icon {color: #555!important;margin-left: 0px;}
 			.circle{background: #E73A38; width: 200px;height: 200px;position: absolute;border-radius: 50%;}
 			.circle2{background: #F8937E; width: 200px;height: 200px;position: absolute;border-radius: 50%;}
-			.circle3{background: #8EBD99; width: 200px;height: 200px;position: absolute;border-radius: 50%;}
+			.circle3{background: #E7475E; width: 200px;height: 200px;position: absolute;border-radius: 50%;}
 			.quotaRecord .div01 span{display: none;}
 			.totalEdu{left: 79px!important;}
 			li.active{border-bottom: 2px solid #B62D29;box-sizing: border-box;color: #B62D29;}
@@ -79,10 +79,10 @@
 				<div class="pie_right">
 					<div class="right"></div>
 				</div>
-				<div class="mask"><span class="ft20" style="color: #8EBD99;" id="availableBalance3">---</span></div>
+				<div class="mask"><span class="ft20" style="color: #E7475E;" id="availableBalance3">---</span></div>
 				<div class="totalEdu">达标率</div>
 			</div>
-			<div id="quotaPWrap" style="margin-top: 80px;">
+			<div id="quotaPWrap" style="margin-top: 170px;">
 				<div class="quotaP1 fineB tbone" id="limitbalance">
 					目标桶数<span>---</span>
 				</div>
@@ -107,6 +107,10 @@
 					</div>
 					<div class="quotaP1 fineB" id="tempbalance3">
 						实际会员数<span>---</span>
+					</div>
+					<!--<div class="quotaP1 fttc">周完成详情</div>-->
+					
+					<div class="quotaP1 fineB" id="weekFinishDetails" style="display: none;">
 					</div>
 				</div>
 				<div style="background-color: #EEEEEE;text-align: center;font-size: 18px;color: #445252;margin-top: 20px;padding: 10px;">
@@ -311,7 +315,7 @@
 						}
 					});
 				}
-				getTwo() 
+//				getTwo() 
 				function getTwo(){
 					mui.ajax(serverUrl + '/app/statistics/personal', {
 						data: {
@@ -362,7 +366,7 @@
 						}
 					});
 				}
-				getThird()
+//				getThird()
 				function getThird(){
 					mui.ajax(serverUrl + '/app/statistics/personal', {
 						data: {
@@ -395,7 +399,13 @@
 										}
 	
 									}, 10);
-	
+									var str = '';
+									if(data.content.weekFinishDetails){
+										data.content.weekFinishDetails.forEach(function(ele,index){
+											str+=ele.startDate+' ~ '+ele.endDate+'<span>'+ele.finishQty+'</span>'
+										})
+										$('#weekFinishDetails').show().html(str)
+									}
 								}
 	
 							}
@@ -416,16 +426,20 @@
 				$('#tabLink2 li').click(function(){
 					$('#tabLink2 li').removeClass('active');
 					$(this).addClass('active');
+//					$('.circle2,.circle,.circle3').hide().css('background','#cccccc')
 					if($(this).index() == 0){
-//						getOne()
+						getOne()
+//						$('.circle').css('background','#E73A38').show()
 						$('.tbone').show()
 						$('.tbtwo,.tbthird').hide()
 					}else if($(this).index() == 2){
-//						getThird()
+						getThird()
+//						$('.circle3').css('background','#E7475E').show()
 						$('.tbthird').show()
 						$('.tbone,.tbtwo').hide()
 					}else{
-//						getTwo();
+						getTwo();
+//						$('.circle2').css('background','#F8937E').show()
 						$('.tbtwo').show()
 						$('.tbone,.tbthird').hide()
 						

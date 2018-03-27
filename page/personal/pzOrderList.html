@@ -82,11 +82,11 @@
 							 	<div class="bgcee padd10">
 							 		<%if(list[i].photos.length>4){%>
 								 		<%for(var j = 0 ;j<4;j++){%>
-									 		<img src="<%=list[i].photos[j]%>" class="cmimg" />
+									 		<img src="<%=list[i].photos[j] || '../../img/editset.png'%>" class="cmimg" />
 									 	<%}%>
 							 		<%}else{%>
 							 			<%for(var j = 0 ;j<list[i].photos.length;j++){%>
-									 		<img src="<%=list[i].photos[j]%>" class="cmimg" />
+									 		<img src="<%=list[i].photos[j] || '../../img/editset.png'%>" class="cmimg" />
 									 	<%}%>
 							 		<%}%>
 

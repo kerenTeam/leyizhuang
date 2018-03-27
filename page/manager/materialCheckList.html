@@ -31,7 +31,7 @@
 			<dl class="cart">
 				<%for(var i=0;i<list.length;i++){%>
 					<dd onclick="goodsInfo('<%=list[i].gid%>')">
-						<a class="goodsPic" style="margin-left: auto;"><img src="<%=list[i].coverImageUri%>" onerror="javascript:this.src='../../images/img.svg';" /></a>
+						<a class="goodsPic" style="margin-left: auto;"><img src="<%=list[i].coverImageUri || '../../img/editset.png'%>" onerror="javascript:this.src='../../images/img.svg';" /></a>
 						<div class="goodsInfor" style="margin-left: 0.9rem!important;">
 						    		<a class="maincl ft16"><%=list[i].skuName%></a>
 						    		<%if(list[i].isGift){%>

@@ -117,7 +117,7 @@
 					<%for(var i = 0 ;i<list.goodsList.length;i++){%>
 						<div class="proWrap fineB">
 							<div class="proLeft">
-								<img src="<%=list.goodsList[i].coverImageUri%>"/>
+								<img src="<%=list.goodsList[i].coverImageUri || '../../img/editset.png'%>"/>
 							</div>
 							<div class="proRight">
 								<h4><%=list.goodsList[i].skuName%></h4>

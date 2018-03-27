@@ -7,8 +7,8 @@
 	"id": "H570519A0",/*应用的标识，创建应用时自动生成，勿手动修改*/
 	"name": "乐易装",/*应用名称，程序桌面图标名称*/
 	"version": {
-		"name": "1.3.6",/*应用版本名称*/
-		"code": "136"
+		"name": "1.3.7",/*应用版本名称*/
+		"code": "137"
 	},
 	"description": "室内设计APP",/*应用描述信息*/
 	"icons": {
@@ -65,29 +65,7 @@
 		"Geolocation": {},
 		"Payment": {},
 		"Push": {},
-		"Share": {},
-		"NSLocationWhenInUseUsageDescription":{
-            "description":"我们需要通过读取您的地理位置信息来确定你当前所在的的城市，并展示准确的信息。"
-        },
-        "NSLocationAlwaysUsageDescription":{
-            "description":"我们需要通过读取您的地理位置信息来确定你当前所在的的城市，并展示准确的信息。"
-        },
-        "NSPhotoLibraryAddUsageDescription":{
-            "description":"我们需要向您的相册添加图片来保存您喜欢的照片，并展示准确的信息。"
-        },
-        "NSCameraUsageDescription":{
-            "description":"我们需要使用你的相机拍摄照片，当你需要发布上传图片的时候。"
-        },
-        "NSPhotoLibraryUsageDescription":{
-            "description":"我们需要读取您的相册来保存您喜欢的照片。"
-        },
-        "NSMicrophoneUsageDescription":{
-            "description":"我们需要使用您的麦克风录制音频进行语音聊天。"
-        },
-        "NSContactsUsageDescription":{
-            "description":"我们需要通过读取您的通讯录信息查看谁在使用乐易装。"
-        },
-        "Audio": {}
+		"Share": {}
 	},
 	"plus": {
 		"statusbar": {
@@ -254,7 +232,7 @@
 		"splashscreen": {
 			"autoclose": true,/*是否自动关闭程序启动界面，true表示应用加载应用入口页面后自动关闭；false则需调plus.navigator.closeSplashscreen()关闭*/
 			"waiting": false,
-			"delay": "0"
+			"delay": "1800"
 		},
 		"runmode": "liberate",/*应用的首次启动运行模式，可取liberate或normal，liberate模式在第一次启动时将解压应用资源（Android平台File API才可正常访问_www目录）*/
 		"signature": "Sk9JTiBVUyBtYWlsdG86aHIyMDEzQGRjbG91ZC5pbw==",/*可选，保留给应用签名，暂不使用*/
@@ -274,7 +252,7 @@
 						"description": "可选，微信分享"
 					},
 					"qq": {
-						"appid": "1106327144",
+						"appid": "1106802668",
 						"description": "QQ分享"
 					},
 					"sina": {

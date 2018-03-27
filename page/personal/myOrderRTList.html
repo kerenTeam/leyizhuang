@@ -72,7 +72,7 @@
 								<p class="p1" onclick="openDetail('<%= list[i].returnNo%>')">
 									<% if(list[i].goodsImgList && list[i].goodsImgList.length){%>
 										<%for(var j=0; j<list[i].goodsImgList.length; j++){%>
-											<a><img class="loadPics" src="../../img/loadBack.svg" data-src="<%= list[i].goodsImgList[j]%>"/></a>
+											<a><img class="loadPics" src="../../img/loadBack.svg" data-src="<%= list[i].goodsImgList[j] || '../../img/editset.png'%>"/></a>
 										<%} %>
 									<% }else{%>
 										<a><img class="loadPics" src="../../img/loadBack.svg"/></a>
