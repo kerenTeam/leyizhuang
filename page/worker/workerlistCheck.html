@@ -86,11 +86,11 @@
 								<%if(list[i].pictureList && list[i].pictureList.length > 0){%>
 									<%if(list[i].pictureList.length > 4){%>
 										<%for(var j = 0; j < 4; j++){%>
-											<img src="<%=list[i].pictureList[j]%>" onerror="../../images/img.svg"/>
+											<img src="<%=list[i].pictureList[j] || '../../img/editset.png'%>" onerror="../../images/img.svg"/>
 										<%}%>
 									<%}else{%>
 										<%for(var j = 0; j < list[i].pictureList.length; j++){%>
-											<img src="<%=list[i].pictureList[j]%>" onerror="../../images/img.svg"/>
+											<img src="<%=list[i].pictureList[j] || '../../img/editset.png'%>" onerror="../../images/img.svg"/>
 										<%}%>
 									<%}%>
 								<%}%>

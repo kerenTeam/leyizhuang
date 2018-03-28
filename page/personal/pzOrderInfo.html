@@ -24,7 +24,7 @@
 			<script type="text/html" id="infoList">
 				<div class="padd10 bgcwt">
 				 	<%for(var i = 0 ;i<list.photos.length;i++){%>
-				 		<img src="<%=list.photos[i]%>" class="cmimg" data-preview-src="" data-preview-group="1"/>
+				 		<img src="<%=list.photos[i] || '../../img/editset.png'%>" class="cmimg" data-preview-src="" data-preview-group="1"/>
 				 	<%}%>
 				 </div>
 				 <div style="height: 10px;"></div>

@@ -71,7 +71,7 @@
 					<div class="mui-checkbox" style="top: 30%;">
 						<input name="checkbox" type="checkbox" data-id='<%=list[i].giftList[j].goodsId%>'>
 					</div>
-					<a class="goodsPic"><img src="<%=list[i].giftList[j].coverImageUri%>" onerror="javascript:this.src='../../img/editset.png';" /></a>
+					<a class="goodsPic"><img src="<%=list[i].giftList[j].coverImageUri || '../../img/editset.png'%>" onerror="javascript:this.src='../../img/editset.png';" /></a>
 					<div class="goodsInfor">
 						<h2 class="ft14">
 						    <a style="word-break: break-all;text-overflow: inherit;overflow: auto;max-width: inherit;white-space: inherit!important;"><%=list[i].giftList[j].skuName%></a>

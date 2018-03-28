@@ -134,6 +134,7 @@
 			.orderEBtn img{width: 30px;}
 			.orderEBtn .mui-badge{position: absolute;top: -2px;right: -1px;font-style: normal;padding: 2px 5px;}
 			.orderNum{display: none;}
+			#cancelS1{padding-bottom: 22px;}
 		</style>
 
 	</head>
@@ -144,7 +145,7 @@
 			<!--<div id="beijing2"></div>-->
 			<div id="fixdtop"></div>
 			<div class="content clearfloat fl mui-row white">
-				<div class="mui-col-sm-4 mui-col-xs-4" style="padding-top: 28px;position: relative;left: 3px;"><img src="https://b-ssl.duitang.com/uploads/item/201710/12/20171012232816_GX5iw.thumb.224_0.jpeg" class="myInfo" id="mypic" /></div>
+				<div class="mui-col-sm-4 mui-col-xs-4" style="padding-top: 28px;position: relative;left: 3px;"><img src="images/10.png" class="myInfo" id="mypic" /></div>
 				<div class="mui-col-sm-8 mui-col-xs-8 writing">
 					<p class="centop">
 						<div class="denlu">用户名：<span id="userName" style="z-index: 99;"></span></div>
@@ -256,6 +257,10 @@
 						<img src="images/center/look.svg" style="background-color: #839973;"/>浏览记录
 						<span class="mui-icon mui-icon-arrowright mui-pull-right maincl ft20 maincl"></span>
 					</div>
+					<div onclick="shareApp()" class="mb10">
+						<img src="images/center/shareapp.svg" style="background-color: #C08497;"/>把乐易装推荐给朋友
+						<span class="mui-icon mui-icon-arrowright mui-pull-right maincl ft20 maincl"></span>
+					</div>
 				</div>
 			</div>
 			<!--导购-->
@@ -278,7 +283,7 @@
 						<span class="mui-icon mui-icon-arrowright mui-pull-right maincl ft20 maincl"></span>
 					</div>
 					<div onclick="gxb()" class="mb10">
-						<img src="images/center/mmaterial.svg" style="background-color: #FF7A5A;"/>工序包
+						<img src="images/center/mmaterial.svg" style="background-color: #62C8A5;"/>工序包
 						<span class="mui-icon mui-icon-arrowright mui-pull-right maincl ft20 maincl"></span>
 					</div>
 
@@ -295,8 +300,12 @@
 						<img src="images/center/cust.svg" style="background-color: #CA6259;"/>我的顾客
 						<span class="mui-icon mui-icon-arrowright mui-pull-right maincl ft20 maincl"></span>
 					</div>
-					<div onclick="qrcode()" class="mb10">
+					<div onclick="qrcode()" class="afterBorder">
 						<img src="images/center/qrcode.svg" style="background-color: #8EBD99;"/>我的二维码
+						<span class="mui-icon mui-icon-arrowright mui-pull-right maincl ft20 maincl"></span>
+					</div>
+					<div onclick="shareApp()" class="mb10">
+						<img src="images/center/shareapp.svg" style="background-color: #C08497;"/>把乐易装推荐给朋友
 						<span class="mui-icon mui-icon-arrowright mui-pull-right maincl ft20 maincl"></span>
 					</div>
 
@@ -350,6 +359,10 @@
 						<img src="images/center/look.svg" style="background-color: #839973;"/>浏览记录
 						<span class="mui-icon mui-icon-arrowright mui-pull-right maincl ft20 maincl"></span>
 					</div>
+					<div onclick="shareApp()" class="mb10">
+						<img src="images/center/shareapp.svg" style="background-color: #C08497;"/>把乐易装推荐给朋友
+						<span class="mui-icon mui-icon-arrowright mui-pull-right maincl ft20 maincl"></span>
+					</div>
 				</div>
 			</div>
 			<!--工人-->
@@ -372,11 +385,15 @@
 						<img src="images/center/color.svg" style="background-color: #E2B9B3;"/>调色板
 						<span class="mui-icon mui-icon-arrowright mui-pull-right maincl ft20 maincl"></span>
 					</div>
-
+					<div onclick="shareApp()" class="mb10">
+						<img src="images/center/shareapp.svg" style="background-color: #C08497;"/>把乐易装推荐给朋友
+						<span class="mui-icon mui-icon-arrowright mui-pull-right maincl ft20 maincl"></span>
+					</div>
 					<div class="" onclick="lookHistory()">
 						<img src="images/center/look.svg" style="background-color: #839973;"/>浏览记录
 						<span class="mui-icon mui-icon-arrowright mui-pull-right maincl ft20 maincl"></span>
 					</div>
+					
 
 
 				</div>
@@ -399,6 +416,7 @@
 		<script src="js/app.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/artTemplate-native.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/default.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/youxd.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
 			//测试推送
 			/*mui('#mypic')[0].onclick = function(){
@@ -533,6 +551,17 @@
 					view:'page/personal/collect.html',
 					id: 'collect',
 				})
+			}
+			//分享app
+			function shareApp(){
+				var msg = {
+			        myIsIndex3:true,//不显示图片时，可以设这个参数 或者 myIsIndex2:true
+			        title:'朋友把乐易装推荐给你哦',
+			        content:'朋友把乐易装推荐给你哦',
+			        href:'http://download.leyizhuang.com.cn:6789/lyzWeb0/upApp/upgrade.html'
+			    };
+			    showSfun1(msg,function(){},function(){});
+	
 			}
 			//料单审核
 			function listCheck(){
@@ -673,7 +702,7 @@
 					var oldToken = plus.storage.getItem('oldToken');
 					var sellerType = plus.storage.getItem('sellerType');
 					$('.qiandao').html('签到');
-					$('#mypic').attr('src','https://b-ssl.duitang.com/uploads/item/201710/12/20171012232816_GX5iw.thumb.224_0.jpeg')
+					$('#mypic').attr('src','images/10.png')
 					//签到
 					$('.qiandao').unbind('click').click(function(){
 						mui.ajax(serverUrl+'/app/customer/sign',{
