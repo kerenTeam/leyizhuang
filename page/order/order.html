@@ -316,13 +316,13 @@
 						<div class="pad10 ft14 afterBorder manager" style="display: none;">现金返利&nbsp;&nbsp;<span class='activecl' id="cash">¥--</span><input type="tel" placeholder="请输入使用金额" name="cash" onchange="maxC(this)" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" class='mui-pull-right preDeposit' oninput="inputbd(this)"/></div>
 						<!--only guide-->
 						<div class="pad10 ft14 afterBorder guide" style="display: none;">信用额度&nbsp;&nbsp;<span class='activecl' id="creditVal">¥--</span><input type="tel" placeholder="请输入使用金额" name="creditVal" onchange="maxC(this)" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" class='mui-pull-right preDeposit' oninput="inputbd(this)"/></div>
-						<div class="pad10 ft14 afterBorder guide dsje" style="display: none;">代收金额&nbsp;&nbsp;<input type="tel" placeholder="请输入代收金额" name="cashHelp" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" class='mui-pull-right preDeposit' /></div>
+						<div class="pad10 ft14 afterBorder guide dsje" style="display: none;">代收金额<img src="../../images/center/help.svg" style="width: 20px;margin-left: 5px;" onclick="dsInfo()"/>&nbsp;&nbsp;<input type="tel" placeholder="请输入代收金额" name="cashHelp" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" class='mui-pull-right preDeposit' /></div>
 					<%}else{%>
 						<div class="pad10 ft14 afterBorder"><%if(guide == 1){%>门店<%}%>预存款&nbsp;&nbsp;<span class='activecl' id="preDepositb">¥--</span><input type="number" onchange="maxC(this)" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" placeholder="请输入使用金额" name="preDepositb" class='mui-pull-right preDeposit' oninput="inputbd(this)"/></div>
 						<div class="pad10 ft14 afterBorder manager" style="display: none;">信用金&nbsp;&nbsp;<span class='activecl' id="credit">¥--</span><input type="number" placeholder="请输入使用金额" name="credit" onchange="maxC(this)" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" class='mui-pull-right preDeposit' oninput="inputbd(this)"/></div>
 						<div class="pad10 ft14 afterBorder manager" style="display: none;">现金返利&nbsp;&nbsp;<span class='activecl' id="cash">¥--</span><input type="number" placeholder="请输入使用金额" name="cash" onchange="maxC(this)" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" class='mui-pull-right preDeposit' oninput="inputbd(this)"/></div>
 						<div class="pad10 ft14 afterBorder guide" style="display: none;">信用额度&nbsp;&nbsp;<span class='activecl' id="creditVal">¥--</span><input type="number" placeholder="请输入使用金额" name="creditVal" onchange="maxC(this)" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" class='mui-pull-right preDeposit' oninput="inputbd(this)"/></div>
-						<div class="pad10 ft14 afterBorder guide dsje" style="display: none;">代收金额&nbsp;&nbsp;<input type="number" placeholder="请输入代收金额" name="cashHelp" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" class='mui-pull-right preDeposit' /></div>
+						<div class="pad10 ft14 afterBorder guide dsje" style="display: none;">代收金额 <img src="../../images/center/help.svg" style="width: 20px;margin-left: 5px;" onclick="dsInfo()"/>&nbsp;&nbsp;<input type="number" placeholder="请输入代收金额" name="cashHelp" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" class='mui-pull-right preDeposit' /></div>
 					<%}%>
 					<div style="height: 10px;background: #EEEEEE;"></div>
 
@@ -463,6 +463,15 @@
 						customerId:customerId
 					}
 				})
+			}
+			window.dsInfo = function(){
+				var isCanceInfo = '代收款规则说明\n'+
+						'以下情况视为影响二次销售，不可以退换：\n'+
+						'1)会员请导购代下订单，若未付清本订单货款而发生欠款事宜，导购有权向会员索要货物欠款。\n'+
+						'2)导购在下单时，将注明代收款金额，平台在订单成立后，将会以短信通知您订单之欠款金额。\n'+
+						'3)配送员将货物配送至指定地方后，请一并交付该订单之欠款。若无法现场交付，必须请配送员发起欠款通知，请导购进行审核。\n'+
+						'4)若导购不同意欠款，配送员有权将货物拉回。';
+					mui.alert(isCanceInfo)
 			}
 
 //			window.maxC = function(obj) {

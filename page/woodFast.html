@@ -24,7 +24,7 @@
 	 		.actBadge{background-color: #B42E28;color: white;}
 	 		.categray span{margin: 0 10px 0 0;display: inline-block;}
 	 		.actspan{color: #B42E28;}
-	 		.afterBorder>div:first-child{color: black!important;font-weight: 600;padding: 10px 0 10px;
+	 		.maincl .afterBorder>div:first-child{color: black!important;font-weight: 600;padding: 10px 0 10px;
 				background: #EEEEEE;
 				text-align: center;
 				width: 100vw;
@@ -34,6 +34,7 @@
 	 		.flexr span{margin: 5px 2px;display: inline-block;}
 	 		.showRotate{-webkit-transform: rotateX(180deg);-webkit-transform-origin: center;padding-left: 10px;-webkit-transition:all 0.3s ease;}
 			.mui-numbox {background: none!important;}
+			
 		</style>
 	</head>
 
@@ -1064,6 +1065,7 @@
 			})
 		}
 		mui.plusReady(function(){
+			plus.storage.removeItem('$woodFastGoods')
 			document.addEventListener('refreshct', function() {
 				getCartNum();
 			})
@@ -1263,7 +1265,7 @@
 									$('#optal input').prop("checked", false);
 								}
 							} else {
-								mui.toast(data.message);
+								plus.nativeUI.alert(data.message);
 							}
 						},
 						error: function(xhr, type, errorThrown) {

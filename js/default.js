@@ -1,6 +1,7 @@
-var serverUrl = 'http://app.leyizhuang.com.cn';//远程
-//var serverUrl = 'http://119.23.149.7:9999';//本地
+//var serverUrl = 'http://app.leyizhuang.com.cn';//远程
+var serverUrl = 'http://119.23.149.7:9999';//本地
 var oCms = 'http://120.77.14.185:6789';
+//var oCms = 'http://120.78.73.217:8090';//old
 
 //解决input输入时被键盘挡住
 $("input").focus(function(){

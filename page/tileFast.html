@@ -24,7 +24,7 @@
 	 		.actBadge{background-color: #B42E28;color: white;}
 	 		.categray span{margin: 0 10px 0 0;display: inline-block;}
 	 		.actspan{color: #B42E28;}
-	 		.afterBorder>div:first-child{color: black!important;font-weight: 600;padding: 10px 0 10px;
+	 		.maincl .afterBorder>div:first-child{color: black!important;font-weight: 600;padding: 10px 0 10px;
 				background: #EEEEEE;
 				text-align: center;
 				width: 100vw;
@@ -816,6 +816,7 @@
 			})
 		}
 		mui.plusReady(function(){
+			plus.storage.removeItem('$tileFastGoods')
 			document.addEventListener('refreshct', function() {
 				getCartNum();
 			})
@@ -1015,7 +1016,7 @@
 									$('#optal input').prop("checked", false);
 								} 
 							} else {
-								mui.toast(data.message)
+								plus.nativeUI.alert(data.message)
 							}
 						},
 						error: function(xhr, type, errorThrown) {
