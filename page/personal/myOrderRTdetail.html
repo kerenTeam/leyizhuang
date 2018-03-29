@@ -129,13 +129,8 @@
 
 					<h3 class="thZhengce" id="openStatusD" data-num='<%= dataObj.returnNumber%>' style="text-align: right;border-top:1px solid #eee">物流详情></h3>
 				</div>
-				<div class="beizhu">
-			    		<h5>退货退款说明：</h5>
-					<div>
-						<p id="mendianA0" style="padding: 5px 15px 10px;font-size: 15px;">1、使用的优惠券在订单在退款完成后，不予退回优惠券；</p>
-						<p id="mendianA0" style="padding: 5px 15px 10px;font-size: 15px;">2、收到退货商品并检查无误后，我们将在一个工作日内发起退款，退款将原路退回至原订单支付账户；</p>
-						<p id="mendianA0" style="padding: 5px 15px 10px;font-size: 15px;">3、原订单运费不予退回。</p>
-					</div>
+				<div class="thZhengce noticeRt activecl" style="border-bottom-width: 10px;font-size: 16px!important;">
+			    		*退换货注意事项				 
 			    </div>
 				<div class="beizhu">
 			    		<h5>退货原因:</h5>
@@ -240,6 +235,28 @@
 										type:'tuihuo'
 									}
 								})
+							})
+							//退货注意事项
+							$('.noticeRt').click(function(){
+								var isCanceInfo = '乐易装平台退换货注意事项：\n'+
+									'以下情况视为影响二次销售，不可以退换：\n'+
+									'1) 密封产品原包装打开，一次性封贴或胶条破损（质量问题除外）;\n'+
+									'2) 产品已使用（质量问题除外）;\n'+
+									'3) 服务费、运费、人工费等商品不接受退货;\n'+
+									'4) 购买时明确说明不支持退货的商品;\n'+
+									'5) 任何非在平台上出售的商品（序列号或批号不符）;\n'+
+									'6) 过保商品或超过三个月（含）之出货单;\n'+
+									'7) 未经授权的维修、误用、碰撞、疏忽、滥用、进液、事故、改动、不正确的安装所造成的商品质量问题，或撕毁、涂改标贴、机器序号、防伪标记;\n'+
+									'8) 无法提供商品的发票、保修卡等三包凭证或者三包凭证信息与商品不符及被涂改的;\n'+
+									'8) 无法提供商品的发票、保修卡等三包凭证或者三包凭证信息与商品不符及被涂改的;\n'+
+									'9) 其他依法不应办理退换货的。\n'+
+									'退款注意事项：\n'+
+									'若符合退货原则，请于乐易装平台系统进行退货。审核无误后，3-5天内进行退款：\n'+
+									'1)	商品在收回后确认符合退货原则后进行退款。\n'+
+									'2)	使用支付宝／微信／银联支付的，依促销分摊后之退款价格原路退回。\n'+
+									'3)	使用会员预存款支付的，依促销分摊后之退款价格原路退回。\n'+
+									'4)	使用现金/ POS 刷卡机，依促销分摊后之退款价格，至门店进行现金退款。';
+								mui.alert(isCanceInfo)	
 							})
 						}else{
 							mui.toast(data.message);
