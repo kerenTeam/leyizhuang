@@ -113,7 +113,8 @@ function cancelOF(pageType,cancelParentId){
 			var isCanceInfo = '1、订单一旦取消后，无法恢复。\n'+
 				'2、订单取消后，已支付的金额将会在一个工作日内原路退还。\n'+
 				'3、限时促销等购买优惠可能一并取消。\n'+
-				'4、因商品已分拣等原因可能会导致订单取消失败。';
+				'4、因商品已分拣等原因可能会导致订单取消失败。\n'+
+				'5、若订单取消失败，系统将以短信的方式通知，请会员进行拒收或退货申请。（详细请参考乐易装平台退换货注意事项）';
 			mui.confirm(isCanceInfo,'提示',['取消','确定'],function(e){
 			    if(e.index==1){
 			    		$('#cancelOrder').css('display','table');

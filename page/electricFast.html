@@ -771,6 +771,7 @@
 			})
 		}
 		mui.plusReady(function(){
+			plus.storage.removeItem('$eleFastGoods')
 			document.addEventListener('refreshct', function() {
 				getCartNum();
 			})
@@ -787,8 +788,8 @@
 				event.stopPropagation()
 			})
 			//存缓存
-//			plus.storage.removeItem('$eleFastGoods')
-			var eleFastGoods = JSON.parse(plus.storage.getItem('$eleFastGoods') || '[]');
+//			plus.storage.removeItem('$eleFastGoods')
+			var eleFastGoods = JSON.parse(plus.storage.getItem('$eleFastGoods') || '[]');
 			showBtCart();
 			$('.wfast input').on('change', function() {
 				var fastMaterial = '2';
@@ -830,12 +831,12 @@
 						eleFastGoods.push(cartObj);
 					}
 				}
-				plus.storage.setItem("$eleFastGoods", JSON.stringify(eleFastGoods));
+				plus.storage.setItem("$eleFastGoods", JSON.stringify(eleFastGoods));
 				showBtCart();
 			})
 			
 			function showBtCart(){
-				var eleFastGoods = JSON.parse(plus.storage.getItem('$eleFastGoods') || '[]');
+				var eleFastGoods = JSON.parse(plus.storage.getItem('$eleFastGoods') || '[]');
 				if(eleFastGoods.length>0){
 					$('#btcart').html(template('btcartTpl',{list:eleFastGoods}))
 					mui('.mui-numbox').numbox();
@@ -870,7 +871,7 @@
 					if(flag) {
 						eleFastGoods.push(cartObj);
 					} 
-					plus.storage.setItem("$eleFastGoods",JSON.stringify(eleFastGoods));
+					plus.storage.setItem("$eleFastGoods",JSON.stringify(eleFastGoods));
 					showBtCart()
 				})
 				}else{
@@ -880,7 +881,7 @@
 				}
 			}
 			window.delAll = function(){
-//				plus.storage.removeItem('$eleFastGoods');
+//				plus.storage.removeItem('$eleFastGoods');
 				var ALLcheckLength = $("#btcart").find("input[type='checkbox']:checked").length;
 				if(ALLcheckLength == 0) {
 					mui.toast("您还未选择要删除的商品哦！")
@@ -891,13 +892,13 @@
 							$("#btcart").find("input[type='checkbox']:checked").each(function(){
 								var delID=$(this).attr("data-id"); 
 								//删除这一条缓存
-							    eleFastGoods =JSON.parse(plus.storage.getItem('$eleFastGoods')||'[]');
+							    eleFastGoods =JSON.parse(plus.storage.getItem('$eleFastGoods')||'[]');
 								for(var i=0;i<eleFastGoods.length;i++){
 									if(delID==eleFastGoods[i].goodcode){
 										eleFastGoods.splice(i, 1);
 									}
 								} 
-								plus.storage.setItem("$eleFastGoods",JSON.stringify(eleFastGoods));
+								plus.storage.setItem("$eleFastGoods",JSON.stringify(eleFastGoods));
 							})
 							showBtCart();
 							ALLcheckLength = $("#btcart").find("input[type='checkbox']:checked").length;
@@ -954,13 +955,13 @@
 								$("#btcart").find("input[type='checkbox']:checked").each(function(index){
 									var goodCode=$(this).attr("data-id");
 									//删除这一条缓存
-								    var eleFastGoods =JSON.parse(plus.storage.getItem('$eleFastGoods')||'[]');
+								    var eleFastGoods =JSON.parse(plus.storage.getItem('$eleFastGoods')||'[]');
 									for(var i=0;i<eleFastGoods.length;i++){
 										if(goodCode==eleFastGoods[i].goodcode){
 											eleFastGoods.splice(i, 1);
 										}
 									} 
-									plus.storage.setItem("$eleFastGoods",JSON.stringify(eleFastGoods));
+									plus.storage.setItem("$eleFastGoods",JSON.stringify(eleFastGoods));
 								})
 								showBtCart();
 								ALLcheckLength = $("#btcart").find("input[type='checkbox']:checked").length;
@@ -968,7 +969,7 @@
 									$('#optal input').prop("checked", false);
 								} 
 							} else {
-								mui.toast(data.message)
+								plus.nativeUI.alert(data.message)
 							}
 						},
 						error: function(xhr, type, errorThrown) {
