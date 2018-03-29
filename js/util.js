@@ -60,20 +60,25 @@ var util = {
 	 * 点击切换tab窗口
 	 */
 	changeSubpage: function(targetPage, activePage, aniShow) {
-		//若为iOS平台或非首次显示，则直接显示
-		if(mui.os.ios || aniShow[targetPage]) {
-			plus.webview.show(targetPage);
-		} else {
-			//否则，使用fade-in动画，且保存变量
-			var temp = {};
-			temp[targetPage] = "true";
-			mui.extend(aniShow, temp);
-			plus.webview.show(targetPage, "fade-in", 300);
-		}
-		//隐藏当前 除了第一个父窗口
-		if(activePage !== plus.webview.getLaunchWebview()) {
-			plus.webview.hide(activePage);
-		}
+//		if(targetPage.id == 'center.html' && plus.storage.getItem('iosCheat') == 'false'){
+			//审核自动登录.点我的 要求登录
+
+//		}else{
+			//若为iOS平台或非首次显示，则直接显示
+			if(mui.os.ios || aniShow[targetPage]) {
+				plus.webview.show(targetPage);
+			} else {
+				//否则，使用fade-in动画，且保存变量
+				var temp = {};
+				temp[targetPage] = "true";
+				mui.extend(aniShow, temp);
+				plus.webview.show(targetPage, "fade-in", 300);
+			}
+			//隐藏当前 除了第一个父窗口
+			if(activePage !== plus.webview.getLaunchWebview()) {
+				plus.webview.hide(activePage);
+			}
+//		}
 	},
 	/**
 	 * 点击重绘底部tab （view控件）
@@ -82,7 +87,6 @@ var util = {
 		if(currIndex !=2){
 			mui.fire(plus.webview.getWebviewById('cart.html'),'refreshBtn')
 		}
-
 		currIndex = currIndex * 2;
 		// 重绘当前tag 包括icon和text，所以执行两个重绘操作
 		util.updateSubNView(currIndex, util.options.ACTIVE_COLOR);
@@ -100,6 +104,7 @@ var util = {
 	changeColor: function(obj, color) {
 		obj.color = color;
 		return obj;
+
 	},
 	/*
 	 * 利用 plus.nativeObj.View 提供的 drawText 方法更新 view 控件

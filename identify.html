@@ -140,10 +140,16 @@
 				</div>
 			</div>
 		</div>-->
+		<style type="text/css">
+			.backBtn001{margin: 45px 20px;width: 50px;height: 50px;background-color: #ccc;line-height: 48px;border-radius: 50%;text-align: center;font-size: 30px;color: #c91018;}
 
+		</style>
+		<div class="backBtn001" style="display: none;">
+			X
+		</div>
 		<div class="login2Btns">
 			<button class="btn21 employee"  style="margin-right: 1%;">员工登录</button>
-			<button class="btn22" id="weixinLogin" style="margin-left: 1%;display: !important;">微信快速登录</button>
+			<button class="btn22" id="weixinLogin" style="margin-left: 1%;">微信快速登录</button>
 		</div>
 
 		<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
@@ -151,6 +157,7 @@
 		<script src="js/app.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/base64.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/default.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/youxd.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
 			mui.init({
 			    swipeBack:false //右滑关闭功能
@@ -164,35 +171,38 @@
 			})
 
 			mui.plusReady(function() {
-				var wv=plus.webview.currentWebview();
-				wv.setStyle({'popGesture':'none'});
-				//是否打开微信登录
-//				mui.ajax(serverUrl + '/app/system/setting/weChatLoginStatus', {
-//					dataType: 'json',
-//					type: 'post',
-//					timeout: 10000,
-//					success: function(data, type, xhr) {
-//						console.log('isWx返回', data);
-//						if(data.code == 0 && data.content.isWeChatLoginAllowed){
-//							$('#weixinLogin').show()
-//						}else{
-//							$('#weixinLogin').hide()
-//						}
-//					},
-//					error: function(xhr, type, errorThrown) {
-//						plus.nativeUI.closeWaiting();
-//						console.log('响应失败');
-//					}
-//
-//				});
-
+				if(plus.storage.getItem('yaoqiudl') != 'yaoqiudl'){
+					var wv=plus.webview.currentWebview();
+					wv.setStyle({'popGesture':'none'});
+				}else{
+					mui('.backBtn001')[0].style.display = 'block';
+					mui('.backBtn001')[0].onclick = function(){
+						plus.webview.currentWebview().close();
+					}
+					$('#weixinLogin') && $('#weixinLogin').hide();
+				}
 				if(plus.webview.getWebviewById('shezhi')) {
 					plus.webview.getWebviewById('shezhi').close();
 				}
+				//if(/android/i.test(navigator.userAgent)){
 				if(/android/i.test(navigator.userAgent)){
-			 	 	var systemType = 'ANDROID'
+			 	 	var systemType = 'ANDROID';
 				}else{
-			 	 	var systemType = 'IOS'
+			 	 	var systemType = 'IOS';
+			 	 	//是否打开微信登录,并自动登录
+		 	 		if(plus.storage.getItem('yaoqiudl') != 'yaoqiudl'){
+		 	 			hideIos(function(){
+							//自动登录
+							var b = new Base64();
+							var str = b.encode('123456');
+							plus.storage.setItem("Acc_pass",JSON.stringify(['YK001',str]));
+							plus.storage.setItem("oldToken",'have');
+							var index = plus.webview.getLaunchWebview();
+							index.reload();
+							mui.fire(index,'refreshpage');
+							setTimeout(function(){plus.webview.currentWebview().close();},1000)
+						});
+		 	 		}
 				}
 				var clientId = plus.push.getClientInfo().clientid;
 				clearInterval(getClientid)
@@ -266,6 +276,7 @@
 												plus.storage.setItem("oldToken", xhr.getResponseHeader('token'));
 												plus.storage.setItem("rankCode", data.content.rankCode);
 												plus.storage.setItem("openId", openID);
+												plus.storage.setItem('iosCheat','true');
 												plus.storage.setItem('userCity',data.content.cityId.toString())
 												plus.storage.removeItem('Acc_pass');
 

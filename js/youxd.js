@@ -273,3 +273,28 @@ function showSfun1(msg,fun1,fun0,iosLinkPic,fun3){
 	}*/
 	//showSfun1(msg,function(){},function(){});
 //分享结束
+
+
+function hideIos(fun0){
+	//是否打开微信登录,并自动登录
+	mui.ajax(serverUrl + '/app/system/setting/weChatLoginStatus', {
+		dataType: 'json',
+		type: 'post',
+		timeout: 10000,
+		success: function(data, type, xhr) {
+			console.log('是否打开微信登录,并自动登录返回'+JSON.stringify(data));
+			if(data.code == 0 && data.content.isWeChatLoginAllowed){
+				$('#weixinLogin') && $('#weixinLogin').show();
+				plus.storage.setItem('iosCheat','true');
+			}else{
+				$('#weixinLogin') && $('#weixinLogin').hide();
+				plus.storage.setItem('iosCheat','false');
+				fun0 && fun0();
+			}
+		},
+		error: function(xhr, type, errorThrown) {
+			console.log('是否打开微信登录,并自动登录响应失败');
+		}
+
+	});
+}

@@ -145,7 +145,7 @@
 				</div>
 			</div>
 			<div>
-				<img src="images/center/message.svg" onclick="goMessage()" class="message"/>
+				<img src="images/center/message.svg" id="xiaoxiBtn" onclick="goMessage()" class="message"/>
 				<span class="mui-badge mui-badge-danger" id="ctMsg" style="right: 20px;position: absolute;padding: 4px;bottom: 29px;background-color: red;display: none;"></span>
 			</div>
 
@@ -690,6 +690,17 @@
 										} else {
 											plus.nativeUI.closeWaiting();
 											plus.storage.setItem("oldToken", xhr.getResponseHeader('token'));
+											//审核自动登录
+											if(plus.storage.getItem('iosCheat') == 'false'){
+												plus.storage.setItem("$identityType",JSON.stringify({'identityType':data.content.type}));
+												plus.storage.setItem('$userId',JSON.stringify(data.content.userId));
+												plus.storage.setItem('userCity',data.content.cityId.toString());
+												mui.fire(plus.webview.getWebviewById('cart.html'), 'refresh');
+												plus.webview.getWebviewById('cart.html').reload();
+												mui.fire(plus.webview.getWebviewById('page/goodList.html'),'refresh');
+												mui.fire(plus.webview.getWebviewById('center.html'),'refresh');
+												plus.webview.getWebviewById('center.html').reload();
+											}
 											if(data.content.type == 1){
 												openview({
 													view:'page/dispatching/dispatching.html',
@@ -707,7 +718,7 @@
 										console.log('响应失败');
 										loadNum++;
 										if(loadNum < 3) {
-											mui.toast('当前网络不好,再次连接');
+											//mui.toast('当前网络不好,再次连接');
 										}
 										console.log('获取默认token响应失败');
 									}
@@ -774,6 +785,7 @@
 						$('.specialGoods').show();
 					}
 					//切换板块
+
 					if(identityT == 0 || identityT == 4 || identityT == 5) { //导购
 						$('.guides').css('display', '')
 						$('.cusMan,.worker').css('display', 'none')
@@ -788,6 +800,9 @@
 						getIcon(2)
 					} else { //配送员
 
+					}
+					if(plus.storage.getItem('$userId') == 1){
+						$('.guides, #xiaoxiBtn').css('display', 'none')
 					}
 					var timeMsg = null;
 					clearInterval(timeMsg);
@@ -1118,7 +1133,9 @@
 				}
 				//功能指引 1
 //				setTimeout(function() {
-					if(showGuide && plus.storage.getItem('oldToken') && !funGuide1){
+
+					function showGuideFun(){
+						if(showGuide && plus.storage.getItem('oldToken') && !funGuide1){
 							mui.openWindow({
 							    url:'funGuide.html',
 							    id:'funGuide',
@@ -1132,7 +1149,9 @@
 
 							    }
 							})
+						}
 					}
+					showGuideFun();
 //				}, 0);
 			});
 

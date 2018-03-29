@@ -157,7 +157,7 @@
 					</p>
 				</div>
 				<img class="dao shezhi" style="top: 8px;width: 36px;" src="images/center/shizhi.png" />
-				<div onclick="goMessage()">
+				<div onclick="goMessage()" id="xiaoxiBtn">
 					<img class="dao" style="top: 8px;width: 36px;right: 50px;" src="images/center/message.svg" />
 					<span class="mui-badge mui-badge-danger" id="ctMsg" style="right: 54px;position: absolute;padding: 4px;top: 8px;background-color: red;display: none;"></span>
 				</div>
@@ -393,7 +393,7 @@
 						<img src="images/center/look.svg" style="background-color: #839973;"/>浏览记录
 						<span class="mui-icon mui-icon-arrowright mui-pull-right maincl ft20 maincl"></span>
 					</div>
-					
+
 
 
 				</div>
@@ -477,12 +477,12 @@
 				    plus.push.addEventListener( "click", function( pushInfo ) {
 				    		console.log('监听click消息' , pushInfo);
 				    		if(JSON.stringify(pushInfo).indexOf('body')==-1){
-				    			//安卓点击，ios receive消息的本地点击 
+				    			//安卓点击，ios receive消息的本地点击
 								if(/android/i.test(navigator.userAgent)){
 							 	 	var pushMsg = pushInfo.payload;
 								}else{
 				    				var pushMsg = JSON.parse(pushInfo.payload);
-								}	
+								}
 								bannerGo(pushMsg.banner,pushMsg.info,'one');
 				    		}else{
 				    			//ios后台对应的 点击
@@ -561,7 +561,7 @@
 			        href:'http://download.leyizhuang.com.cn:6789/lyzWeb0/upApp/upgrade.html'
 			    };
 			    showSfun1(msg,function(){},function(){});
-	
+
 			}
 			//料单审核
 			function listCheck(){
@@ -795,13 +795,26 @@
 					}else{
 						$('#storePreDepositb').hide()
 					}
+					if(plus.storage.getItem('$userId') == 1){
+						$('#xiaoxiBtn, .orderType').css('display', 'none');
+					}
 
 					/*设置*/
 					mui('.shezhi')[0].addEventListener('tap',function(){
-						openview({
-							view:'page/personal/shezhi.html',
-							id:'shezhi'
-						});
+						if(plus.storage.getItem('$userId') == 1){
+							plus.storage.setItem('yaoqiudl','yaoqiudl');
+							openview({
+								view: 'identify.html',
+								id: 'identify'
+							})
+							mui.toast('请登录');
+						}else{
+							openview({
+								view:'page/personal/shezhi.html',
+								id:'shezhi'
+							});
+						}
+
 					});
 
 					function loadmyinfo() {

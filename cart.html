@@ -571,239 +571,248 @@
 
 							//下单
 							$('.goOrder').unbind("click").click(function() {
-								plus.storage.removeItem('auditNo');
-								if($(".cssp[type='checkbox']:checked").length){
-									var cusId = $('.cssp').attr('data-id');
+								if(plus.storage.getItem('$userId') == 1){
+									plus.storage.setItem('yaoqiudl','yaoqiudl');
+									openview({
+										view: 'identify.html',
+										id: 'identify'
+									})
+									mui.toast('请登录');
 								}else{
-									var cusId = ''
-								}
-								var cusphone = $('.cssp').attr('data-phone');
-								var ALLcheckLength = $("dd").find("input[type='checkbox']:checked").length;
-								if(ALLcheckLength == 0) {
-									mui.toast("您还未选择要购买的商品哦！")
-								} else {
-									var materialList = []; // for gift
-									var justGoods = [];//for create order
-									var goodlists = []; //for woker and count
-									var productCouponList = []; // count
-									//存缓存
-									$("dd").find("input[type='checkbox']:checked").each(function(index) {
-										var gdtype = $(this).attr('data-type');
-										var gid = $(this).attr('data-id');
-										var gnum = $(this).parent().parent().find('.mui-input-numbox').val();
-										if(gdtype == 'coupon'){
-											var goodsLineType = 'PRODUCT_COUPON';
-											productCouponList.push({
-												id: gid,
-												qty: gnum,
-											})
-										}else{
-											if(gdtype == 'ld'){
-												var auditNo = $(this).attr('data-auditNo');
-												plus.storage.setItem('auditNo',auditNo);
+									plus.storage.removeItem('auditNo');
+									if($(".cssp[type='checkbox']:checked").length){
+										var cusId = $('.cssp').attr('data-id');
+									}else{
+										var cusId = ''
+									}
+									var cusphone = $('.cssp').attr('data-phone');
+									var ALLcheckLength = $("dd").find("input[type='checkbox']:checked").length;
+									if(ALLcheckLength == 0) {
+										mui.toast("您还未选择要购买的商品哦！")
+									} else {
+										var materialList = []; // for gift
+										var justGoods = [];//for create order
+										var goodlists = []; //for woker and count
+										var productCouponList = []; // count
+										//存缓存
+										$("dd").find("input[type='checkbox']:checked").each(function(index) {
+											var gdtype = $(this).attr('data-type');
+											var gid = $(this).attr('data-id');
+											var gnum = $(this).parent().parent().find('.mui-input-numbox').val();
+											if(gdtype == 'coupon'){
+												var goodsLineType = 'PRODUCT_COUPON';
+												productCouponList.push({
+													id: gid,
+													qty: gnum,
+												})
+											}else{
+												if(gdtype == 'ld'){
+													var auditNo = $(this).attr('data-auditNo');
+													plus.storage.setItem('auditNo',auditNo);
+												}
+
+												var goodsLineType = 'GOODS';
+												justGoods.push({
+													id: gid,
+													qty: gnum,
+													goodsLineType: 'GOODS'
+												});
+												goodlists.push({
+													id: gid,
+													qty: gnum,
+												})
 											}
 
-											var goodsLineType = 'GOODS';
-											justGoods.push({
-												id: gid,
-												qty: gnum,
-												goodsLineType: 'GOODS'
-											});
-											goodlists.push({
-												id: gid,
-												qty: gnum,
+											materialList.push({
+												id: $(this).attr('data-id'),
+												qty: $(this).parent().parent().find('.mui-input-numbox').val(),
+												goodsLineType:goodsLineType
 											})
-										}
-
-										materialList.push({
-											id: $(this).attr('data-id'),
-											qty: $(this).parent().parent().find('.mui-input-numbox').val(),
-											goodsLineType:goodsLineType
 										})
-									})
 
-									plus.storage.setItem('materialList', JSON.stringify(materialList));
-									plus.storage.setItem('justGoods', JSON.stringify(justGoods));
-									plus.storage.setItem('goodlists', JSON.stringify(goodlists));
-									plus.storage.setItem('productCouponList', JSON.stringify(productCouponList));
-									console.log(plus.storage.getItem('materialList'));
+										plus.storage.setItem('materialList', JSON.stringify(materialList));
+										plus.storage.setItem('justGoods', JSON.stringify(justGoods));
+										plus.storage.setItem('goodlists', JSON.stringify(goodlists));
+										plus.storage.setItem('productCouponList', JSON.stringify(productCouponList));
+										console.log(plus.storage.getItem('materialList'));
 
-									if(plus.storage.getItem('oldToken')) {
-										if(identityT == 0 || identityT == 4 || identityT == 5) {
-											mui.ajax(serverUrl + '/app/gift/list', {
-												data: {
-													userId: userId,
-													identityType: identityT,
-													goodsArray: JSON.stringify(materialList)
-												},
-												dataType: 'json',
-												type: 'post',
-												timeout: 10000,
-												headers: {
-													"Authorization": oldToken
-												},
-												success: function(data, type, xhr) {
-													console.log('gift',data)
-													if(data.code == 0 && data.content) {
-														var sysDeliveryType = data.content.sysDeliveryType;
-//														mui.ajax(serverUrl + '/app/order/enter', {
-//															data: {
-//																userId: userId,
-//																identityType: identityT,
-//																goodsList: goodlists,
-//																customerId: '1',
-//																giftList:[],
-//																productCouponList:productCouponList,
-//																sysDeliveryType:sysDeliveryType
-//															},
-//															dataType: 'json',
-//															type: 'post',
-//															timeout: 10000,
-//															headers: {
-//																"Authorization": oldToken,
-//																'Content-Type': 'application/json'
-//															},
-//															success: function(data, type, xhr) {
-//																console.log('获取料单商品', data);
-//																var dataObj = {};
-//																if(data.code == 0 && data.content) {
-																	if(cusId){
+										if(plus.storage.getItem('oldToken')) {
+											if(identityT == 0 || identityT == 4 || identityT == 5) {
+												mui.ajax(serverUrl + '/app/gift/list', {
+													data: {
+														userId: userId,
+														identityType: identityT,
+														goodsArray: JSON.stringify(materialList)
+													},
+													dataType: 'json',
+													type: 'post',
+													timeout: 10000,
+													headers: {
+														"Authorization": oldToken
+													},
+													success: function(data, type, xhr) {
+														console.log('gift',data)
+														if(data.code == 0 && data.content) {
+															var sysDeliveryType = data.content.sysDeliveryType;
+	//														mui.ajax(serverUrl + '/app/order/enter', {
+	//															data: {
+	//																userId: userId,
+	//																identityType: identityT,
+	//																goodsList: goodlists,
+	//																customerId: '1',
+	//																giftList:[],
+	//																productCouponList:productCouponList,
+	//																sysDeliveryType:sysDeliveryType
+	//															},
+	//															dataType: 'json',
+	//															type: 'post',
+	//															timeout: 10000,
+	//															headers: {
+	//																"Authorization": oldToken,
+	//																'Content-Type': 'application/json'
+	//															},
+	//															success: function(data, type, xhr) {
+	//																console.log('获取料单商品', data);
+	//																var dataObj = {};
+	//																if(data.code == 0 && data.content) {
+																		if(cusId){
+																			openview({
+																				view:'page/order/chooseGift.html',
+																				id:'chooseGift',
+							//													autoShow:false,
+																				extrasobj:{cusId:cusId}
+																			})
+																		}else{
+																			openview({
+																				view: 'page/order/chooseCustom.html',
+																				id: 'chooseCustom',
+																			})
+																		}
+	//																} else {
+	//																	plus.nativeUI.alert(data.message);
+	//																}
+	//															},
+	//															error: function(xhr, type, errorThrown) {
+	//																console.log('响应失败  !');
+	//																plus.nativeUI.closeWaiting();
+	//
+	//															}
+	//														});
+														} else {
+															plus.nativeUI.alert(data.message);
+														}
+													},
+													error: function(xhr, type, errorThrown) {
+														console.log('响应失败  !');
+														plus.nativeUI.closeWaiting();
+
+													}
+												});
+
+											} else if(identityT == 3) {
+												mui.ajax(serverUrl+'/app/goodsMoney/worker',{
+													data:{
+														userId:userId,
+														identityType:identityT,
+														custoermId:cusId,
+														goodsList:goodlists
+													},
+													dataType:'json',
+													type:'post',
+													timeout:10000,
+													headers:{"Authorization":oldToken,'Content-Type':'application/json'},
+													success:function(data,type,xhr){
+														console.log('获取料单商品',data);
+														var dataObj = {};
+														if(data.code == 0){
+															openview({
+																view: 'page/order/workerMaterial.html',
+																id: 'workerMaterial'
+															})
+														}else{
+															plus.nativeUI.alert(data.message);
+														}
+													},
+													error:function(xhr,type,errorThrown){
+														console.log('响应失败  !');
+														plus.nativeUI.closeWaiting();
+
+													}
+												});
+											} else {
+												mui.ajax(serverUrl + '/app/gift/list', {
+													data: {
+														userId: userId,
+														identityType: identityT,
+														goodsArray: JSON.stringify(materialList)
+													},
+													dataType: 'json',
+													type: 'post',
+													timeout: 10000,
+													headers: {
+														"Authorization": oldToken
+													},
+													success: function(data, type, xhr) {
+														console.log('gift',data)
+														if(data.code == 0 && data.content) {
+	//														var sysDeliveryType = data.content.sysDeliveryType;
+	//														mui.ajax(serverUrl + '/app/order/enter', {
+	//															data: {
+	//																userId: userId,
+	//																identityType: identityT,
+	//																goodsList: goodlists,
+	//																customerId: '',
+	//																giftList:[],
+	//																productCouponList:productCouponList,
+	//																sysDeliveryType:sysDeliveryType
+	//															},
+	//															dataType: 'json',
+	//															type: 'post',
+	//															timeout: 10000,
+	//															headers: {
+	//																"Authorization": oldToken,
+	//																'Content-Type': 'application/json'
+	//															},
+	//															success: function(data, type, xhr) {
+	//																console.log('获取料单商品', data);
+	//																var dataObj = {};
+	//																if(data.code == 0 && data.content) {
 																		openview({
-																			view:'page/order/chooseGift.html',
-																			id:'chooseGift',
-						//													autoShow:false,
-																			extrasobj:{cusId:cusId}
+																			view: 'page/order/chooseGift.html',
+																			id: 'chooseGift',
+							//												autoShow:false,
 																		})
-																	}else{
-																		openview({
-																			view: 'page/order/chooseCustom.html',
-																			id: 'chooseCustom',
-																		})
-																	}
-//																} else {
-//																	plus.nativeUI.alert(data.message);
-//																}
-//															},
-//															error: function(xhr, type, errorThrown) {
-//																console.log('响应失败  !');
-//																plus.nativeUI.closeWaiting();
-//
-//															}
-//														});
-													} else {
-														plus.nativeUI.alert(data.message);
+	//																} else {
+	//																	plus.nativeUI.alert(data.message);
+	//																}
+	//															},
+	//															error: function(xhr, type, errorThrown) {
+	//																console.log('响应失败  !');
+	//																plus.nativeUI.closeWaiting();
+	//
+	//															}
+	//														});
+														} else {
+															plus.nativeUI.alert(data.message);
+														}
+													},
+													error: function(xhr, type, errorThrown) {
+														console.log('响应失败  !');
+														plus.nativeUI.closeWaiting();
+
 													}
-												},
-												error: function(xhr, type, errorThrown) {
-													console.log('响应失败  !');
-													plus.nativeUI.closeWaiting();
+												});
 
-												}
+											}
+
+										} else { //没登陆直接打开登录页面
+											mui.toast('请登录');
+											openview({
+												view: 'login.html'
 											});
-
-										} else if(identityT == 3) {
-											mui.ajax(serverUrl+'/app/goodsMoney/worker',{
-												data:{
-													userId:userId,
-													identityType:identityT,
-													custoermId:cusId,
-													goodsList:goodlists
-												},
-												dataType:'json',
-												type:'post',
-												timeout:10000,
-												headers:{"Authorization":oldToken,'Content-Type':'application/json'},
-												success:function(data,type,xhr){
-													console.log('获取料单商品',data);
-													var dataObj = {};
-													if(data.code == 0){
-														openview({
-															view: 'page/order/workerMaterial.html',
-															id: 'workerMaterial'
-														})
-													}else{
-														plus.nativeUI.alert(data.message);
-													}
-												},
-												error:function(xhr,type,errorThrown){
-													console.log('响应失败  !');
-													plus.nativeUI.closeWaiting();
-
-												}
-											});
-										} else {
-											mui.ajax(serverUrl + '/app/gift/list', {
-												data: {
-													userId: userId,
-													identityType: identityT,
-													goodsArray: JSON.stringify(materialList)
-												},
-												dataType: 'json',
-												type: 'post',
-												timeout: 10000,
-												headers: {
-													"Authorization": oldToken
-												},
-												success: function(data, type, xhr) {
-													console.log('gift',data)
-													if(data.code == 0 && data.content) {
-//														var sysDeliveryType = data.content.sysDeliveryType;
-//														mui.ajax(serverUrl + '/app/order/enter', {
-//															data: {
-//																userId: userId,
-//																identityType: identityT,
-//																goodsList: goodlists,
-//																customerId: '',
-//																giftList:[],
-//																productCouponList:productCouponList,
-//																sysDeliveryType:sysDeliveryType
-//															},
-//															dataType: 'json',
-//															type: 'post',
-//															timeout: 10000,
-//															headers: {
-//																"Authorization": oldToken,
-//																'Content-Type': 'application/json'
-//															},
-//															success: function(data, type, xhr) {
-//																console.log('获取料单商品', data);
-//																var dataObj = {};
-//																if(data.code == 0 && data.content) {
-																	openview({
-																		view: 'page/order/chooseGift.html',
-																		id: 'chooseGift',
-						//												autoShow:false,
-																	})
-//																} else {
-//																	plus.nativeUI.alert(data.message);
-//																}
-//															},
-//															error: function(xhr, type, errorThrown) {
-//																console.log('响应失败  !');
-//																plus.nativeUI.closeWaiting();
-//
-//															}
-//														});
-													} else {
-														plus.nativeUI.alert(data.message);
-													}
-												},
-												error: function(xhr, type, errorThrown) {
-													console.log('响应失败  !');
-													plus.nativeUI.closeWaiting();
-
-												}
-											});
-
 										}
 
-									} else { //没登陆直接打开登录页面
-										mui.toast('请登录');
-										openview({
-											view: 'login.html'
-										});
 									}
-
 								}
 							})
 						} else {
