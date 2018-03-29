@@ -129,7 +129,8 @@
 				var oldToken = plus.storage.getItem('oldToken');
 				var orderNo = plus.webview.currentWebview().orderNo;
 				var isOver = plus.webview.currentWebview().isOver;
-				if(isOver == 1){
+				var ordertype = plus.webview.currentWebview().ordertype;
+				if(isOver == 1 || ordertype == 1){
 					$('.addwl').hide();
 				}else{
 					$('.addwl').show();
