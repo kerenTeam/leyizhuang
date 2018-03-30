@@ -96,7 +96,7 @@
 						<input name="radio1" dataType='RETURN_STORE' value="送货至门店" class="typeRadio" type="radio">
 					</div>
 					<div class="fangshiMore fangshiMore2">
-						<p id="mendian0" style="padding-bottom: 6px;">请与上班时间送货到---</p>
+						<p id="mendian0" style="padding-bottom: 6px;">请于上班时间送货到---</p>
 						<p id="mendianA0">地址：----</p>
 					</div>
 					<div class="fangshiMore ">
@@ -160,10 +160,17 @@
 				var moreInfo = {};//获取用户退货方式和取货地址
 				var cusId = plus.webview.currentWebview().cusId;
 				var platform = plus.storage.getItem('platform');
+				//门店自提无 上门取货
 				if(deliveryType == '门店自提'){
 					$('.smqh').hide();
+					$('.zhimendian input').trigger('click')
+					$('.fangshiMore').eq(0).css('display','block');
+					$('.fangshiMore').eq(1).css('display','none');
 				}else if(deliveryType && deliveryType.indexOf('券')!=-1){
 					$('.smqh,.tostore,#tostore').hide();
+					$('.zhimendian input').trigger('click')
+					$('.fangshiMore').eq(0).css('display','block');
+					$('.fangshiMore').eq(1).css('display','none');
 
 				}
 				//装饰公司申请退货页面无送货至门店
@@ -211,7 +218,7 @@
 								}else{
 									if(data.content){
 										moreInfo = data.content;
-										$('#mendian0').html('请与上班时间送货到'+data.content.bookingStoreName);
+										$('#mendian0').html('请于上班时间送货到'+data.content.bookingStoreAddress+data.content.bookingStoreName);
 										$('#mendianA0').html('地址：'+data.content.bookingStoreAddress);
 										//显示上门取货地址
 										$('#AD1').html(data.content.receiver);

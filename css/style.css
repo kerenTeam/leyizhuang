@@ -53,7 +53,7 @@ body {
 	width: 30px;
 	margin-top: 5px;
 	position: relative;
-	z-index: 100;
+	z-index: 1;
 }
 .cartSecond,.cartOne,.cartThird{
 	position: relative;

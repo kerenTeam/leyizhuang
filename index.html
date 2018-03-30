@@ -648,7 +648,6 @@
 
 				document.addEventListener('refreshpage', function() {
 					Sign()
-					loadIndex();
 				})
 				var timeSign = null;
 				var loadNum = 0;
@@ -690,6 +689,7 @@
 										} else {
 											plus.nativeUI.closeWaiting();
 											plus.storage.setItem("oldToken", xhr.getResponseHeader('token'));
+											console.log(xhr.getResponseHeader('token'))
 											//审核自动登录
 											if(plus.storage.getItem('iosCheat') == 'false'){
 												plus.storage.setItem("$identityType",JSON.stringify({'identityType':data.content.type}));
@@ -708,7 +708,6 @@
 												})
 											}else{
 												loadIndex();
-//												util.initSubpage();
 											}
 
 										}
@@ -742,8 +741,10 @@
 											}else{
 												plus.storage.removeItem("rankCode");
 											}
-
-//											util.initSubpage();
+											var rankCode = plus.storage.getItem('rankCode');
+											if(rankCode){
+												$('.specialGoods').show();
+											}
 											loadIndex();
 										} else if(data.code == -1) {
 											plus.nativeUI.closeWaiting();
@@ -773,17 +774,17 @@
 					//app更新
 					checkUpdate(true);
 				} //登录方法结束
-				downRe(loadIndex);
+				downRe(pageRd);
+				function pageRd(){
+					Sign()
+				}
 				function loadIndex() {
 					//获取缓存
 				    var nowcity = plus.storage.getItem('userCity');
 					var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
 					var userId = plus.storage.getItem('$userId');
 					var oldToken = plus.storage.getItem('oldToken');
-					var rankCode = plus.storage.getItem('rankCode');
-					if(rankCode){
-						$('.specialGoods').show();
-					}
+					
 					//切换板块
 
 					if(identityT == 0 || identityT == 4 || identityT == 5) { //导购

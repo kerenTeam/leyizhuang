@@ -160,7 +160,9 @@
 										plus.storage.setItem('$userId',JSON.stringify(data.content.userId));
 										plus.storage.setItem("$identityType",JSON.stringify({'identityType':data.content.type}));
 										plus.storage.setItem("Acc_pass",JSON.stringify(Acc_pass));//保存账号密码,用于自动登录
-										plus.storage.setItem('userCity',data.content.cityId.toString());
+										if(data.content.cityId){
+											plus.storage.setItem('userCity',data.content.cityId.toString());
+										}
 										plus.storage.setItem('iosCheat','true');
 										if(data.content.sellerType == 'SUPERVISOR'){
 											plus.storage.setItem("sellerType",'SUPERVISOR');//店长
@@ -176,6 +178,9 @@
 												id:'dispatching'
 											})
 										}else{
+											if(plus.webview.getWebviewById('dispatching')) {
+												plus.webview.getWebviewById('dispatching').close();
+											}
 											mui.fire(plus.webview.getWebviewById('cart.html'), 'refresh');
 											plus.webview.getWebviewById('cart.html').reload()
 											var index = plus.webview.getLaunchWebview();
@@ -184,14 +189,11 @@
 											mui.fire(plus.webview.getWebviewById('page/goodList.html'),'refresh');
 											mui.fire(plus.webview.getWebviewById('center.html'),'refresh');
 											plus.webview.getWebviewById('center.html').reload()
-											if(plus.webview.getWebviewById('dispatching')) {
-												plus.webview.getWebviewById('dispatching').close();
-											}
+											
 										}
-										var time2 = setTimeout(function(){
-
+										setTimeout(function(){
 											plus.webview.currentWebview().close();
-										},500)
+										},800)
 									}
 								},
 								error:function(xhr,type,errorThrown){

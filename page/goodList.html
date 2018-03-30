@@ -152,8 +152,8 @@
 					getCartNum();
 				})
 				function kindTyperf(){
-					$('.flexw div').removeClass('curActive')
-				 	$('.flexw div').eq(0).addClass('curActive');
+					$('.categray span').removeClass('actBadge')
+				 	$('.categray>span:first-child').addClass('actBadge');
 					kindType($('.curActive').attr('data-id'));
 				}
 				 kindType(categoryCode);

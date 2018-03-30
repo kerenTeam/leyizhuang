@@ -152,7 +152,7 @@
 						</div>
 						<li class="clearfloat">
 							<p class="fl">收货人 <span class="redc"> *</span></p>
-							<input type="text" class="fr shuru" id="person" placeholder="请输入收货人姓名" />
+							<input type="text" class="fr shuru" id="person" placeholder="请输入收货人姓名，最多5个字符" />
 						</li>
 						<li class="">
 							<p class="fl">联系电话 <span class="redc"> *</span></p>
@@ -357,6 +357,7 @@
 				//点击保存新增地址
 				window.save = function(){
 					var newPerson = document.getElementById('person').value;
+					var newPerson2 = $.trim(newPerson).replace(/[^\x00-\xff]/g, "**");
 					var newPhone = '';
 						newPhone = document.getElementById('phone').value;
 					var newAddress = '';
@@ -374,6 +375,8 @@
 					if(newPerson == ''){
 						$('#person').focus();
 						mui.toast('收货人不能为空!');
+					}else if(newPerson2.length > 10){
+						mui.toast('收货人最多输入5个汉字或者10个字母')
 					}else if(!reg_phone.test(newPhone)){
 						$('#phone').focus();
 						mui.toast('请输入正确的手机号码 !');

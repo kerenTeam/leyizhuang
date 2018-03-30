@@ -1108,7 +1108,7 @@
 				});
 			}
 			//自提 获取门店
-			$("input[name='peis']").change(function() {
+			$("input[name='peis']").unbind('change').change(function() {
 //				getMaterial();
 				var delivery = $("input[name='peis']:checked").val();
 				var goodsId = '';
@@ -1184,7 +1184,7 @@
 												$("input[name='peis']").eq(1).prop('checked', true)
 												//合计
 												carculate();
-												mui.toast(message);
+												plus.nativeUI.alert(message);
 											}
 										},
 										error: function(xhr, type, errorThrown) {
@@ -1199,7 +1199,7 @@
 										storeStr += '<option data-addr="' + data.content.storeList[i].detailedAddress + '" value="' + data.content.storeList[i].storeId + '">' + data.content.storeList[i].storeName + '</option>'
 									}
 									$('#chooseStore select').html(storeStr);
-									$('#chooseStore select').change(function() {
+									$('#chooseStore select').unbind('change').change(function() {
 										var storeId = $(this).val();
 										var curselect = $(this)
 										//请求门店库存
@@ -1231,14 +1231,16 @@
 													//合计
 													carculate();
 												} else {
-													$('#add_info').show();
-													$('#chooseStore').hide();
+													$('#add_info,.isowndis,#cityResult').show();
+													$('#chooseStore,#storeAddress').hide();
 													$('#freight').html('¥' + $('#firstFreight').val());
 													if(identityT != 6){$('.dsje').show();}
 													curselect.find('option').eq(0).attr('selected', true);
+													$("input[name='peis']").eq(0).attr('checked', false)
+													$("input[name='peis']").eq(1).prop('checked', true)
 													//合计
 													carculate();
-													mui.toast(data.message);
+													plus.nativeUI.alert(data.message);
 												}
 											},
 											error: function(xhr, type, errorThrown) {
@@ -1397,7 +1399,7 @@
 				var endCur = carculate();
 				if(endCur >= 0){
 					var deliveryType, bookingStoreId, bookingStoreName, bookingStoreAddress,
-					receiver, receiverPhone, deliveryCity, deliveryCounty, deliveryStreet, residenceName, detailedAddress, deliveryTime, isOwnerReceiving, auditNo = plus.storage.getItem('auditNo') || '', remark;
+					receiver, receiverPhone,deliveryProvince, deliveryCity, deliveryCounty, deliveryStreet, residenceName, detailedAddress, deliveryTime, isOwnerReceiving, auditNo = plus.storage.getItem('auditNo') || '', remark;
 					remark = $('#remark').val();
 					var delivery = $("input[name='peis']:checked").val();
 					deliveryType = (delivery == 1) ? "SELF_TAKE" : "HOUSE_DELIVERY";

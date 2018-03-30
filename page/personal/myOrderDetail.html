@@ -312,7 +312,7 @@ background: linear-gradient(to right, #1fddff, #ff4b1f); /* W3C, IE 10+/ Edge, F
                         <span class="aClick" onclick="cancelFun('<%= detail.orderNumber%>',this)">取消订单</span>
                     <% }%>
                     <% if(detail.status == 'FINISHED'){%>
-                        <span class="redC aClick" onclick="openReturns('<%= detail.orderNumber%>','<%= detail.customer.customerId%>')">退货</span>
+                        <span class="redC aClick" onclick="openReturns('<%= detail.orderNumber%>','<%= detail.customer.customerId%>','<%=detail.deliveryType%>')">退货</span>
                     <% }%>
                     <span onclick="comeOnAgain('<%= detail.orderNumber%>','<%= detail.customer.customerId%>')" class="aClick">再来一单</span>
                 <% }%>
@@ -325,7 +325,7 @@ background: linear-gradient(to right, #1fddff, #ff4b1f); /* W3C, IE 10+/ Edge, F
 
                 <%if(detail.deliveryType.indexOf('产品券')>-1){%>
 					<%if(detail.status == "FINISHED"){%>
-						<span class="redC aClick" onclick="openReturns('<%= detail.orderNumber%>','<%= detail.customerId%>','<%= detail.deliveryType%>')">退货</span>
+						<span class="redC aClick" onclick="openReturns('<%= detail.orderNumber%>','<%= detail.customer.customerId%>','<%= detail.deliveryType%>')">退货</span>
 					<%}%>
 				<%}%>
 			</div>

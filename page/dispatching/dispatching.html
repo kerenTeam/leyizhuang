@@ -622,6 +622,10 @@
 					id:'center'
 				})
 			})
+			downRe(loadFunrf);
+			function loadFunrf(){
+				loadFun($('#tabLink li.active').index())
+			}
 			loadFun(0);
 			function loadFun(index){
 				$(window).unbind('scroll');
