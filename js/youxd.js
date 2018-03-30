@@ -283,6 +283,7 @@ function hideIos(fun0){
 		timeout: 10000,
 		success: function(data, type, xhr) {
 			console.log('是否打开微信登录,并自动登录返回'+JSON.stringify(data));
+
 			if(data.code == 0 && data.content.isWeChatLoginAllowed){
 				$('#weixinLogin') && $('#weixinLogin').show();
 				plus.storage.setItem('iosCheat','true');

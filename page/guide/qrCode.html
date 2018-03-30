@@ -20,7 +20,7 @@
 		<header class="mui-bar mui-bar-nav fineB">
 		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left bigSize" style="margin-left: 0;"></a>
 		    <h1 class="mui-title">二维码</h1>
-			<span class="mui-pull-right ft15 fenxiangCode" style="line-height: 50px;">
+			<span class="mui-pull-right ft15 fenxiangCode" style="line-height: 50px;display: none;">
 				分享
 			</span>
 		</header>
@@ -53,9 +53,12 @@
 						console.log('二维码',data);
 						if(data.code == 0 && data.content.qrCode){
 							mui('.imgcode')[0].src = data.content.qrCode;
-							console.log(mui('.imgcode')[0].src)
+							console.log(mui('.imgcode')[0].src);
 						}else{
 							mui('.imgcode')[0].src = '../../img/editset.png';
+						}
+						if(mui('.imgcode')[0].src.indexOf('http')>-1){
+							mui('.fenxiangCode')[0].style.display = 'block';
 						}
 						//将图片下载只本地
 						var imgUrl = mui('.imgcode')[0].src,relativePath;
