@@ -207,8 +207,9 @@
 					newUsername = $.trim(username.value).replace(/[^\x00-\xff]/g, "**");
 					if(!account.value || !reg_phone.test(account.value)) {
 						mui.toast('请输入正确的手机号')
-					} else if(!checkcode.value) {
-						mui.toast('请输入验证码')
+					} else if(!checkcode.value || VerCode != checkcode.value) {
+						mui.toast('请输入正确的验证码')
+						return;
 					} else if(account.value != codePhone) {
 						mui.toast('请重新获取验证码')
 					} else if(!newUsername) {
@@ -302,7 +303,8 @@
 															plus.webview.currentWebview().close();
 															plus.nativeUI.closeWaiting();
 														}else{
-															mui.toast(data.message)
+															plus.webview.currentWebview().close();
+															plus.nativeUI.alert(data.message)
 														}
 
 													},

@@ -75,19 +75,20 @@
 								var result2 = result.regeocode;
 								result = result.regeocode.addressComponent;
 								console.log(JSON.stringify(result))
-								if(result.province){
-									if(result.province != cprovince){
-										mui.toast('只能定位当前所在省哦');
-									}else{
-										goback(result.province,result.city,result.district,result.township,result.street,result.streetNumber,result2.formattedAddress,result.neighborhood)
-									}
-								}else{
-									if(result.city != cprovince){
-										mui.toast('只能定位当前所在省哦');
-									}else{
-										goback(result.province,result.city,result.district,result.township,result.street,result.streetNumber,result2.formattedAddress,result.neighborhood)
-									}
-								}
+//								if(result.province){
+//									if(result.province != cprovince){
+//										mui.toast('只能定位当前所在省哦');
+//									}else{
+//										goback(result.province,result.city,result.district,result.township,result.street,result.streetNumber,result2.formattedAddress,result.neighborhood)
+//									}
+//								}else{
+//									if(result.city != cprovince){
+//										mui.toast('只能定位当前所在省哦');
+//									}else{
+//										goback(result.province,result.city,result.district,result.township,result.street,result.streetNumber,result2.formattedAddress,result.neighborhood)
+//									}
+//								}
+								goback(result.province,result.city,result.district,result.township,result.street,result.streetNumber,result2.formattedAddress,result.neighborhood)
 
 							}
 						});

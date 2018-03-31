@@ -789,9 +789,10 @@
 			})
 			//存缓存
 //			plus.storage.removeItem('$eleFastGoods')
-			var eleFastGoods = JSON.parse(plus.storage.getItem('$eleFastGoods') || '[]');
+
 			showBtCart();
 			$('.wfast input').on('change', function() {
+				var eleFastGoods = JSON.parse(plus.storage.getItem('$eleFastGoods') || '[]');
 				var fastMaterial = '2';
 				var number = $(this).val(); //当前数量
 				var firstCode = $(this).parentsUntil('.mui-content').find('.title').attr('data-id');
@@ -805,8 +806,8 @@
 				var skuName = $(this).parentsUntil('.bgcwt').find('.spone .bdcA').text() || $(this).parentsUntil('.bgcwt').find('div').eq(0).text();
 				var specif =brand+' '+$.trim($(this).parentsUntil('.bgcwt').find('.spsec .bdcA').text())+' '+$.trim(fiveSpecif);
 				var cartObj={skuName:skuName,specif:specif,num:number,goodcode:fastMaterial}
+//				alert('～'+JSON.stringify(cartObj));
 //				alert('～'+fastMaterial);
-			 
 				//更新此商品数量缓存
 				if(eleFastGoods.length != 0) {
 					var flag = false;
@@ -858,7 +859,7 @@
 					for(var i = 0; i < eleFastGoods.length; i++) {
 						if(eleFastGoods[i].goodcode == codeid) {
 							if(parseInt(number) != 0){
-								eleFastGoods[i].num = parseInt(number);
+								eleFastGoods[i].num += parseInt(number);
 							}else{
 								eleFastGoods.splice(i, 1);
 							}
