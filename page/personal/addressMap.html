@@ -22,12 +22,12 @@
 				right: 0;
 				margin: 0;
 			}
-			
+
 			iframe {
 				width: 100%;
 				height: 100%;
 			}
-			
+
 			.main-header {
 				position: fixed;
 				top: 0;
@@ -45,7 +45,7 @@
 
 		<script>
 //			(function() {
- 
+
 				mui.plusReady(function() {
 					plus.nativeUI.closeWaiting()
 					var nowcity = plus.storage.getItem('userCity');
@@ -70,23 +70,27 @@
 							extensions: "all"
 						});
 						geocoder.getAddress(NewLocation, function(status, result) {
-							
+
 							if(result.info === 'OK') {
 								var result2 = result.regeocode;
 								result = result.regeocode.addressComponent;
 								console.log(JSON.stringify(result))
 								if(result.province){
-									if(result.province != cprovince){
+									/*if(result.province != cprovince){
 										mui.toast('只能定位当前所在省哦');
 									}else{
 										goback(result.province,result.city,result.district,result.township,result.street,result.streetNumber,result2.formattedAddress,result.neighborhood)
-									}
+									}*/
+									goback(result.province,result.city,result.district,result.township,result.street,result.streetNumber,result2.formattedAddress,result.neighborhood)
+
 								}else{
-									if(result.city != cprovince){
+									/*if(result.city != cprovince){
 										mui.toast('只能定位当前所在省哦');
 									}else{
 										goback(result.province,result.city,result.district,result.township,result.street,result.streetNumber,result2.formattedAddress,result.neighborhood)
-									}
+									}*/
+									goback(result.province,result.city,result.district,result.township,result.street,result.streetNumber,result2.formattedAddress,result.neighborhood)
+
 								}
 
 							}
