@@ -307,7 +307,7 @@
 								var newStreet = $('#jieW').val();
 								var xiaoquIn = document.getElementById('xiaoquIn').value;
 
-								var reg_phone = /^1((3|4|5|8|7){1}\d{1}|70)\d{8}$/;//手机号正则
+								var reg_phone = /^1[0-9]{10}$/;//手机号正则
 								if(!reg_phone.test(newPhone)){
 									$('#phone').focus();
 									mui.toast('请输入正确的手机号码 !');
