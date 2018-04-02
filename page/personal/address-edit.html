@@ -42,16 +42,6 @@
 				padding: 8px;
 				margin: 3px;
 			}
-			#showCityPicker3{
-				position: absolute;
-				right: 10px;
-				line-height: 49px;
-				border: none;
-				padding: 0;
-				text-align: right;
-				width: 75%;
-				background-color: rgba(0,0,0,0);
-			}
 			.data ul li span{
 				line-height: 49px;
 			}
@@ -139,7 +129,7 @@
 							<div style="display: none;" class="" id="localadd" style="max-width: 70%;">
 								点击定位
 							</div>
-							<div class="curADD" style="width: 68%;">
+							<div class="curADD" id="showCityPicker3" style="width: 68%;">
 								<input type="text" id="provenceW"  value="" placeholder="省"/> -
 								<input type="text" id="cityW" value="" placeholder="市"/> -
 								<input type="text" id="districtW" value="" placeholder="区"/>
@@ -149,7 +139,7 @@
 						</li>
 						<li class="clearfloat">
 							<p class="fl">所在街道 <span class="redc"> *</span></p>
-							<input type="text" class="fr shuru" id="jieW" placeholder="填写街道" />
+							<input type="text" class="fr shuru" id="jieW" maxlength="20" placeholder="填写街道，最多20个字" />
 						</li>
 						<li class="clearfloat">
 								<p class="fl">所在小区  <span class="redc"> *</span></p>
@@ -175,7 +165,7 @@
 
 	<script src="../../js/mui.min.js"></script>
 	<script src="../../js/mui.picker.minY.js"></script>
-	<script src="../../js/city.data-3Y.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../js/city.data-3.js" type="text/javascript" charset="utf-8"></script>
 	<!--模板引擎获取数据-->
 	<script type="text/javascript">
 			//定位
@@ -260,7 +250,22 @@
 	<script type="text/javascript" charset="utf-8">
 
 		mui.plusReady(function(){
-
+			
+			var cityPicker3 = new mui.PopPicker({
+				layer: 3
+			});
+			cityPicker3.setData(cityData3);
+			var showCityPickerButton = document.getElementById('showCityPicker3');
+			showCityPickerButton.addEventListener('tap', function(event) {
+				cityPicker3.show(function(items) {
+					$('#provenceW').val(items[0].text)
+				 	$('#cityW').val(items[1].text)
+				 	$('#districtW').val(items[2].text)
+					//返回 false 可以阻止选择框的关闭
+					//return false;
+				});
+			}, false);
+			
 			//获取缓存
 			var adId = plus.webview.currentWebview().adId; /*地址id*/
 			var userId = plus.webview.currentWebview().userId;
@@ -307,7 +312,7 @@
 								var newStreet = $('#jieW').val();
 								var xiaoquIn = document.getElementById('xiaoquIn').value;
 
-								var reg_phone = /^1((3|4|5|8|7){1}\d{1}|70)\d{8}$/;//手机号正则
+								var reg_phone = /^1[0-9]{10}$/;//手机号正则
 								if(!reg_phone.test(newPhone)){
 									$('#phone').focus();
 									mui.toast('请输入正确的手机号码 !');
@@ -318,9 +323,9 @@
 									mui.toast('收货人最多输入5个汉字或者10个字母')
 								}else if(!newProvince || !newCity || !newArea){
 									mui.toast('所在省市区不能为空!');
-								}else if(newStreet == ''){
-									mui.toast('所在街道不能为空!');
-									$('#xiaoquIn').focus();
+								}else if(newStreet == ''|| newStreet.indexOf('街')<0){
+									mui.toast('所在街道信息不正确!');
+									$('#jieW').focus();
 								}else if(xiaoquIn == ''){
 									mui.toast('所在小区不能为空!');
 									$('#xiaoquIn').focus();

@@ -210,7 +210,7 @@
 		var oldToken = plus.storage.getItem("oldToken");
 		var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
 		var oneId = plus.webview.currentWebview().oneId || userId;//导购的 客户id(如果没有就是直接打开页面，不是由导购帮助顾客下单。)
-		var reg_phone = /^1((3|4|5|8|7){1}\d{1}|70)\d{8}$/;//手机号正则;
+		var reg_phone = /^1[0-9]{10}$/;//手机号正则;
 		var nowcity = plus.storage.getItem('userCity');
 		//个人信息
 		mui.ajax(serverUrl+'/app/user/homepage', {

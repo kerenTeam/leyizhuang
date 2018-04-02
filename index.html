@@ -1172,17 +1172,18 @@
 
 			}
 			function fastOrder(){
-				mui.plusReady(function() {
-				    var nowcity = plus.storage.getItem('userCity');
-					if(nowcity != 1) {
-						plus.nativeUI.alert("非常抱歉，目前仅成都市开通快捷下单")
-					} else {
-						openview({
-							view:'page/fastOrder.html',
-							id:'fastOrder'
-						})
-					}
-				})
+//				mui.plusReady(function() {
+//				    var nowcity = plus.storage.getItem('userCity');
+//					if(nowcity != 1) {
+//						plus.nativeUI.alert("非常抱歉，目前仅成都市开通快捷下单")
+//					} else {
+//						openview({
+//							view:'page/fastOrder.html',
+//							id:'fastOrder'
+//						})
+//					}
+//				}) 
+				mui.alert('此功能暂未开放，敬请期待!')
 
 			}
 			function specialGoods(){
