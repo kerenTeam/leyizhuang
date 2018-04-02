@@ -172,7 +172,7 @@
 						</li>
 						<li class="clearfloat">
 							<p class="fl">所在街道 <span class="redc"> *</span></p>
-							<input type="text" class="fr shuru" id="jieW" placeholder="填写街道" />
+							<input type="text" class="fr shuru" id="jieW" placeholder="填写街道，最多20个字" maxlength="20"/>
 						</li>
 						<li class="clearfloat" id="localaddmap">
 							<p class="fl">所在小区 <span class="redc"> *</span></p>
@@ -388,9 +388,9 @@
 						mui.toast('请输入正确的手机号码 !');
 					}else if(!newProvince || !newCity || !newArea){
 						mui.toast('所在省市区不能为空!');
-					}else if(newStreet == ''){
-						mui.toast('所在街道不能为空!');
-						$('#xiaoquIn').focus();
+					}else if(newStreet == '' || newStreet.indexOf('街')<0){
+						mui.toast('所在街道信息不正确!');
+						$('#jieW').focus();
 					}else if(xiaoquIn == ''){
 						mui.toast('所在小区不能为空!');
 						$('#xiaoquIn').focus();

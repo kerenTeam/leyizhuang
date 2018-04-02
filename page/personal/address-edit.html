@@ -139,7 +139,7 @@
 						</li>
 						<li class="clearfloat">
 							<p class="fl">所在街道 <span class="redc"> *</span></p>
-							<input type="text" class="fr shuru" id="jieW" placeholder="填写街道" />
+							<input type="text" class="fr shuru" id="jieW" maxlength="20" placeholder="填写街道，最多20个字" />
 						</li>
 						<li class="clearfloat">
 								<p class="fl">所在小区  <span class="redc"> *</span></p>
@@ -323,9 +323,9 @@
 									mui.toast('收货人最多输入5个汉字或者10个字母')
 								}else if(!newProvince || !newCity || !newArea){
 									mui.toast('所在省市区不能为空!');
-								}else if(newStreet == ''){
-									mui.toast('所在街道不能为空!');
-									$('#xiaoquIn').focus();
+								}else if(newStreet == ''|| newStreet.indexOf('街')<0){
+									mui.toast('所在街道信息不正确!');
+									$('#jieW').focus();
 								}else if(xiaoquIn == ''){
 									mui.toast('所在小区不能为空!');
 									$('#xiaoquIn').focus();
