@@ -222,7 +222,10 @@
       "js/default.js",
       "css/configW.css",
       "img/balls.svg",
-      "cart.html"
+      "cart.html",
+      "images/center/message.svg",
+      "images/index/special3.png",
+      "images/index/bdchexk.svg"
     ],
     "refer": [
       "html/tab-webview-subpage-chat.html",
@@ -384,7 +387,8 @@
       "fonts/mui.ttf",
       "js/artTemplate-native.js",
       "js/default.js",
-      "css/configW.css"
+      "css/configW.css",
+      "css/commonY.css"
     ],
     "refer": [
       "page/goodsInfo.html",
@@ -404,7 +408,27 @@
       "js/jquery.min.js",
       "js/default.js",
       "img/editset.png",
-      "css/configW.css"
+      "css/configW.css",
+      "images/center/centerBg.png",
+      "images/center/message.svg",
+      "images/center/waitPay.svg",
+      "images/center/mywallet.svg",
+      "images/center/cmt.svg",
+      "images/center/mmaterial.svg",
+      "images/center/backT.svg",
+      "images/center/camer.svg",
+      "images/center/paycheck.svg",
+      "images/center/worker.svg",
+      "images/center/shareapp.svg",
+      "images/center/look.svg",
+      "images/center/collect.svg",
+      "images/center/credit.svg",
+      "images/center/take.svg",
+      "images/center/qrcode.svg",
+      "images/center/color.svg",
+      "images/center/debate.svg",
+      "images/center/material.svg",
+      "images/center/cust.svg"
     ],
     "refer": [
       "page/collect.html",
@@ -455,7 +479,10 @@
       "img/check2.png",
       "css/style.css",
       "css/configW.css",
-      "images/blankCart.png"
+      "images/blankCart.png",
+      "images/order/c3g.svg",
+      "images/order/c1.svg",
+      "images/order/c2g.svg"
     ],
     "refer": [
       "login.html",

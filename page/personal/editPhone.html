@@ -82,7 +82,7 @@
 					var userId = plus.storage.getItem('$userId'); 
 					var oldToken = plus.storage.getItem('oldToken');
 					
-					var reg_phone = /^1((3|4|5|8|7){1}\d{1}|70)\d{8}$/;//手机号正则;
+					var reg_phone = /^1[0-9]{10}$/;//手机号正则;
 					var sendButton = document.getElementById('sendMail');
 					var account = document.getElementById('account');
 					var checkcode = document.getElementById('checkcode');

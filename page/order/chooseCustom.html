@@ -118,7 +118,7 @@
 				plus.storage.removeItem('contactOne');
 			})
 			mui.plusReady(function(){
-				var reg_phone = /^1((3|4|5|8|7){1}\d{1}|70)\d{8}$/;//手机号正则;
+				var reg_phone = /^1[0-9]{10}$/;//手机号正则;
 				var account = $('#bindPhone');
 				//获取缓存
 				var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;

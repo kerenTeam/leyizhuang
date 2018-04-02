@@ -103,6 +103,13 @@
 					plus.nativeUI.closeWaiting();
 				}else{
 					mui.toast(data.message);
+					//显示商品
+					var goods = data.content.totalGoodsInfo ;
+					dataObj.totalQty = data.content.totalQty;
+					dataObj.totalPrice = data.content.totalPrice;
+					dataObj.list = goods;
+
+					document.getElementById('cartData').innerHTML = template('cartTpl',dataObj);
 					plus.nativeUI.closeWaiting();
 
 				}
