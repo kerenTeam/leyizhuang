@@ -81,6 +81,11 @@ background: linear-gradient(to right, #1fddff, #ff4b1f); /* W3C, IE 10+/ Edge, F
 			<div class="Dpart1 Dpart2">
 				<span class="huiC">支付方式</span> <span class="mui-pull-right"><%= detail.payType%></span>
 			</div>
+			<%if(detail.identityT == '0'){%>
+				<div class="Dpart1 Dpart2" style="position: relative;top: -20px;">
+					<span class="huiC">导购填写代收款</span> <span class="mui-pull-right"><%= detail.BillingDetailResponse.collectionAmount%> 元</span>
+				</div>
+			<%}%>
 			<div class="Dpart3">
 				<div>
 					<span class="huiC">收货人</span><span class="mui-pull-right"><%= detail.receiver%> <img style="width: 16px;position: relative;top: -1px;" src="../../images/center/tel.svg" alt="" /><a href="tel:<%=detail.receiverPhone%>"><%= detail.receiverPhone || '无'%></a></span>
