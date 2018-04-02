@@ -307,9 +307,13 @@
 							plus.nativeUI.closeWaiting();
 							console.log('过期否',data);
 							if(data.code == 0 ){
-								$('#payMoney').html('¥' + money);
-								$('#maskInfo').fadeIn(200);
-								toPay(money, orderNo)
+								if(money>0){
+									$('#payMoney').html('¥' + money);
+									$('#maskInfo').fadeIn(200);
+									toPay(money, orderNo)
+								}else{
+									dontPay (orderNo)
+								}
 							}else{
 								mui.toast(data.message)
 								plus.webview.currentWebview().reload();
@@ -321,6 +325,36 @@
 							console.log('响应失败');
 						}
 					});
+					function dontPay (orderNumber) {
+						mui.ajax(serverUrl+'/app/order/pay/zero/order',{
+							data: {
+								userId: userId,
+								identityType: identityT,
+								orderNumber:orderNumber
+							},
+							dataType: 'json',
+							type: 'post',
+							timeout: 10000,
+							headers: {
+								"Authorization": oldToken,
+							},
+							success:function(data,type,xhr){
+								plus.nativeUI.closeWaiting();
+								console.log('无需付款',data);
+								if(data.code == 0 ){
+									mui.alert('支付成功')
+									plus.webview.currentWebview().reload();
+								}else{
+									mui.toast(data.message)
+								}
+							},
+							error:function(xhr,type,errorThrown){
+								plus.nativeUI.closeWaiting();
+								mui.toast(type)
+								console.log('响应失败');
+							}
+						});
+					}
 				})
 			}
 			//系统检测获取支付通道
