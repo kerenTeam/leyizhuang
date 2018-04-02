@@ -275,13 +275,17 @@ function showSfun1(msg,fun1,fun0,iosLinkPic,fun3){
 //分享结束
 
 
-function hideIos(fun0){
+function hideIos(fun0,version){
 	//是否打开微信登录,并自动登录
 	mui.ajax(serverUrl + '/app/system/setting/weChatLoginStatus', {
+		data: {
+			"version": version
+		},
 		dataType: 'json',
 		type: 'post',
 		timeout: 10000,
 		success: function(data, type, xhr) {
+			console.error('当前版本'+version);
 			console.log('是否打开微信登录,并自动登录返回'+JSON.stringify(data));
 
 			if(data.code == 0 && data.content.isWeChatLoginAllowed){

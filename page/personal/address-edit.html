@@ -130,16 +130,16 @@
 								点击定位
 							</div>
 							<div class="curADD" id="showCityPicker3" style="width: 68%;">
-								<input type="text" id="provenceW"  value="" placeholder="省"/> -
-								<input type="text" id="cityW" value="" placeholder="市"/> -
-								<input type="text" id="districtW" value="" placeholder="区"/>
+								<input type="text" id="provenceW" readonly value="" placeholder="省"/> -
+								<input type="text" id="cityW" readonly value="" placeholder="市"/> -
+								<input type="text" id="districtW" readonly value="" placeholder="区"/>
 							</div>
 							<img src="../../images/marker_01.png" onclick="goMap()" style="width: 20px;" alt="" />
 
 						</li>
 						<li class="clearfloat">
 							<p class="fl">所在街道 <span class="redc"> *</span></p>
-							<input type="text" class="fr shuru" id="jieW" maxlength="20" placeholder="填写街道，最多20个字" />
+							<input type="text" class="fr shuru" id="jieW" maxlength="20" placeholder="填写街道，如(桂溪街道)" />
 						</li>
 						<li class="clearfloat">
 								<p class="fl">所在小区  <span class="redc"> *</span></p>
@@ -175,7 +175,7 @@
 			function goMap(){
 				plus.nativeUI.showWaiting();
 				if(!cprovince){
-					mui.toast('未开启定位权限，请到设置中开启或者重试，实在不行就手动输入吧');
+					mui.toast('未开启定位权限，请到设置中开启或者重试，实在不行就手动选择吧');
 					plus.nativeUI.closeWaiting()
 				}else{
 					openview({
@@ -250,7 +250,7 @@
 	<script type="text/javascript" charset="utf-8">
 
 		mui.plusReady(function(){
-			
+
 			var cityPicker3 = new mui.PopPicker({
 				layer: 3
 			});
@@ -265,7 +265,7 @@
 					//return false;
 				});
 			}, false);
-			
+
 			//获取缓存
 			var adId = plus.webview.currentWebview().adId; /*地址id*/
 			var userId = plus.webview.currentWebview().userId;

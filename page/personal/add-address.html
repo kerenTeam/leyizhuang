@@ -172,7 +172,7 @@
 						</li>
 						<li class="clearfloat">
 							<p class="fl">所在街道 <span class="redc"> *</span></p>
-							<input type="text" class="fr shuru" id="jieW" placeholder="填写街道，最多20个字" maxlength="20"/>
+							<input type="text" class="fr shuru" id="jieW" placeholder="填写街道，如(桂溪街道)" maxlength="20"/>
 						</li>
 						<li class="clearfloat" id="localaddmap">
 							<p class="fl">所在小区 <span class="redc"> *</span></p>
@@ -227,7 +227,7 @@
 				plus.nativeUI.showWaiting()
 //			function goMap(){
 				if(!cprovince){
-					mui.toast('未开启定位权限，请到设置中开启或者重试，实在不行就手动输入吧');
+					mui.toast('未开启定位权限，请到设置中开启或者重试，实在不行就手动选择吧');
 					plus.nativeUI.closeWaiting()
 				}else{
 					openview({
@@ -325,7 +325,7 @@
 			})
 
 			mui.plusReady(function(){
-				
+
 				var cityPicker3 = new mui.PopPicker({
 					layer: 3
 				});
@@ -340,7 +340,7 @@
 						//return false;
 					});
 				}, false);
-				
+
 				//获取缓存
 				plus.storage.removeItem('$mapStorage');
 				var oldToken = plus.storage.getItem('oldToken');

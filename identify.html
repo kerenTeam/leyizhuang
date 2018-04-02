@@ -171,6 +171,11 @@
 			})
 
 			mui.plusReady(function() {
+				var Nowversion = '';
+				plus.runtime.getProperty(plus.runtime.appid,function(inf){//显示当前版本号
+		        	    Nowversion = inf.version;
+			    });
+
 				if(plus.storage.getItem('yaoqiudl') != 'yaoqiudl'){
 					var wv=plus.webview.currentWebview();
 					wv.setStyle({'popGesture':'none'});
@@ -189,19 +194,26 @@
 			 	 	var systemType = 'ANDROID';
 				}else{
 			 	 	var systemType = 'IOS';
+
 			 	 	//是否打开微信登录,并自动登录
 		 	 		if(plus.storage.getItem('yaoqiudl') != 'yaoqiudl'){
-		 	 			hideIos(function(){
-							//自动登录
-							var b = new Base64();
-							var str = b.encode('123456');
-							plus.storage.setItem("Acc_pass",JSON.stringify(['YK001',str]));
-							plus.storage.setItem("oldToken",'have');
-							var index = plus.webview.getLaunchWebview();
-							index.reload();
-							mui.fire(index,'refreshpage');
-							setTimeout(function(){plus.webview.currentWebview().close();},1000)
-						});
+						var time1122 = setInterval(function(){
+				 	 		if(Nowversion){
+				 	 			clearInterval(time1122);
+				 	 			hideIos(function(){
+									//自动登录
+									var b = new Base64();
+									var str = b.encode('123456');
+									plus.storage.setItem("Acc_pass",JSON.stringify(['YK001',str]));
+									plus.storage.setItem("oldToken",'have');
+									var index = plus.webview.getLaunchWebview();
+									index.reload();
+									mui.fire(index,'refreshpage');
+									setTimeout(function(){plus.webview.currentWebview().close();},1000)
+								},Nowversion);
+				 	 		}
+				 	 	},10)
+
 		 	 		}
 				}
 				var clientId = plus.push.getClientInfo().clientid;
