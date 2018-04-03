@@ -10,7 +10,7 @@
 		<link rel="stylesheet" type="text/css" href="../css/configW.css"/>
 	</head>
  	<style type="text/css">
- 		.categray div{width:calc(100vw - 100px);vertical-align: top;}
+ 		.categray div{width:calc(100vw - 100px);width:-webkit-calc(100vw - 100px);width:-moz-calc(100vw - 100px);vertical-align: top;}
  		.sedc span{margin-bottom:10px;font-size: 16px;padding:0 4px;border-radius: 3px;}
  		.flexw div{position: relative;align-items: center;padding: 15px 0 10px;}
  		.flexw div:not(:last-child):after{position: absolute;content: '';position: absolute;width: 1px;height: 30px;background: #DDD8CD;-webkit-transform:scaleX(.3);right: 0px;top:12px;z-index: 999;}
@@ -295,7 +295,6 @@
 					var oneSize = 15;
 					goodsList(categoryId,brandId,typeId,specification,0);
 					function goodsList(categoryId,brandId,typeId,specification,nosp){
-
 						plus.nativeUI.showWaiting();
 						mui.ajax(serverUrl+'/app/goods/filter',{
 							data:{
