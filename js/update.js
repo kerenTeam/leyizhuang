@@ -7,6 +7,7 @@ function plusReady(){
     plus.runtime.getProperty(plus.runtime.appid,function(inf){
         wgtVer=inf.version;
         console.log("当前应用版本："+wgtVer);
+        plus.storage.setItem('version',wgtVer);
     });
 }
 if(window.plus){
