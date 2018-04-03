@@ -28,6 +28,9 @@ body {
     background-color: none!important;
 	z-index: 0;
 }
+.mui-number button{
+	-webkit-appearance:button!important;
+}
 .mui-numbox [class*=btn-numbox], .mui-numbox [class*=numbox-btn]{
 	width: 34px;
 	font-size: 30px;
