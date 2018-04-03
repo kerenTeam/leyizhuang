@@ -569,6 +569,7 @@
 
 							//下单
 							$('.goOrder').unbind("click").click(function() {
+								plus.nativeUI.showWaiting()
 								if(plus.storage.getItem('$userId') == 1){
 									plus.storage.setItem('yaoqiudl','yaoqiudl');
 									openview({
@@ -576,6 +577,7 @@
 										id: 'identify'
 									})
 									mui.toast('请登录');
+									plus.nativeUI.closeWaiting()
 								}else{
 									plus.storage.removeItem('auditNo');
 									if($(".cssp[type='checkbox']:checked").length){
@@ -586,6 +588,7 @@
 									var cusphone = $('.cssp').attr('data-phone');
 									var ALLcheckLength = $("dd").find("input[type='checkbox']:checked").length;
 									if(ALLcheckLength == 0) {
+										plus.nativeUI.closeWaiting()
 										mui.toast("您还未选择要购买的商品哦！")
 									} else {
 										var materialList = []; // for gift
@@ -650,52 +653,20 @@
 													},
 													success: function(data, type, xhr) {
 														console.log('gift',data)
+														plus.nativeUI.closeWaiting()
 														if(data.code == 0 && data.content) {
-															var sysDeliveryType = data.content.sysDeliveryType;
-	//														mui.ajax(serverUrl + '/app/order/enter', {
-	//															data: {
-	//																userId: userId,
-	//																identityType: identityT,
-	//																goodsList: goodlists,
-	//																customerId: '1',
-	//																giftList:[],
-	//																productCouponList:productCouponList,
-	//																sysDeliveryType:sysDeliveryType
-	//															},
-	//															dataType: 'json',
-	//															type: 'post',
-	//															timeout: 10000,
-	//															headers: {
-	//																"Authorization": oldToken,
-	//																'Content-Type': 'application/json'
-	//															},
-	//															success: function(data, type, xhr) {
-	//																console.log('获取料单商品', data);
-	//																var dataObj = {};
-	//																if(data.code == 0 && data.content) {
-																		if(cusId){
-																			openview({
-																				view:'page/order/chooseGift.html',
-																				id:'chooseGift',
-							//													autoShow:false,
-																				extrasobj:{cusId:cusId}
-																			})
-																		}else{
-																			openview({
-																				view: 'page/order/chooseCustom.html',
-																				id: 'chooseCustom',
-																			})
-																		}
-	//																} else {
-	//																	plus.nativeUI.alert(data.message);
-	//																}
-	//															},
-	//															error: function(xhr, type, errorThrown) {
-	//																console.log('响应失败  !');
-	//																plus.nativeUI.closeWaiting();
-	//
-	//															}
-	//														});
+															if(cusId){
+																openview({
+																	view:'page/order/chooseGift.html',
+																	id:'chooseGift',
+																	extrasobj:{cusId:cusId}
+																})
+															}else{
+																openview({
+																	view: 'page/order/chooseCustom.html',
+																	id: 'chooseCustom',
+																})
+															}
 														} else {
 															plus.nativeUI.alert(data.message);
 														}
@@ -720,6 +691,7 @@
 													timeout:10000,
 													headers:{"Authorization":oldToken,'Content-Type':'application/json'},
 													success:function(data,type,xhr){
+														plus.nativeUI.closeWaiting()
 														console.log('获取料单商品',data);
 														var dataObj = {};
 														if(data.code == 0){
@@ -752,44 +724,12 @@
 													},
 													success: function(data, type, xhr) {
 														console.log('gift',data)
+														plus.nativeUI.closeWaiting()
 														if(data.code == 0 && data.content) {
-	//														var sysDeliveryType = data.content.sysDeliveryType;
-	//														mui.ajax(serverUrl + '/app/order/enter', {
-	//															data: {
-	//																userId: userId,
-	//																identityType: identityT,
-	//																goodsList: goodlists,
-	//																customerId: '',
-	//																giftList:[],
-	//																productCouponList:productCouponList,
-	//																sysDeliveryType:sysDeliveryType
-	//															},
-	//															dataType: 'json',
-	//															type: 'post',
-	//															timeout: 10000,
-	//															headers: {
-	//																"Authorization": oldToken,
-	//																'Content-Type': 'application/json'
-	//															},
-	//															success: function(data, type, xhr) {
-	//																console.log('获取料单商品', data);
-	//																var dataObj = {};
-	//																if(data.code == 0 && data.content) {
-																		openview({
-																			view: 'page/order/chooseGift.html',
-																			id: 'chooseGift',
-							//												autoShow:false,
-																		})
-	//																} else {
-	//																	plus.nativeUI.alert(data.message);
-	//																}
-	//															},
-	//															error: function(xhr, type, errorThrown) {
-	//																console.log('响应失败  !');
-	//																plus.nativeUI.closeWaiting();
-	//
-	//															}
-	//														});
+															openview({
+																view: 'page/order/chooseGift.html',
+																id: 'chooseGift',
+															})
 														} else {
 															plus.nativeUI.alert(data.message);
 														}
