@@ -171,11 +171,6 @@
 			})
 
 			mui.plusReady(function() {
-				var Nowversion = '';
-				plus.runtime.getProperty(plus.runtime.appid,function(inf){//显示当前版本号
-		        	    Nowversion = inf.version;
-			    });
-
 				if(plus.storage.getItem('yaoqiudl') != 'yaoqiudl'){
 					var wv=plus.webview.currentWebview();
 					wv.setStyle({'popGesture':'none'});
@@ -189,16 +184,14 @@
 				if(plus.webview.getWebviewById('shezhi')) {
 					plus.webview.getWebviewById('shezhi').close();
 				}
-				//if(/android/i.test(navigator.userAgent)){
 				if(/android/i.test(navigator.userAgent)){
 			 	 	var systemType = 'ANDROID';
 				}else{
 			 	 	var systemType = 'IOS';
-
 			 	 	//是否打开微信登录,并自动登录
 		 	 		if(plus.storage.getItem('yaoqiudl') != 'yaoqiudl'){
 						var time1122 = setInterval(function(){
-				 	 		if(Nowversion){
+				 	 		if(plus.storage.getItem('version')){
 				 	 			clearInterval(time1122);
 				 	 			hideIos(function(){
 									//自动登录
@@ -210,10 +203,10 @@
 									index.reload();
 									mui.fire(index,'refreshpage');
 									setTimeout(function(){plus.webview.currentWebview().close();},1000)
-								},Nowversion);
+								},plus.storage.getItem('version'));
+								plus.storage.removeItem('version');
 				 	 		}
 				 	 	},10)
-
 		 	 		}
 				}
 				var clientId = plus.push.getClientInfo().clientid;
