@@ -32,7 +32,7 @@
 	<body>
 		<header class="mui-bar mui-bar-nav fineB">
 		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left bigSize"></a>
-		    <h1 class="mui-title">设置</h1>
+		    <h1 class="mui-title" id="sheZhiUrl">设置</h1>
 		</header>
 		<script src="../../js/statusBar.js"></script><!--状态栏-->
 		<div id="main">
@@ -60,6 +60,42 @@
 	<script src="../../js/update.js" type="text/javascript" charset="utf-8"></script>
 	<script type="text/javascript">
 		mui.plusReady(function(){
+			//调试接口输入
+			mui('#sheZhiUrl')[0].addEventListener('swipeleft',function(){
+				mui('#sheZhiUrl')[0].addEventListener('swiperight',function(){
+					mui.prompt(' ','请输入自定义IP','内部测试功能',['正式IP或输入的IP（输入优先）','测试IP'],function(e) {
+						if(e.index == 0) {
+							if(e.value.indexOf('http')>-1){
+								plus.storage.setItem('SURL',e.value);
+								plus.nativeUI.alert("你选择了自定义IP，重启APP生效！",function(){
+					            		plus.runtime.restart();
+						        });
+							}else{
+								mui.toast('没有输入IP（需包含http），启用正式IP');
+								plus.storage.setItem('SURL','http://app.leyizhuang.com.cn');
+								plus.nativeUI.alert("你选择了正式IP，重启APP生效！",function(){
+					            		plus.runtime.restart();
+						        });
+							}
+						}else{
+							plus.storage.setItem('SURL','http://119.23.149.7:9999');
+							plus.nativeUI.alert("你选择了测试IP，重启APP生效！",function(){
+				            		plus.runtime.restart();
+					        });
+						}
+					},'')
+				})
+			})
+//			mui('#sheZhiUrl')[0].addEventListener('longtap',function(){
+//				alert(1)
+//				if(plus.storage.getItem('SURL')){
+//					plus.storage.removeItem('SURL');
+//					plus.nativeUI.alert("重置IP地址成功，重启APP生效！",function(){
+//		            		plus.runtime.restart();
+//			        });
+//				}
+//
+//			})
 			var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
 			if(identityT == 1){
 				mui('#dizhiGuan')[0].style.display = 'none';
@@ -67,7 +103,12 @@
 			//检测设备信息
 			!function(){
 				plus.runtime.getProperty(plus.runtime.appid,function(inf){//显示当前版本号
-		        	    mui('#version')[0].innerHTML = inf.version;
+					if(serverUrl.indexOf('com')>-1 || serverUrl.indexOf('cn')>-1){
+						mui('#version')[0].innerHTML = inf.version;
+					}else{
+						mui('#version')[0].innerHTML = inf.version + ' beta';
+					}
+
 			    });
 				if(/android/i.test(navigator.userAgent)){
 					mui('#editPhone')[0].className += ' liafter';
