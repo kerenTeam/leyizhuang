@@ -63,6 +63,7 @@ body{padding-bottom: 0px;}
 /*签到*/
 .signHead{
 	display: flex;
+	display: -webkit-flex;
 }
 .signHead div{
 	flex: 1;
@@ -326,7 +327,10 @@ header.mui-bar{z-index: 200;}
 .orderBtns span.redC{color: #c7161e;border-color: #c7161e;}
 /*搜索*/
 .searchFind { position: relative; }
-.sint { right: 0; top: 5px; left: 0; position: absolute; display: flex; align-items: center; }
+.sint { right: 0; top: 5px; left: 0; position: absolute;
+display: flex;
+display: -webkit-flex;
+align-items: center; }
 .sint .back {     font-size: 15px;
     color: #c7161e;
     flex-basis: 40px;
@@ -357,7 +361,7 @@ input.fsearch::-webkit-input-placeholder{
 .redC{color: #AC0100;}
 .floL{float: right;}
 .proWrapAll{background-color: #fff;margin-bottom: 10px;}
-.proWrap{display: flex;padding: 15px;}
+.proWrap{display: -webkit-flex;padding: 15px;}
 .proLeft{flex: 2;}
 .proLeft img{width: 100%;height: 100%;}
 .proRight{flex: 5;padding-left: 20px;}

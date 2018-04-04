@@ -19,7 +19,7 @@
 			top: 22%;
 			left: 5%;
 		}
-		
+
 		.vct img {
 			display: block;
 			width: 80px;
@@ -27,7 +27,7 @@
 			margin-bottom: 10px;
 			vertical-align: middle;
 		}
-		
+
 		.vct td {
 			padding: 20px;
 		}
@@ -37,7 +37,7 @@
 			padding-top: 54%;
 			overflow: hidden;
 		}
-		
+
 		.imgpt img {
 			position: absolute;
 			top: 0;
@@ -49,8 +49,8 @@
 			width: 80px;
 			padding: 20px;
 		}
-		
-	 
+
+
 		.imgpt img {
 			position: absolute;
 			top: 0;
@@ -58,7 +58,7 @@
 			width: 100%;
 			height: 100%;
 		}
-		
+
 		.clasfyItem {
 			position: absolute;
 			top: 0;
@@ -67,8 +67,10 @@
 			bottom: 0;
 			text-align: center;
 			display: flex;
+			display: -webkit-flex;
 			align-items: center;
-    		justify-content: center;
+    			justify-content: center;
+    			-webkit-justify-content: center;
 			background-color: rgba(0,0,0,0.3);
 			-webkit-transition: all 0.5 ease;
 		}
@@ -79,7 +81,7 @@
 			font-weight: 400;
 		}
 		.mui-numbox {background: none!important;}
-		
+
 		.trangle {
 			position: absolute;
 			bottom: 0;
@@ -91,7 +93,7 @@
 			border-bottom: 11px solid white;
 			border-left: 11px solid transparent;
 		}
-	 
+
 		.npbk ul:not(:last-of-type):after {
 			position: absolute;
 			content: '';
@@ -103,7 +105,7 @@
 			bottom: 0;
 			transform-origin: bottom;
 		}
-		
+
 		.nplist {
 			width: 1.3rem;
 			/*height: 1.3rem;*/
@@ -114,7 +116,7 @@
 			box-shadow: 0px 0 5px 0px rgba(0, 0, 0, 0.1);
 			margin-left: 5px;
 		}
-		
+
 		.nplast {
 			height: 1.3rem;
 			/*text-align: center;*/
@@ -124,7 +126,7 @@
 			position: absolute;
 			top: 0;
 		}
-		
+
 		.nplist h4 {
 			color: black;
 			font-size: 0.14rem;
@@ -135,14 +137,14 @@
 			overflow: hidden;
 			margin: auto;
 		}
-		
+
 		.npimg {
 			position: relative;
 			width: 100%;
 			padding-top: 100%;
 			overflow: hidden;
 		}
-		
+
 		.npimg img {
 			position: absolute;
 			top: 0;
@@ -150,13 +152,13 @@
 			width: 100%;
 			height: 100%;
 		}
-		
+
 		.nprice {
 			font-size: 0.12rem;
 			color: #f53c42;
 			line-height: 1.5;
 		}
-		 
+
 		.titpr {
 			white-space: normal;
 			max-width: 100px;
@@ -170,7 +172,7 @@
 			overflow: hidden;
 
 		}
-		
+
 		.titprg {
 			display: block!important;
 			width: 100%!important;
@@ -192,7 +194,7 @@
 			<span class="mui-badge mui-badge-white">0</span>
 		</div>
 		<div class="mui-content" style="padding-top: 50px;">
-			<div id="classify"></div> 
+			<div id="classify"></div>
 			<script type="text/html" id="classifyTpl">
 				<%for(var i = 0 ;i < list.length ; i++){%>
 				 <div class="typeDis" style="background-color: #fff;">
@@ -232,10 +234,10 @@
 						    		<%}%>
 					    		<%}%>
 							</ul>
-						
+
 						</div>
 					</div>
-				</div> 
+				</div>
 				<%}%>
 			</script>
 		</div>
@@ -258,7 +260,7 @@
 					}
 				})
 
-			} 
+			}
 			mui.plusReady(function(){
 				getCartNum();
 				document.addEventListener('refreshct', function() {
@@ -293,7 +295,7 @@
 						     		data.content.forEach(function(ele,index){
 										if(ele.promotionId == listId){
 											$('#classify').html(template('classifyTpl', {list:[data.content[index]]}));
-										} 
+										}
 									})
 						     		$('.toCart,.mui-numbox button').click(function() {
 										event.stopPropagation()
@@ -335,7 +337,7 @@
 													} else {
 														mui.toast(data.message)
 													}
-	
+
 												},
 												error: function(xhr, type, errorThrown) {
 													plus.nativeUI.closeWaiting();
@@ -367,7 +369,7 @@
 															} else {
 																mui.toast(data.message)
 															}
-	
+
 														},
 														error: function(xhr, type, errorThrown) {
 															plus.nativeUI.closeWaiting();
@@ -378,12 +380,12 @@
 													cur.val(1);
 													cur.siblings().removeAttr('disabled');
 												}
-	
+
 											})
 										}
-	
+
 									})
-	
+
 									function addCart(goodid,num,cur){
 										mui.ajax(serverUrl+'/app/materialList/add',{
 											data:{
@@ -405,7 +407,7 @@
 												}else{
 													mui.toast(data.message)
 												}
-	
+
 											},
 											error:function(xhr,type,errorThrown){
 												plus.nativeUI.closeWaiting();
@@ -413,7 +415,7 @@
 											}
 										});
 									}
-						     	  
+
 								}else{
 									$('#classify').html('<div style="text-align:center;padding:15px;font-size: 12px;">暂无活动促销</div>')
 								}
@@ -426,7 +428,7 @@
 						}
 					});
 				}
-				
+
 				function getCartNum(){
 					var cartNum = plus.storage.getItem('cartNums') || 0;
 					cartNum = cartNum < 0 ? 0:cartNum;
@@ -447,7 +449,7 @@
 						}
 					})
 
-				 	
+
 				}
 			})
 		</script>
@@ -464,7 +466,7 @@
 			   	//阻止页面的滑动默认事件
 			   	document.addEventListener("touchmove",defaultEvent,false);
 		  	},false)
-		 
+
 		  	block.addEventListener("touchmove", function(e) {
 			   	var touches = e.touches[0];
 			   	var oLeft = touches.clientX - oW;
@@ -477,7 +479,7 @@
 			   	block.style.left = oLeft + "px";
 			   	block.style.top = oTop + "px";
 		  	},false);
-		   
+
 			block.addEventListener("touchend",function() {
 			   document.removeEventListener("touchmove",defaultEvent,false);
 			},false);

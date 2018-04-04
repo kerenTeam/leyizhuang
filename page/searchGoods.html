@@ -22,20 +22,21 @@
 		header {
 			height: 50px!important;
 		}
-		
+
 		.searchFind {
 			position: relative;
 		}
-		
+
 		.sint {
 			right: 0;
 			top: 5px;
 			left: 0;
 			position: absolute;
 			display: flex;
+			display: -webkit-flex;
 			align-items: center;
 		}
-		
+
 		.sint .back {
 			font-size: 14px;
 			color: #F53C42;
@@ -43,7 +44,7 @@
 			margin-left: 10px;
 			text-align: center;
 		}
-		
+
 		.fsearch {
 			border-radius: 20px!important;
 			background-color: #f9f9f9!important;
@@ -51,20 +52,20 @@
 			font-size: 12px!important;
 			padding-left: 30px!important;
 		}
-		
+
 		.fsearch::-webkit-input-placeholder {
 			color: gray!important;
 			text-align: left;
 			font-size: 12px;
 		}
-		
+
 		.mui-icon-search {
 			position: absolute;
 			left: -3px;
 			top: 3px;
 			color: gray;
 		}
-		
+
 		form {
 			width: 100%;
 			margin-left: 10px;
@@ -73,28 +74,28 @@
 		#tab {
 			display: none;
 		}
-		
+
 		.history {
 			position: relative;
 			top: 50px;
 			padding: 15px;
 			background-color: white;
 		}
-		
+
 		.history span {
 			font-size: 12px;
 			vertical-align: middle;
 		}
-		
+
 		.history img {
 			float: right;
 			width: 20px;
 		}
-		
+
 		.hisList {
 			margin-top: 15px;
 		}
-		
+
 		.hisList span {
 			display: inline-block;
 			padding: 5px 10px;
@@ -211,10 +212,10 @@
 		function goodsInfo(id){
 			openview({
 				view:'goodsInfo.html',
-				id: 'goodsInfo', 
+				id: 'goodsInfo',
 				extrasobj:{goodId:id}
-			}) 
-			
+			})
+
 		}
 		mui.plusReady(function() {
 			//缓存记录
@@ -233,7 +234,7 @@
 				$('.latest').css("display", "none");
 				document.getElementById('record').innerHTML = "暂无搜索记录";
 			})
-			//搜索某一条 缓存 
+			//搜索某一条 缓存
 			$('.hisList span').click(function(e) {
 				e.preventDefault();
 				$("#container").css("display", "none");
@@ -241,7 +242,7 @@
 				$("input").val($(this).text());
 				submitTest()
 			})
-				 
+
 			//搜索方法
 			$("input").focus(function() {
 				$(".latest").css("display", "block");
@@ -325,8 +326,8 @@
 										if(platform == 'ANDROID'){
 											$(this).select();
 										}else{
-											$(this).focus(); 
-											$(this).get(0).selectionStart = 0; 
+											$(this).focus();
+											$(this).get(0).selectionStart = 0;
 											$(this).get(0).selectionEnd = $(this).get(0).value.length;
 										}
 										event.stopPropagation()
@@ -338,7 +339,7 @@
 										plus.nativeUI.showWaiting();
 										addCart(goodid,1,cur);
 									})
-									
+
 									//数量选择 -> 加入购物车
 									$('.mui-numbox input').on('change', function() {
 										plus.nativeUI.showWaiting();
@@ -367,7 +368,7 @@
 													} else {
 														mui.toast(data.message)
 													}
-			
+
 												},
 												error: function(xhr, type, errorThrown) {
 													plus.nativeUI.closeWaiting();
@@ -399,7 +400,7 @@
 															} else {
 																mui.toast(data.message)
 															}
-			
+
 														},
 														error: function(xhr, type, errorThrown) {
 															plus.nativeUI.closeWaiting();
@@ -407,15 +408,15 @@
 													});
 												}else{
 													plus.nativeUI.closeWaiting();
-													cur.val(1);	
-													cur.siblings().removeAttr('disabled'); 
+													cur.val(1);
+													cur.siblings().removeAttr('disabled');
 												}
-			
+
 											})
 										}
-										
+
 									})
-									
+
 									function addCart(goodid,num,cur){
 										mui.ajax(serverUrl+'/app/materialList/add',{
 											data:{
@@ -427,19 +428,19 @@
 											headers: {"Authorization": oldToken},
 											type:'post',
 											timeout:10000,
-											success:function(data,type,xhr){ 
+											success:function(data,type,xhr){
 												plus.nativeUI.closeWaiting();
 												console.log('加入购物车',data);
 												if(data.code == 0 ){
 													mui.fire(plus.webview.getWebviewById('cart.html'), 'refresh');
 													cur.next().show();
 													cur.next().find('input').val(1)
-													cur.next().find('input').siblings().removeAttr('disabled'); 
+													cur.next().find('input').siblings().removeAttr('disabled');
 													cur.hide();
 												}else{
 													mui.toast(data.message)
 												}
-												 
+
 											},
 											error:function(xhr,type,errorThrown){
 												plus.nativeUI.closeWaiting();
@@ -447,7 +448,7 @@
 											}
 										});
 									}
-									
+
 								} else {
 									$('#searchOut').html('<div style="text-align:center;padding:15px;font-size: 12px;">暂无商品</div>')
 								}
@@ -488,7 +489,7 @@
 					}
 				})
 
-			 	
+
 			}
 		})
 	</script>
@@ -505,7 +506,7 @@
 			   	//阻止页面的滑动默认事件
 			   	document.addEventListener("touchmove",defaultEvent,false);
 		  	},false)
-		 
+
 		  	block.addEventListener("touchmove", function(e) {
 			   	var touches = e.touches[0];
 			   	var oLeft = touches.clientX - oW;
@@ -518,7 +519,7 @@
 			   	block.style.left = oLeft + "px";
 			   	block.style.top = oTop + "px";
 		  	},false);
-		   
+
 			block.addEventListener("touchend",function() {
 			   document.removeEventListener("touchmove",defaultEvent,false);
 			},false);

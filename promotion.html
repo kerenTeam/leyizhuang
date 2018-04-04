@@ -19,7 +19,7 @@
 			top: 22%;
 			left: 5%;
 		}
-		
+
 		.vct img {
 			display: block;
 			width: 80px;
@@ -27,23 +27,23 @@
 			margin-bottom: 10px;
 			vertical-align: middle;
 		}
-		
+
 		.vct td {
 			padding: 20px;
 		}
-		
+
 		#close {
 			width: 80px;
 			padding: 20px;
 		}
-		
+
 		.imgpt {
 			position: relative;
 			width: 100%;
 			padding-top: 54%;
 			overflow: hidden;
 		}
-		
+
 		.imgpt img {
 			position: absolute;
 			top: 0;
@@ -51,7 +51,7 @@
 			width: 100%;
 			height: 100%;
 		}
-		
+
 		.clasfyItem {
 			position: absolute;
 			top: 0;
@@ -60,7 +60,9 @@
 			bottom: 0;
 			text-align: center;
 			display: flex;
+			display: -webkit-flex;
 			align-items: center;
+    		-webkit-justify-content: center;
     		justify-content: center;
 			/*background-color: rgba(0,0,0,0.3);*/
 			-webkit-transition: all 0.5 ease;
@@ -70,7 +72,7 @@
 			font-size: 20px;
 			font-weight: 400;
 		}
-		
+
 		.trangle {
 			position: absolute;
 			bottom: 0;
@@ -82,7 +84,7 @@
 			border-bottom: 11px solid white;
 			border-left: 11px solid transparent;
 		}
-		
+
 		.npbk {
 			overflow-x: hidden;
 			width: 100vw;
@@ -92,14 +94,14 @@
 			margin-left: -50vw;
 			margin-right: -50vw;
 		}
-		
+
 		.npbk ul {
 			margin: 10px 0px 10px 5px;
 			position: relative;
 			white-space: nowrap;
 			overflow-x: scroll;
 		}
-		
+
 		.npbk ul:not(:last-of-type):after {
 			position: absolute;
 			content: '';
@@ -111,7 +113,7 @@
 			bottom: 0;
 			transform-origin: bottom;
 		}
-		
+
 		.nplist {
 			width: 1.3rem;
 			/*height: 1.3rem;*/
@@ -122,7 +124,7 @@
 			box-shadow: 0px 0 5px 0px rgba(0, 0, 0, 0.1);
 			margin-left: 5px;
 		}
-		
+
 		.nplast {
 			height: 1.3rem;
 			/*text-align: center;*/
@@ -132,7 +134,7 @@
 			position: absolute;
 			top: 0;
 		}
-		
+
 		.nplist h4 {
 			color: black;
 			font-size: 0.14rem;
@@ -143,14 +145,14 @@
 			overflow: hidden;
 			margin: auto;
 		}
-		
+
 		.npimg {
 			position: relative;
 			width: 100%;
 			padding-top: 100%;
 			overflow: hidden;
 		}
-		
+
 		.npimg img {
 			position: absolute;
 			top: 0;
@@ -158,13 +160,13 @@
 			width: 100%;
 			height: 100%;
 		}
-		
+
 		.nprice {
 			font-size: 0.12rem;
 			color: #f53c42;
 			line-height: 1.5;
 		}
-		 
+
 		.titpr {
 			white-space: normal;
 			max-width: 100px;
@@ -178,14 +180,14 @@
 			overflow: hidden;
 
 		}
-		
+
 		.titprg {
 			display: block!important;
 			width: 100%!important;
 			max-width: none;
 			height: auto
 		}
-		
+
 		.mui-media {
 			margin: 0 10px;
 			display: inline-block!important;
@@ -201,7 +203,7 @@
 		</header>
 		<script src="js/statusBar.js" type="text/javascript" charset="utf-8"></script>
 		<div class="mui-content" style="padding-top: 50px;">
-			<div id="classify"></div> 
+			<div id="classify"></div>
 			<script type="text/html" id="classifyTpl">
 				<%for(var i = 0 ;i < list.length ; i++){%>
 				 <div class="typeDis" style="background-color: #fff;">
@@ -254,17 +256,17 @@
 											<div class="zanwei zanweiY2" style="margin-top: -10px;" style="background-color: #EEEEEE!important;">
 												查看更多
 											</div>
-											 
+
 										</a>
 									</li>
 								<%}else{%>
 									<div style="text-align:center;padding:20px;font-size: 12px;">暂无活动促销商品</div>
 								<%}%>
-								 
+
 							</ul>
 						</div>
 					</div>
-				</div> 
+				</div>
 				<%}%>
 			</script>
 		</div>
@@ -336,7 +338,7 @@
 						}
 					});
 				}
-				
+
 				var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
 				var userId = plus.storage.getItem('$userId');
 				var oldToken = plus.storage.getItem('oldToken');
@@ -366,7 +368,7 @@
 						mui.alert('当前网络不好,请重试');
 					}
 				});
-			
+
 			})
 		</script>
 	</body>

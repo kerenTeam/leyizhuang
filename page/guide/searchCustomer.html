@@ -34,6 +34,7 @@
 			left: 0;
 			position: absolute;
 			display: flex;
+			display: -webkit-flex;
 			align-items: center;
 		}
 
@@ -140,6 +141,7 @@
 
 		.flexr {
 			display: flex;
+			display: -webkit-flex;
 			width: 100%;
 			background-color: white;
 			justify-content: space-between;
@@ -260,7 +262,7 @@
 					<%for(var i=0;i < list.length;i++){%>
 					<div class="qashadow" onclick="openDetail(<%=list[i].cusId%>)">
 						<div class="qtop flexr">
-							<div class="ft14" style="display: flex;align-items: center;padding: 10px 0;">
+							<div class="ft14" style="display: -webkit-flex;align-items: center;padding: 10px 0;">
 								<img class="Avator loadPics" style="display: none;" data-src="" src="" />
 
 								<div style="flex: 1;margin-left: 10px;">

@@ -130,7 +130,7 @@
 							<input type="number" class="fr shuru" id="phone" placeholder="请输入手机号码" />
 						</li>
 						<style type="text/css">
-							.dizhiX{display: flex;height: auto !important;}
+							.dizhiX{display: -webkit-flex;height: auto !important;}
 							.dizhiX .fl{width: 64px;}
 
 							.dizhiX .DZp{width: 100px;}
@@ -277,7 +277,7 @@
 					//alert(position.addresses);
 					longitude=(position.coords.longitude).toFixed(6);
 					latitude=(position.coords.latitude).toFixed(6);
-					 
+
 				}
 				// 通过定位模块获取位置信息
 				function getGeocode(){
@@ -286,21 +286,21 @@
 						outSet( "获取定位位置信息失败："+e.message );
 					},{geocode:true,provider:'amap'});
 				}
-				window.addEventListener('refreshmapstorage',function(event){ 
+				window.addEventListener('refreshmapstorage',function(event){
 					ismapStorage();
 				})
 				ismapStorage();
 				function ismapStorage(){
-					var mapStorage = JSON.parse(plus.storage.getItem('$mapStorage') || '[]'); 
-						 if(mapStorage.length==0){ 
+					var mapStorage = JSON.parse(plus.storage.getItem('$mapStorage') || '[]');
+						 if(mapStorage.length==0){
 						 	getGeocode();
-						 } 
+						 }
 						 else{
 						 	$('#xiaoquIn').val(mapStorage[0].adraddress)
 						 	$('#xiaoquIn').val(mapStorage[0].adraddress)
-						 	plus.storage.removeItem('$mapStorage'); 
+						 	plus.storage.removeItem('$mapStorage');
 						 }
-				} 
+				}
 			})
 		</script>
 		<script type="text/javascript" charset="utf-8">
@@ -311,7 +311,7 @@
 					extrasobj:{htmlName:'add-address'}
 				})
 			}
-			
+
 			//导入通讯录
 			document.addEventListener('resetTel',function(){
 				var contactOne = JSON.parse(plus.storage.getItem('contactOne'));
@@ -319,7 +319,7 @@
 				document.getElementById('phone').value = contactOne[0].phone;
 				plus.storage.removeItem('contactOne');
 			})
-		 
+
 			mui.plusReady(function(){
 				//获取缓存
 				var oldToken = plus.storage.getItem('oldToken');

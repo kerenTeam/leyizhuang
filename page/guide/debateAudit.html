@@ -30,7 +30,7 @@
 			.checkListB{padding: 15px 20px;text-align: right;}
 			.checkListB button{width: 80px;padding: 6px 10px;}
 			#infoListDiv{transition: all .3s;}
-			.flexr{display: flex;justify-content: space-between;margin: 2px 0;}
+			.flexr{display: -webkit-flex;-webkit-justify-content: space-between;margin: 2px 0;}
 			a,a:active{color: rgb(51,51,51)!important;}
 			.flexRow2 img{width: 30px;vertical-align: middle;margin-right: 10px;}
 			.telAd{width: 25px;vertical-align: middle;}
@@ -235,7 +235,7 @@
 								if( data.content.list && data.content.list.length){
 									data.content.list.forEach(function(ele,index){
 										if(ele.orderNumber){
-											ele.orderNumber2 = ele.orderNumber.substr(0, 5) + '****' + ele.orderNumber.substr(20);  
+											ele.orderNumber2 = ele.orderNumber.substr(0, 5) + '****' + ele.orderNumber.substr(20);
 										}
 									})
 									document.getElementById('infoListDiv').innerHTML = template('infoList',{list:data.content.list,listType:index});
@@ -259,12 +259,12 @@
 															if( data.content.list && data.content.list.length){
 																data.content.list.forEach(function(ele,index){
 																	if(ele.orderNumber){
-																		ele.orderNumber2 = ele.orderNumber.substr(0, 5) + '****' + ele.orderNumber.substr(20);  
+																		ele.orderNumber2 = ele.orderNumber.substr(0, 5) + '****' + ele.orderNumber.substr(20);
 																	}
 																})
 																document.getElementById('infoListDiv').innerHTML += template('infoList',{list:data.content.list,listType:index});
 																$('a').click(function(){event.stopPropagation()})
-																
+
 															}
 						                                }
 							                             document.getElementById('upload').innerHTML = '';
@@ -284,12 +284,12 @@
 								}else if(data.content && data.content.length){
 									data.content.forEach(function(ele,index){
 										if(ele.orderNumber){
-											ele.orderNumber2 = ele.orderNumber.substr(0, 5) + '****' + ele.orderNumber.substr(20);  
+											ele.orderNumber2 = ele.orderNumber.substr(0, 5) + '****' + ele.orderNumber.substr(20);
 										}
 									})
 									document.getElementById('infoListDiv').innerHTML = template('infoList',{list:data.content,listType:index});
 									$('a').click(function(){event.stopPropagation()})
-									
+
 								}else{
 									document.getElementById('infoListDiv').innerHTML = '<div style="text-align: center;padding: 50px;"><img src="../../images/order/order.png" style="width: 100px;" /><div class="ft13 disablecl">暂无数据</div></div>';
 								}
@@ -333,7 +333,7 @@
 							}
 						});
 					}
-				}) 
+				})
 			}
 		})
 

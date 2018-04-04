@@ -24,7 +24,7 @@
 		    #tabLink li {width: 49%!important;font-size: 16px!important;line-height: 45px;text-align: center;}
 		    #tabLink2 li {width: 32.6%!important;font-size: 16px!important;line-height: 45px;text-align: center;}
 			.rank{font-style: italic;font-weight: 600;font-size: 20px;}
-			.flexr{display: flex;justify-content: space-around;align-items: center;}
+			.flexr{display: -webkit-flex;-webkit-justify-content: space-around;align-items: center;}
 			.tbtwo,.tbthird{display: none;}
 		</style>
 	</head>
@@ -52,7 +52,7 @@
 				高端桶数
 			</div>-->
 			<div class="circle tbone" style="left:50%;-webkit-transform: translateX(-50%);margin-top: 40px;">
-				
+
 				<div class="pie_left">
 					<div class="left"></div>
 				</div>
@@ -61,7 +61,7 @@
 				</div>
 				<div class="mask"><span class="ft20" style="color: #E73A38;" id="availableBalance">---</span></div>
 				<div class="totalEdu">达标率</div>
-			</div> 
+			</div>
 			<div class="circle2 tbtwo" style="left:50%;-webkit-transform: translateX(-50%);margin-top: 40px;">
 				<div class="pie_left">
 					<div class="left"></div>
@@ -92,7 +92,7 @@
 				<!--<div id="HYS" style="text-align: center;font-size: 18px;color: #F8937E;margin-top: 30px;margin-bottom: -10px;">
 					高端活跃会员数
 				</div>-->
-				
+
 				<div class="tbtwo">
 					<div class="quotaP1 fineB" id="limitbalance2">
 						目标会员数<span>---</span>
@@ -109,7 +109,7 @@
 						实际会员数<span>---</span>
 					</div>
 					<!--<div class="quotaP1 fttc">周完成详情</div>-->
-					
+
 					<div class="quotaP1 fineB" id="weekFinishDetails" style="display: none;">
 					</div>
 				</div>
@@ -151,10 +151,10 @@
 												名
 											</div>
 											<div class="ft14" style="max-width: 100px;">
-												<%=list[i].organizationName%> 
+												<%=list[i].organizationName%>
 											</div>
 											<div class="ft14">
-												<%=list[i].name%> 
+												<%=list[i].name%>
 											</div>
 											<div class="ft14">
 												<%=list[i].finishQty%>桶
@@ -182,12 +182,12 @@
 													<%=list[i].rank%>
 												</span>
 												名
-											</div>  
+											</div>
 											<div class="ft14" style="max-width: 100px;">
 												<%=list[i].organizationName%>
 											</div>
 											<div class="ft14">
-												<%=list[i].name%> 
+												<%=list[i].name%>
 											</div>
 											<div class="ft14">
 												<%=list[i].finishQty%>个
@@ -217,7 +217,7 @@
 		<script src="../../js/artTemplate-native.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
 			mui.init();
-		 
+
 			function addPercent(num) {
 				if(num > 100) return;
 				var c = document.getElementsByClassName("circle")[0];
@@ -286,27 +286,27 @@
 								if(data.content) {
 									$('#limitbalance span').html(data.content.targetQty+'桶')
 									$('#tempbalance span').html(data.content.finishQty+'桶')
-	
+
 									var count = (data.content.finishQty / data.content.targetQty) * 100,
 										i = 0;
 									$('#availableBalance').html(data.content.finishChance * 100 .toFixed(2)+'%')
-										
+
 									var t = setInterval(function() {
 										if(i < count) {
 											addPercent(++i);
 										}
-	
+
 									}, 10);
-	
+
 								}
-	
+
 							}
 							if(data.code == 1000) {
 								mui.toast(data.message)
 							} else if(data.code == -1) {
 								mui.toast(data.message)
 							}
-	
+
 						},
 						error: function(xhr, type, errorThrown) {
 							plus.nativeUI.closeWaiting();
@@ -315,7 +315,7 @@
 						}
 					});
 				}
-//				getTwo() 
+//				getTwo()
 				function getTwo(){
 					mui.ajax(serverUrl + '/app/statistics/personal', {
 						data: {
@@ -337,27 +337,27 @@
 								if(data.content) {
 									$('#limitbalance2 span').html(data.content.targetQty+'个')
 									$('#tempbalance2 span').html(data.content.finishQty+'个')
-	
+
 									var count = (data.content.finishQty / data.content.targetQty) * 100,
 										i = 0;
 									$('#availableBalance2').html(data.content.finishChance * 100 .toFixed(2)+'%')
-										
+
 									var t = setInterval(function() {
 										if(i < count) {
 											addPercent2(++i);
 										}
-	
+
 									}, 10);
-	
+
 								}
-	
+
 							}
 							if(data.code == 1000) {
 								mui.toast(data.message)
 							} else if(data.code == -1) {
 								mui.toast(data.message)
 							}
-	
+
 						},
 						error: function(xhr, type, errorThrown) {
 							plus.nativeUI.closeWaiting();
@@ -388,16 +388,16 @@
 								if(data.content) {
 									$('#limitbalance3 span').html(data.content.targetQty+'个')
 									$('#tempbalance3 span').html(data.content.finishQty+'个')
-	
+
 									var count = (data.content.finishQty / data.content.targetQty) * 100,
 										i = 0;
 									$('#availableBalance3').html(data.content.finishChance * 100 .toFixed(2)+'%')
-										
+
 									var t = setInterval(function() {
 										if(i < count) {
 											addPercent3(++i);
 										}
-	
+
 									}, 10);
 									var str = '';
 									if(data.content.weekFinishDetails){
@@ -407,14 +407,14 @@
 										$('#weekFinishDetails').show().html(str)
 									}
 								}
-	
+
 							}
 							if(data.code == 1000) {
 								mui.toast(data.message)
 							} else if(data.code == -1) {
 								mui.toast(data.message)
 							}
-	
+
 						},
 						error: function(xhr, type, errorThrown) {
 							plus.nativeUI.closeWaiting();
@@ -442,7 +442,7 @@
 //						$('.circle2').css('background','#F8937E').show()
 						$('.tbtwo').show()
 						$('.tbone,.tbthird').hide()
-						
+
 					}
 				})
 				$('#tabLink li').click(function(){
@@ -477,14 +477,14 @@
 								clearTimeout(timeLoad),timeLoad = null;
 								if(data.code == 0){
 									$('#loadingdiv').css('height','0px');
-									if(data.content && data.content.length){ 
+									if(data.content && data.content.length){
 										document.getElementById('infoListDiv').innerHTML = template('infoList',{list:data.content,listType:index});
 										$('a').click(function(){event.stopPropagation()})
-										
+
 									}else{
 										document.getElementById('infoListDiv').innerHTML = '<div style="text-align: center;padding: 50px;"><img src="../../images/order/order.png" style="width: 100px;" /><div class="ft13 disablecl">暂无数据</div></div>';
 									}
-	
+
 								}else{
 									mui.toast(data.message);
 								}
@@ -506,14 +506,14 @@
 								clearTimeout(timeLoad),timeLoad = null;
 								if(data.code == 0){
 									$('#loadingdiv').css('height','0px');
-									if(data.content && data.content.length){ 
+									if(data.content && data.content.length){
 										document.getElementById('infoListDiv1').innerHTML = template('infoList1',{list:data.content,listType:index});
 										$('a').click(function(){event.stopPropagation()})
-										
+
 									}else{
 										document.getElementById('infoListDiv1').innerHTML = '<div style="text-align: center;padding: 50px;"><img src="../../images/order/order.png" style="width: 100px;" /><div class="ft13 disablecl">暂无数据</div></div>';
 									}
-	
+
 								}else{
 									mui.toast(data.message);
 								}
