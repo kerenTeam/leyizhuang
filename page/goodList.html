@@ -10,7 +10,7 @@
 		<link rel="stylesheet" type="text/css" href="../css/configW.css"/>
 	</head>
  	<style type="text/css">
- 		.categray div{width:calc(100vw - 100px);width:-webkit-calc(100vw - 100px);width:-moz-calc(100vw - 100px);vertical-align: top;}
+ 		.categray div{width:calc(100vw - 80px);width:-webkit-calc(100vw - 80px);width:-moz-calc(100vw - 80px);vertical-align: top;}
  		.sedc span{margin-bottom:10px;font-size: 16px;padding:0 4px;border-radius: 3px;}
  		.flexw div{position: relative;align-items: center;padding: 15px 0 10px;}
  		.flexw div:not(:last-child):after{position: absolute;content: '';position: absolute;width: 1px;height: 30px;background: #DDD8CD;-webkit-transform:scaleX(.3);right: 0px;top:12px;z-index: 999;}
@@ -55,17 +55,17 @@
 
 		<!--小分类-->
 		<div class="filter" style="background-color:white;padding:6px;font-size:14px;margin-top: 95px;">
-	     	<div class="categray">
+	     	<div class="categray categray1">
 	     		<span class="mui-badge mui-badge-danger ftb actBadge" data-id = '' data-name = 'category'>全部</span><div class="sedc categraya afterBorder"></div>
 
 	     	</div>
-	     	<div class="categray">
+	     	<div class="categray categray2">
 	     		<span class="mui-badge mui-badge-danger ftb actBadge" data-id = '' data-name = 'brand'>品牌</span><div class="sedc categrayb afterBorder"></div>
 	     	</div>
-	     	<div class="categray">
+	     	<div class="categray categray3">
 	     		<span class="mui-badge mui-badge-danger ftb actBadge" data-id = '' data-name = 'specification'>规格</span><div class="sedc categrayc afterBorder"></div>
 	     	</div>
-	     	<div class="categray">
+	     	<div class="categray categray4">
 	     		<span class="mui-badge mui-badge-danger ftb actBadge" data-id = '' data-name = 'type'>类型</span><div class="sedc categrayd"></div>
 	     	</div>
 	     </div>
@@ -179,10 +179,10 @@
 					//全部类别
 					getCategorySecond('','','','')
 					function getCategorySecond(categorySecond,goodsBrand,goodType,specification){
+//						alert('1 '+categorySecond+' 2'+goodsBrand+' 3'+goodType+' 4'+specification)
 						mui.ajax(serverUrl+'/app/goods/category/list',{
 							data:{
 								categoryCode:categoryCode,
-								categorySecond:categorySecond,
 								goodsBrand:goodsBrand,
 								goodType:goodType,
 								specification:specification,
@@ -201,9 +201,39 @@
 									if(data.content && data.content.length){
 										var html = '';
 										for(var i = 0;i<data.content.length;i++){
-											html+='<span data-name = "category" data-id="'+data.content[i].categoryId+'">'+data.content[i].categoryName+'</span>'
+											if(categorySecond == data.content[i].categoryName){
+												html+='<span class="actBadge" data-name = "category" data-id="'+data.content[i].categoryId+'">'+data.content[i].categoryName+'</span>'
+											}else{
+												html+='<span data-name = "category" data-id="'+data.content[i].categoryId+'">'+data.content[i].categoryName+'</span>'
+											}
+
 										}
 										$('.categraya').html(html)
+										
+										//商品 筛选
+										$('.categray1 span').unbind('click').click(function(){
+											$(window).unbind('scroll');
+											Spagenum = 2; //实到页数
+											Ypagenum = 1; //应到页数
+				 							document.body.scrollTop = document.documentElement.scrollTop = 0;
+											$(this).parentsUntil('.filter').find('span').removeClass('actBadge actspan');
+											$(this).addClass('actBadge');
+											
+											var categorySecond,goodsBrand,goodType,specification;
+											categorySecond = $('.categray1 .actBadge').text()=='全部' ? '':$('.categray1 .actBadge').text();
+											goodsBrand = $('.categray2 .actBadge').text()=='品牌' ? '': $('.categray2 .actBadge').text();
+											goodType = $('.categray4 .actBadge').text()=='类型' ? '': $('.categray4 .actBadge').text();
+											specification = $('.categray3 .actBadge').text()=='规格' ? '': $('.categray3 .actBadge').text();
+												 
+											getGoodsBrand(categorySecond,goodsBrand,goodType,specification)
+											getSpecification(categorySecond,goodsBrand,goodType,specification)
+											getGoodType(categorySecond,goodsBrand,goodType,specification)
+											categoryId = $(this).attr('data-id')
+											brandId = $('.categray2 .actBadge').attr('data-id')
+											typeId = $('.categray4 .actBadge').attr('data-id') 
+											goodsList(categoryId,brandId,typeId,specification,1);
+										})
+										
 									}else{
 										$('.categraya').html('无')
 									}
@@ -228,7 +258,6 @@
 							data:{
 								categoryCode:categoryCode,
 								categorySecond:categorySecond,
-								goodsBrand:goodsBrand,
 								goodType:goodType,
 								specification:specification,
 								userId:userId,
@@ -245,9 +274,36 @@
 									if(data.content && data.content.length){
 										var html = '';
 										for(var i = 0;i<data.content.length;i++){
-											html += '<span data-name = "brand" data-id="'+data.content[i].brandId+'">'+data.content[i].brandName+'</span>';
+											if(goodsBrand == data.content[i].brandName){
+												html += '<span class="actBadge" data-name = "brand" data-id="'+data.content[i].brandId+'">'+data.content[i].brandName+'</span>';
+											}else{
+												html += '<span data-name = "brand" data-id="'+data.content[i].brandId+'">'+data.content[i].brandName+'</span>';
+											}
+
 										}
 										$('.categrayb').html(html)
+										//商品 筛选
+										$('.categray2 span').unbind('click').click(function(){
+											$(window).unbind('scroll');
+											Spagenum = 2; //实到页数
+											Ypagenum = 1; //应到页数
+				 							document.body.scrollTop = document.documentElement.scrollTop = 0;
+											$(this).parentsUntil('.filter').find('span').removeClass('actBadge actspan');
+											$(this).addClass('actBadge');
+											
+											var categorySecond,goodsBrand,goodType,specification;
+											categorySecond = $('.categray1 .actBadge').text()=='全部' ? '':$('.categray1 .actBadge').text();
+											goodsBrand = $('.categray2 .actBadge').text()=='品牌' ? '': $('.categray2 .actBadge').text();
+											goodType = $('.categray4 .actBadge').text()=='类型' ? '': $('.categray4 .actBadge').text();
+											specification = $('.categray3 .actBadge').text()=='规格' ? '': $('.categray3 .actBadge').text();
+											getGoodType(categorySecond,goodsBrand,goodType,specification)
+											getSpecification(categorySecond,goodsBrand,goodType,specification)
+											getCategorySecond(categorySecond,goodsBrand,goodType,specification)
+										 	categoryId = $('.categray1 .actBadge').attr('data-id')
+											brandId = $(this).attr('data-id')
+											typeId = $('.categray4 .actBadge').attr('data-id') 
+											goodsList(categoryId,brandId,typeId,specification,1);
+										})
 									}else{
 										$('.categrayb').html('无')
 									}
@@ -274,7 +330,6 @@
 								categorySecond:categorySecond,
 								goodsBrand:goodsBrand,
 								goodType:goodType,
-								specification:specification,
 								userId:userId,
 								identityType:identityT
 							},
@@ -288,10 +343,37 @@
 									plus.nativeUI.closeWaiting();
 									if(data.content && data.content.length){
 										var html = '';
-										for(var i in data.content.list){
-//											html+='<span data-name = "specification" data-id="'+spec[i]+'">'+data.content.list[i]+'</span>';
+										for(var i = 0 ;i<data.content.length;i++){
+											if(specification == data.content[i].specificationName){
+												html+='<span class="actBadge" data-name = "specification" data-id="'+data.content[i].specificationName+'">'+data.content[i].specificationName+'</span>';
+											}else{
+												html+='<span data-name = "specification" data-id="'+data.content[i].specificationName+'">'+data.content[i].specificationName+'</span>';
+											}
 										}
 										$('.categrayc').html(html);
+										//商品 筛选
+										$('.categray3 span').unbind('click').click(function(){
+											$(window).unbind('scroll');
+											Spagenum = 2; //实到页数
+											Ypagenum = 1; //应到页数
+				 							document.body.scrollTop = document.documentElement.scrollTop = 0;
+											$(this).parentsUntil('.filter').find('span').removeClass('actBadge actspan');
+											$(this).addClass('actBadge');
+											
+											var categorySecond,goodsBrand,goodType,specification;
+											categorySecond = $('.categray1 .actBadge').text()=='全部' ? '':$('.categray1 .actBadge').text();
+											goodsBrand = $('.categray2 .actBadge').text()=='品牌' ? '': $('.categray2 .actBadge').text();
+											goodType = $('.categray4 .actBadge').text()=='类型' ? '': $('.categray4 .actBadge').text();
+											specification = $('.categray3 .actBadge').text()=='规格' ? '': $('.categray3 .actBadge').text();
+
+											getCategorySecond(categorySecond,goodsBrand,goodType,specification)
+											getGoodsBrand(categorySecond,goodsBrand,goodType,specification)
+											getGoodType(categorySecond,goodsBrand,goodType,specification)
+											categoryId = $('.categray1 .actBadge').attr('data-id')
+											brandId = $('.categray2 .actBadge').attr('data-id')
+											typeId = $('.categray4 .actBadge').attr('data-id') 
+											goodsList(categoryId,brandId,typeId,specification,1);
+										})
 									}else{
 										$('.categrayc').html('无');
 									}
@@ -305,7 +387,7 @@
 							},
 							error:function(xhr,type,errorThrown){
 								plus.nativeUI.closeWaiting();
-								console.log('登录响应失败');
+								console.log('规格响应失败');
 							}
 						});
 					}
@@ -318,7 +400,6 @@
 								userId:userId,
 								categorySecond:categorySecond,
 								goodsBrand:goodsBrand,
-								goodType:goodType,
 								specification:specification,
 								identityType:identityT
 							},
@@ -333,9 +414,36 @@
 									if(data.content && data.content.length){
 										var html = '';
 										for(var i = 0;i<data.content.length;i++){
-											html += '<span data-name = "type" data-id="'+data.content[i].typeId+'">'+data.content[i].typeName+'</span>';
+											if(goodType == data.content[i].typeName){
+												html += '<span class="actBadge" data-name = "type" data-id="'+data.content[i].typeId+'">'+data.content[i].typeName+'</span>';
+											}else{
+												html += '<span data-name = "type" data-id="'+data.content[i].typeId+'">'+data.content[i].typeName+'</span>';
+											}
+
 										}
 										$('.categrayd').html(html)
+										//商品 筛选
+										$('.categray4 span').unbind('click').click(function(){
+											$(window).unbind('scroll');
+											Spagenum = 2; //实到页数
+											Ypagenum = 1; //应到页数
+				 							document.body.scrollTop = document.documentElement.scrollTop = 0;
+											$(this).parentsUntil('.filter').find('span').removeClass('actBadge actspan');
+											$(this).addClass('actBadge');
+											
+											var categorySecond,goodsBrand,goodType,specification;
+											categorySecond = $('.categray1 .actBadge').text()=='全部' ? '':$('.categray1 .actBadge').text();
+											goodsBrand = $('.categray2 .actBadge').text()=='品牌' ? '': $('.categray2 .actBadge').text();
+											goodType = $('.categray4 .actBadge').text()=='类型' ? '': $('.categray4 .actBadge').text();
+											specification = $('.categray3 .actBadge').text()=='规格' ? '': $('.categray3 .actBadge').text();
+											categoryId = $('.categray1 .actBadge').attr('data-id')
+											brandId = $('.categray2 .actBadge').attr('data-id')
+											typeId = $(this).attr('data-id')
+											getCategorySecond(categorySecond,goodsBrand,goodType,specification)
+											getGoodsBrand(categorySecond,goodsBrand,goodType,specification)
+											getSpecification(categorySecond,goodsBrand,goodType,specification)
+											goodsList(categoryId,brandId,typeId,specification,1);
+										})
 									}else{
 										 $('.categrayd').html('无')
 									}
@@ -384,37 +492,37 @@
 								if(data.code == 0 ){
 									plus.nativeUI.closeWaiting();
 									if(data.content && data.content.list && data.content.list.length){
-										//规格
-										var spec = [];
-										for(var i in data.content.list){
-											if(data.content.list[i].goodsSpecification){
-												spec.push(data.content.list[i].goodsSpecification)
-											}
-										}
-										//去重
-										spec = spec.unique1();
-										console.log('spec',spec);
-										var str='';
-										if(spec.length){
-											if(!nosp){
-												for(var i = 0;i<spec.length;i++){
-													str+='<span data-name = "specification" data-id="'+spec[i]+'">'+spec[i]+'</span>';
-												}
-											}else{
-												str = plus.storage.getItem('specification');
-											}
-										}else{
-											var str='无';
-										}
-										plus.storage.setItem('specification',str)
-										$('.categrayc').html(str);
-										if(specification){
-											$('.categrayc span').each(function(){
-												if($(this).html() == specification){
-													$(this).addClass('actBadge')
-												}
-											})
-										}
+//										//规格
+//										var spec = [];
+//										for(var i in data.content.list){
+//											if(data.content.list[i].goodsSpecification){
+//												spec.push(data.content.list[i].goodsSpecification)
+//											}
+//										}
+//										//去重
+//										spec = spec.unique1();
+//										console.log('spec',spec);
+//										var str='';
+//										if(spec.length){
+//											if(!nosp){
+//												for(var i = 0;i<spec.length;i++){
+//													str+='<span data-name = "specification" data-id="'+spec[i]+'">'+spec[i]+'</span>';
+//												}
+//											}else{
+//												str = plus.storage.getItem('specification');
+//											}
+//										}else{
+//											var str='无';
+//										}
+//										plus.storage.setItem('specification',str)
+//										$('.categrayc').html(str);
+//										if(specification){
+//											$('.categrayc span').each(function(){
+//												if($(this).html() == specification){
+//													$(this).addClass('actBadge')
+//												}
+//											})
+//										}
 										$('#goodsList').html(template('goodsTpl',{list:data.content.list}));
 										mui('.mui-numbox').numbox();
 										$('.toCart,.mui-numbox button').click(function() {
@@ -453,30 +561,46 @@
 											event.stopPropagation()
 										})
 										//商品 筛选
-										$('.categray span').unbind('click').click(function(){
-											$(window).unbind('scroll');
-											Spagenum = 2; //实到页数
-											Ypagenum = 1; //应到页数
-				 							document.body.scrollTop = document.documentElement.scrollTop = 0;
-											$(this).parentsUntil('.filter').find('span').removeClass('actBadge actspan');
-//											if($(this).hasClass('ftb')){
-												$(this).addClass('actBadge');
-//											}else{
-//												$(this).addClass('actspan');
+//										$('.categray span').unbind('click').click(function(){
+//											$(window).unbind('scroll');
+//											Spagenum = 2; //实到页数
+//											Ypagenum = 1; //应到页数
+//				 							document.body.scrollTop = document.documentElement.scrollTop = 0;
+//											$(this).parentsUntil('.filter').find('span').removeClass('actBadge actspan');
+//											$(this).addClass('actBadge');
+//											
+//											var categorySecond,goodsBrand,goodType,specification;
+//											categorySecond = $('.categray1 .actBadge').text()=='全部' ? '':$('.categray1 .actBadge').text();
+//											goodsBrand = $('.categray2 .actBadge').text()=='品牌' ? '': $('.categray2 .actBadge').text();
+//											goodType = $('.categray4 .actBadge').text()=='类型' ? '': $('.categray4 .actBadge').text();
+//											specification = $('.categray3 .actBadge').text()=='规格' ? '': $('.categray3 .actBadge').text();
+//											
+////											 
+//											if($(this).attr('data-name') == 'category'){
+//												categoryId = $(this).attr('data-id')
+//												 
+//												getGoodsBrand(categorySecond,goodType,specification)
+//												getSpecification(categorySecond,goodsBrand,goodType)
+//												getGoodType(categorySecond,goodsBrand,specification)
+//											}else if($(this).attr('data-name') == 'brand'){
+//												brandId = $(this).attr('data-id')
+//												
+//												getGoodType(categorySecond,goodsBrand,specification)
+//												getSpecification(categorySecond,goodsBrand,goodType)
+//												getCategorySecond(goodsBrand,goodType,specification)
+//											}else if($(this).attr('data-name') == 'specification'){
+//												specification = $(this).attr('data-id')
+//												getCategorySecond(goodsBrand,goodType,specification)
+//												getGoodsBrand(categorySecond,goodType,specification)
+//												getGoodType(categorySecond,goodsBrand,specification)
+//											}else if($(this).attr('data-name') == 'type'){
+//												typeId = $(this).attr('data-id')
+//												getCategorySecond(goodsBrand,goodType,specification)
+//												getGoodsBrand(categorySecond,goodType,specification)
+//												getSpecification(categorySecond,goodsBrand,goodType)
 //											}
-
-
-											if($(this).attr('data-name') == 'category'){
-												categoryId = $(this).attr('data-id')
-											}else if($(this).attr('data-name') == 'brand'){
-												brandId = $(this).attr('data-id')
-											}else if($(this).attr('data-name') == 'specification'){
-												specification = $(this).attr('data-id')
-											}else if($(this).attr('data-name') == 'type'){
-												typeId = $(this).attr('data-id')
-											}
-											goodsList(categoryId,brandId,typeId,specification,1);
-										})
+//											goodsList(categoryId,brandId,typeId,specification,1);
+//										})
 
 										//加入购物车
 										$('.toCart').unbind("click").click(function(){
@@ -648,32 +772,32 @@
 															if(data.code == 0 ){
 																plus.nativeUI.closeWaiting();
 																if(data.content && data.content.list && data.content.list.length){
-																	//规格
-																	for(var i in data.content.list){
-																		if(data.content.list[i].goodsSpecification){
-																			spec.push(data.content.list[i].goodsSpecification)
-																		}
-																	}
-																	//去重
-																	spec = spec.unique1();
-																	console.log('spec',spec);
-																	var str='';
-																	if(!nosp){
-																		for(var i = 0;i<spec.length;i++){
-																			str+='<span data-name = "specification" data-id="'+spec[i]+'">'+spec[i]+'</span>';
-																		}
-																	}else{
-																		str = plus.storage.getItem('specification');
-																	}
-																	plus.storage.setItem('specification',str)
-																	$('.categrayc').html(str);
-																	if(specification){
-																		$('.categrayc span').each(function(){
-																			if($(this).html() == specification){
-																				$(this).addClass('actBadge')
-																			}
-																		})
-																	}
+//																	//规格
+//																	for(var i in data.content.list){
+//																		if(data.content.list[i].goodsSpecification){
+//																			spec.push(data.content.list[i].goodsSpecification)
+//																		}
+//																	}
+//																	//去重
+//																	spec = spec.unique1();
+//																	console.log('spec',spec);
+//																	var str='';
+//																	if(!nosp){
+//																		for(var i = 0;i<spec.length;i++){
+//																			str+='<span data-name = "specification" data-id="'+spec[i]+'">'+spec[i]+'</span>';
+//																		}
+//																	}else{
+//																		str = plus.storage.getItem('specification');
+//																	}
+//																	plus.storage.setItem('specification',str)
+//																	$('.categrayc').html(str);
+//																	if(specification){
+//																		$('.categrayc span').each(function(){
+//																			if($(this).html() == specification){
+//																				$(this).addClass('actBadge')
+//																			}
+//																		})
+//																	}
 																	$('#goodsList').append(template('goodsTpl',{list:data.content.list}));
 																	mui('.mui-numbox').numbox();
 																	$('.toCart,.mui-numbox button').click(function() {
@@ -715,31 +839,46 @@
 																	console.log('成功+1,实到' + Spagenum);
 																	console.log('成功+1,应到' + Spagenum);
 																	//商品 筛选
-																	$('.categray span').unbind('click').click(function(){
-																		$(window).unbind('scroll');
-																		Spagenum = 2; //实到页数
-																		Ypagenum = 1; //应到页数
-				 														document.body.scrollTop = document.documentElement.scrollTop = 0;
-																		$(this).parentsUntil('.filter').find('span').removeClass('actBadge actspan');
-//																		if($(this).hasClass('ftb')){
-																			$(this).addClass('actBadge');
-//																		}else{
-//																			$(this).addClass('actspan');
+//																	$('.categray span').unbind('click').click(function(){
+//																		$(window).unbind('scroll');
+//																		Spagenum = 2; //实到页数
+//																		Ypagenum = 1; //应到页数
+//											 							document.body.scrollTop = document.documentElement.scrollTop = 0;
+//																		$(this).parentsUntil('.filter').find('span').removeClass('actBadge actspan');
+//																		$(this).addClass('actBadge');
+//																		
+//																		var categorySecond,goodsBrand,goodType,specification;
+//																		categorySecond = $('.categray1 .actBadge').text()=='全部' ? '':$('.categray1 .actBadge').text();
+//																		goodsBrand = $('.categray2 .actBadge').text()=='品牌' ? '': $('.categray2 .actBadge').text();
+//																		goodType = $('.categray4 .actBadge').text()=='类型' ? '': $('.categray4 .actBadge').text();
+//																		specification = $('.categray3 .actBadge').text()=='规格' ? '': $('.categray3 .actBadge').text();
+//																		
+//							//											 
+//																		if($(this).attr('data-name') == 'category'){
+//																			categoryId = $(this).attr('data-id')
+//																			 
+//																			getGoodsBrand(categorySecond,goodType,specification)
+//																			getSpecification(categorySecond,goodsBrand,goodType)
+//																			getGoodType(categorySecond,goodsBrand,specification)
+//																		}else if($(this).attr('data-name') == 'brand'){
+//																			brandId = $(this).attr('data-id')
+//																			
+//																			getGoodType(categorySecond,goodsBrand,specification)
+//																			getSpecification(categorySecond,goodsBrand,goodType)
+//																			getCategorySecond(goodsBrand,goodType,specification)
+//																		}else if($(this).attr('data-name') == 'specification'){
+//																			specification = $(this).attr('data-id')
+//																			getCategorySecond(goodsBrand,goodType,specification)
+//																			getGoodsBrand(categorySecond,goodType,specification)
+//																			getGoodType(categorySecond,goodsBrand,specification)
+//																		}else if($(this).attr('data-name') == 'type'){
+//																			typeId = $(this).attr('data-id')
+//																			getCategorySecond(goodsBrand,goodType,specification)
+//																			getGoodsBrand(categorySecond,goodType,specification)
+//																			getSpecification(categorySecond,goodsBrand,goodType)
 //																		}
-
-
-																		if($(this).attr('data-name') == 'category'){
-																			categoryId = $(this).attr('data-id')
-																		}else if($(this).attr('data-name') == 'brand'){
-																			brandId = $(this).attr('data-id')
-																		}else if($(this).attr('data-name') == 'specification'){
-																			specification = $(this).attr('data-id')
-																		}else if($(this).attr('data-name') == 'type'){
-																			typeId = $(this).attr('data-id')
-																		}
-
-																		goodsList(categoryId,brandId,typeId,specification,1);
-																	})
+//																		goodsList(categoryId,brandId,typeId,specification,1);
+//																	})
 
 																	//加入购物车
 																	$('.toCart').unbind('click').click(function(){
