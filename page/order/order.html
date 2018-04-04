@@ -247,7 +247,7 @@
 			<div class="bgcwt mb10">
 				<div class="pad10 ft16 afterBorder "><span class="allaccountinfo">账单明细</span><span class="mui-icon mui-icon-arrowdown maincl mui-pull-right"></span> </div>
 				<div class="pad_5 ft15 maincl">商品金额<span class='mui-pull-right pad_r10' id="totalPriceb">¥--</span> </div>
-				<div class="pad_5 ft15 maincl">充帐户余额<span class='mui-pull-right pad_r10' id="memberDiscount">¥--</span></div>
+				<div class="pad_5 ft15 maincl">冲帐户余额<span class='mui-pull-right pad_r10' id="memberDiscount">¥--</span></div>
 				<div class="pad_5 ft15 maincl">订单折扣<span class='mui-pull-right pad_r10' id="orderDiscount">¥--</span></div>
 				<div class="pad_5 ft15 maincl proCouponDiscount" style="display: none;">产品券折扣<span class='mui-pull-right pad_r10' id="proCouponDiscount">¥--</span></div>
 				<div class="pad_5 ft15 maincl">运费<span class='mui-pull-right pad_r10' id="freight">¥--</span></div>
@@ -335,7 +335,7 @@
 				</span>
 				<input placeholder="请填写纸质销货单号" type="text" maxlength="20" style="width: 70%;border: 0;text-align: right;margin-bottom: 0;"  />
 			</div>
-			<textarea rows="3" id='remark' placeholder="备注信息（最大可输入字数120字）" maxlength="120"></textarea>
+			<textarea rows="3" id='remark' placeholder="备注信息（最大可输入字数120字）" oninput="replaceLikeVal(this)" maxlength="120"></textarea>
 
 			<!--存储 第一次返回乐币 和 合计-->
 			<input type="hidden" id="firstLebi" data-id='' value="" />
@@ -396,7 +396,12 @@
 			   obj.value= parseFloat(obj.value);
 			  }
 		}
-
+		function replaceLikeVal(comp){ 
+		    if (comp.value.indexOf("'") != -1 || comp.value.indexOf("\"") != -1) { 
+		      //comp.value = comp.value.substring(0, comp.value.length-1); 
+		      comp.value = comp.value.replace(/\'/g,"").replace(/\"/g,""); 
+		    } 
+		  }
 		function pastNum() {
 			if(obj.value.length == 1) {
 				obj.value = obj.value.replace(/[^1-9]/g, '0')
