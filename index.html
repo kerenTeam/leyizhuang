@@ -34,9 +34,10 @@
 
 			.flexw,
 			.flexws {
-				display: flex;
+				display: -webkit-flex;
+				-webkit-align-items: center;
 				align-items: center;
-				justify-content: space-around;
+				-webkit-justify-content: space-around;
 				text-align: center;
 				margin-top: 15px;
 				font-size: 16px
@@ -54,7 +55,7 @@
 				display: inline-block!important;
 			}
 			.flexws{margin-top: 0;}
-			.flexws>div{width: 50%;display: flex;padding: 20px 15px;justify-content: space-between;align-items: center;}
+			.flexws>div{width: 50%;display: -webkit-flex;padding: 20px 15px;-webkit-justify-content: space-between;-webkit-align-items: center;}
 			.flexws>div>div:first-child{width: 50%;}
 			.ltac .imgb {
 				margin: 5px auto;
@@ -107,8 +108,8 @@
 			.mui-card-content-inner p{font-size: 16px;}
 			.mui-card-content-inner{padding: 8px;}
 			.message {position: absolute;top: 32px;right: 20px;width: 6%;}
-			.somenspf{display: flex;justify-content: space-around;align-items: center;}
-			.somenspf > div{display: flex;align-items: center;}
+			.somenspf{display: -webkit-flex;-webkit-justify-content: space-around;align-items: center;}
+			.somenspf > div{display: -webkit-flex;align-items: center;}
 			.somenspf img{width:15px;vertical-align: middle;margin-top: -3px;}
 			.goodsList{overflow:hidden}
 			.ftype .imgb img{width: 28px!important;height: 28px!important;}
@@ -784,7 +785,7 @@
 					var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
 					var userId = plus.storage.getItem('$userId');
 					var oldToken = plus.storage.getItem('oldToken');
-					
+
 					//切换板块
 
 					if(identityT == 0 || identityT == 4 || identityT == 5) { //导购
@@ -1182,7 +1183,7 @@
 //							id:'fastOrder'
 //						})
 //					}
-//				}) 
+//				})
 				mui.alert('此功能暂未开放，敬请期待!')
 
 			}

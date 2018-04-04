@@ -13,8 +13,12 @@
 }
 .flexRow{
 	font-size: 14px;
+	display: -webkit-flex;
 	display: flex;
+	-webkit-justify-content: space-around;
 	justify-content: space-around;
+	-webkit-justify-content: space-around;
+	-webkit-align-items: flex-end;
 	align-items: flex-end;
 	text-align: center;
 	padding: 10px 0;

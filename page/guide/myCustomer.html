@@ -87,7 +87,7 @@
 
 					<div class="qashadow" data-id="<%=dataList[i].light%>" onclick="openDetail(<%=dataList[i].cusId%>,'<%=dataList[i].light%>')">
 						<div class="qtop flexr">
-							<div class="ft14" style="display: flex;align-items: center;">
+							<div class="ft14" style="display: -webkit-flex;align-items: center;">
 								<%if(dataList[i].picUrl && dataList[i].picUrl.indexOf('http')>-1){%>
 									<img class="Avator loadPics" data-src="" src="<%=dataList[i].picUrl%>"/>
 								<%}else{%>

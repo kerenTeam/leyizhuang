@@ -23,20 +23,21 @@
 		header {
 			height: 50px!important;
 		}
-		
+
 		.searchFind {
 			position: relative;
 		}
-		
+
 		.sint {
 			right: 0;
 			top: 5px;
 			left: 0;
 			position: absolute;
 			display: flex;
+			display: -webkit-flex;
 			align-items: center;
 		}
-		
+
 		.sint .back {
 			font-size: 14px;
 			color: #F53C42;
@@ -44,7 +45,7 @@
 			margin-left: 10px;
 			text-align: center;
 		}
-		
+
 		.fsearch {
 			border-radius: 20px!important;
 			background-color: #f9f9f9!important;
@@ -52,26 +53,26 @@
 			font-size: 12px!important;
 			padding-left: 30px!important;
 		}
-		
+
 		.fsearch::-webkit-input-placeholder {
 			color: gray!important;
 			text-align: left;
 			font-size: 12px;
 		}
-		
+
 		.mui-icon-search {
 			position: absolute;
 			left: 5px;
 			top: 3px;
 			color: gray;
 		}
-		
+
 		form {
 			width: 100%;
 			margin-left: 10px;
 		}
 		.mui-icon{margin-left: 10px!important;}
-		
+
 		.tabPs {
 			border-bottom: 1px solid #EEEEEE;
 			position: fixed;
@@ -83,7 +84,7 @@
 			height: calc(31px + 13px);
 			z-index: 99;
 		}
-		
+
 		.tab {
 			/*padding: 0 15px;*/
 			background: white;
@@ -91,7 +92,7 @@
 			/*display: flex;
 			justify-content: space-around;*/
 		}
-		
+
 		.tab div {
 			padding: 15px 0;
 			font-size: 13px;
@@ -99,12 +100,12 @@
 			width: 50%;
 			text-align: center;
 		}
-		
+
 		.tabActive {
 			color: #F53C42;
 			/*border-bottom: 2px solid #F53C42;*/
 		}
-		
+
 		.border {
 			position: absolute;
 			z-index: 99;
@@ -114,86 +115,88 @@
 			background-color: #F53C42;
 			-webkit-transition: all 0.5s ease;
 		}
-		
+
 		.tabcontent {
 			position: relative;
 			top: 0;
 			display: none;
 		}
-		
+
 		.taactive {
 			display: block;
 		}
-		
+
 		.cAvator {
 			width: 0.4rem;
 			height: 0.4rem;
 			margin-right: 10px;
 		}
-		
+
 		.userAvator {
 			width: 0.4rem;
 			height: 0.4rem;
 			border-radius: 50%;
 			margin-right: 10px;
 		}
-		
+
 		.flexr {
 			display: flex;
+			display: -webkit-flex;
 			width: 100%;
 			background-color: white;
 			justify-content: space-between;
+			-webkit-justify-content: space-between;
 			color: #303030;
 			align-items: center;
 		}
-		
+
 		.qashadow {
 			margin-bottom: 10px;
 			box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.1);
 			background-color: white;
 			padding: 10px
 		}
-		
+
 		.qashadow img {
 			width: 20px;
 		}
-		
+
 		.qbot {
 			margin-top: 10px;
 			line-height: 1.3;
 		}
-		
+
 		.Avator {
 			width: 40px!important;
 			height: 40px!important;
 			border-radius: 50%;
 		}
-		
+
 		#tab {
 			display: none;
 		}
-		
+
 		.history {
 			position: relative;
 			top: 50px;
 			padding: 15px;
 			background-color: white;
 		}
-		
+
 		.history span {
 			font-size: 12px;
 			vertical-align: middle;
 		}
-		
+
 		.history img {
 			float: right;
 			width: 20px;
 		}
-		
+
 		.hisList {
 			margin-top: 15px;
 		}
-		
+
 		.hisList span {
 			display: inline-block;
 			padding: 5px 10px;
@@ -256,7 +259,7 @@
 					<%for(var i=0;i < list.length;i++){%>
 					<div class="qashadow" onclick="openDetail()">
 						<div class="qtop flexr">
-							<div class="ft14" style="display: flex;align-items: center;">
+							<div class="ft14" style="display: -webkit-flex;align-items: center;">
 								<img class="Avator loadPics" data-src="" src="<%=list[i].picUrl%>" />
 
 								<div style="flex: 1;margin-left: 10px;">
@@ -340,7 +343,7 @@
 				$('.latest').css("display", "none");
 				document.getElementById('record').innerHTML = "暂无搜索记录";
 			})
-			//搜索某一条 缓存 
+			//搜索某一条 缓存
 			$('.hisList span').click(function(e) {
 				e.preventDefault();
 				$("#container").css("display", "none");

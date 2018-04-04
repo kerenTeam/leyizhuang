@@ -35,7 +35,9 @@
 			.flexw,
 			.flexws {
 				display: flex;
+				display: -webkit-flex;
 				align-items: center;
+				-webkit-justify-content: space-around;
 				justify-content: space-around;
 				text-align: center;
 				margin-top: 15px;
@@ -252,7 +254,7 @@
 			<!--商品列表-->
 			<div class="goodsList" id="goodsListHot"></div>
 			<div style="height: 50px;width: 100%;clear: both;"></div>
-			
+
 			<script type="text/html" id="goodsHotTpl">
 				<ul class="mui-table-view" style="border-top: none!important;">
 					<%for(var i = 0 ;i<list.length;i++){%>
@@ -276,19 +278,19 @@
 					<%}%>
 				</ul>
 			</script>
-		
+
 			<div style="text-align:center;padding:20px 10px">
 				乐易装商学院
 				<span style="float:right;font-size:12px" onclick="tradeLists()">更多</span>
 			</div>
-			<div id="tradeList"></div>			
+			<div id="tradeList"></div>
 			<script type="text/html" id="tradeTpl">
 				<%for(var i=0;i<dataList.length;i++){%>
 					<div class="qashadow" data-id="<%=dataList[i].id%>" onclick="openDetail(<%=dataList[i].id%>)">
 						<div class="qtop flexr">
-							<div class="ft16" style="display: flex;align-items: center;">
+							<div class="ft16" style="display: -webkit-flex;align-items: center;">
 								<img class="Avator" src="<%=dataList[i].pic%>"/>
-								
+
 								<div style="flex: 1;margin-left: 10px;">
 									<div class="maincl ft16">
 										<span class=""><%=dataList[i].title%></span>
@@ -298,13 +300,13 @@
 									</div>
 								</div>
 							</div>
-							 
+
 						</div>
 					</div>
 				<%}%>
-			</script>	
+			</script>
 		<div class="upload text-center text-xs gray" id="upload"></div>
-			
+
 		<div style="height: 50px;width: 100%;clear: both;"></div>
 		<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/mui.min.js"></script>
@@ -509,7 +511,7 @@
 					id: 'hotGoods',
 				})
 			}
-			
+
 			function tradeLists(){
 				openview({
 					view: 'page/tradeList.html',
@@ -692,7 +694,7 @@
 					}
 					loadIndex();
 				} //登录方法结束
-				
+
 				loadIndex();
 				function loadIndex() {
 					//获取缓存
@@ -791,7 +793,7 @@
 						timeout: 10000, //超时时间设置为10秒；
 						success: function(data) {
 							console.log('trade',data);
-							
+
 							if(data && data.data.length) {
 								document.getElementById("tradeList").innerHTML = template("tradeTpl", {dataList:data.data});
 								mui("#upload")[0].innerHTML = "";
@@ -831,7 +833,7 @@
 													mui("#upload")[0].innerHTML = "";
 												}
 											});
-										} 
+										}
 									} else { //当前页不小于等于总页数时请求下一页
 											mui("#upload")[0].innerHTML = "到底了";
 										}
@@ -846,8 +848,8 @@
 							mui("#upload")[0].innerHTML = "";
 						}
 					});
-				
-				
+
+
 				}
 			});
 		</script>

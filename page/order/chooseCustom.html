@@ -21,18 +21,18 @@
 		.qashadow img {
 			width: 20px;
 		}
-		
+
 		.qbot {
 			margin-top: 10px;
 			line-height: 1.3;
 		}
-		
+
 		.Avator {
 			width: 40px!important;
 			height: 40px!important;
 			border-radius: 50%;
 		}
-		
+
 	</style>
 	<body>
 		<header class="mui-bar mui-bar-nav" style="padding-right: 15px;">
@@ -43,7 +43,7 @@
 		<script src="../../js/statusBar.js" type="text/javascript" charset="utf-8"></script>
 		<div class="mui-content" >
 			<form onsubmit="submitTest();return false;" id="searchf">
-				<div style="padding:10px 0;display: flex;align-items: center;justify-content: space-between;margin: 10px 0;" class="bgcwt">
+				<div style="padding:10px 0;display: -webkit-flex;align-items: center;-webkit-justify-content: space-between;margin: 10px 0;" class="bgcwt">
 					<input type="text" id="bindPhone" style="width: 70%;margin: 0;" placeholder="请输入会员姓名或电话" />
 					<div style="border-left: 0px solid #EEEEEE;padding: 0 10px;" onclick="submitTest();">
 						<span class="mui-icon mui-icon-search"></span>
@@ -54,7 +54,7 @@
 			<!--<div class="qrcode pad15 bgcwt">
 				 <img class="imgcode" src="../../img/Spinner.svg" data-preview-src="" data-preview-group="1"/>
 			</div>-->
-			
+
 			<div id="searchOut" style="margin-top: 5px;"></div>
 
 			<script type="text/html" id="searchOutTpl">
@@ -66,21 +66,21 @@
 					<%for(var i=0;i < list.length;i++){%>
 					<div class="qashadow afterBorder" onclick="gonext(<%=list[i].cusId%>)">
 						<div class="qtop flexr">
-							<div class="ft14" style="display: flex;align-items: center;padding: 10px 0;">
+							<div class="ft14" style="display: -webkit-flex;align-items: center;padding: 10px 0;">
 								<div style="flex: 1;margin-left: 10px;">
 									<div class="maincl ft16">
 										<span class="maincl"><%=list[i].cusName%></span>
 										<span class="maincl"><%=list[i].cusPhone%></span>
-									</div> 
+									</div>
 								</div>
-							</div> 
+							</div>
 						</div>
 					</div>
 
 					<%}%>
 				</div>
 			</script>
-			
+
 		</div>
 		<script src="../../js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../../js/artTemplate-native.js" type="text/javascript" charset="utf-8"></script>
@@ -89,7 +89,7 @@
 		<script type="text/javascript">
 			mui.init();
 			function qrCode(){
-				
+
 				openview({
 					view: '../guide/qrCode.html',
 					id: 'qrCode',
@@ -102,13 +102,13 @@
 					extrasobj:{htmlName:'chooseCustom'}
 				})
 			}
-			function gonext(id){ 
+			function gonext(id){
 				openview({
 					view:'chooseGift.html',
 					id:'chooseGift',
 //					autoShow:false,
 					extrasobj:{cusId:id}
-				}) 
+				})
 			}
 			//导入通讯录
 			document.addEventListener('resetTel2',function(){
@@ -124,7 +124,7 @@
 				var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
 				var userId = plus.storage.getItem('$userId');
 				var oldToken = plus.storage.getItem('oldToken');
-//				
+//
 //				mui.ajax(serverUrl+'/app/employee/qr/code',{
 //					data:{'userID':userId,'identityType':identityT},
 //					dataType:'json',
@@ -144,7 +144,7 @@
 //						console.log('响应失败  !');
 //					}
 //				});
-//				
+//
 				window.submitTest = function(){
 					if(!account.val()){
 						mui.toast('请输入会员姓名或电话')
@@ -173,13 +173,13 @@
 											$('#searchOut').html(template('searchOutTpl', {
 												list: data.content
 											}));
-		
+
 										} else {
 											$('#searchOut').html('<div style="text-align:center;padding:15px;font-size: 12px;">暂无搜索结果</div>')
 										}
 									} else {
 										$('#searchOut').html('<div style="text-align:center;padding:15px;font-size: 12px;">暂无搜索结果</div>')
-									} 
+									}
 								}else{
 									$('#searchOut').html('<div style="text-align:center;padding:15px;font-size: 12px;">暂无搜索结果</div>')
 									mui.toast(data.message)

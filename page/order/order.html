@@ -189,7 +189,7 @@
 				<div style="clear: both;"></div>
 				<div class="pad10 ft15 afterBorder flexr" id="chooseStore" style="display: none;">
 					<em>选择门店 </em>
-					<div style="display: flex;align-items: center;">
+					<div style="display: -webkit-flex;align-items: center;">
 						<select style="padding: 0;direction: rtl!important;">
 							<option value="">选择</option>
 						</select>
@@ -503,7 +503,7 @@
 //
 //			}
 			window.inputbd = function(obj){
-				
+
 				$('.onlypay').addClass('goOrder')
 				var cur = $(obj);
 				var maxCh = cur.prev().html().replace('¥', '');
@@ -529,7 +529,7 @@
 					$('.onlypay').addClass('goOrder')
 					carculate()
 				}
-				
+
 				carculate()
 			}
 			if(identityT == 2) {
@@ -602,7 +602,7 @@
 							}else{
 								$('.proCouponDiscount').hide()
 							}
-							
+
 							if(data.content.freight) {
 								$('#freight').html('¥' + data.content.freight)
 								$('#firstFreight').val(data.content.freight)
@@ -787,13 +787,13 @@
 							mui.toast(data.message);
 							if(sysDeliveryType != 'SELF_TAKE'){
 								$('.goOrder').unbind('click')
-							} 
+							}
 							plus.nativeUI.closeWaiting();
 							if(data.content && data.content.totalGoodsInfo){
 								promotionInfo = JSON.stringify(data.content.promotionInfo);//更换选赠品时存的促销赠品
 								//显示商品
 								var goods = data.content.totalGoodsInfo;
-	
+
 								dataObj.totalQty = data.content.totalQty;
 								dataObj.totalPrice = data.content.totalPrice;
 								dataObj.list = goods;
@@ -821,14 +821,14 @@
 									$('#freight').html('0')
 									$('#firstFreight').val(0)
 								}
-	
+
 								if(data.content.upstairsFee) {
 									$('#upstar').html('¥' + data.content.upstairsFee)
 								}
 								if(data.content.isShowNumber) {
 									$('#isShowNumber').show()
 									$('#isShowNumber').attr('data-id',1)
-	
+
 								}else{
 									$('#isShowNumber').hide()
 									$('#isShowNumber').attr('data-id',0)
@@ -859,7 +859,7 @@
 								if(identityT == 0){
 									discount.guide = 1;
 								}
-	
+
 								document.getElementById('elseDiscount').innerHTML = template('elseDiscountTpl', discount);
 								plus.nativeUI.closeWaiting();
 								carculate();
@@ -886,9 +886,9 @@
 										curCoupon.find(".quanc").css("display", "none").removeClass('hasChoosed');
 									} else {
 										curCoupon.find(".quanc").css("display", "block").addClass('hasChoosed');
-	
+
 									};
-	
+
 									$(".quanc").each(function() {
 										if($(this).css("display") == "block") {
 											coupon_id = $(this).attr("data-id");
@@ -928,7 +928,7 @@
 										success: function(data, type, xhr) {
 											console.log('选取优惠券返回', data);
 											if(data.code == 0 && data.content) {
-	
+
 												$('#couponDiscount').val(data.content.couponDiscount);
 												if(data.content.lebi) {
 													if(data.content.lebi.rebate < 0){
@@ -1256,7 +1256,7 @@
 										});
 									})
 								}
-								
+
 							} else {
 								$('#chooseStore').hide();
 								$('#freight').html('¥' + $('#firstFreight').val());
@@ -1400,7 +1400,7 @@
 			}
 			//支付
 			$('.goOrder').unbind('click').click(function() {
-				event.stopPropagation(); 
+				event.stopPropagation();
 				var endCur = carculate();
 				if(endCur >= 0){
 					var deliveryType, bookingStoreId, bookingStoreName, bookingStoreAddress,
@@ -1443,7 +1443,7 @@
 //							isOwnerReceiving = $('.isOwnerReceiving').prop('checked') == true ? true : false;
 						}
 					}
-					var salesNumber = '',jgpattern =/^[A-Za-z0-9]+$/; 
+					var salesNumber = '',jgpattern =/^[A-Za-z0-9]+$/;
 					if($('#isShowNumber').attr('data-id') == 1 && ($('#isShowNumber input').val() == '' || !jgpattern.test($('#isShowNumber input').val()))){
 						mui.toast("请填写正确的纸质销货单号");
 						return;
@@ -1603,9 +1603,9 @@
 					});
 
 					function toPay(payableAmount, orderNumber) {
-						
+
 						document.getElementById('facePay').setAttribute('onclick', 'facePayF("' + payableAmount + '","' + orderNumber + '")');
-						
+
 						//系统检测获取支付通道
 						plus.payment.getChannels(function(channels) {
 							console.log("channel " + JSON.stringify(channels));
@@ -1663,7 +1663,7 @@
 							success: function(data) {
 								console.error(data);
 								plus.nativeUI.closeWaiting();
-								if(data.code == 0) { 
+								if(data.code == 0) {
 									openview({
 										view: 'orderSuccess.html',
 										id: 'orderSuccess',
@@ -1690,7 +1690,7 @@
 							},
 							error: function(xhr, type, errorThrown) {
 								//异常处理；
-								console.log(type); 
+								console.log(type);
 							}
 						});
 					}

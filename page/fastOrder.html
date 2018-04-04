@@ -15,12 +15,12 @@
 			body {
 				background-color: #efeff4;
 			}
-			
+
 			.mui-bar~.mui-content .mui-fullscreen {
 				top: 44px;
 				height: auto;
 			}
-			
+
 			.mui-pull-top-tips {
 				position: absolute;
 				top: -20px;
@@ -31,11 +31,11 @@
 				border-radius: 100%;
 				z-index: 1;
 			}
-			
+
 			.mui-bar~.mui-pull-top-tips {
 				top: 24px;
 			}
-			
+
 			.mui-pull-top-wrapper {
 				width: 42px;
 				height: 42px;
@@ -48,28 +48,28 @@
 				box-shadow: 0 4px 10px #bbb;
 				overflow: hidden;
 			}
-			
+
 			.mui-pull-top-tips.mui-transitioning {
 				-webkit-transition-duration: 200ms;
 				transition-duration: 200ms;
 			}
-			
+
 			.mui-pull-top-tips .mui-pull-loading {
 				/*-webkit-backface-visibility: hidden;
 				-webkit-transition-duration: 400ms;
 				transition-duration: 400ms;*/
 				margin: 0;
 			}
-			
+
 			.mui-pull-top-wrapper .mui-icon,
 			.mui-pull-top-wrapper .mui-spinner {
 				margin-top: 7px;
 			}
-			
+
 			.mui-pull-top-wrapper .mui-icon.mui-reverse {
 				/*-webkit-transform: rotate(180deg) translateZ(0);*/
 			}
-			
+
 			.mui-pull-bottom-tips {
 				text-align: center;
 				background-color: #efeff4;
@@ -77,7 +77,7 @@
 				line-height: 40px;
 				color: #777;
 			}
-			
+
 			.mui-pull-top-canvas {
 				overflow: hidden;
 				background-color: #fafafa;
@@ -87,16 +87,16 @@
 				height: 40px;
 				margin: 0 auto;
 			}
-			
+
 			.mui-pull-top-canvas canvas {
 				width: 40px;
 			}
-			
+
 			.mui-slider-indicator.mui-segmented-control {
 				background-color: #efeff4;
 			}
 			#sliderSegmentedControl{height: 38px;}
-			.mui-scroll{display: flex;justify-content: space-around;width: 100vw!important;align-items: center;background: white;height: 50px!important;}
+			.mui-scroll{display: -webkit-flex;-webkit-justify-content: space-around;width: 100vw!important;align-items: center;background: white;height: 50px!important;}
 			.mui-scroll .mui-control-item{position: relative;flex: 1;}
 			.mui-scroll .mui-control-item:not(:last-child):after{content: '';position: absolute;width: 1px;height: 30px;background: #DDD8CD;-webkit-transform:scaleX(.3);right: 0px;top:5px;z-index: 999;}
 			.mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active{
@@ -146,7 +146,7 @@
 		<script src="../js/webviewGroup.js" type="text/javascript" charset="utf-8"></script>
 		<script>
 			mui.init();
-			
+
 			mui.plusReady(function() {
 				var group = new webviewGroup(plus.webview.currentWebview().id,{
 					items: [{

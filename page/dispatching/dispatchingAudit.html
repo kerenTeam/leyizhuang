@@ -9,7 +9,7 @@
 		<link rel="stylesheet" type="text/css" href="../../css/mui.min.css"/>
 		<link rel="stylesheet" type="text/css" href="../../css/commonY.css">
 		<link rel="stylesheet" type="text/css" href="../../css/configW.css"/>
-		<style type="text/css"> 
+		<style type="text/css">
 			.Dpart1{padding: 15px 15px 5px;background-color: #fff;line-height: 2.5;margin-bottom: 7px;}
 			.Dpart1 h4{font-size: 16px;}
 			.Dpart1 h4 span{color: #AC0100;}
@@ -21,7 +21,7 @@
 			.redC{color: #AC0100;}
 			.floL{float: right;}
 			.proWrapAll{background-color: #fff;margin-bottom: 10px;}
-			.proWrap{display: flex;padding: 15px;}
+			.proWrap{display: -webkit-flex;padding: 15px;}
 			.proLeft{flex: 2;}
 			.proLeft img{width: 100%;height: 100%;}
 			.proRight{flex: 5;padding-left: 20px;}
@@ -40,7 +40,7 @@
 			.checkListDZ{padding: 10px 0;color: #757575;font-size: 16px;}
 			.checkListB{padding: 10px 20px;text-align: right;}
 			#infoListDiv{transition: all .3s;}
-			.flexr{display: flex;justify-content: space-around;margin: 2px 0;}
+			.flexr{display: -webkit-flex;-webkit-justify-content: space-around;margin: 2px 0;}
 			.flexr>div{flex: 1;}
 			a,a:active{color: rgb(51,51,51)!important;}
 		</style>
@@ -61,7 +61,7 @@
 						<span>出货单号：<%=list.orderNumber%></span>
 					</h4>
 					<div class="checkListCon clearfix afterBorder ft15">
-						
+
 						<div class="flexr">
 							<div>
 								<span class="disablecl">
@@ -99,12 +99,12 @@
 							</div>
 						</div>
 					</div>
-	
+
 				</div>
-				
+
 			</script>
-		 	
-			
+
+
 		</div>
 		<script src="../../js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../../js/mui.min.js"></script>
@@ -142,8 +142,8 @@
 					success:function(data,type,xhr){
 						console.log('欠款审核 ',data);
 						if(data.code == 0){
-						 
-							if(data.content){ 
+
+							if(data.content){
 								data.content.orderNumber=orderNumber;
 								document.getElementById('infoListDiv').innerHTML = template('infoList',{list:data.content});
 							}else{
@@ -158,7 +158,7 @@
 						console.log('响应失败  !');
 					}
 				});
-				 
+
 			})
 		</script>
 	</body>

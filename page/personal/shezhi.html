@@ -85,17 +85,8 @@
 						}
 					},'')
 				})
-			})
-//			mui('#sheZhiUrl')[0].addEventListener('longtap',function(){
-//				alert(1)
-//				if(plus.storage.getItem('SURL')){
-//					plus.storage.removeItem('SURL');
-//					plus.nativeUI.alert("重置IP地址成功，重启APP生效！",function(){
-//		            		plus.runtime.restart();
-//			        });
-//				}
-//
-//			})
+			});
+
 			var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
 			if(identityT == 1){
 				mui('#dizhiGuan')[0].style.display = 'none';
