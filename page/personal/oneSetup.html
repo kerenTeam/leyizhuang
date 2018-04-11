@@ -209,9 +209,9 @@
 	</body>
 	<script src="../../js/mui.min.js"></script>
 	<script src="../../js/mui.picker.minNew.js"></script>
-	<script src="../../js/default.js" type="text/javascript" charset="utf-8"></script>
 	<script src="../../js/artTemplate-native.js"></script>
 	<script src="../../js/jquery.min.js"></script>
+	<script src="../../js/default.js" type="text/javascript" charset="utf-8"></script>
 	<script type="text/javascript">
 		//选择日期
 		function openTime(nowthis){
@@ -373,6 +373,9 @@
 								$('#store').html(storeStr);
 								if(data.content.storeId){
 									$('#store option').eq(curstore+1).attr('selected',true);
+								}
+								if(!data.content.isPassable){
+									$('#guide,#store').attr('disabled',true)
 								}
 
 								//导购

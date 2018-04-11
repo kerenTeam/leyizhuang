@@ -201,14 +201,15 @@
 									if(data.content && data.content.length){
 										var html = '';
 										for(var i = 0;i<data.content.length;i++){
-											if(categorySecond == data.content[i].categoryName){
-												html+='<span class="actBadge" data-name = "category" data-id="'+data.content[i].categoryId+'">'+data.content[i].categoryName+'</span>'
-											}else{
-												html+='<span data-name = "category" data-id="'+data.content[i].categoryId+'">'+data.content[i].categoryName+'</span>'
+											if(data.content[i] && data.content[i].categoryName){
+												if(categorySecond == data.content[i].categoryName){
+													html+='<span class="actBadge" data-name = "category" data-id="'+data.content[i].categoryId+'">'+data.content[i].categoryName+'</span>'
+												}else{
+													html+='<span data-name = "category" data-id="'+data.content[i].categoryId+'">'+data.content[i].categoryName+'</span>'
+												}
 											}
-
 										}
-										$('.categraya').html(html)
+										$('.categraya').html(html || '无')
 										
 										//商品 筛选
 										$('.categray1 span').unbind('click').click(function(){
@@ -274,12 +275,13 @@
 									if(data.content && data.content.length){
 										var html = '';
 										for(var i = 0;i<data.content.length;i++){
-											if(goodsBrand == data.content[i].brandName){
-												html += '<span class="actBadge" data-name = "brand" data-id="'+data.content[i].brandId+'">'+data.content[i].brandName+'</span>';
-											}else{
-												html += '<span data-name = "brand" data-id="'+data.content[i].brandId+'">'+data.content[i].brandName+'</span>';
+											if(data.content[i] && data.content[i].brandName){
+												if(goodsBrand == data.content[i].brandName){
+													html += '<span class="actBadge" data-name = "brand" data-id="'+data.content[i].brandId+'">'+data.content[i].brandName+'</span>';
+												}else{
+													html += '<span data-name = "brand" data-id="'+data.content[i].brandId+'">'+data.content[i].brandName+'</span>';
+												}
 											}
-
 										}
 										$('.categrayb').html(html)
 										//商品 筛选
@@ -344,13 +346,15 @@
 									if(data.content && data.content.length){
 										var html = '';
 										for(var i = 0 ;i<data.content.length;i++){
-											if(specification == data.content[i].specificationName){
-												html+='<span class="actBadge" data-name = "specification" data-id="'+data.content[i].specificationName+'">'+data.content[i].specificationName+'</span>';
-											}else{
-												html+='<span data-name = "specification" data-id="'+data.content[i].specificationName+'">'+data.content[i].specificationName+'</span>';
+											if(data.content[i] && data.content[i].specificationName){
+												if(specification == data.content[i].specificationName){
+													html+='<span class="actBadge" data-name = "specification" data-id="'+data.content[i].specificationName+'">'+data.content[i].specificationName+'</span>';
+												}else{
+													html+='<span data-name = "specification" data-id="'+data.content[i].specificationName+'">'+data.content[i].specificationName+'</span>';
+												}
 											}
 										}
-										$('.categrayc').html(html);
+										$('.categrayc').html(html ||'无');
 										//商品 筛选
 										$('.categray3 span').unbind('click').click(function(){
 											$(window).unbind('scroll');
@@ -414,14 +418,15 @@
 									if(data.content && data.content.length){
 										var html = '';
 										for(var i = 0;i<data.content.length;i++){
-											if(goodType == data.content[i].typeName){
-												html += '<span class="actBadge" data-name = "type" data-id="'+data.content[i].typeId+'">'+data.content[i].typeName+'</span>';
-											}else{
-												html += '<span data-name = "type" data-id="'+data.content[i].typeId+'">'+data.content[i].typeName+'</span>';
+											if(data.content[i] && data.content[i].typeName){
+												if(goodType == data.content[i].typeName){
+													html += '<span class="actBadge" data-name = "type" data-id="'+data.content[i].typeId+'">'+data.content[i].typeName+'</span>';
+												}else{
+													html += '<span data-name = "type" data-id="'+data.content[i].typeId+'">'+data.content[i].typeName+'</span>';
+												}
 											}
-
 										}
-										$('.categrayd').html(html)
+										$('.categrayd').html(html || '无')
 										//商品 筛选
 										$('.categray4 span').unbind('click').click(function(){
 											$(window).unbind('scroll');

@@ -112,6 +112,9 @@ background: linear-gradient(to right, #1fddff, #ff4b1f); /* W3C, IE 10+/ Edge, F
 				<div>
 					<span class="huiC">配送时间</span> <span class="mui-pull-right"><%= detail.deliveryTime || '无'%></span>
 				</div>
+				<div style="overflow: hidden;">
+					<span class="huiC">订单备注</span> <span class="mui-pull-right" style="display: inline-block;max-width: 80%;text-align: right;"><%= detail.remark || '无'%></span>
+				</div>
 			</div>
 			<%if(detail.customer && detail.customer.customerId){%>
 				<div class="Dpart3">

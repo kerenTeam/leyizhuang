@@ -277,7 +277,7 @@
 										mui.toast("确认收货成功！");//提示清单
 										plus.webview.getWebviewById("deliveryInfo").close();
 										mui.fire(plus.webview.getWebviewById('dispatching'), 'refresh');
-										mui.back();
+										plus.webview.currentWebview.close();
 									}else{
 										mui.toast(dataobj.message);
 									}

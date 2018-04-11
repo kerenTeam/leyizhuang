@@ -690,7 +690,7 @@
 										} else {
 											plus.nativeUI.closeWaiting();
 											plus.storage.setItem("oldToken", xhr.getResponseHeader('token'));
-											console.log(xhr.getResponseHeader('token'))
+											console.log('111 '+xhr.getResponseHeader('token'))
 											//审核自动登录
 											if(plus.storage.getItem('iosCheat') == 'false'){
 												plus.storage.setItem("$identityType",JSON.stringify({'identityType':data.content.type}));
@@ -737,6 +737,7 @@
 										if(data.code == 0 && data.content.isExist) {
 											plus.nativeUI.closeWaiting();
 											plus.storage.setItem("oldToken", xhr.getResponseHeader('token'));
+											console.log('111 '+xhr.getResponseHeader('token'))
 											if(data.content.rankCode){
 												plus.storage.setItem("rankCode", data.content.rankCode);
 											}else{

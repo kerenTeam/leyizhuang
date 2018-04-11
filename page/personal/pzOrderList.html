@@ -158,7 +158,7 @@
 						data:{'userId':userId,'identityType':identityT,'page':1,'size':oneSize},
 						dataType:'json',
 						type:'post',
-						timeout:10000,
+						timeout:100000,
 						headers:{"Authorization":oldToken},
 						success:function(data,type,xhr){
 							console.log(data);
@@ -186,7 +186,7 @@
 														data:{'userId':userId,'identityType':identityT,'page':Spagenum,'size':oneSize},
 								                        dataType:'json',
 								                        type:'post',
-								                        timeout:10000,
+								                        timeout:100000,
 								                        headers:{"Authorization":oldToken},
 								                        success:function(data,type,xhr){
 							                            		console.log('订单续',data);

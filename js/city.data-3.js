@@ -7977,6 +7977,12 @@ var cityData3 = [{
 		}, {
 			value: "510107",
 			text: "武侯区"
+		},{
+			value: "510103",
+			text: "高新区"
+		},{
+			value: "510102",
+			text: "天府新区"
 		}, {
 			value: "510108",
 			text: "成华区"
@@ -7997,7 +8003,7 @@ var cityData3 = [{
 			text: "金堂县"
 		}, {
 			value: "510122",
-			text: "双流县"
+			text: "双流区"
 		}, {
 			value: "510124",
 			text: "郫县"

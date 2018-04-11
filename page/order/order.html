@@ -309,21 +309,23 @@
 					<%}%>
 					<div class="pad10 ft16" style="text-align: right;">订单金额小计：<span class="activecl" id="totalOrderAmount">¥--</span></div>
 					<div style="height: 10px;background: #EEEEEE;"></div>
-					<%if(platform == 'ANDROID'){%>
-						<div class="pad10 ft14 afterBorder"><%if(guide ==1){%>门店<%}%>预存款&nbsp;&nbsp;<span class='activecl' id="preDepositb">¥--</span><input type="tel" onchange="maxC(this)" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" placeholder="请输入使用金额" name="preDepositb" class='mui-pull-right preDeposit' oninput="inputbd(this)"/></div>
-						<!--only manager-->
-						<div class="pad10 ft14 afterBorder manager" style="display: none;">信用金&nbsp;&nbsp;<span class='activecl' id="credit">¥--</span><input type="tel" placeholder="请输入使用金额" name="credit" onchange="maxC(this)" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" class='mui-pull-right preDeposit' oninput="inputbd(this)"/></div>
-						<div class="pad10 ft14 afterBorder manager" style="display: none;">现金返利&nbsp;&nbsp;<span class='activecl' id="cash">¥--</span><input type="tel" placeholder="请输入使用金额" name="cash" onchange="maxC(this)" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" class='mui-pull-right preDeposit' oninput="inputbd(this)"/></div>
-						<!--only guide-->
-						<div class="pad10 ft14 afterBorder guide" style="display: none;">信用额度&nbsp;&nbsp;<span class='activecl' id="creditVal">¥--</span><input type="tel" placeholder="请输入使用金额" name="creditVal" onchange="maxC(this)" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" class='mui-pull-right preDeposit' oninput="inputbd(this)"/></div>
-						<div class="pad10 ft14 afterBorder guide dsje" style="display: none;">代收金额<img src="../../images/center/help.svg" style="width: 20px;margin-left: 5px;" onclick="dsInfo()"/>&nbsp;&nbsp;<input type="tel" placeholder="请输入代收金额" name="cashHelp" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" class='mui-pull-right preDeposit' /></div>
-					<%}else{%>
-						<div class="pad10 ft14 afterBorder"><%if(guide == 1){%>门店<%}%>预存款&nbsp;&nbsp;<span class='activecl' id="preDepositb">¥--</span><input type="number" onchange="maxC(this)" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" placeholder="请输入使用金额" name="preDepositb" class='mui-pull-right preDeposit' oninput="inputbd(this)"/></div>
-						<div class="pad10 ft14 afterBorder manager" style="display: none;">信用金&nbsp;&nbsp;<span class='activecl' id="credit">¥--</span><input type="number" placeholder="请输入使用金额" name="credit" onchange="maxC(this)" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" class='mui-pull-right preDeposit' oninput="inputbd(this)"/></div>
-						<div class="pad10 ft14 afterBorder manager" style="display: none;">现金返利&nbsp;&nbsp;<span class='activecl' id="cash">¥--</span><input type="number" placeholder="请输入使用金额" name="cash" onchange="maxC(this)" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" class='mui-pull-right preDeposit' oninput="inputbd(this)"/></div>
-						<div class="pad10 ft14 afterBorder guide" style="display: none;">信用额度&nbsp;&nbsp;<span class='activecl' id="creditVal">¥--</span><input type="number" placeholder="请输入使用金额" name="creditVal" onchange="maxC(this)" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" class='mui-pull-right preDeposit' oninput="inputbd(this)"/></div>
-						<div class="pad10 ft14 afterBorder guide dsje" style="display: none;">代收金额 <img src="../../images/center/help.svg" style="width: 20px;margin-left: 5px;" onclick="dsInfo()"/>&nbsp;&nbsp;<input type="number" placeholder="请输入代收金额" name="cashHelp" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" class='mui-pull-right preDeposit' /></div>
-					<%}%>
+					<div id="allaccounts">
+						<%if(platform == 'ANDROID'){%>
+							<div class="pad10 ft14 afterBorder"><%if(guide ==1){%>门店<%}%>预存款&nbsp;&nbsp;<span class='activecl' id="preDepositb">¥--</span><input type="tel" onchange="maxC(this)" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" placeholder="请输入使用金额" name="preDepositb" class='mui-pull-right preDeposit' oninput="inputbd(this)"/></div>
+							<!--only manager-->
+							<div class="pad10 ft14 afterBorder manager" style="display: none;">信用金&nbsp;&nbsp;<span class='activecl' id="credit">¥--</span><input type="tel" placeholder="请输入使用金额" name="credit" onchange="maxC(this)" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" class='mui-pull-right preDeposit' oninput="inputbd(this)"/></div>
+							<div class="pad10 ft14 afterBorder manager" style="display: none;">现金返利&nbsp;&nbsp;<span class='activecl' id="cash">¥--</span><input type="tel" placeholder="请输入使用金额" name="cash" onchange="maxC(this)" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" class='mui-pull-right preDeposit' oninput="inputbd(this)"/></div>
+							<!--only guide-->
+							<div class="pad10 ft14 afterBorder guide" style="display: none;">信用额度&nbsp;&nbsp;<span class='activecl' id="creditVal">¥--</span><input type="tel" placeholder="请输入使用金额" name="creditVal" onchange="maxC(this)" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" class='mui-pull-right preDeposit' oninput="inputbd(this)"/></div>
+							<div class="pad10 ft14 afterBorder guide dsje" style="display: none;">代收金额<img src="../../images/center/help.svg" style="width: 20px;margin-left: 5px;" onclick="dsInfo()"/>&nbsp;&nbsp;<input type="tel" placeholder="请输入代收金额" name="cashHelp" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" class='mui-pull-right preDeposit' /></div>
+						<%}else{%>
+							<div class="pad10 ft14 afterBorder"><%if(guide == 1){%>门店<%}%>预存款&nbsp;&nbsp;<span class='activecl' id="preDepositb">¥--</span><input type="number" onchange="maxC(this)" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" placeholder="请输入使用金额" name="preDepositb" class='mui-pull-right preDeposit' oninput="inputbd(this)"/></div>
+							<div class="pad10 ft14 afterBorder manager" style="display: none;">信用金&nbsp;&nbsp;<span class='activecl' id="credit">¥--</span><input type="number" placeholder="请输入使用金额" name="credit" onchange="maxC(this)" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" class='mui-pull-right preDeposit' oninput="inputbd(this)"/></div>
+							<div class="pad10 ft14 afterBorder manager" style="display: none;">现金返利&nbsp;&nbsp;<span class='activecl' id="cash">¥--</span><input type="number" placeholder="请输入使用金额" name="cash" onchange="maxC(this)" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" class='mui-pull-right preDeposit' oninput="inputbd(this)"/></div>
+							<div class="pad10 ft14 afterBorder guide" style="display: none;">信用额度&nbsp;&nbsp;<span class='activecl' id="creditVal">¥--</span><input type="number" placeholder="请输入使用金额" name="creditVal" onchange="maxC(this)" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" class='mui-pull-right preDeposit' oninput="inputbd(this)"/></div>
+							<div class="pad10 ft14 afterBorder guide dsje" style="display: none;">代收金额 <img src="../../images/center/help.svg" style="width: 20px;margin-left: 5px;" onclick="dsInfo()"/>&nbsp;&nbsp;<input type="number" placeholder="请输入代收金额" name="cashHelp" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" class='mui-pull-right preDeposit' /></div>
+						<%}%>
+					</div>
 					<div style="height: 10px;background: #EEEEEE;"></div>
 
 
@@ -348,7 +350,8 @@
 				<a class="dp ft16" style="color: #B62D29;">
 					<span>应付款：</span>¥<span class="totalMoney">--</span>
 				</a>
-				<a class="onlypay goOrder dp ft16" style="background:#B62D29;color:white;text-shadow:none;">去支付</a>
+				<button class="onlypay goOrder dp ft16" style="background:#B62D29;color:white;text-shadow:none;border: none;border-radius: 0;-webkit-appearance: button;width:100px;line-height: 0.5rem;">去支付</button>
+				<button class="goOrderNp dp ft16" style="background:#B62D29;color:white;text-shadow:none;border: none;border-radius: 0;-webkit-appearance: button;width:100px;line-height: 0.5rem;display: none;">提交</button>
 
 			</aside>
 
@@ -602,7 +605,13 @@
 							}else{
 								$('.proCouponDiscount').hide()
 							}
-
+							if(data.content.isSpecialSelfTake){
+								$('.goOrderNp').show()
+								$('.goOrder,#coupon, #quanData,#allaccounts').hide()
+							}else{
+								$('.goOrder,#coupon, #quanData,#allaccounts').show()
+								$('.goOrderNp').hide()
+							}
 							if(data.content.freight) {
 								$('#freight').html('¥' + data.content.freight)
 								$('#firstFreight').val(data.content.freight)
@@ -1400,6 +1409,7 @@
 			}
 			//支付
 			$('.goOrder').unbind('click').click(function() {
+				var cur = $(this);
 				event.stopPropagation();
 				var endCur = carculate();
 				if(endCur >= 0){
@@ -1512,6 +1522,7 @@
 						"billingInfo": JSON.stringify(billingInfo),
 					})
 					plus.nativeUI.showWaiting();
+					cur.attr('disabled',true)
 					//创建订单
 					mui.ajax(serverUrl + '/app/order/create', {
 						data: {
@@ -1531,7 +1542,7 @@
 						},
 						dataType: 'json',
 						type: 'post',
-						timeout: 10000,
+						timeout: 100000,
 						headers: {
 							"Authorization": oldToken
 						},

@@ -208,7 +208,7 @@
 							document.getElementById('main').innerHTML='<div class="nothing" style="background-color: #EFEFF4;margin-top: 60px;"><img src="../../images/order/addresic.svg" style="display: block;margin: 20px auto;width: 80px;"/><p style="text-align: center;">你还没有地址哟！</p></div>';
 						}
 						if(pageid){/*从选择地址跳转*/
-							$(".addlist .bottom .right").css("display","none");
+//							$(".addlist .bottom .right .editAd").css("display","none"); 
 							$(".addlist").click(function(){
 								$(this).css("background","#eee")
 								$(this).addClass("adhover")
@@ -288,6 +288,7 @@
 						}
 						//点击编辑跳转传参
 						window.editAd = function(AdId){
+							event.stopPropagation()
 							openview({
 							 	view:"address-edit.html",
 							 	id:"address-edit",
@@ -297,6 +298,7 @@
 						//删除确认弹框
 						var exterminate = document.getElementsByClassName('exterminate');
 						window.deleteAd = function(AdIdD){
+							event.stopPropagation()
 							mui.confirm('确认删除该地址？','',['取消','确认'],function (e) {
 								if(e.index == 1) {
 									mui.ajax(serverUrl+'/app/user/setting/deliveryAddress/delete',{

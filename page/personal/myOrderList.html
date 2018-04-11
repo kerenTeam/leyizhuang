@@ -299,7 +299,7 @@
 						},
 						dataType: 'json',
 						type: 'post',
-						timeout: 10000,
+						timeout: 20000,
 						headers: {
 							"Authorization": oldToken,
 						},
@@ -334,7 +334,7 @@
 							},
 							dataType: 'json',
 							type: 'post',
-							timeout: 10000,
+							timeout: 20000,
 							headers: {
 								"Authorization": oldToken,
 							},
@@ -679,7 +679,7 @@
 						data:nowData,
 						dataType:'json',
 						type:'post',
-						timeout:10000,
+						timeout:100000,
 						headers:{"Authorization":oldToken},
 						success:function(data,type,xhr){
 							console.log('订单',data);
@@ -753,7 +753,7 @@
 							                        data:nowData,
 							                        dataType:'json',
 							                        type:'post',
-							                        timeout:10000,
+							                        timeout:100000,
 							                        headers:{"Authorization":oldToken},
 							                        success:function(data,type,xhr){
 							                            console.log('订单',data);
@@ -888,7 +888,7 @@
 									data:dataObj0,
 									dataType:'json',
 									type:'post',
-									timeout:10000,
+									timeout:20000,
 									headers:{"Authorization":oldToken},
 									success:function(data,type,xhr){
 										console.log('订单评价'+JSON.stringify(data));
