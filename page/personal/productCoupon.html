@@ -62,6 +62,9 @@
 								<span style="word-break:break-all;white-space: normal;">
 									<%=list[i].goodsName%>
 								</span>
+								<%if(list[i].isZG){%>
+									<em class="mui-badge mui-badge-warning mui-pull-right" style="color: white;">专供产品券</em>
+								<%}%>
 								<p class='mui-ellipsis'>规格:
 									<%=list[i].goodsSpecification%> &nbsp;单位:
 									<%=list[i].goodsUnit%>
@@ -74,7 +77,7 @@
 								</div>
 							</div>
 						</a>
-						<img data-id="<%=list[i].goodsId%>" data-left="<%=list[i].leftNumber%>" class="check" src="../../images/center/uncheck.svg" alt="" />
+						<img data-id="<%=list[i].goodsId%>" data-left="<%=list[i].leftNumber%>" data-isZG="<%=list[i].isZG%>" class="check" src="../../images/center/uncheck.svg" alt="" />
 					</li>
 					<%}%>
 				</ul>
@@ -152,47 +155,57 @@
 									})
 									$('#useCoupon').unbind("click").click(function(){
 										var productCouponList = [];
+										var flag = 0
 										$('.choosed').each(function(){
 											var id = $(this).attr('data-id');
 											var totalQty = $(this).attr('data-left');
+											var isZG = $(this).attr('data-isZG');
+											if(isZG == true && identityT!=6){
+												flag = 1
+												mui.alert("专供产品券仅顾客可提货哦")	
+												return false;
+											}
 											var qty =$(this).prev().find('.mui-numbox-input').val();
 											productCouponList.push({"gid":id,"qty":qty,"totalQty":totalQty})
 										})
-										mui.ajax(serverUrl+'/app/productCoupon/transform/materialList',{
-											data: {
-												cusId:cusId,
-												userId: userId,
-												identityType: identityT,
-												productCouponList:productCouponList
-											},
-											dataType: 'json',
-											type: 'post',
-											timeout: 10000,
-											headers: {
-												"Authorization": oldToken,
-												'Content-Type': 'application/json'
-											},
-											success:function(data,type,xhr){
-												plus.nativeUI.closeWaiting();
-												console.log('产品券使用',data);
-												if(data.code == 0 ){
-													mui.fire(plus.webview.getWebviewById('cart.html'), 'refresh');
-													kindType();
-													openview({
-														view:'../../cart.html',
-														id:'cart',
-														extrasobj:{page:1,cusid:cusId}
-													})
-												}else{
-													mui.toast(data.message)
+										if(flag!=1){
+											mui.ajax(serverUrl+'/app/productCoupon/transform/materialList',{
+												data: {
+													cusId:cusId,
+													userId: userId,
+													identityType: identityT,
+													productCouponList:productCouponList
+												},
+												dataType: 'json',
+												type: 'post',
+												timeout: 10000,
+												headers: {
+													"Authorization": oldToken,
+													'Content-Type': 'application/json'
+												},
+												success:function(data,type,xhr){
+													plus.nativeUI.closeWaiting();
+													console.log('产品券使用',data);
+													if(data.code == 0 ){
+														mui.fire(plus.webview.getWebviewById('cart.html'), 'refresh');
+														kindType();
+														openview({
+															view:'../../cart.html',
+															id:'cart',
+															extrasobj:{page:1,cusid:cusId}
+														})
+													}else{
+														mui.toast(data.message)
+													}
+												},
+												error:function(xhr,type,errorThrown){
+													plus.nativeUI.closeWaiting();
+													mui.toast(type)
+													console.log('响应失败');
 												}
-											},
-											error:function(xhr,type,errorThrown){
-												plus.nativeUI.closeWaiting();
-												mui.toast(type)
-												console.log('响应失败');
-											}
-										});
+											});		
+										}
+										
 									})
 								} else {
 									$('#useCoupon').hide();

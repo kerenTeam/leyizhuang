@@ -273,12 +273,10 @@
 				</div>
 			<%}%>
 		</script>
-		<div class="specialGoods" style="display:none;margin: 10px 10px -5px 10px;" onclick="specialGoods()">
-			<!--<div style="background-color: rgb(253, 229, 107);padding: 12px 0 8px 0;text-align: center;border-radius: 3px;color: rgb(253, 115, 52);font-weight: 700;font-size: 18px;">
-				专供商品
-				<div style="font-size: 12px;color:cornflowerblue;font-weight: 400;">专家智慧 · 信赖之选</div>
-			</div>-->
-			<!--<img src="images/index/special2.png" style="width: 100%;"/>-->
+		<div class="specialGoods1" style="margin: 10px 10px -5px 10px;display: none;" onclick="specialGoods()">
+			<img src="images/index/special2.png" style="width: 100%;"/>
+		</div>
+		<div class="specialGoods2" style="margin: 10px 10px -5px 10px;display: none;" onclick="specialGoods()">
 			<img src="images/index/special3.png" style="width: 100%;"/>
 		</div>
 		<div class="padd10" id="huodong0"></div>
@@ -744,8 +742,11 @@
 												plus.storage.removeItem("rankCode");
 											}
 											var rankCode = plus.storage.getItem('rankCode');
-											if(rankCode){
-												$('.specialGoods').show();
+											if(rankCode == 'A' || rankCode == 'C'){
+												$('.specialGoods1').show();
+											}else if(rankCode == 'B' || rankCode == 'D'){
+												$('.specialGoods2').show();
+												
 											}
 											loadIndex();
 										} else if(data.code == -1) {

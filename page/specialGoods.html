@@ -51,6 +51,7 @@
 										  <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
 										</div>
 									<%}else{%>
+										<img style="display:none;float:right;margin-left:5px;vertical-align:middle" data-id="<%=list[i].id%>" class="toCart" src="../images/addcart.svg"/>
 										<div style="float:right;" class="mui-numbox" data-numbox-step='1' data-numbox-min='0' data-numbox-max='9999'>
 										  <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
 										  <input class="mui-numbox-input" type="number" data-id="<%=list[i].id%>" value="<%=list[i].materialQty%>"/>
@@ -235,6 +236,8 @@
 													if(data.code == 0 ){
 														mui.fire(plus.webview.getWebviewById('cart.html'), 'refresh');
 														cur.next().show();
+														cur.next().find('input').val(1);
+														cur.next().find('input').siblings().removeAttr('disabled');
 														cur.hide();
 													}else{
 														mui.toast(data.message)
@@ -394,6 +397,10 @@
 								                                                    console.log('加入购物车',data);
 								                                                    if(data.code == 0 ){
 								                                                        mui.fire(plus.webview.getWebviewById('cart.html'), 'refresh');
+								                                                    	cur.next().show();
+																						cur.next().find('input').val(1);
+																						cur.next().find('input').siblings().removeAttr('disabled');
+																						cur.hide();
 								                                                    }else{
 								                                                        mui.toast(data.message)
 								                                                    }

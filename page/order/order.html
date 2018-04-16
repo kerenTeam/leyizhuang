@@ -345,6 +345,7 @@
 			<input type="hidden" id="firstFreight" value="" />
 			<input type="hidden" id="couponDiscount" value="0" />
 			<input type="hidden" id="firstOrderDiscount" value="0" />
+			<input type="hidden" id="SpecialSelfTake" value="0" />
 			<div style="height:1rem;"></div>
 			<aside class="btmNav" id="dibu">
 				<a class="dp ft16" style="color: #B62D29;">
@@ -595,6 +596,11 @@
 							} else {
 								$('#orderDiscount').html('0')
 							}
+							if(data.content.isSpecialSelfTake) {
+								$('#SpecialSelfTake').val(1)
+							} else {
+								$('#SpecialSelfTake').html('0')
+							}
 							if(identityT == 0 || identityT == 6){
 								$('.proCouponDiscount').show();
 								if(data.content.proCouponDiscount){
@@ -605,13 +611,7 @@
 							}else{
 								$('.proCouponDiscount').hide()
 							}
-							if(data.content.isSpecialSelfTake){
-								$('.goOrderNp').show()
-								$('.goOrder,#coupon, #quanData,#allaccounts').hide()
-							}else{
-								$('.goOrder,#coupon, #quanData,#allaccounts').show()
-								$('.goOrderNp').hide()
-							}
+							
 							if(data.content.freight) {
 								$('#freight').html('¥' + data.content.freight)
 								$('#firstFreight').val(data.content.freight)
@@ -791,6 +791,7 @@
 								$('#cash').html('¥' + 0);
 								$('#cash').next().hide()
 							}
+							
 
 						} else {
 							mui.toast(data.message);
@@ -1160,6 +1161,7 @@
 									var storeId = data.content.storeList[0].storeId;
 									$('#chooseStore select').html(storeStr);
 									var curselect = $('#chooseStore select');
+									
 									//请求门店库存
 									mui.ajax(serverUrl + '/app/settlement/selfTakeStore/choose', {
 										data: {
@@ -1186,8 +1188,16 @@
 													$('.storeAddress').html('无地址')
 												}
 												$('.dsje').hide();
+												if($('#SpecialSelfTake').val() == 1){
+													$('.goOrderNp').show()
+													$('.goOrder,#coupon,#quanData,#allaccounts').hide()
+												}else{
+													$('.goOrder,#coupon,#quanData,#allaccounts').show()
+													$('.goOrderNp').hide()
+												}
 												//合计
 												carculate();
+												
 											} else {
 												if(identityT != 6){$('.dsje').show();}
 												var message = data.message || '包含不支持自提商品';
@@ -1242,6 +1252,13 @@
 														$('.storeAddress').html('无地址')
 													}
 													$('.dsje').hide();
+													if($('#SpecialSelfTake').val() == 1){
+														$('.goOrderNp').show()
+														$('.goOrder,#coupon,#quanData,#allaccounts').hide()
+													}else{
+														$('.goOrder,#coupon,#quanData,#allaccounts').show()
+														$('.goOrderNp').hide()
+													}
 													//合计
 													carculate();
 												} else {
@@ -1272,7 +1289,7 @@
 								if(identityT != 6){$('.dsje').show();}
 								var message = data.message || '包含不支持自提商品'
 								$("input[name='peis']").eq(0).attr('checked', false)
-								$("input[name='peis']").eq(1).prop('checked', true)
+								$("input[name='peis']").eq(1).prop('checked', true).parent().show()
 								//合计
 								carculate();
 								mui.toast(message);
@@ -1289,6 +1306,8 @@
 					$('#chooseStore,#storeAddress').hide();
 					$('#add_info,.isowndis,#cityResult').show();
 					$('#freight').html('¥' + $('#firstFreight').val());
+					$('.goOrder,#coupon,#quanData,#allaccounts').show()
+					$('.goOrderNp').hide()
 					carculate();
 					getLebi($('#totalOrderAmount').html().replace('¥', ''));
 
@@ -1407,6 +1426,175 @@
 					}
 				});
 			}
+			//特殊自提单
+			$('.goOrderNp').click(function(){
+				var cur = $(this);
+				event.stopPropagation();
+				var deliveryType, bookingStoreId, bookingStoreName, bookingStoreAddress,
+				receiver, receiverPhone,deliveryProvince, deliveryCity, deliveryCounty, deliveryStreet, residenceName, detailedAddress, deliveryTime, isOwnerReceiving, auditNo = plus.storage.getItem('auditNo') || '', remark;
+				remark = $('#remark').val();
+				var delivery = $("input[name='peis']:checked").val();
+				deliveryType = (delivery == 1) ? "SELF_TAKE" : "HOUSE_DELIVERY";
+				if(deliveryType == "SELF_TAKE") {
+					var storeId = $('#chooseStore select').val();
+					if(!storeId) {
+						mui.toast('还未选择门店！');
+						return;
+					} else {
+						bookingStoreId = storeId;
+						bookingStoreName = $('#chooseStore option:selected').text();
+						bookingStoreAddress = $('.storeAddress').html();
+						deliveryTime = '';
+//							isOwnerReceiving = true;
+					}
+				}
+				var salesNumber = '',jgpattern =/^[A-Za-z0-9]+$/;
+				if($('#isShowNumber').attr('data-id') == 1 && ($('#isShowNumber input').val() == '' || !jgpattern.test($('#isShowNumber input').val()))){
+					mui.toast("请填写正确的纸质销货单号");
+					return;
+				}else{
+					salesNumber = $('#isShowNumber input').val();
+				}
+				var goodsInfo = onlyGoods; //商品 （普通商品 料单商品）
+				var cashCouponIds = []; //优惠券
+				if(identityT == 6) {
+					var cusPreDeposit = preDepositb;
+					var stPreDeposit = 0;
+				} else {
+					var cusPreDeposit = 0;
+					var stPreDeposit = preDepositb;
+				}
+				if($('#changeJf').find("input[type='checkbox']:checked").length == 1) {
+					var leBiQuantity = $('#totalJfen').text();
+				} else {
+					var leBiQuantity = 0
+				}
+				var billingInfo = {
+					"orderDiscount": orderDiscount,
+					"leBiQuantity": leBiQuantity,
+					"freight": freight,
+					"cusPreDeposit": cusPreDeposit,
+					"stPreDeposit": stPreDeposit,
+					"empCreditMoney": creditVal,
+					"storeCreditMoney": credit,
+					"storeSubvention": cash,
+					"collectionAmount": cashHelp
+				}; //账单明细
+				console.log('账单明细', billingInfo)
+				$('.hasChoosed').each(function(index) {
+					cashCouponIds.push(parseInt($(this).attr('data-id')))
+				})
+				console.log('优惠券使用', cashCouponIds)
+				var deliveryInfo = {
+					"deliveryType": deliveryType,
+					"bookingStoreId": bookingStoreId,
+					"bookingStoreName": bookingStoreName,
+					"bookingStoreAddress": bookingStoreAddress,
+					"receiver": receiver,
+					"receiverPhone": receiverPhone,
+					"deliveryProvince":deliveryProvince,
+					"deliveryCity": deliveryCity,
+					"deliveryCounty": deliveryCounty,
+					"deliveryStreet": deliveryStreet,
+					"residenceName": residenceName,
+					"detailedAddress": detailedAddress,
+					"deliveryTime": deliveryTime,
+//						"isOwnerReceiving": isOwnerReceiving
+				};
+				console.log('deliveryInfo ', deliveryInfo);
+				console.log('订单参数', {
+					"cityId": cityId,
+					"identityType": identityT,
+					"userId": userId,
+					"customerId": customerId,
+					"remark": remark,
+					"goodsInfo": goodsInfo,
+					"productCouponInfo": productCouponList,
+					"promotionInfo": promotionInfo,
+					"deliveryInfo": JSON.stringify(deliveryInfo),
+					"cashCouponIds": JSON.stringify(cashCouponIds),
+					"auditNo": auditNo,
+					"billingInfo": JSON.stringify(billingInfo),
+				})
+				plus.nativeUI.showWaiting();
+				cur.attr('disabled',true)
+				
+				//创建订单
+				mui.ajax(serverUrl + '/app/order/create/JMSelfTake', {
+					data: {
+						"cityId": cityId,
+						"identityType": identityT,
+						"userId": userId,
+						"customerId": customerId,
+						"remark": remark,
+						"goodsInfo": goodsInfo,
+						"productCouponInfo": productCouponList,
+						"promotionInfo":promotionInfo,
+						"deliveryInfo": JSON.stringify(deliveryInfo),
+					 	"cashCouponIds":JSON.stringify(cashCouponIds),
+						"auditNo": auditNo,
+						"billingInfo": JSON.stringify(billingInfo),
+						"salesNumber":salesNumber
+					},
+					dataType: 'json',
+					type: 'post',
+					timeout: 100000,
+					headers: {
+						"Authorization": oldToken
+					},
+					success: function(data) {
+						console.log('创建特殊自提单返回', data);
+						if(data.code == 0) {
+							mui.fire(plus.webview.getWebviewById('center.html'),'OrderNumR');
+							mui.fire(plus.webview.getWebviewById('page/goodList.html'), 'refresh');
+							mui.fire(plus.webview.getWebviewById('cart.html'), 'refresh');
+							mui.fire(plus.webview.getWebviewById('cart'), 'refresh');
+							mui.fire(plus.webview.getWebviewById('goodList'),'refresh');
+							mui.fire(plus.webview.getWebviewById('gxbList'),'refresh');
+							mui.fire(plus.webview.getWebviewById('oilFast.html'),'refresh');
+							mui.fire(plus.webview.getWebviewById('waterFast.html'),'refresh');
+							mui.fire(plus.webview.getWebviewById('electricFast.html'),'refresh');
+							mui.fire(plus.webview.getWebviewById('woodFast.html'),'refresh');
+							mui.fire(plus.webview.getWebviewById('tileFast.html'),'refresh');
+							mui.fire(plus.webview.getWebviewById('collect'),'refresh');
+							mui.fire(plus.webview.getWebviewById('ofenBuy'),'refresh');
+							mui.fire(plus.webview.getWebviewById('specialGoods'),'refreshsd');
+							mui.fire(plus.webview.getWebviewById('hotGoods'),'refresh');
+							mui.fire(plus.webview.getWebviewById('history'),'refresh');
+						 
+								mui.toast('订单提交成功！！！')
+								openview({
+									view: 'orderSuccess.html',
+									id: 'orderSuccess',
+									extrasobj:{
+										orderNo:data.content.orderNumber,
+										money:0
+									}
+								}) 
+								setTimeout(function() {
+									if(plus.webview.getWebviewById("order")) {
+										plus.webview.getWebviewById("order").close();
+									}
+									if(plus.webview.getWebviewById("chooseGift")) {
+										plus.webview.getWebviewById("chooseGift").close();
+									}
+									if(plus.webview.getWebviewById("chooseCustom")) {
+										plus.webview.getWebviewById("chooseCustom").close();
+									}
+								}, 800) 
+							plus.nativeUI.closeWaiting();
+						} else {
+							plus.nativeUI.closeWaiting();
+							plus.nativeUI.alert(data.message);
+						}
+					},
+					error: function(xhr, type, errorThrown) {
+						plus.nativeUI.closeWaiting();
+						console.log('响应失败');
+					}
+				});
+				
+			})
 			//支付
 			$('.goOrder').unbind('click').click(function() {
 				var cur = $(this);
