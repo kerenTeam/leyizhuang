@@ -92,16 +92,16 @@ function installWgt(path,hide,ios){
         console.log("安装wgt文件成功！");
         if(hide){//静默更新
 	        	if(path.indexOf('apk')>-1){
-	        		plus.nativeUI.alert("软件更新包已通过wifi预加载下载成功， 请安装新版软件！",function(){
+	        		plus.nativeUI.alert("乐易装APP改善了一些功能，现在自动进行重启，新功能重启后生效！",function(){
 		            plus.runtime.quit();
 		        });
 	        }else{
-	    			plus.nativeUI.alert("软件已通过wifi预加载优化完成， 重启完成操作！",function(){
+	    			plus.nativeUI.alert("乐易装APP改善了一些功能，现在自动进行重启，新功能重启后生效！",function(){
 	            		plus.runtime.restart();
 		        });
 	        }
         }else{
-        		plus.nativeUI.alert("更新完成， 重启完成升级！",function(){
+        		plus.nativeUI.alert("乐易装APP改善了一些功能，现在自动进行重启，新功能重启后生效！",function(){
 	            plus.runtime.restart();
 	        });
         }
@@ -111,7 +111,7 @@ function installWgt(path,hide,ios){
         console.log("安装wgt文件失败["+e.code+"]："+e.message);
         if(!hide){
 	        	if (e.message.indexOf('不匹配')>-1) {
-	        		plus.nativeUI.alert("更新完成， 重启完成升级！",function(){
+	        		plus.nativeUI.alert("乐易装APP改善了一些功能，现在自动进行重启，新功能重启后生效！",function(){
 		            plus.runtime.restart();
 		        });
 	        	} else{

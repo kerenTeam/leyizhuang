@@ -77,7 +77,12 @@
 								</div>
 							</div>
 						</a>
-						<img data-id="<%=list[i].goodsId%>" data-left="<%=list[i].leftNumber%>" data-isZG="<%=list[i].isZG%>" class="check" src="../../images/center/uncheck.svg" alt="" />
+						<%if(list[i].isZG){%>
+							<img data-id="<%=list[i].goodsId%>" data-left="<%=list[i].leftNumber%>" data-isZG="1" class="check" src="../../images/center/uncheck.svg" alt="" />
+						<%}else{%>
+							<img data-id="<%=list[i].goodsId%>" data-left="<%=list[i].leftNumber%>" class="check" src="../../images/center/uncheck.svg" alt="" />
+						<%}%>
+
 					</li>
 					<%}%>
 				</ul>
@@ -131,8 +136,8 @@
 										if(platform == 'ANDROID'){
 											$(this).select();
 										}else{
-											$(this).focus(); 
-											$(this).get(0).selectionStart = 0; 
+											$(this).focus();
+											$(this).get(0).selectionStart = 0;
 											$(this).get(0).selectionEnd = $(this).get(0).value.length;
 										}
 										event.stopPropagation()
@@ -162,7 +167,7 @@
 											var isZG = $(this).attr('data-isZG');
 											if(isZG == true && identityT!=6){
 												flag = 1
-												mui.alert("专供产品券仅顾客可提货哦")	
+												mui.alert("专供产品券仅顾客可提货哦")
 												return false;
 											}
 											var qty =$(this).prev().find('.mui-numbox-input').val();
@@ -203,9 +208,9 @@
 													mui.toast(type)
 													console.log('响应失败');
 												}
-											});		
+											});
 										}
-										
+
 									})
 								} else {
 									$('#useCoupon').hide();

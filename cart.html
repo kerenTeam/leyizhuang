@@ -234,6 +234,7 @@
 							var m = 0;
 							if(data.content) {
 								plus.storage.removeItem('remark');
+								plus.storage.removeItem('remark2');
 								plus.storage.removeItem('audnoAddrObj');
 								if(data.content.auditListRes && data.content.auditListRes.goodsList && data.content.auditListRes.goodsList.length>0){
 									m = m+1;
@@ -268,6 +269,9 @@
 								}else{
 									$('#cartData').html('')
 								}
+								if(data.content.remark){
+									plus.storage.setItem('remark2',data.content.remark);
+								}
 
 							}
 							if(m == 0){
@@ -298,7 +302,7 @@
 									}
 									event.stopPropagation()
 								})
-								 
+
 							//编辑所有
 							$(".editAll").toggle(function() {
 								$(".delBtn,.delBtnAll").show();
@@ -459,7 +463,7 @@
 							})
 							//数量选择
 //							$('.mui-numbox input').onfocus(function(){
-//								
+//
 //							})
 							$('.mui-numbox input').on('input', function() {
 								var cur = $(this);
@@ -504,7 +508,7 @@
 														mui.fire(plus.webview.getWebviewById('specialGoods'),'refreshsd');
 														mui.fire(plus.webview.getWebviewById('cart'), 'refresh');
 														mui.fire(plus.webview.getWebviewById('promotionInfo'),'refresh');
-														 
+
 													} else {
 														mui.toast(data.message)
 													}
@@ -632,7 +636,7 @@
 
 									})
 								}
-								
+
 
 								var index = plus.webview.getLaunchWebview();
 								mui.fire(index, 'cart_refresh');
@@ -683,7 +687,7 @@
 														var auditNo = $(this).attr('data-auditNo');
 														plus.storage.setItem('auditNo',auditNo);
 													}
-	
+
 													var goodsLineType = 'GOODS';
 													justGoods.push({
 														id: gid,
@@ -695,14 +699,14 @@
 														qty: gnum,
 													})
 												}
-	
+
 												materialList.push({
 													id: $(this).attr('data-id'),
 													qty: $(this).parent().parent().find('.mui-input-numbox').val(),
 													goodsLineType:goodsLineType
 												})
 											}
-											
+
 										})
 
 										plus.storage.setItem('materialList', JSON.stringify(materialList));

@@ -274,7 +274,7 @@
 			<%}%>
 		</script>
 		<div class="specialGoods1" style="margin: 10px 10px -5px 10px;display: none;" onclick="specialGoods()">
-			<img src="images/index/special2.png" style="width: 100%;"/>
+			<img src="" style="width: 100%;"/>
 		</div>
 		<div class="specialGoods2" style="margin: 10px 10px -5px 10px;display: none;" onclick="specialGoods()">
 			<img src="images/index/special3.png" style="width: 100%;"/>
@@ -742,11 +742,11 @@
 												plus.storage.removeItem("rankCode");
 											}
 											var rankCode = plus.storage.getItem('rankCode');
-											if(rankCode == 'A' || rankCode == 'C'){
+											if(rankCode){
+												 onerror="javascript:this.src='images/index/special3.png';"
+												$('.specialGoods1 img').attr('src',data.content.rankUrl);
+												$('.specialGoods1 img').attr('onerror',"javascript:this.src='images/index/special3.png");
 												$('.specialGoods1').show();
-											}else if(rankCode == 'B' || rankCode == 'D'){
-												$('.specialGoods2').show();
-												
 											}
 											loadIndex();
 										} else if(data.code == -1) {

@@ -400,11 +400,11 @@
 			   obj.value= parseFloat(obj.value);
 			  }
 		}
-		function replaceLikeVal(comp){ 
-		    if (comp.value.indexOf("'") != -1 || comp.value.indexOf("\"") != -1) { 
-		      //comp.value = comp.value.substring(0, comp.value.length-1); 
-		      comp.value = comp.value.replace(/\'/g,"").replace(/\"/g,""); 
-		    } 
+		function replaceLikeVal(comp){
+		    if (comp.value.indexOf("'") != -1 || comp.value.indexOf("\"") != -1) {
+		      //comp.value = comp.value.substring(0, comp.value.length-1);
+		      comp.value = comp.value.replace(/\'/g,"").replace(/\"/g,"");
+		    }
 		  }
 		function pastNum() {
 			if(obj.value.length == 1) {
@@ -435,9 +435,16 @@
 			var promotionInfo = plus.storage.getItem('giftList');//促销赠品
 			var customerId = plus.webview.currentWebview().customerId || '';
 			var sysDeliveryType = plus.webview.currentWebview().sysDeliveryType;
+
+
+			if(plus.storage.getItem('remark2')){
+				$('#remark').val(plus.storage.getItem('remark2'));
+			}
 			if(plus.storage.getItem('auditNo') && plus.storage.getItem('remark')){
 				$('#remark').val(plus.storage.getItem('remark'));
 			}
+
+
 			if(sysDeliveryType == 'SELF_TAKE'){
 				mui.confirm('订单存在库存不足商品，是否切换自提方式', '提示', ['返回', '确定'], function(e) {
 					if(e.index == 1) {
@@ -611,7 +618,7 @@
 							}else{
 								$('.proCouponDiscount').hide()
 							}
-							
+
 							if(data.content.freight) {
 								$('#freight').html('¥' + data.content.freight)
 								$('#firstFreight').val(data.content.freight)
@@ -791,7 +798,7 @@
 								$('#cash').html('¥' + 0);
 								$('#cash').next().hide()
 							}
-							
+
 
 						} else {
 							mui.toast(data.message);
@@ -1161,7 +1168,7 @@
 									var storeId = data.content.storeList[0].storeId;
 									$('#chooseStore select').html(storeStr);
 									var curselect = $('#chooseStore select');
-									
+
 									//请求门店库存
 									mui.ajax(serverUrl + '/app/settlement/selfTakeStore/choose', {
 										data: {
@@ -1197,7 +1204,7 @@
 												}
 												//合计
 												carculate();
-												
+
 											} else {
 												if(identityT != 6){$('.dsje').show();}
 												var message = data.message || '包含不支持自提商品';
@@ -1518,7 +1525,7 @@
 				})
 				plus.nativeUI.showWaiting();
 				cur.attr('disabled',true)
-				
+
 				//创建订单
 				mui.ajax(serverUrl + '/app/order/create/JMSelfTake', {
 					data: {
@@ -1561,7 +1568,7 @@
 							mui.fire(plus.webview.getWebviewById('specialGoods'),'refreshsd');
 							mui.fire(plus.webview.getWebviewById('hotGoods'),'refresh');
 							mui.fire(plus.webview.getWebviewById('history'),'refresh');
-						 
+
 								mui.toast('订单提交成功！！！')
 								openview({
 									view: 'orderSuccess.html',
@@ -1570,7 +1577,7 @@
 										orderNo:data.content.orderNumber,
 										money:0
 									}
-								}) 
+								})
 								setTimeout(function() {
 									if(plus.webview.getWebviewById("order")) {
 										plus.webview.getWebviewById("order").close();
@@ -1581,7 +1588,7 @@
 									if(plus.webview.getWebviewById("chooseCustom")) {
 										plus.webview.getWebviewById("chooseCustom").close();
 									}
-								}, 800) 
+								}, 800)
 							plus.nativeUI.closeWaiting();
 						} else {
 							plus.nativeUI.closeWaiting();
@@ -1593,7 +1600,7 @@
 						console.log('响应失败');
 					}
 				});
-				
+
 			})
 			//支付
 			$('.goOrder').unbind('click').click(function() {
