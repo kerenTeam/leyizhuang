@@ -63,7 +63,7 @@
 					</div>
 				</div>
 			</div>
-	    		<div class="bottomop flexr" style="position: fixed;">
+	    		<div class="bottomop flexr">
 				<div id="QA"><!--大盒子-->
 					<div class="QA qative dyCon" id="questions" style="display: block;"></div><!--盒子一-->
 
@@ -132,7 +132,7 @@
 					},
 					dataType:'json',
 					type:'post',
-					timeout:10000,
+					timeout:30000,
 					headers:{"Authorization":oldToken},
 					success:function(data,type,xhr){
 						plus.nativeUI.closeWaiting();

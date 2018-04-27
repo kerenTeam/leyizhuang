@@ -13,6 +13,7 @@
 		<link rel="stylesheet" type="text/css" href="../../css/commonY.css">
 		<link rel="stylesheet" type="text/css" href="../../css/indexY.css">
 		<link rel="stylesheet" href="../../css/resetY.css">
+		<!--<link rel="stylesheet" href="../../css/youxd.css">-->
 		<script type="text/javascript" src="../../js/jquery.min.js"></script>
 
 		<script src="../../js/mui.min.js" type="text/javascript"></script>
@@ -82,7 +83,6 @@
 			}
 			.nothing{
 				display: block;
-				background-color: #EFEFF4;
 				margin-top: 60px;
 				text-align: center;
 			}
@@ -94,6 +94,33 @@
 			.nothing p{
 				text-align: center;
 			}
+			/*搜索*/
+			.searchFind { position: relative; }
+			.sint { right: 0; top: 5px; left: 0; position: absolute;
+			display: flex;
+			display: -webkit-flex;
+			align-items: center; }
+			.sint .back {     font-size: 15px;
+			    color: #c7161e;
+			    flex-basis: 40px;
+			    margin-left: 0px;
+			    text-align: center;
+			    margin-top: -10px;
+			    margin-right: 12px; }
+			.fsearch { border-radius: 20px!important; background-color: #f9f9f9!important; border: 1px solid #dfdfdf!important; font-size: 15px!important;
+				padding-left: 30px!important;  }
+			.fsearch::-webkit-input-placeholder { color: gray!important; text-align: left; font-size: 12px; }
+			.mui-icon-search { position: absolute;  top: 3px; color: gray;z-index: 200; }
+			form { width: 100%;     padding: 0 8px;}
+			.mui-icon-search2{
+				top: -3px;left: 14px;
+			}
+			input.fsearch::-webkit-input-placeholder{
+				color: #999;opacity:1;font-size: 15px;
+			}
+			#tabLink2{
+				height: 50px; position: relative; top: 52px;
+			}
 		</style>
 	</head>
 	<body>
@@ -104,6 +131,21 @@
 		    <a href="javascript:;" style="line-height: 50px;color:#555;font-size: 15px;" class="fr baocun" onclick="addAd()">新增</a>
 		</header>
 		<script src="../../js/statusBar.js"></script><!--状态栏-->
+
+			<div class="tab-hd tab-hdtwo" id="tabLink2" >
+				<div class="searchFind">
+					<span class="mui-icon mui-icon-search mui-icon-search2" id="clickSearch"></span>
+					<div class="sint">
+						<form id="searchf">
+							<input type="search" id="valInt" class="fsearch" placeholder="收货人姓名、电话、详细地址，小区">
+						</form>
+						<span class="back" id="cancelSearch">确认</span>
+					</div>
+				</div>
+			</div>
+
+
+
 		<div id="addressList"></div>
 
 	    <!--模板铺数据-->
@@ -191,151 +233,179 @@
 				console.log('刷新数据');
 			})
 			function RefreshAd(){
-				/*我的地址*/
-				mui.ajax(serverUrl+'/app/user/setting/deliveryAddress/list',{
-					data:{'userId' : userId,'identityType':identityT,'page':1},
-					dataType:'json',
-					type:'post',
-					timeout:10000,
-					headers:{"Authorization":oldToken},
-					success:function(data,type,xhr){
-						console.log('地址',data);
-						var addressObj = {};
-						addressObj.addressLi = data.content.list;
-						var html = template('addressList-detail',addressObj);
-						document.getElementById('addressList').innerHTML = html;
-						if(data.content==0){
-							document.getElementById('main').innerHTML='<div class="nothing" style="background-color: #EFEFF4;margin-top: 60px;"><img src="../../images/order/addresic.svg" style="display: block;margin: 20px auto;width: 80px;"/><p style="text-align: center;">你还没有地址哟！</p></div>';
-						}
-						if(pageid){/*从选择地址跳转*/
-//							$(".addlist .bottom .right .editAd").css("display","none"); 
-							$(".addlist").click(function(){
-								$(this).css("background","#eee")
-								$(this).addClass("adhover")
-								var addressStorage = JSON.parse(plus.storage.getItem('$addressStorage') || '[]');
-								var defultAddress ={};
-									defultAddress.id = $(this).attr("data-addid");
-									defultAddress.person = $(this).attr("data-person");
-									defultAddress.phone = $(this).attr("data-phone");
-									defultAddress.province = $(this).attr("data-pv");
-									defultAddress.city = $(this).attr("data-ct");
-									defultAddress.country = $(this).attr("data-cty");
-									defultAddress.street = $(this).attr("data-st");
-									defultAddress.villageName = $(this).attr("data-villageName");
-									defultAddress.address = $(this).attr("data-adi");
 
-									addressStorage = [defultAddress];
+				var url = '/app/user/setting/deliveryAddress/list';
+				var dataObj = {'userId' : userId,'identityType':identityT,'page':1}
+				getData(url,dataObj);
+				//搜索
+				$('#searchf').submit(function(){
+					var valInt = $('#valInt').val();
+					var url = '/app/user/setting/search/deliveryAddress';
+					var dataObj = {'userId' : userId,'identityType':identityT,'page':1,'keywords':valInt}
+					getData(url,dataObj,'noList');
+					return false;
+				})
+				$('#clickSearch, #cancelSearch').click(function(){
+					var valInt = $('#valInt').val();
+					var url = '/app/user/setting/search/deliveryAddress';
+					var dataObj = {'userId' : userId,'identityType':identityT,'page':1,'keywords':valInt}
+					getData(url,dataObj,'noList');
 
-
-									if(goType == 'pzOrder'){//拍照下单
-										plus.storage.setItem('$addressStorageY2', JSON.stringify(addressStorage));
-										mui.fire(plus.webview.getWebviewById('pzOrder'),'readdstorage');//拍照下单
-									}
-									if(goType == 'toReturn'){//申请退货
-										plus.storage.setItem('$addressStorageTH1', JSON.stringify(addressStorage));
-										mui.fire(plus.webview.getWebviewById('myOrderReturns'),'readdstorage');
-									}
-									if(goType == 'order'){
-										plus.storage.setItem('$addressStorage', JSON.stringify(addressStorage));
-										var list = plus.webview.getWebviewById('workerMaterial');
-										mui.fire(list,'readdstorage');
-									}
- 									if(goType == 'gorder'){
-										plus.storage.setItem('$addressStorageOrder', JSON.stringify(addressStorage));
-										var list = plus.webview.getWebviewById('order');
-										mui.fire(list,'readdstorage');
-									}
- 									plus.webview.currentWebview().close();//关闭当前页面
-
-							})
-						}
-
-						//点击修改默认地址
-						window.changeState = function(thisobj){
-							var checked = $(thisobj).find('input').attr("checked");
-							var thisAdId = $(thisobj).find('input').attr("id");
-
-							if(typeof(checked)=="undefined"){//本来不是默认地址
-								$('.radio').find('input').removeAttr('checked');//移除其他勾选
-								$(thisobj).find('input').prop('checked',true);//勾选当前
-								mui.ajax(serverUrl+'/api/useraccount/stateaddress',{
-									data:{userid:userId,address_id:thisAdId,state:1},
-									dataType:'json',
-									type:'post',
-									timeout:10000,
-									headers:{"token":oldToken},
-									success:function(data,type,xhr){
-									},
-									error:function(xhr,type,errorThrown){
-										console.log('响应失败  !');
-									}
-								});
-							}else{//本来是默认地址
-								$(thisobj).find('input').removeAttr('checked');
-								mui.ajax(serverUrl+'/api/useraccount/stateaddress',{
-									data:{userid:userId,address_id:thisAdId,state:0},
-									dataType:'json',
-									type:'post',
-									timeout:10000,
-									headers:{"token":oldToken},
-									success:function(data,type,xhr){
-									},
-									error:function(xhr,type,errorThrown){
-										console.log('响应失败  !');
-									}
-								});
+				})
+				function getData(url,dataObj, noList){
+					/*我的地址*/
+					mui.ajax(serverUrl+url,{
+						data:dataObj,
+						dataType:'json',
+						type:'post',
+						timeout:10000,
+						headers:{"Authorization":oldToken},
+						success:function(data,type,xhr){
+							console.log('地址',data);
+							var addressObj = {};
+							if(noList){//搜索
+								addressObj.addressLi = data.content;
+							}else{
+								addressObj.addressLi = data.content.list;
 							}
-						}
-						//点击编辑跳转传参
-						window.editAd = function(AdId){
-							event.stopPropagation()
-							openview({
-							 	view:"address-edit.html",
-							 	id:"address-edit",
-							 	extrasobj:{adId:AdId,userId:userId}
-							})
-						}
-						//删除确认弹框
-						var exterminate = document.getElementsByClassName('exterminate');
-						window.deleteAd = function(AdIdD){
-							event.stopPropagation()
-							mui.confirm('确认删除该地址？','',['取消','确认'],function (e) {
-								if(e.index == 1) {
-									mui.ajax(serverUrl+'/app/user/setting/deliveryAddress/delete',{
-										data:{'deliveryAddressId':AdIdD,'identityType':identityT,'userId':userId},
+							var html = template('addressList-detail',addressObj);
+							document.getElementById('addressList').innerHTML = html;
+							if(data.content==0){
+								document.getElementById('main').innerHTML='<div class="nothing" style="margin-top: 60px;"><img src="../../images/order/addresic.svg" style="display: block;margin: 20px auto;width: 80px;"/><p style="text-align: center;">你还没有地址哟！</p></div>';
+								if(noList){
+									document.getElementById('main').innerHTML='<div class="nothing" style="margin-top: 60px;"><img src="../../images/order/addresic.svg" style="display: block;margin: 20px auto;width: 80px;"/><p style="text-align: center;">没有搜索结果！</p></div>';
+								}
+							}
+							if(pageid){/*从选择地址跳转*/
+	//							$(".addlist .bottom .right .editAd").css("display","none");
+								$(".addlist").click(function(){
+									$(this).css("background","#eee")
+									$(this).addClass("adhover")
+									var addressStorage = JSON.parse(plus.storage.getItem('$addressStorage') || '[]');
+									var defultAddress ={};
+										defultAddress.id = $(this).attr("data-addid");
+										defultAddress.person = $(this).attr("data-person");
+										defultAddress.phone = $(this).attr("data-phone");
+										defultAddress.province = $(this).attr("data-pv");
+										defultAddress.city = $(this).attr("data-ct");
+										defultAddress.country = $(this).attr("data-cty");
+										defultAddress.street = $(this).attr("data-st");
+										defultAddress.villageName = $(this).attr("data-villageName");
+										defultAddress.address = $(this).attr("data-adi");
+
+										addressStorage = [defultAddress];
+
+
+										if(goType == 'pzOrder'){//拍照下单
+											plus.storage.setItem('$addressStorageY2', JSON.stringify(addressStorage));
+											mui.fire(plus.webview.getWebviewById('pzOrder'),'readdstorage');//拍照下单
+										}
+										if(goType == 'toReturn'){//申请退货
+											plus.storage.setItem('$addressStorageTH1', JSON.stringify(addressStorage));
+											mui.fire(plus.webview.getWebviewById('myOrderReturns'),'readdstorage');
+										}
+										if(goType == 'order'){
+											plus.storage.setItem('$addressStorage', JSON.stringify(addressStorage));
+											var list = plus.webview.getWebviewById('workerMaterial');
+											mui.fire(list,'readdstorage');
+										}
+	 									if(goType == 'gorder'){
+											plus.storage.setItem('$addressStorageOrder', JSON.stringify(addressStorage));
+											var list = plus.webview.getWebviewById('order');
+											mui.fire(list,'readdstorage');
+										}
+	 									plus.webview.currentWebview().close();//关闭当前页面
+
+								})
+							}
+
+							//点击修改默认地址
+							window.changeState = function(thisobj){
+								var checked = $(thisobj).find('input').attr("checked");
+								var thisAdId = $(thisobj).find('input').attr("id");
+
+								if(typeof(checked)=="undefined"){//本来不是默认地址
+									$('.radio').find('input').removeAttr('checked');//移除其他勾选
+									$(thisobj).find('input').prop('checked',true);//勾选当前
+									mui.ajax(serverUrl+'/api/useraccount/stateaddress',{
+										data:{userid:userId,address_id:thisAdId,state:1},
 										dataType:'json',
 										type:'post',
 										timeout:10000,
-										headers:{"Authorization":oldToken},
+										headers:{"token":oldToken},
 										success:function(data,type,xhr){
-											plus.nativeUI.alert("删除成功！");
-											mui.fire(plus.webview.getWebviewById('address'),'refreshAd');//打开指定页面
+										},
+										error:function(xhr,type,errorThrown){
+											console.log('响应失败  !');
+										}
+									});
+								}else{//本来是默认地址
+									$(thisobj).find('input').removeAttr('checked');
+									mui.ajax(serverUrl+'/api/useraccount/stateaddress',{
+										data:{userid:userId,address_id:thisAdId,state:0},
+										dataType:'json',
+										type:'post',
+										timeout:10000,
+										headers:{"token":oldToken},
+										success:function(data,type,xhr){
 										},
 										error:function(xhr,type,errorThrown){
 											console.log('响应失败  !');
 										}
 									});
 								}
-							})
+							}
+							//点击编辑跳转传参
+							window.editAd = function(AdId){
+								event.stopPropagation()
+								openview({
+								 	view:"address-edit.html",
+								 	id:"address-edit",
+								 	extrasobj:{adId:AdId,userId:userId}
+								})
+							}
+							//删除确认弹框
+							var exterminate = document.getElementsByClassName('exterminate');
+							window.deleteAd = function(AdIdD){
+								event.stopPropagation()
+								mui.confirm('确认删除该地址？','',['取消','确认'],function (e) {
+									if(e.index == 1) {
+										mui.ajax(serverUrl+'/app/user/setting/deliveryAddress/delete',{
+											data:{'deliveryAddressId':AdIdD,'identityType':identityT,'userId':userId},
+											dataType:'json',
+											type:'post',
+											timeout:10000,
+											headers:{"Authorization":oldToken},
+											success:function(data,type,xhr){
+												plus.nativeUI.alert("删除成功！");
+												mui.fire(plus.webview.getWebviewById('address'),'refreshAd');//打开指定页面
+											},
+											error:function(xhr,type,errorThrown){
+												console.log('响应失败  !');
+											}
+										});
+									}
+								})
+							}
+							//点击添加地址跳转
+							window.addAd = function(){
+								openview({
+									view:'add-address.html',
+									id:'add-address',
+									extrasobj: {
+										page: 'order',
+										ConeId:plus.webview.currentWebview().ConeId,
+										CidentityT:identityT,
+									}
+								});
+							}
+						},
+						error:function(xhr,type,errorThrown){
+							plus.nativeUI.closeWaiting();
+							mui.toast('响应失败  !');
 						}
-						//点击添加地址跳转
-						window.addAd = function(){
-							openview({
-								view:'add-address.html',
-								id:'add-address',
-								extrasobj: {
-									page: 'order',
-									ConeId:plus.webview.currentWebview().ConeId,
-									CidentityT:identityT,
-								}
-							});
-						}
-					},
-					error:function(xhr,type,errorThrown){
-						plus.nativeUI.closeWaiting();
-						mui.toast('响应失败  !');
-					}
-				});
+					});
+				}
 			}
 		})();
 	</script>
