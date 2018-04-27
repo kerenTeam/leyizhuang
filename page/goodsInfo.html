@@ -121,15 +121,20 @@
 					<div class="ft18"><%=dataobj.skuName%></div>
 					<div class="activecl2 ft16"><strong>¥<%=dataobj.price%></strong></div>
 				</div>
-				<div class="ft16 specif">
+				<div class="ft14 specif">
 					<div>
 						<span class="maincl">规格：</span><%=dataobj.goodsSpecification%>
 					</div>
 					<div>
 						<span class="maincl">单位：</span><%=dataobj.goodsUnit%>
 					</div>
-				</div>
 
+				</div>
+				<div class="maincl ft15" style="background:#F6F7F8;">
+	            		<%if(dataobj.workArea){%><div style="padding: 5px 10px;">施工面积<em class="titcl"> <%=dataobj.workArea%>平米</em></div> <%}%>
+	            		<%if(dataobj.workCost){%><div style="padding: 5px 10px;">施工成本<em class="titcl"> <%=dataobj.workCost%>元/平米</em></div> <%}%>
+
+        			</div>
 			</script>
 
 			<!--详情-->
@@ -206,6 +211,8 @@
 									<%=dataobj.skuName%>
 								</div>
 								<div>规格：<em><%=dataobj.goodsSpecification%></em> 单位：<em><%=dataobj.goodsUnit%></em></div>
+
+
 								<span>
 									<b id="priceChange">¥ <%=dataobj.price%></b>
 								</span>
@@ -262,6 +269,7 @@
 	<script type="text/javascript">
 		mui.plusReady(function(){
 			var goodid = plus.webview.currentWebview().goodId;
+			var specail = plus.webview.currentWebview().specail;
 			if(!goodid){
 				mui.toast('未返回商品id')
 			}

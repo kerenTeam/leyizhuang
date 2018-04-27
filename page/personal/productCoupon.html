@@ -122,7 +122,7 @@
 							"Authorization": oldToken
 						},
 						type: 'post',
-						timeout: 10000,
+						timeout: 50000,
 						success: function(data, type, xhr) {
 							console.log('产品券列表', data);
 							if(data.code == 0) {

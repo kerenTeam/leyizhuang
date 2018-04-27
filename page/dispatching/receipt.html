@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html class="ui-page-login">
 
 	<head>
@@ -277,7 +277,7 @@
 										mui.toast("确认收货成功！");//提示清单
 										plus.webview.getWebviewById("deliveryInfo").close();
 										mui.fire(plus.webview.getWebviewById('dispatching'), 'refresh');
-										plus.webview.currentWebview.close();
+										plus.webview.currentWebview().close();
 									}else{
 										mui.toast(dataobj.message);
 									}
