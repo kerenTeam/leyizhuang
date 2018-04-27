@@ -177,6 +177,7 @@
 								<div style="word-break: break-all;white-space: normal;">
 									<%=list[i].goodsName%>
 								</div>
+								<div class="ft14 maincl">商品编码：<%=list[i].sku || '无'%></div>
 								<p class='mui-ellipsis ft16'>规格:
 									<%=list[i].goodsSpecification%> &nbsp;单位:
 									<%=list[i].goodsUnit%>
@@ -307,7 +308,7 @@
 						"Authorization": oldToken
 					},
 					type: 'post',
-					timeout: 10000,
+					timeout: 30000,
 					success: function(data, type, xhr) {
 						console.log('搜索商品列表' + JSON.stringify(data));
 						if(data.code == 0) {

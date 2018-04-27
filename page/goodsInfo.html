@@ -122,6 +122,7 @@
 					<div class="activecl2 ft16"><strong>¥<%=dataobj.price%></strong></div>
 				</div>
 				<div class="ft14 specif">
+					<%if(dataobj.sku){%><div><span class="maincl">商品编码：</span><%=dataobj.sku%></div> <%}%>
 					<div>
 						<span class="maincl">规格：</span><%=dataobj.goodsSpecification%>
 					</div>
