@@ -224,7 +224,7 @@
 					}else {
 						plus.nativeUI.showWaiting();
 						var cityId = $('#city').val();
-						mui.ajax(serverUrl + '/app/customer/registry', { //改密
+						mui.ajax(serverUrl + '/app/customer/registryOfTwo', { //改密
 							data: {
 								"phone": account.value,
 								"openId": openId,
@@ -233,17 +233,21 @@
 								"nickName": nick,
 								"sex": sex,
 								"name":username.value.replace(/[ ]/g,""),
-								"profession":$('#workerType').val()
+								"profession":$('#workerType').val(),
+								"guidePhone":guide.value
 							},
 							dataType: 'json',
 							type: 'post',
-							timeout: 10000,
+							timeout: 20000,
 							//								headers: {"Authorization": plus.storage.getItem("oldToken")},
 							success: function(data) {
 								console.log('注册返回', data);
 								if(data.code == 0) {
 									plus.nativeUI.closeWaiting();
 									mui.toast('注册成功');
+									if(data.message){
+										mui.toast(data.message);
+									}
 									mui.ajax(serverUrl + '/app/customer/login', {
 										data: {
 											"openId": openId,
@@ -281,38 +285,7 @@
 												index.reload()
 												mui.fire(index, 'refreshpage');
 												plus.nativeUI.closeWaiting();
-												mui.ajax(serverUrl + '/app/customer/binding/seller', {
-													data: {
-														userId: userId,
-														guidePhone: guide.value,
-														identityType:'6'
-													},
-													dataType: 'json',
-													headers: {
-														"Authorization": oldToken
-													},
-													type: 'post',
-													timeout: 10000,
-													success: function(data, type, xhr) {
-														plus.nativeUI.closeWaiting();
-														console.log('绑定返回', data);
-														if(data.code == 0) {
-															if(plus.webview.getWebviewById('reg')){
-																plus.webview.getWebviewById('reg').close();
-															}
-															plus.webview.currentWebview().close();
-															plus.nativeUI.closeWaiting();
-														}else{
-															plus.webview.currentWebview().close();
-															plus.nativeUI.alert(data.message)
-														}
-
-													},
-													error: function(xhr, type, errorThrown) {
-														plus.nativeUI.closeWaiting();
-														mui.toast(type)
-													}
-												});
+												plus.webview.currentWebview().close();
 											}
 
 										},

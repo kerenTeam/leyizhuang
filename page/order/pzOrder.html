@@ -248,7 +248,7 @@
 		});
 		//发送 发布
 		$('.baocun').click(function(){
-		 	var BZCon = mui('#BZCon')[0].value;//备注
+		 	var BZCon = mui('#BZCon')[0].value.replace(/[\r\n]/g,"");//备注
 			var cname = $('#cname').val();
 			var cphone = $('#cphone').val();
 		 	if(!Apic.length){

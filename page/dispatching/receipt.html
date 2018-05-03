@@ -253,7 +253,7 @@
 					var pickUpCode = $('#pickUpCode').val();
 					var truemoney = $('#truemoney').val();
 					var paymentMethod = $('.bdcA').text();
-					var content = $('#notice').val();
+					var content = $('#notice').val().replace(/[\r\n]/g,"");
 					if(!pickUpCode){
 						mui.toast("还未填收货码呢！");
 		    	   			mui('#pickUpCode')[0].focus();

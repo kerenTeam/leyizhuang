@@ -1610,7 +1610,7 @@
 				if(endCur >= 0){
 					var deliveryType, bookingStoreId, bookingStoreName, bookingStoreAddress,
 					receiver, receiverPhone,deliveryProvince, deliveryCity, deliveryCounty, deliveryStreet, residenceName, detailedAddress, deliveryTime, isOwnerReceiving, auditNo = plus.storage.getItem('auditNo') || '', remark;
-					remark = $('#remark').val();
+					remark = $('#remark').val().replace(/[\r\n]/g,"");
 					var delivery = $("input[name='peis']:checked").val();
 					deliveryType = (delivery == 1) ? "SELF_TAKE" : "HOUSE_DELIVERY";
 					if(deliveryType == "SELF_TAKE") {

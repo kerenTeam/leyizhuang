@@ -141,7 +141,7 @@
 			var reg_phone = /^1((3|4|5|8|7){1}\d{1}|70)\d{8}$/;//手机号正则
 
 		    $(".baocun").on("click",function(){
-		    		var content = $("textarea").val();
+		    		var content = $("textarea").val().replace(/[\r\n]/g,"");
 		    		var typeid = $('#fankuiSpan .active').attr('typeid');
 
 				if(!content){
