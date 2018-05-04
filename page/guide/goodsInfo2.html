@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<title>商品详情</title>
+		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, width=device-width">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-touch-fullscreen" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="format-detection" content="telephone=no">
+		<meta name="format-detection" content="address=no">
+		<link rel="stylesheet" type="text/css" href="../../css/mui.min.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/commonY.css">
+		<link rel="stylesheet" href="../../css/resetY.css" />
+		 <link rel="stylesheet" type="text/css" href="../../css/style.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/configW.css"/>
+	</head>
+	<style type="text/css">
+		.baocun{text-align:right;}
+		.baocun img{vertical-align:middle;width: 30px;}
+		.listCon{border-bottom: 10px solid #f3f3f3;}
+		.listCon p{padding:10px 0 0}
+		.follow{position:relative;}
+		.follow{background-color:#fff;padding:15px 10px;}
+		.follow:after{position:absolute;right:10px;bottom:0;left:10px;height:1px;background:#cacaca;content:'';-webkit-transform:scaleY(.3);}
+		.follow:last-child:after{height:0;}
+		.fchidl{display:flex;align-items:center;justify-content:space-between;}
+		.userAvator{margin-right:10px;width:45px;height:45px;border-radius:50%;}
+		.fchidl>div{display:flex;vertical-align:middle;text-align:left;font-size:15px;align-items:center;}
+		.text{color:#999;}
+  		.flexrr{display: -webkit-flex;-webkit-justify-content: space-between;align-items: center;padding: 15px 0;}
+  		.flexrr>div img{width: 20px;vertical-align: middle;}
+  		.cmtall img{width: 25px;margin-right: 5px;}
+  		.cmtflex{display: -webkit-flex;-webkit-justify-content: space-between;align-items: center;}
+  		.fchidl2 .ctc img{width: 25;}
+  		ul{list-style: none;padding: inherit;margin: 0;}
+	   	.diybtn{background: url(../../img/makeFriend/follow.png) no-repeat;background-size: 100% 100%;background-position: left top;color: white;padding: 4px 22px;}
+  		.diybtn2{background: url(../../img/makeFriend/unfollw.png) no-repeat;background-size: 100% 100%;background-position: left top;color: #31c58b;padding: 4px 22px;}
+		.yhm{width:calc((100vw - 50px)/3);width:-webkit-calc((100vw - 50px)/3);width:-moz-calc((100vw - 50px)/3);height: calc((100vw - 20px)/3);height: -webkit-calc((100vw - 20px)/3);height: -moz-calc((100vw - 20px)/3);margin-left: 5px;margin-top:10px ;}
+		.giveBk{background: url(../../img/makeFriend/give.png) no-repeat;background-size: 100% 100%;background-position: left top;color: #31c58b;padding: 6px 25px;color: white;}
+		.fchidl2{display: -webkit-flex;vertical-align: baseline;}
+		.fchidl2 .butright{flex-grow: 1;}
+		.fchidl2 .btop{display: -webkit-flex;-webkit-justify-content: space-between;align-items: center;}
+		.opbot{display: -webkit-flex;height: 50px;-webkit-align-items:center;position: fixed;bottom: 0;left: 0;right: 0;background-color: white;box-shadow: 0px 1px 1px 1px #EEEEEE;}
+		.opbf{-webkit-flex-grow: 1;display: -webkit-flex;-webkit-justify-content: space-around;-webkit-align-items: center;}
+		.opbf>div{flex: 1;text-align: center;}
+		.opbb{font-size: 17px;width: calc(100vw * 0.6);width: -webkit-calc(100vw * 0.6);width: -moz-calc(100vw * 0.6);text-align: center;background-color: #B62D29;color: white!important;height: 100%;line-height: 50px;}
+		.writecmt{flex-grow: 1;background: url(../../img/makeFriend/cmtbor.png) no-repeat bottom;padding: 5px;max-height: 80px;overflow-y: scroll;}
+		.opbot img{width: 25px;height:25px;margin: 0 3px;vertical-align: middle;}
+		.follow .maincl{letter-spacing: 0.4px;line-height: 1.5;}
+		.follow b{font-weight: 600;color: #FD6363;}
+		.fchidl3{padding: 10px 10px;border-left: 1px solid #ccc;}
+		.DTcontent{overflow: hidden;}
+		.dynamicPic{float: left;position: relative;overflow: hidden;border-right: 2px solid #fff;}
+		.dynamicPic1{width: 70%;padding-top: 68%;}
+		.dynamicPic2{width: 50%;padding-top: 48%;}
+		.dynamicPic3{width: 33%;padding-top: 31%;}
+		.dynamicPic img{width: 100%;}
+		#maskInfo{z-index:99999;position:fixed;top:0;left:0;width:100%;bottom:0;background-color:rgba(0,0,0,.5)}
+		.dynamicPic span{display: inline-block;position: absolute;top: 2%;left: 2%;width: 96%;height: 96%;background-color: #F3F3F3;overflow: hidden;}
+		.mui-slider-item img{
+			width: 100%!important;
+		}
+		#goodsInfo{margin: 10px 0;background-color: white;padding: 10px;}
+		#goodsInfo img{width: 100%;}
+		.specif{display: -webkit-flex;-webkit-justify-content: space-between;background-color: #F6F7F8;padding: 10px;}
+		.specif div{flex: 1;}
+		.goodstit{padding:0 10px;border-left: 5px solid #AE0100;margin: 5px 0;}
+		#collt img{vertical-align: middle;width: 25px;}
+		.cmtImg{padding: 10px 0;}
+		.cmtImg img{width: 4em;height: 4em;border-radius: 3px;display: inline-block;}
+		/*大的购物车图标*/
+       .mui-numbox{width: 106px;height: 34px;padding: 0px 34px;}
+       .mui-numbox .mui-input-numbox, .mui-numbox .mui-numbox-input{font-size: 14px;}
+       .mui-numbox [class*=btn-numbox], .mui-numbox [class*=numbox-btn]{line-height: 0.4!important;}
+	</style>
+
+	<body>
+
+		<header class="mui-bar mui-bar-nav" id="header">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left bigSize back"></a>
+			<h1 class="mui-title findUser">商品详情</h1>
+			<span class="mui-pull-right ft15 fenxiangBtn1" style="line-height: 50px;">
+				分享
+			</span>
+		</header>
+		<script src="../../js/statusBar.js"></script><!--状态栏-->
+		<div class="mui-content">
+			<div id="moll_info"></div>
+
+			<script type="text/html" id="infoTpl">
+				<div class="mui-slider">
+					<!--轮播图-->
+					<%if(dataobj.rotationImageUriList.length){%>
+						<div class="mui-slider-group mui-slider-loop">
+						    <!--支持循环，需要重复图片节点-->
+						    <div class="mui-slider-item mui-slider-item-duplicate">
+						    	<img src="<%= dataobj.rotationImageUriList[dataobj.rotationImageUriList.length-1] %>" onerror="javascript:this.src='../../images/img.svg';" />
+						    </div>
+							<% for(var i=0;i<dataobj.rotationImageUriList.length;i++){ %>
+						    	<div class="mui-slider-item">
+						    		<img src="<%=dataobj.rotationImageUriList[i] %>"  onerror="javascript:this.src='../../images/img.svg';"/>
+						    	</div>
+						     <% } %>
+						    <!--支持循环，需要重复图片节点-->
+						    <div class="mui-slider-item mui-slider-item-duplicate" >
+						    	<img src="<%=dataobj.rotationImageUriList[0] %>" onerror="javascript:this.src='../../images/img.svg';" />
+						    </div>
+						</div>
+						<div class="mui-slider-indicator">
+							<div class="mui-indicator mui-active"></div>
+							<% for(var i=0;i<dataobj.rotationImageUriList.length-1;i++){ %>
+						    	<div class="mui-indicator"></div>
+						    <% } %>
+			            </div>
+					<%}%>
+				</div>
+				<!--轮播图结束-->
+				<div id="brief" style="background: white;padding: 10px;">
+					<div class="ft18"><%=dataobj.skuName%></div>
+					<div class="activecl2 ft16"><strong>¥<%=dataobj.price%></strong></div>
+				</div>
+				<div class="ft14 specif">
+					<%if(dataobj.sku){%><div><span class="maincl">商品编码：</span><%=dataobj.sku%></div> <%}%>
+					<div>
+						<span class="maincl">规格：</span><%=dataobj.goodsSpecification%>
+					</div>
+					<div>
+						<span class="maincl">单位：</span><%=dataobj.goodsUnit%>
+					</div>
+
+				</div>
+				<div class="maincl ft15" style="background:#F6F7F8;">
+	            		<%if(dataobj.workArea){%><div style="padding: 5px 10px;">施工面积<em class="titcl"> <%=dataobj.workArea%>平米</em></div> <%}%>
+	            		<%if(dataobj.workCost){%><div style="padding: 5px 10px;">施工成本<em class="titcl"> <%=dataobj.workCost%>元/平米</em></div> <%}%>
+
+        			</div>
+			</script>
+
+			<!--详情-->
+			<div id="goodsInfo">
+				<div class="ft16 goodstit">商品详情</div>
+				<div id="infoCnt"></div>
+			</div>
+			<div class="afterBorder" style="padding: 10px;background-color: white;">
+				<div class="ft17 goodstit">商品评价 <span class="mui-pull-right maincl ft14"></span></div>
+			</div>
+			<div id="curShow" class="bgcwt"></div>
+    			<!--留言-->
+		 	<script type="text/html" id="cmtTpl">
+
+		 		<%for(var i=0;i<list.length;i++){%>
+		 			<%if(list[i].isShow){%>
+			 			<div class="follow">
+							<div class="fchidl2">
+								<img src="<%=list[i].picUrl || '../../images/10.png'%>" class="userAvator"/>
+								<div class="butright">
+									<div class="btop">
+						            		<b class="ft16"><%=list[i].evaluationName ||'匿名'%></b> <span class="disablecl"><%=list[i].evaluationTime%></span>
+						            	</div>
+					            	<div class="maincl ft15"><%=list[i].commentContent%></div>
+					            	<%if(list[i].evaluationPictures && list[i].evaluationPictures.length){%>
+					            		<div class="cmtImg">
+						            	<%for(var j = 0 ; j<list[i].evaluationPictures.length;j++){%>
+						            		<%if(list[i].evaluationPictures[j]){%>
+											<img src="<%=list[i].evaluationPictures[j]%>" data-preview-src="" data-preview-group="<%=i+1%>" alt="" />
+						            		<%}%>
+						            	<%}%>
+					            		</div>
+					            	<%}%>
+					           </div>
+							</div>
+						</div>
+		 			<%}%>
+					<%}%>
+		 	</script>
+			<div class="upload text-center text-xs gray" id="upload" style="padding-bottom: 50px;z-index: 9999;"></div>
+
+		</div>
+
+	
+
+
+	 </body>
+	<script type="text/javascript" src="../../js/jquery.min.js"></script>
+	<script src="../../js/mui.min.js"></script>
+	<script src="../../js/mui.zoom.js"></script>
+	<script src="../../js/mui.previewimage.js"></script>
+	<script src="../../js/artTemplate-native.js"></script>
+	<script src="../../js/default.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../js/youxd.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		//购物车弹出/关闭
+		function toshare(){
+			$(".am-share").addClass("am-modal-active");
+			if($(".sharebg").length>0){
+				$(".sharebg").addClass("sharebg-active");
+			}else{
+				$("body").append('<div class="sharebg"></div>');
+				$(".sharebg").addClass("sharebg-active");
+			}
+			$(".sharebg-active,.share_btn").click(function(){
+				$(".am-share").removeClass("am-modal-active");
+				setTimeout(function(){
+					$(".sharebg-active").removeClass("sharebg-active");
+					$(".sharebg").remove();
+				},300);
+			})
+		}
+	</script>
+	<script type="text/javascript">
+		mui.plusReady(function(){
+			var goodid = plus.webview.currentWebview().goodId;
+			var specail = plus.webview.currentWebview().specail;
+			if(!goodid){
+				mui.toast('未返回商品id')
+			}
+			//获取缓存
+			var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
+			var userId = plus.storage.getItem('$userId');
+			var oldToken = plus.storage.getItem('oldToken');
+			plus.nativeUI.showWaiting();
+//			alert(goodid+' '+identityT+' '+userId)
+
+			//增加浏览记录
+			mui.ajax(serverUrl+'/app/user/browseHistory/add',{
+				data:{
+					goodsId:goodid,
+					userId:userId,
+					identityType:identityT
+				},
+				dataType:'json',
+				headers: {"Authorization": oldToken},
+				type:'post',
+				timeout:10000,
+				success:function(data,type,xhr){
+					plus.nativeUI.closeWaiting();
+					plus.nativeUI.closeWaiting();
+					console.log('增加浏览记录',data);
+					if(data.code == 0 ){
+						console.log('增加成功')
+					}
+				},
+				error:function(xhr,type,errorThrown){
+					plus.nativeUI.closeWaiting();
+					mui.toast(type)
+					console.log('响应失败');
+				}
+			});
+
+			//商品详情
+			mui.ajax(serverUrl+'/app/goods/get/goodsDetail',{
+				data:{
+					goodsId:goodid,
+					userId:userId,
+					identityType:identityT
+				},
+				dataType:'json',
+				headers: {"Authorization": oldToken},
+				type:'post',
+				timeout:10000,
+				success:function(data,type,xhr){
+					plus.nativeUI.closeWaiting();
+					console.log('商品详情',data);
+					console.log('商品详情',JSON.stringify(data));
+					if(data.code == 0 ){
+						plus.nativeUI.closeWaiting();
+						if(data.content){
+							if(data.content.isCollect){
+								$('#collt').html('<img src="../../img/zan.png"/>取消收藏').attr('data-id','1')
+							}
+							if(data.content.rotationImageUriList){
+								for(var i in data.content.rotationImageUriList){
+									if(!data.content.rotationImageUriList[i]){
+										data.content.rotationImageUriList[i] = '../../images/img.svg'
+									}
+								}
+
+							}
+							document.getElementById("moll_info").innerHTML = template("infoTpl", {dataobj:data.content});
+							document.getElementById("cartObj").innerHTML = template("cartTpl", {dataobj:data.content});
+							if(data.content.goodsDetail){
+								$('#infoCnt').html(data.content.goodsDetail)
+							}else{
+								$('#infoCnt').html('<div style="font-size:14px;color:gray;padding:5%;text-align: center;">暂无详情</div>')
+							}
+							mui('.mui-numbox').numbox();
+							$('.toCart,.mui-numbox button').click(function() {
+								event.stopPropagation()
+							})
+
+							var platform = plus.storage.getItem('platform')
+							$('.mui-numbox input').click(function() {
+								event.stopPropagation()
+								if(platform == 'ANDROID'){
+									$(this).select();
+								}else{
+									$(this).focus();
+									$(this).get(0).selectionStart = 0;
+									$(this).get(0).selectionEnd = $(this).get(0).value.length;
+								}
+							})
+							var gallery = mui(".mui-slider");
+							gallery.slider({
+								interval: 3000 //设置自动轮播周期为3s
+							});
+						}
+						//分享
+						mui('.fenxiangBtn1')[0].onclick = function(){
+							if(data.content){
+								console.log('商品详情2',JSON.stringify(data));
+								//示例
+								//http://download.leyizhuang.com.cn:6789/lyzWeb0/upApp/upgrade.html
+								//var url = 'http://119.27.182.129/lyzWeb0/page/goodsInfo.html',
+								var url = 'http://download.leyizhuang.com.cn:6789/lyzWeb0/page/goodsInfo.html',
+								    dataInfo = JSON.stringify(data),
+								    infoTxt = data.content.skuName || '乐意装';
+								var msg = {
+									myIsIndex:true,
+									iosHideQQ:true,
+									title:infoTxt,
+									content:infoTxt,
+									href:url+'?dataInfo='+dataInfo
+								};
+								showSfun1(msg,function(){},function(){});
+							}else{
+								mui.toast('无效的分享内容');
+							}
+						}
+						//分享结束
+					}
+					if(data.code == 1000 ){
+						mui.toast(data.message)
+					}else if(data.code == -1 ){
+						mui.toast(data.message)
+					}
+
+				},
+				error:function(xhr,type,errorThrown){
+					plus.nativeUI.closeWaiting();
+					mui.toast(type)
+					console.log('响应失败');
+				}
+			});
+
+		    	//收藏
+		    	$('#collt').click(function(){
+		    		if($(this).attr('data-id') == 0){
+		    			mui.ajax(serverUrl+'/app/user/collect/add',{
+						data:{
+							goodsId:goodid,
+							userId:userId,
+							identityType:identityT
+						},
+						dataType:'json',
+						headers: {"Authorization": oldToken},
+						type:'post',
+						timeout:10000,
+						success:function(data,type,xhr){
+							plus.nativeUI.closeWaiting();
+							console.log('收藏返回',data);
+							if(data.code == 0 ){
+								plus.nativeUI.closeWaiting();
+								$('#collt').attr('data-id','1');
+								$('#collt').html('<img src="../../img/zan.png"/>取消收藏');
+								mui.toast('收藏成功');
+							}
+							if(data.code == 1000 ){
+								mui.toast(data.message)
+							}else if(data.code == -1 ){
+								mui.toast(data.message)
+							}
+
+						},
+						error:function(xhr,type,errorThrown){
+							plus.nativeUI.closeWaiting();
+							mui.toast(type)
+						}
+					});
+		    		}else{
+		    			mui.ajax(serverUrl+'/app/user/collect/remove',{
+						data:{
+							goodsId:goodid,
+							userId:userId,
+							identityType:identityT
+						},
+						dataType:'json',
+						headers: {"Authorization": oldToken},
+						type:'post',
+						timeout:10000,
+						success:function(data,type,xhr){
+							plus.nativeUI.closeWaiting();
+							console.log('收藏返回',data);
+							if(data.code == 0 ){
+								plus.nativeUI.closeWaiting();
+								$('#collt').attr('data-id','0');
+								mui.toast('取消成功');
+								$('#collt').html('<img src="../../img/weizan.png"/>收藏')
+							}
+							if(data.code == 1000 ){
+								mui.toast(data.message)
+							}else if(data.code == -1 ){
+								mui.toast(data.message)
+							}
+
+						},
+						error:function(xhr,type,errorThrown){
+							plus.nativeUI.closeWaiting();
+							mui.toast(type)
+						}
+					});
+		    		}
+
+		    	})
+
+			//加入购物车
+			$('.shop-btn').unbind("click").click(function(){
+				mui.ajax(serverUrl+'/app/materialList/add',{
+					data:{
+						userId:userId,
+						identityType:identityT,
+						params:goodid+'-'+$('#test').val()
+					},
+					dataType:'json',
+					headers: {"Authorization": oldToken},
+					type:'post',
+					timeout:10000,
+					success:function(data,type,xhr){
+						plus.nativeUI.closeWaiting();
+						console.log('加入购物车',data);
+						if(data.code == 0 ){
+							plus.nativeUI.toast('加入成功')
+							$(".am-share").removeClass("am-modal-active");
+							$(".sharebg ").removeClass("sharebg-active");
+							mui.fire(plus.webview.getWebviewById('cart.html'), 'refresh');
+						}else{
+							mui.toast(data.message)
+						}
+
+					},
+					error:function(xhr,type,errorThrown){
+						plus.nativeUI.closeWaiting();
+						mui.toast(type)
+						console.log('响应失败');
+					}
+				});
+			})
+			var Spagenum = 2; //实到页数
+			var Ypagenum = 1; //应到页数
+			var oneSize = 10;
+			//获取评论
+			mui.ajax(serverUrl+'/app/order/evaluation/goods/list',{
+				data:{
+					gid:goodid,
+					page:1,
+					size:oneSize
+				},
+				dataType:'json',
+				headers: {"Authorization": oldToken},
+				type:'post',
+				timeout:10000,
+				success:function(data,type,xhr){
+					plus.nativeUI.closeWaiting();
+					console.log('评论列表',data);
+					if(data.code == 0 ){
+					 	if(data.content && data.content.list && data.content.list.length){
+					 		for(var i in data.content.list){
+					 			var dt = new Date(data.content.list[i].evaluationTime.replace(/-/g,'/')).getTime();
+								data.content.list[i].evaluationTime = getDateDiff(dt);
+				       		}
+					 		mui('#curShow')[0].innerHTML = template('cmtTpl',{list:data.content.list})
+					 		//下拉加载
+							$(window).scroll(function() {
+								var scrollTop = $(this).scrollTop();
+								var scrollHeight = $(document).height();
+								var windowHeight = $(this).height();
+								if(scrollTop + windowHeight == scrollHeight) {
+									if(Spagenum <= data.content.pages && Spagenum == Ypagenum + 1) { //当前页小于等于总页数时请求下一页
+										mui("#upload")[0].innerHTML = "<img src='../../img/Rolling.svg' />";
+										Ypagenum++; //满足加载情况,应到页数+1
+										console.log('发起请求,实到' + Spagenum + '页');
+										console.log('发起请求,应到' + Ypagenum + '页');
+
+										mui.ajax(serverUrl+'/app/order/evaluation/goods/list',{
+											data:{
+												gid:goodid,'page':Ypagenum,'size':oneSize
+											},
+											dataType:'json',
+											headers: {"Authorization": oldToken},
+											type:'post',
+											timeout:10000,
+											success:function(data,type,xhr){
+												console.log('明细续',data)
+												if(data.code == 0 ){
+													if(data.content && data.content.list && data.content.list.length){
+												 		for(var i in data.content.list){
+												 			var dt = new Date(data.content.list[i].evaluationTime.replace(/-/g,'/')).getTime();
+															data.content.list[i].evaluationTime = getDateDiff(dt);
+											       		}
+												 		mui('#curShow')[0].innerHTML += template('cmtTpl',{list:data.content.list})
+													}else{
+														mui.toast(data.message);
+													}
+												mui("#upload")[0].innerHTML = " ";
+												Spagenum++; //加载成功,当前页+1
+												console.log('成功+1,实到' + Spagenum);
+												console.log('成功+1,应到' + Spagenum);
+												}
+											},
+											error: function(xhr, type, errorThrown) {
+												Ypagenum--; //失败是应到-1
+												mui.toast("当前网络不好请重试");
+												mui("#upload")[0].innerHTML = "";
+											}
+										});
+
+									} else if(Spagenum == data.content.pages + 1) { //当前页不小于等于总页数时请求下一页
+										mui("#upload")[0].innerHTML = "到底了";
+									}
+								}
+							});
+					 	}else{
+					 		mui('#curShow')[0].innerHTML = '<div style="font-size:14px;color:gray;padding:5%;text-align: center;"><img width="60" src="../../img/nocmt.svg" /><br/><br/>暂无评论</div>'
+					 	}
+					}else{
+						mui.toast(data.message)
+					}
+
+				},
+				error:function(xhr,type,errorThrown){
+					plus.nativeUI.closeWaiting();
+					mui.toast(type)
+					console.log('响应失败');
+				}
+			});
+		})
+
+		//发布时间判断
+		var minute = 1000 * 60;
+		var hour = minute * 60;
+		var day = hour * 24;
+		var halfamonth = day * 15;
+		var month = day * 30;
+		function getDateDiff(dateTimeStamp){
+			var now = new Date().getTime();
+			var diffValue = now - dateTimeStamp;
+			var monthC =diffValue/month;
+			var weekC =diffValue/(7*day);
+			var dayC =diffValue/day;
+			var hourC =diffValue/hour;
+			var minC =diffValue/minute;
+			if(monthC>=1){
+			 result=parseInt(monthC) + "月前";
+			 }
+			 else if(weekC>=1){
+			 result=parseInt(weekC) + "周前";
+			 }
+			 else if(dayC>=1){
+			 result=parseInt(dayC) +"天前";
+			 }
+			 else if(hourC>=1){
+			 result=parseInt(hourC) +"小时前";
+			 }
+			 else if(minC>=1){
+			 result=parseInt(minC) +"分钟前";
+			 }else{
+			 result="刚刚";
+			 }
+			return result;
+		}
+		mui.previewImage();
+
+	</script>
+
+</html>

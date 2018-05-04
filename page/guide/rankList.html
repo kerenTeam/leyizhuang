@@ -1,0 +1,457 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../../css/style.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/commonY.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/configW.css"/>
+	</head>
+ 	<style type="text/css">
+ 		.categray div{
+ 			width: 80%;
+ 			vertical-align: top;
+ 		}
+		.mui-numbox {background: none!important;}
+ 	</style>
+	<body style="padding-bottom: 0px;">
+		<header class="mui-bar mui-bar-nav" style="padding-right: 15px;">
+			<a id="leftbtn" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title"></h1>
+		</header>
+		<script src="../../js/statusBar.js" type="text/javascript" charset="utf-8"></script>
+		<!--<div class="gocarticon" id="div2">
+			<img src="../../images/whitecart.svg" alt="" />
+			<span class="mui-badge mui-badge-white">0</span>
+		</div>-->
+		<div class="mui-content" style="margin-top: 7px;">
+		    <!--商品列表-->
+		    <div class="goodsList" id="goodsList"></div>
+
+		    <script type="text/html" id="goodsTpl">
+		    	<ul class="mui-table-view">
+		    		<%for(var i = 0 ;i<list.length;i++){%>
+			    		<li class="mui-table-view-cell mui-media" id="<%=list[i].id%>" onclick="goodsInfo(<%=list[i].id%>)">
+					        <a href="javascript:;">
+					            <img class="mui-media-object mui-pull-left" src="<%=list[i].coverImageUri || '../../img/editset.png'%>">
+					            <div class="mui-media-body ft16">
+					                <div style="word-break: break-all;white-space: normal;"><%=list[i].goodsName%></div>
+					                <p class='mui-ellipsis ft16'>规格:<%=list[i].goodsSpecification%> &nbsp;单位:<%=list[i].goodsUnit%></p>
+						            <span class="activecl2 ft18">¥<%=list[i].retailPrice%></span>
+								 
+					            </div>
+					        </a>
+					    </li>
+		    		<%}%>
+				</ul>
+		    </script>
+	    </div>
+
+			<div class="upload text-center text-xs gray" id="upload"></div>
+		<script src="../../js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/artTemplate-native.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/default.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			mui.init();
+			function goodsInfo(id){
+				openview({
+					view:'goodsInfo2.html',
+					id: 'goodsInfo2',
+					extrasobj:{goodId:id}
+				})
+
+			}
+			mui.plusReady(function(){
+			 
+				var categoryCode = plus.webview.currentWebview().ctid;
+				var rankCode = plus.webview.currentWebview().rankCode;
+				mui('.mui-title')[0].innerHTML = plus.webview.currentWebview().rankName
+				if(categoryCode){
+					$('.flexw div').siblings().removeClass('curActive')
+					$('.'+categoryCode).addClass('curActive');
+				}
+				plus.nativeUI.showWaiting();
+				document.addEventListener('refresh', function() {
+					kindType(categoryCode);
+				})
+				downRe(kindType);
+				
+				 kindType(categoryCode);
+				 function kindType(categoryCode){
+				 	var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
+					var userId = plus.storage.getItem('$userId');
+					var oldToken = plus.storage.getItem('oldToken');
+					var Spagenum = 2; //实到页数
+					var Ypagenum = 1; //应到页数
+					var oneSize = 10;
+					//商品列表
+					mui.ajax(serverUrl+'/app/goods/seller/rank/list',{
+						data:{
+//							categoryCode:categoryCode,
+							userId:userId,
+							identityType:identityT,
+							rankCode:rankCode,
+							page:1,
+							size:oneSize
+						},
+						dataType:'json',
+						headers: {"Authorization": oldToken},
+						type:'post',
+						timeout:10000,
+						success:function(data,type,xhr){
+							console.log('商品列表',data);
+							if(data.code == 0 ){
+								plus.nativeUI.closeWaiting();
+								if(data.content){
+									if(data.content.list && data.content.list.length){
+										$('#goodsList').html(template('goodsTpl',{list:data.content.list}));
+										$('.toCart,.mui-numbox button').click(function() {
+											event.stopPropagation()
+										})
+										var platform = plus.storage.getItem('platform')
+										$('.mui-numbox input').click(function() {
+											if(platform == 'ANDROID'){
+												$(this).select();
+											}else{
+												$(this).focus(); 
+												$(this).get(0).selectionStart = 0; 
+												$(this).get(0).selectionEnd = $(this).get(0).value.length;
+											}
+											event.stopPropagation()
+										})
+										mui('.mui-numbox').numbox();
+										//加入购物车
+										$('.toCart').unbind('click').click(function(){
+											event.stopPropagation()
+											var goodid = $(this).attr('data-id');
+											var cur = $(this);
+											plus.nativeUI.showWaiting();
+											addCart(goodid,1,cur);
+										})
+										//数量选择 -> 加入购物车
+										$('.mui-numbox input').on('change', function() {
+											plus.nativeUI.showWaiting();
+											var cur = $(this);
+											var number = $(this).val(); //当前数量
+											var goodsid = $(this).attr("data-id"); //当前商品id
+											if(number>0){
+												var goodsList = [{'id':goodsid,'qty':number}];
+												mui.ajax(serverUrl + '/app/materialList/edit/batch', {
+													data: {
+														userId: userId,
+														identityType: identityT,
+														goodsList: JSON.stringify(goodsList),
+													},
+													dataType: 'json',
+													headers: {
+														"Authorization": oldToken
+													},
+													type: 'post',
+													timeout: 10000,
+													success: function(data, type, xhr) {
+														plus.nativeUI.closeWaiting();
+														console.log('加入购物车', data);
+														if(data.code == 0) {
+															mui.fire(plus.webview.getWebviewById('cart.html'), 'refresh');
+														} else {
+															mui.toast(data.message)
+														}
+
+													},
+													error: function(xhr, type, errorThrown) {
+														plus.nativeUI.closeWaiting();
+														console.log('登录响应失败');
+													}
+												});
+											}else{
+												mui.confirm('狠心不要了咩？', '提示', ['取消', '确定'], function(e) {
+													if(e.index == 1) {
+														mui.ajax(serverUrl + '/app/materialList/goods/delete', {
+															data: {
+																userId: userId,
+																identityType: identityT,
+																goodsIdArray: goodsid,
+															},
+															dataType: 'json',
+															headers: {
+																"Authorization": oldToken
+															},
+															type: 'post',
+															timeout: 10000,
+															success: function(data, type, xhr) {
+																plus.nativeUI.closeWaiting();
+																console.log('删除', data);
+																if(data.code == 0) {
+																	cur.parent().prev().show();
+																	cur.parent().hide();
+																	mui.fire(plus.webview.getWebviewById('cart.html'), 'refresh');
+																} else {
+																	mui.toast(data.message)
+																}
+
+															},
+															error: function(xhr, type, errorThrown) {
+																plus.nativeUI.closeWaiting();
+															}
+														});
+													}else{
+														plus.nativeUI.closeWaiting();
+														cur.val(1);
+														cur.siblings().removeAttr('disabled');
+													}
+
+												})
+											}
+
+										})
+
+										function addCart(goodid,num,cur){
+											mui.ajax(serverUrl+'/app/materialList/add',{
+												data:{
+													userId:userId,
+													identityType:identityT,
+													params:goodid+'-'+num
+												},
+												dataType:'json',
+												headers: {"Authorization": oldToken},
+												type:'post',
+												timeout:10000,
+												success:function(data,type,xhr){
+													plus.nativeUI.closeWaiting();
+													console.log('加入购物车',data);
+													if(data.code == 0 ){
+														mui.fire(plus.webview.getWebviewById('cart.html'), 'refresh');
+														cur.next().show();
+														cur.next().find('input').val(1);
+														cur.next().find('input').siblings().removeAttr('disabled');
+														cur.hide();
+													}else{
+														mui.toast(data.message)
+													}
+
+												},
+												error:function(xhr,type,errorThrown){
+													plus.nativeUI.closeWaiting();
+													console.log('登录响应失败');
+												}
+											});
+										}
+
+										$(window).scroll(function() {
+											var scrollTop = $(this).scrollTop();
+											var scrollHeight = $(document).height();
+											var windowHeight = $(this).height();
+											if(scrollTop + windowHeight == scrollHeight) {
+												if(Spagenum <= data.content.pages && Spagenum == Ypagenum + 1) { //当前页小于等于总页数时请求下一页
+													mui("#upload")[0].innerHTML = "<img src='../../img/Rolling.svg' />";
+													Ypagenum++; //满足加载情况,应到页数+1
+													console.log('发起请求,实到' + Spagenum + '页');
+													console.log('发起请求,应到' + Ypagenum + '页');
+													mui.ajax(serverUrl+'/app/goods/seller/rank/list',{
+														data:{
+															userId:userId,
+															identityType:identityT,
+															rankCode:rankCode,
+															page:Ypagenum,
+															size:oneSize
+														},
+														dataType:'json',
+														headers: {"Authorization": oldToken},
+														type:'post',
+														timeout:10000,
+														success:function(data,type,xhr){
+															console.log('商品列表',data);
+															if(data.code == 0 ){
+																plus.nativeUI.closeWaiting();
+																if(data.content){
+								                                    if(data.content.list && data.content.list.length){
+								                                        $('#goodsList').append(template('goodsTpl',{list:data.content.list}));
+								                                        $('.toCart,.mui-numbox button').click(function() {
+								                                            event.stopPropagation()
+								                                        })
+								                                        var platform = plus.storage.getItem('platform')
+																		$('.mui-numbox input').click(function() {
+																			if(platform == 'ANDROID'){
+																				$(this).select();
+																			}else{
+																				$(this).focus(); 
+																				$(this).get(0).selectionStart = 0; 
+																				$(this).get(0).selectionEnd = $(this).get(0).value.length;
+																			}
+																			event.stopPropagation()
+																		})
+								                                        mui("#upload")[0].innerHTML = " ";
+																		Spagenum++; //加载成功,当前页+1
+																		console.log('成功+1,实到' + Spagenum);
+																		console.log('成功+1,应到' + Spagenum);
+								                                        mui('.mui-numbox').numbox();
+								                                        //加入购物车
+								                                        $('.toCart').unbind('click').click(function(){
+								                                        	event.stopPropagation();
+								                                            var goodid = $(this).attr('data-id');
+								                                            var cur = $(this);
+								                                            plus.nativeUI.showWaiting();
+								                                            addCart2(goodid,1,cur);
+								                                        })
+								                                        //数量选择 -> 加入购物车
+								                                        $('.mui-numbox input').on('change', function() {
+								                                            plus.nativeUI.showWaiting();
+								                                            var cur = $(this);
+								                                            var number = $(this).val(); //当前数量
+								                                            var goodsid = $(this).attr("data-id"); //当前商品id
+								                                            if(number>0){
+								                                                var goodsList = [{'id':goodsid,'qty':number}];
+								                                                mui.ajax(serverUrl + '/app/materialList/edit/batch', {
+								                                                    data: {
+								                                                        userId: userId,
+								                                                        identityType: identityT,
+								                                                        goodsList: JSON.stringify(goodsList),
+								                                                    },
+								                                                    dataType: 'json',
+								                                                    headers: {
+								                                                        "Authorization": oldToken
+								                                                    },
+								                                                    type: 'post',
+								                                                    timeout: 10000,
+								                                                    success: function(data, type, xhr) {
+								                                                        plus.nativeUI.closeWaiting();
+								                                                        console.log('加入购物车', data);
+								                                                        if(data.code == 0) {
+								                                                            mui.fire(plus.webview.getWebviewById('cart.html'), 'refresh');
+								                                                        } else {
+								                                                            mui.toast(data.message)
+								                                                        }
+
+								                                                    },
+								                                                    error: function(xhr, type, errorThrown) {
+								                                                        plus.nativeUI.closeWaiting();
+								                                                        console.log('登录响应失败');
+								                                                    }
+								                                                });
+								                                            }else{
+								                                                mui.confirm('狠心不要了咩？', '提示', ['取消', '确定'], function(e) {
+								                                                    if(e.index == 1) {
+								                                                        mui.ajax(serverUrl + '/app/materialList/goods/delete', {
+								                                                            data: {
+								                                                                userId: userId,
+								                                                                identityType: identityT,
+								                                                                goodsIdArray: goodsid,
+								                                                            },
+								                                                            dataType: 'json',
+								                                                            headers: {
+								                                                                "Authorization": oldToken
+								                                                            },
+								                                                            type: 'post',
+								                                                            timeout: 10000,
+								                                                            success: function(data, type, xhr) {
+								                                                                plus.nativeUI.closeWaiting();
+								                                                                console.log('删除', data);
+								                                                                if(data.code == 0) {
+								                                                                	cur.parent().prev().show();
+																									cur.parent().hide();
+								                                                                    mui.fire(plus.webview.getWebviewById('cart.html'), 'refresh');
+								                                                                } else {
+								                                                                    mui.toast(data.message)
+								                                                                }
+
+								                                                            },
+								                                                            error: function(xhr, type, errorThrown) {
+								                                                                plus.nativeUI.closeWaiting();
+								                                                            }
+								                                                        });
+								                                                    }else{
+								                                                        plus.nativeUI.closeWaiting();
+								                                                        cur.val(1);
+								                                                        cur.siblings().removeAttr('disabled');
+								                                                    }
+
+								                                                })
+								                                            }
+
+								                                        })
+
+								                                        function addCart2(goodid,num,cur){
+								                                            mui.ajax(serverUrl+'/app/materialList/add',{
+								                                                data:{
+								                                                    userId:userId,
+								                                                    identityType:identityT,
+								                                                    params:goodid+'-'+num
+								                                                },
+								                                                dataType:'json',
+								                                                headers: {"Authorization": oldToken},
+								                                                type:'post',
+								                                                timeout:10000,
+								                                                success:function(data,type,xhr){
+								                                                    plus.nativeUI.closeWaiting();
+								                                                    console.log('加入购物车',data);
+								                                                    if(data.code == 0 ){
+								                                                        mui.fire(plus.webview.getWebviewById('cart.html'), 'refresh');
+								                                                    	cur.next().show();
+																						cur.next().find('input').val(1);
+																						cur.next().find('input').siblings().removeAttr('disabled');
+																						cur.hide();
+								                                                    }else{
+								                                                        mui.toast(data.message)
+								                                                    }
+
+								                                                },
+								                                                error:function(xhr,type,errorThrown){
+								                                                    plus.nativeUI.closeWaiting();
+								                                                    console.log('登录响应失败');
+								                                                }
+								                                            });
+								                                        }
+
+								                                    }
+								                                }
+															}else{
+																plus.nativeUI.closeWaiting();
+																mui.toast(data.message)
+															}
+
+
+														},
+														error:function(xhr,type,errorThrown){
+															plus.nativeUI.closeWaiting();
+															Ypagenum--; //失败是应到-1
+															mui.toast("当前网络不好请重试");
+															mui("#upload")[0].innerHTML = "";
+															console.log('响应失败');
+														}
+													});
+
+												} else if(Spagenum == data.content.pages + 1) { //当前页不小于等于总页数时请求下一页
+													mui("#upload")[0].innerHTML = "到底了";
+												}
+											}
+										});
+
+									}else{
+										$('#goodsList').html('<div style="text-align:center;padding:15px">暂无商品</div>')
+									}
+								}else{
+									$('#goodsList').html('<div style="text-align:center;padding:15px">暂无商品</div>')
+								}
+							}else{
+								mui.toast(data.message)
+							}
+
+						},
+						error:function(xhr,type,errorThrown){
+							plus.nativeUI.closeWaiting();
+							mui.toast(type)
+							console.log('登录响应失败');
+						}
+					});
+				 }
+			 
+			})
+		</script>
+		
+	</body>
+
+</html>
