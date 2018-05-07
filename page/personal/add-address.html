@@ -181,7 +181,7 @@
 					</ul>
 				</div>
 				<div style="padding:5px 5%;">详细地址  <span class="redc"> *</span></div>
-				<textarea rows="4" id="address" placeholder="请填写详细地址，如xx栋xx单元xx号" class="textare box-s">           栋           单元           号</textarea>
+				<textarea rows="4" id="address" placeholder="请填写详细地址，如xx栋xx单元xx号" class="textare box-s">   栋  单元  号</textarea>
 			    	<div class="address-btn clearfloat">
 			    		<span class="szwmr fl">设为默认</span>
 			    		<a href="#" class="toggle toggle--on fr" id="acquiescence"></a>
@@ -217,7 +217,7 @@
 				}, 200)
 			});
 		</script>
- 
+
 		<script type="text/javascript" charset="utf-8">
 			function openMail(){
 				openview({
@@ -302,7 +302,7 @@
 					ismapStorage();
 				})
 				ismapStorage();
-				
+
 				function ismapStorage(){
 					var mapStorage = JSON.parse(plus.storage.getItem('$mapStorage') || '[]');
 						 if(mapStorage.length==0){
@@ -324,7 +324,7 @@
 												if(cityData3[i].children[j].children[k].text == mapStorage[0].district){
 													mui.ajax(serverUrl+'/app/areaManagement/getStreet',{
 														data:{
-															'code': cityData3[i].children[j].children[k].value, 
+															'code': cityData3[i].children[j].children[k].value,
 														},
 														dataType:'json',
 														type:'post',
@@ -332,17 +332,17 @@
 														headers:{"Authorization":oldToken},
 														success:function(data,type,xhr){
 															console.log("街道返回",data)
-															if(data.code == 0){ 
-																if(data.content){ 
-																	
+															if(data.code == 0){
+																if(data.content){
+
 																	cityjPicker.setData(data.content);
 																	var cityResult = document.getElementById('jieW');
 																	cityResult.addEventListener('tap', function(event) {
-																		cityjPicker.show(function(itemsj) { 
+																		cityjPicker.show(function(itemsj) {
 																			if(itemsj[0] == '空'){
-																				$('#jieW').val(''); 
+																				$('#jieW').val('');
 																			}else{
-																				$('#jieW').val(itemsj[0]); 
+																				$('#jieW').val(itemsj[0]);
 																			}
 																		});
 																	}, true);
@@ -351,33 +351,33 @@
 																	cityjPicker.setData(['空']);
 																var cityResult = document.getElementById('jieW');
 																cityResult.addEventListener('tap', function(event) {
-																	 cityjPicker.show(function(itemsj) { 
-																		$('#jieW').val(''); 
+																	 cityjPicker.show(function(itemsj) {
+																		$('#jieW').val('');
 																	});
 																}, false);
 																}
-																
+
 															}else{
 																mui.alert(data.message);
 																cityjPicker.setData(['空']);
 																var cityResult = document.getElementById('jieW');
 																cityResult.addEventListener('tap', function(event) {
-																	 cityjPicker.show(function(itemsj) { 
-																		$('#jieW').val(''); 
+																	 cityjPicker.show(function(itemsj) {
+																		$('#jieW').val('');
 																	});
 																}, false);
 															}
-							
-							
+
+
 														},
 														error:function(xhr,type,errorThrown){
 															console.log('响应失败  !');
 														}
-													});		
+													});
 												}
 											}
 										}
-										
+
 									}
 								}
 							}
@@ -389,7 +389,7 @@
 						plus.storage.removeItem('$mapStorage')
 					}
 				}
-				
+
 				cityPicker3.setData(cityData3);
 				var showCityPickerButton = document.getElementById('showCityPicker3');
 				showCityPickerButton.addEventListener('tap', function(event) {
@@ -397,10 +397,10 @@
 						$('#provenceW').val(items[0].text)
 					 	$('#cityW').val(items[1].text)
 					 	$('#districtW').val(items[2].text)
-					 	$('#jieW').val(''); 
+					 	$('#jieW').val('');
 					 	mui.ajax(serverUrl+'/app/areaManagement/getStreet',{
 							data:{
-								'code': items[2].value, 
+								'code': items[2].value,
 							},
 							dataType:'json',
 							type:'post',
@@ -408,17 +408,17 @@
 							headers:{"Authorization":oldToken},
 							success:function(data,type,xhr){
 								console.log("街道返回",data)
-								if(data.code == 0){ 
-									if(data.content){ 
-										
+								if(data.code == 0){
+									if(data.content){
+
 										cityjPicker.setData(data.content);
 										var cityResult = document.getElementById('jieW');
 										cityResult.addEventListener('tap', function(event) {
-											cityjPicker.show(function(itemsj) { 
+											cityjPicker.show(function(itemsj) {
 												if(itemsj[0] == '空'){
-													$('#jieW').val(''); 
+													$('#jieW').val('');
 												}else{
-													$('#jieW').val(itemsj[0]); 
+													$('#jieW').val(itemsj[0]);
 												}
 											});
 										}, true);
@@ -427,18 +427,18 @@
 										cityjPicker.setData(['空']);
 										var cityResult = document.getElementById('jieW');
 										cityResult.addEventListener('tap', function(event) {
-											 cityjPicker.show(function(itemsj) { 
-												$('#jieW').val(''); 
+											 cityjPicker.show(function(itemsj) {
+												$('#jieW').val('');
 											});
 										}, false);
 									}
-									
+
 								}else{
 									mui.alert(data.message);
 									cityjPicker.setData(['空']);
 									var cityResult = document.getElementById('jieW');
 									cityResult.addEventListener('tap', function(event) {
-										 $('#jieW').val(''); 
+										 $('#jieW').val('');
 									}, false);
 								}
 

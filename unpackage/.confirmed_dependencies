@@ -269,7 +269,8 @@
       "page/specialGoods.html",
       "page/guide/achievement.html",
       "funGuide.html",
-      "promotion.html"
+      "promotion.html",
+      "page/guide/rankList.html"
     ]
   },
   "page/gxbList.html": {
@@ -1146,7 +1147,8 @@
       "js/artTemplate-native.js"
     ],
     "refer": [
-      "page/worker/workerCheckInfo.html"
+      "page/worker/workerCheckInfo.html",
+      "cart.html"
     ]
   },
   "page/worker/workerCheckInfo.html": {
@@ -1413,5 +1415,10 @@
       "cart.html"
     ],
     "resources": []
+  },
+  "page/guide/rankList.html": {
+    "refer": [
+      "page/guide/goodsInfo2.html"
+    ]
   }
 }

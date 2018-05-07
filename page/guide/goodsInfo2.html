@@ -213,6 +213,7 @@
 		mui.plusReady(function(){
 			var goodid = plus.webview.currentWebview().goodId;
 			var specail = plus.webview.currentWebview().specail;
+			var rankCode = plus.webview.currentWebview().rankCode;
 			if(!goodid){
 				mui.toast('未返回商品id')
 			}
@@ -250,8 +251,9 @@
 			});
 
 			//商品详情
-			mui.ajax(serverUrl+'/app/goods/get/goodsDetail',{
+			mui.ajax(serverUrl+'/app/goods/seller/zg/goodsDetail',{
 				data:{
+					rankCode:rankCode,
 					goodsId:goodid,
 					userId:userId,
 					identityType:identityT

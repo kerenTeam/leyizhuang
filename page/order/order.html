@@ -1062,17 +1062,17 @@
 							if(plus.storage.getItem("$addressStorageOrder") != null) {
 								addrObj.obj = JSON.parse(plus.storage.getItem("$addressStorageOrder"));
 							} else {
-								var defultAddress = {};
-								defultAddress.id = data.content.id;
-								defultAddress.person = data.content.deliveryName;
-								defultAddress.phone = data.content.deliveryPhone;
-								defultAddress.province = data.content.deliveryProvince;
-								defultAddress.city = data.content.deliveryCity;
-								defultAddress.country = data.content.deliveryCounty;
-								defultAddress.street = data.content.deliveryStreet;
-								defultAddress.villageName = data.content.villageName;
-								defultAddress.address = data.content.detailedAddress;
-								addrObj.obj = [defultAddress];
+//								var defultAddress = {};
+//								defultAddress.id = data.content.id;
+//								defultAddress.person = data.content.deliveryName;
+//								defultAddress.phone = data.content.deliveryPhone;
+//								defultAddress.province = data.content.deliveryProvince;
+//								defultAddress.city = data.content.deliveryCity;
+//								defultAddress.country = data.content.deliveryCounty;
+//								defultAddress.street = data.content.deliveryStreet;
+//								defultAddress.villageName = data.content.villageName;
+//								defultAddress.address = data.content.detailedAddress;
+								addrObj.obj = [];
 							}
 							document.getElementById("add_info").innerHTML = template("addrTpl", addrObj);
 							plus.storage.removeItem("$addressStorageOrder")

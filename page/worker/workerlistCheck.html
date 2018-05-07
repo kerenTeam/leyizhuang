@@ -97,6 +97,7 @@
 							</div>
 							<p class="checkListDZ fineT fineB">收货地址：<%=list[i].deliveryCity%><%=list[i].deliveryCounty%><%=list[i].deliveryStreet%><%=list[i].residenceName%><%=list[i].detailedAddress%></p>
 							<div class="checkListB">
+								<button type="button" class="mui-btn mui-btn" onclick="comeOnAgain('<%=list[i].auditNo%>','<%=list[i].auditHeaderID%>')">再来一单</button>
 								<%if(list[i].status == 1){%>
 									<button type="button" class="mui-btn mui-btn" onclick="delet('<%=list[i].auditNo%>')">取消</button>
 								<%}else if(list[i].status == 2){%>
@@ -158,7 +159,7 @@
 					timeout:10000,
 					headers:{"Authorization":oldToken},
 					success:function(data,type,xhr){
-						console.log(data);
+						console.log(JSON.stringify(data));
 						var timeLoad = setInterval(function(){
 							clearTimeout(timeLoad),timeLoad = null;
 							if(data.code == 0){
@@ -236,7 +237,59 @@
 					}
 				});
 			}
+
 		})
+
+		//再来一单
+		function comeOnAgain(auditNo,auditHeaderId){
+			plus.nativeUI.showWaiting();
+			event.stopPropagation();
+			mui.plusReady(function(){
+				var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
+				var userId = plus.storage.getItem('$userId');
+				var oldToken = plus.storage.getItem('oldToken');
+				mui.ajax(serverUrl + '/app/material/audit/copy',{
+					data:{'userId':userId,'identityType':identityT,'auditNo':auditNo,'auditHeaderId':auditHeaderId},
+					dataType:'json',
+					type:'post',
+					timeout:10000,
+					headers:{"Authorization":oldToken},
+					success:function(data,type,xhr){
+						console.log('再来一单',JSON.stringify(data));
+						if(data.code == 0){
+							mui.toast(data.message || '操作成功');
+							mui.fire(plus.webview.getWebviewById('cart.html'),'refresh');
+							mui.fire(plus.webview.getWebviewById('cart'),'refresh');
+							openview({
+								view:'../../cart.html',
+								id:'cart',
+								extrasobj:{page:1,cusid:null}
+							})
+							var timeY0 = setTimeout(function(){
+
+								if(plus.webview.getWebviewById("orderSuccess")) {
+									plus.webview.getWebviewById("orderSuccess").close();
+								}
+								if(plus.webview.getWebviewById("myOrderList")) {
+									plus.webview.getWebviewById("myOrderList").close();
+								}
+								if(plus.webview.getWebviewById("myOrderDetail")) {
+									plus.webview.getWebviewById("myOrderDetail").close();
+								}
+							},500)
+						}else{
+							mui.toast(data.message || '操作失败');
+							plus.nativeUI.closeWaiting();
+						}
+					},
+					error:function(xhr,type,errorThrown){
+						console.error('再来一单，响应失败  !');
+						mui.toast('当前网络不好，请重试');
+						plus.nativeUI.closeWaiting();
+					}
+				});
+			})
+		}
 
 
 	</script>

@@ -40,6 +40,15 @@
 					            <div class="mui-media-body ft16">
 					                <div style="word-break: break-all;white-space: normal;"><%=list[i].goodsName%></div>
 					                <p class='mui-ellipsis ft16'>规格:<%=list[i].goodsSpecification%> &nbsp;单位:<%=list[i].goodsUnit%></p>
+					                 <p class='titcl ft14' style="word-break: break-all;white-space: normal;">
+							            	<%if(list[i].workArea){%>
+							            		施工面积 <%=list[i].workArea%>/平米 &nbsp;<br />
+							            	<%}%>
+							            	<%if(list[i].workCost){%>
+							            		施工成本 <%=list[i].workCost%>元/平米
+							            	<%}%>
+	
+										</p>
 						            <span class="activecl2 ft18">¥<%=list[i].retailPrice%></span>
 								 
 					            </div>
@@ -57,18 +66,19 @@
 		<script src="../../js/default.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
 			mui.init();
-			function goodsInfo(id){
-				openview({
-					view:'goodsInfo2.html',
-					id: 'goodsInfo2',
-					extrasobj:{goodId:id}
-				})
-
-			}
+			
 			mui.plusReady(function(){
 			 
 				var categoryCode = plus.webview.currentWebview().ctid;
 				var rankCode = plus.webview.currentWebview().rankCode;
+				window.goodsInfo = function(id){
+						openview({
+							view:'goodsInfo2.html',
+							id: 'goodsInfo2',
+							extrasobj:{goodId:id,rankCode:rankCode}
+						})
+		
+					}
 				mui('.mui-title')[0].innerHTML = plus.webview.currentWebview().rankName
 				if(categoryCode){
 					$('.flexw div').siblings().removeClass('curActive')
