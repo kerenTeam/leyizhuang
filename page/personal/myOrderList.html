@@ -668,6 +668,8 @@
 					$(window).unbind('scroll');
 					var nowApi = '/app/order/list';
 					var nowData = {'userID':userId,'identityType':identityT,'showStatus':tabT,'page':1,'size':oneSize};
+					console.log(nowData)
+					console.log(oldToken)
 					if(condition){//搜索字段
 						nowApi = '/app/order/search';
 						nowData = {'userID':userId,'identityType':identityT,'showStatus':tabT,'condition':condition}

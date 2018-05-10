@@ -1588,7 +1588,7 @@
 									if(plus.webview.getWebviewById("chooseCustom")) {
 										plus.webview.getWebviewById("chooseCustom").close();
 									}
-								}, 800)
+								}, 3000)
 							plus.nativeUI.closeWaiting();
 						} else {
 							plus.nativeUI.closeWaiting();
@@ -1793,7 +1793,7 @@
 										if(plus.webview.getWebviewById("chooseCustom")) {
 											plus.webview.getWebviewById("chooseCustom").close();
 										}
-									}, 800)
+									}, 3000)
 								}
 
 								plus.nativeUI.closeWaiting();
@@ -1888,7 +1888,7 @@
 										if(plus.webview.getWebviewById("chooseCustom")) {
 											plus.webview.getWebviewById("chooseCustom").close();
 										}
-									}, 800)
+									}, 3000)
 								}else{
 									plus.nativeUI.alert("支付失败");
 								}
@@ -1963,7 +1963,7 @@
 													if(plus.webview.getWebviewById("chooseCustom")) {
 														plus.webview.getWebviewById("chooseCustom").close();
 													}
-												}, 800)
+												}, 3000)
 											}, function(e) {
 												console.log("----- 支付失败 -----");
 												console.log("[" + e.code + "]：" + e.message);
@@ -2024,7 +2024,7 @@
 													if(plus.webview.getWebviewById("chooseCustom")) {
 														plus.webview.getWebviewById("chooseCustom").close();
 													}
-												}, 800)
+												}, 3000)
 
 												//
 											}, function(e) {
