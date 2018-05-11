@@ -283,7 +283,7 @@
 		<header class="mui-row mui-bar mui-bar-transparent hasManyCity" id="header" style="z-index: 200;">
 			<div class="searchBox" onclick="goSearch()" style="z-index:1;position: absolute;top: 27px;left: 20px;width: 75%;">
 				<div class="indexSearch">
-					<span class="mui-icon mui-icon-search" style="vertical-align: middle;font-size:20px;padding-top: 7px;float: left;padding-left: 10px;"></span>
+					<span class="mui-icon mui-icon-search" style="vertical-align: middle;font-size:20px;padding-top: 7px;float: right;padding-right: 10px;"></span>
 				</div>
 			</div>
 			<div>
@@ -506,9 +506,9 @@
 				</div>
 			</div>
 			<div class="flexws afterBorder">
-				<div id="paizhaoOrder" class="rightBorder paddv10" onclick="paizhaoOrder()">
+				<div id="paizhaoOrder" class="rightBorder paddv10" onclick="productCoupon()">
 					<div id="">
-						拍照下单
+						产品券
 					</div>
 					<img src="img/legray.svg" alt="" />
 				</div>
@@ -789,7 +789,13 @@
 					console.log("语音识别失败：" + e.message);
 				});
 			}
-
+			// 产品券
+			function productCoupon(){
+				openview({
+					view:'page/personal/productCoupon.html',
+					id: 'productCoupon',
+				})
+			}
 			function poverTel() {
 				mui.openWindow({
 					url: 'consultTel.html',
@@ -1250,10 +1256,15 @@
 						success: function(data, type, xhr) {
 							console.log('首页活动', data);
 							if(data.code == '0') {
-								$('#huodong0').html(template('huodongS0', {
-									list: data.activity,
-									url: oCms
-								}));
+								if(identityT == 6){
+									$('#huodong0').html('<img src="img/pzorder.jpg" style="width:100%" onclick="paizhaoOrder()"/>')
+								}else{
+									$('#huodong0').html(template('huodongS0', {
+										list: data.activity,
+										url: oCms
+									}));
+								}
+								
 							} else {
 								//								mui.toast(data.message)
 							}

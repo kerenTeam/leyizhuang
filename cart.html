@@ -854,7 +854,7 @@
 						fen += num;
 					})
 					//赋值
-					$(".totalNum").html(fen);
+					$(".totalNum").html($("dd").find("input[type='checkbox']:checked").length);
 					$(".totalMoney").html(parseFloat(pay).toFixed(2));
 				}
 

@@ -270,7 +270,8 @@
       "page/guide/achievement.html",
       "funGuide.html",
       "promotion.html",
-      "page/guide/rankList.html"
+      "page/guide/rankList.html",
+      "page/personal/productCoupon.html"
     ]
   },
   "page/gxbList.html": {
