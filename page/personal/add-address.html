@@ -256,6 +256,7 @@
 			}, false);
 			mui.plusReady(function(){
 				var oldToken = plus.storage.getItem('oldToken');
+				var nowcity = plus.storage.getItem('userCity');
 				plus.storage.removeItem('$mapStorage');
 				var cityPicker3 = new mui.PopPicker({
 					layer: 3
@@ -290,11 +291,39 @@
 					longitude=(position.coords.longitude).toFixed(6);
 					latitude=(position.coords.latitude).toFixed(6);
 					cprovince = position.address.province;
-					$('#localadd').html(position.address.addresses)
-				 	$('#provenceW').val(position.address.province)
-				 	$('#cityW').val(position.address.city)
-				 	$('#jieW').val(position.address.street)
-				 	$('#districtW').val(position.address.district)
+					if(nowcity == 3){
+						$('#provenceW').val('重庆')
+				 		$('#cityW').val('重庆') 
+					}else if(nowcity == 2){
+						$('#provenceW').val('河南省')
+						$('#cityW').val('郑州市') 
+					}else{
+						if(nowcity == 1){
+							$('#provenceW').val('四川省')
+							$('#cityW').val('成都市') 
+						}else if(nowcity == 4){
+							$('#provenceW').val('四川省')
+							$('#cityW').val('泸州市') 
+						}else if(nowcity == 5){
+							$('#provenceW').val('四川省')
+							$('#cityW').val('南充市') 
+						}else if(nowcity == 6){
+							$('#provenceW').val('四川省')
+							$('#cityW').val('绵阳市') 
+						}else if(nowcity == 7){
+							$('#provenceW').val('四川省')
+							$('#cityW').val('德阳市') 
+						}else if(nowcity == 8){
+							$('#provenceW').val('四川省')
+							$('#cityW').val('宜宾市') 
+						}else{
+						$('#provenceW').val(position.address.province)
+					 	$('#cityW').val(position.address.city)
+					 	$('#districtW').val(position.address.district)
+						$('#localadd').html(position.address.addresses)
+					 	$('#jieW').val(position.address.street)
+						}
+					}
 				}
 				// 通过定位模块获取位置信息
 				function getGeocode(){

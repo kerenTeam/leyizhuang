@@ -235,20 +235,20 @@
 			function RefreshAd(){
 
 				var url = '/app/user/setting/deliveryAddress/list';
-				var dataObj = {'userId' : userId,'identityType':identityT,'page':1}
+				var dataObj = {'userId' : userId,'identityType':identityT,'page':1,size:1000}
 				getData(url,dataObj);
 				//搜索
 				$('#searchf').submit(function(){
 					var valInt = $('#valInt').val();
 					var url = '/app/user/setting/search/deliveryAddress';
-					var dataObj = {'userId' : userId,'identityType':identityT,'page':1,'keywords':valInt}
+					var dataObj = {'userId' : userId,'identityType':identityT,'page':1,size:1000,'keywords':valInt}
 					getData(url,dataObj,'noList');
 					return false;
 				})
 				$('#clickSearch, #cancelSearch').click(function(){
 					var valInt = $('#valInt').val();
 					var url = '/app/user/setting/search/deliveryAddress';
-					var dataObj = {'userId' : userId,'identityType':identityT,'page':1,'keywords':valInt}
+					var dataObj = {'userId' : userId,'identityType':identityT,'page':1,size:1000,'keywords':valInt}
 					getData(url,dataObj,'noList');
 
 				})
