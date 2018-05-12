@@ -394,7 +394,8 @@
     ],
     "refer": [
       "page/goodsInfo.html",
-      "cart.html"
+      "cart.html",
+      "page/searchGoods.html"
     ]
   },
   "center.html": {
@@ -1420,6 +1421,7 @@
   "page/guide/rankList.html": {
     "refer": [
       "page/guide/goodsInfo2.html"
-    ]
+    ],
+    "resources": []
   }
 }

@@ -765,7 +765,8 @@
 				],
 				"refer": [
 					"page/goodsInfo.html",
-					"cart.html"
+					"cart.html",
+					"page/searchGoods.html"
 				],
 				"priority": 0
 			},

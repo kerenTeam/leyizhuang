@@ -286,10 +286,15 @@
 					str += "移动速度："+sped;
 					console.log(JSON.stringify(position));
 					//outLine( str );
-					//alert(position.addresses);
+//					alert(position.address.addresses);
 					longitude=(position.coords.longitude).toFixed(6);
 					latitude=(position.coords.latitude).toFixed(6);
 					cprovince = position.address.province;
+					$('#localadd').html(position.address.addresses)
+				 	$('#provenceW').val(position.address.province)
+				 	$('#cityW').val(position.address.city)
+				 	$('#jieW').val(position.address.street)
+				 	$('#districtW').val(position.address.district)
 				}
 				// 通过定位模块获取位置信息
 				function getGeocode(){

@@ -10,6 +10,7 @@
 		<link rel="stylesheet" type="text/css" href="../css/configW.css"/>
 	</head>
  	<style type="text/css">
+ 		header{top: 19px!important;}
  		.categray div{width:calc(100vw - 80px);width:-webkit-calc(100vw - 80px);width:-moz-calc(100vw - 80px);vertical-align: top;}
  		.sedc span{margin-bottom:10px;font-size: 16px;padding:0 4px;border-radius: 3px;}
  		.flexw div{position: relative;align-items: center;padding: 15px 0 10px;}
@@ -27,6 +28,60 @@
             height: 10px;
             visibility: hidden;
         }
+        
+        
+        	.searchFind {
+			position: relative;
+		}
+
+		.sint {
+			right: 5px;
+			top: 5px;
+			left: 30px;
+			position: absolute;
+			display: flex;
+			display: -webkit-flex;
+			align-items: center;
+		}
+
+		.sint .back {
+			font-size: 14px;
+			color: #F53C42;
+			flex-basis: 40px;
+			margin-left: 10px;
+			text-align: center;
+		}
+
+		.fsearch {
+			border-radius: 20px!important;
+			background-color: #f9f9f9!important;
+			border: 1px solid #dfdfdf!important;
+			font-size: 12px!important;
+			padding-left: 30px!important;
+		}
+
+		.fsearch::-webkit-input-placeholder {
+			color: gray!important;
+			text-align: left;
+			font-size: 12px;
+		}
+
+		.mui-icon-search {
+			position: absolute!important;
+			right: 20px;
+			top: 3px;
+			color: gray;
+		}
+	    form {
+			width: 100%;
+			margin-left: 10px;
+		}
+		.mui-icon{margin-left: 10px!important;}
+        .mui-bar input[type=search] {
+		    height: 35px;
+		    margin: 3px 0;
+		    padding-left: 20px!important;
+		} 
         /*大的购物车图标*/
         .toCart {width: 56px;padding: 10px;padding-right: 15px;position: absolute;right: 1px;bottom: 3px;}
         .mui-numbox{position: absolute;right: 6px;bottom: 6px;width: 106px;height: 34px;padding: 0px 34px;}
@@ -36,14 +91,32 @@
 	<body>
 		<header class="mui-bar mui-bar-nav" style="padding-right: 15px;z-index: 100;">
 			<a id="leftbtn" style="display: none;" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-			<h1 class="mui-title">商品列表</h1>
+			<!--<h1 class="mui-title">商品列表</h1>-->
+			<div class="searchFind">
+				<span class="mui-icon mui-icon-search" onclick="submitTest();"></span>
+				<div class="sint">
+					<form onsubmit="submitTest();return false;" id="searchf">
+						<!--onsubmit="submitTest();return false;" -->
+						<input type="search" class="fsearch" readonly="" placeholder="请输入商品关键字">
+					</form>
+				</div>
+
+			</div>
 		</header>
 		<script src="../js/statusBar.js" type="text/javascript" charset="utf-8"></script>
+		<!--<div class="search" style="margin-top: 98px;">
+			<div class="searchBox" >
+				<img src="../images/searchBar.png"/>
+				<img class="searchIcon" src="../images/search.png"/>
+				<div style="position:absolute;left: 30px;font-size: 15px;top:50%;-webkit-transform: translateY(-50%);">
+					请输入商品关键字
+				</div>
+			</div>
+		</div>
 		<div class="gocarticon" id="div2" style="display: none;">
 			<img src="../images/whitecart.svg" alt="" />
 			<span class="mui-badge mui-badge-white">0</span>
-		</div>
-
+		</div>-->
 		<!--一级分类-->
 		<div class="mui-content flexw afterBorder" style="margin-top: 3px;position:fixed; top: 23px;z-index: 99;left: 0;right: 0;height: 95px;">
 		    <div class="water curActive" data-id = "water">水</div>
@@ -54,7 +127,7 @@
 		</div>
 
 		<!--小分类-->
-		<div class="filter" style="background-color:white;padding:6px;font-size:14px;margin-top: 95px;">
+		<div class="filter" style="background-color:white;padding:6px;font-size:14px;margin-top: 98px;">
 	     	<div class="categray categray1">
 	     		<span class="mui-badge mui-badge-danger ftb actBadge" data-id = '' data-name = 'category'>全部</span><div class="sedc categraya afterBorder"></div>
 
@@ -129,11 +202,21 @@
 				})
 
 			}
+			
 			mui.plusReady(function(){
+				//搜索
+				$('.searchFind').click(function(){
+					openview({
+						view:'searchGoods.html',
+						id:'searchGoods'
+					})
+				})
 				var categoryCode = plus.webview.currentWebview().ctid;
 				var pageFrom = plus.webview.currentWebview().page;
 				if(pageFrom == 1){
 					$('#leftbtn,.gocarticon').css('display','block')
+				}else{
+					$('.sint').css('left','10px')
 				}
 				if(!categoryCode){
 					categoryCode = 'water';

@@ -280,15 +280,15 @@
 	</head>
 
 	<body onload="text=document.getElementById('text');">
-		<header class="mui-row mui-bar mui-bar-transparent hasManyCity" id="header" style="z-index: 200;">
+		<header class="mui-row mui-bar hasManyCity" id="header" style="z-index: 200;">
 			<div class="searchBox" onclick="goSearch()" style="z-index:1;position: absolute;top: 27px;left: 20px;width: 75%;">
 				<div class="indexSearch">
 					<span class="mui-icon mui-icon-search" style="vertical-align: middle;font-size:20px;padding-top: 7px;float: right;padding-right: 10px;"></span>
 				</div>
 			</div>
 			<div>
-				<img src="images/center/message.svg" id="xiaoxiBtn" onclick="goMessage()" class="message" />
-				<img src="images/center/zixunsvg.svg" style="display: none;" id="zixunsvg" onclick="poverTel()" class="message zixunsvg" />
+				<img src="images/center/message.svg" id="xiaoxiBtn" onclick="goMessage()" class="message messagefitler" />
+				<img src="images/center/zixunsvg.svg" style="display: none;" id="zixunsvg" onclick="poverTel()" class="message zixunsvg messagefitler" />
 				<span class="mui-badge mui-badge-danger" id="ctMsg" style="right: 20px;position: absolute;padding: 4px;bottom: 29px;background-color: red;display: none;"></span>
 			</div>
 
@@ -313,21 +313,17 @@
 				var scrollHeight = $(document).height();
 				var windowHeight = $(this).height();
 				if(scrollTop >= 100) { //不透明背景
-					mui('#header')[0].style.boxShadow = "0 0 2px rgba(175, 166, 166, 0.85)";
-					mui('.message')[0].className = 'message messagefitler';
-					mui('.zixunsvg')[0].className = 'message zixunsvg messagefitler';
+					mui('#header')[0].style.boxShadow = "0 0 2px rgba(175, 166, 166, 0.85)"; 
 					mui('.indexSearch')[0].style.background = 'rgba(204, 204, 204, 0.54)';
 				} else { //透明背景
-					mui('#header')[0].style.boxShadow = "0 0 0 rgba(175, 166, 166, 0.85)";
-					mui('.message')[0].className = 'message';
-					mui('.zixunsvg')[0].className = 'message zixunsvg';
+					mui('#header')[0].style.boxShadow = "0 0 0 rgba(175, 166, 166, 0.85)"; 
 					mui('.indexSearch')[0].style.background = 'rgba(160, 155, 155, 0.49)';
 				}
 			});
 		</script>
 		<div style="position: relative;">
 			<div id="banner">
-				<div class="mui-slider slider2">
+				<div class="mui-slider slider2" style="padding-top: 60px;">
 					<div class="mui-slider-group mui-slider-loop">
 						<!--支持循环，需要重复图片节点-->
 						<div class="mui-slider-item mui-slider-item-duplicate zanwei zanwei2">
@@ -350,7 +346,7 @@
 				</div>
 			</div>
 			<script type="text/html" id="bannerTpl">
-				<div class="mui-slider slider2">
+				<div class="mui-slider slider2" style="padding-top: 60px;">
 					<!--轮播图-->
 					<%if(list.length){%>
 					<div class="mui-slider-group mui-slider-loop">
@@ -1034,7 +1030,7 @@
 					if(plus.storage.getItem('$userId') == 1) {
 						$('.guides, #xiaoxiBtn').css('display', 'none')
 					}
-					if(identityT == 6){
+					if(identityT == 6 || identityT == 0){
 						mui('#zixunsvg')[0].style.display = 'inline-block';
 					}else{
 						mui('#xiaoxiBtn')[0].style.right = '29px';
