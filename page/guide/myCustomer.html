@@ -22,7 +22,7 @@
 		.bottomop{border-bottom: 1px solid #f3f3f3;}
 		.bottomop img{width:22px}
 		.flexr{display:flex;width:100%;background-color:white;justify-content:space-between;color: #303030;align-items: center;}
-		.bottomop>div{padding:14px 0;display:flex;width:50%;justify-content:center;align-items:center;position:relative;}
+		.bottomop>div{padding:14px 0;display:flex;width:50%;justify-content:center;align-items:center;position:relative;flex-direction: column;}
 		/*.bottomop div:first-child{border-right:1px solid #f3f3f3}*/
 		.bottomop .active{color:#B42E28;}
 		.bottomop div:after{position:absolute;bottom:0;left:50%;right:50%;height:2px;background-color:#B42E28;content:""}
@@ -69,11 +69,11 @@
 				</div>
 			</div>
 	    		<div class="bottomop flexr">
-				<div class="ft14 active">全部</div>
-				<div class="ft14">红灯</div>
-				<div class="ft14">绿灯</div>
-				<div class="ft14">黄灯</div>
-				<div class="ft14">熄灯</div>
+				<div class="ft14 active" data-id="全部">全部</div>
+				<div class="ft14" data-id="红灯">铁粉<small>(2+/月)</small></div>
+				<div class="ft14" data-id="黄灯">粉丝<small>(1+/月)</small></div>
+				<div class="ft14" data-id="绿灯">会员<small>(5-/半年)</small></div>
+				<div class="ft14" data-id="熄灯">熄灯</div>
 		 	</div>
 
 			<div id="QA"><!--大盒子-->
@@ -145,7 +145,7 @@
 			if(!$(this).hasClass('active')){
 				$('.bottomop div').removeClass('active');
 				$(this).addClass('active');
-				var innerText = $(this).text();
+				var innerText = $(this).attr("data-id");
 				$('.qashadow').each(function(){
 				if($(this).attr('data-id') == innerText){
 						$(this).css('display','');
