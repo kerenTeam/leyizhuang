@@ -282,10 +282,18 @@
 						<img src="images/center/paycheck.svg" style="background-color: #FF7A5A;"/>欠款审核
 						<span class="mui-icon mui-icon-arrowright mui-pull-right maincl ft20 maincl"></span>
 					</div>
-					<div onclick="gxb()" class="mb10">
+					<div onclick="gxb()" class="afterBorder">
 						<img src="images/center/mmaterial.svg" style="background-color: #62C8A5;"/>工序包
 						<span class="mui-icon mui-icon-arrowright mui-pull-right maincl ft20 maincl"></span>
-					</div> 
+					</div>
+					<div onclick="zhuangshi('dai')" class="afterBorder">
+						<img src="images/center/daifu.svg" style="background-color: #FFB85F;"/>装饰公司待付款清单
+						<span class="mui-icon mui-icon-arrowright mui-pull-right maincl ft20 maincl"></span>
+					</div>
+					<div onclick="zhuangshi('yi')" class="mb10">
+						<img src="images/center/yifu.svg" style="background-color: #62C8A5;"/>装饰公司已付款清单
+						<span class="mui-icon mui-icon-arrowright mui-pull-right maincl ft20 maincl"></span>
+					</div>
 					<div class="afterBorder" onclick="paizhaoOrder()">
 						<img src="images/center/camer.svg" style="background-color: #ED8A63;"/>拍照下单
 						<span class="mui-icon mui-icon-arrowright mui-pull-right maincl ft20 maincl"></span>
@@ -636,6 +644,15 @@
 					id: 'gxb',
 				})
 			}
+			function zhuangshi(type){
+				openview({
+					view:'page/personal/myOrderList.html',
+					id: 'myOrderList',
+					extrasobj:{
+						type:type
+					}
+				})
+			}
 			//经理-> 工人列表
 			function goworker(){
 				openview({
@@ -704,6 +721,7 @@
 					//获取缓存
 					var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
 					var userId = plus.storage.getItem('$userId');
+					console.log('userId ==== '+ userId)
 					var oldToken = plus.storage.getItem('oldToken');
 					var sellerType = plus.storage.getItem('sellerType');
 					$('.qiandao').html('签到');

@@ -95,11 +95,14 @@
 						<%for(var i=0;i<list.length;i++){%>
 							<div class="orderList">
 								<div id="orderList<%= i%>">
-									<h3 class="h3" onclick="openDetail('<%= list[i].orderNo%>','','orderList<%= i%>')">
+									<h3 class="h3" haha="<%= list[i].zhuangshi%>" onclick="openDetail('<%= list[i].orderNo%>','','orderList<%= i%>','','<%= list[i].zhuangshi%>')">
 										<a class="a1"><%= list[i].deliveryType%></a>
 										<span class="stateSpan" status="list[i].status"><%= list[i].statusDesc%></span>
+										<% if(list[i].zhuangshi && list[i].storeName) {%>
+											<p>装饰公司：<%= list[i].storeName%></p>
+										<% } %>
 									</h3>
-									<p class="p1" onclick="openDetail('<%= list[i].orderNo%>','','orderList<%= i%>')">
+									<p class="p1" onclick="openDetail('<%= list[i].orderNo%>','','orderList<%= i%>','','<%= list[i].zhuangshi%>')">
 										<% if(list[i].goodsImgList && list[i].goodsImgList.length){%>
 											<%for(var j=0; j<list[i].goodsImgList.length; j++){%>
 												<a><img class="loadPics" src="../../img/loadBack.svg" data-src="<%= list[i].goodsImgList[j] || '../../img/editset.png'%>"/></a>
@@ -108,7 +111,11 @@
 											<a><img class="loadPics" src="../../img/loadBack.svg"/></a>
 										<% }%>
 										<% if(list[i].endTime){%>
-											<span class="stateSpan2"><%=list[i].endTime%>分钟后关闭订单</span>
+											<% if(list[i].zhuangshi) {%>
+												<span class="stateSpan2" style="top: 70px;"><%=list[i].endTime%>分钟后关闭订单</span>
+											<% }else{ %>
+												<span class="stateSpan2"><%=list[i].endTime%>分钟后关闭订单</span>
+											<% } %>
 										<% }%>
 									</p>
 									<div class="pad10 afterBorder">
@@ -119,42 +126,44 @@
 									</div>
 									<!--显示状态按钮-->
 									<div class="orderBtns">
-										<!--待付款：UNPAID，待发货：PENDING_SHIPMENT，待收货：PENDING_RECEIVE，已取消：CANCELED，取消中：CANCELING，已完成：FINISHED，拒签：REJECTED，已结案：CLOSED。-->
-										<% if(list[i].deliveryType == '送货上门' || list[i].deliveryType == '门店自提'){%>
-											<% if(list[i].status == 'UNPAID'){%>
-												<span class="redC aClick" onclick="goToPay('<%= list[i].orderNo%>','<%= list[i].amountPayable%>')">去支付</span>
+										<% if(!list[i].zhuangshi){ %>
+											<!--待付款：UNPAID，待发货：PENDING_SHIPMENT，待收货：PENDING_RECEIVE，已取消：CANCELED，取消中：CANCELING，已完成：FINISHED，拒签：REJECTED，已结案：CLOSED。-->
+											<% if(list[i].deliveryType == '送货上门' || list[i].deliveryType == '门店自提'){%>
+												<% if(list[i].status == 'UNPAID'){%>
+													<span class="redC aClick" onclick="goToPay('<%= list[i].orderNo%>','<%= list[i].amountPayable%>')">去支付</span>
+												<% }%>
+												<% if(list[i].status == 'UNPAID' || list[i].status == 'PENDING_SHIPMENT'){%>
+													<span class="aClick" onclick="NewcancelFun('<%= list[i].orderNo%>',this)">取消订单</span>
+												<% }%>
+												<% if(list[i].deliveryType == '门店自提' && list[i].status == 'PENDING_RECEIVE'){%>
+							                        <span class="aClick" onclick="NewcancelFun('<%= list[i].orderNo%>',this)">取消订单</span>
+							                    <% }%>
+												<% if(list[i].status == 'FINISHED'){%>
+													<span class="redC aClick" onclick="openReturns('<%= list[i].orderNo%>','<%= list[i].customerId%>','<%=list[i].deliveryType%>')">退货</span>
+												<% }%>
+												<% if(list[i].status == 'FINISHED' || list[i].status == 'CLOSED'){%>
+													<% if(list[i].isEvaluated == false){%>
+														<span class="aClick" onclick="evaFun('<%= list[i].orderNo%>',this)">评价</span>
+													<% }else{%>
+														<!--<span class="aClick">已评价</span>-->
+													<% }%>
+												<% }%>
+												<span onclick="comeOnAgain('<%= list[i].orderNo%>','<%= list[i].customer.customerId%>')" class="aClick">再来一单</span>
 											<% }%>
-											<% if(list[i].status == 'UNPAID' || list[i].status == 'PENDING_SHIPMENT'){%>
-												<span class="aClick" onclick="NewcancelFun('<%= list[i].orderNo%>',this)">取消订单</span>
-											<% }%>
-											<% if(list[i].deliveryType == '门店自提' && list[i].status == 'PENDING_RECEIVE'){%>
-						                        <span class="aClick" onclick="NewcancelFun('<%= list[i].orderNo%>',this)">取消订单</span>
-						                    <% }%>
-											<% if(list[i].status == 'FINISHED'){%>
-												<span class="redC aClick" onclick="openReturns('<%= list[i].orderNo%>','<%= list[i].customerId%>','<%=list[i].deliveryType%>')">退货</span>
-											<% }%>
-											<% if(list[i].status == 'FINISHED' || list[i].status == 'CLOSED'){%>
-												<% if(list[i].isEvaluated == false){%>
-													<span class="aClick" onclick="evaFun('<%= list[i].orderNo%>',this)">评价</span>
-												<% }else{%>
-													<!--<span class="aClick">已评价</span>-->
+
+											<% if(list[i].deliveryType == '送货上门'){%>
+												<!--这里 状态 取反-->
+												<% if(list[i].status != 'UNPAID' && list[i].status != 'CANCELED' && list[i].status != 'CANCELING'){%>
+													<span onclick="goOrderWL('<%= list[i].orderNo%>')" class="aClick redC lookwl">查看物流</span>
 												<% }%>
 											<% }%>
-											<span onclick="comeOnAgain('<%= list[i].orderNo%>','<%= list[i].customer.customerId%>')" class="aClick">再来一单</span>
-										<% }%>
 
-										<% if(list[i].deliveryType == '送货上门'){%>
-											<!--这里 状态 取反-->
-											<% if(list[i].status != 'UNPAID' && list[i].status != 'CANCELED' && list[i].status != 'CANCELING'){%>
-												<span onclick="goOrderWL('<%= list[i].orderNo%>')" class="aClick redC lookwl">查看物流</span>
-											<% }%>
-										<% }%>
-
-										<%if(list[i].deliveryType.indexOf('产品券')>-1){%>
-											<%if(list[i].status == "FINISHED"){%>
-												<span class="redC aClick" onclick="openReturns('<%= list[i].orderNo%>','<%= list[i].customerId%>','<%=list[i].deliveryType%>')">退货</span>
+											<%if(list[i].deliveryType.indexOf('产品券')>-1){%>
+												<%if(list[i].status == "FINISHED"){%>
+													<span class="redC aClick" onclick="openReturns('<%= list[i].orderNo%>','<%= list[i].customerId%>','<%=list[i].deliveryType%>')">退货</span>
+												<%}%>
 											<%}%>
-										<%}%>
+										<% }%>
 									</div>
 								</div>
 							</div>
@@ -532,7 +541,7 @@
 				var inType = plus.webview.currentWebview().type;
 				var noButton = plus.webview.currentWebview().isNoButton;
 				var fromPage = plus.webview.currentWebview().fromPage;
-				if(fromPage == 'index' || inType == 1){
+				if(fromPage == 'index' || inType == 1 || inType == 'dai' || inType == 'yi'){
 					$('.mui-title').html("物流");
 					$('#loadingdiv').css("margin-top",0);
 					$('#openSearch,#tabLink').hide()
@@ -542,8 +551,10 @@
 					$('#openSearch,#tabLink').show()
 				}
 				if(inType == 1){$('.mui-title').html("待付款");}
+				if(inType == 'dai'){$('.mui-title').html("装饰公司待付款清单");}
+				if(inType == 'yi'){$('.mui-title').html("装饰公司已付款清单");}
 				//打开订单详情
-				window.openDetail = function(orderNo,evaluat,id,cusid){
+				window.openDetail = function(orderNo,evaluat,id,cusid,zhuangshi){
 //					if(fromPage != 'index'){
 						openview({
 							view:'myOrderDetail.html',
@@ -554,7 +565,8 @@
 								cancelParentId:id,//父元素ID
 								noButton:noButton,
 								lookCusid:userId,
-								cusId:cusid
+								cusId:cusid,
+								zhuangshi:zhuangshi
 							}
 						})
 //					}
@@ -676,6 +688,12 @@
 					}else if(fromPage == 'index'){
 						nowApi = '/app/delivery/logistics/list';
 						nowData = {'userId':userId,'identityType':identityT,'page':1,'size':oneSize};
+					}else if(inType == 'dai'){
+						nowApi = '/app/order/payForAnother/list';
+						nowData = {'userId':userId,'identityType':identityT,'page':1,'size':oneSize};
+					}else if(inType == 'yi'){
+						nowApi = '/app/order/list/sellerManager/payFor';
+						nowData = {'userId':userId,'identityType':identityT,'page':1,'size':oneSize};
 					}
 					mui.ajax(serverUrl + nowApi,{
 						data:nowData,
@@ -697,6 +715,9 @@
 											}
 											if(ele.endTime){
 												ele.endTime = parseInt(ele.endTime/(1000*60))
+											}
+											if(inType == 'yi' || inType == 'dai'){
+												ele.zhuangshi = inType
 											}
 										})
 										document.getElementById('infoListDiv').innerHTML = template('infoList',{list:data.content.list,nowState:tabT});
@@ -750,6 +771,10 @@
 												nowData = {'userID':userId,'identityType':identityT,'showStatus':tabT,'page':Ypagenum,'size':oneSize};
 												if(fromPage == 'index'){
 													nowData = {'userId':userId,'identityType':identityT,'page':Ypagenum,'size':oneSize};
+												}else if(inType == 'dai'){
+													nowData = {'userId':userId,'identityType':identityT,'page':Ypagenum,'size':oneSize};
+												}else if(inType == 'yi'){
+													nowData = {'userId':userId,'identityType':identityT,'page':Ypagenum,'size':oneSize};
 												}
 												mui.ajax(serverUrl + nowApi,{
 							                        data:nowData,
@@ -769,6 +794,9 @@
 																	}
 																	if(ele.endTime){
 																		ele.endTime = parseInt(ele.endTime/(1000*60))
+																	}
+																	if(inType == 'yi' || inType == 'dai'){
+																		ele.zhuangshi = true
 																	}
 																})
 						                                        document.getElementById('infoListDiv').innerHTML += template('infoList',{list:data.content.list,nowState:tabT});
