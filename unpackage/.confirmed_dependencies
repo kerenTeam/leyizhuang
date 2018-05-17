@@ -271,7 +271,8 @@
       "funGuide.html",
       "promotion.html",
       "page/guide/rankList.html",
-      "page/personal/productCoupon.html"
+      "page/personal/productCoupon.html",
+      "page/personal/address.html"
     ]
   },
   "page/gxbList.html": {

@@ -281,7 +281,7 @@
 
 	<body onload="text=document.getElementById('text');">
 		<header class="mui-row mui-bar hasManyCity" id="header" style="z-index: 200;">
-			<div class="searchBox" onclick="goSearch()" style="z-index:1;position: absolute;top: 27px;left: 20px;width: 75%;">
+			<div class="searchBox" onclick="goSearch()" style="z-index:1;position: absolute;top: 27px;left: 13px;width: 75%;">
 				<div class="indexSearch">
 					<span class="mui-icon mui-icon-search" style="vertical-align: middle;font-size:20px;padding-top: 7px;float: right;padding-right: 10px;"></span>
 				</div>
@@ -536,9 +536,9 @@
 					</div>
 					<img src="img/legray.svg" alt="" />
 				</div>
-				<div onclick="poverTel()" class="rightBorder">
+				<div onclick="goaddr()" class="rightBorder">
 					<div>
-						咨询
+						地址管理
 					</div>
 					<img src="img/legray.svg" alt="" />
 				</div>
@@ -608,9 +608,9 @@
 				</div>
 			</div>
 			<div class="flexws afterBorder">
-				<div id="paizhaoOrder" class="rightBorder paddv10" onclick="paizhaoOrder()">
+				<div id="paizhaoOrder" class="rightBorder paddv10" onclick="goaddr()">
 					<div id="">
-						拍照下单
+						地址管理
 					</div>
 					<img src="img/legray.svg" alt="" />
 				</div>
@@ -790,6 +790,12 @@
 				openview({
 					view:'page/personal/productCoupon.html',
 					id: 'productCoupon',
+				})
+			}
+			function goaddr(){
+				openview({
+					view: "page/personal/address.html",
+					id: "address",
 				})
 			}
 			function poverTel() {
@@ -1014,7 +1020,6 @@
 						$('.cusMan,.worker').css('display', 'none')
 						getIcon(3)
 						//new
-
 						getClassfy()
 					} else if(identityT == 6 || identityT == 2) { //顾客 项目经理
 						$('.cusMan').css('display', '')
@@ -1252,7 +1257,7 @@
 						success: function(data, type, xhr) {
 							console.log('首页活动', data);
 							if(data.code == '0') {
-								if(identityT == 6){
+								if(identityT == 6 || identityT == 0){
 									$('#huodong0').html('<img src="img/pzorder.jpg" style="width:100%" onclick="paizhaoOrder()"/>')
 								}else{
 									$('#huodong0').html(template('huodongS0', {

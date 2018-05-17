@@ -145,12 +145,13 @@
 			</div>
 
 
-
-		<div id="addressList"></div>
+		<div id="main" class="mui-clearfix contaniner">
+			<div id="addressList"></div>
+		</div>
 
 	    <!--模板铺数据-->
 		<script id="addressList-detail" type="text/html">
-			<div id="main" class="mui-clearfix contaniner">
+		
 				<% if(!addressLi || addressLi == ''){%>
 					<div class="nothing" style="margin-top: 60px;">
 						<img src="../../images/order/addresic.svg" style="display: block;margin: 20px auto;width: 80px;"/>
@@ -202,8 +203,9 @@
 				    	</div>
 			    	<% } %>
 			    <% } %>
-		    </div>
 		</script>
+		<div class="upload text-center text-xs gray" id="upload"></div>
+
 	    <script type="text/javascript">
 		mui.init();
 		mui.plusReady(function(){
@@ -233,26 +235,35 @@
 				console.log('刷新数据');
 			})
 			function RefreshAd(){
-
+				var Spagenum = 2; //实到页数
+				var Ypagenum = 1; //应到页数
+				var oneSize = 10;
 				var url = '/app/user/setting/deliveryAddress/list';
 				var dataObj = {'userId' : userId,'identityType':identityT,'page':1,size:1000}
 				getData(url,dataObj);
+			
 				//搜索
 				$('#searchf').submit(function(){
 					var valInt = $('#valInt').val();
 					var url = '/app/user/setting/search/deliveryAddress';
-					var dataObj = {'userId' : userId,'identityType':identityT,'page':1,size:1000,'keywords':valInt}
+					var dataObj = {'userId' : userId,'identityType':identityT,'page':1,size:10,'keywords':valInt}
+					Spagenum = 2; //实到页数
+					Ypagenum = 1; //应到页数 
 					getData(url,dataObj,'noList');
 					return false;
 				})
 				$('#clickSearch, #cancelSearch').click(function(){
 					var valInt = $('#valInt').val();
 					var url = '/app/user/setting/search/deliveryAddress';
-					var dataObj = {'userId' : userId,'identityType':identityT,'page':1,size:1000,'keywords':valInt}
+					Spagenum = 2; //实到页数
+					Ypagenum = 1; //应到页数
+					oneSize = 10;
+					var dataObj = {'userId' : userId,'identityType':identityT,'page':1,size:10,'keywords':valInt}
 					getData(url,dataObj,'noList');
 
 				})
 				function getData(url,dataObj, noList){
+					
 					/*我的地址*/
 					mui.ajax(serverUrl+url,{
 						data:dataObj,
@@ -399,6 +410,179 @@
 									}
 								});
 							}
+							$(window).scroll(function() {
+								var scrollTop = $(this).scrollTop();
+								var scrollHeight = $(document).height();
+								var windowHeight = $(this).height();
+								if(scrollTop + windowHeight == scrollHeight) {
+									if(Spagenum <= data.content.pages && Spagenum == Ypagenum + 1) { //当前页小于等于总页数时请求下一页
+										mui("#upload")[0].innerHTML = "<img src='../../img/Rolling.svg' />";
+										Ypagenum++; //满足加载情况,应到页数+1
+										console.log('发起请求,实到' + Spagenum + '页');
+										console.log('发起请求,应到' + Ypagenum + '页');
+										var valInt = $('#valInt').val();
+										if(valInt){
+											var dataObj = {'userId' : userId,'identityType':identityT,'page':Ypagenum,'keywords':valInt}
+										}else{
+											var dataObj = {'userId' : userId,'identityType':identityT,'page':Ypagenum,}
+										}
+									mui.ajax(serverUrl+url,{
+										data:dataObj,
+										dataType:'json',
+										type:'post',
+										timeout:10000,
+										headers:{"Authorization":oldToken},
+										success:function(data,type,xhr){
+											console.log('地址',data);
+											var addressObj = {};
+											if(noList){//搜索
+												addressObj.addressLi = data.content;
+											}else{
+												addressObj.addressLi = data.content.list;
+											}
+											var html = template('addressList-detail',addressObj);
+											document.getElementById('addressList').innerHTML+= html;
+										  	mui("#upload")[0].innerHTML = " ";
+											Spagenum++; //加载成功,当前页+1
+											console.log('成功+1,实到' + Spagenum);
+											console.log('成功+1,应到' + Spagenum);
+											if(pageid){/*从选择地址跳转*/
+					//							$(".addlist .bottom .right .editAd").css("display","none");
+												$(".addlist").click(function(){
+													$(this).css("background","#eee")
+													$(this).addClass("adhover")
+													var addressStorage = JSON.parse(plus.storage.getItem('$addressStorage') || '[]');
+													var defultAddress ={};
+														defultAddress.id = $(this).attr("data-addid");
+														defultAddress.person = $(this).attr("data-person");
+														defultAddress.phone = $(this).attr("data-phone");
+														defultAddress.province = $(this).attr("data-pv");
+														defultAddress.city = $(this).attr("data-ct");
+														defultAddress.country = $(this).attr("data-cty");
+														defultAddress.street = $(this).attr("data-st");
+														defultAddress.villageName = $(this).attr("data-villageName");
+														defultAddress.address = $(this).attr("data-adi");
+				
+														addressStorage = [defultAddress];
+				
+				
+														if(goType == 'pzOrder'){//拍照下单
+															plus.storage.setItem('$addressStorageY2', JSON.stringify(addressStorage));
+															mui.fire(plus.webview.getWebviewById('pzOrder'),'readdstorage');//拍照下单
+														}
+														if(goType == 'toReturn'){//申请退货
+															plus.storage.setItem('$addressStorageTH1', JSON.stringify(addressStorage));
+															mui.fire(plus.webview.getWebviewById('myOrderReturns'),'readdstorage');
+														}
+														if(goType == 'order'){
+															plus.storage.setItem('$addressStorage', JSON.stringify(addressStorage));
+															var list = plus.webview.getWebviewById('workerMaterial');
+															mui.fire(list,'readdstorage');
+														}
+					 									if(goType == 'gorder'){
+															plus.storage.setItem('$addressStorageOrder', JSON.stringify(addressStorage));
+															var list = plus.webview.getWebviewById('order');
+															mui.fire(list,'readdstorage');
+														}
+					 									plus.webview.currentWebview().close();//关闭当前页面
+				
+												})
+											}
+				
+											//点击修改默认地址
+											window.changeState = function(thisobj){
+												var checked = $(thisobj).find('input').attr("checked");
+												var thisAdId = $(thisobj).find('input').attr("id");
+				
+												if(typeof(checked)=="undefined"){//本来不是默认地址
+													$('.radio').find('input').removeAttr('checked');//移除其他勾选
+													$(thisobj).find('input').prop('checked',true);//勾选当前
+													mui.ajax(serverUrl+'/api/useraccount/stateaddress',{
+														data:{userid:userId,address_id:thisAdId,state:1},
+														dataType:'json',
+														type:'post',
+														timeout:10000,
+														headers:{"token":oldToken},
+														success:function(data,type,xhr){
+														},
+														error:function(xhr,type,errorThrown){
+															console.log('响应失败  !');
+														}
+													});
+												}else{//本来是默认地址
+													$(thisobj).find('input').removeAttr('checked');
+													mui.ajax(serverUrl+'/api/useraccount/stateaddress',{
+														data:{userid:userId,address_id:thisAdId,state:0},
+														dataType:'json',
+														type:'post',
+														timeout:10000,
+														headers:{"token":oldToken},
+														success:function(data,type,xhr){
+														},
+														error:function(xhr,type,errorThrown){
+															console.log('响应失败  !');
+														}
+													});
+												}
+											}
+											//点击编辑跳转传参
+											window.editAd = function(AdId){
+												event.stopPropagation()
+												openview({
+												 	view:"address-edit.html",
+												 	id:"address-edit",
+												 	extrasobj:{adId:AdId,userId:userId}
+												})
+											}
+											//删除确认弹框
+											var exterminate = document.getElementsByClassName('exterminate');
+											window.deleteAd = function(AdIdD){
+												event.stopPropagation()
+												mui.confirm('确认删除该地址？','',['取消','确认'],function (e) {
+													if(e.index == 1) {
+														mui.ajax(serverUrl+'/app/user/setting/deliveryAddress/delete',{
+															data:{'deliveryAddressId':AdIdD,'identityType':identityT,'userId':userId},
+															dataType:'json',
+															type:'post',
+															timeout:10000,
+															headers:{"Authorization":oldToken},
+															success:function(data,type,xhr){
+																plus.nativeUI.alert("删除成功！");
+																mui.fire(plus.webview.getWebviewById('address'),'refreshAd');//打开指定页面
+															},
+															error:function(xhr,type,errorThrown){
+																console.log('响应失败  !');
+															}
+														});
+													}
+												})
+											}
+											//点击添加地址跳转
+											window.addAd = function(){
+												openview({
+													view:'add-address.html',
+													id:'add-address',
+													extrasobj: {
+														page: 'order',
+														ConeId:plus.webview.currentWebview().ConeId,
+														CidentityT:identityT,
+													}
+												});
+											}
+										},
+										error:function(xhr,type,errorThrown){
+											plus.nativeUI.closeWaiting();
+											Ypagenum--; //失败是应到-1
+											mui.toast("当前网络不好请重试");
+											mui("#upload")[0].innerHTML = "";
+											console.log('响应失败');
+										}
+									});
+									} else if(Spagenum == data.content.pages + 1) { //当前页不小于等于总页数时请求下一页
+										mui("#upload")[0].innerHTML = "到底了";
+									}
+								}
+							});
 						},
 						error:function(xhr,type,errorThrown){
 							plus.nativeUI.closeWaiting();

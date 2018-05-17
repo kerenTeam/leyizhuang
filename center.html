@@ -285,9 +285,7 @@
 					<div onclick="gxb()" class="mb10">
 						<img src="images/center/mmaterial.svg" style="background-color: #62C8A5;"/>工序包
 						<span class="mui-icon mui-icon-arrowright mui-pull-right maincl ft20 maincl"></span>
-					</div>
-
-
+					</div> 
 					<div class="afterBorder" onclick="paizhaoOrder()">
 						<img src="images/center/camer.svg" style="background-color: #ED8A63;"/>拍照下单
 						<span class="mui-icon mui-icon-arrowright mui-pull-right maincl ft20 maincl"></span>
@@ -678,6 +676,13 @@
 				openview({
 					view: 'page/personal/pzOrderList.html',
 					id: 'pzOrderList',
+				})
+			}
+			//去拍照下单
+			function gopaizhaoOrder(){
+				openview({
+					view: 'page/order/pzOrder.html',
+					id: 'pzOrder',
 				})
 			}
 			//浏览记录

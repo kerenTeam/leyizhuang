@@ -74,8 +74,11 @@
 								  <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
 								  <input class="mui-numbox-input" type="number" value="1"/>
 								  <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
-								</div>
+								</div> 
 							</div>
+							<%if(list[i].effectiveStartTime || list[i].effectiveEndTime){%>
+								<div class="activecl2">有效日期：<%=list[i].effectiveStartTime%> ~ <%=list[i].effectiveEndTime%></div>
+							<%}%>
 						</a>
 						<%if(list[i].isZG){%>
 							<img data-id="<%=list[i].goodsId%>" data-left="<%=list[i].leftNumber%>" data-isZG="1" class="check" src="../../images/center/uncheck.svg" alt="" />

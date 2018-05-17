@@ -291,31 +291,65 @@
 					longitude=(position.coords.longitude).toFixed(6);
 					latitude=(position.coords.latitude).toFixed(6);
 					cprovince = position.address.province;
+				 
 					if(nowcity == 3){
 						$('#provenceW').val('重庆')
 				 		$('#cityW').val('重庆') 
+				 		
+						cityPicker3.pickers[0].setSelectedValue('500000');
+						setTimeout(function(){
+							cityPicker3.pickers[1].setSelectedValue('500000');
+						},300)
 					}else if(nowcity == 2){
 						$('#provenceW').val('河南省')
 						$('#cityW').val('郑州市') 
+						cityPicker3.pickers[0].setSelectedValue('410000');
+						setTimeout(function(){
+							cityPicker3.pickers[1].setSelectedValue('410100');
+						},300)
 					}else{
 						if(nowcity == 1){
 							$('#provenceW').val('四川省')
 							$('#cityW').val('成都市') 
+							cityPicker3.pickers[0].setSelectedValue('510000');
+							setTimeout(function(){
+								cityPicker3.pickers[1].setSelectedValue('510100');
+							},300)
 						}else if(nowcity == 4){
 							$('#provenceW').val('四川省')
 							$('#cityW').val('泸州市') 
+							cityPicker3.pickers[0].setSelectedValue('510000');
+							setTimeout(function(){
+								cityPicker3.pickers[1].setSelectedValue('510500');
+							},300)
 						}else if(nowcity == 5){
 							$('#provenceW').val('四川省')
 							$('#cityW').val('南充市') 
+							cityPicker3.pickers[0].setSelectedValue('510000');
+							setTimeout(function(){
+								cityPicker3.pickers[1].setSelectedValue('511300');
+							},300)
 						}else if(nowcity == 6){
 							$('#provenceW').val('四川省')
 							$('#cityW').val('绵阳市') 
+							cityPicker3.pickers[0].setSelectedValue('510000');
+							setTimeout(function(){
+								cityPicker3.pickers[1].setSelectedValue('510700');
+							},300)
 						}else if(nowcity == 7){
 							$('#provenceW').val('四川省')
 							$('#cityW').val('德阳市') 
+							cityPicker3.pickers[0].setSelectedValue('510000');
+							setTimeout(function(){
+								cityPicker3.pickers[1].setSelectedValue('510600');
+							},300)
 						}else if(nowcity == 8){
 							$('#provenceW').val('四川省')
 							$('#cityW').val('宜宾市') 
+							cityPicker3.pickers[0].setSelectedValue('510000');
+							setTimeout(function(){
+								cityPicker3.pickers[1].setSelectedValue('511500');
+							},300)
 						}else{
 						$('#provenceW').val(position.address.province)
 					 	$('#cityW').val(position.address.city)
