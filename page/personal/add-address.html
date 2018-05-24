@@ -181,8 +181,10 @@
 					</ul>
 				</div>
 				<div style="padding:5px 5%;">详细地址  <span class="redc"> *</span></div>
-				<textarea maxlength="60" rows="4" id="address" placeholder="请填写详细地址，如xx栋xx单元xx号" class="textare box-s">   栋  单元  号</textarea>
-			    	<div class="address-btn clearfloat">
+				<textarea maxlength="60" rows="3" id="address" placeholder="请填写详细地址，如xx栋xx单元xx号" class="textare box-s">   栋  单元  号</textarea>
+			    <div style="padding:5px 5%;">楼盘信息</div>
+				<textarea maxlength="20" rows="3" id="estateInfo" placeholder="楼盘信息(选填),最多20个字" class="textare box-s"></textarea>
+			    		<div class="address-btn clearfloat">
 			    		<span class="szwmr fl">设为默认</span>
 			    		<a href="#" class="toggle toggle--on fr" id="acquiescence"></a>
 			    	</div>
@@ -291,18 +293,18 @@
 					longitude=(position.coords.longitude).toFixed(6);
 					latitude=(position.coords.latitude).toFixed(6);
 					cprovince = position.address.province;
-				 
+
 					if(nowcity == 3){
 						$('#provenceW').val('重庆')
-				 		$('#cityW').val('重庆') 
-				 		
+				 		$('#cityW').val('重庆')
+
 						cityPicker3.pickers[0].setSelectedValue('500000');
 						setTimeout(function(){
 							cityPicker3.pickers[1].setSelectedValue('500000');
 						},300)
 					}else if(nowcity == 2){
 						$('#provenceW').val('河南省')
-						$('#cityW').val('郑州市') 
+						$('#cityW').val('郑州市')
 						cityPicker3.pickers[0].setSelectedValue('410000');
 						setTimeout(function(){
 							cityPicker3.pickers[1].setSelectedValue('410100');
@@ -310,42 +312,42 @@
 					}else{
 						if(nowcity == 1){
 							$('#provenceW').val('四川省')
-							$('#cityW').val('成都市') 
+							$('#cityW').val('成都市')
 							cityPicker3.pickers[0].setSelectedValue('510000');
 							setTimeout(function(){
 								cityPicker3.pickers[1].setSelectedValue('510100');
 							},300)
 						}else if(nowcity == 4){
 							$('#provenceW').val('四川省')
-							$('#cityW').val('泸州市') 
+							$('#cityW').val('泸州市')
 							cityPicker3.pickers[0].setSelectedValue('510000');
 							setTimeout(function(){
 								cityPicker3.pickers[1].setSelectedValue('510500');
 							},300)
 						}else if(nowcity == 5){
 							$('#provenceW').val('四川省')
-							$('#cityW').val('南充市') 
+							$('#cityW').val('南充市')
 							cityPicker3.pickers[0].setSelectedValue('510000');
 							setTimeout(function(){
 								cityPicker3.pickers[1].setSelectedValue('511300');
 							},300)
 						}else if(nowcity == 6){
 							$('#provenceW').val('四川省')
-							$('#cityW').val('绵阳市') 
+							$('#cityW').val('绵阳市')
 							cityPicker3.pickers[0].setSelectedValue('510000');
 							setTimeout(function(){
 								cityPicker3.pickers[1].setSelectedValue('510700');
 							},300)
 						}else if(nowcity == 7){
 							$('#provenceW').val('四川省')
-							$('#cityW').val('德阳市') 
+							$('#cityW').val('德阳市')
 							cityPicker3.pickers[0].setSelectedValue('510000');
 							setTimeout(function(){
 								cityPicker3.pickers[1].setSelectedValue('510600');
 							},300)
 						}else if(nowcity == 8){
 							$('#provenceW').val('四川省')
-							$('#cityW').val('宜宾市') 
+							$('#cityW').val('宜宾市')
 							cityPicker3.pickers[0].setSelectedValue('510000');
 							setTimeout(function(){
 								cityPicker3.pickers[1].setSelectedValue('511500');
@@ -578,6 +580,7 @@
 						mui.toast('还未填写详细地址!');
 						$('#newAddress').focus();
 					}else{
+
 						console.log('kk',{
 								'userId': userId,
 								'identityType': identityT,
@@ -589,7 +592,8 @@
 								'detailedAddress':newAddress,
 								'deliveryStreet':newStreet,
 								'villageName':xiaoquIn,
-								'isDefault':defaultAddress
+								'isDefault':defaultAddress,
+								'estateInfo':$('#estateInfo').val()
 							})
 						mui.ajax(serverUrl+'/app/user/setting/deliveryAddress/add',{
 							data:{
@@ -603,7 +607,8 @@
 								'detailedAddress':newAddress,
 								'deliveryStreet':newStreet,
 								'villageName':xiaoquIn,
-								'isDefault':defaultAddress
+								'isDefault':defaultAddress,
+								'estateInfo':$('#estateInfo').val()
 							},
 							dataType:'json',
 							type:'post',

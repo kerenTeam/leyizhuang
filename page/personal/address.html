@@ -151,7 +151,7 @@
 
 	    <!--模板铺数据-->
 		<script id="addressList-detail" type="text/html">
-		
+
 				<% if(!addressLi || addressLi == ''){%>
 					<div class="nothing" style="margin-top: 60px;">
 						<img src="../../images/order/addresic.svg" style="display: block;margin: 20px auto;width: 80px;"/>
@@ -169,6 +169,13 @@
 				    				<li>
 				    					<%= addressLi[i].deliveryProvince || ''%><%= addressLi[i].deliveryCity%><%= addressLi[i].deliveryCounty%> <%= addressLi[i].deliveryStreet%> <%= addressLi[i].villageName %> <%= addressLi[i].detailedAddress %>
 				    				</li>
+
+				    				<%if(addressLi[i].estateInfo){%>
+				    					<li>
+				    						楼盘信息:<%=addressLi[i].estateInfo%>
+				    					</li>
+				    				<%}%>
+
 				    			</ul>
 				    		</div>
 				    		<div class="bottom clearfloat box-s">
@@ -241,14 +248,14 @@
 				var url = '/app/user/setting/deliveryAddress/list';
 				var dataObj = {'userId' : userId,'identityType':identityT,'page':1,size:1000}
 				getData(url,dataObj);
-			
+
 				//搜索
 				$('#searchf').submit(function(){
 					var valInt = $('#valInt').val();
 					var url = '/app/user/setting/search/deliveryAddress';
 					var dataObj = {'userId' : userId,'identityType':identityT,'page':1,size:10,'keywords':valInt}
 					Spagenum = 2; //实到页数
-					Ypagenum = 1; //应到页数 
+					Ypagenum = 1; //应到页数
 					getData(url,dataObj,'noList');
 					return false;
 				})
@@ -263,7 +270,7 @@
 
 				})
 				function getData(url,dataObj, noList){
-					
+
 					/*我的地址*/
 					mui.ajax(serverUrl+url,{
 						data:dataObj,
@@ -462,10 +469,10 @@
 														defultAddress.street = $(this).attr("data-st");
 														defultAddress.villageName = $(this).attr("data-villageName");
 														defultAddress.address = $(this).attr("data-adi");
-				
+
 														addressStorage = [defultAddress];
-				
-				
+
+
 														if(goType == 'pzOrder'){//拍照下单
 															plus.storage.setItem('$addressStorageY2', JSON.stringify(addressStorage));
 															mui.fire(plus.webview.getWebviewById('pzOrder'),'readdstorage');//拍照下单
@@ -485,15 +492,15 @@
 															mui.fire(list,'readdstorage');
 														}
 					 									plus.webview.currentWebview().close();//关闭当前页面
-				
+
 												})
 											}
-				
+
 											//点击修改默认地址
 											window.changeState = function(thisobj){
 												var checked = $(thisobj).find('input').attr("checked");
 												var thisAdId = $(thisobj).find('input').attr("id");
-				
+
 												if(typeof(checked)=="undefined"){//本来不是默认地址
 													$('.radio').find('input').removeAttr('checked');//移除其他勾选
 													$(thisobj).find('input').prop('checked',true);//勾选当前

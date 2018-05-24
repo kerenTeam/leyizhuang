@@ -289,7 +289,7 @@
 			<div>
 				<img src="images/center/message.svg" id="xiaoxiBtn" onclick="goMessage()" class="message messagefitler" />
 				<img src="images/center/zixunsvg.svg" style="display: none;" id="zixunsvg" onclick="poverTel()" class="message zixunsvg messagefitler" />
-				<span class="mui-badge mui-badge-danger" id="ctMsg" style="right: 20px;position: absolute;padding: 4px;bottom: 29px;background-color: red;display: none;"></span>
+				<span class="mui-badge mui-badge-danger" id="ctMsg" style="right: 38px;position: absolute;padding: 4px;bottom: 29px;background-color: red;display: none;"></span>
 			</div>
 
 		</header>
@@ -313,10 +313,10 @@
 				var scrollHeight = $(document).height();
 				var windowHeight = $(this).height();
 				if(scrollTop >= 100) { //不透明背景
-					mui('#header')[0].style.boxShadow = "0 0 2px rgba(175, 166, 166, 0.85)"; 
+					mui('#header')[0].style.boxShadow = "0 0 2px rgba(175, 166, 166, 0.85)";
 					mui('.indexSearch')[0].style.background = 'rgba(204, 204, 204, 0.54)';
 				} else { //透明背景
-					mui('#header')[0].style.boxShadow = "0 0 0 rgba(175, 166, 166, 0.85)"; 
+					mui('#header')[0].style.boxShadow = "0 0 0 rgba(175, 166, 166, 0.85)";
 					mui('.indexSearch')[0].style.background = 'rgba(160, 155, 155, 0.49)';
 				}
 			});
@@ -582,9 +582,9 @@
 					</div>
 					<img src="img/legray.svg" alt="" />
 				</div>
-				<div onclick="poverTel()" class="rightBorder">
+				<div onclick="goaddr()" class="rightBorder">
 					<div id="">
-						咨询
+						地址管理
 					</div>
 					<img src="img/legray.svg" alt="" />
 				</div>
@@ -787,10 +787,16 @@
 			}
 			// 产品券
 			function productCoupon(){
-				openview({
-					view:'page/personal/productCoupon.html',
-					id: 'productCoupon',
-				})
+				var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
+				if(identityT == 2){
+					 mui.alert('暂未开通此功能,敬请期待')
+				}else{
+					openview({
+						view:'page/personal/productCoupon.html',
+						id: 'productCoupon',
+					})
+				}
+
 			}
 			function goaddr(){
 				openview({
@@ -1035,7 +1041,7 @@
 					if(plus.storage.getItem('$userId') == 1) {
 						$('.guides, #xiaoxiBtn').css('display', 'none')
 					}
-					if(identityT == 6 || identityT == 0){
+					if(identityT == 6 || identityT == 0 || identityT == 3 || identityT == 2){
 						mui('#zixunsvg')[0].style.display = 'inline-block';
 					}else{
 						mui('#xiaoxiBtn')[0].style.right = '29px';
@@ -1257,7 +1263,7 @@
 						success: function(data, type, xhr) {
 							console.log('首页活动', data);
 							if(data.code == '0') {
-								if(identityT == 6 || identityT == 0){
+								if(identityT == 6 || identityT == 0 || identityT == 2 || identityT == 3){
 									$('#huodong0').html('<img src="img/pzorder.jpg" style="width:100%" onclick="paizhaoOrder()"/>')
 								}else{
 									$('#huodong0').html(template('huodongS0', {
@@ -1265,7 +1271,7 @@
 										url: oCms
 									}));
 								}
-								
+
 							} else {
 								//								mui.toast(data.message)
 							}
@@ -1503,15 +1509,21 @@
 			}
 
 			function delivery() {
-				//打开订单，
-				openview({
-					view: 'page/personal/myOrderList.html',
-					id: 'myOrderList',
-					extrasobj: {
-						type: 2,
-						fromPage: 'index'
-					}
-				})
+				var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
+				if(identityT == 3){
+					 mui.alert('暂未开通此功能,敬请期待')
+				}else{
+					//打开订单，
+					openview({
+						view: 'page/personal/myOrderList.html',
+						id: 'myOrderList',
+						extrasobj: {
+							type: 2,
+							fromPage: 'index'
+						}
+					})
+				}
+
 			}
 			//消息
 			function goMessage() {

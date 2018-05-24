@@ -148,6 +148,9 @@ background: linear-gradient(to right, #1fddff, #ff4b1f); /* W3C, IE 10+/ Edge, F
 				<div style="overflow: hidden;">
 					<span class="huiC">订单备注</span> <span class="mui-pull-right" style="display: inline-block;max-width: 80%;text-align: right;"><%= detail.remark || '无'%></span>
 				</div>
+				<div style="overflow: hidden;">
+					<span class="huiC">楼盘信息</span> <span class="mui-pull-right" style="display: inline-block;max-width: 80%;text-align: right;"><%= detail.estateInfo || '无'%></span>
+				</div>
 			</div>
 			<%if(detail.customer && detail.customer.customerId){%>
 				<div class="Dpart3">
@@ -259,7 +262,7 @@ background: linear-gradient(to right, #1fddff, #ff4b1f); /* W3C, IE 10+/ Edge, F
 						<span class="huiC">代付款</span> <span class="floL"><%= detail.BillingDetailResponse.payForAnotherMoney%>元</span>
 					</div>
 					<div>
-						<span class="huiC">代付方式</span> <span class="floL"><%= detail.payType%></span>
+						<span class="huiC">代付方式</span> <span class="floL"><%= detail.BillingDetailResponse.payType%></span>
 					</div>
 				<% } %>
 				<% if(detail.identityT == '2' && detail.BillingDetailResponse.payForAnotherMoney){ %>
@@ -385,9 +388,12 @@ background: linear-gradient(to right, #1fddff, #ff4b1f); /* W3C, IE 10+/ Edge, F
 						<%}%>
 					<%}%>
 				<%}else{%>
+					<!--导购的 装饰公司待付款清-->
 					<% if(detail.status == 'UNPAID'){%>
 						<span class="redC aClick" onclick="goToPay('<%= detail.orderNumber%>','<%= detail.BillingDetailResponse.amountPayable%>')">去支付</span>
-					<% }%>
+					<% }else{%>
+						<span onclick="goOrderWL('<%= detail.orderNumber%>')" class="aClick redC lookwl">查看物流</span>
+					<% } %>
 				<%}%>
 			</div>
 
@@ -616,6 +622,7 @@ background: linear-gradient(to right, #1fddff, #ff4b1f); /* W3C, IE 10+/ Edge, F
 					}
 					//装饰公司支付方法
 					function zhuangshiPay(id, payableAmount, orderNumber){
+						plus.nativeUI.showWaiting()
 						var payType = 'EMP_CREDIT'
 						if(id == 'yucunzhifu'){payType = 'ST_PREPAY'}
 						mui.ajax(serverUrl + '/app/order/handle/payForAnother', {
@@ -637,10 +644,21 @@ background: linear-gradient(to right, #1fddff, #ff4b1f); /* W3C, IE 10+/ Edge, F
 								if(data.code == 0) {
 									mui.alert('支付成功')
 									mui.fire(plus.webview.getWebviewById('center.html'),'refresh');
-									plus.webview.currentWebview().reload();
+									openview({
+										view:'myOrderList.html',
+										id: 'myOrderList',
+										reOpen:true,
+										extrasobj:{
+											type:'yi'
+										}
+									})
+									setTimeout(function(){
+										plus.webview.currentWebview().close();
+									},2000)
 								}else{
 									mui.alert(data.message || '支付失败,请重试！')
 								}
+								plus.nativeUI.closeWaiting()
 							},
 							error: function(xhr, type, errorThrown) {
 								//异常处理；
@@ -686,7 +704,16 @@ background: linear-gradient(to right, #1fddff, #ff4b1f); /* W3C, IE 10+/ Edge, F
 											console.log("----- 支付成功 -----");
 											var result = JSON.stringify(result);
 											mui.fire(plus.webview.getWebviewById('center.html'),'refresh');
-											plus.webview.currentWebview().reload();
+											openview({
+												view:'myOrderList.html',
+												id: 'myOrderList',
+												extrasobj:{
+													type:'yi'
+												}
+											})
+											setTimeout(function(){
+												plus.webview.currentWebview().close();
+											},2000)
 										}, function(e) {
 											console.log("----- 支付失败 -----");
 											console.log("[" + e.code + "]：" + e.message);
@@ -727,8 +754,17 @@ background: linear-gradient(to right, #1fddff, #ff4b1f); /* W3C, IE 10+/ Edge, F
 											console.log("----- 支付成功 -----", JSON.stringify(result));
 											plus.nativeUI.closeWaiting();
 											plus.nativeUI.alert("支付成功");
-											mui.fire(plus.webview.getWebviewById('center.html'),'refresh');
-											plus.webview.currentWebview().reload();
+											openview({
+												view:'myOrderList.html',
+												id: 'myOrderList',
+												reOpen:true,
+												extrasobj:{
+													type:'yi'
+												}
+											})
+											setTimeout(function(){
+												plus.webview.currentWebview().close();
+											},2000)
 
 										}, function(e) {
 											console.log("----- 支付失败 -----");
