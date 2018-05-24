@@ -70,10 +70,10 @@
 			</div>
 	    		<div class="bottomop flexr">
 				<div class="ft14 active" data-id="全部">全部</div>
-				<div class="ft14" data-id="红灯">铁粉<small>(2+/月)</small></div>
-				<div class="ft14" data-id="黄灯">粉丝<small>(1+/月)</small></div>
-				<div class="ft14" data-id="绿灯">会员<small>(5-/半年)</small></div>
-				<div class="ft14" data-id="熄灯">熄灯</div>
+				<div class="ft14" data-id="RED">铁粉<small>(2+/月)</small></div>
+				<div class="ft14" data-id="GREEN">粉丝<small>(1+/月)</small></div>
+				<div class="ft14" data-id="YELLOW">会员<small>(5-/半年)</small></div>
+				<div class="ft14" data-id="NOTCLOSE">熄灯</div>
 		 	</div>
 
 			<div id="QA"><!--大盒子-->
@@ -85,7 +85,7 @@
 				<script type="text/html" id="listDataS">
 				<%for(var i=0;i<dataList.length;i++){%>
 
-					<div class="qashadow" data-id="<%=dataList[i].light%>" onclick="openDetail(<%=dataList[i].cusId%>,'<%=dataList[i].light%>')">
+					<div class="qashadow" data-id="<%=dataList[i].lightStatus%>" onclick="openDetail(<%=dataList[i].cusId%>,'<%=dataList[i].light%>')">
 						<div class="qtop flexr">
 							<div class="ft14" style="display: -webkit-flex;align-items: center;">
 								<%if(dataList[i].picUrl && dataList[i].picUrl.indexOf('http')>-1){%>
@@ -146,8 +146,9 @@
 				$('.bottomop div').removeClass('active');
 				$(this).addClass('active');
 				var innerText = $(this).attr("data-id");
+
 				$('.qashadow').each(function(){
-				if($(this).attr('data-id') == innerText){
+				if(innerText.indexOf($(this).attr('data-id')) != -1){
 						$(this).css('display','');
 					}else{
 						if(innerText == '全部'){

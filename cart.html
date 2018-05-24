@@ -235,7 +235,11 @@
 							if(data.content) {
 								plus.storage.removeItem('remark');
 								plus.storage.removeItem('remark2');
+								plus.storage.removeItem('deliveryId');
 								plus.storage.removeItem('audnoAddrObj');
+								if(data.content.deliveryId){
+									plus.storage.setItem('deliveryId',data.content.deliveryId.toString());
+								}
 								if(data.content.auditListRes && data.content.auditListRes.goodsList && data.content.auditListRes.goodsList.length>0){
 									m = m+1;
 									$('#auditList').html(template('auditTpl', {lists:data.content.auditListRes}));

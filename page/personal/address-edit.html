@@ -148,8 +148,11 @@
 					</ul>
 				</div>
 				<div style="padding:5px 5%;">详细地址  <span class="redc"> *</span></div>
-				<textarea maxlength="60" id="address" rows="4" placeholder="请填写详细地址，如xx栋xx单元xx号"lass="textare box-s"></textarea><!--详细地址-->
- 			</div>
+				<textarea maxlength="60" id="address" rows="3" placeholder="请填写详细地址，如xx栋xx单元xx号"lass="textare box-s"></textarea><!--详细地址-->
+ 				<div style="padding:5px 5%;">楼盘信息</div>
+				<textarea maxlength="20" rows="3" id="estateInfo" placeholder="楼盘信息(选填),最多20个字" class="textare box-s"></textarea>
+
+		    </div>
 		    	<div class="address-btn clearfloat">
 		    		<span class="szwmr fl">设为默认</span>
 		    		<a href="#" class="toggle toggle--on fr" id="acquiescence"></a>
@@ -470,6 +473,7 @@
 						 	$('#districtW').val(thisAddArray[k].deliveryCounty)
 							$('#xiaoquIn').attr('value',thisAddArray[k].villageName); /*小区*/
 							$('#address').html(thisAddArray[k].detailedAddress); /*详细地址*/
+							$('#estateInfo').html(thisAddArray[k].estateInfo); /*楼盘信息*/
 							if(thisAddArray[k].isDefault){ /*显示默认地址*/
 								$('#acquiescence').removeClass('toggle--on');
 								$('#acquiescence').addClass('toggle--off');
@@ -523,7 +527,8 @@
 											'detailedAddress':newAddress,
 											'deliveryStreet':newStreet,
 											'villageName':xiaoquIn,
-											'isDefault':defaultAddress
+											'isDefault':defaultAddress,
+											'estateInfo':$('#estateInfo').val()
 										},
 										dataType:'json',
 										type:'post',

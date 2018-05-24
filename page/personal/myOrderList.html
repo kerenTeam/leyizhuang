@@ -100,6 +100,7 @@
 										<span class="stateSpan" status="list[i].status"><%= list[i].statusDesc%></span>
 										<% if(list[i].zhuangshi && list[i].storeName) {%>
 											<p>装饰公司：<%= list[i].storeName%></p>
+											<p>订&nbsp; 单&nbsp; 号：<%= list[i].orderNo%></p>
 										<% } %>
 									</h3>
 									<p class="p1" onclick="openDetail('<%= list[i].orderNo%>','','orderList<%= i%>','','<%= list[i].zhuangshi%>')">
@@ -112,14 +113,17 @@
 										<% }%>
 										<% if(list[i].endTime){%>
 											<% if(list[i].zhuangshi) {%>
-												<span class="stateSpan2" style="top: 70px;"><%=list[i].endTime%>分钟后关闭订单</span>
+												<span class="stateSpan2" style="top: 80px;"><%=list[i].endTime%>分钟后关闭订单</span>
 											<% }else{ %>
 												<span class="stateSpan2"><%=list[i].endTime%>分钟后关闭订单</span>
 											<% } %>
 										<% }%>
 									</p>
 									<div class="pad10 afterBorder">
-										地址:<%=list[i].shippingAddress%>
+										地址:<%=list[i].shippingAddress%><br />
+										<%if(list[i].estateInfo){%>
+											楼盘:<%=list[i].estateInfo%>
+										<%}%>
 									</div>
 									<div class="orderInfo">
 										共<%= list[i].count%>件商品 商品总额：<span>¥ <%= list[i].price%></span>

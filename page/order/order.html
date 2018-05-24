@@ -218,7 +218,7 @@
 						<span class="mui-icon mui-icon-arrowright maincl ft20" style="margin-top: 3px;"></span>
 					</div>
 					<%}else{%>
-					<div class="qtop flexr pad10" onclick="address()" id="addid" data-receiver="<%=obj[0].person%>" data-receiverPhone="<%=obj[0].phone%>" data-deliveryProvince="<%=obj[0].province%>" data-deliveryCity="<%=obj[0].city%>" data-deliveryCounty="<%=obj[0].country%>" data-deliveryStreet="<%=obj[0].street%>" data-residenceName="<%=obj[0].villageName%>" data-detailedAddress="<%=obj[0].address%>">
+					<div class="qtop flexr pad10" onclick="address()" id="addid" data-receiver="<%=obj[0].person%>" data-receiverPhone="<%=obj[0].phone%>" data-deliveryProvince="<%=obj[0].province%>" data-deliveryCity="<%=obj[0].city%>" data-deliveryCounty="<%=obj[0].country%>" data-deliveryStreet="<%=obj[0].street%>" data-residenceName="<%=obj[0].villageName%>" data-detailedAddress="<%=obj[0].address%>" data-estateInfo="<%=obj[0].estateInfo%>">
 						<img src="../../images/order/map.svg" style="margin-right: 10px;"/>
 						<div style="flex: 1;">
 							<div class="ft15">
@@ -228,6 +228,10 @@
 							<div class="ft15">
 								<span class="titcl"><%=obj[0].province%><%=obj[0].city%><%=obj[0].country%><%=obj[0].street%><%=obj[0].villageName%><%=obj[0].address%></span>
 							</div>
+							<%if(obj[0].estateInfo){%>
+								<div class="ft15">楼盘:<%=obj[0].estateInfo%></div>
+							<%}%>
+
 						</div>
 						<span class="mui-icon mui-icon-arrowright maincl ft20"></span>
 					</div>
@@ -320,10 +324,8 @@
 							<div class="pad10 ft14 afterBorder guide dsje" style="display: none;">代收金额<img src="../../images/center/help.svg" style="width: 20px;margin-left: 5px;" onclick="dsInfo()"/>&nbsp;&nbsp;<input type="tel" placeholder="请输入代收金额" name="cashHelp" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" class='mui-pull-right preDeposit' /></div>
 						<%}else{%>
 							<div class="pad10 ft14 afterBorder"><%if(guide == 1){%>门店<%}%><%if(guide ==2){%>客户<%}%>预存款&nbsp;&nbsp;<span class='activecl' id="preDepositb">¥--</span><input type="number" onchange="maxC(this)" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" placeholder="请输入使用金额" name="preDepositb" class='mui-pull-right preDeposit' oninput="inputbd(this)"/></div>
-							<!--only manager-->
 							<div class="pad10 ft14 afterBorder manager" style="display: none;">信用金&nbsp;&nbsp;<span class='activecl' id="credit">¥--</span><input type="number" placeholder="请输入使用金额" name="credit" onchange="maxC(this)" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" class='mui-pull-right preDeposit' oninput="inputbd(this)"/></div>
 							<div class="pad10 ft14 afterBorder manager" style="display: none;">现金返利&nbsp;&nbsp;<span class='activecl' id="cash">¥--</span><input type="number" placeholder="请输入使用金额" name="cash" onchange="maxC(this)" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" class='mui-pull-right preDeposit' oninput="inputbd(this)"/></div>
-							<!--only guide-->
 							<div class="pad10 ft14 afterBorder guide" style="display: none;">信用额度&nbsp;&nbsp;<span class='activecl' id="creditVal">¥--</span><input type="number" placeholder="请输入使用金额" name="creditVal" onchange="maxC(this)" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" class='mui-pull-right preDeposit' oninput="inputbd(this)"/></div>
 							<div class="pad10 ft14 afterBorder guide dsje" style="display: none;">代收金额 <img src="../../images/center/help.svg" style="width: 20px;margin-left: 5px;" onclick="dsInfo()"/>&nbsp;&nbsp;<input type="number" placeholder="请输入代收金额" name="cashHelp" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" class='mui-pull-right preDeposit' /></div>
 						<%}%>
@@ -490,31 +492,6 @@
 						'4)若导购不同意欠款，配送员有权将货物拉回。';
 					mui.alert(isCanceInfo)
 			}
-
-//			window.maxC = function(obj) {
-//				var cur = $(obj);
-//				var maxCh = cur.prev().html().replace('¥', '');
-//				var payValue = $('#totalOrderAmount').html().replace('¥', '');
-//				var creditc = $('input[name="credit"]').val(); //信用金
-//				var cashc = $('input[name="cash"]').val(); //现金返利
-//				var creditValc = $('input[name="creditVal"]').val(); //信用额度
-//				var preDepositbc = $('input[name="preDepositb"]').val(); //预存款
-//				var inputAll = Number(creditc) + Number(cashc) + Number(creditValc) +Number(preDepositbc);
-//				if(inputAll > payValue){
-//					mui.toast('您输入的金额大于应付金额哦');
-//					obj.value = '';
-//					carculate()
-//					return;
-//				}else if(Number(obj.value) > Number(maxCh)) {
-//					mui.toast('不能大于当前项的最大额度');
-//					obj.value = '';
-//					carculate()
-//					return;
-//				}else{
-//					carculate()
-//				}
-//
-//			}
 			window.inputbd = function(obj){
 
 				$('.onlypay').addClass('goOrder')
@@ -1041,10 +1018,48 @@
 			});
 
 			console.log('audnoAddrObj ',plus.storage.getItem("audnoAddrObj"))
+
 			if(plus.storage.getItem("audnoAddrObj") && plus.storage.getItem("auditNo")){
 				var addrObj = {};
 				addrObj.obj = [JSON.parse(plus.storage.getItem("audnoAddrObj"))];
 				document.getElementById("add_info").innerHTML = template("addrTpl", addrObj);
+			}else if(identityT == 2 && plus.storage.getItem("deliveryId")){
+				mui.ajax(serverUrl + '/app/user/get/deliveryAddress', {
+					data: {
+						userId: userId,
+						identityType: identityT,
+						deliveryId:plus.storage.getItem("deliveryId")
+					},
+					dataType: 'json',
+					type: 'post',
+					timeout: 10000,
+					headers: {
+						"Authorization": oldToken
+					},
+					success: function(data, type, xhr) {
+						console.log('deliveryId地址', data);
+						var addrObj = {}
+						if(data.code == 0 && data.content) {
+							var defultAddress = {};
+							defultAddress.id = data.content.id;
+							defultAddress.person = data.content.deliveryName;
+							defultAddress.phone = data.content.deliveryPhone;
+							defultAddress.province = data.content.deliveryProvince;
+							defultAddress.city = data.content.deliveryCity;
+							defultAddress.country = data.content.deliveryCounty;
+							defultAddress.street = data.content.deliveryStreet;
+							defultAddress.villageName = data.content.villageName;
+							defultAddress.address = data.content.detailedAddress;
+							defultAddress.estateInfo = data.content.estateInfo;
+							addrObj.obj = [defultAddress];
+
+							document.getElementById("add_info").innerHTML = template("addrTpl", addrObj);
+						}
+					},
+					error: function(xhr, type, errorThrown) {
+						console.log('响应失败  !');
+					}
+				});
 			}else{
 				orderAdd();
 			}
@@ -1069,16 +1084,6 @@
 							if(plus.storage.getItem("$addressStorageOrder") != null) {
 								addrObj.obj = JSON.parse(plus.storage.getItem("$addressStorageOrder"));
 							} else {
-//								var defultAddress = {};
-//								defultAddress.id = data.content.id;
-//								defultAddress.person = data.content.deliveryName;
-//								defultAddress.phone = data.content.deliveryPhone;
-//								defultAddress.province = data.content.deliveryProvince;
-//								defultAddress.city = data.content.deliveryCity;
-//								defultAddress.country = data.content.deliveryCounty;
-//								defultAddress.street = data.content.deliveryStreet;
-//								defultAddress.villageName = data.content.villageName;
-//								defultAddress.address = data.content.detailedAddress;
 								addrObj.obj = [];
 							}
 							document.getElementById("add_info").innerHTML = template("addrTpl", addrObj);
@@ -1616,7 +1621,7 @@
 				var endCur = carculate();
 				if(endCur >= 0){
 					var deliveryType, bookingStoreId, bookingStoreName, bookingStoreAddress,
-					receiver, receiverPhone,deliveryProvince, deliveryCity, deliveryCounty, deliveryStreet, residenceName, detailedAddress, deliveryTime, isOwnerReceiving, auditNo = plus.storage.getItem('auditNo') || '', remark;
+					receiver, receiverPhone,deliveryProvince, deliveryCity, deliveryCounty, deliveryStreet,estateInfo, residenceName, detailedAddress, deliveryTime, isOwnerReceiving, auditNo = plus.storage.getItem('auditNo') || '', remark;
 					remark = $('#remark').val().replace(/[\r\n]/g,"");
 					var delivery = $("input[name='peis']:checked").val();
 					deliveryType = (delivery == 1) ? "SELF_TAKE" : "HOUSE_DELIVERY";
@@ -1646,6 +1651,7 @@
 							deliveryStreet = $('#addid').attr('data-deliveryStreet'),
 							residenceName = $('#addid').attr('data-residenceName'),
 							detailedAddress = $('#addid').attr('data-detailedAddress');
+							estateInfo = $('#addid').attr('data-estateInfo');
 							if(!$('#cityResult .pstime').html()) {
 								mui.toast('还未选择配送时间哦！');
 								return;
@@ -1706,6 +1712,7 @@
 						"residenceName": residenceName,
 						"detailedAddress": detailedAddress,
 						"deliveryTime": deliveryTime,
+						"estateInfo":estateInfo
 //						"isOwnerReceiving": isOwnerReceiving
 					};
 					console.log('deliveryInfo ', deliveryInfo);

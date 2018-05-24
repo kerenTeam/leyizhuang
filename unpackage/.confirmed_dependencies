@@ -1321,7 +1321,8 @@
     "refer": [
       "page/personal/myOrderWL.html",
       "cart.html",
-      "page/personal/myOrderReturns.html"
+      "page/personal/myOrderReturns.html",
+      "page/personal/myOrderList.html"
     ],
     "resources": []
   },
