@@ -311,7 +311,7 @@
 					<div style="height: 10px;background: #EEEEEE;"></div>
 					<div id="allaccounts">
 						<%if(platform == 'ANDROID'){%>
-							<div class="pad10 ft14 afterBorder"><%if(guide ==1){%>门店<%}%>预存款&nbsp;&nbsp;<span class='activecl' id="preDepositb">¥--</span><input type="tel" onchange="maxC(this)" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" placeholder="请输入使用金额" name="preDepositb" class='mui-pull-right preDeposit' oninput="inputbd(this)"/></div>
+							<div class="pad10 ft14 afterBorder"><%if(guide ==1){%>门店<%}%><%if(guide ==2){%>客户<%}%>预存款&nbsp;&nbsp;<span class='activecl' id="preDepositb">¥--</span><input type="tel" onchange="maxC(this)" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" placeholder="请输入使用金额" name="preDepositb" class='mui-pull-right preDeposit' oninput="inputbd(this)"/></div>
 							<!--only manager-->
 							<div class="pad10 ft14 afterBorder manager" style="display: none;">信用金&nbsp;&nbsp;<span class='activecl' id="credit">¥--</span><input type="tel" placeholder="请输入使用金额" name="credit" onchange="maxC(this)" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" class='mui-pull-right preDeposit' oninput="inputbd(this)"/></div>
 							<div class="pad10 ft14 afterBorder manager" style="display: none;">现金返利&nbsp;&nbsp;<span class='activecl' id="cash">¥--</span><input type="tel" placeholder="请输入使用金额" name="cash" onchange="maxC(this)" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" class='mui-pull-right preDeposit' oninput="inputbd(this)"/></div>
@@ -319,9 +319,11 @@
 							<div class="pad10 ft14 afterBorder guide" style="display: none;">信用额度&nbsp;&nbsp;<span class='activecl' id="creditVal">¥--</span><input type="tel" placeholder="请输入使用金额" name="creditVal" onchange="maxC(this)" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" class='mui-pull-right preDeposit' oninput="inputbd(this)"/></div>
 							<div class="pad10 ft14 afterBorder guide dsje" style="display: none;">代收金额<img src="../../images/center/help.svg" style="width: 20px;margin-left: 5px;" onclick="dsInfo()"/>&nbsp;&nbsp;<input type="tel" placeholder="请输入代收金额" name="cashHelp" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" class='mui-pull-right preDeposit' /></div>
 						<%}else{%>
-							<div class="pad10 ft14 afterBorder"><%if(guide == 1){%>门店<%}%>预存款&nbsp;&nbsp;<span class='activecl' id="preDepositb">¥--</span><input type="number" onchange="maxC(this)" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" placeholder="请输入使用金额" name="preDepositb" class='mui-pull-right preDeposit' oninput="inputbd(this)"/></div>
+							<div class="pad10 ft14 afterBorder"><%if(guide == 1){%>门店<%}%><%if(guide ==2){%>客户<%}%>预存款&nbsp;&nbsp;<span class='activecl' id="preDepositb">¥--</span><input type="number" onchange="maxC(this)" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" placeholder="请输入使用金额" name="preDepositb" class='mui-pull-right preDeposit' oninput="inputbd(this)"/></div>
+							<!--only manager-->
 							<div class="pad10 ft14 afterBorder manager" style="display: none;">信用金&nbsp;&nbsp;<span class='activecl' id="credit">¥--</span><input type="number" placeholder="请输入使用金额" name="credit" onchange="maxC(this)" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" class='mui-pull-right preDeposit' oninput="inputbd(this)"/></div>
 							<div class="pad10 ft14 afterBorder manager" style="display: none;">现金返利&nbsp;&nbsp;<span class='activecl' id="cash">¥--</span><input type="number" placeholder="请输入使用金额" name="cash" onchange="maxC(this)" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" class='mui-pull-right preDeposit' oninput="inputbd(this)"/></div>
+							<!--only guide-->
 							<div class="pad10 ft14 afterBorder guide" style="display: none;">信用额度&nbsp;&nbsp;<span class='activecl' id="creditVal">¥--</span><input type="number" placeholder="请输入使用金额" name="creditVal" onchange="maxC(this)" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" class='mui-pull-right preDeposit' oninput="inputbd(this)"/></div>
 							<div class="pad10 ft14 afterBorder guide dsje" style="display: none;">代收金额 <img src="../../images/center/help.svg" style="width: 20px;margin-left: 5px;" onclick="dsInfo()"/>&nbsp;&nbsp;<input type="number" placeholder="请输入代收金额" name="cashHelp" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" class='mui-pull-right preDeposit' /></div>
 						<%}%>
@@ -664,6 +666,9 @@
 							if(identityT == 0){
 								discount.guide = 1;
 							}
+							if(identityT == 2){
+								discount.guide = 2;
+							}
 
 							document.getElementById('elseDiscount').innerHTML = template('elseDiscountTpl', discount);
 							plus.nativeUI.closeWaiting();
@@ -876,7 +881,9 @@
 								if(identityT == 0){
 									discount.guide = 1;
 								}
-
+								if(identityT == 2){
+									discount.guide = 2;
+								}
 								document.getElementById('elseDiscount').innerHTML = template('elseDiscountTpl', discount);
 								plus.nativeUI.closeWaiting();
 								carculate();
