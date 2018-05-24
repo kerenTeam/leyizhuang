@@ -16,6 +16,34 @@
  			vertical-align: top;
  		}
 		.mui-numbox {background: none!important;}
+		/*搜索*/
+		.searchFind { position: relative; }
+		.sint { right: 0; top: 5px; left: 0; position: absolute;
+		display: flex;
+		display: -webkit-flex;
+		align-items: center; }
+		.sint .back {     font-size: 15px;
+		    color: #c7161e;
+		    flex-basis: 40px;
+		    margin-left: 0px;
+		    text-align: center;
+		    margin-top: -10px;
+		    margin-right: 12px; }
+		.fsearch { border-radius: 20px!important; background-color: #f9f9f9!important; border: 1px solid #dfdfdf!important; font-size: 15px!important;
+			padding-left: 30px!important;  }
+		.fsearch::-webkit-input-placeholder { color: gray!important; text-align: left; font-size: 12px; }
+		.mui-icon-search { position: absolute;  top: 3px; color: gray;z-index: 200; }
+		form { width: 100%;     padding: 0 8px;}
+		.mui-icon-search2{
+			top: 11px;left: 14px;
+		}
+		input.fsearch::-webkit-input-placeholder{
+			color: #999;opacity:1;font-size: 15px;
+		}
+		#tabLink2{
+			height: 50px; position: relative; top: 3px;
+		}
+		#valInt::-webkit-input-placeholder {font-size: 12px;}
  	</style>
 	<body style="padding-bottom: 0px;">
 		<header class="mui-bar mui-bar-nav" style="padding-right: 15px;">
@@ -28,6 +56,21 @@
 			<span class="mui-badge mui-badge-white">0</span>
 		</div>-->
 		<div class="mui-content" style="margin-top: 7px;">
+		<div class="tab-hd tab-hdtwo" id="tabLink2" >
+			<div class="searchFind">
+				<span class="mui-icon mui-icon-search mui-icon-search2" id="clickSearch"></span>
+				<div class="sint">
+					<form id="searchf">
+						<input type="search" id="valInt" class="fsearch" placeholder="请输入商品关键字">
+					</form>
+					<span class="back" id="cancelSearch">确认</span>
+				</div>
+			</div>
+		</div>
+		<div class="gocarticon" id="div2" style="display: none;">
+			<img src="../images/whitecart.svg" alt="" />
+			<span class="mui-badge mui-badge-white">0</span>
+		</div>
 		    <!--商品列表-->
 		    <div class="goodsList" id="goodsList"></div>
 
@@ -69,7 +112,7 @@
 			
 			mui.plusReady(function(){
 			 
-				var categoryCode = plus.webview.currentWebview().ctid;
+				var categoryCode = '';
 				var rankCode = plus.webview.currentWebview().rankCode;
 				window.goodsInfo = function(id){
 						openview({
@@ -80,10 +123,7 @@
 		
 					}
 				mui('.mui-title')[0].innerHTML = plus.webview.currentWebview().rankName
-				if(categoryCode){
-					$('.flexw div').siblings().removeClass('curActive')
-					$('.'+categoryCode).addClass('curActive');
-				}
+			 
 				plus.nativeUI.showWaiting();
 				document.addEventListener('refresh', function() {
 					kindType(categoryCode);
@@ -91,6 +131,19 @@
 				downRe(kindType);
 				
 				 kindType(categoryCode);
+				 
+				//搜索
+				$('#searchf').submit(function(){
+					var valInt = $('#valInt').val();
+				 	kindType(valInt)
+					return false;
+				})
+				$('#clickSearch, #cancelSearch').click(function(){
+					var valInt = $('#valInt').val();
+					kindType(valInt) 
+				})
+				 
+				 
 				 function kindType(categoryCode){
 				 	var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
 					var userId = plus.storage.getItem('$userId');
@@ -101,7 +154,7 @@
 					//商品列表
 					mui.ajax(serverUrl+'/app/goods/seller/rank/list',{
 						data:{
-//							categoryCode:categoryCode,
+							keywords:categoryCode,
 							userId:userId,
 							identityType:identityT,
 							rankCode:rankCode,

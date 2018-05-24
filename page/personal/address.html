@@ -121,6 +121,7 @@
 			#tabLink2{
 				height: 50px; position: relative; top: 52px;
 			}
+			#valInt::-webkit-input-placeholder {font-size: 12px;}
 		</style>
 	</head>
 	<body>
@@ -137,7 +138,7 @@
 					<span class="mui-icon mui-icon-search mui-icon-search2" id="clickSearch"></span>
 					<div class="sint">
 						<form id="searchf">
-							<input type="search" id="valInt" class="fsearch" placeholder="收货人姓名、电话、详细地址，小区">
+							<input type="search" id="valInt" class="fsearch" placeholder="收货人姓名、电话、详细地址、小区、楼盘">
 						</form>
 						<span class="back" id="cancelSearch">确认</span>
 					</div>
@@ -172,7 +173,7 @@
 
 				    				<%if(addressLi[i].estateInfo){%>
 				    					<li>
-				    						楼盘信息:<%=addressLi[i].estateInfo%>
+				    						楼盘信息 : <%=addressLi[i].estateInfo%>
 				    					</li>
 				    				<%}%>
 
