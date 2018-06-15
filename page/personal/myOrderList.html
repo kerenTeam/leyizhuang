@@ -99,7 +99,7 @@
 										<a class="a1"><%= list[i].deliveryType%></a>
 										<span class="stateSpan" status="list[i].status"><%= list[i].statusDesc%></span>
 										<% if(list[i].zhuangshi && list[i].storeName) {%>
-											<p>装饰公司：<%= list[i].storeName%></p>
+											<p>客户：<%= list[i].storeName%></p>
 											<p>订&nbsp; 单&nbsp; 号：<%= list[i].orderNo%></p>
 										<% } %>
 									</h3>
@@ -268,17 +268,17 @@
 				<li class="fttc pad10 afterBorder ft16 activecl">
 					应付金额：<span id="payMoney">---</span>
 				</li>
-				<li class="pad10 afterBorder" id="alipay">
+				<li class="pad10 afterBorder aClick2" id="alipay">
 					<img src="../../images/order/alipay.svg" />支付宝
 				</li>
-				<li class="pad10 afterBorder" id="wxpay">
+				<li class="pad10 afterBorder aClick2" id="wxpay">
 					<img src="../../images/order/weixinpay.svg" />微信
 				</li>
-				<li class="pad10 afterBorder">
+				<li class="pad10 afterBorder aClick2" id="UnionPayY">
 					<img src="../../images/order/bankpay.svg" />银联支付
 				</li>
-				<li class="closeMask fttc pad10">
-					取消
+				<li class="closeMask fttc pad10 aClick2" style="padding: 14px;">
+					代付款
 				</li>
 			</ul>
 		</div>
@@ -372,6 +372,7 @@
 			}
 			//系统检测获取支付通道
 			function toPay(payableAmount, orderNumber) {
+				document.getElementById('UnionPayY').setAttribute('onclick', 'payfun("UnionPayY","' + payableAmount + '","' + orderNumber + '")');
 				plus.payment.getChannels(function(channels) {
 					console.log("channel " + JSON.stringify(channels));
 					for(var i in channels) {
@@ -422,11 +423,61 @@
 						//调用支付功能
 						plus.nativeUI.showWaiting();
 						gopay(id, payableAmount, orderNumber);
-					} else {
+					}else if(id == 'UnionPayY'){
+						UnionPayYGoPay(id, payableAmount, orderNumber);
+					}else {
 						plus.nativeUI.alert("当前环境不支持此支付通道！", null, "提示");
 						return;
 					}
+					//银联的支付
+					function UnionPayYGoPay(id, payableAmount, orderNumber){
+						plus.nativeUI.showWaiting();
+						mui.ajax(serverUrl + '/app/unionpay/order/pay/html', {
+							data: {
+								userId: userId,
+								identityType: identityT.toString(),
+//								payableAmount: 0.01,
+								payableAmount: payableAmount,
+								orderNumber: orderNumber
+//								userId: 1,
+//								identityType: 6,
+//								payableAmount: 0.01,
+//								orderNumber: 'CDXN20171206175749976912036'
+							},
+							type: 'post', //HTTP请求类型
+							headers: {
+								"Authorization": oldToken
+							},
+							timeout: 20000, //超时时间设置为10秒；
+							success: function(data) {
+								if(data.message){
+									plus.nativeUI.closeWaiting();
+									mui.alert(data.message || '支付失败,请重试！')
+								}else{
+									plus.nativeUI.closeWaiting();
+									openview({
+										view:'UnionPayYGoPay.html',
+										id:'UnionPayYGoPay',
+										extrasobj:{
+											dataHtml:data,
+											orderNumber: orderNumber,
+											payableAmount: payableAmount
+										}
+									})
+								}
+							},
+							error: function(xhr, type, errorThrown) {
+								//异常处理；
+								console.log(type);
+								console.log("----- 支付失败 -----");
+								console.log(xhr.status);
+								plus.nativeUI.closeWaiting();
+								plus.nativeUI.alert("支付失败,请重试！");
+							}
+						});
 
+					}
+					//支付宝 , 微信 的支付
 					function gopay(id, payableAmount, orderNumber) {
 						if(id == 'wxpay') {
 							//微信
@@ -555,8 +606,8 @@
 					$('#openSearch,#tabLink').show()
 				}
 				if(inType == 1){$('.mui-title').html("待付款");}
-				if(inType == 'dai'){$('.mui-title').html("装饰公司待付款清单");}
-				if(inType == 'yi'){$('.mui-title').html("装饰公司已付款清单");}
+				if(inType == 'dai'){$('.mui-title').html("客户待付款清单");}
+				if(inType == 'yi'){$('.mui-title').html("客户已付款清单");}
 				//打开订单详情
 				window.openDetail = function(orderNo,evaluat,id,cusid,zhuangshi){
 //					if(fromPage != 'index'){
@@ -718,7 +769,8 @@
 												ele.customer = {customerId:null}
 											}
 											if(ele.endTime){
-												ele.endTime = parseInt(ele.endTime/(1000*60))
+												var minutes = parseInt(ele.endTime/(1000*60));
+												ele.endTime = (Math.floor(minutes/60) + "小时" + (minutes%60) + "分" );
 											}
 											if(inType == 'yi' || inType == 'dai'){
 												ele.zhuangshi = inType

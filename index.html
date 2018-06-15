@@ -1273,7 +1273,9 @@
 								}
 
 							} else {
-								//								mui.toast(data.message)
+								if(identityT == 6 || identityT == 0 || identityT == 2 || identityT == 3){
+									$('#huodong0').html('<img src="img/pzorder.jpg" style="width:100%" onclick="paizhaoOrder()"/>')
+								}
 							}
 						},
 						error: function(xhr, type, errorThrown) {
@@ -1608,7 +1610,7 @@
 					id: 'achievement',
 				})
 			})
- 
+
 			function goodsInfo(id) {
 				openview({
 					view: 'page/goodsInfo.html',

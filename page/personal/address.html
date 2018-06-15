@@ -160,7 +160,7 @@
 					</div>
 				<%}else{%>
 				 	<% for(var i=0;i<addressLi.length;i++){ %>
-				    	<div class="addlist clearfloat" data-addid="<%= addressLi[i].id %>" data-person="<%= addressLi[i].deliveryName %>" data-phone="<%= addressLi[i].deliveryPhone %>" data-pv="<%= addressLi[i].deliveryProvince || '' %>" data-ct="<%= addressLi[i].deliveryCity %>" data-cty="<%= addressLi[i].deliveryCounty %>" data-st="<%= addressLi[i].deliveryStreet %>" data-villageName="<%= addressLi[i].villageName %>" data-adi="<%= addressLi[i].detailedAddress %>">
+				    	<div class="addlist clearfloat" data-addid="<%= addressLi[i].id %>" data-person="<%= addressLi[i].deliveryName %>" data-phone="<%= addressLi[i].deliveryPhone %>" data-pv="<%= addressLi[i].deliveryProvince || '' %>" data-ct="<%= addressLi[i].deliveryCity %>" data-cty="<%= addressLi[i].deliveryCounty %>" data-st="<%= addressLi[i].deliveryStreet %>" data-villageName="<%= addressLi[i].villageName %>" data-adi="<%= addressLi[i].detailedAddress %>" data-estateInfo="<%=addressLi[i].estateInfo%>">
 				    		<div class="top clearfloat box-s">
 				    			<ul>
 				    				<li>
@@ -247,7 +247,7 @@
 				var Ypagenum = 1; //应到页数
 				var oneSize = 10;
 				var url = '/app/user/setting/deliveryAddress/list';
-				var dataObj = {'userId' : userId,'identityType':identityT,'page':1,size:1000}
+				var dataObj = {'userId' : userId,'identityType':identityT,'page':1,size:10}
 				getData(url,dataObj);
 
 				//搜索
@@ -311,6 +311,7 @@
 										defultAddress.street = $(this).attr("data-st");
 										defultAddress.villageName = $(this).attr("data-villageName");
 										defultAddress.address = $(this).attr("data-adi");
+										defultAddress.estateInfo = $(this).attr("data-estateInfo");
 
 										addressStorage = [defultAddress];
 
@@ -470,6 +471,7 @@
 														defultAddress.street = $(this).attr("data-st");
 														defultAddress.villageName = $(this).attr("data-villageName");
 														defultAddress.address = $(this).attr("data-adi");
+														defultAddress.estateInfo = $(this).attr("data-estateInfo");
 
 														addressStorage = [defultAddress];
 

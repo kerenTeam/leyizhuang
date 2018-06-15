@@ -110,11 +110,11 @@ background: linear-gradient(to right, #1fddff, #ff4b1f); /* W3C, IE 10+/ Edge, F
 			<%}%>
 			<div class="Dpart3">
 				<% if(detail.zhuangshi){ %>
+					<!--<div>
+						<span class="huiC">客户</span><span class="mui-pull-right"><%= detail.storeName  || '暂无'%></span>
+					</div>-->
 					<div>
-						<span class="huiC">装饰公司</span><span class="mui-pull-right"><%= detail.storeName  || '暂无'%></span>
-					</div>
-					<div>
-						<span class="huiC">装饰公司经理</span><span class="mui-pull-right"><%= detail.customerName  || '暂无'%></span>
+						<span class="huiC">客户</span><span class="mui-pull-right"><%= detail.customerName  || '暂无'%></span>
 					</div>
 					<div>
 						<span class="huiC">电话</span><span class="mui-pull-right"><%= detail.customerPhone || '暂无'%> </span>
@@ -197,8 +197,9 @@ background: linear-gradient(to right, #1fddff, #ff4b1f); /* W3C, IE 10+/ Edge, F
 							<%}%>
 						</span>
 					</div>
+
 				<%}%>
-				<!--装饰公司经理查看订单详情，增加现金返利折扣金额显示-->
+				<!--客户经理查看订单详情，增加现金返利折扣金额显示-->
 				<%if(detail.identityT == '2'){%>
 					<div>
 						<span class="huiC">现金返利折扣</span> <span class="floL">
@@ -259,7 +260,7 @@ background: linear-gradient(to right, #1fddff, #ff4b1f); /* W3C, IE 10+/ Edge, F
 				</div>
 				<% if(detail.zhuangshi == 'yi'){ %>
 					<div>
-						<span class="huiC">代付款</span> <span class="floL"><%= detail.BillingDetailResponse.payForAnotherMoney%>元</span>
+						<span class="huiC">代付金额</span> <span class="floL"><%= detail.BillingDetailResponse.payForAnotherMoney%>元</span>
 					</div>
 					<div>
 						<span class="huiC">代付方式</span> <span class="floL"><%= detail.BillingDetailResponse.payType%></span>
@@ -267,12 +268,23 @@ background: linear-gradient(to right, #1fddff, #ff4b1f); /* W3C, IE 10+/ Edge, F
 				<% } %>
 				<% if(detail.identityT == '2' && detail.BillingDetailResponse.payForAnotherMoney){ %>
 					<div>
-						<span class="huiC">代付款</span> <span class="floL"><%= detail.BillingDetailResponse.payForAnotherMoney%>元</span>
+						<span class="huiC">代付金额</span> <span class="floL"><%= detail.BillingDetailResponse.payForAnotherMoney%>元</span>
 					</div>
 				<% } %>
 				<!--<div>
 					<span class="redC">应付金额</span> <span class="floL redC"><%= detail.BillingDetailResponse.leBiCashDiscount%>元</span>
 				</div>-->
+				<%if(detail.identityT == '6'){%>
+					<%if(detail.customerBillingDetailResponse && detail.customerBillingDetailResponse.payForAnotherMoney){%>
+						<div>
+							<span class="huiC">代付金额</span> <span class="floL">
+									<%= detail.customerBillingDetailResponse.payForAnotherMoney || 0%>元
+
+							</span>
+						</div>
+					<%}%>
+
+				<%}%>
 			</div>
 			<div class="fineT" style="text-align: right;background-color: #fff;margin-top: -7px;padding: 10px 15px;margin-bottom: 7px;">
 				实付款<span class="redC"><%= detail.BillingDetailResponse.amountPayable%>元</span>
@@ -388,7 +400,7 @@ background: linear-gradient(to right, #1fddff, #ff4b1f); /* W3C, IE 10+/ Edge, F
 						<%}%>
 					<%}%>
 				<%}else{%>
-					<!--导购的 装饰公司待付款清-->
+					<!--导购的 客户待付款清-->
 					<% if(detail.status == 'UNPAID'){%>
 						<span class="redC aClick" onclick="goToPay('<%= detail.orderNumber%>','<%= detail.BillingDetailResponse.amountPayable%>')">去支付</span>
 					<% }else{%>
@@ -459,14 +471,14 @@ background: linear-gradient(to right, #1fddff, #ff4b1f); /* W3C, IE 10+/ Edge, F
 				<li class="pad10 afterBorder">
 					<img src="../../images/order/bankpay.svg" />银联
 				</li>
-				<li class="pad10 afterBorder" id="eduzhifu">
+				<li class="pad10 afterBorder" id="eduzhifu" style="display: none;">
 					<img src="../../images/order/eduzhifu.svg" />信用额度
 				</li>
-				<li class="pad10 afterBorder" id="yucunzhifu">
+				<li class="pad10 afterBorder" id="yucunzhifu" style="display: none;">
 					<img src="../../images/order/yucunzhifu.svg" />门店预存款
 				</li>
 				<li class="closeMask fttc pad10">
-					取消
+					待付款
 				</li>
 			</ul>
 		</div>
@@ -620,7 +632,7 @@ background: linear-gradient(to right, #1fddff, #ff4b1f); /* W3C, IE 10+/ Edge, F
 						plus.nativeUI.alert("当前环境不支持此支付通道！", null, "提示");
 						return;
 					}
-					//装饰公司支付方法
+					//客户支付方法
 					function zhuangshiPay(id, payableAmount, orderNumber){
 						plus.nativeUI.showWaiting()
 						var payType = 'EMP_CREDIT'
@@ -830,6 +842,14 @@ background: linear-gradient(to right, #1fddff, #ff4b1f); /* W3C, IE 10+/ Edge, F
 							}
 							data.content.BillingDetailResponse = data.content.customerBillingDetailResponse || data.content.managerBillingDetailResponse || data.content.sellerBillingDetailResponse;
 							document.getElementById('main').innerHTML = template('mainS',{detail:data.content});
+							if(zhuangshi){
+								if(data.content.isUseStorePre){
+									mui('#yucunzhifu')[0].style.display = 'block'
+								}
+								if(data.content.isUseEmpCredit){
+									mui('#eduzhifu')[0].style.display = 'block'
+								}
+							}
 							if(isButton == 'no'){
 								$('.footBtn,.proRight button').hide();
 							}

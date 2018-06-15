@@ -1,0 +1,100 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>商学院详情1</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/configW.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/commonY.css" />
+	</head>
+	<style type="text/css">
+		#title,#content{padding: 10px;}
+		#title{font-size: 18px;color: #555;text-align: center;}
+		#content{font-size: 16px;}
+		#content img{width: 100%!important;}
+		p img{width: 100%!important;}
+		body,.mui-content{background-color: #fff !important;}
+		table{width: 100%!important;display: block;}
+	</style>
+	<body>
+		<header class="mui-bar mui-bar-nav" style="padding-right: 15px;">
+			<a id="leftbtn" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">详情</h1>
+		</header>
+		<script src="../../js/statusBar.js"></script>
+		<div class="mui-content">
+		<div id="content">
+
+		</div>
+		</div>
+		<div class="upload text-center text-xs gray" id="upload"></div>
+		<script src="../../js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/artTemplate-native.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/default.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			mui.init();
+			mui.plusReady(function(){
+				var wv=plus.webview.currentWebview();
+				wv.setStyle({'popGesture':'none'});
+				var old_back = mui.back;
+				var orderNumber = plus.webview.currentWebview().orderNumber;
+				var payableAmount = plus.webview.currentWebview().payableAmount;
+				//改写返回键返回的函数，返回时传页面停留时间
+				mui.back = function(){
+					mui.confirm('请确认已完成支付!', '提示', ['未支付', '已支付'], function(e) {
+			            if (e.index == 1) {
+//			            		openview({
+//								view: '../order/orderSuccess.html',
+//								id: 'orderSuccess',
+//								extrasobj:{
+//									orderNo:orderNumber,
+//									money:payableAmount,
+//								}
+//							})
+			            		openview({
+								view:'myOrderDetail.html',
+								id:'myOrderDetail',
+								extrasobj:{
+									orderNo:orderNumber,
+								}
+							})
+			            		setTimeout(function() {
+			            			if(plus.webview.getWebviewById("myOrderList")) {
+									plus.webview.getWebviewById("myOrderList").close();
+								}
+			            			if(plus.webview.getWebviewById("order")) {
+									plus.webview.getWebviewById("order").close();
+								}
+								plus.webview.currentWebview().close()
+							}, 1500)
+		            	    }else{
+							old_back();
+		            	    }
+			        })
+				}
+
+
+
+				var dataHtml = plus.webview.currentWebview().dataHtml;
+				$('.mui-title,#title').html('银联支付');
+				var self = plus.webview.currentWebview();
+				var baiduWV = plus.webview.create('UnionPayYGoPayIN.html', "UnionPayYGoPayIN", {
+					top: "75px",
+					bottom: 0
+				},{preload:dataHtml});
+				self.append(baiduWV);
+				setTimeout(function(){
+//					var UnionPayYGoPayIN = plus.webview.getWebviewById('UnionPayYGoPayIN')
+					console.error(JSON.stringify(baiduWV.nativeInstanceObject()) )
+//					alert(baiduWV.getSubNViews())
+				},5000)
+
+			})
+
+		</script>
+	</body>
+
+</html>

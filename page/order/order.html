@@ -367,20 +367,20 @@
 					<li class="fttc pad10 afterBorder ft16 activecl">
 						应付金额：<span id="payMoney">---</span>
 					</li>
-					<li class="pad10 afterBorder" id="alipay">
+					<li class="pad10 afterBorder aClick2" id="alipay">
 						<img src="../../images/order/alipay.svg" />支付宝
 					</li>
-					<li class="pad10 afterBorder" id="wxpay">
+					<li class="pad10 afterBorder aClick2" id="wxpay">
 						<img src="../../images/order/weixinpay.svg" />微信
 					</li>
-					<li class="pad10 afterBorder">
+					<li class="pad10 afterBorder aClick2" id="UnionPayY">
 						<img src="../../images/order/bankpay.svg" />银联支付
 					</li>
-					<li class="pad10 afterBorder" id="facePay" style="display: none;">
+					<li class="pad10 afterBorder aClick2" id="facePay" style="display: none;">
 						<img src="../../images/order/facePay.svg" />货到付款
 					</li>
-					<li class="closeMask fttc pad10">
-						取消
+					<li class="closeMask fttc pad10 aClick2">
+						代付款
 					</li>
 				</ul>
 			</div>
@@ -651,7 +651,7 @@
 							plus.nativeUI.closeWaiting();
 							carculate();
 							$('#firstLebi').val(ctlebi);
-							if(data.content.leBi) {
+							if(data.content.leBi){
 								if(data.content.leBi.rebate < 0){
 									$('#coupon').hide();
 								}else{
@@ -1023,7 +1023,7 @@
 				var addrObj = {};
 				addrObj.obj = [JSON.parse(plus.storage.getItem("audnoAddrObj"))];
 				document.getElementById("add_info").innerHTML = template("addrTpl", addrObj);
-			}else if(identityT == 2 && plus.storage.getItem("deliveryId")){
+			}else if(plus.storage.getItem("deliveryId")){
 				mui.ajax(serverUrl + '/app/user/get/deliveryAddress', {
 					data: {
 						userId: userId,
@@ -1823,7 +1823,7 @@
 					});
 
 					function toPay(payableAmount, orderNumber) {
-
+						document.getElementById('UnionPayY').setAttribute('onclick', 'payfun("UnionPayY","' + payableAmount + '","' + orderNumber + '")');
 						document.getElementById('facePay').setAttribute('onclick', 'facePayF("' + payableAmount + '","' + orderNumber + '")');
 
 						//系统检测获取支付通道
@@ -1921,9 +1921,60 @@
 							//调用支付功能
 							plus.nativeUI.showWaiting();
 							gopay(id, payableAmount, orderNumber);
+						}else if(id == 'UnionPayY'){
+							UnionPayYGoPay(id, payableAmount, orderNumber);
 						} else {
 							plus.nativeUI.alert("当前环境不支持此支付通道！", null, "提示");
 							return;
+						}
+
+						//银联的支付
+						function UnionPayYGoPay(id, payableAmount, orderNumber){
+							plus.nativeUI.showWaiting();
+							mui.ajax(serverUrl + '/app/unionpay/order/pay/html', {
+								data: {
+									userId: userId,
+									identityType: identityT.toString(),
+	//								payableAmount: 0.01,
+									payableAmount: payableAmount,
+									orderNumber: orderNumber
+	//								userId: 1,
+	//								identityType: 6,
+	//								payableAmount: 0.01,
+	//								orderNumber: 'CDXN20171206175749976912036'
+								},
+								type: 'post', //HTTP请求类型
+								headers: {
+									"Authorization": oldToken
+								},
+								timeout: 20000, //超时时间设置为10秒；
+								success: function(data) {
+									if(data.message){
+										plus.nativeUI.closeWaiting();
+										mui.alert(data.message || '支付失败,请重试！')
+									}else{
+										plus.nativeUI.closeWaiting();
+										openview({
+											view:'../personal/UnionPayYGoPay.html',
+											id:'UnionPayYGoPay',
+											extrasobj:{
+												dataHtml:data,
+												orderNumber: orderNumber,
+												payableAmount: payableAmount
+											}
+										})
+									}
+								},
+								error: function(xhr, type, errorThrown) {
+									//异常处理；
+									console.log(type);
+									console.log("----- 支付失败 -----");
+									console.log(xhr.status);
+									plus.nativeUI.closeWaiting();
+									plus.nativeUI.alert("支付失败,请重试！");
+								}
+							});
+
 						}
 
 						function gopay(id, payableAmount, orderNumber) {

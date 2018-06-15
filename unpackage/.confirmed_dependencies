@@ -914,7 +914,8 @@
       "page/personal/productCoupon.html",
       "page/order/elseMaterialList.html",
       "page/personal/myOrderList.html",
-      "page/order/orderSuccess.html"
+      "page/order/orderSuccess.html",
+      "page/personal/UnionPayYGoPay.html"
     ]
   },
   "page/order/chooseCustom.html": {
@@ -1250,7 +1251,8 @@
       "page/personal/myOrderDetail.html",
       "page/personal/signInDay.html",
       "page/personal/myOrderReturns.html",
-      "cart.html"
+      "cart.html",
+      "page/personal/UnionPayYGoPay.html"
     ],
     "resources": []
   },
@@ -1425,5 +1427,15 @@
       "page/guide/goodsInfo2.html"
     ],
     "resources": []
+  },
+  "page/personal/UnionPayYGoPay.html": {
+    "resources": [
+      "page/personal/UnionPayYGoPayIN.html"
+    ],
+    "refer": [
+      "page/personal/UnionPayYGoPayIN.html",
+      "page/order/orderSuccess.html",
+      "page/personal/myOrderDetail.html"
+    ]
   }
 }

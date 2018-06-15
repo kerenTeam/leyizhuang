@@ -1,0 +1,50 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>商学院详情2</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/configW.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/commonY.css" />
+	</head>
+	<style type="text/css">
+		#title,#content{padding: 10px;}
+		#title{font-size: 18px;color: #555;text-align: center;}
+		#content{font-size: 16px;}
+		#content img{width: 100%!important;}
+		p img{width: 100%!important;}
+		body,.mui-content{background-color: #fff !important;}
+		table{width: 100%!important;display: block;}
+	</style>
+	<body>
+		<!--<header class="mui-bar mui-bar-nav" style="padding-right: 15px;">
+			<a id="leftbtn" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">详情</h1>
+		</header>-->
+		<script src="../../js/statusBar.js"></script>
+		<div class="mui-content">
+		<div id="content">
+
+		</div>
+		</div>
+		<div class="upload text-center text-xs gray" id="upload"></div>
+		<script src="../../js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/artTemplate-native.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/default.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			mui.init();
+			mui.plusReady(function(){
+				var wv=plus.webview.currentWebview();
+				wv.setStyle({'popGesture':'none'});
+				var preload = plus.webview.currentWebview().preload;
+				$('.mui-title,#title').html('data.content.title');
+				$('#content').html(preload)
+			})
+
+		</script>
+	</body>
+
+</html>

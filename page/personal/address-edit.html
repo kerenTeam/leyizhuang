@@ -70,7 +70,7 @@
 				margin-top: 4%;
 			}
 			.add-address .textare{
-				border-bottom: none;
+				border-bottom: none!important;
 			}
 			.redc{color: red!important;}
 			.data ul li span{color: #666;}
@@ -386,9 +386,8 @@
 			var userId = plus.webview.currentWebview().userId;
 			var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
 
-
 			mui.ajax(serverUrl+'/app/user/setting/deliveryAddress/list',{
-					data:{'userId' : userId,'identityType':identityT,'page':1},
+					data:{'userId' : userId,'identityType':identityT,'page':1,'size':100},
 					dataType:'json',
 					type:'post',
 					timeout:10000,
