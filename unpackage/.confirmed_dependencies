@@ -493,7 +493,8 @@
       "page/order/chooseGift.html",
       "page/order/order.html",
       "page/order/chooseCustom.html",
-      "page/order/workerMaterial.html"
+      "page/order/workerMaterial.html",
+      "couponCart.html"
     ]
   },
   "page/collect.html": {
@@ -1436,6 +1437,11 @@
       "page/personal/UnionPayYGoPayIN.html",
       "page/order/orderSuccess.html",
       "page/personal/myOrderDetail.html"
+    ]
+  },
+  "couponCart.html": {
+    "refer": [
+      "page/order/chooseCustom.html"
     ]
   }
 }

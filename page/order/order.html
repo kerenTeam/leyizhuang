@@ -174,7 +174,7 @@
 					<div style="clear: both;"></div>
 				</dl>
 			</script>
-			<div class="bgcwt">
+			<div class="bgcwt isBuyCoupon">
 				<div class="pad10 ft15 afterBorder">
 					<em>配送方式 </em>
 					<div class="mui-input-row mui-radio mui-left mui-pull-right psw selfTake">
@@ -254,8 +254,8 @@
 				<div class="pad_5 ft15 maincl">冲帐户余额<span class='mui-pull-right pad_r10' id="memberDiscount">¥--</span></div>
 				<div class="pad_5 ft15 maincl">订单折扣<span class='mui-pull-right pad_r10' id="orderDiscount">¥--</span></div>
 				<div class="pad_5 ft15 maincl proCouponDiscount" style="display: none;">产品券折扣<span class='mui-pull-right pad_r10' id="proCouponDiscount">¥--</span></div>
-				<div class="pad_5 ft15 maincl">运费<span class='mui-pull-right pad_r10' id="freight">¥--</span></div>
-				<div class="pad_5 ft15 maincl">上楼费<span class='mui-pull-right pad_r10' id="upstar">依现实情况收取</span></div>
+				<div class="pad_5 ft15 maincl yfee">运费<span class='mui-pull-right pad_r10' id="freight">¥--</span></div>
+				<div class="pad_5 ft15 maincl sfee">上楼费<span class='mui-pull-right pad_r10' id="upstar">依现实情况收取</span></div>
 
 			</div>
 			<div id="elseDiscount"></div>
@@ -320,13 +320,13 @@
 							<div class="pad10 ft14 afterBorder manager" style="display: none;">信用金&nbsp;&nbsp;<span class='activecl' id="credit">¥--</span><input type="tel" placeholder="请输入使用金额" name="credit" onchange="maxC(this)" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" class='mui-pull-right preDeposit' oninput="inputbd(this)"/></div>
 							<div class="pad10 ft14 afterBorder manager" style="display: none;">现金返利&nbsp;&nbsp;<span class='activecl' id="cash">¥--</span><input type="tel" placeholder="请输入使用金额" name="cash" onchange="maxC(this)" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" class='mui-pull-right preDeposit' oninput="inputbd(this)"/></div>
 							<!--only guide-->
-							<div class="pad10 ft14 afterBorder guide" style="display: none;">信用额度&nbsp;&nbsp;<span class='activecl' id="creditVal">¥--</span><input type="tel" placeholder="请输入使用金额" name="creditVal" onchange="maxC(this)" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" class='mui-pull-right preDeposit' oninput="inputbd(this)"/></div>
+							<div class="pad10 ft14 afterBorder guide xyed" style="display: none;">信用额度&nbsp;&nbsp;<span class='activecl' id="creditVal">¥--</span><input type="tel" placeholder="请输入使用金额" name="creditVal" onchange="maxC(this)" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" class='mui-pull-right preDeposit' oninput="inputbd(this)"/></div>
 							<div class="pad10 ft14 afterBorder guide dsje" style="display: none;">代收金额<img src="../../images/center/help.svg" style="width: 20px;margin-left: 5px;" onclick="dsInfo()"/>&nbsp;&nbsp;<input type="tel" placeholder="请输入代收金额" name="cashHelp" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" class='mui-pull-right preDeposit' /></div>
 						<%}else{%>
 							<div class="pad10 ft14 afterBorder"><%if(guide == 1){%>门店<%}%><%if(guide ==2){%>客户<%}%>预存款&nbsp;&nbsp;<span class='activecl' id="preDepositb">¥--</span><input type="number" onchange="maxC(this)" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" placeholder="请输入使用金额" name="preDepositb" class='mui-pull-right preDeposit' oninput="inputbd(this)"/></div>
 							<div class="pad10 ft14 afterBorder manager" style="display: none;">信用金&nbsp;&nbsp;<span class='activecl' id="credit">¥--</span><input type="number" placeholder="请输入使用金额" name="credit" onchange="maxC(this)" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" class='mui-pull-right preDeposit' oninput="inputbd(this)"/></div>
 							<div class="pad10 ft14 afterBorder manager" style="display: none;">现金返利&nbsp;&nbsp;<span class='activecl' id="cash">¥--</span><input type="number" placeholder="请输入使用金额" name="cash" onchange="maxC(this)" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" class='mui-pull-right preDeposit' oninput="inputbd(this)"/></div>
-							<div class="pad10 ft14 afterBorder guide" style="display: none;">信用额度&nbsp;&nbsp;<span class='activecl' id="creditVal">¥--</span><input type="number" placeholder="请输入使用金额" name="creditVal" onchange="maxC(this)" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" class='mui-pull-right preDeposit' oninput="inputbd(this)"/></div>
+							<div class="pad10 ft14 afterBorder guide xyed" style="display: none;">信用额度&nbsp;&nbsp;<span class='activecl' id="creditVal">¥--</span><input type="number" placeholder="请输入使用金额" name="creditVal" onchange="maxC(this)" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" class='mui-pull-right preDeposit' oninput="inputbd(this)"/></div>
 							<div class="pad10 ft14 afterBorder guide dsje" style="display: none;">代收金额 <img src="../../images/center/help.svg" style="width: 20px;margin-left: 5px;" onclick="dsInfo()"/>&nbsp;&nbsp;<input type="number" placeholder="请输入代收金额" name="cashHelp" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" class='mui-pull-right preDeposit' /></div>
 						<%}%>
 					</div>
@@ -439,7 +439,10 @@
 			var promotionInfo = plus.storage.getItem('giftList');//促销赠品
 			var customerId = plus.webview.currentWebview().customerId || '';
 			var sysDeliveryType = plus.webview.currentWebview().sysDeliveryType;
-
+			var orderType = plus.webview.currentWebview().orderType || '';
+			if(orderType == 'COUPON'){
+				$('.isBuyCoupon,.xyed,.yfee,.sfee,.dsje').hide()
+			}
 
 			if(plus.storage.getItem('remark2')){
 				$('#remark').val(plus.storage.getItem('remark2'));
@@ -545,7 +548,8 @@
 						customerId: customerId,
 						giftList:JSON.parse(promotionInfo),
 						productCouponList:JSON.parse(productCouponList),
-						sysDeliveryType:sysDeliveryType
+						sysDeliveryType:sysDeliveryType,
+						orderType:orderType,
 					},
 					dataType: 'json',
 					type: 'post',
@@ -597,7 +601,9 @@
 							}else{
 								$('.proCouponDiscount').hide()
 							}
-
+							if(orderType == 'COUPON'){
+								$('.proCouponDiscount').hide()
+							}
 							if(data.content.freight) {
 								$('#freight').html('¥' + data.content.freight)
 								$('#firstFreight').val(data.content.freight)
@@ -668,6 +674,9 @@
 							}
 							if(identityT == 2) {
 								$('.manager').show();
+							}
+							if(orderType == 'COUPON'){
+								$('.isBuyCoupon,.xyed,.yfee,.sfee').hide()
 							}
 							//券
 							$(".checkQuan").click(function() {
@@ -877,6 +886,9 @@
 								}
 								if(identityT == 2) {
 									$('.manager').show();
+								}
+								if(orderType == 'COUPON'){
+									$('.isBuyCoupon,.xyed,yfee,sfee').hide()
 								}
 								//券
 								$(".checkQuan").click(function() {
@@ -1207,6 +1219,9 @@
 													$('.storeAddress').html('无地址')
 												}
 												$('.dsje').hide();
+												if(orderType == 'COUPON'){
+													$('.dsje').hide()
+												}
 												if($('#SpecialSelfTake').val() == 1){
 													$('.goOrderNp').show()
 													$('.goOrder,#coupon,#quanData,#allaccounts').hide()
@@ -1219,6 +1234,9 @@
 
 											} else {
 												if(identityT != 6){$('.dsje').show();}
+												if(orderType == 'COUPON'){
+													$('.dsje').hide()
+												}
 												var message = data.message || '包含不支持自提商品';
 												$('#chooseStore,#storeAddress').hide();
 												$('#add_info,.isowndis,#cityResult').show();
@@ -1232,6 +1250,9 @@
 										},
 										error: function(xhr, type, errorThrown) {
 											if(identityT != 6){$('.dsje').show();}
+											if(orderType == 'COUPON'){
+												$('.dsje').hide()
+											}
 											plus.nativeUI.closeWaiting();
 											console.log('响应失败');
 										}
@@ -1271,6 +1292,9 @@
 														$('.storeAddress').html('无地址')
 													}
 													$('.dsje').hide();
+													if(orderType == 'COUPON'){
+														$('.dsje').hide()
+													}
 													if($('#SpecialSelfTake').val() == 1){
 														$('.goOrderNp').show()
 														$('.goOrder,#coupon,#quanData,#allaccounts').hide()
@@ -1285,6 +1309,9 @@
 													$('#chooseStore,#storeAddress').hide();
 													$('#freight').html('¥' + $('#firstFreight').val());
 													if(identityT != 6){$('.dsje').show();}
+													if(orderType == 'COUPON'){
+														$('.dsje').hide()
+													}
 													curselect.find('option').eq(0).attr('selected', true);
 													$("input[name='peis']").eq(0).attr('checked', false)
 													$("input[name='peis']").eq(1).prop('checked', true)
@@ -1295,6 +1322,9 @@
 											},
 											error: function(xhr, type, errorThrown) {
 												if(identityT != 6){$('.dsje').show();}
+												if(orderType == 'COUPON'){
+													$('.dsje').hide()
+												}
 												plus.nativeUI.closeWaiting();
 												console.log('响应失败');
 											}
@@ -1306,6 +1336,9 @@
 								$('#chooseStore').hide();
 								$('#freight').html('¥' + $('#firstFreight').val());
 								if(identityT != 6){$('.dsje').show();}
+								if(orderType == 'COUPON'){
+									$('.dsje').hide()
+								}
 								var message = data.message || '包含不支持自提商品'
 								$("input[name='peis']").eq(0).attr('checked', false)
 								$("input[name='peis']").eq(1).prop('checked', true).parent().show()
@@ -1322,6 +1355,9 @@
 
 				} else {
 					if(identityT != 6){$('.dsje').show();}
+					if(orderType == 'COUPON'){
+						$('.dsje').hide()
+					}
 					$('#chooseStore,#storeAddress').hide();
 					$('#add_info,.isowndis,#cityResult').show();
 					$('#freight').html('¥' + $('#firstFreight').val());
@@ -1639,7 +1675,7 @@
 						}
 					} else {
 						var addid = $('#addid').attr('data-receiver');
-						if(!addid) {
+						if(!orderType && !addid) {
 							mui.toast('还未选择收货地址哦！');
 							return;
 						} else {
@@ -1732,8 +1768,14 @@
 					})
 					plus.nativeUI.showWaiting();
 					cur.attr('disabled',true)
+					var payAPI = ''
+					if(orderType == 'COUPON'){
+						payAPI = '/app/order/create/BuyCouponOrder'
+					}else{
+						payAPI = '/app/order/create'
+					}
 					//创建订单
-					mui.ajax(serverUrl + '/app/order/create', {
+					mui.ajax(serverUrl + payAPI, {
 						data: {
 							"cityId": cityId,
 							"identityType": identityT,

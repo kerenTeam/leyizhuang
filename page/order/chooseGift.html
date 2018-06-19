@@ -141,6 +141,7 @@
 			var oldToken = plus.storage.getItem('oldToken');
 			var idobj = plus.storage.getItem('materialList') || '[]';
 			var cusId = plus.webview.currentWebview().cusId;
+			var buyType = plus.webview.currentWebview().buyType || '';
 
 			console.log('idobj ', idobj)
 			cartload();
@@ -152,7 +153,8 @@
 					data: {
 						userId: userId,
 						identityType: identityT,
-						goodsArray: idobj
+						goodsArray: idobj,
+						orderType:buyType
 					},
 					dataType: 'json',
 					type: 'post',
@@ -229,7 +231,8 @@
 //											autoShow:false,
 											extrasobj: {
 												customerId: cusId,
-												sysDeliveryType:sysDeliveryType
+												sysDeliveryType:sysDeliveryType,
+												orderType:buyType
 											}
 										})
 									} else {
@@ -238,7 +241,8 @@
 											id: 'order',
 //											autoShow:false,
 											extrasobj: {
-												sysDeliveryType:sysDeliveryType
+												sysDeliveryType:sysDeliveryType,
+												orderType:buyType
 											}
 										})
 									}
@@ -308,7 +312,8 @@
 //											autoShow:false,
 											extrasobj: {
 												customerId: cusId,
-												sysDeliveryType:sysDeliveryType
+												sysDeliveryType:sysDeliveryType,
+												orderType:buyType
 											}
 										})
 									} else {
@@ -317,7 +322,8 @@
 											id: 'order',
 //											autoShow:false,
 											extrasobj: {
-												sysDeliveryType:sysDeliveryType
+												sysDeliveryType:sysDeliveryType,
+												orderType:buyType
 											}
 										})
 									}

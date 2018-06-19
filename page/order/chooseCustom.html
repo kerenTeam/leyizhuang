@@ -102,14 +102,7 @@
 					extrasobj:{htmlName:'chooseCustom'}
 				})
 			}
-			function gonext(id){
-				openview({
-					view:'chooseGift.html',
-					id:'chooseGift',
-//					autoShow:false,
-					extrasobj:{cusId:id}
-				})
-			}
+			
 			//导入通讯录
 			document.addEventListener('resetTel2',function(){
 				var contactOne = JSON.parse(plus.storage.getItem('contactOne'));
@@ -124,6 +117,16 @@
 				var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
 				var userId = plus.storage.getItem('$userId');
 				var oldToken = plus.storage.getItem('oldToken');
+				var buyType = plus.webview.currentWebview().buyType || '';
+
+				window.gonext = function(id){
+					openview({
+						view:'chooseGift.html',
+						id:'chooseGift',
+	//					autoShow:false,
+						extrasobj:{cusId:id,buyType:buyType}
+					})
+				}
 //
 //				mui.ajax(serverUrl+'/app/employee/qr/code',{
 //					data:{'userID':userId,'identityType':identityT},

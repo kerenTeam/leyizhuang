@@ -404,7 +404,7 @@
 			"splash": false,
 			"push": false,
 			"spot": false
-		},"adid":"124652120106"
+		}
 	},
 	"dependencies": {
 		"pages": {
@@ -924,7 +924,8 @@
 					"page/order/chooseGift.html",
 					"page/order/order.html",
 					"page/order/chooseCustom.html",
-					"page/order/workerMaterial.html"
+					"page/order/workerMaterial.html",
+					"couponCart.html"
 				],
 				"priority": 0
 			},
@@ -1968,6 +1969,13 @@
 				"refer": [
 					"page/order/orderSuccess.html",
 					"page/personal/myOrderDetail.html"
+				],
+				"priority": 0
+			},
+			"couponCart.html": {
+				"resources": [],
+				"refer": [
+					"page/order/chooseCustom.html"
 				],
 				"priority": 0
 			}

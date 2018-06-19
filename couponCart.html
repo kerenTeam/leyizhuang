@@ -3,7 +3,7 @@
 
 	<head>
 		<meta charset="UTF-8">
-		<title>购物车</title>
+		<title>购物车(买券)</title>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link rel="stylesheet" type="text/css" href="css/mui.min.css" />
 		<link rel="stylesheet" type="text/css" href="css/commonY.css"/>
@@ -21,9 +21,9 @@
 	<body>
 
 		<header class="mui-bar mui-bar-nav">
-			<a class="headbar mui-action-back mui-icon mui-icon-left-nav mui-pull-left normalSize" id="fanhui" style="margin-left: 0;display: none;width: 30px!important;"></a>
-			<span style="line-height: 50px;color: #555;margin-left: 10px;display: none;" id="buyCoupon" onclick="buyCoupon()">
-				买券
+			<a class="headbar mui-action-back mui-icon mui-icon-left-nav mui-pull-left normalSize" id="fanhui" style="margin-left: 0;width: 30px!important;"></a>
+			<span style="line-height: 50px;color: #555;margin-left: 5px;" class="mui-action-back" id="buyCoupon">
+				购物
 			</span>
 			<h1 class="mui-title">下料清单</h1>
 			<a class="mui-pull-right editAll" id="bianji" style="line-height: 50px;color: #555;">编辑</a>
@@ -186,12 +186,6 @@
 	</body>
 
 	<script>
-		function buyCoupon(){
-			openview({
-				view:'couponCart.html',
-				id: 'couponCart'
-			})
-		}
 		mui.plusReady(function() {
 			downRe(cartload);
 			var page = plus.webview.currentWebview().page;
@@ -223,12 +217,10 @@
 				var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
 				var userId = plus.storage.getItem('$userId');
 				var oldToken = plus.storage.getItem('oldToken');
-				if(identityT == 0 || identityT == 6){
-					$('#buyCoupon').show()
-				}
+			 
 				//获取购物车数据
 				plus.nativeUI.showWaiting();
-				mui.ajax(serverUrl + '/app/materialList/list', {
+				mui.ajax(serverUrl + '/app/materialList/buyCoupon/list', {
 					data: {
 						userId: userId,
 						identityType: identityT,
@@ -736,6 +728,7 @@
 												mui.ajax(serverUrl + '/app/gift/list', {
 													data: {
 														userId: userId,
+														orderType:'COUPON',
 														identityType: identityT,
 														goodsArray: JSON.stringify(materialList)
 													},
@@ -753,12 +746,13 @@
 																openview({
 																	view:'page/order/chooseGift.html',
 																	id:'chooseGift',
-																	extrasobj:{cusId:cusId}
+																	extrasobj:{cusId:cusId,buyType:'COUPON'}
 																})
 															}else{
 																openview({
 																	view: 'page/order/chooseCustom.html',
 																	id: 'chooseCustom',
+																	extrasobj:{buyType:'COUPON'}
 																})
 															}
 														} else {
@@ -772,40 +766,10 @@
 													}
 												});
 
-											} else if(identityT == 3) {
-												mui.ajax(serverUrl+'/app/goodsMoney/worker',{
-													data:{
-														userId:userId,
-														identityType:identityT,
-														custoermId:cusId,
-														goodsList:goodlists
-													},
-													dataType:'json',
-													type:'post',
-													timeout:10000,
-													headers:{"Authorization":oldToken,'Content-Type':'application/json'},
-													success:function(data,type,xhr){
-														plus.nativeUI.closeWaiting()
-														console.log('获取料单商品',data);
-														var dataObj = {};
-														if(data.code == 0){
-															openview({
-																view: 'page/order/workerMaterial.html',
-																id: 'workerMaterial'
-															})
-														}else{
-															plus.nativeUI.alert(data.message);
-														}
-													},
-													error:function(xhr,type,errorThrown){
-														console.log('响应失败  !');
-														plus.nativeUI.closeWaiting();
-
-													}
-												});
-											} else {
+											}else {
 												mui.ajax(serverUrl + '/app/gift/list', {
 													data: {
+														orderType:'COUPON',
 														userId: userId,
 														identityType: identityT,
 														goodsArray: JSON.stringify(materialList)
@@ -823,6 +787,7 @@
 															openview({
 																view: 'page/order/chooseGift.html',
 																id: 'chooseGift',
+																extrasobj:{buyType:'COUPON'}
 															})
 														} else {
 															plus.nativeUI.alert(data.message);
