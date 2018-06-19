@@ -462,22 +462,22 @@ background: linear-gradient(to right, #1fddff, #ff4b1f); /* W3C, IE 10+/ Edge, F
 				<li class="fttc pad10 afterBorder ft16 activecl">
 					应付金额：<span id="payMoney">---</span>
 				</li>
-				<li class="pad10 afterBorder" id="alipay">
+				<li class="pad10 afterBorder aClick2" id="alipay">
 					<img src="../../images/order/alipay.svg" />支付宝
 				</li>
-				<li class="pad10 afterBorder" id="wxpay">
+				<li class="pad10 afterBorder aClick2" id="wxpay">
 					<img src="../../images/order/weixinpay.svg" />微信
 				</li>
-				<li class="pad10 afterBorder">
-					<img src="../../images/order/bankpay.svg" />银联
+				<li class="pad10 afterBorder aClick2" id="UnionPayY">
+					<img src="../../images/order/bankpay.svg" />银联支付
 				</li>
-				<li class="pad10 afterBorder" id="eduzhifu" style="display: none;">
+				<li class="pad10 afterBorder aClick2" id="eduzhifu" style="display: none;">
 					<img src="../../images/order/eduzhifu.svg" />信用额度
 				</li>
-				<li class="pad10 afterBorder" id="yucunzhifu" style="display: none;">
+				<li class="pad10 afterBorder aClick2" id="yucunzhifu" style="display: none;">
 					<img src="../../images/order/yucunzhifu.svg" />门店预存款
 				</li>
-				<li class="closeMask fttc pad10">
+				<li class="closeMask fttc pad10" style="padding: 14px;">
 					待付款
 				</li>
 			</ul>
@@ -576,6 +576,7 @@ background: linear-gradient(to right, #1fddff, #ff4b1f); /* W3C, IE 10+/ Edge, F
 			function toPay(payableAmount, orderNumber) {
 				document.getElementById('yucunzhifu').setAttribute('onclick', 'payfun("yucunzhifu","' + payableAmount + '","' + orderNumber + '")');
 				document.getElementById('eduzhifu').setAttribute('onclick', 'payfun("eduzhifu","' + payableAmount + '","' + orderNumber + '")');
+				document.getElementById('UnionPayY').setAttribute('onclick', 'payfun("UnionPayY","' + payableAmount + '","' + orderNumber + '")');
 				plus.payment.getChannels(function(channels) {
 					console.log("channel " + JSON.stringify(channels));
 					for(var i in channels) {
@@ -628,9 +629,59 @@ background: linear-gradient(to right, #1fddff, #ff4b1f); /* W3C, IE 10+/ Edge, F
 						gopay(id, payableAmount, orderNumber);
 					} else if(id == 'yucunzhifu' || id == 'eduzhifu'){
 						zhuangshiPay(id, payableAmount, orderNumber);
+					}else if(id == 'UnionPayY'){
+						UnionPayYGoPay(id, payableAmount, orderNumber);
 					}else {
 						plus.nativeUI.alert("当前环境不支持此支付通道！", null, "提示");
 						return;
+					}
+					//银联的支付
+					function UnionPayYGoPay(id, payableAmount, orderNumber){
+						plus.nativeUI.showWaiting();
+						mui.ajax(serverUrl + '/app/unionpay/order/pay/html', {
+							data: {
+								userId: userId,
+								identityType: identityT.toString(),
+//								payableAmount: 0.01,
+								payableAmount: payableAmount,
+								orderNumber: orderNumber
+//								userId: 1,
+//								identityType: 6,
+//								payableAmount: 0.01,
+//								orderNumber: 'CDXN20171206175749976912036'
+							},
+							type: 'post', //HTTP请求类型
+							headers: {
+								"Authorization": oldToken
+							},
+							timeout: 20000, //超时时间设置为10秒；
+							success: function(data) {
+								if(data.message){
+									plus.nativeUI.closeWaiting();
+									mui.alert(data.message || '支付失败,请重试！')
+								}else{
+									plus.nativeUI.closeWaiting();
+									openview({
+										view:'UnionPayYGoPay.html',
+										id:'UnionPayYGoPay',
+										extrasobj:{
+											dataHtml:data,
+											orderNumber: orderNumber,
+											payableAmount: payableAmount
+										}
+									})
+								}
+							},
+							error: function(xhr, type, errorThrown) {
+								//异常处理；
+								console.log(type);
+								console.log("----- 支付失败 -----");
+								console.log(xhr.status);
+								plus.nativeUI.closeWaiting();
+								plus.nativeUI.alert("支付失败,请重试！");
+							}
+						});
+
 					}
 					//客户支付方法
 					function zhuangshiPay(id, payableAmount, orderNumber){
