@@ -1325,7 +1325,8 @@
       "page/personal/myOrderWL.html",
       "cart.html",
       "page/personal/myOrderReturns.html",
-      "page/personal/myOrderList.html"
+      "page/personal/myOrderList.html",
+      "page/personal/UnionPayYGoPay.html"
     ],
     "resources": []
   },
