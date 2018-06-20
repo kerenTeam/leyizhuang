@@ -23,9 +23,9 @@
 		<header class="mui-bar mui-bar-nav">
 			<a class="headbar mui-action-back mui-icon mui-icon-left-nav mui-pull-left normalSize" id="fanhui" style="margin-left: 0;width: 30px!important;"></a>
 			<span style="line-height: 50px;color: #555;margin-left: 5px;" class="mui-action-back" id="buyCoupon">
-				购物
+				换购商品
 			</span>
-			<h1 class="mui-title">下料清单</h1>
+			<h1 class="mui-title"style="left: 105px!important;text-align: center;right: 100px;">下料清单</h1>
 			<a class="mui-pull-right editAll" id="bianji" style="line-height: 50px;color: #555;">编辑</a>
 		</header>
 		<script src="js/statusBar.js"></script>
@@ -195,7 +195,7 @@
 			}
 			if(page == 1) {
 				$('#fanhui').show()
-			} 
+			}
 			document.addEventListener('refresh', function(event) {
 				cartload();
 			});
@@ -217,7 +217,7 @@
 				var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
 				var userId = plus.storage.getItem('$userId');
 				var oldToken = plus.storage.getItem('oldToken');
-			 
+
 				//获取购物车数据
 				plus.nativeUI.showWaiting();
 				mui.ajax(serverUrl + '/app/materialList/buyCoupon/list', {
