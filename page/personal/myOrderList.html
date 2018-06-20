@@ -163,6 +163,9 @@
 											<% }%>
 
 											<%if(list[i].deliveryType.indexOf('产品券')>-1){%>
+												<% if(list[i].status == 'UNPAID'){%>
+													<span class="redC aClick" onclick="goToPay('<%= list[i].orderNo%>','<%= list[i].amountPayable%>')">去支付</span>
+												<% }%>
 												<%if(list[i].status == "FINISHED"){%>
 													<span class="redC aClick" onclick="openReturns('<%= list[i].orderNo%>','<%= list[i].customerId%>','<%=list[i].deliveryType%>')">退货</span>
 												<%}%>
