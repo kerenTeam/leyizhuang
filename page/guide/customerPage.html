@@ -47,8 +47,7 @@
 				line-height: 25px;
 			}
 			.writing {
-				padding:42px 0 5px;
-				padding-bottom: 5px;
+				padding:20px 0 0px;
 				margin-left: -25px;
 			}
 			#userBox {
@@ -152,13 +151,14 @@
 			<!--<div id="beijing2"></div>-->
 			<div id="fixdtop"></div>
 			<div class="content clearfloat fl mui-row white">
-				<div class="mui-col-sm-4 mui-col-xs-4" style="padding-top: 44px;position: relative;left: 3px;"><img src="../../images/10.png" class="myInfo" id="mypic" /></div>
+				<div class="mui-col-sm-4 mui-col-xs-4" style="padding-top: 30px;position: relative;left: 3px;"><img src="../../images/10.png" class="myInfo" id="mypic" /></div>
 				<div class="mui-col-sm-8 mui-col-xs-8 writing">
 					<p class="centop">
 						<div class="denlu">用户名:<span id="userName" style="z-index: 99;"></span></div>
 						<div>顾客类型:<span id="customerType"></span></div>
+						<div>预存款:<span id="balance"></span></div>
 						<div class="denlu" style="display:none ;" id="userNumber">用户id:<span style="z-index: 99;"></span></div>
-						<div class="denlu" id="onlyCust">灯号:<span id="dengh"></span><br />导购:<span id="guideName"></span><a id="guideMobile" style="display: none;" href=""><img style="width: 15px;margin-left: 5px;" src="../../images/center/phone.svg"/></a></div>
+						<div class="denlu" id="onlyCust">导购:<span id="guideName"></span><a id="guideMobile" style="display: none;" href=""><img style="width: 15px;margin-left: 5px;" src="../../images/center/phone.svg"/></a></div>
 					</p>
 					<div id="changeM" onclick="changeCusType()" style="position: absolute;top: 60px;right: 0px;padding: 8px;background: white;color: black;border-radius: 5px;font-size: 14px;display: none;">
 						转为会员
@@ -360,6 +360,12 @@
 											$('#customerType').html(data.content.customerType)
 										}else{
 											$('#customerType').html('无')
+										}
+										if(data.content.balance){
+											$('#balance').html('¥'+data.content.balance)
+										}else{
+											$('#balance').html('¥0')
+											
 										}
 										if(data.content.guideName) {
 											$('#guideName').html(data.content.guideName)

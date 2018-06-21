@@ -172,9 +172,9 @@
 			<img src="../images/whitecart.svg" alt="" />
 			<span class="mui-badge mui-badge-white">0</span>
 		</div>
-		<div class="mui-content" style="margin-top: 7px;">
+		<div class="mui-content" style="margin-top: 6px;">
 			<!--一级分类-->
-			<div class="mui-content flexw afterBorder" style="position: fixed;top: 75px;z-index: 99;left: 0;right: 0;height: 51px;">
+			<div class="mui-content flexw afterBorder" style="position: fixed;top: 74px;z-index: 99;left: 0;right: 0;height: 51px;border-top: 1px solid #EEEEEE;">
 				<div class="water curActive" data-id="water">水</div>
 				<div class="electric" data-id="electric">电</div>
 				<div class="wood" data-id="wood">木</div>
@@ -182,7 +182,7 @@
 				<div class="oil" data-id="oil">油</div>
 			</div>
 			<!--小分类-->
-			<div class="filter" style="background-color:white;padding:6px;font-size:14px;margin-top: 52px;">
+			<div class="filter beforeBorder" style="background-color:#EEEEEE;padding:6px 6px 0 6px;font-size:14px;position: fixed;top: 125px;left: 0;width: 100%;z-index: 999;">
 				<div class="categray categray2">
 					<span class="mui-badge mui-badge-danger ftb actBadge" data-id='' data-name='brand'>品牌</span>
 					<div class="sedc categrayb"></div>
@@ -190,7 +190,7 @@
 			</div>
 
 			<!--商品列表-->
-			<div class="goodsList" id="goodsList"></div>
+			<div class="goodsList" id="goodsList" style="margin-top: 112px;"></div>
 
 			<script type="text/html" id="goodsTpl">
 				<ul class="mui-table-view">
@@ -287,7 +287,7 @@
 				document.addEventListener('refreshsd', function() {
 					kindType(categoryCode, keywords);
 				})
-				downRe(kindType);
+//				downRe(kindType);
 				kindType(categoryCode, keywords);
 
 				function kindType(categoryCode, keywords) {
@@ -332,7 +332,7 @@
 												//												if(goodsBrand == data.content[i].brandName){
 												//													html += '<span class="actBadge" data-name = "brand" data-id="'+data.content[i].brandId+'">'+data.content[i].brandName+'</span>';
 												//												}else{
-												html += '<span data-name = "brand" data-id="' + data.content[i].brandId + '">' + data.content[i].brandId + '</span>';
+												html += '<span data-name = "brand" data-id="' + data.content[i].brandId + '">' + data.content[i].brandName + '</span>';
 												//												}
 											}
 										}
@@ -381,7 +381,7 @@
 							data: {
 								keywords: keywords,
 								firstCategoryCode: categoryCode,
-								brandId: brandId
+								brandId: brandId,
 								userId: userId,
 								identityType: identityT,
 								page: 1,
@@ -552,7 +552,7 @@
 															data: {
 																keywords: keywords,
 																firstCategoryCode: categoryCode,
-																brandId: brandI
+																brandId: brandId,
 																userId: userId,
 																identityType: identityT,
 																page: Ypagenum,
