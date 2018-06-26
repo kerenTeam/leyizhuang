@@ -184,7 +184,7 @@
 				<div class="oil" data-id="oil">油</div>
 			</div>
 			<!--小分类-->
-			<div class="filter beforeBorder" style="background-color:#EEEEEE;padding:6px 6px 0 6px;font-size:14px;position: fixed;top: 125px;left: 0;width: 100%;z-index: 999;">
+			<div class="filter beforeBorder" style="background-color:#EEEEEE;padding:6px 6px 0 6px;font-size:14px;margin-top: 50px;">
 				<div class="categray categray2">
 					<span class="mui-badge mui-badge-danger ftb actBadge" data-id='' data-name='brand'>品牌</span>
 					<div class="sedc categrayb afterBorder"></div>
@@ -200,7 +200,7 @@
 				<span class="mui-badge mui-badge-white">0</span>
 			</div>
 			<!--商品列表-->
-			<div class="goodsList" id="goodsList" style="margin-top: 111px;"></div>
+			<div class="goodsList" id="goodsList"></div>
 
 			<script type="text/html" id="goodsTpl">
 				<ul class="mui-table-view">
@@ -246,8 +246,8 @@
 			mui.plusReady(function() {
 
 				var categoryCode = '',
-					keywords = '';
-				var brandId = ''
+					keywords = ''; 
+				var brandId = '',specification=''
 				if(!categoryCode) {
 					categoryCode = 'water';
 				}
@@ -306,15 +306,15 @@
 					$(window).unbind('scroll');
 					document.body.scrollTop = document.documentElement.scrollTop = 0;
 					//品牌
-					getGoodsBrand()
-
-					function getGoodsBrand() {
+					getGoodsBrand('','')
+					function getGoodsBrand(goodsBrand,specification) {
 						mui.ajax(serverUrl + '/app/goods/rank/brand/list', {
 							data: {
 								categoryCode: categoryCode,
 								userId: userId,
+								specification:specification,
 								identityType: identityT,
-								rankCode: rankCode
+								rankCode: rankCode,
 							},
 							dataType: 'json',
 							headers: {
@@ -330,27 +330,29 @@
 										var html = '';
 										for(var i = 0; i < data.content.length; i++) {
 											if(data.content[i] && data.content[i].brandId) {
-												//												if(goodsBrand == data.content[i].brandName){
-												//													html += '<span class="actBadge" data-name = "brand" data-id="'+data.content[i].brandId+'">'+data.content[i].brandName+'</span>';
-												//												}else{
-												html += '<span data-name = "brand" data-id="' + data.content[i].brandId + '">' + data.content[i].brandName + '</span>';
-												//												}
+												if(goodsBrand == data.content[i].brandName){
+													html += '<span class="actBadge" data-name = "brand" data-id="'+data.content[i].brandId+'">'+data.content[i].brandName+'</span>';
+												}else{
+													html += '<span data-name = "brand" data-id="' + data.content[i].brandId + '">' + data.content[i].brandName + '</span>';
+												}
 											}
 										}
 										$('.categrayb').html(html)
 										//商品 筛选
 										$('.categray2 span').unbind('click').click(function() {
 											$(window).unbind('scroll');
-
 											Spagenum = 2; //实到页数
 											Ypagenum = 1; //应到页数
 											document.body.scrollTop = document.documentElement.scrollTop = 0;
 											$(this).parentsUntil('.filter').find('span').removeClass('actBadge actspan');
 											$(this).addClass('actBadge');
+
 											var categorySecond, goodsBrand, goodType, specification;
 											goodsBrand = $('.categray2 .actBadge').text() == '品牌' ? '' : $('.categray2 .actBadge').text();
 											brandId = $(this).attr('data-id')
-											goodsList(categoryCode, '', brandId);
+											specification = $('.categray3 .actBadge').text()=='规格' ? '': $('.categray3 .actBadge').text();
+											getSpecification(goodsBrand,specification)
+											goodsList(categoryCode, '', brandId,specification);
 										})
 									} else {
 										$('.categrayb').html('无')
@@ -370,12 +372,78 @@
 						});
 					}
 
+					//规格
+					getSpecification('','')
+					function getSpecification(goodsBrand,specification){
+						mui.ajax(serverUrl+'/app/goods/rank/specification/list',{
+							data:{
+								categoryCode:categoryCode, 
+								goodsBrand:goodsBrand, 
+								userId:userId,
+								identityType:identityT,
+								rankCode: rankCode,
+							},
+							dataType:'json',
+							headers: {"Authorization": oldToken},
+							type:'post',
+							timeout:10000,
+							success:function(data,type,xhr){
+								console.log('规格列表',data);
+								if(data.code == 0 ){
+									plus.nativeUI.closeWaiting();
+									if(data.content && data.content.length){
+										var html = '';
+										for(var i = 0 ;i<data.content.length;i++){
+											if(data.content[i] && data.content[i].specificationName){
+												if(specification == data.content[i].specificationName){
+													html+='<span class="actBadge" data-name = "specification" data-id="'+data.content[i].specificationName+'">'+data.content[i].specificationName+'</span>';
+												}else{
+													html+='<span data-name = "specification" data-id="'+data.content[i].specificationName+'">'+data.content[i].specificationName+'</span>';
+												}
+											}
+										}
+										$('.categrayc').html(html ||'无');
+										//商品 筛选
+										$('.categray3 span').unbind('click').click(function(){
+											$(window).unbind('scroll');
+											Spagenum = 2; //实到页数
+											Ypagenum = 1; //应到页数
+				 							document.body.scrollTop = document.documentElement.scrollTop = 0;
+											$(this).parentsUntil('.filter').find('span').removeClass('actBadge actspan');
+											$(this).addClass('actBadge');
+											
+											var categorySecond,goodsBrand,goodType,specification;
+											goodsBrand = $('.categray2 .actBadge').text()=='品牌' ? '': $('.categray2 .actBadge').text();
+											specification = $('.categray3 .actBadge').text()=='规格' ? '': $('.categray3 .actBadge').text();
+											getGoodsBrand(goodsBrand,specification)
+											brandId = $('.categray2 .actBadge').attr('data-id')
+											goodsList(categoryCode, '', brandId,specification);
+										})
+									}else{
+										$('.categrayc').html('无');
+									}
+								}
+								if(data.code == 1000 ){
+									mui.toast(data.message)
+								}else if(data.code == -1 ){
+									mui.toast(data.message)
+								}
+	
+							},
+							error:function(xhr,type,errorThrown){
+								plus.nativeUI.closeWaiting();
+								console.log('规格响应失败');
+							}
+						});
+					}
+
+					
 					var Spagenum = 2; //实到页数
 					var Ypagenum = 1; //应到页数
 					var oneSize = 10;
-					goodsList(categoryCode, keywords, brandId)
+					goodsList(categoryCode, keywords, brandId,specification)
 
-					function goodsList(categoryCode, keywords, brandId) {
+					function goodsList(categoryCode, keywords, brandId,specification) {
 						plus.nativeUI.showWaiting()
 						//商品列表
 						mui.ajax(serverUrl + '/app/goods/seller/rank/list', {
@@ -387,7 +455,8 @@
 								page: 1,
 								size: oneSize,
 								firstCategoryCode: categoryCode,
-								brandId: brandId
+								brandId: brandId,
+								specification:specification,
 							},
 							dataType: 'json',
 							headers: {
@@ -561,7 +630,8 @@
 																page: Ypagenum,
 																size: oneSize,
 																firstCategoryCode: categoryCode,
-																brandId: brandId
+																brandId: brandId,
+																specification:specification,
 															},
 															dataType: 'json',
 															headers: {
@@ -765,12 +835,12 @@
 					//搜索
 					$('#searchf').submit(function() {
 						var valInt = $('#valInt').val();
-						goodsList(categoryCode, valInt, brandId)
+						goodsList(categoryCode, valInt, brandId,specification)
 						return false;
 					})
 					$('#clickSearch, #cancelSearch').click(function() {
 						var valInt = $('#valInt').val();
-						goodsList(categoryCode, valInt, brandId)
+						goodsList(categoryCode, valInt, brandId,specification)
 					})
 
 				}

@@ -462,7 +462,9 @@
       "page/guide/qrCode.html",
       "page/guide/storePreDepositb.html",
       "page/personal/myOrderWL.html",
-      "page/gxb.html"
+      "page/gxb.html",
+      "page/manager/billList.html",
+      "page/manager/billHistory.html"
     ]
   },
   "cart.html": {
@@ -1443,6 +1445,13 @@
   "couponCart.html": {
     "refer": [
       "page/order/chooseCustom.html"
-    ]
+    ],
+    "resources": []
+  },
+  "page/manager/billList.html": {
+    "refer": [
+      "page/manager/payBill.html"
+    ],
+    "resources": []
   }
 }

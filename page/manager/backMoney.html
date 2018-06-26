@@ -57,9 +57,12 @@
 			<div id="infoListDiv"></div>
 			<script id="infoList" type="text/html">
 				<%for(var i=0;i<list.length;i++){%>
-					<div class="rechargeConDiv flexr">
-						<div><%= list[i].type%> <span class="maincl activecl ft16"><%= list[i].changeMoney%></span></div>
-						<div class="ft14"><%= list[i].createTime%></div>
+					<div class="rechargeConDiv">
+						<div class="ft14">消费时间：<%= list[i].createTime%></div>
+						<div class="ft14">订单编号：<%= list[i].id%></div>
+						<div class="ft14">消费金额：<%= list[i].changeMoney%></div>
+						<div class="ft14">消费方式：<%= list[i].type%></div>
+						 
 					</div>
 				<%}%>
 			</script>

@@ -333,8 +333,16 @@
 						<img src="images/center/mywallet.svg" style="background-color: #DF7782;"/>我的钱包
 						<span class="mui-icon mui-icon-arrowright mui-pull-right maincl ft20 maincl"></span>
 					</div>
-					<div class="mb10" onclick="backMoney()">
-						<img src="images/center/credit.svg" style="background-color: #EECD86;"/>信用额度
+					<div class="afterBorder" onclick="backMoney()">
+						<img src="images/center/credit.svg" style="background-color: #EECD86;"/>信用金记录
+						<span class="mui-icon mui-icon-arrowright mui-pull-right maincl ft20 maincl"></span>
+					</div>
+					<div class="afterBorder" onclick="billList()">
+						<img src="images/center/payBill.svg" style="background-color: #99CCCC;"/>本期账单及还款
+						<span class="mui-icon mui-icon-arrowright mui-pull-right maincl ft20 maincl"></span>
+					</div>
+					<div class="mb10" onclick="billHistory()">
+						<img src="images/center/payBill.svg" style="background-color: #99CCCC;"/>查看历史账单
 						<span class="mui-icon mui-icon-arrowright mui-pull-right maincl ft20 maincl"></span>
 					</div>
 					<div class="afterBorder" onclick="goCollect()">
@@ -665,6 +673,19 @@
 				openview({
 					view:'page/manager/backMoney.html',
 					id: 'backMoney',
+				})
+			}
+			//账单及还款
+			function billList(){
+				openview({
+					view:'page/manager/billList.html',
+					id: 'billList',
+				})
+			}
+			function billHistory(){
+				openview({
+					view:'page/manager/billHistory.html',
+					id: 'billHistory',
 				})
 			}
 			//钱包

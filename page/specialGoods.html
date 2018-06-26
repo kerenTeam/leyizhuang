@@ -182,15 +182,19 @@
 				<div class="oil" data-id="oil">油</div>
 			</div>
 			<!--小分类-->
-			<div class="filter beforeBorder" style="background-color:#EEEEEE;padding:6px 6px 0 6px;font-size:14px;position: fixed;top: 125px;left: 0;width: 100%;z-index: 999;">
+			<div class="filter beforeBorder" style="background-color:#EEEEEE;padding:6px 6px 0 6px;font-size:14px;margin-top: 50px;">
 				<div class="categray categray2">
 					<span class="mui-badge mui-badge-danger ftb actBadge" data-id='' data-name='brand'>品牌</span>
-					<div class="sedc categrayb"></div>
+					<div class="sedc categrayb afterBorder"></div>
 				</div>
+				<div class="categray categray3">
+		     		<span class="mui-badge mui-badge-danger ftb actBadge" data-id = '' data-name = 'specification'>规格</span>
+		     		<div class="sedc categrayc"></div>
+		     	</div>
 			</div>
 
 			<!--商品列表-->
-			<div class="goodsList" id="goodsList" style="margin-top: 112px;"></div>
+			<div class="goodsList" id="goodsList"></div>
 
 			<script type="text/html" id="goodsTpl">
 				<ul class="mui-table-view">
@@ -269,7 +273,7 @@
 				var oldToken = plus.storage.getItem('oldToken');
 				var categoryCode = plus.webview.currentWebview().ctid,
 					keywords = '';
-				var brandId = ''
+				var brandId = '',specification=''
 				if(!categoryCode) {
 					categoryCode = 'water';
 				}
@@ -350,7 +354,7 @@
 											goodsBrand = $('.categray2 .actBadge').text() == '品牌' ? '' : $('.categray2 .actBadge').text();
 											brandId = $(this).attr('data-id')
 											specification = $('.categray3 .actBadge').text()=='规格' ? '': $('.categray3 .actBadge').text();
-											getSpecification(categorySecond,goodsBrand,goodType,specification)
+											getSpecification(goodsBrand,specification)
 											goodsList(categoryCode, '', brandId,specification);
 										})
 									} else {
@@ -438,6 +442,8 @@
 					var Spagenum = 2; //实到页数
 					var Ypagenum = 1; //应到页数
 					var oneSize = 10;
+					
+					
 					goodsList(categoryCode, keywords, brandId,specification)
 
 					function goodsList(categoryCode, keywords, brandId, specification) {
@@ -620,6 +626,7 @@
 																keywords: keywords,
 																firstCategoryCode: categoryCode,
 																brandId: brandId,
+																specification:specification,
 																userId: userId,
 																identityType: identityT,
 																page: Ypagenum,
@@ -825,12 +832,12 @@
 					}
 					$('#searchf').submit(function() {
 						var valInt = $('#valInt').val();
-						goodsList(categoryCode, valInt, brandId)
+						goodsList(categoryCode, valInt, brandId,specification)
 						return false;
 					})
 					$('#clickSearch, #cancelSearch').click(function() {
 						var valInt = $('#valInt').val();
-						goodsList(categoryCode, valInt, brandId)
+						goodsList(categoryCode, valInt, brandId,specification)
 					})
 				}
 
