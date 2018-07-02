@@ -280,9 +280,16 @@
 				<li class="pad10 afterBorder aClick2" id="UnionPayY">
 					<img src="../../images/order/bankpay.svg" />银联支付
 				</li>
+				<li class="pad10 afterBorder aClick2" id="xyed1" style="display: none;">
+					<img src="../../img/credit.svg" alt="" /> 信用额度
+				</li>
+				<li class="pad10 afterBorder aClick2" id="xyj2" style="display: none;">
+					<img src="../../img/credit.svg" alt="" />  信用金
+				</li>
 				<li class="closeMask fttc pad10 aClick2" style="padding: 14px;">
 					代付款
 				</li>
+
 			</ul>
 		</div>
 		<script src="../../js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
@@ -326,6 +333,12 @@
 								if(money>0){
 									$('#payMoney').html('¥' + money);
 									$('#maskInfo').fadeIn(200);
+									if(identityT == 0){
+									 $('#xyed1').show()
+									}
+									if(identityT == 2){
+									 $('#xyj2').show()
+									}
 									toPay(money, orderNo)
 								}else{
 									dontPay (orderNo)
@@ -376,6 +389,8 @@
 			//系统检测获取支付通道
 			function toPay(payableAmount, orderNumber) {
 				document.getElementById('UnionPayY').setAttribute('onclick', 'payfun("UnionPayY","' + payableAmount + '","' + orderNumber + '")');
+				document.getElementById('xyed1').setAttribute('onclick', 'xyedPayF("EMP_CREDIT","' + payableAmount + '","' + orderNumber + '")');
+				document.getElementById('xyj2').setAttribute('onclick', 'xyedPayF("STORE_CREDIT_MONEY","' + payableAmount + '","' + orderNumber + '")');
 				plus.payment.getChannels(function(channels) {
 					console.log("channel " + JSON.stringify(channels));
 					for(var i in channels) {
@@ -581,6 +596,39 @@
 					}
 
 				}
+				//3.信用额度支付
+				window.xyedPayF = function(payType,payableAmount,orderNumber){
+
+						mui.ajax(serverUrl + '/app/order/handle/payCredit', {
+							data: {
+								userId: userId,
+								identityType: identityT.toString(),
+								payType: payType,
+								orderNumber: orderNumber,
+							},
+							type: 'post', //HTTP请求类型
+							headers: {
+								"Authorization": oldToken
+							},
+							timeout: 10000, //超时时间设置为10秒；
+							success: function(data) {
+								console.error(data);
+								plus.nativeUI.closeWaiting();
+								if(data.code == 0) {
+									plus.nativeUI.alert("支付成功");
+									mui.fire(plus.webview.getWebviewById('center.html'),'refresh');
+									plus.webview.currentWebview().reload();
+								}else{
+									plus.nativeUI.alert(data.message);
+								}
+
+							},
+							error: function(xhr, type, errorThrown) {
+								//异常处理；
+								console.log(type);
+							}
+						});
+					}
 			})
 			//去支付结束
 
@@ -796,7 +844,7 @@
 												if(!ele.customer || !ele.customer.customerId){
 													ele.customer = {customerId:null}
 												}
-											 
+
 												if(ele.endTime){
 													var minutes = parseInt(ele.endTime/(1000*60));
 													ele.endTime = (Math.floor(minutes/60) + "小时" + (minutes%60) + "分" );

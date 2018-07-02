@@ -317,10 +317,10 @@
 						<%if(platform == 'ANDROID'){%>
 							<div class="pad10 ft14 afterBorder"><%if(guide ==1){%>门店<%}%><%if(guide ==2){%>客户<%}%>预存款&nbsp;&nbsp;<span class='activecl' id="preDepositb">¥--</span><input type="tel" onchange="maxC(this)" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" placeholder="请输入使用金额" name="preDepositb" class='mui-pull-right preDeposit' oninput="inputbd(this)"/></div>
 							<!--only manager-->
-							<div class="pad10 ft14 afterBorder manager" style="display: none;">信用金&nbsp;&nbsp;<span class='activecl' id="credit">¥--</span><input type="tel" placeholder="请输入使用金额" name="credit" onchange="maxC(this)" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" class='mui-pull-right preDeposit' oninput="inputbd(this)"/></div>
+							<!--<div class="pad10 ft14 afterBorder manager" style="display: none;">信用金&nbsp;&nbsp;<span class='activecl' id="credit">¥--</span><input type="tel" placeholder="请输入使用金额" name="credit" onchange="maxC(this)" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" class='mui-pull-right preDeposit' oninput="inputbd(this)"/></div>-->
 							<div class="pad10 ft14 afterBorder manager" style="display: none;">现金返利&nbsp;&nbsp;<span class='activecl' id="cash">¥--</span><input type="tel" placeholder="请输入使用金额" name="cash" onchange="maxC(this)" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" class='mui-pull-right preDeposit' oninput="inputbd(this)"/></div>
 							<!--only guide-->
-							<div class="pad10 ft14 afterBorder guide xyed" style="display: none;">信用额度&nbsp;&nbsp;<span class='activecl' id="creditVal">¥--</span><input type="tel" placeholder="请输入使用金额" name="creditVal" onchange="maxC(this)" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" class='mui-pull-right preDeposit' oninput="inputbd(this)"/></div>
+							<!--<div class="pad10 ft14 afterBorder guide xyed" style="display: none;">信用额度&nbsp;&nbsp;<span class='activecl' id="creditVal">¥--</span><input type="tel" placeholder="请输入使用金额" name="creditVal" onchange="maxC(this)" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" class='mui-pull-right preDeposit' oninput="inputbd(this)"/></div>-->
 							<div class="pad10 ft14 afterBorder guide dsje" style="display: none;">代收金额<img src="../../images/center/help.svg" style="width: 20px;margin-left: 5px;" onclick="dsInfo()"/>&nbsp;&nbsp;<input type="tel" placeholder="请输入代收金额" name="cashHelp" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" class='mui-pull-right preDeposit' /></div>
 						<%}else{%>
 							<div class="pad10 ft14 afterBorder"><%if(guide == 1){%>门店<%}%><%if(guide ==2){%>客户<%}%>预存款&nbsp;&nbsp;<span class='activecl' id="preDepositb">¥--</span><input type="number" onchange="maxC(this)" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" placeholder="请输入使用金额" name="preDepositb" class='mui-pull-right preDeposit' oninput="inputbd(this)"/></div>
@@ -378,6 +378,12 @@
 					</li>
 					<li class="pad10 afterBorder aClick2" id="facePay" style="display: none;">
 						<img src="../../images/order/facePay.svg" />货到付款
+					</li>
+					<li class="pad10 afterBorder aClick2" id="xyed1" style="display: none;">
+						<img src="../../img/credit.svg" alt="" /> 信用额度
+					</li>
+					<li class="pad10 afterBorder aClick2" id="xyj2" style="display: none;">
+						<img src="../../img/credit.svg" alt="" />  信用金
 					</li>
 					<li class="closeMask fttc pad10 aClick2">
 						代付款
@@ -1384,9 +1390,9 @@
 				if(identityT == 0 || identityT == 6){
 					proCouponDiscountv =  $('#proCouponDiscount').html().replace('-¥', '');
 				}
-				credit = $('input[name="credit"]').val(); //信用金
+				credit = $('input[name="credit"]').val() || 0; //信用金
 				cash = $('input[name="cash"]').val(); //现金返利
-				creditVal = $('input[name="creditVal"]').val(); //信用额度
+				creditVal = $('input[name="creditVal"]').val() || 0; //信用额度
 				cashHelp = $('input[name="cashHelp"]').val(); //代收金额
 				preDepositb = $('input[name="preDepositb"]').val(); //预存款
 				if($('#changeJf').find("input[type='checkbox']:checked").length == 1) {
@@ -1821,9 +1827,16 @@
 								}else{
 									$('#facePay').hide();
 								}
+
 								if(data.content.isPayUp == false) {
 									$('#payMoney').html('¥' + data.content.amountPayable);
 									$('#maskInfo').fadeIn(200);
+									if(identityT == 0){
+									 $('#xyed1').show()
+									}
+									if(identityT == 2){
+									 $('#xyj2').show()
+									}
 									toPay(data.content.amountPayable, data.content.orderNumber);
 								}else{
 									mui.toast('订单提交成功！！！')
@@ -1867,7 +1880,8 @@
 					function toPay(payableAmount, orderNumber) {
 						document.getElementById('UnionPayY').setAttribute('onclick', 'payfun("UnionPayY","' + payableAmount + '","' + orderNumber + '")');
 						document.getElementById('facePay').setAttribute('onclick', 'facePayF("' + payableAmount + '","' + orderNumber + '")');
-
+						document.getElementById('xyed1').setAttribute('onclick', 'xyedPayF("EMP_CREDIT","' + payableAmount + '","' + orderNumber + '")');
+						document.getElementById('xyj2').setAttribute('onclick', 'xyedPayF("STORE_CREDIT_MONEY","' + payableAmount + '","' + orderNumber + '")');
 						//系统检测获取支付通道
 						plus.payment.getChannels(function(channels) {
 							console.log("channel " + JSON.stringify(channels));
@@ -2156,6 +2170,55 @@
 							}
 						}
 
+					}
+					//3.信用额度支付
+					window.xyedPayF = function(payType,payableAmount,orderNumber){
+
+						mui.ajax(serverUrl + '/app/order/handle/payCredit', {
+							data: {
+								userId: userId,
+								identityType: identityT.toString(),
+								payType: payType,
+								orderNumber: orderNumber,
+							},
+							type: 'post', //HTTP请求类型
+							headers: {
+								"Authorization": oldToken
+							},
+							timeout: 10000, //超时时间设置为10秒；
+							success: function(data) {
+								console.error(data);
+								plus.nativeUI.closeWaiting();
+								if(data.code == 0) {
+									openview({
+										view: 'orderSuccess.html',
+										id: 'orderSuccess',
+										extrasobj:{
+											orderNo:orderNumber,
+											money:payableAmount,
+										}
+									})
+									setTimeout(function() {
+										if(plus.webview.getWebviewById("order")) {
+											plus.webview.getWebviewById("order").close();
+										}
+										if(plus.webview.getWebviewById("chooseGift")) {
+											plus.webview.getWebviewById("chooseGift").close();
+										}
+										if(plus.webview.getWebviewById("chooseCustom")) {
+											plus.webview.getWebviewById("chooseCustom").close();
+										}
+									}, 3000)
+								}else{
+									plus.nativeUI.alert(data.message);
+								}
+
+							},
+							error: function(xhr, type, errorThrown) {
+								//异常处理；
+								console.log(type);
+							}
+						});
 					}
 				}
 
