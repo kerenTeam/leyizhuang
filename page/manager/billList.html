@@ -174,375 +174,308 @@
 		</header>
 		<script src="../../js/statusBar.js" type="text/javascript" charset="utf-8"></script>
 		<div class="mui-content" style="margin-top: 7px;">
-			<div class="ft12 maincl flexr" style="padding: 5px;background: #F0F0F0;justify-content: space-between;">
-				<div>5月账单2018.04.20 - 2018.05.19</div>
-				<div>账单号：BSLCT20180603</div>
-			</div>
-			<div class="bills">
-				<div class="ft14">本期应还</div>
-				<div class="ft20 billmony">1741</div>
-				<div class="ft12 activecl2">还款截止日 7月9日</div>
-			</div>
-			<div class="flexr pad10 ft14 maincl recordel afterBorder">
-				<div class="rightBorder" style="width: 50%;">
-					账单总金额<br/> ¥1741.00
-				</div>
-				<div style="width: 50%;">
-					本期已还款金额<br/> ¥0
-				</div>
-			</div>
-			<div class="flexr pad10 ft13 maincl cmonth">
-				<div class="rightBorder" style="width: 50%;">
-					本期退款金额: <span class="activecl">-¥70.0</span><br/> 本期账单金额: ¥1810
-				</div>
-				<div style="width: 50%;">
-					上期未还金额: ¥0.00<br/> 上&nbsp;期&nbsp;滞&nbsp;纳&nbsp;金: ¥1.00
-				</div>
-			</div>
-			<div class="tab-hd tab-hdtwo" id="tabLink" style="position: sticky;top: 70px;width: 100%;height: 40px;z-index: 999;">
-				<ul class="tab-nav">
-					<li class="active aClick " data-statusId="">账单明细</li>
-					<li class="aClick" data-statusId="1">账单还款记录<span id="waitCheck" style="display: none;" class="mui-badge mui-badge-danger"></span></li>
-
-				</ul>
-			</div>
-			<!--商品列表-->
-			<div class="goodsList" id="goodsList" style="margin-bottom: 50px;">
-				<div class="contentppp">
-					<div class="flexrsh searchList bgcwt ft12">
-						<div style="margin-top:14px ;">
-							开始：<input type="date" name="" id="" value="" class="start" placeholder="出货日"/>
-						</div>
-						<div style="margin-top:14px ;">
-							结束：<input type="date" name="" id="" value="" class="end" placeholder="出货日"/>
-						</div>
-						<span class="mui-icon mui-icon-search activecl" onclick="goSearch()"></span>
-					</div>
-					<ul class="mui-table-view">
-						<li class="mui-table-view-cell mui-media">
-							<a href="javascript:;" style="margin-left: 0px;">
-								<div class="flexr fledw" style="max-width: 95%;">
-									<div class="mui-media-body ft12">
-										订单出货日
-									</div>
-									<div class="mui-media-body ft12">
-										订单号
-									</div>
-									<div class="mui-media-body ft12">
-										金额
-									</div>
-									<div class="mui-media-body ft12">
-										滞纳金
-									</div>
-								</div>
-							</a>
-							<img data-id="1" data-money="1" class="check" src="../../images/center/checked.svg" alt="" />
-						</li>
-						<li class="mui-table-view-cell mui-media" id="1">
-							<a href="javascript:;" style="margin-left: 0px;">
-								<div class="mui-media-body ft14 flexr fledw" style="max-width: 95%;">
-									<div id="">
-										2018/04/19
-									</div>
-									<div id="">
-										CD_XN_001
-									</div>
-									<div class="activecl">
-										¥-70
-									</div>
-									<div id="">
-										¥0
-									</div>
-								</div>
-							</a>
-							<img data-id="1" data-money="1" class="check" src="../../images/center/checked.svg" alt="" />
-						</li>
-						<li class="mui-table-view-cell mui-media" id="1">
-							<a href="javascript:;" style="margin-left: 0px;">
-								<div class="mui-media-body ft14 flexr fledw" style="max-width: 95%;">
-									<div id="">
-										2018/04/19
-									</div>
-									<div id="">
-										CD_XN_001
-									</div>
-									<div id="">
-										¥150
-									</div>
-									<div id="">
-										¥1
-									</div>
-								</div>
-							</a>
-							<img data-id="1" data-money="1" class="check" src="../../images/center/checked.svg" alt="" />
-						</li>
-						<li class="mui-table-view-cell mui-media" id="1">
-							<a href="javascript:;" style="margin-left: 0px;">
-								<div class="mui-media-body ft14 flexr fledw" style="max-width: 95%;">
-									<div id="">
-										2018/04/19
-									</div>
-									<div id="">
-										CD_XN_001
-									</div>
-									<div id="">
-										¥100
-									</div>
-									<div id="">
-										¥0
-									</div>
-								</div>
-							</a>
-							<img data-id="1" data-money="1" class="check" src="../../images/center/checked.svg" alt="" />
-						</li>
-						<li class="mui-table-view-cell mui-media" id="1">
-							<a href="javascript:;" style="margin-left: 0px;">
-								<div class="mui-media-body ft14 flexr fledw" style="max-width: 95%;">
-									<div id="">
-										2018/04/19
-									</div>
-									<div id="">
-										CD_XN_001
-									</div>
-									<div id="">
-										¥100
-									</div>
-									<div id="">
-										¥0
-									</div>
-								</div>
-							</a>
-							<img data-id="1" data-money="1" class="check" src="../../images/center/checked.svg" alt="" />
-						</li>
-						<li class="mui-table-view-cell mui-media" id="1">
-							<a href="javascript:;" style="margin-left: 0px;">
-								<div class="mui-media-body ft14 flexr fledw" style="max-width: 95%;">
-									<div id="">
-										2018/04/19
-									</div>
-									<div id="">
-										CD_XN_001
-									</div>
-									<div id="">
-										¥100
-									</div>
-									<div id="">
-										¥0
-									</div>
-								</div>
-							</a>
-							<img data-id="1" data-money="1" class="check" src="../../images/center/checked.svg" alt="" />
-						</li>
-					</ul>
-					<div style="height:40px;"></div>
-					<aside class="btmNav flexr" style="position: fixed;bottom: 0;left: 0;width: 100%;border-top: 1px solid #eee;">
-						<a class="dp ft16" style="color: #B62D29;text-align: center;flex: 1;">
-							<span>合计：</span><span class="totalMoney">¥1741</span>
-						</a>
-						<button id="useCoupon" class="mui-btn-danger" disabled="">立即还款</button>
-					</aside>
-				</div>
-				<div class="contentppp ft12" style="display: none;">
-					<div class="flexr ppph">
-						<div id="">
-							2018-08-12
-						</div>
-						<div id="">
-							合计：¥12000
-						</div> 
-					</div>
-					<div class="flexr fledw paddc10 afterBorder">
-						<div>
-							订单出货日
-						</div>
-						<div>
-							订单号
-						</div>
-						<div>
-							金额
-						</div>
-						<div>
-							滞纳金
-						</div>
-					</div>
-					<div class="flexr fledw paddc10 afterBorder">
-						<div id="">
-							2018/04/19
-						</div>
-						<div id="">
-							CD_XN_001
-						</div>
-						<div id="">
-							¥1220
-						</div>
-						<div id="">
-							¥0
-						</div>
-					</div>
-					<div class="flexr fledw paddc10">
-						<div id="">
-							2018/04/19
-						</div>
-						<div id="">
-							CD_XN_001
-						</div>
-						<div id="">
-							¥1220
-						</div>
-						<div id="">
-							¥0
-						</div>
-					</div>
-					<div class="flexr fledw paddc10">
-						<div id="">
-							2018/04/19
-						</div>
-						<div id="">
-							CD_XN_001
-						</div>
-						<div id="">
-							¥1220
-						</div>
-						<div id="">
-							¥0
-						</div>
-					</div>
-				<div class="flexr ppph">
-						<div id="">
-							2018-08-12
-						</div>
-						<div id="">
-							合计：¥12000
-						</div> 
-					</div>
-					<div class="flexr fledw paddc10 afterBorder">
-						<div>
-							订单出货日
-						</div>
-						<div>
-							订单号
-						</div>
-						<div>
-							金额
-						</div>
-						<div>
-							滞纳金
-						</div>
-					</div>
-					<div class="flexr fledw paddc10 afterBorder">
-						<div id="">
-							2018/04/19
-						</div>
-						<div id="">
-							CD_XN_001
-						</div>
-						<div id="">
-							¥150
-						</div>
-						<div id="">
-							¥1
-						</div>
-					</div>
-					<div class="flexr fledw paddc10">
-						<div id="">
-							2018/04/19
-						</div>
-						<div id="">
-							CD_XN_001
-						</div>
-						<div id="">
-							¥1220
-						</div>
-						<div id="">
-							¥0
-						</div>
-					</div>
-					<div class="flexr fledw paddc10">
-						<div id="">
-							2018/04/19
-						</div>
-						<div id="">
-							CD_XN_001
-						</div>
-						<div id="">
-							¥1220
-						</div>
-						<div id="">
-							¥0
-						</div>
-					</div>
-				<div class="flexr ppph">
-						<div id="">
-							2018-08-12
-						</div>
-						<div id="">
-							合计：¥12000
-						</div> 
-					</div>
-					<div class="flexr fledw paddc10 afterBorder">
-						<div>
-							订单出货日
-						</div>
-						<div>
-							订单号
-						</div>
-						<div>
-							金额
-						</div>
-						<div>
-							滞纳金
-						</div>
-					</div>
-					<div class="flexr fledw paddc10 afterBorder">
-						<div id="">
-							2018/04/19
-						</div>
-						<div id="">
-							CD_XN_001
-						</div>
-						<div id="">
-							¥1220
-						</div>
-						<div id="">
-							¥0
-						</div>
-					</div>
-					<div class="flexr fledw paddc10">
-						<div id="">
-							2018/04/19
-						</div>
-						<div id="">
-							CD_XN_001
-						</div>
-						<div id="">
-							¥1220
-						</div>
-						<div id="">
-							¥0
-						</div>
-					</div>
-					<div class="flexr fledw paddc10">
-						<div id="">
-							2018/04/19
-						</div>
-						<div id="">
-							CD_XN_001
-						</div>
-						<div id="">
-							¥1220
-						</div>
-						<div id="">
-							¥0
-						</div>
-					</div>
-					 <div style="height:40px;"></div>
-					<aside class="btmNav ft14" style="position: fixed;bottom: 0;left: 0;width: 100%;height: 55px;line-height: 55px;background: #FFFFFF;text-align: center;border-top: 1px solid #eee;">
-							还款合计：<big class="activecl">¥11101</big>
-					</aside>
-				</div>
+			<div id="goodsList">
 				
-			</div> 
-			
+			</div>
+			<script type="text/html" id="goodsTpl">
+				<div class="ft12 maincl flexr" style="padding: 5px;background: #F0F0F0;justify-content: space-between;flex-wrap: wrap;">
+					<div><%=list.billName%> <%=list.billStartDate%> ~ <%=list.billEndDate%></div>
+					<div>账单号 <%=list.billNo%></div>
+				</div>
+				<div class="bills">
+					<div class="ft14">本期应还</div>
+					<div class="ft20 billmony"><%=list.billTotalAmount || 0%></div>
+					<div class="ft12 activecl2">还款截止日 <%=list.repaymentDeadlineDate%></div>
+				</div>
+				<div class="flexr pad10 ft14 maincl recordel afterBorder">
+					<div class="rightBorder" style="width: 50%;">
+						账单总金额<br/> ¥<%=list.billTotalAmount || 0%>
+					</div>
+					<div style="width: 50%;">
+						本期已还款金额<br/> ¥<%=list.currentPaidAmount || 0%>
+					</div>
+				</div>
+				<div class="flexr pad10 ft13 maincl cmonth">
+					<div class="rightBorder" style="width: 50%;text-align: left;padding: 0 20px;">
+						本期退款金额: <span class="activecl">-¥<%=list.currentAdjustmentAmount || 0.00%></span><br/> 本期账单金额: ¥<%=list.currentBillAmount%>
+					</div>
+					<div style="width: 50%;text-align: left;padding: 0 20px;">
+						上期未还金额: ¥<%=list.priorNotPaidBillAmount%><br/> 上&nbsp;期&nbsp;滞&nbsp;纳&nbsp;金: ¥<%=list.priorNotPaidInterestAmount%>
+					</div>
+				</div>
+				<div class="tab-hd tab-hdtwo" id="tabLink" style="position: sticky;top: 70px;width: 100%;height: 40px;z-index: 999;">
+					<ul class="tab-nav">
+						<li class="active aClick " data-statusId="">账单明细</li>
+						<li class="aClick" data-statusId="1">账单还款记录<span id="waitCheck" style="display: none;" class="mui-badge mui-badge-danger"></span></li>
+	
+					</ul>
+				</div>
+				<!--商品列表-->
+				<div class="goodsList" style="margin-bottom: 50px;">
+					<div class="contentppp">
+						<div class="flexrsh searchList bgcwt ft12">
+							<div style="margin-top:14px ;">
+								开始：<input type="date" name="" id="" value="" class="start" placeholder="出货日"/>
+							</div>
+							<div style="margin-top:14px ;">
+								结束：<input type="date" name="" id="" value="" class="end" placeholder="出货日"/>
+							</div>
+							<span class="mui-icon mui-icon-search activecl" onclick="goSearch()"></span>
+						</div>
+						<ul class="mui-table-view">
+							<li class="mui-table-view-cell mui-media">
+								<a href="javascript:;" style="margin-left: 0px;">
+									<div class="flexr fledw" style="max-width: 95%;">
+										<div class="mui-media-body ft12">
+											订单出货日
+										</div>
+										<div class="mui-media-body ft12">
+											订单号
+										</div>
+										<div class="mui-media-body ft12">
+											金额
+										</div>
+										<div class="mui-media-body ft12">
+											滞纳金
+										</div>
+									</div>
+								</a>
+								<img data-id="" class="check" src="../../images/center/checked.svg" alt="" />
+							</li>
+							<%if(list.notPayOrderDetails && list.notPayOrderDetails.length){%>
+								<%for(var i = 0; i < list.notPayOrderDetails.length; i++){%>
+									<li class="mui-table-view-cell mui-media" id="<%=list.notPayOrderDetails.orderId%>">
+										<a href="javascript:;" style="margin-left: 0px;">
+											<div class="mui-media-body ft14 flexr fledw" style="max-width: 95%;">
+												<div id="">
+													<%=list.notPayOrderDetails[i].shipmentTime%>
+												</div>
+												<div id="">
+													<%=list.notPayOrderDetails[i].orderNo%>
+												</div>
+												<div class="activecl">
+													¥<%=list.notPayOrderDetails[i].orderCreditMoney%>
+												</div>
+												<div id="">
+													¥<%=list.notPayOrderDetails[i].interestAmount%>
+												</div>
+											</div>
+										</a>
+										<img data-id="<%=list.notPayOrderDetails[i].orderNo%>" data-orderNo="<%=list.notPayOrderDetails[i].orderNo%>" data-returnNo="<%list.notPayOrderDetails[i].returnNo%>" class="check choosed" src="../../images/center/checked.svg" alt="" />
+									</li>
+								<%}%> 
+							<%}%> 
+						</ul>
+						<div style="height:40px;"></div>
+						<aside class="btmNav flexr" style="position: fixed;bottom: 0;left: 0;width: 100%;border-top: 1px solid #eee;">
+							<a class="dp ft16" style="color: #B62D29;text-align: center;flex: 1;">
+								<span>合计：</span><span class="totalMoney">¥1741</span>
+							</a>
+							<button id="useCoupon" class="mui-btn-danger">立即还款</button>
+						</aside>
+					</div>
+					<div class="contentppp ft12" style="display: none;">
+						<div class="flexr ppph">
+							<div id="">
+								2018-08-12
+							</div>
+							<div id="">
+								合计：¥12000
+							</div> 
+						</div>
+						<div class="flexr fledw paddc10 afterBorder">
+							<div>
+								订单出货日
+							</div>
+							<div>
+								订单号
+							</div>
+							<div>
+								金额
+							</div>
+							<div>
+								滞纳金
+							</div>
+						</div>
+						<div class="flexr fledw paddc10 afterBorder">
+							<div id="">
+								2018/04/19
+							</div>
+							<div id="">
+								CD_XN_001
+							</div>
+							<div id="">
+								¥1220
+							</div>
+							<div id="">
+								¥0
+							</div>
+						</div>
+						<div class="flexr fledw paddc10">
+							<div id="">
+								2018/04/19
+							</div>
+							<div id="">
+								CD_XN_001
+							</div>
+							<div id="">
+								¥1220
+							</div>
+							<div id="">
+								¥0
+							</div>
+						</div>
+						<div class="flexr fledw paddc10">
+							<div id="">
+								2018/04/19
+							</div>
+							<div id="">
+								CD_XN_001
+							</div>
+							<div id="">
+								¥1220
+							</div>
+							<div id="">
+								¥0
+							</div>
+						</div>
+					<div class="flexr ppph">
+							<div id="">
+								2018-08-12
+							</div>
+							<div id="">
+								合计：¥12000
+							</div> 
+						</div>
+						<div class="flexr fledw paddc10 afterBorder">
+							<div>
+								订单出货日
+							</div>
+							<div>
+								订单号
+							</div>
+							<div>
+								金额
+							</div>
+							<div>
+								滞纳金
+							</div>
+						</div>
+						<div class="flexr fledw paddc10 afterBorder">
+							<div id="">
+								2018/04/19
+							</div>
+							<div id="">
+								CD_XN_001
+							</div>
+							<div id="">
+								¥150
+							</div>
+							<div id="">
+								¥1
+							</div>
+						</div>
+						<div class="flexr fledw paddc10">
+							<div id="">
+								2018/04/19
+							</div>
+							<div id="">
+								CD_XN_001
+							</div>
+							<div id="">
+								¥1220
+							</div>
+							<div id="">
+								¥0
+							</div>
+						</div>
+						<div class="flexr fledw paddc10">
+							<div id="">
+								2018/04/19
+							</div>
+							<div id="">
+								CD_XN_001
+							</div>
+							<div id="">
+								¥1220
+							</div>
+							<div id="">
+								¥0
+							</div>
+						</div>
+					<div class="flexr ppph">
+							<div id="">
+								2018-08-12
+							</div>
+							<div id="">
+								合计：¥12000
+							</div> 
+						</div>
+						<div class="flexr fledw paddc10 afterBorder">
+							<div>
+								订单出货日
+							</div>
+							<div>
+								订单号
+							</div>
+							<div>
+								金额
+							</div>
+							<div>
+								滞纳金
+							</div>
+						</div>
+						<div class="flexr fledw paddc10 afterBorder">
+							<div id="">
+								2018/04/19
+							</div>
+							<div id="">
+								CD_XN_001
+							</div>
+							<div id="">
+								¥1220
+							</div>
+							<div id="">
+								¥0
+							</div>
+						</div>
+						<div class="flexr fledw paddc10">
+							<div id="">
+								2018/04/19
+							</div>
+							<div id="">
+								CD_XN_001
+							</div>
+							<div id="">
+								¥1220
+							</div>
+							<div id="">
+								¥0
+							</div>
+						</div>
+						<div class="flexr fledw paddc10">
+							<div id="">
+								2018/04/19
+							</div>
+							<div id="">
+								CD_XN_001
+							</div>
+							<div id="">
+								¥1220
+							</div>
+							<div id="">
+								¥0
+							</div>
+						</div>
+						 <div style="height:40px;"></div>
+						<aside class="btmNav ft14" style="position: fixed;bottom: 0;left: 0;width: 100%;height: 55px;line-height: 55px;background: #FFFFFF;text-align: center;border-top: 1px solid #eee;">
+								还款合计：<big class="activecl">¥11101</big>
+						</aside>
+					</div>
+					
+				</div> 
+					
+			</script>
 		</div>
 		
 		<!--操作表-->
@@ -601,15 +534,7 @@
 			$('.paychoose li').click(function() {
 				event.stopPropagation()
 			})
-			
-			$('#tabLink li').click(function(){
-				$('#tabLink li').removeClass('active');
-				$(this).addClass('active'); 
-				$('.contentppp').hide()
-				$('.contentppp').eq($(this).index()).show()
-				 
-			})
-			
+			 
 			mui.plusReady(function() {
 				var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
 				var userId = plus.storage.getItem('$userId');
@@ -617,14 +542,16 @@
 				var page = plus.webview.currentWebview().page;
 				var cusId = plus.webview.currentWebview().cusid;
 				var pays = {};
-				//				plus.nativeUI.showWaiting();
-				//				kindType();
-				function kindType() {
-					//欠款查询列表
-					mui.ajax(serverUrl + '/app/seller/arrearsAudit/list', {
+				plus.nativeUI.showWaiting();
+				kindType('','');
+				function kindType(startTimeStr,endTimeStr) {
+					//账单查询列表
+					mui.ajax(serverUrl + '/app/bill/look', {
 						data: {
-							userID: userId,
+							userId: userId,
 							identityType: identityT,
+							startTimeStr:startTimeStr,
+							endTimeStr:endTimeStr,
 						},
 						dataType: 'json',
 						headers: {
@@ -633,30 +560,59 @@
 						type: 'post',
 						timeout: 10000,
 						success: function(data, type, xhr) {
-							console.log('欠款查询列表', data);
+							console.log('账单查询列表', data);
 							if(data.code == 0) {
 								plus.nativeUI.closeWaiting();
-								if(data.content && data.content.length) {
+								if(data.content) {
+									data.content.notPayOrderDetails.forEach(function(ele,index){
+										if(ele.orderNo){
+											ele.orderNo = ele.orderNo.substr(0, 5) + '****' + ele.orderNo.substr(20);
+										}
+									})
 									$('#goodsList').html(template('goodsTpl', {
 										list: data.content
 									}));
+									$('#tabLink li').click(function(){
+										$('#tabLink li').removeClass('active');
+										$(this).addClass('active'); 
+										$('.contentppp').hide()
+										$('.contentppp').eq($(this).index()).show()
+										 
+									})
 									//还款
-									$('.check').click(function() {
+									$('.check').parent().click(function() { 
 										event.stopPropagation();
-										if($(this).attr('src') == '../../images/center/checked.svg') {
-											$('.check').removeClass('choosed')
-											$('.check').attr('src', '../../images/center/checked.svg')
-											$(this).addClass('choosed')
-											$(this).attr('src', '../../images/center/checked.svg')
-											$('.totalMoney').html($(this).parent().find('.arrearageMoney').html())
-										} else {
-											$(this).removeClass('choosed')
-											$(this).attr('src', '../../images/center/checked.svg');
-											$('.totalMoney').html('¥' + 0)
+										if(!$(this).find('.check').attr('data-id')){
+											if($(this).find('.check').attr('src') == '../../images/center/checked.svg') {
+												$('.check').removeClass('choosed')
+												$('.check').attr('src', '../../images/center/uncheck.svg')
+											} else {
+												$('.check').attr('src', '../../images/center/checked.svg')
+												$('.check').addClass('choosed')
+											}	
+										}else{
+											if($(this).find('.check').attr('src') == '../../images/center/checked.svg') {
+												$('.check').removeClass('choosed')
+												$(this).find('.check').removeClass('choosed')
+												$(this).find('.check').attr('src', '../../images/center/uncheck.svg')
+												$('.check').eq(0).attr('src', '../../images/center/uncheck.svg')
+												$('.totalMoney').html($(this).parent().find('.arrearageMoney').html())
+											} else {
+												$(this).find('.check').addClass('choosed')
+												$(this).find('.check').attr('src', '../../images/center/checked.svg');
+												$('.totalMoney').html('¥' + 0)
+											}	
 										}
 										if($('.choosed').length > 0) {
 											$('#useCoupon').removeAttr('disabled')
+											if($('.choosed').length+1>= $('.check').length){
+												$('.check').attr('src', '../../images/center/checked.svg')
+												$('.check').addClass('choosed')
+												
+											}
 										} else {
+//											$('.check').attr('src', '../../images/center/uncheck.svg')
+//											$('.check').removeClass('choosed')
 											$('#useCoupon').attr('disabled', true)
 										}
 									})
@@ -679,7 +635,7 @@
 						error: function(xhr, type, errorThrown) {
 							plus.nativeUI.closeWaiting();
 							mui.toast(type)
-							console.log('登录响应失败');
+							console.log('响应失败');
 						}
 					});
 
