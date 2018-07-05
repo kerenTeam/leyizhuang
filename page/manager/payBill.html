@@ -118,7 +118,8 @@
 			color: white;
 			padding: 14px 20px;
 			border-radius: 0;
-		} 
+		}
+		
 		.bills {
 			text-align: center;
 			padding: 35px 0;
@@ -150,60 +151,76 @@
 			text-align: center;
 			flex: 1;
 		}
-		.ppph{padding: 10px;background: #F0F0F0;font-size: 14px;}
-		.paddc10{padding: 10px 0;justify-content: space-between}
-		.paddc10 div{flex: 1;text-align: center;}
-		::placeholder{font-size: 14px;}
+		
+		.ppph {
+			padding: 10px;
+			background: #F0F0F0;
+			font-size: 14px;
+		}
+		
+		.paddc10 {
+			padding: 10px 0;
+			justify-content: space-between
+		}
+		
+		.paddc10 div {
+			flex: 1;
+			text-align: center;
+		}
+		
+		::placeholder {
+			font-size: 14px;
+		}
 	</style>
 
 	<body>
 		<header class="mui-bar mui-bar-nav" style="padding-right: 15px;">
 			<a id="leftbtn" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<h1 class="mui-title">账单还款</h1>
-		 
+
 		</header>
 		<script src="../../js/statusBar.js" type="text/javascript" charset="utf-8"></script>
 		<div class="mui-content" style="margin-top: 7px;">
-		 
+
 			<div class="bills afterBorder">
 				<div class="ft14">应还金额</div>
-				<div class="ft20 billmony">1741.00</div>
+				<div class="ft20 billmony">---</div>
 			</div>
 			<div class="flexr pad15 ft14 maincl recordel afterBorder">
 				<div>
 					当前可用信用金
 				</div>
-				<div>
-					¥190
+				<div class="currentxyj">
+					---
 				</div>
 			</div>
 			<div class="flexr pad15 ft14 maincl recordel">
 				<div>
 					还款后可用信用金
 				</div>
-				<div>
-					¥1931
+				<div class="repaymentCreditMoney">
+					---
 				</div>
 			</div>
 			<div style="position: fixed;bottom: 50px;left: 0;width: 100%;">
-				
+
 				<div class="flexr pad15 ft14 maincl recordel">
 					<div>
-						可用预存款¥1000 <span class="ft12" style="display: none;">剩余：8000</span>
+						可用预存款<span class="stPreDiposit">---</span>
 					</div>
 					<div>
-						<input placeholder="请输入使用金额" style="border: none!important;width: 100px;margin-bottom: 0!important;padding: 0;font-size:14px;text-align: right;height: 25px;line-height: 25px;" type="text" />
+						<input class="input" placeholder="请输入预存款" readonly style="border: none!important;width: 100px;margin-bottom: 0!important;padding: 0;font-size:14px;text-align: right;height: 25px;line-height: 25px;" type="text" />
 					</div>
 				</div>
 			</div>
-			
+
 		</div>
 		<div style="height:40px;"></div>
 		<aside class="btmNav flexr" style="position: fixed;bottom: 0;left: 0;width: 100%;border-top: 1px solid #eee;">
 			<a class="dp ft16" style="color: #B62D29;text-align: center;flex: 1;">
-				<span>合计：</span><span class="totalMoney">¥1741</span>
+				<span>合计：</span><span class="totalMoney">---</span>
 			</a>
-			<button id="useCoupon" class="mui-btn-danger" disabled="">立即还款</button>
+			<button id="useCoupon" class="mui-btn-danger">立即还款</button>
 		</aside>
 		<!--操作表-->
 		<div id="maskInfo" style="display: none;">
@@ -233,17 +250,6 @@
 		<script type="text/javascript">
 			mui.init();
 
-			function goInfo(audi) {
-				openview({
-					view: '../personal/myOrderDetail.html',
-					id: 'myOrderDetail',
-					extrasobj: {
-						orderNo: audi,
-						isButton: 'no'
-					}
-				})
-			}
-
 			function repayment() {
 				openview({
 					view: 'repayment.html',
@@ -261,87 +267,94 @@
 			$('.paychoose li').click(function() {
 				event.stopPropagation()
 			})
-			
-			$('#tabLink li').click(function(){
-				$('#tabLink li').removeClass('active');
-				$(this).addClass('active'); 
-				$('.contentppp').hide()
-				$('.contentppp').eq($(this).index()).show()
-				 
-			})
-			
+
 			mui.plusReady(function() {
 				var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
 				var userId = plus.storage.getItem('$userId');
 				var oldToken = plus.storage.getItem('oldToken')
-				var page = plus.webview.currentWebview().page;
-				var cusId = plus.webview.currentWebview().cusid;
+				var content = plus.webview.currentWebview().content;
+				console.error('content ', content)
 				var pays = {};
-				//				plus.nativeUI.showWaiting();
-				//				kindType();
-				function kindType() {
-					//欠款查询列表
-					mui.ajax(serverUrl + '/app/seller/arrearsAudit/list', {
-						data: {
-							userID: userId,
-							identityType: identityT,
-						},
-						dataType: 'json',
-						headers: {
-							"Authorization": oldToken
-						},
-						type: 'post',
-						timeout: 10000,
-						success: function(data, type, xhr) {
-							console.log('欠款查询列表', data);
-							if(data.code == 0) {
-								plus.nativeUI.closeWaiting();
-								if(data.content && data.content.length) {
-									$('#goodsList').html(template('goodsTpl', {
-										list: data.content
-									}));
-									//还款
-									$('.check').click(function() {
-										event.stopPropagation();
-										if($(this).attr('src') == '../../images/center/uncheck.svg') {
-											$('.check').removeClass('choosed')
-											$('.check').attr('src', '../../images/center/uncheck.svg')
-											$(this).addClass('choosed')
-											$(this).attr('src', '../../images/center/checked.svg')
-											$('.totalMoney').html($(this).parent().find('.arrearageMoney').html())
-										} else {
-											$(this).removeClass('choosed')
-											$(this).attr('src', '../../images/center/uncheck.svg');
-											$('.totalMoney').html('¥' + 0)
-										}
-										if($('.choosed').length > 0) {
-											$('#useCoupon').removeAttr('disabled')
-										} else {
-											$('#useCoupon').attr('disabled', true)
-										}
-									})
-									$('#useCoupon').click(function() {
-										var id = $('.choosed').attr('data-id');
-										$('#payMoney').html('￥' + $('.choosed').attr('data-money'))
-										$('#maskInfo').fadeIn(200);
-										toPay(id);
-									})
-								} else {
-									$('#useCoupon,.btmNav').hide();
-									$('#goodsList').html('<div style="text-align:center;padding:15px;color:gray">暂无欠款</div>')
-								}
-							} else {
-								$('#useCoupon').hide();
-								mui.toast(data.message)
-							}
+				kindType();
 
-						},
-						error: function(xhr, type, errorThrown) {
-							plus.nativeUI.closeWaiting();
-							mui.toast(type)
-							console.log('登录响应失败');
+				function kindType() {
+					$('.billmony').html('¥' + content.totalPayAmount)
+					$('.currentxyj').html('¥' + content.currentCreditMoney)
+					$('.repaymentCreditMoney').html('¥' + content.repaymentCreditMoney)
+					$('.stPreDiposit').html('¥' + content.stPreDiposit)
+					if(content.stPreDiposit >= content.totalPayAmount) {
+						$('.totalMoney,#payMoney').html('¥0')
+						$('.input').val(content.totalPayAmount)
+
+					} else {
+						$('.totalMoney,#payMoney').html('¥' + content.totalPayAmount)
+						$('.input').val('')
+						$('.input').click(function() {
+							mui.toast('预存款不足，请使用第三方支付')
+
+						})
+					}
+
+					$('#useCoupon').click(function() {
+						plus.nativeUI.showWaiting()
+						$('#useCoupon').attr('disabled', true)
+						if(content.stPreDiposit >= content.totalPayAmount) {
+							var stPreDipositAmount = content.totalPayAmount
+						} else {
+							var stPreDipositAmount = 0
 						}
-					});
+						console.log('paybill',{
+								userId: userId,
+								identityType: identityT,
+								orderDetails: JSON.stringify(content.billorderDetailsRequests),
+								billNo: content.billNo,
+								stPreDipositAmount: stPreDipositAmount
+							})
+						mui.ajax(serverUrl + '/app/bill/pay', {
+							data: {
+								userId: userId,
+								identityType: identityT,
+								orderDetails: JSON.stringify(content.billorderDetailsRequests),
+								billNo: content.billNo,
+								stPreDipositAmount: stPreDipositAmount
+							},
+							type: 'post', //HTTP请求类型
+							headers: {
+								"Authorization": oldToken
+							},
+							timeout: 10000, //超时时间设置为10秒；
+							success: function(data) {
+								console.error(data);
+								plus.nativeUI.closeWaiting();
+								$('#useCoupon').attr('disabled', false)
+
+								if(data.code == 0) {
+									if(content.stPreDiposit >= content.totalPayAmount) {
+										mui.toast('还款成功')
+									} else {
+										if(data.content && data.content.repaymentNo){
+											$('#maskInfo').fadeIn(200);
+											toPay(data.content.repaymentNo);
+										}
+										
+
+									}
+
+								} else {
+									mui.toast(data.message);
+								}
+
+							},
+							error: function(xhr, type, errorThrown) {
+								//异常处理；
+								console.log(type);
+
+								plus.nativeUI.closeWaiting();
+								plus.nativeUI.alert("获取订单信息失败！");
+							}
+						});
+
+					})
 
 					function toPay(orderNumber) {
 						//系统检测获取支付通道
@@ -403,7 +416,7 @@
 									data: {
 										userId: userId,
 										identityType: identityT,
-										orderNumber: orderNumber,
+										repaymentNo: orderNumber,
 									},
 									type: 'post', //HTTP请求类型
 									headers: {
@@ -427,7 +440,6 @@
 											plus.payment.request(pays[id], varpay, function(result) {
 												console.log("----- 支付成功 -----");
 												var result = JSON.stringify(result);
-												kindType();
 												payOk(data.message);
 											}, function(e) {
 												console.log("----- 支付失败 -----");
@@ -454,7 +466,7 @@
 									data: {
 										userId: userId,
 										identityType: identityT,
-										orderNumber: orderNumber,
+										repaymentNo: orderNumber,
 									},
 									type: 'post', //HTTP请求类型
 									headers: {
@@ -471,7 +483,6 @@
 												plus.nativeUI.closeWaiting();
 												plus.nativeUI.alert("支付成功");
 												var result = JSON.stringify(result);
-												kindType();
 												payOk(data.message);
 											}, function(e) {
 												console.log("----- 支付失败 -----");
