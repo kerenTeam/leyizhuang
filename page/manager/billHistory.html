@@ -15,7 +15,7 @@
 		.month {
 			padding: 10px;
 		}
-		
+
 		.mui-icon-arrowright {
 			vertical-align: middle;
 			color: gray;
@@ -30,86 +30,28 @@
 
 		</header>
 		<script src="../../js/statusBar.js" type="text/javascript" charset="utf-8"></script>
-		<div class="mui-content" style="margin-top: 7px;">
-			<div class="ft16 year">2018年</div>
-			<div class="flexr afterBorder month">
-				<div id="">
-					4月账单<br /> 2018-03-12 ~ 2018-04-12
-				</div>
-				<div id="">
-					¥12131
-					<span class="mui-icon mui-icon-arrowright"></span>
-				</div>
-			</div>
-			<div class="flexr afterBorder month">
-				<div id="">
-					5月账单<br /> 2018-04-12 ~ 2018-05-12
-				</div>
-				<div id="">
-					¥12131
-					<span class="mui-icon mui-icon-arrowright"></span>
-				</div>
-			</div>
-			<div class="ft16 year">2018年</div>
-			<div class="flexr afterBorder month">
-				<div id="">
-					4月账单<br /> 2018-04-12 ~ 2018-05-12
-				</div>
-				<div id="">
-					¥12131
-					<span class="mui-icon mui-icon-arrowright"></span>
-				</div>
-			</div>
-			<div class="flexr afterBorder month">
-				<div id="">
-					5月账单<br /> 2018-04-12 ~ 2018-05-12
-				</div>
-				<div id="">
-					¥12131
-					<span class="mui-icon mui-icon-arrowright"></span>
-				</div>
-			</div>
-			<div class="ft16 year">2017年</div>
-			<div class="flexr afterBorder month">
-				<div id="">
-					4月账单<br /> 2018-04-12 ~ 2018-05-12
-				</div>
-				<div id="">
-					¥12131
-					<span class="mui-icon mui-icon-arrowright"></span>
-				</div>
-			</div>
-			<div class="flexr afterBorder month">
-				<div id="">
-					5月账单<br /> 2018-04-12 ~ 2018-05-12
-				</div>
-				<div id="">
-					¥12131
-					<span class="mui-icon mui-icon-arrowright"></span>
-				</div>
-			</div>
-			<div class="ft16 year">2016年</div>
-			<div class="flexr afterBorder month">
-				<div id="">
-					4月账单<br /> 2018-04-12 ~ 2018-05-12
-				</div>
-				<div id="">
-					¥12131
-					<span class="mui-icon mui-icon-arrowright"></span>
-				</div>
-			</div>
-			<div class="flexr afterBorder month">
-				<div id="">
-					5月账单<br /> 2018-04-12 ~ 2018-05-12
-				</div>
-				<div id="">
-					¥12131
-					<span class="mui-icon mui-icon-arrowright"></span>
-				</div>
-			</div>
+		<div class="mui-content" style="margin-top: 7px;" id="infoListDiv">
+
+			<script type="text/html" id="infoList">
+				<% for(var i=0;i<list.length;i++){ %>
+					<% if(list[i].shouYears){%>
+						<div class="ft16 year"> <%= list[i].years%> 年</div>
+					<%}%>
+					<div class="flexr afterBorder month aClick">
+						<div id="">
+							<%= list[i].billName%> <br /> <%= list[i].billStartDate%> ~ <%= list[i].billEndDate%>
+						</div>
+						<div id="">
+							¥<%= list[i].currentPaidAmount%>
+							<span class="mui-icon mui-icon-arrowright"></span>
+						</div>
+					</div>
+				<%}%>
+			</script>
+
 		</div>
 		<div class="upload text-center text-xs gray" id="upload"></div>
-		
+
 	</body>
 
 </html>
@@ -123,10 +65,11 @@
 		var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
 		var userId = plus.storage.getItem('$userId');
 		var oldToken = plus.storage.getItem('oldToken');
-		plus.nativeUI.showWaiting();  
+		plus.nativeUI.showWaiting();
 		var Spagenum = 2; //实到页数
 		var Ypagenum = 1; //应到页数
-		var oneSize = 15;
+		var oneSize = 10;
+		var yearsArray = [];//存放所有的年份
 		mui.ajax(serverUrl + '/app/bill/history/list', {
 			data: {
 				'userId': userId,
@@ -141,96 +84,92 @@
 				"Authorization": oldToken
 			},
 			success: function(data, type, xhr) {
-				console.log(data);
-				var timeLoad = setInterval(function() {
-					clearTimeout(timeLoad), timeLoad = null;
-					if(data.code == 0) { 
-						if(data.content) {
-							if(data.content.list && data.content.list.length) {
-								document.getElementById('infoListDiv').innerHTML = template('infoList', {
-									list: data.content.list
-								});
-							} else {
-								document.getElementById('infoListDiv').innerHTML = '<div style="text-align: center;padding: 50px;"><img src="../../images/order/order.png" style="width: 100px;" /><div class="ft13 disablecl">暂无数据</div></div>';
-							} 
+				console.log('历史账单', data);
+				if(data.code == 0) {
+					plus.nativeUI.closeWaiting()
+					if(data.content) {
+						if(data.content.list && data.content.list.length) {
+							var nowList = data.content.list;
+							nowList.forEach(function(ele,index){
+								if(yearsArray.indexOf(ele.years) == -1){
+									yearsArray.push(ele.years)
+									ele.shouYears = true
+								}
+							})
+							document.getElementById('infoListDiv').innerHTML = template('infoList', {list: nowList});
 						} else {
 							document.getElementById('infoListDiv').innerHTML = '<div style="text-align: center;padding: 50px;"><img src="../../images/order/order.png" style="width: 100px;" /><div class="ft13 disablecl">暂无数据</div></div>';
 						}
-						//下拉加载
-						$(window).scroll(function() {
-							var scrollTop = $(this).scrollTop();
-							var scrollHeight = $(document).height();
-							var windowHeight = $(this).height();
-							if(scrollTop + windowHeight == scrollHeight) {
-								if(Spagenum <= data.content.pages && Spagenum == Ypagenum + 1) { //当前页小于等于总页数时请求下一页
-									mui("#upload")[0].innerHTML = "<img src='../../img/Rolling.svg' />";
-									Ypagenum++; //满足加载情况,应到页数+1
-									console.log('发起请求,实到' + Spagenum + '页');
-									console.log('发起请求,应到' + Ypagenum + '页');
-
-									mui.ajax(serverUrl + url, {
-										data: {
-											'userId': userId,
-											'identityType': identityT,
-											'page': Ypagenum,
-											'size': oneSize
-										},
-										dataType: 'json',
-										type: 'post',
-										timeout: 10000,
-										headers: {
-											"Authorization": oldToken
-										},
-										success: function(data, type, xhr) {
-											console.log('上拉加载', data);
-											var timeLoad = setInterval(function() {
-												clearTimeout(timeLoad), timeLoad = null;
-												if(data.code == 0) {
-													$('#loadingdiv').css('height', '0px');
-													if(data.content) {
-														if(tabT == 'tab1') {
-															if(data.content.list && data.content.list.length) {
-																document.getElementById('infoListDiv').innerHTML += template('infoList', {
-																	list: data.content.list
-																});
-															}
-														} else if(tabT == 'tab2') {
-															if(data.content.length) {
-																document.getElementById('infoListDiv').innerHTML += template('infoList2', {
-																	list: data.content
-																});
-															}
-														}
-													}
-												} else {
-													mui.toast(data.message);
-												}
-											}, 500)
-											mui("#upload")[0].innerHTML = " ";
-											Spagenum++; //加载成功,当前页+1
-											console.log('成功+1,实到' + Spagenum);
-											console.log('成功+1,应到' + Spagenum);
-										},
-										error: function(xhr, type, errorThrown) {
-											console.log('响应失败  !');
-											Ypagenum--; //失败是应到-1
-											mui.toast("当前网络不好请重试");
-											mui("#upload")[0].innerHTML = "";
-										}
-									});
-
-								} else if(Spagenum == data.content.pages + 1) { //当前页不小于等于总页数时请求下一页
-									mui("#upload")[0].innerHTML = "到底了";
-
-								}
-							}
-						});
 					} else {
-						mui.toast(data.message);
+						document.getElementById('infoListDiv').innerHTML = '<div style="text-align: center;padding: 50px;"><img src="../../images/order/order.png" style="width: 100px;" /><div class="ft13 disablecl">暂无数据</div></div>';
 					}
-				}, 500)
+					//下拉加载
+					$(window).scroll(function() {
+						var scrollTop = $(this).scrollTop();
+						var scrollHeight = $(document).height();
+						var windowHeight = $(this).height();
+						if(scrollTop + windowHeight == scrollHeight) {
+							if(Spagenum <= data.content.pages && Spagenum == Ypagenum + 1) { //当前页小于等于总页数时请求下一页
+								mui("#upload")[0].innerHTML = "<img src='../../img/Rolling.svg' />";
+								Ypagenum++; //满足加载情况,应到页数+1
+								console.log('发起请求,实到' + Spagenum + '页');
+								console.log('发起请求,应到' + Ypagenum + '页');
+
+								mui.ajax(serverUrl + '/app/bill/history/list', {
+									data: {
+										'userId': userId,
+										'identityType': identityT,
+										'page': Ypagenum,
+										'size': oneSize
+									},
+									dataType: 'json',
+									type: 'post',
+									timeout: 10000,
+									headers: {
+										"Authorization": oldToken
+									},
+									success: function(data, type, xhr) {
+										console.log('上拉加载', data);
+										if(data.code == 0) {
+											if(data.content) {
+												if(data.content.list && data.content.list.length) {
+													var nowList = data.content.list;
+													nowList.forEach(function(ele,index){
+														if(yearsArray.indexOf(ele.years) == -1){
+															yearsArray.push(ele.years)
+															ele.shouYears = true
+														}
+													})
+													document.getElementById('infoListDiv').innerHTML += template('infoList', {list: nowList});
+												}
+											}
+										}
+										mui("#upload")[0].innerHTML = " ";
+										Spagenum++; //加载成功,当前页+1
+										console.log('成功+1,实到' + Spagenum);
+										console.log('成功+1,应到' + Spagenum);
+									},
+									error: function(xhr, type, errorThrown) {
+										console.log('响应失败  !');
+										Ypagenum--; //失败是应到-1
+										mui.toast("当前网络不好请重试");
+										mui("#upload")[0].innerHTML = "";
+									}
+								});
+
+							} else if(Spagenum == data.content.pages + 1) { //当前页不小于等于总页数时请求下一页
+								mui("#upload")[0].innerHTML = "到底了";
+
+							}
+						}
+					});
+				} else {
+					plus.nativeUI.closeWaiting()
+					mui.toast(data.message);
+				}
 			},
 			error: function(xhr, type, errorThrown) {
+				plus.nativeUI.closeWaiting()
 				console.log('响应失败  !');
 			}
 		});
