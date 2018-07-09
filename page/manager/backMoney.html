@@ -34,7 +34,7 @@
 	<body>
 		<header class="mui-bar mui-bar-nav" style="padding-right: 15px;">
 			<a id="leftbtn" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-			<h1 class="mui-title">信用额度</h1>
+			<h1 class="mui-title">信用金记录</h1>
 		</header>
 		<script src="../../js/statusBar.js" type="text/javascript" charset="utf-8"></script>
 		<div class="mui-content ft16" style="margin-top: 7px;">
@@ -59,7 +59,7 @@
 				<%for(var i=0;i<list.length;i++){%>
 					<div class="rechargeConDiv">
 						<div class="ft14">消费时间：<%= list[i].createTime%></div>
-						<div class="ft14">订单编号：<%= list[i].id%></div>
+						<div class="ft14">订单编号：<%= list[i].referenceNumber%></div>
 						<div class="ft14">消费金额：<%= list[i].changeMoney%></div>
 						<div class="ft14">消费方式：<%= list[i].type%></div>
 						 

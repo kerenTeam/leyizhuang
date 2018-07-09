@@ -205,11 +205,15 @@
 			<div style="position: fixed;bottom: 50px;left: 0;width: 100%;">
 
 				<div class="flexr pad15 ft14 maincl recordel">
-					<div>
+					
+					<div style="display: flex;align-items: center;">
+						<div class="mui-input-row mui-checkbox ft15" style="width: 30px;height: 30px;display: inline-block;left: -5px;top: -4px;">
+							<input name="checkbox1" style="right: 4px;" id="istrpst"  value="" type="checkbox">
+						</div>
 						可用预存款<span class="stPreDiposit">---</span>
 					</div>
 					<div>
-						<input class="input" placeholder="请输入预存款" readonly style="border: none!important;width: 100px;margin-bottom: 0!important;padding: 0;font-size:14px;text-align: right;height: 25px;line-height: 25px;" type="text" />
+						<input class="input" readonly style="border: none!important;width: 120px;margin-bottom: 0!important;padding: 0;font-size:14px;text-align: right;height: 25px;line-height: 25px;" type="text" />
 					</div>
 				</div>
 			</div>
@@ -235,7 +239,7 @@
 				<li class="padd10 afterBorder" id="wxpay">
 					<img src="../../images/order/weixinpay.svg" />微信
 				</li>
-				<li class="padd10 afterBorder">
+				<li class="padd10 afterBorder" id='UnionPayY'>
 					<img src="../../images/order/bankpay.svg" />银联支付
 				</li>
 				<li class="closeMask fttc padd10">
@@ -249,17 +253,11 @@
 		<script src="../../js/default.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
 			mui.init();
-
-			function repayment() {
-				openview({
-					view: 'repayment.html',
-					id: 'repayment',
-				})
-			}
+ 
 			//支付成功回调
 			function payOk(message) {
-				mui.alert(message || '还款成功');
-				repayment();
+				mui.alert(message || '还款成功'); 
+				mui.fire(plus.webview.getWebviewById('billList'),'refreashbill')
 				setTimeout(function() {
 					plus.webview.currentWebview().close();
 				}, 500)
@@ -282,41 +280,59 @@
 					$('.currentxyj').html('¥' + content.currentCreditMoney)
 					$('.repaymentCreditMoney').html('¥' + content.repaymentCreditMoney)
 					$('.stPreDiposit').html('¥' + content.stPreDiposit)
-					if(content.stPreDiposit >= content.totalPayAmount) {
+					if(content.totalPayAmount >0 && content.stPreDiposit >= content.totalPayAmount) {
 						$('.totalMoney,#payMoney').html('¥0')
-						$('.input').val(content.totalPayAmount)
-
+						$('#istrpst').attr('checked',true)
+						$('.input').val('使用 ¥'+content.totalPayAmount)
 					} else {
 						$('.totalMoney,#payMoney').html('¥' + content.totalPayAmount)
-						$('.input').val('')
+						$('.input').val('不可使用预存款')
+						$('#istrpst').attr('checked',false)
+						$('#istrpst').attr('disabled',true)
+						
 						$('.input').click(function() {
 							mui.toast('预存款不足，请使用第三方支付')
 
 						})
 					}
-
+					$('#istrpst').click(function(){
+						if(content.stPreDiposit >= content.totalPayAmount) {
+							if($(this).is(':checked')){
+								$('.input').val('使用 ¥'+content.totalPayAmount)
+								$('.totalMoney,#payMoney').html('¥0')
+								
+							}else{
+								$('.input').val('不使用预存款')
+								$('.totalMoney,#payMoney').html('¥' + content.totalPayAmount)
+							}
+						}else{
+							mui.toast('预存款不足，请使用第三方支付')
+							
+						}
+						
+					})
 					$('#useCoupon').click(function() {
 						plus.nativeUI.showWaiting()
 						$('#useCoupon').attr('disabled', true)
-						if(content.stPreDiposit >= content.totalPayAmount) {
-							var stPreDipositAmount = content.totalPayAmount
+						if($('#istrpst').is(":checked")) {
+							var stPreDepositAmount = content.totalPayAmount
 						} else {
-							var stPreDipositAmount = 0
+							var stPreDepositAmount = 0
 						}
-						console.log('paybill',{
-								userId: userId,
-								identityType: identityT,
-								orderDetails: JSON.stringify(content.billorderDetailsRequests),
-								billNo: content.billNo,
-								stPreDipositAmount: stPreDipositAmount
-							})
+						console.log('paybill', {
+							userId: userId,
+							identityType: identityT,
+							orderDetails: JSON.stringify(content.billorderDetailsRequests),
+							billNo: content.billNo,
+							stPreDepositAmount: stPreDepositAmount
+						})
 						mui.ajax(serverUrl + '/app/bill/pay', {
 							data: {
 								userId: userId,
 								identityType: identityT,
 								orderDetails: JSON.stringify(content.billorderDetailsRequests),
 								billNo: content.billNo,
-								stPreDipositAmount: stPreDipositAmount
+								stPreDepositAmount: stPreDepositAmount
 							},
 							type: 'post', //HTTP请求类型
 							headers: {
@@ -324,20 +340,18 @@
 							},
 							timeout: 10000, //超时时间设置为10秒；
 							success: function(data) {
-								console.error(data);
+								console.error('略略略 ',data);
 								plus.nativeUI.closeWaiting();
 								$('#useCoupon').attr('disabled', false)
 
 								if(data.code == 0) {
-									if(content.stPreDiposit >= content.totalPayAmount) {
-										mui.toast('还款成功')
-									} else {
-										if(data.content && data.content.repaymentNo){
-											$('#maskInfo').fadeIn(200);
-											toPay(data.content.repaymentNo);
-										}
-										
+//									mui.alert('还款成功')
+									payOk(data.message);
+								} else if(data.code == 1) {
 
+									if(data.content) {
+										$('#maskInfo').fadeIn(200);
+										toPay(data.content);
 									}
 
 								} else {
@@ -348,15 +362,16 @@
 							error: function(xhr, type, errorThrown) {
 								//异常处理；
 								console.log(type);
-
+								$('#useCoupon').attr('disabled', false)
 								plus.nativeUI.closeWaiting();
 								plus.nativeUI.alert("获取订单信息失败！");
 							}
 						});
 
 					})
-
 					function toPay(orderNumber) {
+						document.getElementById('UnionPayY').setAttribute('onclick', 'payfun("UnionPayY","' + orderNumber + '")');
+						
 						//系统检测获取支付通道
 						plus.payment.getChannels(function(channels) {
 							console.log("channel " + JSON.stringify(channels));
@@ -396,6 +411,49 @@
 						}
 						//系统检测获取支付通道结束
 					}
+					//银联的支付
+					function UnionPayYGoPay(id, orderNumber){
+						plus.nativeUI.showWaiting();
+						mui.ajax(serverUrl + '/app/unionpay/bill/pay/html', {
+							data: {
+								userId: userId,
+								identityType: identityT.toString(), 
+								repaymentNo: orderNumber 
+							},
+							type: 'post', //HTTP请求类型
+							headers: {
+								"Authorization": oldToken
+							},
+							timeout: 20000, //超时时间设置为10秒；
+							success: function(data) {
+								if(data.message){
+									plus.nativeUI.closeWaiting();
+									mui.alert(data.message || '支付失败,请重试！')
+								}else{
+									plus.nativeUI.closeWaiting();
+									openview({
+										view:'../personal/UnionPayYGoPay.html',
+										id:'UnionPayYGoPay',
+										extrasobj:{
+											dataHtml:data,
+											orderNumber: orderNumber,
+											billfrom:1
+										}
+									})
+								}
+							},
+							error: function(xhr, type, errorThrown) {
+								//异常处理；
+								console.log(type);
+								console.log("----- 支付失败 -----");
+								console.log(xhr.status);
+								plus.nativeUI.closeWaiting();
+								plus.nativeUI.alert("支付失败,请重试！");
+							}
+						});
+
+					}
+					
 					// 支付方法
 					window.payfun = function(id, orderNumber) {
 						var varpay;
@@ -403,7 +461,9 @@
 							//调用支付功能
 							plus.nativeUI.showWaiting();
 							gopay(id, orderNumber);
-						} else {
+						}else if(id == 'UnionPayY'){
+							UnionPayYGoPay(id, orderNumber);
+						}  else {
 							plus.nativeUI.alert("当前环境不支持此支付通道！", null, "提示");
 							return;
 						}
@@ -412,7 +472,7 @@
 							console.log(id + ' ' + orderNumber)
 							if(id == 'wxpay') {
 								//微信
-								mui.ajax(serverUrl + '/app/wechatpay/repayment/pay', {
+								mui.ajax(serverUrl + '/app/wechatpay/bill/pay', {
 									data: {
 										userId: userId,
 										identityType: identityT,
@@ -461,8 +521,13 @@
 									}
 								});
 							} else {
+								console.log({
+										userId: userId,
+										identityType: identityT,
+										repaymentNo: orderNumber,
+									})
 								//支付宝
-								mui.ajax(serverUrl + '/app/alipay/repayment/pay', {
+								mui.ajax(serverUrl + '/app/alipay/bill/pay', {
 									data: {
 										userId: userId,
 										identityType: identityT,

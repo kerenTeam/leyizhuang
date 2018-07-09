@@ -1450,8 +1450,30 @@
   },
   "page/manager/billList.html": {
     "refer": [
-      "page/manager/payBill.html"
+      "page/manager/payBill.html",
+      "page/personal/myOrderDetail.html",
+      "page/personal/myOrderRTdetail.html"
     ],
     "resources": []
+  },
+  "page/manager/billHistory.html": {
+    "refer": [
+      "page/manager/billHistoryList.html"
+    ]
+  },
+  "page/manager/billHistoryList.html": {
+    "refer": [
+      "page/personal/myOrderDetail.html"
+    ]
+  },
+  "page/manager/payBill.html": {
+    "refer": [
+      "page/personal/UnionPayYGoPay.html"
+    ]
+  },
+  "page/personal/recharge.html": {
+    "refer": [
+      "page/personal/recharge.html"
+    ]
   }
 }

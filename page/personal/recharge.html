@@ -81,7 +81,7 @@
 				</div>
 				<div class="mui-input-row">
 					<label class="maincl">充值金额</label>
-					<input id='newpsd' type="number" min="0" max="5000" onchange="mac(this)" class="mui-input-clear mui-input" placeholder="请输入1-5000的整数">
+					<input id='newpsd' type="text" min="0" max="5000" onkeyup="this.value=this.value.replace(/[^\d]/g,'') " onafterpaste="this.value=this.value.replace(/[^\d]/g,'') "  class="mui-input-clear mui-input" placeholder="请输入整数">
 				</div>
 
 			</form>
@@ -125,6 +125,7 @@
 					return false;
 				}
 			}
+		 
 			var pays = {};
 			mui.plusReady(function() {
 				var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
@@ -148,8 +149,8 @@
 
 				sendButton.addEventListener('tap', function() {
 
-					if(!newpsd.value) {
-						mui.toast('请输入充值金额')
+					if(!newpsd.value && !/^\d+$/.test(newpsd.value)) {
+						mui.toast('请输入整数')
 					} else {
 						var id = $('.payc img[data-id="1"]').attr('class');
 						//系统检测获取支付通道
@@ -162,13 +163,6 @@
 									continue;
 								}
 								pays[channel.id] = channel;
-								//									if(channel.id == 'alipay') { //添加支付事件
-								//										document.getElementById('alipay').setAttribute('onclick', 'payfun("alipay")');
-								//									}
-								//									if(channel.id == 'wxpay') {
-								//										document.getElementById('wxpay').setAttribute('onclick', 'payfun("wxpay")');
-								//
-								//									}
 								checkServices(channel);
 							}
 						}, function(e) {
@@ -193,16 +187,11 @@
 						//系统检测获取支付通道结束
 						//支付宝支付
 						var varpay;
-						if(id == 'alipay' || id == 'wxpay') {
+						if(id == 'alipay' || id == 'wxpay' || id == "bankpay") {
 							//调用支付功能
 							plus.nativeUI.showWaiting();
-							if(id == 'alipay') {
-								//获取后台返回数据
-								gopay(id);
-
-							} else if(id == 'wxpay') { //微信
-								gopay(id);
-							}
+							gopay(id);
+						 
 						} else {
 							plus.nativeUI.alert("当前环境不支持此支付通道！", null, "提示");
 							return;
@@ -263,7 +252,47 @@
 										plus.nativeUI.alert("获取订单信息失败！");
 									}
 								});
-							} else {
+							} else if(id == "bankpay"){
+								plus.nativeUI.showWaiting();
+								mui.ajax(serverUrl + '/app/unionpay/recharge/pay/html', {
+									data: {
+										userId: userId,
+										identityType: identityT.toString(), 
+										money:newpsd.value,
+										cityId:parseInt(cityId),
+									},
+									type: 'post', //HTTP请求类型
+									headers: {
+										"Authorization": oldToken
+									},
+									timeout: 20000, //超时时间设置为10秒；
+									success: function(data) {
+										if(data.message){
+											plus.nativeUI.closeWaiting();
+											mui.alert(data.message || '支付失败,请重试！')
+										}else{
+											plus.nativeUI.closeWaiting();
+											openview({
+												view:'UnionPayYGoPay.html',
+												id:'UnionPayYGoPay',
+												extrasobj:{
+													dataHtml:data,
+//													orderNumber: orderNumber,
+													billfrom:1
+												}
+											})
+										}
+									},
+									error: function(xhr, type, errorThrown) {
+										//异常处理；
+										console.log(type);
+										console.log("----- 支付失败 -----");
+										console.log(xhr.status);
+										plus.nativeUI.closeWaiting();
+										plus.nativeUI.alert("支付失败,请重试！");
+									}
+								});	
+							}else{
 								//支付宝
 								mui.ajax(serverUrl + '/app/alipay/recharge/pay', {
 									data: {

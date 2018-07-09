@@ -293,9 +293,12 @@
 			</div>
 
 		</header>
+		
 		<!--状态栏开始-->
 		<style type="text/css" id="headStyle"></style>
 		<div id="sBar" style="background-color: #FFFFFF;position: fixed;width:100%;top: 0;z-index: 9999"></div>
+		
+		<div id="justest" style="display: none;background-color: rgba(255,255,255,0.8);color: red;position: fixed;width:100%;top: 68px;z-index: 9999;text-align: center;padding: 20px 0;font-weight: 800;">*****测试版本*****</div>
 		<script type="text/javascript">
 			var immersed = 0;
 			var ms = (/Html5Plus\/.+\s\(.*(Immersed\/(\d+\.?\d*).*)\)/gi).exec(navigator.userAgent);
@@ -766,7 +769,7 @@
 		<script>
 			mui.init();
 			var text = null;
-
+			
 			function startRecognize() {
 				if(plus.os.name == 'Android' && navigator.userAgent.indexOf('StreamApp') > 0) {
 					plus.nativeUI.toast('当前环境暂不支持语音识别插件');
@@ -824,6 +827,8 @@
 				})
 			}
 			mui.plusReady(function() {
+				
+				
 				if(/android/i.test(navigator.userAgent)) {
 					var systemType = 'ANDROID'
 				} else {
@@ -878,6 +883,11 @@
 				timeSign = setInterval(Sign, 5000000); //两小时自动更新一次token
 
 				function Sign() { //登录方法
+					if(serverUrl == 'http://119.23.149.7:9999'){
+						$('#justest').show()
+					}else{
+						$('#justest').hide()
+					}
 					//设置默认token
 					if(!plus.storage.getItem('oldToken')) { //没有用户token
 						openview({

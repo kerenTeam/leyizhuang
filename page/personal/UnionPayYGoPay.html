@@ -70,10 +70,12 @@
 				var old_back = mui.back;
 				var orderNumber = plus.webview.currentWebview().orderNumber;
 				var payableAmount = plus.webview.currentWebview().payableAmount;
+				var billfrom = plus.webview.currentWebview().billfrom;
 				//改写返回键返回的函数，返回时传页面停留时间
 				mui.back = function() {
 					mui.confirm('请确认已完成支付!', '提示', ['未支付', '已支付'], function(e) {
-						if(e.index == 1) {
+					 
+							if(e.index == 1) {
 							//			            		openview({
 							//								view: '../order/orderSuccess.html',
 							//								id: 'orderSuccess',
@@ -82,17 +84,28 @@
 							//									money:payableAmount,
 							//								}
 							//							})
-							openview({
-								view: 'myOrderDetail.html',
-								id: 'myOrderDetail',
-								extrasobj: {
-									orderNo: orderNumber,
-								}
-							})
+							if(billfrom==1){
+								old_back();
+							}else{
+								openview({
+									view: 'myOrderDetail.html',
+									id: 'myOrderDetail',
+									extrasobj: {
+										orderNo: orderNumber,
+									}
+								})
+							}
+							if(plus.webview.getWebviewById("billList")) {
+								plus.webview.getWebviewById("billList").reload();
+							}
 							if(plus.webview.getWebviewById("myOrderDetail")) {
 								plus.webview.getWebviewById("myOrderDetail").reload();
 							}
 							setTimeout(function() {
+								if(plus.webview.getWebviewById("payBill")) {
+									plus.webview.getWebviewById("payBill").hide();
+									plus.webview.getWebviewById("payBill").close();
+								}
 								if(plus.webview.getWebviewById("myOrderList")) {
 									plus.webview.getWebviewById("myOrderList").hide();
 									plus.webview.getWebviewById("myOrderList").close();
@@ -106,7 +119,8 @@
 							}, 1500)
 						} else {
 							old_back();
-						}
+						} 
+						
 					})
 				}
 

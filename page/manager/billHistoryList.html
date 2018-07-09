@@ -3,7 +3,7 @@
 
 	<head>
 		<meta charset="UTF-8">
-		<title>本期账单及还款</title>
+		<title>历史账单详情</title>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="../../css/mui.min.css" rel="stylesheet" />
 		<link rel="stylesheet" type="text/css" href="../../css/commonY.css" />
@@ -34,7 +34,7 @@
 		}
 		
 		#tabLink li {
-			width: 49%;
+			width: 100%;
 			display: inline-block;
 		}
 		
@@ -94,15 +94,15 @@
 		}
 		
 		.mui-media a {
-			-webkit-transform: translateX(50px);
+			-webkit-transform: translateX(20px);
 		}
 		
 		.check {
 			position: absolute;
 			top: 50%;
 			-webkit-transform: translateY(-50%);
-			width: 25px;
-			left: 17px;
+			width: 15px;
+			left: 10px;
 		}
 		
 		.righticon {
@@ -161,6 +161,7 @@
 		.flexRow2 img{width: 30px;vertical-align: middle;margin-right: 10px;}
 		.searchList{padding: 0 10px;}
 		.searchList input{border: none;outline: none;background: #EEEEEE;font-size: 14px;height: 30px;width: 110px;text-align: left;padding: 2px;}
+
 	</style>
 
 	<body>
@@ -183,8 +184,8 @@
 				</div>
 				<div class="bills">
 					<div class="ft14">本期应还</div>
-					<%if(list.currentShouldPayAmount){%> 
-						<div class="ft20 billmony"><%=list.currentShouldPayAmount%></div>
+					<%if(list.billTotalAmount){%> 
+						<div class="ft20 billmony"><%=list.billTotalAmount%></div>
 						<div class="ft12 activecl2">还款截止日 <%=list.repaymentDeadlineDate%></div>
 					<%}else{%>
 						<img src="../../images/center/payover.svg" style="width: 30px;vertical-align: bottom;"/> <span class="activecl">账单已还清</span>
@@ -202,7 +203,7 @@
 				</div>
 				<div class="flexr pad10 ft13 maincl cmonth">
 					<div class="rightBorder" style="width: 50%;text-align: left;padding: 0 10px;">
-						本期退款金额: <span class="activecl">¥<%=list.currentAdjustmentAmount || 0.00%></span><br/> 本期账单金额: ¥<%=list.currentBillAmount%>
+						本期退款金额: <span class="activecl">-¥<%=list.currentAdjustmentAmount || 0.00%></span><br/> 本期账单金额: ¥<%=list.currentBillAmount%>
 					</div>
 					<div style="width: 50%;text-align: left;padding: 0 10px;">
 						上期未还金额: ¥<%=list.priorNotPaidBillAmount%><br/> 上&nbsp;期&nbsp;滞&nbsp;纳&nbsp;金: ¥<%=list.priorNotPaidInterestAmount%>
@@ -210,27 +211,27 @@
 				</div>
 				<div class="tab-hd tab-hdtwo" id="tabLink" style="position: sticky;top: 70px;width: 100%;height: 40px;z-index: 999;">
 					<ul class="tab-nav">
-						<li class="active aClick " data-statusId="">账单明细</li>
+						<!--<li class="active aClick " data-statusId="">账单明细</li>-->
 						<li class="aClick" data-statusId="1">账单还款记录<span id="waitCheck" style="display: none;" class="mui-badge mui-badge-danger"></span></li>
 	
 					</ul>
 				</div>
 				<!--商品列表-->
 				<div class="goodsList" style="margin-bottom: 50px;">
-					<div class="contentppp">
-						<!--<div class="flexrsh searchList bgcwt ft12">
+					<!--<div class="contentppp">
+						<div class="flexrsh searchList bgcwt ft12">
 							<div style="margin-top:14px ;">
-								开始：<input type="date" min="<%=list.billStartDate%>" max="<%=list.billEndDate%>" value="<%=list.startTimeStr || list.billStartDate%>" class="start" placeholder="出货日"/>
+								开始：<input type="date" min="<%=list.billStartDate%>" max="<%=list.billEndDate%>" value="<%=list.startTimeStr%>" class="start" placeholder="出货日"/>
 							</div>
 							<div style="margin-top:14px ;">
-								结束：<input type="date" min="<%=list.billStartDate%>" max="<%=list.billEndDate%>" value="<%=list.endTimeStr || list.billEndDate%>" class="end" placeholder="出货日"/>
+								结束：<input type="date" min="<%=list.billStartDate%>" max="<%=list.billEndDate%>" value="<%=list.endTimeStr%>" class="end" placeholder="出货日"/>
 							</div>
 							<span class="mui-icon mui-icon-search activecl" onclick="goSearch()"></span>
-						</div>-->
+						</div>
 						<ul class="mui-table-view">
 							<li class="mui-table-view-cell mui-media">
 								<a href="javascript:;" style="margin-left: 0px;">
-									<div class="flexr fledw" style="max-width: 80%;">
+									<div class="flexr fledw" style="max-width: 95%;">
 										<div class="mui-media-body ft12">
 											订单出货日
 										</div>
@@ -245,55 +246,35 @@
 										</div>
 									</div>
 								</a>
-								<img data-id="" class="check" src="../../images/center/checked.svg" alt="" />
 							</li>
 							<%if(list.notPayOrderDetails && list.notPayOrderDetails.length){%>
 								<%for(var i = 0; i < list.notPayOrderDetails.length; i++){%>
-									<li class="mui-table-view-cell mui-media" id="<%=list.notPayOrderDetails.orderId%>">
+									<li class="mui-table-view-cell mui-media" id="<%=list.notPayOrderDetails.orderId%>" onclick="goInfo('<%=list.notPayOrderDetails[i].orderNo%>')">
 										<a href="javascript:;" style="margin-left: 0px;">
-											<div class="mui-media-body ft14 flexr fledw" style="max-width: 80%;"  onclick="goInfo(<%=list.notPayOrderDetails[i].orderCreditMoney || 0%>,'<%=list.notPayOrderDetails[i].orderNo%>','<%=list.notPayOrderDetails[i].returnNo%>')">
-												<div onclick="event.stopPropagation()">
+											<div class="mui-media-body ft14 flexr fledw" style="max-width: 95%;">
+												<div id="">
 													<%=list.notPayOrderDetails[i].shipmentTime%>
 												</div>
 												<div id="">
 													<%=list.notPayOrderDetails[i].orderNo2%>
 												</div>
-												<%if(list.notPayOrderDetails[i].orderCreditMoney && list.notPayOrderDetails[i].orderCreditMoney < 0){%>
-													<div class="activecl">
-														¥<%=list.notPayOrderDetails[i].orderCreditMoney || 0%>
-													</div>	
-												<%}else{%>
-													<div>
-														¥<%=list.notPayOrderDetails[i].orderCreditMoney || 0%>
-													</div>	
-												<%}%>
-												
-												<div>
-													¥<%=list.notPayOrderDetails[i].interestAmount || 0%>
-												</div> 
+												<div class="activecl">
+													¥<%=list.notPayOrderDetails[i].orderCreditMoney%>
+												</div>
+												<div id="">
+													¥<%=list.notPayOrderDetails[i].interestAmount%>
+												</div>
 											</div>
 										</a>
-										<%if(list.notPayOrderDetails[i].orderCreditMoney && list.notPayOrderDetails[i].orderCreditMoney <0){%>
-											<img data-id="<%=list.notPayOrderDetails[i].orderId%>" data-orderType="<%=list.notPayOrderDetails[i].orderType%>" data-orderNo="<%=list.notPayOrderDetails[i].orderNo%>" data-returnNo="<%=list.notPayOrderDetails[i].returnNo%>" data-money="<%=list.notPayOrderDetails[i].orderCreditMoney || 0%>" data-zmoney="<%=list.notPayOrderDetails[i].interestAmount || 0%>" class="check choosed" src="../../images/center/checkG.svg" alt="" />
-										<%}else{%>
-											<img data-id="<%=list.notPayOrderDetails[i].orderId%>" data-orderType="<%=list.notPayOrderDetails[i].orderType%>" data-orderNo="<%=list.notPayOrderDetails[i].orderNo%>" data-returnNo="<%=list.notPayOrderDetails[i].returnNo%>" data-money="<%=list.notPayOrderDetails[i].orderCreditMoney || 0%>" data-zmoney="<%=list.notPayOrderDetails[i].interestAmount || 0%>" class="check zcheck choosed" src="../../images/center/checked.svg" alt="" />
-										<%}%>
-
 									</li>
 								<%}%> 
 							<%}else{%>
 								<div style="text-align:center;padding:15px;color:gray">暂无账单明细</div>
 							<%}%> 
 						</ul>
-						<div style="height:40px;"></div>
-						<aside class="btmNav flexr" style="position: fixed;bottom: 0;left: 0;width: 100%;border-top: 1px solid #eee;">
-							<a class="dp ft16" style="color: #B62D29;text-align: center;flex: 1;">
-								<span>合计：</span><span class="totalMoney"></span>
-							</a>
-							<button id="useCoupon" class="mui-btn-danger">去还款</button>
-						</aside>
-					</div>
-					<div class="contentppp ft12" style="display: none;">
+					 
+					</div>-->
+					<div class="contentppp ft12">
 						<%if(list.paidOrderDetails && list.paidOrderDetails.length){%>
 							<%for(var i = 0; i < list.paidOrderDetails.length; i++){%>
 								<div class="flexr ppph">
@@ -327,7 +308,6 @@
 											<div id="">
 												<%=list.paidOrderDetails[i].billRepaymentDetails[j].orderNo2%>
 											</div>
-											 
 											<%if(list.paidOrderDetails[i].billRepaymentDetails[j].orderCreditMoney && list.paidOrderDetails[i].billRepaymentDetails[j].orderCreditMoney < 0){%>
 												<div class="activecl">
 													¥<%=list.paidOrderDetails[i].billRepaymentDetails[j].orderCreditMoney || 0%>
@@ -338,6 +318,9 @@
 												</div>	
 											<%}%>
 											<div id="">
+												¥<%=list.paidOrderDetails[i].billRepaymentDetails[j].orderCreditMoney || 0%>
+											</div>
+											<div id="">
 												¥<%=list.paidOrderDetails[i].billRepaymentDetails[j].interestAmount || 0%>
 											</div>
 										</div> 
@@ -346,7 +329,7 @@
 								
 							<%}%> 
 						<%}else{%>
-							<div style="text-align:center;padding:15px;color:gray">暂无账单明细</div>
+							<div style="text-align:center;padding:15px;color:gray">暂无账单还款明细</div>
 						<%}%>  
 						 <div style="height:40px;"></div>
 						<aside class="btmNav ft14" style="position: fixed;bottom: 0;left: 0;width: 100%;height: 55px;line-height: 55px;background: #FFFFFF;text-align: center;border-top: 1px solid #eee;">
@@ -366,7 +349,7 @@
 		<script type="text/javascript">
 			mui.init();
 
-			function goInfo(money,audi,returnno) {
+			window.goInfo = function(money,audi,returnno) {
 				if(money>0){
 					openview({
 						view: '../personal/myOrderDetail.html',
@@ -389,42 +372,30 @@
 				
 			} 
 			mui.plusReady(function() {
-			
 				var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
 				var userId = plus.storage.getItem('$userId');
-				var oldToken = plus.storage.getItem('oldToken')
-				var page = plus.webview.currentWebview().page;
-				var cusId = plus.webview.currentWebview().cusid;
+				var oldToken = plus.storage.getItem('oldToken') 
+				var billNo = plus.webview.currentWebview().billNo;
 				var pays = {};
 				window.goSearch = function(){ 
 					kindType($('.start').val(),$('.end').val());
-				}
-				document.addEventListener('refreashbill', function() {
-					kindType('','');
-					console.log('刷新数据');
-				})
-				downRe(pageRd);
-
-				function pageRd() {
-					kindType('','');
 				}
 				kindType('','');
 				function kindType(startTimeStr,endTimeStr) {
 					plus.nativeUI.showWaiting();
 					//账单查询列表
-					mui.ajax(serverUrl + '/app/bill/look', {
+					mui.ajax(serverUrl + '/app/bill/history/detail', {
 						data: {
 							userId: userId,
 							identityType: identityT,
-							startTimeStr:startTimeStr,
-							endTimeStr:endTimeStr,
+							billNo:billNo
 						},
 						dataType: 'json',
 						headers: {
 							"Authorization": oldToken
 						},
 						type: 'post',
-						timeout: 30000,
+						timeout: 10000,
 						success: function(data, type, xhr) {
 							console.log('账单查询列表', data);
 							if(data.code == 0) {
@@ -444,12 +415,15 @@
 									if(data.content.notPayOrderDetails && data.content.notPayOrderDetails.length){
 										data.content.notPayOrderDetails.forEach(function(ele,index){
 											if(ele.orderNo){
-												ele.orderNo2 ='****' + ele.orderNo.substr(ele.orderNo.length-6)
+												ele.orderNo2 = ele.orderNo.substr(0, 2) + '****' + ele.orderNo.substr(20);
 											}
 										})
 									}
 									
+									
+									
 									let allpaied = 0
+									
 									if(data.content.paidOrderDetails && data.content.paidOrderDetails.length){
 										data.content.paidOrderDetails.forEach(function(ele,index){
 											allpaied += parseFloat(ele.totalRepaymentAmount)
@@ -475,128 +449,14 @@
 										}
 									})
 									
-									$('#tabLink li').click(function(){
-										$('#tabLink li').removeClass('active');
-										$(this).addClass('active'); 
-										$('.contentppp').hide()
-										$('.contentppp').eq($(this).index()).show()
-										 
-									})
-									showTot()
-									function showTot(){
-										var paymoney = 0
-										$('.choosed').each(function(){
-											 
-											if($(this).attr('data-money') || $(this).attr('data-zmoney')){
-												paymoney+= parseFloat($(this).attr('data-money'))+parseFloat($(this).attr('data-zmoney'))
-											}
-										}) 
-										$('.totalMoney').html('￥' + paymoney.toFixed(2))
-									}
-									//还款
-									$('.check').click(function() { 
-										event.stopPropagation();
-										if($(this).attr('data-money') < 0){
-										}else{
-											if(!$(this).attr('data-id')){
-												if($(this).attr('src') == '../../images/center/checked.svg') {
-													$('.check').eq(0).removeClass('choosed')
-													$('.check').eq(0).attr('src', '../../images/center/uncheck.svg') 
-													$('.zcheck').removeClass('choosed')
-													$('.zcheck').attr('src', '../../images/center/uncheck.svg')
-												} else {
-													$('.check').eq(0).addClass('choosed')
-													$('.check').eq(0).attr('src', '../../images/center/checked.svg') 
-													$('.zcheck').attr('src', '../../images/center/checked.svg')
-													$('.zcheck').addClass('choosed')
-												}	
-											}else{
-												if($(this).attr('src') == '../../images/center/checked.svg') {
-													$('.check').eq(0).removeClass('choosed')
-													$(this).removeClass('choosed')
-													$(this).attr('src', '../../images/center/uncheck.svg')
-													$('.check').eq(0).attr('src', '../../images/center/uncheck.svg') 
-												} else {
-													$(this).addClass('choosed')
-													$(this).attr('src', '../../images/center/checked.svg');
-												}	
-											}
-										} 
-										if($('.choosed').length > 0) {
-											$('#useCoupon').removeAttr('disabled')
-											if($('.choosed').length+1>= $('.check').length){
-												$('.check').eq(0).addClass('choosed')
-												$('.check').eq(0).attr('src', '../../images/center/checked.svg') 
-												$('.zcheck').attr('src', '../../images/center/checked.svg')
-												$('.zcheck').addClass('choosed')
-												
-											}
-										} else { 
-											$('#useCoupon').attr('disabled', true)
-										}
-										
-										showTot()
-										
-									})
-									$('#useCoupon').click(function() {
-										$('#useCoupon').attr('disabled', true)
-										plus.nativeUI.showWaiting()
-										let orderDetails = []
-										$('.choosed').each(function(){
-											if($(this).attr('data-id')){
-												orderDetails.push({
-												 	id:$(this).attr('data-id'),
-												 	orderNo:$(this).attr('data-orderNo'),
-												 	returnNo:$(this).attr('data-returnNo'),
-												 	orderType:$(this).attr('data-orderType')
-												 })
-											}
-											 
-										}) 
-										console.log('orderDetails ',{
-												userId: userId,
-												identityType: identityT,
-												orderDetails: orderDetails,
-												billNo:data.content.billNo
-											})
-										mui.ajax(serverUrl + '/app/bill/pay/page', {
-											data: {
-												userId: userId,
-												identityType: identityT,
-												orderDetails: JSON.stringify(orderDetails),
-												billNo:data.content.billNo
-											},
-											type: 'post', //HTTP请求类型
-											headers: {
-												"Authorization": oldToken
-											},
-											timeout: 10000, //超时时间设置为10秒；
-											success: function(data) {
-												console.error(data);
-												plus.nativeUI.closeWaiting();
-												$('#useCoupon').attr('disabled', false)
-												
-												if(data.code == 0) {
-													openview({
-														view: 'payBill.html',
-														id: 'payBill',
-														extrasobj:{content:data.content}
-													})
-												} else {
-													mui.toast(data.message);
-												}
-		
-											},
-											error: function(xhr, type, errorThrown) {
-												//异常处理；
-												console.log(type);
-												$('#useCoupon').attr('disabled', false)
-												plus.nativeUI.closeWaiting();
-												plus.nativeUI.alert("获取账单支付失败！");
-											}
-										});
-										
-									})
+//									$('#tabLink li').click(function(){
+//										$('#tabLink li').removeClass('active');
+//										$(this).addClass('active'); 
+//										$('.contentppp').hide()
+//										$('.contentppp').eq($(this).index()).show()
+//										 
+//									})
+								 
 								} else {
 									$('#useCoupon,.btmNav').hide();
 									$('#goodsList').html('<div style="text-align:center;padding:15px;color:gray">暂无账单</div>')
