@@ -133,8 +133,13 @@
 										<% if(!list[i].zhuangshi){ %>
 											<!--待付款：UNPAID，待发货：PENDING_SHIPMENT，待收货：PENDING_RECEIVE，已取消：CANCELED，取消中：CANCELING，已完成：FINISHED，拒签：REJECTED，已结案：CLOSED。-->
 											<% if(list[i].deliveryType == '送货上门' || list[i].deliveryType == '门店自提'){%>
+												
 												<% if(list[i].status == 'UNPAID'){%>
-													<span class="redC aClick" onclick="goToPay('<%= list[i].orderNo%>','<%= list[i].amountPayable%>')">去支付</span>
+													<%if(list[i].isCashDelivery){%>
+														<span class="redC aClick" onclick="goToPay('<%= list[i].orderNo%>','<%= list[i].amountPayable%>',true)">去支付</span>
+													<%}else{%>
+														<span class="redC aClick" onclick="goToPay('<%= list[i].orderNo%>','<%= list[i].amountPayable%>',false)">去支付</span>
+													<%}%>
 												<% }%>
 												<% if(list[i].status == 'UNPAID' || list[i].status == 'PENDING_SHIPMENT'){%>
 													<span class="aClick" onclick="NewcancelFun('<%= list[i].orderNo%>',this)">取消订单</span>
@@ -164,7 +169,11 @@
 
 											<%if(list[i].deliveryType.indexOf('产品券')>-1){%>
 												<% if(list[i].status == 'UNPAID'){%>
-													<span class="redC aClick" onclick="goToPay('<%= list[i].orderNo%>','<%= list[i].amountPayable%>')">去支付</span>
+													<%if(list[i].isCashDelivery){%>
+														<span class="redC aClick" onclick="goToPay('<%= list[i].orderNo%>','<%= list[i].amountPayable%>',true)">去支付</span>
+													<%}else{%>
+														<span class="redC aClick" onclick="goToPay('<%= list[i].orderNo%>','<%= list[i].amountPayable%>',false)">去支付</span>
+													<%}%>
 												<% }%>
 												<%if(list[i].status == "FINISHED"){%>
 													<span class="redC aClick" onclick="openReturns('<%= list[i].orderNo%>','<%= list[i].customerId%>','<%=list[i].deliveryType%>')">退货</span>
@@ -280,6 +289,9 @@
 				<li class="pad10 afterBorder aClick2" id="UnionPayY">
 					<img src="../../images/order/bankpay.svg" />银联支付
 				</li>
+				<li class="pad10 afterBorder aClick2" id="facePay" style="display: none;">
+					<img src="../../images/order/facePay.svg" />货到付款
+				</li>
 				<li class="pad10 afterBorder aClick2" id="xyed1" style="display: none;">
 					<img src="../../img/credit.svg" alt="" /> 信用额度
 				</li>
@@ -308,7 +320,12 @@
 				event.preventDefault();
 				$('#maskInfo').fadeOut(200);
 			})
-			function goToPay(orderNo,money){
+			function goToPay(orderNo,money,isc){
+				if(isc){
+					$('#facePay').show()
+				}else{
+					$('#facePay').hide()
+				}
 				mui.plusReady(function(){
 					var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
 					var userId = plus.storage.getItem('$userId');
@@ -388,6 +405,7 @@
 			}
 			//系统检测获取支付通道
 			function toPay(payableAmount, orderNumber) {
+				document.getElementById('facePay').setAttribute('onclick', 'facePayF("' + payableAmount + '","' + orderNumber + '")');
 				document.getElementById('UnionPayY').setAttribute('onclick', 'payfun("UnionPayY","' + payableAmount + '","' + orderNumber + '")');
 				document.getElementById('xyed1').setAttribute('onclick', 'xyedPayF("EMP_CREDIT","' + payableAmount + '","' + orderNumber + '")');
 				document.getElementById('xyj2').setAttribute('onclick', 'xyedPayF("STORE_CREDIT_MONEY","' + payableAmount + '","' + orderNumber + '")');
@@ -435,6 +453,38 @@
 				var userId = plus.storage.getItem('$userId');
 				var oldToken = plus.storage.getItem('oldToken');
 				// 支付接口
+				//1 货到付款
+				window.facePayF = function(payableAmount,orderNumber){
+					mui.ajax(serverUrl + '/app/order/handle/cashDelivery', {
+						data: {
+							userId: userId,
+							identityType: identityT.toString(),
+//								amountPayable: payableAmount,
+							orderNumber: orderNumber,
+						},
+						type: 'post', //HTTP请求类型
+						headers: {
+							"Authorization": oldToken
+						},
+						timeout: 10000, //超时时间设置为10秒；
+						success: function(data) {
+							console.error(data);
+							plus.nativeUI.closeWaiting();
+							if(data.code == 0) {
+								mui.toast('支付成功')
+								mui.fire(plus.webview.getWebviewById('center.html'),'refresh');
+								plus.webview.currentWebview().reload();
+							}else{
+								plus.nativeUI.alert("支付失败");
+							}
+
+						},
+						error: function(xhr, type, errorThrown) {
+							//异常处理；
+							console.log(type);
+						}
+					});
+				}
 				window.payfun = function(id, payableAmount, orderNumber) {
 					var varpay;
 					if(id == 'alipay' || id == 'wxpay') {

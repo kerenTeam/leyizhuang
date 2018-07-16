@@ -446,6 +446,8 @@
 			var customerId = plus.webview.currentWebview().customerId || '';
 			var sysDeliveryType = plus.webview.currentWebview().sysDeliveryType;
 			var orderType = plus.webview.currentWebview().orderType || '';
+			//获取城市
+			var cityId = plus.storage.getItem('userCity');
 			if(orderType == 'COUPON'){
 				$('.isBuyCoupon,.xyed,.yfee,.sfee,.dsje').hide()
 			}
@@ -1041,6 +1043,8 @@
 				var addrObj = {};
 				addrObj.obj = [JSON.parse(plus.storage.getItem("audnoAddrObj"))];
 				document.getElementById("add_info").innerHTML = template("addrTpl", addrObj);
+				//运费
+				deliveryFee(JSON.parse(plus.storage.getItem("audnoAddrObj")).country)
 			}else if(plus.storage.getItem("deliveryId")){
 				mui.ajax(serverUrl + '/app/user/get/deliveryAddress', {
 					data: {
@@ -1072,6 +1076,8 @@
 							addrObj.obj = [defultAddress];
 
 							document.getElementById("add_info").innerHTML = template("addrTpl", addrObj);
+							//运费
+							deliveryFee(defultAddress.country)
 						}
 					},
 					error: function(xhr, type, errorThrown) {
@@ -1101,23 +1107,27 @@
 						if(data.code == 0 && data.content) {
 							if(plus.storage.getItem("$addressStorageOrder") != null) {
 								addrObj.obj = JSON.parse(plus.storage.getItem("$addressStorageOrder"));
+								//运费
+								deliveryFee(JSON.parse(plus.storage.getItem("$addressStorageOrder"))[0].country)
 							} else {
 								addrObj.obj = [];
 							}
-							document.getElementById("add_info").innerHTML = template("addrTpl", addrObj);
+							document.getElementById("add_info").innerHTML = template("addrTpl", addrObj); 
 							plus.storage.removeItem("$addressStorageOrder")
-
+					
 						} else {
 							console.log('缓存地址', data);
 							addrObj.obj = JSON.parse(plus.storage.getItem("$addressStorageOrder")) || [];
 							document.getElementById("add_info").innerHTML = template("addrTpl", addrObj);
-
+							//运费
+							deliveryFee(JSON.parse(plus.storage.getItem("$addressStorageOrder"))[0].country)
 						}
 					},
 					error: function(xhr, type, errorThrown) {
 						console.log('响应失败  !');
 					}
 				});
+				
 			}
 			function getLebi(money){
 				mui.ajax(serverUrl+'/app/paymentMethods/rebate/lebi',{
@@ -1159,6 +1169,57 @@
 					}
 				});
 			}
+			function deliveryFee(country){
+				var goodsId = '';
+				mui.each(JSON.parse(allGoods), function(index, item) {
+					if(index == JSON.parse(allGoods).length - 1) {
+						goodsId += item.id
+					} else {
+						goodsId += item.id + ','
+					}
+				})
+				var totalOrderAmount = Number($('#firstTotal').val()) - Number($('#freight').html().replace('¥', ''));
+				console.log('计算运费',{
+						"userId": userId,
+						"identityType": identityT,
+						"cityId":cityId,
+						"countyName":country,
+						"goodsList": goodsId,
+						"totalOrderAmount":totalOrderAmount
+						
+				})
+				mui.ajax(serverUrl + '/app/order/deliveryFee', {
+					data: {
+						"userId": userId,
+						"identityType": identityT,
+						"cityId":cityId,
+						"countyName":country,
+						"goodsList": goodsId,
+						"totalOrderAmount":totalOrderAmount
+					},
+					dataType: 'json',
+					type: 'post',
+					timeout: 10000,
+					headers: {
+						"Authorization": oldToken
+					},
+					success: function(data) {
+						console.log('运费', data);
+						if(data.code == 0) { 
+							$('#freight').html('¥'+data.content)
+							$('#firstFreight').val(data.content)
+							carculate()
+						} else { 
+							mui.toast(data.message)
+						}
+					},
+					error: function(xhr, type, errorThrown) {
+						plus.nativeUI.closeWaiting();
+						console.log('响应失败');
+					}
+				});		
+			}
+			
 			//自提 获取门店
 			$("input[name='peis']").unbind('change').change(function() {
 //				getMaterial();
@@ -1413,8 +1474,6 @@
 				$('.totalMoney').html(parseFloat(curTotal).toFixed(2))
 				return parseFloat(curTotal).toFixed(2);
 			}
-			//获取城市
-			var cityId = plus.storage.getItem('userCity');
 			//获取时间段
 			timeRanges();
 
