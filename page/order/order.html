@@ -1210,6 +1210,12 @@
 							$('#firstFreight').val(data.content)
 							carculate()
 						} else { 
+							$('#freight').html('¥'+0)
+							$('#firstFreight').val(0)
+							var addrObj = {}
+							addrObj.obj = [];
+							document.getElementById("add_info").innerHTML = template("addrTpl", addrObj);
+							carculate()
 							mui.toast(data.message)
 						}
 					},
