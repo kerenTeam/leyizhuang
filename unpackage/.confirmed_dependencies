@@ -1475,5 +1475,11 @@
     "refer": [
       "page/personal/recharge.html"
     ]
+  },
+  "page/guide/achievement.html": {
+    "refer": [
+      "page/personal/myOrderRTdetail.html",
+      "page/personal/myOrderDetail.html"
+    ]
   }
 }

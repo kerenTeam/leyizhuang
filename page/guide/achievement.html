@@ -14,6 +14,7 @@
 			.circle{background: #E73A38; width: 200px;height: 200px;position: absolute;border-radius: 50%;}
 			.circle2{background: #F8937E; width: 200px;height: 200px;position: absolute;border-radius: 50%;}
 			.circle3{background: #E7475E; width: 200px;height: 200px;position: absolute;border-radius: 50%;}
+			.circle4{background: #E7475E; width: 200px;height: 200px;position: absolute;border-radius: 50%;}
 			.quotaRecord .div01 span{display: none;}
 			.totalEdu{left: 79px!important;}
 			li.active{border-bottom: 2px solid #B62D29;box-sizing: border-box;color: #B62D29;}
@@ -21,11 +22,25 @@
 			.tab-nav li{height: 45px !important;display: inline-block;}
 			.mui-bar-nav{box-shadow: 1px 0px 1px #eee !important;}
 			header.mui-bar{z-index: 200;}
-		    #tabLink li {width: 49%!important;font-size: 16px!important;line-height: 45px;text-align: center;}
-		    #tabLink2 li {width: 32.6%!important;font-size: 16px!important;line-height: 45px;text-align: center;}
+		    #tabLink li {font-size: 16px!important;line-height: 45px;text-align: center;}
+		    .tab-nav{display: flex;justify-content: space-around;width: 100%;}
+		    #tabLink2 li {font-size: 16px!important;line-height: 45px;text-align: center;}
 			.rank{font-style: italic;font-weight: 600;font-size: 20px;}
 			.flexr{display: -webkit-flex;-webkit-justify-content: space-around;align-items: center;}
-			.tbtwo,.tbthird{display: none;}
+			.tbtwo,.tbthird,.tbone{display: none;}
+			.noshow{display: none;}
+			.mui-media {
+				position: relative;
+				padding-right: 15px!important;
+				padding-left: 10px!important;
+			}
+			.fledw {
+				justify-content: space-around!important;
+			}
+			.fledw div {
+				text-align: center;
+				flex: 1;
+			}
 		</style>
 	</head>
 
@@ -43,7 +58,8 @@
 			</div>
 			<div class="tab-hd tab-hdtwo bgcwt" id="tabLink2" style="z-index: 99;">
 				<ul class="tab-nav ft14">
-				  <li class="active aClick " data-statusId="0">桶数</li>
+				  <li class="aClick active" data-statusId="1">销量</li>
+				  <li class="aClick" data-statusId="0">桶数</li>
 				  <li class="aClick" data-statusId="1">活跃会员数</li>
 				  <li class="aClick" data-statusId="1">开发会员数</li>
 				</ul>
@@ -82,6 +98,16 @@
 				<div class="mask"><span class="ft20" style="color: #E7475E;" id="availableBalance3">---</span></div>
 				<div class="totalEdu">达标率</div>
 			</div>
+			<div class="circle4 tbfour" style="left:50%;-webkit-transform: translateX(-50%);margin-top: 40px;">
+				<div class="pie_left">
+					<div class="left"></div>
+				</div>
+				<div class="pie_right">
+					<div class="right"></div>
+				</div>
+				<div class="mask"><span class="ft20" style="color: #E7475E;" id="availableBalance4">---</span></div>
+				<div class="totalEdu">达标率</div>
+			</div>
 			<div id="quotaPWrap" style="margin-top: 170px;">
 				<div class="quotaP1 fineB tbone" id="limitbalance">
 					目标桶数<span>---</span>
@@ -113,16 +139,24 @@
 					<div class="quotaP1 fineB" id="weekFinishDetails" style="display: none;">
 					</div>
 				</div>
-				<div style="background-color: #EEEEEE;text-align: center;font-size: 18px;color: #445252;margin-top: 20px;padding: 10px;">
+				<div class="tbfour">
+					<div class="quotaP1 fineB" id="limitbalance4">
+						目标销量<span>---</span>
+					</div>
+					<div class="quotaP1 fineB" id="tempbalance4">
+						实际销量<span>---</span>
+					</div> 
+				</div>
+				<div class="noshow" style="background-color: #EEEEEE;text-align: center;font-size: 18px;color: #445252;margin-top: 20px;padding: 10px;">
 					排行榜
 				</div>
-				<div class="tab-hd tab-hdtwo bgcwt" id="tabLink" style="z-index: 99;">
+ 				<div class="tab-hd tab-hdtwo bgcwt noshow" id="tabLink" style="z-index: 99;">
 					<ul class="tab-nav ft14">
 					  <li class="active aClick " data-statusId="0">分公司</li>
 					  <li class="aClick" data-statusId="1">集团</li>
 					</ul>
 				</div>
-				<div class="notice">
+				<div class="notice noshow">
 
 					<!--列表loading-->
 					<div id="loadingdiv" style="text-align: center;font-size: 14px;height:32px;
@@ -201,6 +235,46 @@
 
 					</script>
 				</div>
+
+
+				<div id="salesList"></div>
+				<script type="text/html" id="salesTpl">
+					<div style="background-color: #EEEEEE;text-align: center;font-size: 18px;color: #445252;margin-top: 20px;padding: 10px;">
+						订单列表
+					</div>
+					<ul class="mui-table-view">
+						<li class="mui-table-view-cell mui-media">
+							<a href="javascript:;" style="margin-left: 0px;">
+								<div class="flexr fledw">
+									<div class="mui-media-body ft12">
+										订单出退货日
+									</div>
+									<div class="mui-media-body ft12">
+										订单号
+									</div> 
+								</div>
+							</a>
+						</li>
+						<%if(list && list.length){%>
+							<%for(var i = 0; i < list.length; i++){%>
+								<li class="mui-table-view-cell mui-media" id="<%=list.orderId%>" onclick="goInfo('<%=list[i].ordNo%>','<%=list[i].orderType%>')">
+									<a href="javascript:;" style="margin-left: 0px;">
+										<div class="mui-media-body ft14 flexr fledw">
+											<div id="">
+												<%=list[i].shipmentTime || '---'%>
+											</div>
+											<div id="">
+												<%=list[i].orderNo2%>
+											</div> 
+										</div>
+									</a>
+								</li>
+							<%}%> 
+						<%}else{%>
+							<div style="text-align:center;padding:15px;color:gray">暂无账单明细</div>
+						<%}%> 
+					</ul>
+				</script>
 				<div class="mui-pull-right padd10" style="color: cornflowerblue;">
 					*业绩数据每日0点更新
 				</div>
@@ -257,13 +331,48 @@
 				}
 
 			}
+			function addPercent4(num) {
+				if(num > 100) return;
+				var c = document.getElementsByClassName("circle4")[0];
+				//c.getElementsByTagName("span")[0].innerHTML = num;
+				num = num * 3.6;
+				if(num <= 180) {
+					c.getElementsByClassName("right")[0].style.transform = "rotate(" + num + "deg)";
+				} else {
+					c.getElementsByClassName("right")[0].style.transform = "rotate(180deg)";
+					c.getElementsByClassName("left")[0].style.transform = "rotate(" + (num - 180) + "deg)";
+				}
+
+			}
+			function goInfo(audi,type) {
+				if(type =='order'){
+					openview({
+						view: '../personal/myOrderDetail.html',
+						id: 'myOrderDetail',
+						extrasobj: {
+							orderNo: audi,
+							isButton: 'no'
+						}
+					})
+				}else{
+					openview({
+						view: '../personal/myOrderRTdetail.html',
+						id: 'myOrderRTdetail',
+						extrasobj: {
+							orderNo: audi,
+							isButton: 'no'
+						}
+					})
+				}
+				
+			} 
 			mui.plusReady(function() {
 				//获取缓存
 				var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
 				var userId = plus.storage.getItem('$userId');
 				var oldToken = plus.storage.getItem('oldToken');
 				plus.nativeUI.showWaiting();
-				getOne();
+				getFour();
 				$('#curMonth').html(new Date().getFullYear()+'年'+(new Date().getMonth()+1)+'月')
 				function getOne(){
 					mui.ajax(serverUrl + '/app/statistics/personal', {
@@ -315,7 +424,6 @@
 						}
 					});
 				}
-//				getTwo()
 				function getTwo(){
 					mui.ajax(serverUrl + '/app/statistics/personal', {
 						data: {
@@ -366,7 +474,6 @@
 						}
 					});
 				}
-//				getThird()
 				function getThird(){
 					mui.ajax(serverUrl + '/app/statistics/personal', {
 						data: {
@@ -423,26 +530,106 @@
 						}
 					});
 				}
+				function getFour(){
+					mui.ajax(serverUrl + '/app/statistics/personal', {
+						data: {
+							sellerId: userId,
+							identityType: identityT,
+							flag:'XL'
+						},
+						dataType: 'json',
+						headers: {
+							"Authorization": oldToken
+						},
+						type: 'post',
+						timeout: 10000,
+						success: function(data, type, xhr) {
+							plus.nativeUI.closeWaiting();
+							console.log('销量', data);
+							if(data.code == 0) {
+								plus.nativeUI.closeWaiting();
+								if(data.content) { 
+									if(!data.content.targetSales){
+										var count = 0
+										data.content.targetSales = 0
+									}else{
+										var count = (data.content.finishSales / data.content.targetSales) * 100
+									}
+									$('#limitbalance4 span').html(data.content.targetSales+'元')
+									$('#tempbalance4 span').html(data.content.finishSales+'元')
+									var i = 0;
+									$('#availableBalance4').html(data.content.finishChance * 100 .toFixed(2)+'%')
+
+									var t = setInterval(function() {
+										if(i < count) {
+											addPercent4(++i);
+										}
+
+									}, 10);
+								 	if(data.content.orderList && data.content.orderList.length){
+								 		data.content.orderList.forEach(function(ele,index){
+								 			if(ele.shipmentTime){
+								 				ele.shipmentTime = ele.shipmentTime.substr(0,10)
+								 			}
+											if(ele.ordNo){
+												if(ele.ordNo[0] == 'T'){ 
+													ele.orderNo2 = ele.ordNo.substr(0, 5) + '****' + ele.ordNo.substr(13);
+												}else{
+													ele.orderNo2 = ele.ordNo.substr(0, 5) + '****' + ele.ordNo.substr(20);
+												}
+//												ele.orderNo2 = '****' + ele.ordNo.substr(ele.ordNo.length-6)
+											}
+										})
+								 		$('#salesList').html(template('salesTpl', {
+											list: data.content.orderList
+										}))
+								 	}
+								 
+								}
+
+							}
+							if(data.code == 1000) {
+								mui.toast(data.message)
+							} else if(data.code == -1) {
+								mui.toast(data.message)
+							}
+
+						},
+						error: function(xhr, type, errorThrown) {
+							plus.nativeUI.closeWaiting();
+							mui.toast(type)
+							console.log('登录响应失败');
+						}
+					});
+				}
 				$('#tabLink2 li').click(function(){
 					$('#tabLink2 li').removeClass('active');
 					$(this).addClass('active');
 //					$('.circle2,.circle,.circle3').hide().css('background','#cccccc')
-					if($(this).index() == 0){
+					if($(this).index() == 1){
 						getOne()
 //						$('.circle').css('background','#E73A38').show()
 						$('.tbone').show()
-						$('.tbtwo,.tbthird').hide()
-					}else if($(this).index() == 2){
+						$('.tbtwo,.tbthird,.tbfour').hide()
+						loadFun(0);
+						
+					}else if($(this).index() == 3){
 						getThird()
+						loadFun(0);
 //						$('.circle3').css('background','#E7475E').show()
 						$('.tbthird').show()
-						$('.tbone,.tbtwo').hide()
-					}else{
+						$('.tbone,.tbtwo,.tbfour').hide()
+					}else if($(this).index() == 2){
 						getTwo();
 //						$('.circle2').css('background','#F8937E').show()
 						$('.tbtwo').show()
-						$('.tbone,.tbthird').hide()
-
+						$('.tbone,.tbthird,.tbfour').hide()
+						loadFun(0);
+					}else{
+						getFour();
+//						$('.circle2').css('background','#F8937E').show()
+						$('.tbfour').show()
+						$('.tbone,.tbthird,.tbtwo,.noshow').hide()
 					}
 				})
 				$('#tabLink li').click(function(){
@@ -455,8 +642,9 @@
 					$('#loadingdiv').css('height','32px');
 					loadFun($(this).index());
 				})
-				loadFun(0);
+				
 				function loadFun(index){
+					$('.noshow').show()
 					var Spagenum = 2, Ypagenum = 1, oneSize = 10;
 					if(index == 0){
 						var apiData = {'sellerId':userId,'identityType':identityT,'flag':'FGS','rankType':'TS'};

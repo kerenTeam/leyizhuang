@@ -1178,7 +1178,13 @@
 						goodsId += item.id + ','
 					}
 				})
-				var totalOrderAmount = Number($('#firstTotal').val()) - Number($('#freight').html().replace('¥', ''));
+				if(identityT == 0 || identityT == 6){
+					var proCouponDiscountv =  $('#proCouponDiscount').html().replace('-¥', '');
+				}else{
+					var proCouponDiscountv = 0
+				}
+				var totalOrderAmount = Number($('#firstTotal').val()) - Number($('#freight').html().replace('¥', ''))+Number(proCouponDiscountv);
+//				var totalOrderAmount = $('#totalPriceb').html().replace('¥', '');
 				console.log('计算运费',{
 						"userId": userId,
 						"identityType": identityT,
