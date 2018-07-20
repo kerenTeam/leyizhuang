@@ -14,89 +14,89 @@
 		#tabLink {
 			background: #FFFFFF;
 		}
-		
+
 		#tabLink li.active {
 			border-bottom: 2px solid #B62D29;
 			box-sizing: border-box;
 			color: #B62D29;
 		}
-		
+
 		.tab-hd {
 			height: 45px !important;
 			border-bottom: 1px solid #EFEFF4 !important;
 		}
-		
+
 		#tabLink li {
 			height: 45px !important;
 			line-height: 45px;
 			text-align: center;
 			display: flex;
 		}
-		
+
 		#tabLink li {
 			width: 49%;
 			display: inline-block;
 		}
-		
+
 		.checkList {
 			background-color: #fff;
 			margin-top: 10px;
 		}
-		
+
 		.checkList h4 {
 			font-size: 14px;
 			padding: 12px 10px;
 		}
-		
+
 		.checkList h4 .h4span3 {
 			float: right;
 			color: #B62D29;
 		}
-		
+
 		.checkList h4 .h4span2 {
 			margin-left: 3%;
 		}
-		
+
 		.checkListCon {
 			padding: 10px;
 			white-space: nowrap;
 		}
-		
+
 		.checkListCon img {
 			width: 23%;
 			float: left;
 			margin-left: 1.6%;
 		}
-		
+
 		.checkListDZ {
 			padding: 10px;
 			color: #757575;
 		}
-		
+
 		.checkListB {
 			padding: 10px 20px;
 			text-align: right;
 		}
-		
+
 		#infoListDiv {
 			transition: all .3s;
 		}
-		
+
 		.categray div {
 			width: 80%;
 			vertical-align: top;
 		}
-		
+
 		.mui-media {
 			position: relative;
 			padding-right: 0!important;
 			padding-left: 0!important;
 		}
-		
+
 		.mui-media a {
 			-webkit-transform: translateX(50px);
 		}
-		
+
 		.check {
 			position: absolute;
 			top: 50%;
@@ -104,7 +104,7 @@
 			width: 25px;
 			left: 17px;
 		}
-		
+
 		.righticon {
 			position: absolute;
 			right: 10px;
@@ -112,41 +112,41 @@
 			-webkit-transform: translateY(-50%);
 			font-weight: bold;
 		}
-		
+
 		#useCoupon {
 			background: #B62D29;
 			color: white;
 			padding: 14px 20px;
 			border-radius: 0;
-		} 
+		}
 		.bills {
 			text-align: center;
 			padding: 35px 0;
 			background: white;
 		}
-		
+
 		.billmony {
 			font-size: 28px;
 			font-weight: 500;
 		}
-		
+
 		.recordel {
 			text-align: center;
 			background: white;
 			padding: 10px;
 			background: #F0F5F8;
 		}
-		
+
 		.cmonth {
 			padding: 10px;
 			text-align: center;
 			background: #F0F5F8;
 		}
-		
+
 		.fledw {
 			justify-content: space-between!important
 		}
-		
+
 		.fledw div {
 			text-align: right;
 			flex: 1;
@@ -154,9 +154,9 @@
 		.ppph{padding: 10px;background: #F0F0F0;font-size: 14px;}
 		.paddc10{padding: 10px 0;justify-content: space-between}
 		.paddc10 div{flex: 1;text-align: center;}
-		
+
 		.flexrsh{display: -webkit-flex;-webkit-justify-content: space-between;margin: 2px 0;align-items: center;text-align: center;}
-		.flexrsh{vertical-align: middle;} 
+		.flexrsh{vertical-align: middle;}
 		a,a:active{color: rgb(51,51,51)!important;}
 		.flexRow2 img{width: 30px;vertical-align: middle;margin-right: 10px;}
 		.searchList{padding: 0 10px;}
@@ -174,7 +174,7 @@
 		<script src="../../js/statusBar.js" type="text/javascript" charset="utf-8"></script>
 		<div class="mui-content" style="margin-top: 7px;">
 			<div id="goodsList">
-				
+
 			</div>
 			<script type="text/html" id="goodsTpl">
 				<div class="ft12 maincl flexr" style="padding: 5px;background: #F0F0F0;justify-content: space-between;flex-wrap: wrap;">
@@ -183,14 +183,14 @@
 				</div>
 				<div class="bills">
 					<div class="ft14">本期应还</div>
-					<%if(list.currentShouldPayAmount){%> 
+					<%if(list.currentShouldPayAmount){%>
 						<div class="ft20 billmony"><%=list.currentShouldPayAmount%></div>
 						<div class="ft12 activecl2">还款截止日 <%=list.repaymentDeadlineDate%></div>
 					<%}else{%>
 						<img src="../../images/center/payover.svg" style="width: 30px;vertical-align: bottom;"/> <span class="activecl">账单已还清</span>
-						
+
 					<%}%>
-					
+
 				</div>
 				<div class="flexr pad10 ft14 maincl recordel afterBorder">
 					<div class="rightBorder" style="width: 50%;">
@@ -212,7 +212,7 @@
 					<ul class="tab-nav">
 						<li class="active aClick " data-statusId="">账单明细</li>
 						<li class="aClick" data-statusId="1">账单还款记录<span id="waitCheck" style="display: none;" class="mui-badge mui-badge-danger"></span></li>
-	
+
 					</ul>
 				</div>
 				<!--商品列表-->
@@ -261,16 +261,16 @@
 												<%if(list.notPayOrderDetails[i].orderCreditMoney && list.notPayOrderDetails[i].orderCreditMoney < 0){%>
 													<div class="activecl">
 														¥<%=list.notPayOrderDetails[i].orderCreditMoney || 0%>
-													</div>	
+													</div>
 												<%}else{%>
 													<div>
 														¥<%=list.notPayOrderDetails[i].orderCreditMoney || 0%>
-													</div>	
+													</div>
 												<%}%>
-												
+
 												<div>
 													¥<%=list.notPayOrderDetails[i].interestAmount || 0%>
-												</div> 
+												</div>
 											</div>
 										</a>
 										<%if(list.notPayOrderDetails[i].orderCreditMoney && list.notPayOrderDetails[i].orderCreditMoney <0){%>
@@ -280,10 +280,10 @@
 										<%}%>
 
 									</li>
-								<%}%> 
+								<%}%>
 							<%}else{%>
 								<div style="text-align:center;padding:15px;color:gray">暂无账单明细</div>
-							<%}%> 
+							<%}%>
 						</ul>
 						<div style="height:40px;"></div>
 						<aside class="btmNav flexr" style="position: fixed;bottom: 0;left: 0;width: 100%;border-top: 1px solid #eee;">
@@ -302,7 +302,7 @@
 									</div>
 									<div id="">
 										合计：¥<%=list.paidOrderDetails[i].totalRepaymentAmount || 0%>
-									</div> 
+									</div>
 								</div>
 								<div class="flexr fledw paddc10 afterBorder">
 									<div>
@@ -327,38 +327,38 @@
 											<div id="">
 												<%=list.paidOrderDetails[i].billRepaymentDetails[j].orderNo2%>
 											</div>
-											 
+
 											<%if(list.paidOrderDetails[i].billRepaymentDetails[j].orderCreditMoney && list.paidOrderDetails[i].billRepaymentDetails[j].orderCreditMoney < 0){%>
 												<div class="activecl">
 													¥<%=list.paidOrderDetails[i].billRepaymentDetails[j].orderCreditMoney || 0%>
-												</div>	
+												</div>
 											<%}else{%>
 												<div>
 													¥<%=list.paidOrderDetails[i].billRepaymentDetails[j].orderCreditMoney || 0%>
-												</div>	
+												</div>
 											<%}%>
 											<div id="">
 												¥<%=list.paidOrderDetails[i].billRepaymentDetails[j].interestAmount || 0%>
 											</div>
-										</div> 
+										</div>
 									<%}%>
 								<%}%>
-								
-							<%}%> 
+
+							<%}%>
 						<%}else{%>
 							<div style="text-align:center;padding:15px;color:gray">暂无账单明细</div>
-						<%}%>  
+						<%}%>
 						 <div style="height:40px;"></div>
 						<aside class="btmNav ft14" style="position: fixed;bottom: 0;left: 0;width: 100%;height: 55px;line-height: 55px;background: #FFFFFF;text-align: center;border-top: 1px solid #eee;">
 								还款合计：<big class="activecl">¥<%=list.allpaied%></big>
 						</aside>
 					</div>
-					
-				</div> 
-					
+
+				</div>
+
 			</script>
 		</div>
-		 
+
 		<script src="../../js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../../js/mui.min.js"></script>
 		<script src="../../js/artTemplate-native.js" type="text/javascript" charset="utf-8"></script>
@@ -386,17 +386,18 @@
 						}
 					})
 				}
-				
-			} 
+
+			}
 			mui.plusReady(function() {
-			
+
 				var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
 				var userId = plus.storage.getItem('$userId');
 				var oldToken = plus.storage.getItem('oldToken')
 				var page = plus.webview.currentWebview().page;
 				var cusId = plus.webview.currentWebview().cusid;
 				var pays = {};
-				window.goSearch = function(){ 
+				//废弃
+				window.goSearch = function(){
 					kindType($('.start').val(),$('.end').val());
 				}
 				document.addEventListener('refreashbill', function() {
@@ -448,7 +449,7 @@
 											}
 										})
 									}
-									
+
 									let allpaied = 0
 									if(data.content.paidOrderDetails && data.content.paidOrderDetails.length){
 										data.content.paidOrderDetails.forEach(function(ele,index){
@@ -457,11 +458,11 @@
 												ele.billRepaymentDetails.forEach(function(ele2,index){
 													ele2.orderNo2 = '****' + ele2.orderNo.substr(ele2.orderNo.length-6)
 												})
-	
+
 											}
 										})
 									}
-									
+
 									data.content.allpaied = allpaied.toFixed(2)
 									$('#goodsList').html(template('goodsTpl', {
 										list: data.content
@@ -474,69 +475,69 @@
 											}
 										}
 									})
-									
+
 									$('#tabLink li').click(function(){
 										$('#tabLink li').removeClass('active');
-										$(this).addClass('active'); 
+										$(this).addClass('active');
 										$('.contentppp').hide()
 										$('.contentppp').eq($(this).index()).show()
-										 
+
 									})
 									showTot()
 									function showTot(){
 										var paymoney = 0
 										$('.choosed').each(function(){
-											 
+
 											if($(this).attr('data-money') || $(this).attr('data-zmoney')){
 												paymoney+= parseFloat($(this).attr('data-money'))+parseFloat($(this).attr('data-zmoney'))
 											}
-										}) 
+										})
 										$('.totalMoney').html('￥' + paymoney.toFixed(2))
 									}
 									//还款
-									$('.check').click(function() { 
+									$('.check').click(function() {
 										event.stopPropagation();
 										if($(this).attr('data-money') < 0){
 										}else{
 											if(!$(this).attr('data-id')){
 												if($(this).attr('src') == '../../images/center/checked.svg') {
 													$('.check').eq(0).removeClass('choosed')
-													$('.check').eq(0).attr('src', '../../images/center/uncheck.svg') 
+													$('.check').eq(0).attr('src', '../../images/center/uncheck.svg')
 													$('.zcheck').removeClass('choosed')
 													$('.zcheck').attr('src', '../../images/center/uncheck.svg')
 												} else {
 													$('.check').eq(0).addClass('choosed')
-													$('.check').eq(0).attr('src', '../../images/center/checked.svg') 
+													$('.check').eq(0).attr('src', '../../images/center/checked.svg')
 													$('.zcheck').attr('src', '../../images/center/checked.svg')
 													$('.zcheck').addClass('choosed')
-												}	
+												}
 											}else{
 												if($(this).attr('src') == '../../images/center/checked.svg') {
 													$('.check').eq(0).removeClass('choosed')
 													$(this).removeClass('choosed')
 													$(this).attr('src', '../../images/center/uncheck.svg')
-													$('.check').eq(0).attr('src', '../../images/center/uncheck.svg') 
+													$('.check').eq(0).attr('src', '../../images/center/uncheck.svg')
 												} else {
 													$(this).addClass('choosed')
 													$(this).attr('src', '../../images/center/checked.svg');
-												}	
+												}
 											}
-										} 
+										}
 										if($('.choosed').length > 0) {
 											$('#useCoupon').removeAttr('disabled')
 											if($('.choosed').length+1>= $('.check').length){
 												$('.check').eq(0).addClass('choosed')
-												$('.check').eq(0).attr('src', '../../images/center/checked.svg') 
+												$('.check').eq(0).attr('src', '../../images/center/checked.svg')
 												$('.zcheck').attr('src', '../../images/center/checked.svg')
 												$('.zcheck').addClass('choosed')
-												
+
 											}
-										} else { 
+										} else {
 											$('#useCoupon').attr('disabled', true)
 										}
-										
+
 										showTot()
-										
+
 									})
 									$('#useCoupon').click(function() {
 										$('#useCoupon').attr('disabled', true)
@@ -551,8 +552,8 @@
 												 	orderType:$(this).attr('data-orderType')
 												 })
 											}
-											 
-										}) 
+
+										})
 										console.log('orderDetails ',{
 												userId: userId,
 												identityType: identityT,
@@ -575,7 +576,7 @@
 												console.error(data);
 												plus.nativeUI.closeWaiting();
 												$('#useCoupon').attr('disabled', false)
-												
+
 												if(data.code == 0) {
 													openview({
 														view: 'payBill.html',
@@ -585,7 +586,7 @@
 												} else {
 													mui.toast(data.message);
 												}
-		
+
 											},
 											error: function(xhr, type, errorThrown) {
 												//异常处理；
@@ -595,7 +596,7 @@
 												plus.nativeUI.alert("获取账单支付失败！");
 											}
 										});
-										
+
 									})
 								} else {
 									$('#useCoupon,.btmNav').hide();
@@ -612,7 +613,7 @@
 							mui.toast(type)
 							console.log('响应失败');
 						}
-					}); 
+					});
 				}
 
 			})
