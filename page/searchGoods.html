@@ -212,6 +212,8 @@
 	</body>
 	<script src="../js/default.js" type="text/javascript" charset="utf-8"></script>
 	<script type="text/javascript">
+		
+		//打开商品详情
 		function goodsInfo(id){
 			openview({
 				view:'goodsInfo.html',
@@ -286,6 +288,8 @@
 			var userId = plus.storage.getItem('$userId');
 			var oldToken = plus.storage.getItem("oldToken");
 			var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
+			
+			//监听自定义事件refreshscgd 刷新当前搜索数据
 			document.addEventListener('refreshscgd', function() {
 				doSearch($.trim($('.fsearch').text()))
 			})
