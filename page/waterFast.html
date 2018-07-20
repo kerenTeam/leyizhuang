@@ -988,19 +988,17 @@
 		<script src="../js/artTemplate-native.js" type="text/javascript" charset="utf-8"></script>
 		<script>
 		mui.init();
+		//底部购物车的显示切换
 		$('#showBtcrt,#bottomCart').click(function(){
 			$('#showBtcrt').toggleClass('showRotate')
 			$('#bottomCart').fadeToggle('fast');
 		})
 		$('#btcgood').click(function(){
 			event.stopPropagation();
-		})
-//		$('.bdc').click(function(){
-//			$(this).siblings().removeClass('bdcA')
-//			$(this).addClass('bdcA')
-//		})
+		}) 
 		mui.plusReady(function(){
 			plus.storage.removeItem("$waterFastGoods")
+			
 			document.addEventListener('refreshct', function() {
 				getCartNum();
 			})
@@ -1019,6 +1017,7 @@
 			//存缓存
 //			plus.storage.removeItem('$waterFastGoods')
 			var waterFastGoods = JSON.parse(plus.storage.getItem('$waterFastGoods') || '[]');
+			//获取并展示物车数据
 			showBtCart();
 			$('.wfast input').on('change', function() {
 				var fastMaterial = '1';

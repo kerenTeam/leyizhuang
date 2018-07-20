@@ -148,6 +148,8 @@
 			mui.init();
 
 			mui.plusReady(function() {
+				
+				//初始化webviewGroup组件的切换页面数组
 				var group = new webviewGroup(plus.webview.currentWebview().id,{
 					items: [{
 						id: "waterFast.html",
@@ -178,6 +180,7 @@
 						document.querySelector(".mui-scroll .mui-control-item:nth-child(" + (parseInt(obj.index) + 1) + ")").classList.add("mui-active");
 					}
 				});
+				//切换顶部选项卡
 				mui(".mui-scroll").on("tap", ".mui-control-item", function(e) {
 					var wid = this.getAttribute("data-wid");
 					group.switchTab(wid);
