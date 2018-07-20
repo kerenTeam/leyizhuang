@@ -143,12 +143,12 @@ console.log('systemType '+systemType)
 							plus.nativeUI.showWaiting();
 							 var b = new Base64();
 							 var str = b.encode(loginInfo.password);
-
+							//提交登录 信息
 							mui.ajax(serverUrl+'/app/employee/login',{
 								data:{"name":loginInfo.account,"password":str,"deviceId":deviceId,"clientId":clientId,"systemType":systemType},
 								dataType:'json',
 								type:'post',
-								timeout:10000,
+								timeout:30000,
 								success:function(data,type,xhr){
 									console.log('登录'+JSON.stringify(data));
 									if(data.code !=0){
@@ -204,6 +204,7 @@ console.log('systemType '+systemType)
 									console.log('登录响应失败');
 								}
 							});
+							//提交登录 信息 结束
 						}
 
 
@@ -211,6 +212,7 @@ console.log('systemType '+systemType)
 					$.enterfocus('#login-form input', function() {
 						$.trigger(loginButton, 'tap');
 					});
+					//忘记密码
 					forgetButton.addEventListener('tap', function(event) {
 						$.openWindow({
 							url: 'forget_password.html',

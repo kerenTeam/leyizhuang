@@ -186,6 +186,7 @@
 	</body>
 
 	<script>
+		//换购产品券
 		function buyCoupon(){
 			openview({
 				view:'couponCart.html',
@@ -412,7 +413,7 @@
 
 							});
 
-							//单组 全选
+							//单组全选
 							$('dl dt .mui-checkbox').click(function() {
 								if($(this).find("input").is(':checked')) {
 									$(this).parentsUntil(".eachGroup").find("input").attr("checked", true);

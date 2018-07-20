@@ -28,8 +28,8 @@
             height: 10px;
             visibility: hidden;
         }
-        
-        
+
+
         	.searchFind {
 			position: relative;
 		}
@@ -81,7 +81,7 @@
 		    height: 35px;
 		    margin: 3px 0;
 		    padding-left: 20px!important;
-		} 
+		}
         /*大的购物车图标*/
         .toCart {width: 56px;padding: 10px;padding-right: 15px;position: absolute;right: 1px;bottom: 3px;}
         .mui-numbox{position: absolute;right: 6px;bottom: 6px;width: 106px;height: 34px;padding: 0px 34px;}
@@ -113,6 +113,7 @@
 				</div>
 			</div>
 		</div>-->
+
 		<div class="gocarticon" id="div2" style="display: none;">
 			<img src="../images/whitecart.svg" alt="" />
 			<span class="mui-badge mui-badge-white">0</span>
@@ -202,7 +203,7 @@
 				})
 
 			}
-			
+
 			mui.plusReady(function(){
 				//搜索
 				$('.searchFind').click(function(){
@@ -242,7 +243,7 @@
 				}
 				 kindType(categoryCode);
 				 function kindType(categoryCode){
-					
+
 				 	//一级分类切换
 					$('.flexw div').unbind('click').click(function(){
 						$(this).siblings().removeClass('curActive')
@@ -294,7 +295,7 @@
 											}
 										}
 										$('.categraya').html(html || '无')
-										
+
 										//商品 筛选
 										$('.categray1 span').unbind('click').click(function(){
 											$(window).unbind('scroll');
@@ -303,22 +304,22 @@
 				 							document.body.scrollTop = document.documentElement.scrollTop = 0;
 											$(this).parentsUntil('.filter').find('span').removeClass('actBadge actspan');
 											$(this).addClass('actBadge');
-											
+
 											var categorySecond,goodsBrand,goodType,specification;
 											categorySecond = $('.categray1 .actBadge').text()=='全部' ? '':$('.categray1 .actBadge').text();
 											goodsBrand = $('.categray2 .actBadge').text()=='品牌' ? '': $('.categray2 .actBadge').text();
 											goodType = $('.categray4 .actBadge').text()=='类型' ? '': $('.categray4 .actBadge').text();
 											specification = $('.categray3 .actBadge').text()=='规格' ? '': $('.categray3 .actBadge').text();
-												 
+
 											getGoodsBrand(categorySecond,goodsBrand,goodType,specification)
 											getSpecification(categorySecond,goodsBrand,goodType,specification)
 											getGoodType(categorySecond,goodsBrand,goodType,specification)
 											categoryId = $(this).attr('data-id')
 											brandId = $('.categray2 .actBadge').attr('data-id')
-											typeId = $('.categray4 .actBadge').attr('data-id') 
+											typeId = $('.categray4 .actBadge').attr('data-id')
 											goodsList(categoryId,brandId,typeId,specification,1);
 										})
-										
+
 									}else{
 										$('.categraya').html('无')
 									}
@@ -328,7 +329,7 @@
 								}else if(data.code == -1 ){
 									mui.toast(data.message)
 								}
-	
+
 							},
 							error:function(xhr,type,errorThrown){
 								plus.nativeUI.closeWaiting();
@@ -376,7 +377,7 @@
 				 							document.body.scrollTop = document.documentElement.scrollTop = 0;
 											$(this).parentsUntil('.filter').find('span').removeClass('actBadge actspan');
 											$(this).addClass('actBadge');
-											
+
 											var categorySecond,goodsBrand,goodType,specification;
 											categorySecond = $('.categray1 .actBadge').text()=='全部' ? '':$('.categray1 .actBadge').text();
 											goodsBrand = $('.categray2 .actBadge').text()=='品牌' ? '': $('.categray2 .actBadge').text();
@@ -387,7 +388,7 @@
 											getCategorySecond(categorySecond,goodsBrand,goodType,specification)
 										 	categoryId = $('.categray1 .actBadge').attr('data-id')
 											brandId = $(this).attr('data-id')
-											typeId = $('.categray4 .actBadge').attr('data-id') 
+											typeId = $('.categray4 .actBadge').attr('data-id')
 											goodsList(categoryId,brandId,typeId,specification,1);
 										})
 									}else{
@@ -399,7 +400,7 @@
 								}else if(data.code == -1 ){
 									mui.toast(data.message)
 								}
-	
+
 							},
 							error:function(xhr,type,errorThrown){
 								plus.nativeUI.closeWaiting();
@@ -447,7 +448,7 @@
 				 							document.body.scrollTop = document.documentElement.scrollTop = 0;
 											$(this).parentsUntil('.filter').find('span').removeClass('actBadge actspan');
 											$(this).addClass('actBadge');
-											
+
 											var categorySecond,goodsBrand,goodType,specification;
 											categorySecond = $('.categray1 .actBadge').text()=='全部' ? '':$('.categray1 .actBadge').text();
 											goodsBrand = $('.categray2 .actBadge').text()=='品牌' ? '': $('.categray2 .actBadge').text();
@@ -459,7 +460,7 @@
 											getGoodType(categorySecond,goodsBrand,goodType,specification)
 											categoryId = $('.categray1 .actBadge').attr('data-id')
 											brandId = $('.categray2 .actBadge').attr('data-id')
-											typeId = $('.categray4 .actBadge').attr('data-id') 
+											typeId = $('.categray4 .actBadge').attr('data-id')
 											goodsList(categoryId,brandId,typeId,specification,1);
 										})
 									}else{
@@ -471,7 +472,7 @@
 								}else if(data.code == -1 ){
 									mui.toast(data.message)
 								}
-	
+
 							},
 							error:function(xhr,type,errorThrown){
 								plus.nativeUI.closeWaiting();
@@ -519,7 +520,7 @@
 				 							document.body.scrollTop = document.documentElement.scrollTop = 0;
 											$(this).parentsUntil('.filter').find('span').removeClass('actBadge actspan');
 											$(this).addClass('actBadge');
-											
+
 											var categorySecond,goodsBrand,goodType,specification;
 											categorySecond = $('.categray1 .actBadge').text()=='全部' ? '':$('.categray1 .actBadge').text();
 											goodsBrand = $('.categray2 .actBadge').text()=='品牌' ? '': $('.categray2 .actBadge').text();
@@ -542,7 +543,7 @@
 								}else if(data.code == -1 ){
 									mui.toast(data.message)
 								}
-	
+
 							},
 							error:function(xhr,type,errorThrown){
 								plus.nativeUI.closeWaiting();
@@ -550,8 +551,8 @@
 							}
 						});
 					}
-					
-					
+
+
 					//商品列表
 					var categoryId='',brandId='',typeId='',specification='';
 					var Spagenum = 2; //实到页数
@@ -657,23 +658,23 @@
 //				 							document.body.scrollTop = document.documentElement.scrollTop = 0;
 //											$(this).parentsUntil('.filter').find('span').removeClass('actBadge actspan');
 //											$(this).addClass('actBadge');
-//											
+//
 //											var categorySecond,goodsBrand,goodType,specification;
 //											categorySecond = $('.categray1 .actBadge').text()=='全部' ? '':$('.categray1 .actBadge').text();
 //											goodsBrand = $('.categray2 .actBadge').text()=='品牌' ? '': $('.categray2 .actBadge').text();
 //											goodType = $('.categray4 .actBadge').text()=='类型' ? '': $('.categray4 .actBadge').text();
 //											specification = $('.categray3 .actBadge').text()=='规格' ? '': $('.categray3 .actBadge').text();
-//											
-////											 
+//
+////
 //											if($(this).attr('data-name') == 'category'){
 //												categoryId = $(this).attr('data-id')
-//												 
+//
 //												getGoodsBrand(categorySecond,goodType,specification)
 //												getSpecification(categorySecond,goodsBrand,goodType)
 //												getGoodType(categorySecond,goodsBrand,specification)
 //											}else if($(this).attr('data-name') == 'brand'){
 //												brandId = $(this).attr('data-id')
-//												
+//
 //												getGoodType(categorySecond,goodsBrand,specification)
 //												getSpecification(categorySecond,goodsBrand,goodType)
 //												getCategorySecond(goodsBrand,goodType,specification)
@@ -829,7 +830,7 @@
 												}
 											});
 										}
-
+										//上拉 滚动 加载
 										$(window).scroll(function() {
 											var scrollTop = $(this).scrollTop();
 											var scrollHeight = $(document).height();
@@ -913,6 +914,7 @@
 																		})
 																	}
 																	var platform = plus.storage.getItem('platform')
+																	//点击 输入内容
 																	$('.mui-numbox input').click(function() {
 																		if(platform == 'ANDROID'){
 																			$(this).select();
@@ -935,23 +937,23 @@
 //											 							document.body.scrollTop = document.documentElement.scrollTop = 0;
 //																		$(this).parentsUntil('.filter').find('span').removeClass('actBadge actspan');
 //																		$(this).addClass('actBadge');
-//																		
+//
 //																		var categorySecond,goodsBrand,goodType,specification;
 //																		categorySecond = $('.categray1 .actBadge').text()=='全部' ? '':$('.categray1 .actBadge').text();
 //																		goodsBrand = $('.categray2 .actBadge').text()=='品牌' ? '': $('.categray2 .actBadge').text();
 //																		goodType = $('.categray4 .actBadge').text()=='类型' ? '': $('.categray4 .actBadge').text();
 //																		specification = $('.categray3 .actBadge').text()=='规格' ? '': $('.categray3 .actBadge').text();
-//																		
-//							//											 
+//
+//							//
 //																		if($(this).attr('data-name') == 'category'){
 //																			categoryId = $(this).attr('data-id')
-//																			 
+//
 //																			getGoodsBrand(categorySecond,goodType,specification)
 //																			getSpecification(categorySecond,goodsBrand,goodType)
 //																			getGoodType(categorySecond,goodsBrand,specification)
 //																		}else if($(this).attr('data-name') == 'brand'){
 //																			brandId = $(this).attr('data-id')
-//																			
+//
 //																			getGoodType(categorySecond,goodsBrand,specification)
 //																			getSpecification(categorySecond,goodsBrand,goodType)
 //																			getCategorySecond(goodsBrand,goodType,specification)
@@ -1151,7 +1153,7 @@
 						});
 					}
 				 }
-
+				//获取购物车数量
 				function getCartNum(){
 					var cartNum = plus.storage.getItem('cartNums') || 0;
 					cartNum = cartNum < 0 ? 0:cartNum;

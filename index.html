@@ -293,11 +293,11 @@
 			</div>
 
 		</header>
-		
+
 		<!--状态栏开始-->
 		<style type="text/css" id="headStyle"></style>
 		<div id="sBar" style="background-color: #FFFFFF;position: fixed;width:100%;top: 0;z-index: 9999"></div>
-		
+
 		<div id="justest" style="display: none;background-color: rgba(255,255,255,0.8);color: red;position: fixed;width:100%;top: 68px;z-index: 9999;text-align: center;padding: 20px 0;font-weight: 800;">*****测试版本*****</div>
 		<script type="text/javascript">
 			var immersed = 0;
@@ -324,7 +324,9 @@
 				}
 			});
 		</script>
+		<!--状态栏 结束-->
 		<div style="position: relative;">
+			<!--banner-->
 			<div id="banner">
 				<div class="mui-slider slider2" style="padding-top: 60px;">
 					<div class="mui-slider-group mui-slider-loop">
@@ -377,8 +379,10 @@
 				</div>
 			</script>
 		</div>
+		<!--banner 结束-->
 
 		<div class="bgcwt">
+			<!--已经隐藏-->
 			<div class="somenspf ft12 padd10 fttc activecl" id="slogan">
 				<div style="visibility: hidden;">
 					<img src="images/index/bdchexk.svg" /><span>满1000元包邮</span>
@@ -390,6 +394,7 @@
 					<img src="images/index/bdchexk.svg" /><span>二绕内均可配送</span>
 				</div>
 			</div>
+			<!--水 电 木 油-->
 			<div class="flexw paddv10 ftype" id="iconData" style="margin-top:0 ;">
 				<div data-id="water">
 					<div class="imgb" style="background-color:#B62D29"><img src="images/s.svg" alt="" /></div>水
@@ -422,6 +427,7 @@
 		<div class="specialGoods2" style="margin: 10px 10px -5px 10px;display: none;" onclick="specialGoods()">
 			<img src="images/index/special3.png" style="width: 100%;" />
 		</div>
+		<!--已隐藏-->
 		<div id="banner2" style="display: none;">
 			<div class="mui-slider slider3">
 				<div class="mui-slider-group mui-slider-loop">
@@ -445,6 +451,7 @@
 				</div>
 			</div>
 		</div>
+		<!--已隐藏-->
 		<script type="text/html" id="bannerTpl2">
 			<div class="mui-slider slider3">
 				<!--轮播图-->
@@ -687,6 +694,7 @@
 				<%}%>
 			</ul>
 		</script>
+		<!--热门商品-->
 		<div class="bgcwt afterBorder pad15 ft16" style="margin-top:10px;" onclick="goHotList()">
 			<span class="bdl activecl">
 				热门商品
@@ -694,7 +702,6 @@
 			<span class="mui-pull-right mui-icon mui-icon-arrowright activecl"></span>
 			<span class="mui-pull-right disablecl ft14" style="margin-top: 3px;">更多</span>
 		</div>
-
 		<!--热门商品商品列表-->
 		<div class="bgcwt">
 			<div class="goodsList" id="goodsListHot"></div>
@@ -724,6 +731,7 @@
 				<%}%>
 			</ul>
 		</script>
+		<!--乐易装商学院-->
 		<div class="bgcwt afterBorder pad15 ft16" style="margin-top:10px;" onclick="tradeLists()">
 			<span class="bdl activecl">
 				乐易装商学院
@@ -769,7 +777,7 @@
 		<script>
 			mui.init();
 			var text = null;
-			
+			//语音识别 ( 废弃 )
 			function startRecognize() {
 				if(plus.os.name == 'Android' && navigator.userAgent.indexOf('StreamApp') > 0) {
 					plus.nativeUI.toast('当前环境暂不支持语音识别插件');
@@ -788,7 +796,7 @@
 					console.log("语音识别失败：" + e.message);
 				});
 			}
-			// 产品券
+			// 打开 产品券
 			function productCoupon(){
 				var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
 				if(identityT == 2){
@@ -801,12 +809,14 @@
 				}
 
 			}
+			//打开我的地址
 			function goaddr(){
 				openview({
 					view: "page/personal/address.html",
 					id: "address",
 				})
 			}
+			//打开 客服热线
 			function poverTel() {
 				mui.openWindow({
 					url: 'consultTel.html',
@@ -827,8 +837,8 @@
 				})
 			}
 			mui.plusReady(function() {
-				
-				
+
+
 				if(/android/i.test(navigator.userAgent)) {
 					var systemType = 'ANDROID'
 				} else {
@@ -881,8 +891,8 @@
 				var loadNum2 = 0;
 				clearInterval(timeSign);
 				timeSign = setInterval(Sign, 5000000); //两小时自动更新一次token
-
-				function Sign() { //登录方法
+				//自动 登录方法
+				function Sign() {
 					if(serverUrl == 'http://119.23.149.7:9999'){
 						$('#justest').show()
 					}else{
@@ -1022,6 +1032,7 @@
 					Sign()
 				}
 
+				//刷新 首页数据
 				function loadIndex() {
 					//获取缓存
 					var nowcity = plus.storage.getItem('userCity');
@@ -1063,6 +1074,7 @@
 					})
 					showMsg();
 					timeMsg = setInterval(showMsg, 1800000); //每半小时刷新消息
+					//显示消息
 					function showMsg() {
 						mui.fire(plus.webview.getWebviewById('center.html'), 'refreshInfoC');
 						mui.ajax(serverUrl + '/app/user/message/unread/number', {
@@ -1098,14 +1110,14 @@
 							}
 						});
 					}
-					//banner
+					//获取 banner
 					mui.ajax(oCms + '/index.php/ApiCms/bannerList', {
 						data: {
 							city: nowcity
 						},
 						dataType: 'json',
 						type: 'post',
-						timeout: 10000,
+						timeout: 30000,
 						success: function(data, type, xhr) {
 							console.log('banner', data);
 							plus.nativeUI.closeWaiting();
@@ -1130,7 +1142,7 @@
 							console.log('响应失败');
 						}
 					});
-
+					//获取 banner2 数据
 					function getClassfy() {
 						mui.ajax(serverUrl + '/app/employee/store/rankClassification', {
 							data: {
@@ -1169,7 +1181,7 @@
 							}
 						});
 					}
-					//icon
+					//获取 icon
 					function getIcon(icontype) {
 						mui.ajax(oCms + '/index.php/ApiCms/iconList', {
 							data: {
@@ -1232,7 +1244,7 @@
 							}
 						});
 					}
-					//slogan
+					// 获取 标语
 					mui.ajax(oCms + '/index.php/ApiCms/sloganList', {
 						data: {
 							'city': nowcity
@@ -1242,7 +1254,7 @@
 							"Authorization": oldToken
 						},
 						type: 'post',
-						timeout: 10000,
+						timeout: 30000,
 						success: function(data, type, xhr) {
 							console.log('标语', data);
 							if(data.code == 0) {
@@ -1305,7 +1317,7 @@
 							"Authorization": oldToken
 						},
 						type: 'post',
-						timeout: 10000,
+						timeout: 30000,
 						success: function(data, type, xhr) {
 							console.log('常购商品列表', data);
 							if(data.code == 0) {
@@ -1341,7 +1353,7 @@
 							"Authorization": oldToken
 						},
 						type: 'post',
-						timeout: 10000,
+						timeout: 30000,
 						success: function(data, type, xhr) {
 							console.log('热门商品列表', data);
 							if(data.code == 0) {
@@ -1441,8 +1453,8 @@
 					}
 
 				}
-				//功能指引 1
-				//				setTimeout(function() {
+				// 显示 功能指引 1
+				//setTimeout(function() {
 
 				function showGuideFun() {
 					if(showGuide && plus.storage.getItem('oldToken') && !funGuide1) {
@@ -1466,7 +1478,7 @@
 				showGuideFun();
 				//				}, 0);
 			});
-
+			//点击banner 跳转	( 废弃 )
 			function bannerto(id, url, name, type) {
 				if(url) {
 					if(url.indexOf('http') > -1 || url.indexOf('HTTP') > -1) { //远程
@@ -1544,21 +1556,21 @@
 					id: 'message',
 				})
 			}
-
-			function paizhaoOrder() { //拍照下单
+			//拍照下单
+			function paizhaoOrder() {
 				openview({
 					view: 'page/order/pzOrder.html',
 					id: 'pzOrder',
 				})
 			}
-
+			//搜索
 			function goSearch() {
 				openview({
 					view: 'page/searchGoods.html',
 					id: 'searchGoods',
 				})
 			}
-
+			//常购清单
 			function goOftenList() {
 				openview({
 					view: 'page/ofenBuy.html',
@@ -1614,13 +1626,14 @@
 					id: 'gxb',
 				})
 			})
+			//业绩查看
 			$('.achievement').click(function() {
 				openview({
 					view: 'page/guide/achievement.html',
 					id: 'achievement',
 				})
 			})
-
+			//商品详情
 			function goodsInfo(id) {
 				openview({
 					view: 'page/goodsInfo.html',
@@ -1666,7 +1679,7 @@
 		<script type="text/javascript">
 			var aniShow = {};
 			mui.init({
-				swipeBack: false //启用右滑关闭功能
+				swipeBack: false //启用右滑关闭功能(ios)
 			});
 
 			mui.plusReady(function() {
@@ -1681,7 +1694,7 @@
 				if(cartNum > 999) {
 					cartNum = '999+'
 				}
-
+				//添加 购物车 刷新监听
 				document.addEventListener('cart_refresh', function() {
 					//获取购物车数量
 					cartNum = plus.storage.getItem('cartNums');
@@ -1855,7 +1868,7 @@
 
 				}
 
-				//自定义监听图标点击事件
+				//自定义 监听图标 点击事件(首页下面 促销活动图标)
 				var active_color = '#fff';
 				drawNativeIcon.addEventListener('click', function(e) {
 					mui.openWindow({
