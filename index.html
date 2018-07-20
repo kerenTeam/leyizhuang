@@ -769,7 +769,7 @@
 		<script>
 			mui.init();
 			var text = null;
-			
+			//语音输入部分 ---搁置-----
 			function startRecognize() {
 				if(plus.os.name == 'Android' && navigator.userAgent.indexOf('StreamApp') > 0) {
 					plus.nativeUI.toast('当前环境暂不支持语音识别插件');
@@ -801,12 +801,14 @@
 				}
 
 			}
+			//跳转地址管理
 			function goaddr(){
 				openview({
 					view: "page/personal/address.html",
 					id: "address",
 				})
 			}
+			//打开咨询界面
 			function poverTel() {
 				mui.openWindow({
 					url: 'consultTel.html',
@@ -828,12 +830,13 @@
 			}
 			mui.plusReady(function() {
 				
-				
+				//获取系统
 				if(/android/i.test(navigator.userAgent)) {
 					var systemType = 'ANDROID'
 				} else {
 					var systemType = 'IOS'
 				}
+				//获取clientId
 				var clientId = plus.push.getClientInfo().clientid;
 				clearInterval(getClientid)
 				if(!clientId) {
@@ -851,7 +854,8 @@
 				plus.storage.setItem('platform', systemType)
 				plus.storage.setItem('clientId', clientId)
 				plus.storage.setItem('deviceId', deviceId)
-				//				plus.storage.removeItem('funGuide1')
+				
+				//第一次安装时  打开引导页面
 				var showGuide = plus.storage.getItem("lauchFlag");
 				var funGuide1 = plus.storage.getItem("funGuide1");
 				if(!showGuide) {
@@ -872,7 +876,7 @@
 						Sign();
 					}, 0);
 				}
-
+				//监听refreshpage事件，刷新自动登录方法
 				document.addEventListener('refreshpage', function() {
 					Sign()
 				})
@@ -1016,6 +1020,8 @@
 					//app更新
 					checkUpdate(true);
 				} //登录方法结束
+				
+				//下拉刷新
 				downRe(pageRd);
 
 				function pageRd() {
@@ -1029,7 +1035,7 @@
 					var userId = plus.storage.getItem('$userId');
 					var oldToken = plus.storage.getItem('oldToken');
 
-					//切换板块
+					//切换登录身份板块
 
 					if(identityT == 0 || identityT == 4 || identityT == 5) { //导购
 						$('.guides,#banner2').css('display', '')
@@ -1056,6 +1062,8 @@
 					}else{
 						mui('#xiaoxiBtn')[0].style.right = '29px';
 					}
+					
+					//开定时器 获取通知消息 
 					var timeMsg = null;
 					clearInterval(timeMsg);
 					document.addEventListener('refreshInfoC', function() {
@@ -1130,7 +1138,7 @@
 							console.log('响应失败');
 						}
 					});
-
+					//获取专供排名数据
 					function getClassfy() {
 						mui.ajax(serverUrl + '/app/employee/store/rankClassification', {
 							data: {
@@ -1442,8 +1450,6 @@
 
 				}
 				//功能指引 1
-				//				setTimeout(function() {
-
 				function showGuideFun() {
 					if(showGuide && plus.storage.getItem('oldToken') && !funGuide1) {
 						mui.openWindow({
@@ -1464,9 +1470,8 @@
 					}
 				}
 				showGuideFun();
-				//				}, 0);
 			});
-
+			//跳转banner详情
 			function bannerto(id, url, name, type) {
 				if(url) {
 					if(url.indexOf('http') > -1 || url.indexOf('HTTP') > -1) { //远程
@@ -1482,7 +1487,7 @@
 				}
 
 			}
-
+			//打开快捷下单界面
 			function fastOrder() {
 				//				mui.plusReady(function() {
 				//				    var nowcity = plus.storage.getItem('userCity');
@@ -1498,7 +1503,7 @@
 				mui.alert('此功能暂未开放，敬请期待!')
 
 			}
-
+			
 			function specialGoods() {
 				openview({
 					view: 'page/specialGoods.html',
@@ -1614,13 +1619,14 @@
 					id: 'gxb',
 				})
 			})
+			//业绩查看
 			$('.achievement').click(function() {
 				openview({
 					view: 'page/guide/achievement.html',
 					id: 'achievement',
 				})
 			})
-
+			//跳转商品详情
 			function goodsInfo(id) {
 				openview({
 					view: 'page/goodsInfo.html',
@@ -1631,7 +1637,7 @@
 				})
 
 			}
-
+			//跳转专供商品列表
 			function rankto(name, id) {
 				openview({
 					view: 'page/guide/rankList.html',
@@ -1643,7 +1649,7 @@
 				})
 
 			}
-
+			//跳转商学院详情
 			function openDetail(id, tit) {
 				openview({
 					view: 'page/tradeSchoolLnfo.html',
@@ -1654,7 +1660,7 @@
 					}
 				})
 			}
-
+			//跳转导购信用额度界面
 			function guideCredit() {
 				openview({
 					view: 'page/guide/guideCredit.html',
@@ -1675,13 +1681,12 @@
 				plus.navigator.setStatusBarBackground('#f7f7f7');
 				// 设置系统状态栏样式为深色前景色样式
 				plus.navigator.setStatusBarStyle('dark');
-				//				plus.storage.clear();
 				//获取购物车数量
 				var cartNum = plus.storage.getItem('cartNums') || 0;
 				if(cartNum > 999) {
 					cartNum = '999+'
 				}
-
+				//监听cart_refresh 事件 刷新 所有有购物车总数量显示的界面
 				document.addEventListener('cart_refresh', function() {
 					//获取购物车数量
 					cartNum = plus.storage.getItem('cartNums');
@@ -1702,7 +1707,8 @@
 					mui.fire(plus.webview.getWebviewById('history'), 'refreshct');
 					mui.fire(plus.webview.getWebviewById('searchGoods'), 'refreshct');
 					mui.fire(plus.webview.getWebviewById('promotionInfo'), 'refreshct');
-					drawBadge('hide');
+					//下料清单 角标图案的绘制
+					drawBadge('hide'); 
 					if(cartNum != 0) {
 						drawBadge();
 					} else {
@@ -1710,6 +1716,8 @@
 					}
 
 				})
+				
+				//监听refreshpage pagerefresh 事件，切换底部菜单的选中界面
 				document.addEventListener('refreshpage', function() {
 					drawBadge('hide');
 					util.toggleNview(0);

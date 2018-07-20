@@ -97,6 +97,7 @@
 		<script src="../js/default.js"></script>
 		<script>
 			mui.init();
+			//跳转提现列表
 			function tixianList(){
 				openview({
 					view:"withdrawList.html",
@@ -112,8 +113,10 @@
 				var telway = document.getElementById('telway');
 				var aliaccount = document.getElementById('aliaccount');
 				var mostDraw = document.getElementById('mostDraw');
+				
 				var reg_phone = /^1[0-9]{10}$/;//手机号正则
 				var balancecc = plus.webview.currentWebview().balance;
+				//显示余额
 				if(balancecc){
 					$('#mostMoney').html(balancecc);
 //					$('#mostDraw').attr("max",balancecc)
@@ -137,23 +140,10 @@
 						console.log('个人信息', data);
 						if(data.code == 0) {
 							plus.nativeUI.closeWaiting();
-							if(data.content) {
-								if(data.content.name){
-									//$('#pepoles').val(data.content.name);
-								}
+							if(data.content) { 
 								if(data.content.mobile){
 									$('#telway').val(data.content.mobile);
-								}
-//								if(data.content.balance){
-//									$('#mostMoney').html('¥'+data.content.balance);
-//									$('#mostDraw').attr("max",data.content.balance)
-//								}else if(balancecc){
-//									$('#mostMoney').html('¥'+balancecc);
-//									$('#mostDraw').attr("max",balancecc)
-//								}else{
-//									$('#mostDraw').attr("max",0)
-//									$('#mostMoney').html(0)
-//								}
+								} 
 							}
 						} else {
 							mui.toast(data.message)
@@ -166,7 +156,7 @@
 					}
 				});
 
-
+				//提现操作
 				sendButton.addEventListener('tap', function() {
 
 					if(!pepoles.value) {

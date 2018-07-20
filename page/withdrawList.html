@@ -182,32 +182,26 @@
 	</body>
 	<script src="../js/default.js" type="text/javascript" charset="utf-8"></script>
 	<script src="../js/artTemplate-native.js" type="text/javascript" charset="utf-8"></script>
-	<script type="text/javascript">
-		function goInfo(audi, status) {
-			openview({
-				view: 'listCheckInfo.html',
-				id: 'listCheckInfo',
-				extrasobj: {
-					audioNo: audi,
-					audioStatus: status
-				}
-			})
-		}
+	<script type="text/javascript"> 
 		mui.plusReady(function() {
 			var userId = plus.storage.getItem('$userId');
 			var oldToken = plus.storage.getItem("oldToken");
 			var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
-console.log('token',oldToken)
+			//切换tab框，加载对应列表数据
 			$('#tabLink li').click(function() {
 				$('#tabLink li').removeClass('active');
 				$(this).addClass('active');
 				$('#loadingdiv').css('height', '32px');
 				loadFun($(this).index());
 			})
+			//自定义监听refresh事件，刷新页面
 			document.addEventListener('refresh', function(event) {
 				plus.webview.currentWebview().reload()
 			});
+			//默认加载待审核列表
 			loadFun(0);
+			
+			//取消提现
 			window.cancel = function(applyId,statusIndex){
 				mui.confirm('确认取消申请吗？', '提示', ['取消', '确定'], function(e) {
 					if(e.index == 1) {
@@ -246,6 +240,7 @@ console.log('token',oldToken)
 					}
 				})
 			}
+			
 			function loadFun(index) {
 				var Spagenum = 2,
 					Ypagenum = 1,

@@ -38,6 +38,7 @@
 		<script src="../../js/default.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../../js/mui.min.js"></script>
 		<script type="text/javascript">
+			//打开通知消息界面
 			$('.msg1').click(function(){
 				openview({
 					view:'infoList.html',
@@ -47,6 +48,7 @@
 					}
 				})
 			})
+			//打开物流消息界面
 			$('.msg2').click(function(){
 				openview({
 					view:'deliveryInform.html',
@@ -63,11 +65,12 @@
 				if(identityT == 1){
 					$('.msg2').hide();
 				}
+				//监听refreshInfo事件，刷新 新的通知消息数量
 				document.addEventListener('refreshInfo', function() {
 					showMsg();
 				})
 				showMsg()
-				function showMsg(){//待测
+				function showMsg(){
 					mui.ajax(serverUrl+'/app/user/message/unread/number',{
 						data:{
 							userId:userId,

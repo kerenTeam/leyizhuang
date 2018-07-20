@@ -80,6 +80,7 @@
 					id:'edit_password'
 				})
 			}
+			//解绑微信
 			window.delBindWx = function(){
 				mui.confirm('确认解绑吗？', '提示', ['取消', '确定'], function(e) {
 					if(e.index == 1) {
@@ -103,22 +104,23 @@
 										plus.storage.removeItem('materialList');
 										plus.storage.removeItem("Acc_pass");//保存账号密码,用于自动登录
 										plus.storage.removeItem("rankCode");
-										
+										//解绑后刷新个人中心 和 商品列表
 										mui.fire(plus.webview.getWebviewById('../goodList.html'),'refresh');
 										mui.fire(plus.webview.getWebviewById('center.html'),'refresh');
 										if(plus.webview.getWebviewById('identify')){
 											plus.webview.getWebviewById('identify').close();
-										} 
-											plus.nativeUI.closeWaiting();
-												openview({
-													view:'../../identify.html',
-													id:'identify'
-												})
-											var time2 = setTimeout(function(){
-												
-												plus.webview.currentWebview().close();
-												mui.toast(data.message || '解绑微信成功');
-											},500)
+										}
+										//并且跳转到登录界面
+										plus.nativeUI.closeWaiting();
+											openview({
+												view:'../../identify.html',
+												id:'identify'
+											})
+										var time2 = setTimeout(function(){
+											
+											plus.webview.currentWebview().close();
+											mui.toast(data.message || '解绑微信成功');
+										},500)
 									}else{
 										mui.toast(data.message);
 									} 
