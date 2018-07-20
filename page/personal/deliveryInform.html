@@ -280,7 +280,7 @@
 	</body>
 	<script src="../../js/default.js" type="text/javascript" charset="utf-8"></script>
 	<script type="text/javascript">
-		//动态详情
+		//跳转物流消息详情
 		function DTdetail(id) {
 			event.stopPropagation();
 			openview({
@@ -295,14 +295,17 @@
 	<script type="text/javascript">
 		mui.init();
 		mui.plusReady(function() {
+			//下拉刷新 当前页面
 			downRe(shopData);
+			
+			//获取消息数据
 			shopData();
 			function shopData() {
 
 				var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
 				var userId = plus.storage.getItem('$userId');
 				var oldToken = plus.storage.getItem('oldToken');
-				var noReadNum = plus.webview.currentWebview().noReadNum;
+				var noReadNum = plus.webview.currentWebview().noReadNum;//未读消息数量，用于红点图标的显示
 
 				plus.nativeUI.showWaiting(); //显示等待框
 				mui.ajax(serverUrl + '/app/delivery/message', {

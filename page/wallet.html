@@ -55,7 +55,6 @@
 		<script src="../js/statusBar.js" type="text/javascript" charset="utf-8"></script>
 		<div class="mui-content">
 			<div class="huiZ f17" style="color: #fff;background-image: url(../img/walletBg.jpeg);background-size: 100% 100%;padding:25px 15px;line-height: 20px;">
-			<!--<div class="huiZ f17" style="background-size: 100% 100%;padding:25px 15px;line-height: 20px;">-->
 				当前余额：<span class="f17 huiZ" id='balance'></span>
 				<span class="mui-pull-right activecl aClick" id="recharge">我要充值</span>
 			</div>
@@ -104,12 +103,13 @@
 		<script src="../js/artTemplate-native.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
 			mui.init();
+			//跳转提现页面
 			function tixian(){
 				var mm = $('#balance').text();
 				openview({
 					view:"withdrawDeposit.html",
 					id:"withdrawDeposit",
-					extrasobj:{"balance":mm}
+					extrasobj:{"balance":mm}//余额参数
 
 				})
 			}
@@ -119,11 +119,13 @@
 				var userId = plus.storage.getItem('$userId');
 				var oldToken = plus.storage.getItem('oldToken');
 				plus.nativeUI.showWaiting();
+				//区分登录账户获取钱包余额的api
 				if(identityT == 2){
 					var api = '/app/store/preDeposit/balance'
 				}else{
 					var api = '/app/customer/preDeposit/balance'
 				}
+				//跳转充值页面
 				mui('#recharge')[0].onclick = function(){
 					openview({
 						view:"personal/recharge.html",
@@ -131,6 +133,7 @@
 						extrasobj:{money:$('#balance').text()}
 					})
 				}
+				//监听刷新页面列表数据
 				window.addEventListener('refreash', function(event) {
 					loadWallet();
 				});
@@ -179,7 +182,10 @@
 					}else if(identityT == 2){
 						var url = '/app/employee/PreDeposit/recharge/log';
 					}
+					
+					//默认显示充值记录
 					loadFun(url,'tab1');
+					//不同身份公用dom节点，区分api
 					$('#tabLink li').click(function(){
 						$('#tabLink li').removeClass('active');
 						$(this).addClass('active');
@@ -202,7 +208,7 @@
 					})
 					function loadFun(url,tabT){
 						mui("#upload")[0].innerHTML = " ";
-				 		$(window).unbind('scroll');
+				 		$(window).unbind('scroll');//解绑scroll事件
 						var Spagenum = 2; //实到页数
 						var Ypagenum = 1; //应到页数
 						var oneSize = 10;
@@ -219,12 +225,13 @@
 									if(data.code == 0){
 										$('#loadingdiv').css('height','0px');
 										if(data.content.list && data.content.list.length){
+											//判断点击框区分显示数据
 											if(tabT == 'tab1'){
 												document.getElementById('infoListDiv').innerHTML = template('infoList',{list:data.content.list});
 											}else if(tabT == 'tab2'){
 												document.getElementById('infoListDiv').innerHTML = template('infoList2',{list:data.content.list});
 											}
-
+											//上拉加载
 											$(window).scroll(function() {
 												var scrollTop = $(this).scrollTop();
 												var scrollHeight = $(document).height();
@@ -247,6 +254,7 @@
 							                                    if(data.code == 0){
 							                                        $('#loadingdiv').css('height','0px');
 							                                        if(data.content.list && data.content.list.length){
+							                                        	//判断点击框区分显示数据
 							                                            if(tabT == 'tab1'){
 							                                                document.getElementById('infoListDiv').innerHTML += template('infoList',{list:data.content.list});
 							                                            }else if(tabT == 'tab2'){

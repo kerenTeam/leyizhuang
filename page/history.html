@@ -6,14 +6,26 @@
 		<title>浏览记录</title>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="../css/mui.min.css" rel="stylesheet" />
-		<link rel="stylesheet" type="text/css" href="../css/commonY.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/commonY.css" />
 		<link rel="stylesheet" href="../css/style.css" />
-		<link rel="stylesheet" type="text/css" href="../css/configW.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/configW.css" />
 	</head>
-	<style type="text/css"> 
-		.gxbList{padding:20px;width: calc((100vw - 50px) / 2);float: left;text-align: center;background-color: #FF5053;margin: 5px;}
-		.categray div{width: 80%;vertical-align: top;}
+	<style type="text/css">
+		.gxbList {
+			padding: 20px;
+			width: calc((100vw - 50px) / 2);
+			float: left;
+			text-align: center;
+			background-color: #FF5053;
+			margin: 5px;
+		}
+		
+		.categray div {
+			width: 80%;
+			vertical-align: top;
+		}
 	</style>
+
 	<body>
 		<header class="mui-bar mui-bar-nav">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
@@ -25,50 +37,53 @@
 			<span class="mui-badge mui-badge-white">0</span>
 		</div>
 		<div class="mui-content" style="margin-top: 7px;">
-		
-		    <!--浏览商品列表-->
-		    <div class="goodsList" id="goodsList"></div>
-		    
-		    <script type="text/html" id="goodsTpl">
-		    	<ul class="mui-table-view">
-		    		<%for(var j = 0 ;j<dateArray.length;j++){%>
-		    			<div class="pad10 afterBorder padd10 activecl ft16" style="border-left: 3px solid #B62D29;">
-		    				<%=dateArray[j]%>
-		    			</div>
-			    		<%for(var i = list.length-1 ;i>=0;i--){%>
-			    			<%if(list[i].createTime == dateArray[j]){%>
-			    				<li class="mui-table-view-cell mui-media" id="<%=list[i].id%>" onclick="goodsInfo(<%=list[i].goodsId%>)">
-						        <a href="javascript:;">
-						            <img class="mui-media-object mui-pull-left" src="<%=list[i].coverImageUri || '../img/editset.png'%>">
-						            <div class="mui-media-body ft16">
-						                <div style="word-break: break-all;white-space: normal;">
-						                	<%=list[i].skuName%>
-						                </div>
-						                <p class='mui-ellipsis'>规格:<%=list[i].goodsSpecification%> &nbsp;单位:<%=list[i].goodsUnit%></p>
-							            <span class="activecl">¥<%=list[i].retailPrice%></span>
-							            <%if(!list[i].materialQty){%>
-											<img style="display:inline-block;float:right;margin-left:5px;vertical-align:middle" data-id="<%=list[i].goodsId%>" class="toCart" src="../images/addcart.svg"/>
-											<div style="display: none;float:right;" class="mui-numbox" data-numbox-step='1' data-numbox-min='0' data-numbox-max='9999'>
-											  <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
-											  <input class="mui-numbox-input" type="number" data-id="<%=list[i].goodsId%>" value="1"/>
-											  <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
-											</div>
-										<%}else{%>
-											<img style="display:none;float:right;margin-left:5px;vertical-align:middle" data-id="<%=list[i].goodsId%>" class="toCart" src="../images/addcart.svg"/>
-											<div style="float:right;" class="mui-numbox" data-numbox-step='1' data-numbox-min='0' data-numbox-max='9999'>
-											  <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
-											  <input class="mui-numbox-input" type="number" data-id="<%=list[i].goodsId%>" value="<%=list[i].materialQty%>"/>
-											  <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
-											</div>
-										<%}%>
-						            </div>
-						        </a>
-						    </li>
-			    			<%}%>
-			    		<%}%>
-		    		<%}%>
+
+			<!--浏览商品列表-->
+			<div class="goodsList" id="goodsList"></div>
+
+			<script type="text/html" id="goodsTpl">
+				<ul class="mui-table-view">
+					<%for(var j = 0 ;j<dateArray.length;j++){%>
+					<div class="pad10 afterBorder padd10 activecl ft16" style="border-left: 3px solid #B62D29;">
+						<%=dateArray[j]%>
+					</div>
+					<%for(var i = list.length-1 ;i>=0;i--){%>
+					<%if(list[i].createTime == dateArray[j]){%>
+					<li class="mui-table-view-cell mui-media" id="<%=list[i].id%>" onclick="goodsInfo(<%=list[i].goodsId%>)">
+						<a href="javascript:;">
+							<img class="mui-media-object mui-pull-left" src="<%=list[i].coverImageUri || '../img/editset.png'%>">
+							<div class="mui-media-body ft16">
+								<div style="word-break: break-all;white-space: normal;">
+									<%=list[i].skuName%>
+								</div>
+								<p class='mui-ellipsis'>规格:
+									<%=list[i].goodsSpecification%> &nbsp;单位:
+									<%=list[i].goodsUnit%>
+								</p>
+								<span class="activecl">¥<%=list[i].retailPrice%></span>
+								<%if(!list[i].materialQty){%>
+								<img style="display:inline-block;float:right;margin-left:5px;vertical-align:middle" data-id="<%=list[i].goodsId%>" class="toCart" src="../images/addcart.svg" />
+								<div style="display: none;float:right;" class="mui-numbox" data-numbox-step='1' data-numbox-min='0' data-numbox-max='9999'>
+									<button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+									<input class="mui-numbox-input" type="number" data-id="<%=list[i].goodsId%>" value="1" />
+									<button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+								</div>
+								<%}else{%>
+								<img style="display:none;float:right;margin-left:5px;vertical-align:middle" data-id="<%=list[i].goodsId%>" class="toCart" src="../images/addcart.svg" />
+								<div style="float:right;" class="mui-numbox" data-numbox-step='1' data-numbox-min='0' data-numbox-max='9999'>
+									<button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+									<input class="mui-numbox-input" type="number" data-id="<%=list[i].goodsId%>" value="<%=list[i].materialQty%>" />
+									<button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+								</div>
+								<%}%>
+							</div>
+						</a>
+					</li>
+					<%}%>
+					<%}%>
+					<%}%>
 				</ul>
-		    </script>  
+			</script>
 		</div>
 		<script src="../js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../js/mui.min.js"></script>
@@ -76,89 +91,111 @@
 		<script src="../js/default.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
 			mui.init();
-			function goodsInfo(id){
+			//跳转商品详情
+			function goodsInfo(id) {
 				openview({
-					view:'goodsInfo.html',
-					id: 'goodsInfo', 
-					extrasobj:{goodId:id}
-				}) 
-				
+					view: 'goodsInfo.html',
+					id: 'goodsInfo',
+					extrasobj: {
+						goodId: id
+					}
+				})
+
 			}
-			mui.plusReady(function(){
+			mui.plusReady(function() {
+				//跳转下料清单图标的数量显示
 				getCartNum();
+				//刷新下料清单图标的角标数量显示
 				document.addEventListener('refreshct', function() {
 					getCartNum();
 				})
 				//获取缓存 
 				var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
-				var userId = plus.storage.getItem('$userId'); 
+				var userId = plus.storage.getItem('$userId');
 				var oldToken = plus.storage.getItem('oldToken');
+				//监听自定义事件
 				document.addEventListener('refresh', function() {
 					goodsl();
-				}) 
+				})
+				//获取浏览记录
 				goodsl();
-				function goodsl(){
+
+				function goodsl() {
 					plus.nativeUI.showWaiting();
-					mui.ajax(serverUrl+'/app/user/browseHistory/show',{
-						data:{
-							userId:userId,identityType:identityT
+					mui.ajax(serverUrl + '/app/user/browseHistory/show', {
+						data: {
+							userId: userId,
+							identityType: identityT
 						},
-						dataType:'json',
-						headers: {"Authorization": oldToken},
-						type:'post',
-						timeout:10000,
-						success:function(data,type,xhr){ 
-							console.log('浏览商品列表',data);
-							if(data.code == 0 ){
+						dataType: 'json',
+						headers: {
+							"Authorization": oldToken
+						},
+						type: 'post',
+						timeout: 10000,
+						success: function(data, type, xhr) {
+							console.log('浏览商品列表', data);
+							if(data.code == 0) {
 								plus.nativeUI.closeWaiting();
-								if(data.content && data.content.length){
-									//日期
+								if(data.content && data.content.length) {
+									//定义日期数组，按日期显示浏览过的商品列表
 									var timeArray = [];
-									for(var i = 0; i <data.content.length;i++){
-										if(data.content[i].createTime){
+									for(var i = 0; i < data.content.length; i++) {
+										if(data.content[i].createTime) {
 											//格式化时间
 											var dt = new Date(data.content[i].createTime);
-											var date = [[dt.getFullYear(), dt.getMonth() + 1, dt.getDate()].join('-')].join(' ').replace(/(?=\b\d\b)/g, '0'); // 正则补零 
+											var date = [
+												[dt.getFullYear(), dt.getMonth() + 1, dt.getDate()].join('-')
+											].join(' ').replace(/(?=\b\d\b)/g, '0'); // 正则补零 
 											data.content[i].createTime = date;
 											timeArray.push(data.content[i].createTime)
 										}
 									}
-									console.log('timeArray',timeArray);
+									console.log('timeArray', timeArray);
 									//去重
 									timeArray = timeArray.unique1();
-									console.log('timeArray',timeArray);
-									$('#goodsList').html(template('goodsTpl',{list:data.content,dateArray:timeArray}));
+									console.log('timeArray', timeArray);
+									$('#goodsList').html(template('goodsTpl', {
+										list: data.content,
+										dateArray: timeArray
+									}));
 									mui('.mui-numbox').numbox();
 									$('.toCart,.mui-numbox button').click(function() {
 										event.stopPropagation()
 									})
+
+									//点击数量时选中，安卓和ios分开处理
 									var platform = plus.storage.getItem('platform')
 									$('.mui-numbox input').click(function() {
-										if(platform == 'ANDROID'){
+										if(platform == 'ANDROID') {
 											$(this).select();
-										}else{
-											$(this).focus(); 
-											$(this).get(0).selectionStart = 0; 
+										} else {
+											$(this).focus();
+											$(this).get(0).selectionStart = 0;
 											$(this).get(0).selectionEnd = $(this).get(0).value.length;
 										}
 										event.stopPropagation()
 									})
-									//加入购物车
-									$('.toCart').click(function(){
+
+									//第一次加入购物车
+									$('.toCart').click(function() {
 										var goodid = $(this).attr('data-id');
 										var cur = $(this);
 										plus.nativeUI.showWaiting();
-										addCart(goodid,1,cur);
+										addCart(goodid, 1, cur);
 									})
-									
+
 									//数量选择 -> 加入购物车
 									$('.mui-numbox input').on('change', function() {
 										plus.nativeUI.showWaiting();
 										var cur = $(this);
 										var number = $(this).val(); //当前数量
 										var goodsid = $(this).attr("data-id"); //当前商品id
-										if(number>0){
-											var goodsList = [{'id':goodsid,'qty':number}];
+										if(number > 0) {
+											var goodsList = [{
+												'id': goodsid,
+												'qty': number
+											}];
 											mui.ajax(serverUrl + '/app/materialList/edit/batch', {
 												data: {
 													userId: userId,
@@ -175,18 +212,18 @@
 													plus.nativeUI.closeWaiting();
 													console.log('加入购物车', data);
 													if(data.code == 0) {
-														mui.fire(plus.webview.getWebviewById('cart.html'), 'refresh');
+														mui.fire(plus.webview.getWebviewById('cart.html'), 'refresh'); //自定义事件，刷新购物车
 													} else {
 														mui.toast(data.message)
 													}
-			
+
 												},
 												error: function(xhr, type, errorThrown) {
 													plus.nativeUI.closeWaiting();
-													console.log('登录响应失败');
+													console.log('响应失败');
 												}
 											});
-										}else{
+										} else {
 											mui.confirm('狠心不要了咩？', '提示', ['取消', '确定'], function(e) {
 												if(e.index == 1) {
 													mui.ajax(serverUrl + '/app/materialList/goods/delete', {
@@ -211,94 +248,97 @@
 															} else {
 																mui.toast(data.message)
 															}
-			
+
 														},
 														error: function(xhr, type, errorThrown) {
 															plus.nativeUI.closeWaiting();
 														}
 													});
-												}else{
+												} else {
 													plus.nativeUI.closeWaiting();
-													cur.val(1);	
-													cur.siblings().removeAttr('disabled'); 
+													cur.val(1);
+													cur.siblings().removeAttr('disabled');
 												}
-			
+
 											})
 										}
-										
+
 									})
-									
-									function addCart(goodid,num,cur){
-										mui.ajax(serverUrl+'/app/materialList/add',{
-											data:{
-												userId:userId,
-												identityType:identityT,
-												params:goodid+'-'+num
+
+									function addCart(goodid, num, cur) {
+										mui.ajax(serverUrl + '/app/materialList/add', {
+											data: {
+												userId: userId,
+												identityType: identityT,
+												params: goodid + '-' + num
 											},
-											dataType:'json',
-											headers: {"Authorization": oldToken},
-											type:'post',
-											timeout:10000,
-											success:function(data,type,xhr){ 
+											dataType: 'json',
+											headers: {
+												"Authorization": oldToken
+											},
+											type: 'post',
+											timeout: 10000,
+											success: function(data, type, xhr) {
 												plus.nativeUI.closeWaiting();
-												console.log('加入购物车',data);
-												if(data.code == 0 ){
+												console.log('加入购物车', data);
+												if(data.code == 0) {
 													mui.fire(plus.webview.getWebviewById('cart.html'), 'refresh');
 													cur.next().show();
 													cur.next().find('input').val(1);
 													cur.next().find('input').siblings().removeAttr('disabled');
 													cur.hide();
-												}else{
+												} else {
 													mui.toast(data.message)
 												}
-												 
+
 											},
-											error:function(xhr,type,errorThrown){
+											error: function(xhr, type, errorThrown) {
 												plus.nativeUI.closeWaiting();
 												console.log('登录响应失败');
 											}
 										});
 									}
-									
-								}else{
-									$('#goodsList').html('<div style="text-align:center;padding:15px;color:gray">暂无浏览记录</div>') 
+
+								} else {
+									$('#goodsList').html('<div style="text-align:center;padding:15px;color:gray">暂无浏览记录</div>')
 								}
-							}else{
+							} else {
 								mui.toast(data.message)
 							}
-							 
+
 						},
-						error:function(xhr,type,errorThrown){
+						error: function(xhr, type, errorThrown) {
 							plus.nativeUI.closeWaiting();
 							mui.toast(type)
 							console.log('登录响应失败');
 						}
-					}); 
+					});
 				}
-				function getCartNum(){
+
+				function getCartNum() {
 					var cartNum = plus.storage.getItem('cartNums') || 0;
-					cartNum = cartNum < 0 ? 0:cartNum;
-					if(cartNum>0){
+					cartNum = cartNum < 0 ? 0 : cartNum;
+					if(cartNum > 0) {
 						$('.gocarticon span').show();
 						$('.gocarticon span').html(cartNum)
-					}else{
+					} else {
 						$('.gocarticon span').hide();
 					}
 				}
-				mui('.gocarticon')[0].onclick = function(){
+				//跳转下料清单
+				mui('.gocarticon')[0].onclick = function() {
 					mui.fire(plus.webview.getWebviewById('cart.html'), 'refresh');
 					openview({
 						view: "../cart.html",
-						id:'cart',
+						id: 'cart',
 						extrasobj: {
 							page: "1"
 						}
 					})
 
-				 	
 				}
 			})
-			
+
 			//数组去重
 			Array.prototype.unique1 = function() {
 				var res = [this[0]];
@@ -317,38 +357,41 @@
 				return res;
 			}
 		</script>
+
 		<script type="text/javascript">
+			//			移动图标的js方法
 			// 获取节点
-		  	var block = document.getElementById("div2");
-		  	var oW,oH;
-		  	// 绑定touchstart事件
-		  	block.addEventListener("touchstart", function(e) {
-			   	console.log(e);
-			   	var touches = e.touches[0];
-			   	oW = touches.clientX - block.offsetLeft;
-			   	oH = touches.clientY - block.offsetTop;
-			   	//阻止页面的滑动默认事件
-			   	document.addEventListener("touchmove",defaultEvent,false);
-		  	},false)
-		 
-		  	block.addEventListener("touchmove", function(e) {
-			   	var touches = e.touches[0];
-			   	var oLeft = touches.clientX - oW;
-			   	var oTop = touches.clientY - oH;
-			   	if(oLeft < 0) {
-			   		oLeft = 0;
-			   	}else if(oLeft > document.documentElement.clientWidth - block.offsetWidth) {
-			    oLeft = (document.documentElement.clientWidth - block.offsetWidth);
-			   	}
-			   	block.style.left = oLeft + "px";
-			   	block.style.top = oTop + "px";
-		  	},false);
-		   
-			block.addEventListener("touchend",function() {
-			   document.removeEventListener("touchmove",defaultEvent,false);
-			},false);
+			var block = document.getElementById("div2");
+			var oW, oH;
+			// 绑定touchstart事件
+			block.addEventListener("touchstart", function(e) {
+				console.log(e);
+				var touches = e.touches[0];
+				oW = touches.clientX - block.offsetLeft;
+				oH = touches.clientY - block.offsetTop;
+				//阻止页面的滑动默认事件
+				document.addEventListener("touchmove", defaultEvent, false);
+			}, false)
+
+			block.addEventListener("touchmove", function(e) {
+				var touches = e.touches[0];
+				var oLeft = touches.clientX - oW;
+				var oTop = touches.clientY - oH;
+				if(oLeft < 0) {
+					oLeft = 0;
+				} else if(oLeft > document.documentElement.clientWidth - block.offsetWidth) {
+					oLeft = (document.documentElement.clientWidth - block.offsetWidth);
+				}
+				block.style.left = oLeft + "px";
+				block.style.top = oTop + "px";
+			}, false);
+
+			block.addEventListener("touchend", function() {
+				document.removeEventListener("touchmove", defaultEvent, false);
+			}, false);
+
 			function defaultEvent(e) {
-			   e.preventDefault();
+				e.preventDefault();
 			}
 		</script>
 	</body>

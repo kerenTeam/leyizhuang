@@ -84,7 +84,6 @@
 									</div>
 								</div>
 							</div>
-							<!--<a class="delBtn" data-id="<%=lists.couponsList[j].id%>">删除</a>-->
 					</dd>
 					<%}%>
 				</dl>
@@ -125,7 +124,6 @@
 									</div>
 								</div>
 							</div>
-							<!--<a class="delBtn" data-id="<%=lists.goodsList[j].id%>">删除</a>-->
 					</dd>
 					<%}%>
 				</dl>
@@ -161,7 +159,6 @@
 						</div>
 
 					</div>
-					<!--<a class="delBtn" data-id="<%=list[i].id%>">删除</a>-->
 				</dd>
 				<%}%>
 
@@ -170,6 +167,8 @@
 
 		</script>
 		<div style="height:1rem;"></div>
+		
+		<!--选中 数量、金额的合计-->
 		<aside class="btmNav">
 			<a class="dp ft15" style="position: relative;color: #B62D29;">
 				<div class="mui-checkbox botCheck"><input name="checkbox" id="totalCheck" type="checkbox"></div><span>合计：</span>¥<span class="totalMoney">0</span>
@@ -186,7 +185,7 @@
 	</body>
 
 	<script>
-		//换购产品券
+		//跳转购买产品券页面
 		function buyCoupon(){
 			openview({
 				view:'couponCart.html',
@@ -194,20 +193,27 @@
 			})
 		}
 		mui.plusReady(function() {
+			//下拉刷新当前页
 			downRe(cartload);
+			
 			var page = plus.webview.currentWebview().page;
 			var cusId = plus.webview.currentWebview().cusid;
+			
 			if(!cusId){
 				cusId = ''
 			}
+			//区分显示头部返回图标
 			if(page == 1) {
 				$('#fanhui').show()
 			}
+			//监听自定义refresh事件，刷新购物车数据
 			document.addEventListener('refresh', function(event) {
 				cartload();
 			});
+			
+			//监听底部点击，切换编辑和选择按钮的显示--- 选中or不选中
 			document.addEventListener('refreshBtn', function(event) {
-				//监听底部点击
+				
 				$(".delBtn,.delBtnAll").css("display", "none");
 				$("#allCartData").find("h2").css("visibility", "visible");
 				$('.editAll').html('编辑');
@@ -216,7 +222,10 @@
 				$(".groupCheck").attr("disabled",true);
 				$(".groupCheck").parentsUntil('.eachGroup').find(".mui-checkbox input").attr("disabled",true);
 			});
+			//购物车数据未空时显示的内容
 			var tipsCont = '<div id="rfcart"><img src="images/blankCart.png" style="width:30%;margin: auto;display: block;margin-top: 40%;" alt="" /><div style="color: #666;text-align: center;margin-top: 30px;font-size: 14px;">你的下料清单还是空的哦</div></div>';
+			
+			//获取购物车数据
 			cartload();
 			function cartload() {
 				$('.editAll').show().html('编辑');
@@ -224,6 +233,7 @@
 				var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
 				var userId = plus.storage.getItem('$userId');
 				var oldToken = plus.storage.getItem('oldToken');
+				//顾客和导购才买券
 				if(identityT == 0 || identityT == 6){
 					$('#buyCoupon').show()
 				}
@@ -244,20 +254,22 @@
 						plus.nativeUI.closeWaiting();
 						console.log('下料清单返回', data);
 						if(data.code == 0) {
-							var m = 0;
+							var m = 0;//立falg--》购物车条数
 							if(data.content) {
 								plus.storage.removeItem('remark');
 								plus.storage.removeItem('remark2');
 								plus.storage.removeItem('deliveryId');
 								plus.storage.removeItem('audnoAddrObj');
 								if(data.content.deliveryId && data.content.deliveryId != -1){
-									plus.storage.setItem('deliveryId',data.content.deliveryId.toString());
+									plus.storage.setItem('deliveryId',data.content.deliveryId.toString());//用于订单页面，获取收货地址
 								}
+								
+								//料单审核数据 部分
 								if(data.content.auditListRes && data.content.auditListRes.goodsList && data.content.auditListRes.goodsList.length>0){
 									m = m+1;
 									$('#auditList').html(template('auditTpl', {lists:data.content.auditListRes}));
 									if(data.content.auditListRes.remark){
-										plus.storage.setItem('remark',data.content.auditListRes.remark);
+										plus.storage.setItem('remark',data.content.auditListRes.remark);//用于订单页面，显示备注信息
 									}
 									if(data.content.auditListRes.receiverPhone && data.content.auditListRes.receiver){
 										var audnoAddrObj = {};
@@ -269,17 +281,19 @@
 										audnoAddrObj.street = data.content.auditListRes.deliveryStreet;
 										audnoAddrObj.villageName = data.content.auditListRes.residenceName;
 										audnoAddrObj.address = data.content.auditListRes.detailedAddress;
-										plus.storage.setItem('audnoAddrObj',JSON.stringify(audnoAddrObj));
+										plus.storage.setItem('audnoAddrObj',JSON.stringify(audnoAddrObj));//用于订单页面，显示收货地址
 									}
 								}else{
 									$('#auditList').html('')
 								}
+								//产品券数据 部分
 								if(data.content.couponListRes && data.content.couponListRes.couponsList && data.content.couponListRes.couponsList.length>0){
 									m = m+1;
 									$('#couponsList').html(template('couponsTpl', {lists:data.content.couponListRes}));
 								}else{
 									$('#couponsList').html('')
 								}
+								//普通商品部分
 								if(data.content.materialListRes && data.content.materialListRes.length>0){
 									m = m+1;
 									$('#cartData').html(template('cartTpl', {list: data.content.materialListRes}));
@@ -291,23 +305,31 @@
 								}
 
 							}
-							if(m == 0){
+							
+							if(m == 0){//没有数据 隐藏某些编辑按钮
 								$(".editAll,aside").hide();
 								$('#cartData').html(tipsCont);
 								plus.storage.setItem('cartNums', '0');
-							}else{
+							}else{//相反情况
 								$('aside').show();
 								$('.mui-checkbox input').attr('checked', true);
 								countFuc();
 								plus.storage.setItem('cartNums', $(".totalNum").html());
 							}
+							
+							//*****给首页加自定义事件，刷新app地步的购物车图标的角标数量 *****
 							var index = plus.webview.getLaunchWebview();
 								mui.fire(index, 'cart_refresh');
+								
+								
 								plus.nativeUI.closeWaiting();
-								mui('.mui-numbox').numbox();
+								mui('.mui-numbox').numbox();//初始化numbox组件
+								
 								$('.numberWidget,.mui-numbox button').click(function() {
 									event.stopPropagation();
 								})
+								
+								//点击数量时选中，安卓和ios分开处理  ***其他页面同理****
 								var platform = plus.storage.getItem('platform')
 								$('.mui-numbox input').click(function() {
 									if(platform == 'ANDROID'){
@@ -380,6 +402,8 @@
 															mui.toast('删除成功');
 															$('.delBtnAll').hide();
 															$('.goOrder').show();
+															
+															//******自定义以下事件，刷新所有有关购物车数量显示的界面*******
 															mui.fire(plus.webview.getWebviewById('goodList'),'refresh');
 															mui.fire(plus.webview.getWebviewById('page/goodList.html'),'refresh');
 															mui.fire(plus.webview.getWebviewById('cart.html'),'refresh');
@@ -396,6 +420,8 @@
 															mui.fire(plus.webview.getWebviewById('history'),'refresh');
 															mui.fire(plus.webview.getWebviewById('searchGoods'),'refreshscgd');
 															mui.fire(plus.webview.getWebviewById('promotionInfo'),'refresh');
+															
+															//刷新购物车列表
 															cartload();
 														} else {
 															mui.toast(data.message)
@@ -413,7 +439,7 @@
 
 							});
 
-							//单组全选
+							//单组 全选
 							$('dl dt .mui-checkbox').click(function() {
 								if($(this).find("input").is(':checked')) {
 									$(this).parentsUntil(".eachGroup").find("input").attr("checked", true);
@@ -478,10 +504,7 @@
 
 								countFuc();
 							})
-							//数量选择
-//							$('.mui-numbox input').onfocus(function(){
-//
-//							})
+							//数量输入时监听
 							$('.mui-numbox input').on('input', function() {
 								var cur = $(this);
 								var number = $(this).val(); //当前数量
@@ -545,6 +568,7 @@
 									})
 								}
 							})
+							//数量改变时监听
 							$('.mui-numbox input').on('change', function() {
 								plus.nativeUI.showWaiting();
 								var cur = $(this);
@@ -687,7 +711,7 @@
 										var justGoods = [];//for create order
 										var goodlists = []; //for woker and count
 										var productCouponList = []; // count
-										//存缓存
+										//存缓存 用于选赠品界面 和 提交订单界面 获取数据
 										$("dd").find("input[type='checkbox']:checked").each(function(index) {
 											if($(this).parent().parent().find('.mui-input-numbox').val() != 0){
 												var gdtype = $(this).attr('data-type');
@@ -730,10 +754,10 @@
 										plus.storage.setItem('justGoods', JSON.stringify(justGoods));
 										plus.storage.setItem('goodlists', JSON.stringify(goodlists));
 										plus.storage.setItem('productCouponList', JSON.stringify(productCouponList));
-										console.log(plus.storage.getItem('materialList'));
 
 										if(plus.storage.getItem('oldToken')) {
 											if(identityT == 0 || identityT == 4 || identityT == 5) {
+												//跳转前请求赠品，若没有数据 则不跳转下一步
 												mui.ajax(serverUrl + '/app/gift/list', {
 													data: {
 														userId: userId,
@@ -774,6 +798,7 @@
 												});
 
 											} else if(identityT == 3) {
+												//跳转前请求工人下单api，若报错 则不跳转下一步
 												mui.ajax(serverUrl+'/app/goodsMoney/worker',{
 													data:{
 														userId:userId,

@@ -21,24 +21,24 @@
 	<body style="background: #EEEEEE;">
 		<header class="mui-bar mui-bar-nav" style="padding-right: 15px;">
 			<a id="leftbtn" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-			<h1 class="mui-title">消息通知</h1>
+			<h1 class="mui-title">消息通知</h1> 
 		</header>
 		<script src="../../js/statusBar.js" type="text/javascript" charset="utf-8"></script>
 		<div class="mui-content" style="margin-top: 7px;">
 		   	<div class="mlist msg1" data-id = '0'><img src="../../images/center/messageinf.svg"/>
-		   		通知消息
+		   		通知消息 
 		   		<span class="mui-badge mui-badge-danger mui-pull-right" style="display: none;" id="msg">1</span>
 		  	</div>
 		   	<div class="mlist msg2" data-id = '0'><img src="../../images/center/deliverymsg.svg"/>
 		   		物流消息
 		   		<span class="mui-badge mui-badge-danger mui-pull-right" style="display: none;" id="wlmsg">1</span>
 		   	</div>
-	    </div>
+	    </div> 
 		<script src="../../js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../../js/default.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../../js/mui.min.js"></script>
 		<script type="text/javascript">
-
+			//打开通知消息界面
 			$('.msg1').click(function(){
 				openview({
 					view:'infoList.html',
@@ -48,6 +48,7 @@
 					}
 				})
 			})
+			//打开物流消息界面
 			$('.msg2').click(function(){
 				openview({
 					view:'deliveryInform.html',
@@ -59,16 +60,16 @@
 			})
 			mui.plusReady(function(){
 				var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
-				var userId = plus.storage.getItem('$userId');
+				var userId = plus.storage.getItem('$userId'); 
 				var oldToken = plus.storage.getItem('oldToken');
 				if(identityT == 1){
 					$('.msg2').hide();
 				}
+				//监听refreshInfo事件，刷新 新的通知消息数量
 				document.addEventListener('refreshInfo', function() {
 					showMsg();
 				})
 				showMsg()
-				//显示 消息 数量
 				function showMsg(){
 					mui.ajax(serverUrl+'/app/user/message/unread/number',{
 						data:{
@@ -86,14 +87,14 @@
 						     	if(data.content){
 						     		var logisticMsg = data.content.logisticMsg;
 						     		var notifyMsg = data.content.notifyMsg;
-						       		if(notifyMsg > 0){
+						       		if(notifyMsg > 0){ 
 						       			mui('#msg')[0].style.display = 'block';
 					     				mui('#msg')[0].innerHTML = notifyMsg;
 					     				$('.msg1').attr('data-id',notifyMsg)
 						       		}else{
 						       			mui('#msg')[0].style.display = 'none';
 						       		}
-						       		if(logisticMsg > 0){
+						       		if(logisticMsg > 0){ 
 						       			mui('#wlmsg')[0].style.display = 'block';
 					     				mui('#wlmsg')[0].innerHTML = logisticMsg;
 					     				$('.msg2').attr('data-id',logisticMsg)
@@ -110,10 +111,10 @@
 						}
 					});
 				}
-
+				
 			})
 		</script>
-
+		
 	</body>
 
 </html>

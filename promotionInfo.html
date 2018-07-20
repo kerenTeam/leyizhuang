@@ -3,7 +3,7 @@
 
 	<head>
 		<meta charset="UTF-8">
-		<title></title>
+		<title>促销活动 详情</title>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="css/mui.min.css" rel="stylesheet" />
 		<link rel="stylesheet" type="text/css" href="css/commonY.css" />
@@ -248,9 +248,12 @@
 		<script src="js/default.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
 			mui.init();
+			
+			
 			$('#close').click(function() {
 				plus.webview.currentWebview().close();
 			})
+			
 			function goodsInfo(id) {
 				openview({
 					view: 'page/goodsInfo.html',
@@ -262,10 +265,13 @@
 
 			}
 			mui.plusReady(function(){
+				//跳转下料清单图标的角标数量显示
 				getCartNum();
+				//监听refreshct自定义事件 ，刷新下料清单图标的角标数量显示
 				document.addEventListener('refreshct', function() {
 					getCartNum();
 				})
+				//。。。。。刷新活动列表
 				document.addEventListener('refresh', function() {
 					kindType();
 				})
@@ -276,6 +282,8 @@
 				var listId = plus.webview.currentWebview().listId;
 				$('.mui-title').html(name)
 				plus.nativeUI.showWaiting()
+				
+				
 				kindType();
 				function kindType(){
 					mui.ajax(serverUrl+'/app/act/list',{

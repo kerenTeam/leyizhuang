@@ -293,11 +293,11 @@
 			</div>
 
 		</header>
-
+		
 		<!--状态栏开始-->
 		<style type="text/css" id="headStyle"></style>
 		<div id="sBar" style="background-color: #FFFFFF;position: fixed;width:100%;top: 0;z-index: 9999"></div>
-
+		
 		<div id="justest" style="display: none;background-color: rgba(255,255,255,0.8);color: red;position: fixed;width:100%;top: 68px;z-index: 9999;text-align: center;padding: 20px 0;font-weight: 800;">*****测试版本*****</div>
 		<script type="text/javascript">
 			var immersed = 0;
@@ -324,9 +324,7 @@
 				}
 			});
 		</script>
-		<!--状态栏 结束-->
 		<div style="position: relative;">
-			<!--banner-->
 			<div id="banner">
 				<div class="mui-slider slider2" style="padding-top: 60px;">
 					<div class="mui-slider-group mui-slider-loop">
@@ -379,10 +377,8 @@
 				</div>
 			</script>
 		</div>
-		<!--banner 结束-->
 
 		<div class="bgcwt">
-			<!--已经隐藏-->
 			<div class="somenspf ft12 padd10 fttc activecl" id="slogan">
 				<div style="visibility: hidden;">
 					<img src="images/index/bdchexk.svg" /><span>满1000元包邮</span>
@@ -394,7 +390,6 @@
 					<img src="images/index/bdchexk.svg" /><span>二绕内均可配送</span>
 				</div>
 			</div>
-			<!--水 电 木 油-->
 			<div class="flexw paddv10 ftype" id="iconData" style="margin-top:0 ;">
 				<div data-id="water">
 					<div class="imgb" style="background-color:#B62D29"><img src="images/s.svg" alt="" /></div>水
@@ -427,7 +422,6 @@
 		<div class="specialGoods2" style="margin: 10px 10px -5px 10px;display: none;" onclick="specialGoods()">
 			<img src="images/index/special3.png" style="width: 100%;" />
 		</div>
-		<!--已隐藏-->
 		<div id="banner2" style="display: none;">
 			<div class="mui-slider slider3">
 				<div class="mui-slider-group mui-slider-loop">
@@ -451,7 +445,6 @@
 				</div>
 			</div>
 		</div>
-		<!--已隐藏-->
 		<script type="text/html" id="bannerTpl2">
 			<div class="mui-slider slider3">
 				<!--轮播图-->
@@ -694,7 +687,6 @@
 				<%}%>
 			</ul>
 		</script>
-		<!--热门商品-->
 		<div class="bgcwt afterBorder pad15 ft16" style="margin-top:10px;" onclick="goHotList()">
 			<span class="bdl activecl">
 				热门商品
@@ -702,6 +694,7 @@
 			<span class="mui-pull-right mui-icon mui-icon-arrowright activecl"></span>
 			<span class="mui-pull-right disablecl ft14" style="margin-top: 3px;">更多</span>
 		</div>
+
 		<!--热门商品商品列表-->
 		<div class="bgcwt">
 			<div class="goodsList" id="goodsListHot"></div>
@@ -731,7 +724,6 @@
 				<%}%>
 			</ul>
 		</script>
-		<!--乐易装商学院-->
 		<div class="bgcwt afterBorder pad15 ft16" style="margin-top:10px;" onclick="tradeLists()">
 			<span class="bdl activecl">
 				乐易装商学院
@@ -777,7 +769,7 @@
 		<script>
 			mui.init();
 			var text = null;
-			//语音识别 ( 废弃 )
+			//语音输入部分 ---搁置-----
 			function startRecognize() {
 				if(plus.os.name == 'Android' && navigator.userAgent.indexOf('StreamApp') > 0) {
 					plus.nativeUI.toast('当前环境暂不支持语音识别插件');
@@ -796,7 +788,7 @@
 					console.log("语音识别失败：" + e.message);
 				});
 			}
-			// 打开 产品券
+			// 产品券
 			function productCoupon(){
 				var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
 				if(identityT == 2){
@@ -809,14 +801,14 @@
 				}
 
 			}
-			//打开我的地址
+			//跳转地址管理
 			function goaddr(){
 				openview({
 					view: "page/personal/address.html",
 					id: "address",
 				})
 			}
-			//打开 客服热线
+			//打开咨询界面
 			function poverTel() {
 				mui.openWindow({
 					url: 'consultTel.html',
@@ -837,13 +829,14 @@
 				})
 			}
 			mui.plusReady(function() {
-
-
+				
+				//获取系统
 				if(/android/i.test(navigator.userAgent)) {
 					var systemType = 'ANDROID'
 				} else {
 					var systemType = 'IOS'
 				}
+				//获取clientId
 				var clientId = plus.push.getClientInfo().clientid;
 				clearInterval(getClientid)
 				if(!clientId) {
@@ -861,7 +854,8 @@
 				plus.storage.setItem('platform', systemType)
 				plus.storage.setItem('clientId', clientId)
 				plus.storage.setItem('deviceId', deviceId)
-				//				plus.storage.removeItem('funGuide1')
+				
+				//第一次安装时  打开引导页面
 				var showGuide = plus.storage.getItem("lauchFlag");
 				var funGuide1 = plus.storage.getItem("funGuide1");
 				if(!showGuide) {
@@ -882,7 +876,7 @@
 						Sign();
 					}, 0);
 				}
-
+				//监听refreshpage事件，刷新自动登录方法
 				document.addEventListener('refreshpage', function() {
 					Sign()
 				})
@@ -891,8 +885,8 @@
 				var loadNum2 = 0;
 				clearInterval(timeSign);
 				timeSign = setInterval(Sign, 5000000); //两小时自动更新一次token
-				//自动 登录方法
-				function Sign() {
+
+				function Sign() { //登录方法
 					if(serverUrl == 'http://119.23.149.7:9999'){
 						$('#justest').show()
 					}else{
@@ -1026,13 +1020,14 @@
 					//app更新
 					checkUpdate(true);
 				} //登录方法结束
+				
+				//下拉刷新
 				downRe(pageRd);
 
 				function pageRd() {
 					Sign()
 				}
 
-				//刷新 首页数据
 				function loadIndex() {
 					//获取缓存
 					var nowcity = plus.storage.getItem('userCity');
@@ -1040,7 +1035,7 @@
 					var userId = plus.storage.getItem('$userId');
 					var oldToken = plus.storage.getItem('oldToken');
 
-					//切换板块
+					//切换登录身份板块
 
 					if(identityT == 0 || identityT == 4 || identityT == 5) { //导购
 						$('.guides,#banner2').css('display', '')
@@ -1067,6 +1062,8 @@
 					}else{
 						mui('#xiaoxiBtn')[0].style.right = '29px';
 					}
+					
+					//开定时器 获取通知消息 
 					var timeMsg = null;
 					clearInterval(timeMsg);
 					document.addEventListener('refreshInfoC', function() {
@@ -1074,7 +1071,6 @@
 					})
 					showMsg();
 					timeMsg = setInterval(showMsg, 1800000); //每半小时刷新消息
-					//显示消息
 					function showMsg() {
 						mui.fire(plus.webview.getWebviewById('center.html'), 'refreshInfoC');
 						mui.ajax(serverUrl + '/app/user/message/unread/number', {
@@ -1110,14 +1106,14 @@
 							}
 						});
 					}
-					//获取 banner
+					//banner
 					mui.ajax(oCms + '/index.php/ApiCms/bannerList', {
 						data: {
 							city: nowcity
 						},
 						dataType: 'json',
 						type: 'post',
-						timeout: 30000,
+						timeout: 10000,
 						success: function(data, type, xhr) {
 							console.log('banner', data);
 							plus.nativeUI.closeWaiting();
@@ -1142,7 +1138,7 @@
 							console.log('响应失败');
 						}
 					});
-					//获取 banner2 数据
+					//获取专供排名数据
 					function getClassfy() {
 						mui.ajax(serverUrl + '/app/employee/store/rankClassification', {
 							data: {
@@ -1181,7 +1177,7 @@
 							}
 						});
 					}
-					//获取 icon
+					//icon
 					function getIcon(icontype) {
 						mui.ajax(oCms + '/index.php/ApiCms/iconList', {
 							data: {
@@ -1244,7 +1240,7 @@
 							}
 						});
 					}
-					// 获取 标语
+					//slogan
 					mui.ajax(oCms + '/index.php/ApiCms/sloganList', {
 						data: {
 							'city': nowcity
@@ -1254,7 +1250,7 @@
 							"Authorization": oldToken
 						},
 						type: 'post',
-						timeout: 30000,
+						timeout: 10000,
 						success: function(data, type, xhr) {
 							console.log('标语', data);
 							if(data.code == 0) {
@@ -1317,7 +1313,7 @@
 							"Authorization": oldToken
 						},
 						type: 'post',
-						timeout: 30000,
+						timeout: 10000,
 						success: function(data, type, xhr) {
 							console.log('常购商品列表', data);
 							if(data.code == 0) {
@@ -1353,7 +1349,7 @@
 							"Authorization": oldToken
 						},
 						type: 'post',
-						timeout: 30000,
+						timeout: 10000,
 						success: function(data, type, xhr) {
 							console.log('热门商品列表', data);
 							if(data.code == 0) {
@@ -1453,9 +1449,7 @@
 					}
 
 				}
-				// 显示 功能指引 1
-				//setTimeout(function() {
-
+				//功能指引 1
 				function showGuideFun() {
 					if(showGuide && plus.storage.getItem('oldToken') && !funGuide1) {
 						mui.openWindow({
@@ -1476,9 +1470,8 @@
 					}
 				}
 				showGuideFun();
-				//				}, 0);
 			});
-			//点击banner 跳转	( 废弃 )
+			//跳转banner详情
 			function bannerto(id, url, name, type) {
 				if(url) {
 					if(url.indexOf('http') > -1 || url.indexOf('HTTP') > -1) { //远程
@@ -1494,7 +1487,7 @@
 				}
 
 			}
-
+			//打开快捷下单界面
 			function fastOrder() {
 				//				mui.plusReady(function() {
 				//				    var nowcity = plus.storage.getItem('userCity');
@@ -1510,7 +1503,7 @@
 				mui.alert('此功能暂未开放，敬请期待!')
 
 			}
-
+			
 			function specialGoods() {
 				openview({
 					view: 'page/specialGoods.html',
@@ -1556,21 +1549,21 @@
 					id: 'message',
 				})
 			}
-			//拍照下单
-			function paizhaoOrder() {
+
+			function paizhaoOrder() { //拍照下单
 				openview({
 					view: 'page/order/pzOrder.html',
 					id: 'pzOrder',
 				})
 			}
-			//搜索
+
 			function goSearch() {
 				openview({
 					view: 'page/searchGoods.html',
 					id: 'searchGoods',
 				})
 			}
-			//常购清单
+
 			function goOftenList() {
 				openview({
 					view: 'page/ofenBuy.html',
@@ -1633,7 +1626,7 @@
 					id: 'achievement',
 				})
 			})
-			//商品详情
+			//跳转商品详情
 			function goodsInfo(id) {
 				openview({
 					view: 'page/goodsInfo.html',
@@ -1644,7 +1637,7 @@
 				})
 
 			}
-
+			//跳转专供商品列表
 			function rankto(name, id) {
 				openview({
 					view: 'page/guide/rankList.html',
@@ -1656,7 +1649,7 @@
 				})
 
 			}
-
+			//跳转商学院详情
 			function openDetail(id, tit) {
 				openview({
 					view: 'page/tradeSchoolLnfo.html',
@@ -1667,7 +1660,7 @@
 					}
 				})
 			}
-
+			//跳转导购信用额度界面
 			function guideCredit() {
 				openview({
 					view: 'page/guide/guideCredit.html',
@@ -1679,7 +1672,7 @@
 		<script type="text/javascript">
 			var aniShow = {};
 			mui.init({
-				swipeBack: false //启用右滑关闭功能(ios)
+				swipeBack: false //启用右滑关闭功能
 			});
 
 			mui.plusReady(function() {
@@ -1688,13 +1681,12 @@
 				plus.navigator.setStatusBarBackground('#f7f7f7');
 				// 设置系统状态栏样式为深色前景色样式
 				plus.navigator.setStatusBarStyle('dark');
-				//				plus.storage.clear();
 				//获取购物车数量
 				var cartNum = plus.storage.getItem('cartNums') || 0;
 				if(cartNum > 999) {
 					cartNum = '999+'
 				}
-				//添加 购物车 刷新监听
+				//监听cart_refresh 事件 刷新 所有有购物车总数量显示的界面
 				document.addEventListener('cart_refresh', function() {
 					//获取购物车数量
 					cartNum = plus.storage.getItem('cartNums');
@@ -1715,7 +1707,8 @@
 					mui.fire(plus.webview.getWebviewById('history'), 'refreshct');
 					mui.fire(plus.webview.getWebviewById('searchGoods'), 'refreshct');
 					mui.fire(plus.webview.getWebviewById('promotionInfo'), 'refreshct');
-					drawBadge('hide');
+					//下料清单 角标图案的绘制
+					drawBadge('hide'); 
 					if(cartNum != 0) {
 						drawBadge();
 					} else {
@@ -1723,6 +1716,8 @@
 					}
 
 				})
+				
+				//监听refreshpage pagerefresh 事件，切换底部菜单的选中界面
 				document.addEventListener('refreshpage', function() {
 					drawBadge('hide');
 					util.toggleNview(0);
@@ -1868,7 +1863,7 @@
 
 				}
 
-				//自定义 监听图标 点击事件(首页下面 促销活动图标)
+				//自定义监听图标点击事件
 				var active_color = '#fff';
 				drawNativeIcon.addEventListener('click', function(e) {
 					mui.openWindow({
