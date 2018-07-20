@@ -24,7 +24,7 @@
 			header.mui-bar{z-index: 200;}
 		    #tabLink li {font-size: 16px!important;line-height: 45px;text-align: center;}
 		    .tab-nav{display: flex;justify-content: space-around;width: 100%;}
-		    #tabLink2 li {font-size: 16px!important;line-height: 45px;text-align: center;}
+		    #tabLink2 li {line-height: 45px;text-align: center;}
 			.rank{font-style: italic;font-weight: 600;font-size: 20px;}
 			.flexr{display: -webkit-flex;-webkit-justify-content: space-around;align-items: center;}
 			.tbtwo,.tbthird,.tbone{display: none;}
@@ -35,12 +35,20 @@
 				padding-left: 10px!important;
 			}
 			.fledw {
-				justify-content: space-around!important;
+				justify-content: space-between!important;
 			}
-			.fledw div {
-				text-align: center;
-				flex: 1;
+		 	.fledw div{
+		 		flex: 1;
+		 		text-align: center;
+		 	}
+			/*.fledw:first-child{
+				
+				text-align: left!important;
 			}
+			.fledw:last-child{
+				
+				text-align: right;
+			}*/
 		</style>
 	</head>
 
@@ -51,17 +59,15 @@
 			<a class="mui-pull-right editAll"></a>
 		</header>
 		<script src="../../js/statusBar.js"></script>
-		<div class="mui-content">
-			<div id="curMonth" class="ft16 fttc padd10 activecl2"></div>
-			<div style="background-color: #EEEEEE;text-align: center;font-size: 17px;color: #445252;margin-top: 0px;padding: 10px;">
-				当月高端达标率
+		<div class="mui-content"> 
+			<div id="curMonth" class="ft16 fttc padd10 activecl2" style="background-color: #EEEEEE;text-align: center;font-size: 17px;color: #445252;margin-top: 0px;padding: 10px;">
 			</div>
 			<div class="tab-hd tab-hdtwo bgcwt" id="tabLink2" style="z-index: 99;">
 				<ul class="tab-nav ft14">
 				  <li class="aClick active" data-statusId="1">销量</li>
-				  <li class="aClick" data-statusId="0">桶数</li>
-				  <li class="aClick" data-statusId="1">活跃会员数</li>
-				  <li class="aClick" data-statusId="1">开发会员数</li>
+				  <li class="aClick" data-statusId="0">高端桶数</li>
+				  <li class="aClick" data-statusId="1">活跃高端会员</li>
+				  <li class="aClick" data-statusId="1">新开发高端会员</li>
 				</ul>
 			</div>
 			<!--<div id="TS" style="text-align: center;font-size: 18px;color: orangered;margin-top: 20px;margin-bottom: -10px;">
@@ -252,6 +258,9 @@
 									<div class="mui-media-body ft12">
 										订单号
 									</div> 
+									<div class="mui-media-body ft12">
+										金额
+									</div> 
 								</div>
 							</a>
 						</li>
@@ -265,6 +274,8 @@
 											</div>
 											<div id="">
 												<%=list[i].orderNo2%>
+											</div> <div id="">
+												<%=list[i].price || '---'%>
 											</div> 
 										</div>
 									</a>
@@ -386,7 +397,7 @@
 							"Authorization": oldToken
 						},
 						type: 'post',
-						timeout: 10000,
+						timeout: 30000,
 						success: function(data, type, xhr) {
 							plus.nativeUI.closeWaiting();
 							console.log('桶数销量', data);
@@ -436,7 +447,7 @@
 							"Authorization": oldToken
 						},
 						type: 'post',
-						timeout: 10000,
+						timeout: 30000,
 						success: function(data, type, xhr) {
 							plus.nativeUI.closeWaiting();
 							console.log('活跃数销量', data);
@@ -486,7 +497,7 @@
 							"Authorization": oldToken
 						},
 						type: 'post',
-						timeout: 10000,
+						timeout: 30000,
 						success: function(data, type, xhr) {
 							plus.nativeUI.closeWaiting();
 							console.log('新开发销量', data);
@@ -542,7 +553,7 @@
 							"Authorization": oldToken
 						},
 						type: 'post',
-						timeout: 10000,
+						timeout: 30000,
 						success: function(data, type, xhr) {
 							plus.nativeUI.closeWaiting();
 							console.log('销量', data);
@@ -577,7 +588,6 @@
 												}else{
 													ele.orderNo2 = ele.ordNo.substr(0, 5) + '****' + ele.ordNo.substr(20);
 												}
-//												ele.orderNo2 = '****' + ele.ordNo.substr(ele.ordNo.length-6)
 											}
 										})
 								 		$('#salesList').html(template('salesTpl', {
@@ -610,7 +620,7 @@
 						getOne()
 //						$('.circle').css('background','#E73A38').show()
 						$('.tbone').show()
-						$('.tbtwo,.tbthird,.tbfour').hide()
+						$('.tbtwo,.tbthird,.tbfour,#salesList').hide()
 						loadFun(0);
 						
 					}else if($(this).index() == 3){
@@ -618,17 +628,17 @@
 						loadFun(0);
 //						$('.circle3').css('background','#E7475E').show()
 						$('.tbthird').show()
-						$('.tbone,.tbtwo,.tbfour').hide()
+						$('.tbone,.tbtwo,.tbfour,#salesList').hide()
 					}else if($(this).index() == 2){
 						getTwo();
 //						$('.circle2').css('background','#F8937E').show()
 						$('.tbtwo').show()
-						$('.tbone,.tbthird,.tbfour').hide()
+						$('.tbone,.tbthird,.tbfour,#salesList').hide()
 						loadFun(0);
 					}else{
 						getFour();
 //						$('.circle2').css('background','#F8937E').show()
-						$('.tbfour').show()
+						$('.tbfour,#salesList').show()
 						$('.tbone,.tbthird,.tbtwo,.noshow').hide()
 					}
 				})
@@ -657,7 +667,7 @@
 						data:apiData,
 						dataType:'json',
 						type:'post',
-						timeout:10000,
+						timeout:30000,
 						headers:{"Authorization":oldToken},
 						success:function(data,type,xhr){
 							console.log('桶数排名 ',data);
@@ -686,7 +696,7 @@
 						data:apiData1,
 						dataType:'json',
 						type:'post',
-						timeout:10000,
+						timeout:30000,
 						headers:{"Authorization":oldToken},
 						success:function(data,type,xhr){
 							console.log('会员数排名 ',data);

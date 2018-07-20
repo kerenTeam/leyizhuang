@@ -1170,66 +1170,70 @@
 				});
 			}
 			function deliveryFee(country){
-				var goodsId = '';
-				mui.each(JSON.parse(allGoods), function(index, item) {
-					if(index == JSON.parse(allGoods).length - 1) {
-						goodsId += item.id
-					} else {
-						goodsId += item.id + ','
-					}
-				})
-				if(identityT == 0 || identityT == 6){
-					var proCouponDiscountv =  $('#proCouponDiscount').html().replace('-¥', '');
-				}else{
-					var proCouponDiscountv = 0
-				}
-				var totalOrderAmount = Number($('#firstTotal').val()) - Number($('#freight').html().replace('¥', ''))+Number(proCouponDiscountv);
-//				var totalOrderAmount = $('#totalPriceb').html().replace('¥', '');
-				console.log('计算运费',{
-						"userId": userId,
-						"identityType": identityT,
-						"cityId":cityId,
-						"countyName":country,
-						"goodsList": goodsId,
-						"totalOrderAmount":totalOrderAmount
-						
-				})
-				mui.ajax(serverUrl + '/app/order/deliveryFee', {
-					data: {
-						"userId": userId,
-						"identityType": identityT,
-						"cityId":cityId,
-						"countyName":country,
-						"goodsList": goodsId,
-						"totalOrderAmount":totalOrderAmount
-					},
-					dataType: 'json',
-					type: 'post',
-					timeout: 10000,
-					headers: {
-						"Authorization": oldToken
-					},
-					success: function(data) {
-						console.log('运费', data);
-						if(data.code == 0) { 
-							$('#freight').html('¥'+data.content)
-							$('#firstFreight').val(data.content)
-							carculate()
-						} else { 
-							$('#freight').html('¥'+0)
-							$('#firstFreight').val(0)
-							var addrObj = {}
-							addrObj.obj = [];
-							document.getElementById("add_info").innerHTML = template("addrTpl", addrObj);
-							carculate()
-							mui.toast(data.message)
+				setTimeout(function(){
+					var goodsId = '';
+					mui.each(JSON.parse(allGoods), function(index, item) {
+						if(index == JSON.parse(allGoods).length - 1) {
+							goodsId += item.id
+						} else {
+							goodsId += item.id + ','
 						}
-					},
-					error: function(xhr, type, errorThrown) {
-						plus.nativeUI.closeWaiting();
-						console.log('响应失败');
+					})
+					if(identityT == 0 || identityT == 6){
+						var proCouponDiscountv =  $('#proCouponDiscount').html().replace('-¥', '');
+					}else{
+						var proCouponDiscountv = 0
 					}
-				});		
+					var totalOrderAmount = Number($('#firstTotal').val()) - Number($('#freight').html().replace('¥', ''))+Number(proCouponDiscountv);
+//					alert($('#firstTotal').val()+' '+$('#freight').html().replace('¥', '')+' '+proCouponDiscountv)
+//					alert(totalOrderAmount)
+//  				var totalOrderAmount = $('#totalPriceb').html().replace('¥', '');
+					console.log('计算运费',{
+							"userId": userId,
+							"identityType": identityT,
+							"cityId":cityId,
+							"countyName":country,
+							"goodsList": goodsId,
+							"totalOrderAmount":totalOrderAmount
+							
+					})
+					mui.ajax(serverUrl + '/app/order/deliveryFee', {
+						data: {
+							"userId": userId,
+							"identityType": identityT,
+							"cityId":cityId,
+							"countyName":country,
+							"goodsList": goodsId,
+							"totalOrderAmount":totalOrderAmount
+						},
+						dataType: 'json',
+						type: 'post',
+						timeout: 10000,
+						headers: {
+							"Authorization": oldToken
+						},
+						success: function(data) {
+							console.log('运费', data);
+							if(data.code == 0) { 
+								$('#freight').html('¥'+data.content)
+								$('#firstFreight').val(data.content)
+								carculate()
+							} else { 
+								$('#freight').html('¥'+0)
+								$('#firstFreight').val(0)
+								var addrObj = {}
+								addrObj.obj = [];
+								document.getElementById("add_info").innerHTML = template("addrTpl", addrObj);
+								carculate()
+								mui.toast(data.message)
+							}
+						},
+						error: function(xhr, type, errorThrown) {
+							plus.nativeUI.closeWaiting();
+							console.log('响应失败');
+						}
+					});		
+				},300)
 			}
 			
 			//自提 获取门店
