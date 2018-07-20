@@ -141,6 +141,7 @@
 				<span>底漆</span>
 			</div>
 		</div>
+		<!--最近搜索-->
 		<div id="record"></div>
 		<script id="recordTpt" type="text/html">
 			<%if(data.length==0){%>
@@ -161,7 +162,7 @@
 			<%}%>
 		</script>
 
-		<!--tab-->
+		<!--商品列表-->
 		<div id="tab">
 			<div class="gocarticon" id="div2">
 				<img src="../images/whitecart.svg" alt="" />
@@ -248,11 +249,12 @@
 				submitTest()
 			})
 
-			//搜索方法
+
 			$("input").focus(function() {
 				$(".latest").css("display", "block");
 				$("#tab").css("display", "none");
 			})
+			//搜索方法
 			window.submitTest = function() {
 				var searchCircleStorage = JSON.parse(plus.storage.getItem("$searchCircleStorage") || '[]');
 				if($("input").val() != '') {
@@ -423,7 +425,7 @@
 										}
 
 									})
-
+									//加入购物车
 									function addCart(goodid,num,cur){
 										mui.ajax(serverUrl+'/app/materialList/add',{
 											data:{
@@ -476,6 +478,7 @@
 				});
 
 			}
+			//获取购物车 数量
 			function getCartNum(){
 				var cartNum = plus.storage.getItem('cartNums') || 0;
 				cartNum = cartNum < 0 ? 0:cartNum;
@@ -486,6 +489,7 @@
 					$('.gocarticon span').hide();
 				}
 			}
+			//点击 购物车
 			mui('.gocarticon')[0].onclick = function(){
 				mui.fire(plus.webview.getWebviewById('cart.html'), 'refresh');
 				openview({
@@ -501,6 +505,8 @@
 		})
 	</script>
 <script type="text/javascript">
+
+			//移动 购物车 图标
 			// 获取节点
 		  	var block = document.getElementById("div2");
 		  	var oW,oH;

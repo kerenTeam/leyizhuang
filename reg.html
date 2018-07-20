@@ -202,7 +202,7 @@
 					}
 
 				}, false);
-
+				//提交注册 表单
 				sendButton.addEventListener('tap', function() {
 					newUsername = $.trim(username.value).replace(/[^\x00-\xff]/g, "**");
 					if(!account.value || !reg_phone.test(account.value)) {

@@ -258,6 +258,7 @@
 				<div class="pad_5 ft15 maincl sfee">上楼费<span class='mui-pull-right pad_r10' id="upstar">依现实情况收取</span></div>
 
 			</div>
+			<!--优惠卷-->
 			<div id="elseDiscount"></div>
 			<script type="text/html" id="elseDiscountTpl">
 				<dl class="list" style="border: none;">
@@ -401,6 +402,7 @@
 	</body>
 
 	<script>
+		//处理数据
 		function onlyNum(obj) {
 			obj.value = obj.value.replace(/[^\d.]/g,"");  //清除“数字”和“.”以外的字符
 			  obj.value = obj.value.replace(/\.{2,}/g,"."); //只保留第一个. 清除多余的
@@ -410,12 +412,14 @@
 			   obj.value= parseFloat(obj.value);
 			  }
 		}
+		//处理数据
 		function replaceLikeVal(comp){
 		    if (comp.value.indexOf("'") != -1 || comp.value.indexOf("\"") != -1) {
 		      //comp.value = comp.value.substring(0, comp.value.length-1);
 		      comp.value = comp.value.replace(/\'/g,"").replace(/\"/g,"");
 		    }
 		  }
+		//处理数据
 		function pastNum() {
 			if(obj.value.length == 1) {
 				obj.value = obj.value.replace(/[^1-9]/g, '0')
@@ -503,6 +507,7 @@
 						'4)若导购不同意欠款，配送员有权将货物拉回。';
 					mui.alert(isCanceInfo)
 			}
+			//处理信用金 输入
 			window.inputbd = function(obj){
 
 				$('.onlypay').addClass('goOrder')
@@ -1112,9 +1117,9 @@
 							} else {
 								addrObj.obj = [];
 							}
-							document.getElementById("add_info").innerHTML = template("addrTpl", addrObj); 
+							document.getElementById("add_info").innerHTML = template("addrTpl", addrObj);
 							plus.storage.removeItem("$addressStorageOrder")
-					
+
 						} else {
 							console.log('缓存地址', data);
 							addrObj.obj = JSON.parse(plus.storage.getItem("$addressStorageOrder")) || [];
@@ -1127,7 +1132,7 @@
 						console.log('响应失败  !');
 					}
 				});
-				
+
 			}
 			function getLebi(money){
 				mui.ajax(serverUrl+'/app/paymentMethods/rebate/lebi',{
@@ -1169,6 +1174,7 @@
 					}
 				});
 			}
+
 			function deliveryFee(country){
 				setTimeout(function(){
 					var goodsId = '';
@@ -1195,7 +1201,7 @@
 							"countyName":country,
 							"goodsList": goodsId,
 							"totalOrderAmount":totalOrderAmount
-							
+
 					})
 					mui.ajax(serverUrl + '/app/order/deliveryFee', {
 						data: {
@@ -1214,11 +1220,11 @@
 						},
 						success: function(data) {
 							console.log('运费', data);
-							if(data.code == 0) { 
+							if(data.code == 0) {
 								$('#freight').html('¥'+data.content)
 								$('#firstFreight').val(data.content)
 								carculate()
-							} else { 
+							} else {
 								$('#freight').html('¥'+0)
 								$('#firstFreight').val(0)
 								var addrObj = {}
@@ -1232,10 +1238,10 @@
 							plus.nativeUI.closeWaiting();
 							console.log('响应失败');
 						}
-					});		
+					});
 				},300)
 			}
-			
+
 			//自提 获取门店
 			$("input[name='peis']").unbind('change').change(function() {
 //				getMaterial();

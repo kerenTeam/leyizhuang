@@ -133,7 +133,7 @@
 										<% if(!list[i].zhuangshi){ %>
 											<!--待付款：UNPAID，待发货：PENDING_SHIPMENT，待收货：PENDING_RECEIVE，已取消：CANCELED，取消中：CANCELING，已完成：FINISHED，拒签：REJECTED，已结案：CLOSED。-->
 											<% if(list[i].deliveryType == '送货上门' || list[i].deliveryType == '门店自提'){%>
-												
+
 												<% if(list[i].status == 'UNPAID'){%>
 													<%if(list[i].isCashDelivery){%>
 														<span class="redC aClick" onclick="goToPay('<%= list[i].orderNo%>','<%= list[i].amountPayable%>',true)">去支付</span>
@@ -320,6 +320,7 @@
 				event.preventDefault();
 				$('#maskInfo').fadeOut(200);
 			})
+			//去支付
 			function goToPay(orderNo,money,isc){
 				if(isc){
 					$('#facePay').show()
@@ -1039,6 +1040,7 @@
 					})
 				}
 				var oneStar=0,twoStar=0,threeStar=0,EvaluatAble=true;
+				// 点 星 级
 				mui('.icons').on('tap','i',function(){
 				  	var index = parseInt(this.getAttribute("data-index"));
 				  	var parent = this.parentNode;
