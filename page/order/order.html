@@ -325,9 +325,9 @@
 							<div class="pad10 ft14 afterBorder guide dsje" style="display: none;">代收金额<img src="../../images/center/help.svg" style="width: 20px;margin-left: 5px;" onclick="dsInfo()"/>&nbsp;&nbsp;<input type="tel" placeholder="请输入代收金额" name="cashHelp" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" class='mui-pull-right preDeposit' /></div>
 						<%}else{%>
 							<div class="pad10 ft14 afterBorder"><%if(guide == 1){%>门店<%}%><%if(guide ==2){%>客户<%}%>预存款&nbsp;&nbsp;<span class='activecl' id="preDepositb">¥--</span><input type="number" onchange="maxC(this)" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" placeholder="请输入使用金额" name="preDepositb" class='mui-pull-right preDeposit' oninput="inputbd(this)"/></div>
-							<div class="pad10 ft14 afterBorder manager" style="display: none;">信用金&nbsp;&nbsp;<span class='activecl' id="credit">¥--</span><input type="number" placeholder="请输入使用金额" name="credit" onchange="maxC(this)" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" class='mui-pull-right preDeposit' oninput="inputbd(this)"/></div>
+							<!--<div class="pad10 ft14 afterBorder manager" style="display: none;">信用金&nbsp;&nbsp;<span class='activecl' id="credit">¥--</span><input type="number" placeholder="请输入使用金额" name="credit" onchange="maxC(this)" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" class='mui-pull-right preDeposit' oninput="inputbd(this)"/></div>-->
 							<div class="pad10 ft14 afterBorder manager" style="display: none;">现金返利&nbsp;&nbsp;<span class='activecl' id="cash">¥--</span><input type="number" placeholder="请输入使用金额" name="cash" onchange="maxC(this)" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" class='mui-pull-right preDeposit' oninput="inputbd(this)"/></div>
-							<div class="pad10 ft14 afterBorder guide xyed" style="display: none;">信用额度&nbsp;&nbsp;<span class='activecl' id="creditVal">¥--</span><input type="number" placeholder="请输入使用金额" name="creditVal" onchange="maxC(this)" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" class='mui-pull-right preDeposit' oninput="inputbd(this)"/></div>
+							<!--<div class="pad10 ft14 afterBorder guide xyed" style="display: none;">信用额度&nbsp;&nbsp;<span class='activecl' id="creditVal">¥--</span><input type="number" placeholder="请输入使用金额" name="creditVal" onchange="maxC(this)" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" class='mui-pull-right preDeposit' oninput="inputbd(this)"/></div>-->
 							<div class="pad10 ft14 afterBorder guide dsje" style="display: none;">代收金额 <img src="../../images/center/help.svg" style="width: 20px;margin-left: 5px;" onclick="dsInfo()"/>&nbsp;&nbsp;<input type="number" placeholder="请输入代收金额" name="cashHelp" onkeyup="onlyNum(this)" onafterpaste="pastNum(this)" class='mui-pull-right preDeposit' /></div>
 						<%}%>
 					</div>
@@ -375,16 +375,22 @@
 						<img src="../../images/order/weixinpay.svg" />微信
 					</li>
 					<li class="pad10 afterBorder aClick2" id="UnionPayY">
-						<img src="../../images/order/bankpay.svg" />银联支付
+						<img src="../../images/order/bankpay.svg" /> 银联支付
 					</li>
 					<li class="pad10 afterBorder aClick2" id="facePay" style="display: none;">
-						<img src="../../images/order/facePay.svg" />货到付款
+						<img src="../../images/order/facePay.svg" /> 货到付款
 					</li>
 					<li class="pad10 afterBorder aClick2" id="xyed1" style="display: none;">
-						<img src="../../img/credit.svg" alt="" /> 信用额度 <span class="ft12">余额 <span id="creditVal"></span></span>
+						<img src="../../images/order/eduzhifu.svg" alt="" /> 信用额度 <span class="ft12">余额 <span id="creditVal"></span></span>
 					</li>
 					<li class="pad10 afterBorder aClick2" id="xyj2" style="display: none;">
-						<img src="../../img/credit.svg" alt="" />  信用金 <span class="ft12">余额 <span id="credit"></span></span>
+						<img src="../../images/order/eduzhifu.svg" alt="" /> 信用金 <span class="ft12">余额 <span id="credit"></span></span>
+					</li>
+					<li class="pad10 afterBorder aClick2" id="mdyck" style="display: none;">
+						<img src="../../images/order/yucunzhifu.svg" alt="" /> 门店预存款 <span class="ft12">余额 <span id="mdyckm"></span></span>
+					</li>
+					<li class="pad10 afterBorder aClick2" id="khyck" style="display: none;">
+						<img src="../../images/order/yucunzhifu.svg" alt="" /> 客户预存款 <span class="ft12">余额 <span id="khyckm"></span></span>
 					</li>
 					<li class="closeMask fttc pad10 aClick2">
 						代付款
@@ -775,7 +781,7 @@
 								} else {
 									$('#preDepositb').html('¥' + 0)
 									$('#preDepositb').next().hide()
-								}
+								} 
 							} else {
 								if(data.content.storePreDeposit) {
 									$('#preDepositb').html('¥' + data.content.storePreDeposit)
@@ -788,14 +794,12 @@
 								$('#credit').html('¥' + data.content.storeCreditMoney)
 							} else {
 								$('#credit').html('¥' + 0);
-								$('#credit').next().hide()
 							}
 							if(data.content.creditMoney) {
 								$('#creditVal').html('¥' + data.content.creditMoney)
 							} else {
 								$('#creditVal').html('¥' + 0);
-								$('#creditVal').next().hide()
-							}
+							} 
 							if(data.content.storeSubvention) {
 								$('#cash').html('¥' + data.content.storeSubvention)
 							} else {
@@ -1239,7 +1243,7 @@
 							console.log('响应失败');
 						}
 					});
-				},300)
+				},800)
 			}
 
 			//自提 获取门店
@@ -1913,10 +1917,29 @@
 									$('#payMoney').html('¥' + data.content.amountPayable);
 									$('#maskInfo').fadeIn(200);
 									if(identityT == 0){
-									 $('#xyed1').show()
+										$('#xyed1,#mdyck').show()
+										if(data.content.stPreDeposit) {
+											$('#mdyckm').html('¥' + data.content.stPreDeposit)
+										} else {
+											$('#mdyckm').html('¥' + 0);
+										}
 									}
+									
 									if(identityT == 2){
-									 $('#xyj2').show()
+									 	$('#xyj2,#khyck').show()
+									 	if(data.content.stPreDeposit) {
+											$('#khyckm').html('¥' + data.content.stPreDeposit)
+										} else {
+											$('#khyckm').html('¥' + 0);
+										}
+									}
+									if(identityT == 6){
+									 	$('#khyck').show()
+									 	if(data.content.preDeposit) {
+											$('#khyckm').html('¥' + data.content.preDeposit)
+										} else {
+											$('#khyckm').html('¥' + 0);
+										}
 									}
 									toPay(data.content.amountPayable, data.content.orderNumber);
 								}else{
@@ -1963,6 +1986,14 @@
 						document.getElementById('facePay').setAttribute('onclick', 'facePayF("' + payableAmount + '","' + orderNumber + '")');
 						document.getElementById('xyed1').setAttribute('onclick', 'xyedPayF("EMP_CREDIT","' + payableAmount + '","' + orderNumber + '")');
 						document.getElementById('xyj2').setAttribute('onclick', 'xyedPayF("STORE_CREDIT_MONEY","' + payableAmount + '","' + orderNumber + '")');
+						document.getElementById('mdyck').setAttribute('onclick', 'xyedPayF("ST_PREPAY","' + payableAmount + '","' + orderNumber + '")');
+						if(identityT == 6){
+							document.getElementById('khyck').setAttribute('onclick', 'xyedPayF("CUS_PREPAY","' + payableAmount + '","' + orderNumber + '")');
+						}
+						if(identityT == 2){
+							document.getElementById('khyck').setAttribute('onclick', 'xyedPayF("ST_PREPAY","' + payableAmount + '","' + orderNumber + '")');
+						}
+
 						//系统检测获取支付通道
 						plus.payment.getChannels(function(channels) {
 							console.log("channel " + JSON.stringify(channels));

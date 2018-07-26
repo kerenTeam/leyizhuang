@@ -402,7 +402,7 @@ background: linear-gradient(to right, #1fddff, #ff4b1f); /* W3C, IE 10+/ Edge, F
 				<%}else{%>
 					<!--导购的 客户待付款清-->
 					<% if(detail.status == 'UNPAID'){%>
-						<span class="redC aClick" onclick="goToPay('<%= detail.orderNumber%>','<%= detail.BillingDetailResponse.amountPayable%>')">去支付</span>
+						<span class="redC aClick" onclick="goToPay('<%= detail.orderNumber%>','<%= detail.BillingDetailResponse.amountPayable%>','<%=detail.creditMoney%>','<%=detail.stPreDeposit%>')">去支付</span>
 					<% }else{%>
 						<span onclick="goOrderWL('<%= detail.orderNumber%>')" class="aClick redC lookwl">查看物流</span>
 					<% } %>
@@ -472,10 +472,10 @@ background: linear-gradient(to right, #1fddff, #ff4b1f); /* W3C, IE 10+/ Edge, F
 					<img src="../../images/order/bankpay.svg" />银联支付
 				</li>
 				<li class="pad10 afterBorder aClick2" id="eduzhifu" style="display: none;">
-					<img src="../../images/order/eduzhifu.svg" />信用额度
+					<img src="../../images/order/eduzhifu.svg" />信用额度 <span class="ft12">余额 <span id="creditVal"></span></span>
 				</li>
 				<li class="pad10 afterBorder aClick2" id="yucunzhifu" style="display: none;">
-					<img src="../../images/order/yucunzhifu.svg" />门店预存款
+					<img src="../../images/order/yucunzhifu.svg" />门店预存款 <span class="ft12">余额 <span id="mdyckm"></span></span>
 				</li>
 				<li class="closeMask fttc pad10" style="padding: 14px;">
 					待付款
@@ -500,7 +500,7 @@ background: linear-gradient(to right, #1fddff, #ff4b1f); /* W3C, IE 10+/ Edge, F
 				event.preventDefault();
 				$('#maskInfo').fadeOut(200);
 			})
-			function goToPay(orderNo,money){
+			function goToPay(orderNo,money,creditmoney,stPreDeposit){
 				mui.plusReady(function(){
 					var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
 					var userId = plus.storage.getItem('$userId');
@@ -525,6 +525,17 @@ background: linear-gradient(to right, #1fddff, #ff4b1f); /* W3C, IE 10+/ Edge, F
 								if(money>0){
 									$('#payMoney').html('¥' + money);
 									$('#maskInfo').fadeIn(200);
+									if(creditmoney) {
+											$('#creditVal').html('¥' + creditmoney)
+										} else {
+											$('#creditVal').html('¥' + 0)
+										}
+										if(stPreDeposit) {
+											$('#mdyckm').html('¥' + stPreDeposit)
+										} else {
+											$('#mdyckm').html('¥' + 0)
+										}
+									
 									toPay(money, orderNo)
 								}else{
 									dontPay (orderNo)
