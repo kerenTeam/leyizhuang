@@ -115,6 +115,10 @@
    			text-align: center;
 		}
 		.allaccountinfo{border-left:3px solid #B62D29 ;padding: 0 5px;}
+		.messagefitler {
+			-webkit-filter: invert(0.7);
+			filter: invert(0.7);
+		}
 	</style>
 
 	<body>
@@ -122,6 +126,8 @@
 		<header class="mui-bar mui-bar-nav">
 			<a class="headbar mui-action-back mui-icon mui-icon-left-nav mui-pull-left normalSize"></a>
 			<h1 class="mui-title">确认订单</h1>
+			<img src="../../images/center/zixunSvg.svg" onclick="poverTel()" class="mui-pull-right messagefitler" style="width: 25px;margin-top:11px;margin-right: 5px;" />
+			
 		</header>
 		<!--状态栏-->
 		<script src="../../js/statusBar.js" type="text/javascript" charset="utf-8"></script>
@@ -408,6 +414,26 @@
 	</body>
 
 	<script>
+		//打开咨询界面
+		function poverTel() {
+			mui.openWindow({
+				url: '../../consultTel.html',
+				id: 'consultTel',
+				styles: {
+					background: 'transparent',
+					bounce: 'vertical',
+					bounceBackground: '#DCDCDC', //灰色
+
+				},
+				waiting: {
+					autoShow: false
+				},
+				show: {
+					aniShow: 'slide-in-bottom', //页面显示动画，默认为”slide-in-right“；
+
+				}
+			})
+		}
 		//处理数据
 		function onlyNum(obj) {
 			obj.value = obj.value.replace(/[^\d.]/g,"");  //清除“数字”和“.”以外的字符

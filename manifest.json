@@ -739,7 +739,8 @@
 				"refer": [
 					"page/goodsInfo.html",
 					"cart.html",
-					"page/searchGoods.html"
+					"page/searchGoods.html",
+					"consultTel.html"
 				],
 				"priority": 0
 			},
@@ -927,7 +928,8 @@
 					"page/order/order.html",
 					"page/order/chooseCustom.html",
 					"page/order/workerMaterial.html",
-					"couponCart.html"
+					"couponCart.html",
+					"consultTel.html"
 				],
 				"priority": 0
 			},
@@ -1093,7 +1095,8 @@
 					"js/mui.previewimage.js"
 				],
 				"refer": [
-					"login.html"
+					"login.html",
+					"consultTel.html"
 				],
 				"priority": 0
 			},
@@ -1406,7 +1409,8 @@
 					"page/order/elseMaterialList.html",
 					"page/personal/myOrderList.html",
 					"page/order/orderSuccess.html",
-					"page/personal/UnionPayYGoPay.html"
+					"page/personal/UnionPayYGoPay.html",
+					"consultTel.html"
 				],
 				"priority": 0
 			},
@@ -1946,7 +1950,8 @@
 				],
 				"refer": [
 					"page/goodsInfo.html",
-					"promotionInfo.html"
+					"promotionInfo.html",
+					"consultTel.html"
 				],
 				"priority": 0
 			},
@@ -1961,7 +1966,8 @@
 			"page/guide/rankList.html": {
 				"resources": [],
 				"refer": [
-					"page/guide/goodsInfo2.html"
+					"page/guide/goodsInfo2.html",
+					"consultTel.html"
 				],
 				"priority": 0
 			},

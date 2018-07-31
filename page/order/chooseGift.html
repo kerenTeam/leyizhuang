@@ -69,7 +69,11 @@
 				<%for(var j = 0;j < list[i].giftList.length; j++){%>
 				<dd>
 					<div class="mui-checkbox" style="top: 30%;">
-						<input name="checkbox" type="checkbox" data-id='<%=list[i].giftList[j].goodsId%>'>
+						<%if(list[i].isGiftOptionalQty){%>
+							<input name="checkbox" type="checkbox" data-id='<%=list[i].giftList[j].goodsId%>'>
+						<%}else{%>
+							<input name="checkbox" checked type="checkbox" data-id='<%=list[i].giftList[j].goodsId%>'>
+						<%}%>
 					</div>
 					<a class="goodsPic"><img src="<%=list[i].giftList[j].coverImageUri || '../../img/editset.png'%>" onerror="javascript:this.src='../../img/editset.png';" /></a>
 					<div class="goodsInfor">
@@ -154,7 +158,8 @@
 						userId: userId,
 						identityType: identityT,
 						goodsArray: idobj,
-						orderType:buyType
+						orderType:buyType,
+						cusId:cusId
 					},
 					dataType: 'json',
 					type: 'post',
@@ -217,7 +222,6 @@
 								var idobj = JSON.parse(plus.storage.getItem('materialList') || '[]');
 								plus.storage.setItem('orderGoodsList', JSON.stringify(idobj));
 								plus.storage.setItem('giftList', '[]');
-
 								if(identityT == 3) {
 									openview({
 										view: 'workerMaterial.html',
@@ -298,36 +302,44 @@
 									}
 								})
 								plus.storage.setItem('giftList', JSON.stringify(giftList));
-
-								if(identityT == 3) {
-									openview({
-										view: 'workerMaterial.html',
-										id: 'workerMaterial'
+								
+								//您还没有选赠品，确认下一步？
+								if(giftList.length ==0){
+									mui.confirm('您还没有选赠品，确认下一步？', '提示', ['取消', '确定'], function(e) {
+										if(e.index == 1) {
+											if(identityT == 3) {
+												openview({
+													view: 'workerMaterial.html',
+													id: 'workerMaterial'
+												})
+											} else {
+												if(identityT == 0 || identityT == 4 || identityT == 5) {
+													openview({
+														view: 'order.html',
+														id: 'order',
+			//											autoShow:false,
+														extrasobj: {
+															customerId: cusId,
+															sysDeliveryType:sysDeliveryType,
+															orderType:buyType
+														}
+													})
+												} else {
+													openview({
+														view: 'order.html',
+														id: 'order',
+			//											autoShow:false,
+														extrasobj: {
+															sysDeliveryType:sysDeliveryType,
+															orderType:buyType
+														}
+													})
+												}
+											}
+										}
 									})
-								} else {
-									if(identityT == 0 || identityT == 4 || identityT == 5) {
-										openview({
-											view: 'order.html',
-											id: 'order',
-//											autoShow:false,
-											extrasobj: {
-												customerId: cusId,
-												sysDeliveryType:sysDeliveryType,
-												orderType:buyType
-											}
-										})
-									} else {
-										openview({
-											view: 'order.html',
-											id: 'order',
-//											autoShow:false,
-											extrasobj: {
-												sysDeliveryType:sysDeliveryType,
-												orderType:buyType
-											}
-										})
-									}
 								}
+								
 							})
 						} else {
 							plus.nativeUI.alert(data.message);

@@ -87,7 +87,7 @@
 		}
 		
 		.sint {
-			right: 5px;
+			right: 30px;
 			top: 5px;
 			left: 30px;
 			position: absolute;
@@ -120,9 +120,10 @@
 		
 		.mui-icon-search {
 			position: absolute!important;
-			right: 20px;
-			top: 3px;
+			right: 45px;
+			top: 1px;
 			color: gray;
+			font-size: 22px!important;
 		}
 		
 		form {
@@ -173,6 +174,10 @@
 			width: 35px;
 			padding-bottom: 1px
 		}
+		.messagefitler {
+			-webkit-filter: invert(0.7);
+			filter: invert(0.7);
+		}
 	</style>
 
 	<body>
@@ -187,8 +192,9 @@
 						<input type="search" class="fsearch" readonly="" placeholder="请输入商品关键字">
 					</form>
 				</div>
-
 			</div>
+			<img src="../images/center/zixunSvg.svg" onclick="poverTel()" class="mui-pull-right messagefitler" style="width: 25px;margin-top:11px;margin-right: -5px;" />
+			
 		</header>
 		<script src="../js/statusBar.js" type="text/javascript" charset="utf-8"></script>
 
@@ -293,7 +299,26 @@
 				})
 
 			}
+			//打开咨询界面
+			function poverTel() {
+				mui.openWindow({
+					url: '../consultTel.html',
+					id: 'consultTel',
+					styles: {
+						background: 'transparent',
+						bounce: 'vertical',
+						bounceBackground: '#DCDCDC', //灰色
 
+					},
+					waiting: {
+						autoShow: false
+					},
+					show: {
+						aniShow: 'slide-in-bottom', //页面显示动画，默认为”slide-in-right“；
+
+					}
+				})
+			}
 			mui.plusReady(function() {
 				//搜索
 				$('.searchFind').click(function() {

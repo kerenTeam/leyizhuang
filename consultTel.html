@@ -58,7 +58,7 @@
 							if(data.content){
 								var tel = '';
 								for(var i in data.content){
-									tel += '<div class="afterBorder"><a href="tel:'+data.content[i].supportHotline+'"><div style="font-size:13px;color:black">'+data.content[i].name+'</div>'+data.content[i].supportHotline+'</a></div>'
+									tel += '<div class="afterBorder"><a href="tel:'+data.content[i].supportHotline+'"><div style="font-size:13px;color:black"><img style="width: 16px;vertical-align:middle;margin:-1px 3px 0 0" src="images/center/tel.svg" alt="" />'+data.content[i].name+'</div>'+data.content[i].supportHotline+'</a></div>'
 								}
 								$('.alltel').append(tel)
 								$('.alltel div:last-child').removeClass('afterBorder')

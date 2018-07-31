@@ -396,7 +396,8 @@
     "refer": [
       "page/goodsInfo.html",
       "cart.html",
-      "page/searchGoods.html"
+      "page/searchGoods.html",
+      "consultTel.html"
     ]
   },
   "center.html": {
@@ -496,7 +497,8 @@
       "page/order/order.html",
       "page/order/chooseCustom.html",
       "page/order/workerMaterial.html",
-      "couponCart.html"
+      "couponCart.html",
+      "consultTel.html"
     ]
   },
   "page/collect.html": {
@@ -648,7 +650,8 @@
       "js/mui.previewimage.js"
     ],
     "refer": [
-      "login.html"
+      "login.html",
+      "consultTel.html"
     ]
   },
   "page/personal/shezhi.html": {
@@ -918,7 +921,8 @@
       "page/order/elseMaterialList.html",
       "page/personal/myOrderList.html",
       "page/order/orderSuccess.html",
-      "page/personal/UnionPayYGoPay.html"
+      "page/personal/UnionPayYGoPay.html",
+      "consultTel.html"
     ]
   },
   "page/order/chooseCustom.html": {
@@ -1416,7 +1420,8 @@
     ],
     "refer": [
       "page/goodsInfo.html",
-      "promotionInfo.html"
+      "promotionInfo.html",
+      "consultTel.html"
     ]
   },
   "promotionInfo.html": {
@@ -1428,7 +1433,8 @@
   },
   "page/guide/rankList.html": {
     "refer": [
-      "page/guide/goodsInfo2.html"
+      "page/guide/goodsInfo2.html",
+      "consultTel.html"
     ],
     "resources": []
   },
@@ -1459,27 +1465,32 @@
   "page/manager/billHistory.html": {
     "refer": [
       "page/manager/billHistoryList.html"
-    ]
+    ],
+    "resources": []
   },
   "page/manager/billHistoryList.html": {
     "refer": [
       "page/personal/myOrderDetail.html"
-    ]
+    ],
+    "resources": []
   },
   "page/manager/payBill.html": {
     "refer": [
       "page/personal/UnionPayYGoPay.html"
-    ]
+    ],
+    "resources": []
   },
   "page/personal/recharge.html": {
     "refer": [
       "page/personal/recharge.html"
-    ]
+    ],
+    "resources": []
   },
   "page/guide/achievement.html": {
     "refer": [
       "page/personal/myOrderRTdetail.html",
       "page/personal/myOrderDetail.html"
-    ]
+    ],
+    "resources": []
   }
 }
