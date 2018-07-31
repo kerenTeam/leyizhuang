@@ -4,7 +4,9 @@ mui.plusReady(function(){
 	if(plus.storage.getItem('SURL')){
 		serverUrl = plus.storage.getItem('SURL');
 	}
+	console.log('当前IP'+serverUrl)
 })
+
 
 var oCms = 'http://120.77.14.185:6789';
 //var oCms = 'http://120.78.73.217:8090';//old

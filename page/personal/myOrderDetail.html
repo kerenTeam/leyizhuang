@@ -66,6 +66,13 @@ background: -webkit-linear-gradient(to right, #1fddff, #ff4b1f);  /* Chrome 10-2
 background: linear-gradient(to right, #1fddff, #ff4b1f); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 
 			}
+			/*运费弹窗*/
+			.yunfeiDetail{
+				padding: 0px; font-size: 14px; margin-right: 10px;
+			}
+			.yunfeiDetail a{display: inline-block;color: #B62D29;padding: 3px 9px 0px;}
+			.mui-popover .mui-table-view{overflow: scroll !important;}
+			.mui-popover{height: 230px;}
 		</style>
 	</head>
 
@@ -75,7 +82,23 @@ background: linear-gradient(to right, #1fddff, #ff4b1f); /* W3C, IE 10+/ Edge, F
 			<h1 class="mui-title">订单详情</h1>
 		</header>
 		<script src="../../js/statusBar.js"></script>
+		<div id="middlePopover" class="mui-popover">
+			<div class="mui-popover-arrow"></div>
+			<div class="mui-scroll-wrapper">
+				<div class="mui-scroll">
+					<ul class="mui-table-view" id="yunfeiDataDiv"></ul>
+					<script id="yunfeiDataS" type="text/html">
+						<% for(var i=0; i<list.length; i++) {%>
+							<li class="mui-table-view-cell">
+								<span><%= list[i].changeType%>: </span>
+								<span class="floL"><%= list[i].changeAmount%> 元 </span>
+							</li>
+						<% } %>
+					</script>
+				</div>
+			</div>
 
+		</div>
 		<div id="main">
 			<!--列表loading-->
 			<div id="loadingdiv" style="text-align: center;font-size: 14px;height:32px;margin-bottom: 10px;
@@ -167,7 +190,8 @@ background: linear-gradient(to right, #1fddff, #ff4b1f); /* W3C, IE 10+/ Edge, F
 					<span class="huiC">商品总额</span> <span class="floL"><%= detail.BillingDetailResponse.totalPrice%>元</span>
 				</div>
 				<div>
-					<span class="huiC">运费</span> <span class="floL"><%= detail.BillingDetailResponse.freight%>元</span>
+					<span class="huiC">运费</span>  <span class="floL"><%= detail.BillingDetailResponse.freight%>元</span> <button type="button" class="mui-btn mui-btn-danger mui-btn-outlined floL yunfeiDetail aClick"><a href="#middlePopover">明细</a></button>
+
 				</div>
 				<div>
 					<span class="huiC">优惠券抵扣</span> <span class="floL">
@@ -535,7 +559,7 @@ background: linear-gradient(to right, #1fddff, #ff4b1f); /* W3C, IE 10+/ Edge, F
 										} else {
 											$('#mdyckm').html('¥' + 0)
 										}
-									
+
 									toPay(money, orderNo)
 								}else{
 									dontPay (orderNo)
@@ -627,6 +651,7 @@ background: linear-gradient(to right, #1fddff, #ff4b1f); /* W3C, IE 10+/ Edge, F
 				//系统检测获取支付通道结束
 			}
 			mui.plusReady(function(){
+				mui('.mui-scroll-wrapper').scroll();
 				//获取缓存
 				var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
 				var userId = plus.storage.getItem('$userId');
@@ -904,6 +929,10 @@ background: linear-gradient(to right, #1fddff, #ff4b1f); /* W3C, IE 10+/ Edge, F
 							}
 							data.content.BillingDetailResponse = data.content.customerBillingDetailResponse || data.content.managerBillingDetailResponse || data.content.sellerBillingDetailResponse;
 							document.getElementById('main').innerHTML = template('mainS',{detail:data.content});
+							if(data.content.freightChange){
+								data.content.freightChanges.unshift({changeType:'初始运费',changeAmount: data.content.freightChange.freight})
+							}
+							document.getElementById('yunfeiDataDiv').innerHTML = template('yunfeiDataS',{list:data.content.freightChanges});
 							if(zhuangshi){
 								if(data.content.isUseStorePre){
 									mui('#yucunzhifu')[0].style.display = 'block'
