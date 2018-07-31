@@ -146,7 +146,6 @@
 			var idobj = plus.storage.getItem('materialList') || '[]';
 			var cusId = plus.webview.currentWebview().cusId;
 			var buyType = plus.webview.currentWebview().buyType || '';
-
 			console.log('idobj ', idobj)
 			cartload();
 
@@ -178,7 +177,7 @@
 								});
 								plus.nativeUI.closeWaiting();
 								mui('.mui-numbox').numbox()
-
+								countFuc()
 
 								//单个 选择
 								$('dl dd .mui-checkbox').click(function() {
@@ -307,37 +306,43 @@
 								if(giftList.length ==0){
 									mui.confirm('您还没有选赠品，确认下一步？', '提示', ['取消', '确定'], function(e) {
 										if(e.index == 1) {
-											if(identityT == 3) {
-												openview({
-													view: 'workerMaterial.html',
-													id: 'workerMaterial'
-												})
-											} else {
-												if(identityT == 0 || identityT == 4 || identityT == 5) {
-													openview({
-														view: 'order.html',
-														id: 'order',
-			//											autoShow:false,
-														extrasobj: {
-															customerId: cusId,
-															sysDeliveryType:sysDeliveryType,
-															orderType:buyType
-														}
-													})
-												} else {
-													openview({
-														view: 'order.html',
-														id: 'order',
-			//											autoShow:false,
-														extrasobj: {
-															sysDeliveryType:sysDeliveryType,
-															orderType:buyType
-														}
-													})
-												}
-											}
+											gonext()
 										}
 									})
+								}else{
+									gonext()
+								}
+								function gonext(){
+									if(identityT == 3) {
+										openview({
+											view: 'workerMaterial.html',
+											id: 'workerMaterial'
+										})
+									} else {
+										if(identityT == 0 || identityT == 4 || identityT == 5) {
+											openview({
+												view: 'order.html',
+												id: 'order',
+	//											autoShow:false,
+												extrasobj: {
+													customerId: cusId,
+													sysDeliveryType:sysDeliveryType,
+													orderType:buyType
+												}
+											})
+										} else {
+											openview({
+												view: 'order.html',
+												id: 'order',
+	//											autoShow:false,
+												extrasobj: {
+													sysDeliveryType:sysDeliveryType,
+													orderType:buyType
+												}
+											})
+										}
+									}
+								
 								}
 								
 							})
