@@ -20,14 +20,10 @@
 		.mui-numbox {
 			background: none!important;
 		}
-		/*搜索*/
 		
-		.searchFind {
-			position: relative;
-		}
 		
 		.sint {
-			right: 0;
+			right: 20px;
 			top: 2px;
 			left: 0;
 			position: absolute;
@@ -81,7 +77,12 @@
 			opacity: 1;
 			font-size: 15px;
 		}
+		/*搜索*/
 		
+		.searchFind {
+			position: relative;
+			padding-right: 0!important;
+		}
 		#tabLink2 {
 			height: 50px;
 			position: relative;
@@ -151,13 +152,17 @@
 		.actspan {
 			color: #B42E28;
 		}
+		.messagefitler {
+			-webkit-filter: invert(0.7);
+			filter: invert(0.7);
+		}
 	</style>
 
 	<body style="padding-bottom: 0px;">
 		<header class="mui-bar mui-bar-nav" style="padding-right: 15px;">
 			<a id="leftbtn" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<!--<h1 class="mui-title"></h1>-->
-			<div class="tab-hd tab-hdtwo" id="tabLink2">
+			<div id="tabLink2">
 				<div class="searchFind">
 					<span class="mui-icon mui-icon-search mui-icon-search2" id="clickSearch"></span>
 					<div class="sint">
@@ -167,7 +172,11 @@
 						<span class="back" id="cancelSearch">确认</span>
 					</div>
 				</div>
+				<img src="../../images/center/zixunSvg.svg" onclick="poverTel()" class="mui-pull-right messagefitler" style="position: absolute;top:7px;right:-2px;width: 25px;" />
+				
 			</div>
+
+			
 		</header>
 		<script src="../../js/statusBar.js" type="text/javascript" charset="utf-8"></script>
 		<!--<div class="gocarticon" id="div2">
@@ -242,7 +251,26 @@
 		<script src="../../js/default.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
 			mui.init();
+			//打开咨询界面
+			function poverTel() {
+				mui.openWindow({
+					url: '../../consultTel.html',
+					id: 'consultTel',
+					styles: {
+						background: 'transparent',
+						bounce: 'vertical',
+						bounceBackground: '#DCDCDC', //灰色
 
+					},
+					waiting: {
+						autoShow: false
+					},
+					show: {
+						aniShow: 'slide-in-bottom', //页面显示动画，默认为”slide-in-right“；
+
+					}
+				})
+			}
 			mui.plusReady(function() {
 
 				var categoryCode = '',

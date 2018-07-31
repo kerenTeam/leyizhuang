@@ -150,6 +150,10 @@
 		.actspan {
 			color: #B42E28;
 		}
+		.messagefitler {
+			-webkit-filter: invert(0.7);
+			filter: invert(0.7);
+		}
 	</style>
 
 	<body style="padding-bottom: 0px;">
@@ -165,7 +169,10 @@
 						<span class="back" id="cancelSearch">确认</span>
 					</div>
 				</div>
+				<img src="../../images/center/zixunSvg.svg" onclick="poverTel()" class="mui-pull-right messagefitler" style="position: absolute;top:7px;right:-2px;width: 25px;" />
+				
 			</div>
+			
 		</header>
 		<script src="../js/statusBar.js" type="text/javascript" charset="utf-8"></script>
 		<div class="gocarticon" id="div2">
@@ -250,7 +257,26 @@
 		<script src="../js/default.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
 			mui.init();
+			//打开咨询界面
+			function poverTel() {
+				mui.openWindow({
+					url: '../consultTel.html',
+					id: 'consultTel',
+					styles: {
+						background: 'transparent',
+						bounce: 'vertical',
+						bounceBackground: '#DCDCDC', //灰色
 
+					},
+					waiting: {
+						autoShow: false
+					},
+					show: {
+						aniShow: 'slide-in-bottom', //页面显示动画，默认为”slide-in-right“；
+
+					}
+				})
+			}
 			function goodsInfo(id) {
 				openview({
 					view: 'goodsInfo.html',

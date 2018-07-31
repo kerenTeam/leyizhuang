@@ -6,17 +6,20 @@
 		<title>我的订单列表</title>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="../../css/mui.min.css" rel="stylesheet" />
-		<link rel="stylesheet" type="text/css" href="../../css/configW.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/configW.css" />
 		<link rel="stylesheet" type="text/css" href="../../css/commonY.css">
 		<link rel="stylesheet" type="text/css" href="../../css/indexY.css">
-		<link rel="stylesheet" type="text/css" href="../../css/mui.min.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/mui.min.css" />
 		<link rel="stylesheet" href="../../css/resetY.css">
 		<link rel="stylesheet" href="../../css/youxd.css">
 		<link rel="stylesheet" href="../../css/feedback.css">
 		<script src="../../js/order0.js"></script>
 		<style type="text/css">
-			body{padding-bottom: 10px;}
+			body {
+				padding-bottom: 10px;
+			}
 			/*去支付样式*/
+			
 			#maskInfo {
 				z-index: 99999;
 				position: fixed;
@@ -26,6 +29,7 @@
 				bottom: 0;
 				background-color: rgba(0, 0, 0, .5)
 			}
+			
 			.paychoose {
 				background-color: white;
 				bottom: 0!important;
@@ -33,20 +37,42 @@
 				right: 0;
 				left: 0;
 			}
+			
 			.paychoose img {
 				width: 40px;
 				margin: 0 5px;
 			}
 			/*去支付样式结束*/
-			.orderList .h3 a.a1{    white-space: nowrap;color: #555; font-size: 16px; display: inline-block;
-			    width: calc( 100vw - 90px );
-			    overflow: hidden;
-			    text-overflow: ellipsis;
-		    }
-		    .dingdanPingjia{padding: 4px 10px; border-color: #c7161e; color: #c7161e;}
-		    .cancelBtn{padding-top: 3%;margin-bottom: 0;}
-		    .mui-icon-star-filled, .mui-icon-star{font-size: 24px;}
-		    .loadOpcity{opacity: 0;}
+			
+			.orderList .h3 a.a1 {
+				white-space: nowrap;
+				color: #555;
+				font-size: 16px;
+				display: inline-block;
+				width: calc( 100vw - 90px);
+				overflow: hidden;
+				text-overflow: ellipsis;
+			}
+			
+			.dingdanPingjia {
+				padding: 4px 10px;
+				border-color: #c7161e;
+				color: #c7161e;
+			}
+			
+			.cancelBtn {
+				padding-top: 3%;
+				margin-bottom: 0;
+			}
+			
+			.mui-icon-star-filled,
+			.mui-icon-star {
+				font-size: 24px;
+			}
+			
+			.loadOpcity {
+				opacity: 0;
+			}
 		</style>
 	</head>
 
@@ -62,11 +88,11 @@
 				<!--tab切换-->
 				<div class="tab-hd tab-hdtwo" id="tabLink" style="display: none;">
 					<ul class="tab-nav">
-					  <li class="aClick" data-statusId="">全部</li>
-					  <li class="aClick" data-statusId="1">待发货</li>
-					  <li class="aClick" data-statusId="1">待收货</li>
-					  <li class="aClick" data-statusId="1">已完成</li>
-					  <li class="aClick" data-statusId="1">已取消</li>
+						<li class="aClick" data-statusId="">全部</li>
+						<li class="aClick" data-statusId="1">待发货</li>
+						<li class="aClick" data-statusId="1">待收货</li>
+						<li class="aClick" data-statusId="1">已完成</li>
+						<li class="aClick" data-statusId="1">已取消</li>
 					</ul>
 				</div>
 				<!--搜索-->
@@ -84,7 +110,7 @@
 				<!--列表loading-->
 				<div id="loadingdiv" style="text-align: center;font-size: 14px;height:32px;margin-top: 48px;
 					line-height: 30px;color: #666;-webkit-transition: all .3s;overflow: hidden;">
-					<img style="width: 30px;margin-top:5px;" src="../../img/Rolling.svg"/>
+					<img style="width: 30px;margin-top:5px;" src="../../img/Rolling.svg" />
 				</div>
 				<!--列表loading结束-->
 				<div id="infoListDiv">
@@ -92,10 +118,10 @@
 				</div>
 				<script id="infoList" type="text/html">
 					<% if(list.length){%>
-						<%for(var i=0;i<list.length;i++){%>
-							<div class="orderList">
-								<div id="orderList<%= i%>">
-									<h3 class="h3" haha="<%= list[i].zhuangshi%>" onclick="openDetail('<%= list[i].orderNo%>','','orderList<%= i%>','','<%= list[i].zhuangshi%>')">
+					<%for(var i=0;i<list.length;i++){%>
+					<div class="orderList">
+						<div id="orderList<%= i%>">
+							<h3 class="h3" haha="<%= list[i].zhuangshi%>" onclick="openDetail('<%= list[i].orderNo%>','','orderList<%= i%>','','<%= list[i].zhuangshi%>')">
 										<a class="a1"><%= list[i].deliveryType%></a>
 										<span class="stateSpan" status="list[i].status"><%= list[i].statusDesc%></span>
 										<% if(list[i].zhuangshi && list[i].storeName) {%>
@@ -103,96 +129,97 @@
 											<p>订&nbsp; 单&nbsp; 号：<%= list[i].orderNo%></p>
 										<% } %>
 									</h3>
-									<p class="p1" onclick="openDetail('<%= list[i].orderNo%>','','orderList<%= i%>','','<%= list[i].zhuangshi%>')">
-										<% if(list[i].goodsImgList && list[i].goodsImgList.length){%>
-											<%for(var j=0; j<list[i].goodsImgList.length; j++){%>
-												<a><img class="loadPics" src="../../img/loadBack.svg" data-src="<%= list[i].goodsImgList[j] || '../../img/editset.png'%>"/></a>
-											<%} %>
-										<% }else{%>
-											<a><img class="loadPics" src="../../img/loadBack.svg"/></a>
-										<% }%>
-										<% if(list[i].endTime){%>
-											<% if(list[i].zhuangshi) {%>
-												<span class="stateSpan2" style="top: 80px;"><%=list[i].endTime%>钟后关闭订单</span>
-											<% }else{ %>
-												<span class="stateSpan2"><%=list[i].endTime%>钟后关闭订单</span>
-											<% } %>
-										<% }%>
-									</p>
-									<div class="pad10 afterBorder">
-										地址:<%=list[i].shippingAddress%><br />
-										<%if(list[i].estateInfo){%>
-											楼盘:<%=list[i].estateInfo%>
-										<%}%>
-									</div>
-									<div class="orderInfo">
-										共<%= list[i].count%>件商品 商品总额：<span>¥ <%= list[i].price%></span>
-									</div>
-									<!--显示状态按钮-->
-									<div class="orderBtns">
-										<% if(!list[i].zhuangshi){ %>
-											<!--待付款：UNPAID，待发货：PENDING_SHIPMENT，待收货：PENDING_RECEIVE，已取消：CANCELED，取消中：CANCELING，已完成：FINISHED，拒签：REJECTED，已结案：CLOSED。-->
-											<% if(list[i].deliveryType == '送货上门' || list[i].deliveryType == '门店自提'){%>
-
-												<% if(list[i].status == 'UNPAID'){%>
-													<%if(list[i].isCashDelivery){%>
-														<span class="redC aClick" onclick="goToPay('<%= list[i].orderNo%>','<%= list[i].amountPayable%>',true)">去支付</span>
-													<%}else{%>
-														<span class="redC aClick" onclick="goToPay('<%= list[i].orderNo%>','<%= list[i].amountPayable%>',false)">去支付</span>
-													<%}%>
-												<% }%>
-												<% if(list[i].status == 'UNPAID' || list[i].status == 'PENDING_SHIPMENT'){%>
-													<span class="aClick" onclick="NewcancelFun('<%= list[i].orderNo%>',this)">取消订单</span>
-												<% }%>
-												<% if(list[i].deliveryType == '门店自提' && list[i].status == 'PENDING_RECEIVE'){%>
-							                        <span class="aClick" onclick="NewcancelFun('<%= list[i].orderNo%>',this)">取消订单</span>
-							                    <% }%>
-												<% if(list[i].status == 'FINISHED'){%>
-													<span class="redC aClick" onclick="openReturns('<%= list[i].orderNo%>','<%= list[i].customerId%>','<%=list[i].deliveryType%>')">退货</span>
-												<% }%>
-												<% if(list[i].status == 'FINISHED' || list[i].status == 'CLOSED'){%>
-													<% if(list[i].isEvaluated == false){%>
-														<span class="aClick" onclick="evaFun('<%= list[i].orderNo%>',this)">评价</span>
-													<% }else{%>
-														<!--<span class="aClick">已评价</span>-->
-													<% }%>
-												<% }%>
-												<span onclick="comeOnAgain('<%= list[i].orderNo%>','<%= list[i].customer.customerId%>')" class="aClick">再来一单</span>
-											<% }%>
-
-											<% if(list[i].deliveryType == '送货上门'){%>
-												<!--这里 状态 取反-->
-												<% if(list[i].status != 'UNPAID' && list[i].status != 'CANCELED' && list[i].status != 'CANCELING'){%>
-													<span onclick="goOrderWL('<%= list[i].orderNo%>')" class="aClick redC lookwl">查看物流</span>
-												<% }%>
-											<% }%>
-
-											<%if(list[i].deliveryType.indexOf('产品券')>-1){%>
-												<% if(list[i].status == 'UNPAID'){%>
-													<%if(list[i].isCashDelivery){%>
-														<span class="redC aClick" onclick="goToPay('<%= list[i].orderNo%>','<%= list[i].amountPayable%>',true)">去支付</span>
-													<%}else{%>
-														<span class="redC aClick" onclick="goToPay('<%= list[i].orderNo%>','<%= list[i].amountPayable%>',false)">去支付</span>
-													<%}%>
-												<% }%>
-												<%if(list[i].status == "FINISHED"){%>
-													<span class="redC aClick" onclick="openReturns('<%= list[i].orderNo%>','<%= list[i].customerId%>','<%=list[i].deliveryType%>')">退货</span>
-												<%}%>
-											<%}%>
-										<% }%>
-									</div>
-								</div>
+							<p class="p1" onclick="openDetail('<%= list[i].orderNo%>','','orderList<%= i%>','','<%= list[i].zhuangshi%>')">
+								<% if(list[i].goodsImgList && list[i].goodsImgList.length){%>
+								<%for(var j=0; j<list[i].goodsImgList.length; j++){%>
+								<a><img class="loadPics" src="../../img/loadBack.svg" data-src="<%= list[i].goodsImgList[j] || '../../img/editset.png'%>" /></a>
+								<%} %>
+								<% }else{%>
+								<a><img class="loadPics" src="../../img/loadBack.svg" /></a>
+								<% }%>
+								<% if(list[i].endTime){%>
+								<% if(list[i].zhuangshi) {%>
+								<span class="stateSpan2" style="top: 80px;"><%=list[i].endTime%>钟后关闭订单</span>
+								<% }else{ %>
+								<span class="stateSpan2"><%=list[i].endTime%>钟后关闭订单</span>
+								<% } %>
+								<% }%>
+							</p>
+							<div class="pad10 afterBorder">
+								地址:
+								<%=list[i].shippingAddress%><br />
+								<%if(list[i].estateInfo){%> 楼盘:
+								<%=list[i].estateInfo%>
+								<%}%>
 							</div>
-						<%}%>
-					<% }else{%>
-						<div style="text-align: center;padding: 50px;">
-							<img src="../../images/order/order.png" style="width: 100px;margin-bottom: 8px;" />
-							<div class="ft13 disablecl">暂无相关订单</div>
+							<div class="orderInfo">
+								共
+								<%= list[i].count%>件商品 商品总额：<span>¥ <%= list[i].price%></span>
+							</div>
+							<!--显示状态按钮-->
+							<div class="orderBtns">
+								<% if(!list[i].zhuangshi){ %>
+								<!--待付款：UNPAID，待发货：PENDING_SHIPMENT，待收货：PENDING_RECEIVE，已取消：CANCELED，取消中：CANCELING，已完成：FINISHED，拒签：REJECTED，已结案：CLOSED。-->
+								<% if(list[i].deliveryType == '送货上门' || list[i].deliveryType == '门店自提'){%>
+
+								<% if(list[i].status == 'UNPAID'){%>
+								<%if(list[i].isCashDelivery){%>
+								<span class="redC aClick" onclick="goToPay('<%= list[i].orderNo%>','<%= list[i].amountPayable%>',true,'<%=list[i].creditMoney%>','<%=list[i].stCreditMoney%>','<%=list[i].stPreDeposit%>','<%=list[i].preDeposit%>')">去支付</span>
+								<%}else{%>
+								<span class="redC aClick" onclick="goToPay('<%= list[i].orderNo%>','<%= list[i].amountPayable%>',false,'<%=list[i].creditMoney%>','<%=list[i].stCreditMoney%>','<%=list[i].stPreDeposit%>','<%=list[i].preDeposit%>')">去支付</span>
+								<%}%>
+								<% }%>
+								<% if(list[i].status == 'UNPAID' || list[i].status == 'PENDING_SHIPMENT'){%>
+								<span class="aClick" onclick="NewcancelFun('<%= list[i].orderNo%>',this)">取消订单</span>
+								<% }%>
+								<% if(list[i].deliveryType == '门店自提' && list[i].status == 'PENDING_RECEIVE'){%>
+								<span class="aClick" onclick="NewcancelFun('<%= list[i].orderNo%>',this)">取消订单</span>
+								<% }%>
+								<% if(list[i].status == 'FINISHED'){%>
+								<span class="redC aClick" onclick="openReturns('<%= list[i].orderNo%>','<%= list[i].customerId%>','<%=list[i].deliveryType%>')">退货</span>
+								<% }%>
+								<% if(list[i].status == 'FINISHED' || list[i].status == 'CLOSED'){%>
+								<% if(list[i].isEvaluated == false){%>
+								<span class="aClick" onclick="evaFun('<%= list[i].orderNo%>',this)">评价</span>
+								<% }else{%>
+								<!--<span class="aClick">已评价</span>-->
+								<% }%>
+								<% }%>
+								<span onclick="comeOnAgain('<%= list[i].orderNo%>','<%= list[i].customer.customerId%>')" class="aClick">再来一单</span>
+								<% }%>
+
+								<% if(list[i].deliveryType == '送货上门'){%>
+								<!--这里 状态 取反-->
+								<% if(list[i].status != 'UNPAID' && list[i].status != 'CANCELED' && list[i].status != 'CANCELING'){%>
+								<span onclick="goOrderWL('<%= list[i].orderNo%>')" class="aClick redC lookwl">查看物流</span>
+								<% }%>
+								<% }%>
+
+								<%if(list[i].deliveryType.indexOf('产品券')>-1){%>
+								<% if(list[i].status == 'UNPAID'){%>
+								<%if(list[i].isCashDelivery){%>
+								<span class="redC aClick" onclick="goToPay('<%= list[i].orderNo%>','<%= list[i].amountPayable%>',true,'<%=list[i].creditMoney%>','<%=list[i].stCreditMoney%>','<%=list[i].stPreDeposit%>','<%=list[i].preDeposit%>')">去支付</span>
+								<%}else{%>
+								<span class="redC aClick" onclick="goToPay('<%= list[i].orderNo%>','<%= list[i].amountPayable%>',false,'<%=list[i].creditMoney%>','<%=list[i].stCreditMoney%>','<%=list[i].stPreDeposit%>','<%=list[i].preDeposit%>')">去支付</span>
+								<%}%>
+								<% }%>
+								<%if(list[i].status == "FINISHED"){%>
+								<span class="redC aClick" onclick="openReturns('<%= list[i].orderNo%>','<%= list[i].customerId%>','<%=list[i].deliveryType%>')">退货</span>
+								<%}%>
+								<%}%>
+								<% }%>
+							</div>
 						</div>
+					</div>
+					<%}%>
+					<% }else{%>
+					<div style="text-align: center;padding: 50px;">
+						<img src="../../images/order/order.png" style="width: 100px;margin-bottom: 8px;" />
+						<div class="ft13 disablecl">暂无相关订单</div>
+					</div>
 					<% }%>
 
 				</script>
-
 
 			</div>
 			<div class="upload text-center text-xs gray" id="upload"></div>
@@ -206,10 +233,10 @@
 					<div id="cancelDiv0"></div>
 					<script type="text/html" id="cancelDiv0S">
 						<% for(var i=0;i<list.length;i++){%>
-							<div class="mui-input-row mui-radio mui-left">
-								<label><%= list[i].reason%></label>
-								<input class="reasonInfo" value="<%= list[i].reason%>" name="radio1" type="radio">
-							</div>
+						<div class="mui-input-row mui-radio mui-left">
+							<label><%= list[i].reason%></label>
+							<input class="reasonInfo" value="<%= list[i].reason%>" name="radio1" type="radio">
+						</div>
 						<% }%>
 					</script>
 					<div class="cancelText">
@@ -230,7 +257,8 @@
 						<h4 class="fineB dingdanPJ">订单服务评价： </h4>
 						<div class="mui-content-padded">
 							<div class="vm">
-								<span>产品：</span><!--mui-icon-star-filled-->
+								<span>产品：</span>
+								<!--mui-icon-star-filled-->
 								<div class="icons mui-inline" style="margin-left: 6px;vertical-align: middle;display: inline;">
 									<i data-index="1" class="mui-icon mui-icon-star"></i>
 									<i data-index="2" class="mui-icon mui-icon-star"></i>
@@ -242,7 +270,8 @@
 						</div>
 						<div class="mui-content-padded">
 							<div class="vm">
-								<span>物流：</span><!--mui-icon-star-filled-->
+								<span>物流：</span>
+								<!--mui-icon-star-filled-->
 								<div class="icons mui-inline" style="margin-left: 6px;vertical-align: middle;display: inline;">
 									<i data-index="1" class="mui-icon mui-icon-star"></i>
 									<i data-index="2" class="mui-icon mui-icon-star"></i>
@@ -254,7 +283,8 @@
 						</div>
 						<div class="mui-content-padded">
 							<div class="vm">
-								<span>服务：</span><!--mui-icon-star-filled-->
+								<span>服务：</span>
+								<!--mui-icon-star-filled-->
 								<div class="icons mui-inline" style="margin-left: 6px;vertical-align: middle;display: inline;">
 									<i data-index="1" class="mui-icon mui-icon-star"></i>
 									<i data-index="2" class="mui-icon mui-icon-star"></i>
@@ -293,10 +323,16 @@
 					<img src="../../images/order/facePay.svg" />货到付款
 				</li>
 				<li class="pad10 afterBorder aClick2" id="xyed1" style="display: none;">
-					<img src="../../img/credit.svg" alt="" /> 信用额度
+					<img src="../../images/order/eduzhifu.svg" alt="" />信用额度 <span class="ft12">余额 <span id="creditVal"></span></span>
 				</li>
 				<li class="pad10 afterBorder aClick2" id="xyj2" style="display: none;">
-					<img src="../../img/credit.svg" alt="" />  信用金
+					<img src="../../images/order/eduzhifu.svg" alt="" />信用金 <span class="ft12">余额 <span id="credit"></span></span>
+				</li>
+				<li class="pad10 afterBorder aClick2" id="mdyck" style="display: none;">
+					<img src="../../images/order/yucunzhifu.svg" alt="" /> 门店预存款 <span class="ft12">余额 <span id="mdyckm"></span></span>
+				</li>
+				<li class="pad10 afterBorder aClick2" id="khyck" style="display: none;">
+					<img src="../../images/order/yucunzhifu.svg" alt="" /> 客户预存款 <span class="ft12">余额 <span id="khyckm"></span></span>
 				</li>
 				<li class="closeMask fttc pad10 aClick2" style="padding: 14px;">
 					代付款
@@ -321,22 +357,22 @@
 				$('#maskInfo').fadeOut(200);
 			})
 			//去支付
-			function goToPay(orderNo,money,isc){
-				if(isc){
+			function goToPay(orderNo, money, isc, creditmoney, precreatmoney, stPreDeposit, preDeposit) {
+				if(isc) {
 					$('#facePay').show()
-				}else{
+				} else {
 					$('#facePay').hide()
 				}
-				mui.plusReady(function(){
+				mui.plusReady(function() {
 					var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
 					var userId = plus.storage.getItem('$userId');
 					var oldToken = plus.storage.getItem('oldToken');
 					console.log(oldToken)
-					mui.ajax(serverUrl+'/app/order/verify/timeout',{
+					mui.ajax(serverUrl + '/app/order/verify/timeout', {
 						data: {
 							userId: userId,
 							identityType: identityT,
-							orderNumber:orderNo
+							orderNumber: orderNo
 						},
 						dataType: 'json',
 						type: 'post',
@@ -344,40 +380,69 @@
 						headers: {
 							"Authorization": oldToken,
 						},
-						success:function(data,type,xhr){
+						success: function(data, type, xhr) {
 							plus.nativeUI.closeWaiting();
-							console.log('过期否',data);
-							if(data.code == 0 ){
-								if(money>0){
+							console.log('过期否', data);
+							if(data.code == 0) {
+								if(money > 0) {
 									$('#payMoney').html('¥' + money);
 									$('#maskInfo').fadeIn(200);
-									if(identityT == 0){
-									 $('#xyed1').show()
+									if(identityT == 0) {
+										$('#xyed1,#mdyck').show()
+										if(creditmoney) {
+											$('#creditVal').html('¥' + creditmoney)
+										} else {
+											$('#creditVal').html('¥' + 0)
+										}
+										if(stPreDeposit) {
+											$('#mdyckm').html('¥' + stPreDeposit)
+										} else {
+											$('#mdyckm').html('¥' + 0)
+										}
 									}
-									if(identityT == 2){
-									 $('#xyj2').show()
+									if(identityT == 2) {
+										$('#xyj2,#khyck').show()
+										if(precreatmoney) {
+											$('#credit').html('¥' + precreatmoney)
+										} else {
+											$('#credit').html('¥' + 0)
+										}
+										if(stPreDeposit) {
+											$('#khyckm').html('¥' + stPreDeposit)
+										} else {
+											$('#khyckm').html('¥' + 0)
+										}
+									}
+									if(identityT == 6) {
+										$('#khyck').show()
+										if(preDeposit) {
+											$('#khyckm').html('¥' + preDeposit)
+										} else {
+											$('#khyckm').html('¥' + 0)
+										}
 									}
 									toPay(money, orderNo)
-								}else{
-									dontPay (orderNo)
+								} else {
+									dontPay(orderNo)
 								}
-							}else{
+							} else {
 								mui.toast(data.message)
 								plus.webview.currentWebview().reload();
 							}
 						},
-						error:function(xhr,type,errorThrown){
+						error: function(xhr, type, errorThrown) {
 							plus.nativeUI.closeWaiting();
 							mui.toast(type)
 							console.log('响应失败');
 						}
 					});
-					function dontPay (orderNumber) {
-						mui.ajax(serverUrl+'/app/order/pay/zero/order',{
+
+					function dontPay(orderNumber) {
+						mui.ajax(serverUrl + '/app/order/pay/zero/order', {
 							data: {
 								userId: userId,
 								identityType: identityT,
-								orderNumber:orderNumber
+								orderNumber: orderNumber
 							},
 							dataType: 'json',
 							type: 'post',
@@ -385,17 +450,17 @@
 							headers: {
 								"Authorization": oldToken,
 							},
-							success:function(data,type,xhr){
+							success: function(data, type, xhr) {
 								plus.nativeUI.closeWaiting();
-								console.log('无需付款',data);
-								if(data.code == 0 ){
+								console.log('无需付款', data);
+								if(data.code == 0) {
 									mui.alert('支付成功')
 									plus.webview.currentWebview().reload();
-								}else{
+								} else {
 									mui.toast(data.message)
 								}
 							},
-							error:function(xhr,type,errorThrown){
+							error: function(xhr, type, errorThrown) {
 								plus.nativeUI.closeWaiting();
 								mui.toast(type)
 								console.log('响应失败');
@@ -410,6 +475,15 @@
 				document.getElementById('UnionPayY').setAttribute('onclick', 'payfun("UnionPayY","' + payableAmount + '","' + orderNumber + '")');
 				document.getElementById('xyed1').setAttribute('onclick', 'xyedPayF("EMP_CREDIT","' + payableAmount + '","' + orderNumber + '")');
 				document.getElementById('xyj2').setAttribute('onclick', 'xyedPayF("STORE_CREDIT_MONEY","' + payableAmount + '","' + orderNumber + '")');
+				document.getElementById('mdyck').setAttribute('onclick', 'xyedPayF("ST_PREPAY","' + payableAmount + '","' + orderNumber + '")');
+				var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
+				if(identityT == 6){
+					document.getElementById('khyck').setAttribute('onclick', 'xyedPayF("CUS_PREPAY","' + payableAmount + '","' + orderNumber + '")');
+				}
+				if(identityT == 2){
+					document.getElementById('khyck').setAttribute('onclick', 'xyedPayF("ST_PREPAY","' + payableAmount + '","' + orderNumber + '")');
+				}
+				
 				plus.payment.getChannels(function(channels) {
 					console.log("channel " + JSON.stringify(channels));
 					for(var i in channels) {
@@ -448,19 +522,19 @@
 				}
 				//系统检测获取支付通道结束
 			}
-			mui.plusReady(function(){
+			mui.plusReady(function() {
 				//获取缓存
 				var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
 				var userId = plus.storage.getItem('$userId');
 				var oldToken = plus.storage.getItem('oldToken');
 				// 支付接口
 				//1 货到付款
-				window.facePayF = function(payableAmount,orderNumber){
+				window.facePayF = function(payableAmount, orderNumber) {
 					mui.ajax(serverUrl + '/app/order/handle/cashDelivery', {
 						data: {
 							userId: userId,
 							identityType: identityT.toString(),
-//								amountPayable: payableAmount,
+							//								amountPayable: payableAmount,
 							orderNumber: orderNumber,
 						},
 						type: 'post', //HTTP请求类型
@@ -473,9 +547,9 @@
 							plus.nativeUI.closeWaiting();
 							if(data.code == 0) {
 								mui.toast('支付成功')
-								mui.fire(plus.webview.getWebviewById('center.html'),'refresh');
+								mui.fire(plus.webview.getWebviewById('center.html'), 'refresh');
 								plus.webview.currentWebview().reload();
-							}else{
+							} else {
 								plus.nativeUI.alert("支付失败");
 							}
 
@@ -492,26 +566,26 @@
 						//调用支付功能
 						plus.nativeUI.showWaiting();
 						gopay(id, payableAmount, orderNumber);
-					}else if(id == 'UnionPayY'){
+					} else if(id == 'UnionPayY') {
 						UnionPayYGoPay(id, payableAmount, orderNumber);
-					}else {
+					} else {
 						plus.nativeUI.alert("当前环境不支持此支付通道！", null, "提示");
 						return;
 					}
 					//银联的支付
-					function UnionPayYGoPay(id, payableAmount, orderNumber){
+					function UnionPayYGoPay(id, payableAmount, orderNumber) {
 						plus.nativeUI.showWaiting();
 						mui.ajax(serverUrl + '/app/unionpay/order/pay/html', {
 							data: {
 								userId: userId,
 								identityType: identityT.toString(),
-//								payableAmount: 0.01,
+								//								payableAmount: 0.01,
 								payableAmount: payableAmount,
 								orderNumber: orderNumber
-//								userId: 1,
-//								identityType: 6,
-//								payableAmount: 0.01,
-//								orderNumber: 'CDXN20171206175749976912036'
+								//								userId: 1,
+								//								identityType: 6,
+								//								payableAmount: 0.01,
+								//								orderNumber: 'CDXN20171206175749976912036'
 							},
 							type: 'post', //HTTP请求类型
 							headers: {
@@ -519,16 +593,16 @@
 							},
 							timeout: 20000, //超时时间设置为10秒；
 							success: function(data) {
-								if(data.message){
+								if(data.message) {
 									plus.nativeUI.closeWaiting();
 									mui.alert(data.message || '支付失败,请重试！')
-								}else{
+								} else {
 									plus.nativeUI.closeWaiting();
 									openview({
-										view:'UnionPayYGoPay.html',
-										id:'UnionPayYGoPay',
-										extrasobj:{
-											dataHtml:data,
+										view: 'UnionPayYGoPay.html',
+										id: 'UnionPayYGoPay',
+										extrasobj: {
+											dataHtml: data,
 											orderNumber: orderNumber,
 											payableAmount: payableAmount
 										}
@@ -579,7 +653,7 @@
 										plus.payment.request(pays[id], varpay, function(result) {
 											console.log("----- 支付成功 -----");
 											var result = JSON.stringify(result);
-											mui.fire(plus.webview.getWebviewById('center.html'),'refresh');
+											mui.fire(plus.webview.getWebviewById('center.html'), 'refresh');
 											plus.webview.currentWebview().reload();
 										}, function(e) {
 											console.log("----- 支付失败 -----");
@@ -621,7 +695,7 @@
 											console.log("----- 支付成功 -----", JSON.stringify(result));
 											plus.nativeUI.closeWaiting();
 											plus.nativeUI.alert("支付成功");
-											mui.fire(plus.webview.getWebviewById('center.html'),'refresh');
+											mui.fire(plus.webview.getWebviewById('center.html'), 'refresh');
 											plus.webview.currentWebview().reload();
 
 										}, function(e) {
@@ -648,38 +722,38 @@
 
 				}
 				//3.信用额度支付
-				window.xyedPayF = function(payType,payableAmount,orderNumber){
-
-						mui.ajax(serverUrl + '/app/order/handle/payCredit', {
-							data: {
-								userId: userId,
-								identityType: identityT.toString(),
-								payType: payType,
-								orderNumber: orderNumber,
-							},
-							type: 'post', //HTTP请求类型
-							headers: {
-								"Authorization": oldToken
-							},
-							timeout: 10000, //超时时间设置为10秒；
-							success: function(data) {
-								console.error(data);
-								plus.nativeUI.closeWaiting();
-								if(data.code == 0) {
-									plus.nativeUI.alert("支付成功");
-									mui.fire(plus.webview.getWebviewById('center.html'),'refresh');
-									plus.webview.currentWebview().reload();
-								}else{
-									plus.nativeUI.alert(data.message);
-								}
-
-							},
-							error: function(xhr, type, errorThrown) {
-								//异常处理；
-								console.log(type);
+				window.xyedPayF = function(payType, payableAmount, orderNumber) {
+					plus.nativeUI.showWaiting()
+					mui.ajax(serverUrl + '/app/order/handle/payCredit', {
+						data: {
+							userId: userId,
+							identityType: identityT.toString(),
+							payType: payType,
+							orderNumber: orderNumber,
+						},
+						type: 'post', //HTTP请求类型
+						headers: {
+							"Authorization": oldToken
+						},
+						timeout: 10000, //超时时间设置为10秒；
+						success: function(data) {
+							console.error(data);
+							plus.nativeUI.closeWaiting();
+							if(data.code == 0) {
+								plus.nativeUI.alert("支付成功");
+								mui.fire(plus.webview.getWebviewById('center.html'), 'refresh');
+								plus.webview.currentWebview().reload();
+							} else {
+								plus.nativeUI.alert(data.message);
 							}
-						});
-					}
+
+						},
+						error: function(xhr, type, errorThrown) {
+							//异常处理；
+							console.log(type);
+						}
+					});
+				}
 			})
 			//去支付结束
 
@@ -687,68 +761,74 @@
 			//申请退货 ==> order0.js
 			//打开订单物流  ==> order0.js
 
-			mui.plusReady(function(){
+			mui.plusReady(function() {
 				var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
-				if(plus.webview.currentWebview().lookCusid){
+				if(plus.webview.currentWebview().lookCusid) {
 					identityT = 6;
 				}
 				var userId = plus.webview.currentWebview().lookCusid || plus.storage.getItem('$userId');
 				var oldToken = plus.storage.getItem('oldToken');
-				var SH0 = 0;/*保存的滚动条高度*/
+				var SH0 = 0; /*保存的滚动条高度*/
 				var inType = plus.webview.currentWebview().type;
 				var noButton = plus.webview.currentWebview().isNoButton;
 				var fromPage = plus.webview.currentWebview().fromPage;
-				if(fromPage == 'index' || inType == 1 || inType == 'dai' || inType == 'yi'){
+				if(fromPage == 'index' || inType == 1 || inType == 'dai' || inType == 'yi') {
 					$('.mui-title').html("物流");
-					$('#loadingdiv').css("margin-top",0);
+					$('#loadingdiv').css("margin-top", 0);
 					$('#openSearch,#tabLink').hide()
-				}else{
+				} else {
 					$('.mui-title').html("我的订单");
-					$('#loadingdiv').css("margin-top",'42px');
+					$('#loadingdiv').css("margin-top", '42px');
 					$('#openSearch,#tabLink').show()
 				}
-				if(inType == 1){$('.mui-title').html("待付款");}
-				if(inType == 'dai'){$('.mui-title').html("客户待付款清单");}
-				if(inType == 'yi'){$('.mui-title').html("客户已付款清单");}
+				if(inType == 1) {
+					$('.mui-title').html("待付款");
+				}
+				if(inType == 'dai') {
+					$('.mui-title').html("客户待付款清单");
+				}
+				if(inType == 'yi') {
+					$('.mui-title').html("客户已付款清单");
+				}
 				//打开订单详情
-				window.openDetail = function(orderNo,evaluat,id,cusid,zhuangshi){
-//					if(fromPage != 'index'){
-						openview({
-							view:'myOrderDetail.html',
-							id:'myOrderDetail',
-							extrasobj:{
-								orderNo:orderNo,
-								evaluat:evaluat,
-								cancelParentId:id,//父元素ID
-								noButton:noButton,
-								lookCusid:userId,
-								cusId:cusid,
-								zhuangshi:zhuangshi
-							}
-						})
-//					}
+				window.openDetail = function(orderNo, evaluat, id, cusid, zhuangshi) {
+					//					if(fromPage != 'index'){
+					openview({
+						view: 'myOrderDetail.html',
+						id: 'myOrderDetail',
+						extrasobj: {
+							orderNo: orderNo,
+							evaluat: evaluat,
+							cancelParentId: id, //父元素ID
+							noButton: noButton,
+							lookCusid: userId,
+							cusId: cusid,
+							zhuangshi: zhuangshi
+						}
+					})
+					//					}
 
 				}
 
 				//新的取消订单,妈的非要刷新,傻逼
-				window.NewcancelFun = function(pageType,cancelParentId){
-					cancelFun(pageType,cancelParentId,function(){
+				window.NewcancelFun = function(pageType, cancelParentId) {
+					cancelFun(pageType, cancelParentId, function() {
 						//刷新当前列表
-						if(inType == 1){
+						if(inType == 1) {
 							loadFun(1);
-						}else{
-							$('#tabLink li').each(function(index,ele){
-								if($(ele).hasClass('active')){
-									if(index == 0){
-										loadFun('');//全部
-									}else if(index == 1){
-										loadFun(6);//待发货
-									}else if(index == 2){
-										loadFun(2);//待收货
-									}else if(index == 3){
-										loadFun(3);//已完成
-									}else if(index == 4){
-										loadFun(4);//已取消
+						} else {
+							$('#tabLink li').each(function(index, ele) {
+								if($(ele).hasClass('active')) {
+									if(index == 0) {
+										loadFun(''); //全部
+									} else if(index == 1) {
+										loadFun(6); //待发货
+									} else if(index == 2) {
+										loadFun(2); //待收货
+									} else if(index == 3) {
+										loadFun(3); //已完成
+									} else if(index == 4) {
+										loadFun(4); //已取消
 									}
 								}
 							})
@@ -759,348 +839,427 @@
 
 				//详情页面点取消,监听刷新
 				document.addEventListener('cancelrefresh2', function(event) {
-					var cancelParentId = event.detail.cancelParentId;//父元素ID
-					$('#'+cancelParentId).find('.stateSpan').html('已取消');
-					$('#'+cancelParentId).find('.stateSpan2').css('display','none');
-				    $('#'+cancelParentId).find('.orderBtns').find('span').each(function(index,ele){
-			    	 		if($(ele).html() != '取消订单'){
-			    	 			$(ele).css('display','none');
-			    	 		}
-				    })
-//					$('#tabLink li').each(function(index,ele){
-//						if($(ele).attr('class').indexOf('active')>-1){
-//							if(index == 0){
-//								loadFun('','',{SH0:SH0});
-//							}else{
-//								loadFun(index,'',{SH0:SH0});
-//							}
-//							return false;
-//						}
-//					})
+					var cancelParentId = event.detail.cancelParentId; //父元素ID
+					$('#' + cancelParentId).find('.stateSpan').html('已取消');
+					$('#' + cancelParentId).find('.stateSpan2').css('display', 'none');
+					$('#' + cancelParentId).find('.orderBtns').find('span').each(function(index, ele) {
+						if($(ele).html() != '取消订单') {
+							$(ele).css('display', 'none');
+						}
+					})
+					//					$('#tabLink li').each(function(index,ele){
+					//						if($(ele).attr('class').indexOf('active')>-1){
+					//							if(index == 0){
+					//								loadFun('','',{SH0:SH0});
+					//							}else{
+					//								loadFun(index,'',{SH0:SH0});
+					//							}
+					//							return false;
+					//						}
+					//					})
 				});
 
 				//tab切换
-				if(inType == 1){
+				if(inType == 1) {
 					$('#tabLink li').removeClass('active');
 					$('#tabLink li').eq(inType).addClass('active');
-					loadFun(1);//待付款在这里 md
-				}else if(inType == 2){
+					loadFun(1); //待付款在这里 md
+				} else if(inType == 2) {
 					$('#tabLink li').removeClass('active');
 					$('#tabLink li').eq(inType).addClass('active');
 					loadFun(2);
-				}else{
+				} else {
 					$('#tabLink li').removeClass('active');
 					$('#tabLink li').eq(0).addClass('active');
-					loadFun('');//初始化,全部
+					loadFun(''); //初始化,全部
 				}
-				$('#tabLink li').click(function(){
+				$('#tabLink li').click(function() {
 					$('#tabLink li').removeClass('active');
 					$(this).addClass('active');
-					if($(this).index() == 0){
-						loadFun('');//全部
-					}else if($(this).index() == 1){
-						loadFun(6);//待发货
-					}else if($(this).index() == 2){
-						loadFun(2);//待收货
-					}else if($(this).index() == 3){
-						loadFun(3);//已完成
-					}else if($(this).index() == 4){
-						loadFun(4);//已取消
+					if($(this).index() == 0) {
+						loadFun(''); //全部
+					} else if($(this).index() == 1) {
+						loadFun(6); //待发货
+					} else if($(this).index() == 2) {
+						loadFun(2); //待收货
+					} else if($(this).index() == 3) {
+						loadFun(3); //已完成
+					} else if($(this).index() == 4) {
+						loadFun(4); //已取消
 					}
 				})
 				downRe(crload);
-                function crload(){
-                	if(inType != 1){
-                		var curindex = $('#tabLink li.active').index()
-	                    if(curindex == 0){
-	                        loadFun('');//全部
-	                    }else if(curindex == 1){
-	                        loadFun(6);//待发货
-	                    }else if(curindex == 2){
-	                        loadFun(2);//待收货
-	                    }else if(curindex == 3){
-	                        loadFun(3);//已完成
-	                    }else if(curindex == 4){
-	                        loadFun(4);//已取消
-	                    }
-                	}else{
-                		loadFun(1);
-                	}
 
-                }
+				function crload() {
+					if(inType != 1) {
+						var curindex = $('#tabLink li.active').index()
+						if(curindex == 0) {
+							loadFun(''); //全部
+						} else if(curindex == 1) {
+							loadFun(6); //待发货
+						} else if(curindex == 2) {
+							loadFun(2); //待收货
+						} else if(curindex == 3) {
+							loadFun(3); //已完成
+						} else if(curindex == 4) {
+							loadFun(4); //已取消
+						}
+					} else {
+						loadFun(1);
+					}
 
-				function loadFun(tabT,condition,cancelrefresh){//搜索和tab切换 ，公用一个加载方法
-					var Spagenum = 2, Ypagenum = 1, oneSize = 10;
+				}
+
+				function loadFun(tabT, condition, cancelrefresh) { //搜索和tab切换 ，公用一个加载方法
+					var Spagenum = 2,
+						Ypagenum = 1,
+						oneSize = 10;
 					document.getElementById('infoListDiv').innerHTML = '';
 					document.getElementById('upload').innerHTML = '';
-					$('#loadingdiv').css('height','32px');
+					$('#loadingdiv').css('height', '32px');
 					$(window).unbind('scroll');
 					var nowApi = '/app/order/list';
-					var nowData = {'userID':userId,'identityType':identityT,'showStatus':tabT,'page':1,'size':oneSize};
+					var nowData = {
+						'userID': userId,
+						'identityType': identityT,
+						'showStatus': tabT,
+						'page': 1,
+						'size': oneSize
+					};
 					console.log(nowData)
 					console.log(oldToken)
-					if(condition){//搜索字段
+					if(condition) { //搜索字段
 						nowApi = '/app/order/search';
-						nowData = {'userID':userId,'identityType':identityT,'showStatus':tabT,'condition':condition}
-					}else if(fromPage == 'index'){
+						nowData = {
+							'userID': userId,
+							'identityType': identityT,
+							'showStatus': tabT,
+							'condition': condition
+						}
+					} else if(fromPage == 'index') {
 						nowApi = '/app/delivery/logistics/list';
-						nowData = {'userId':userId,'identityType':identityT,'page':1,'size':oneSize};
-					}else if(inType == 'dai'){
+						nowData = {
+							'userId': userId,
+							'identityType': identityT,
+							'page': 1,
+							'size': oneSize
+						};
+					} else if(inType == 'dai') {
 						nowApi = '/app/order/payForAnother/list';
-						nowData = {'userId':userId,'identityType':identityT,'page':1,'size':oneSize};
-					}else if(inType == 'yi'){
+						nowData = {
+							'userId': userId,
+							'identityType': identityT,
+							'page': 1,
+							'size': oneSize
+						};
+					} else if(inType == 'yi') {
 						nowApi = '/app/order/list/sellerManager/payFor';
-						nowData = {'userId':userId,'identityType':identityT,'page':1,'size':oneSize};
+						nowData = {
+							'userId': userId,
+							'identityType': identityT,
+							'page': 1,
+							'size': oneSize
+						};
 					}
-					mui.ajax(serverUrl + nowApi,{
-						data:nowData,
-						dataType:'json',
-						type:'post',
-						timeout:100000,
-						headers:{"Authorization":oldToken},
-						success:function(data,type,xhr){
-							console.log('订单',data);
-							var timeLoad = setInterval(function(){
-								clearTimeout(timeLoad),timeLoad = null;
-								if(data.code == 0){
-									$('#loadingdiv').css('height','0px');
-									if(data.content.list && data.content.list.length){
+					mui.ajax(serverUrl + nowApi, {
+						data: nowData,
+						dataType: 'json',
+						type: 'post',
+						timeout: 100000,
+						headers: {
+							"Authorization": oldToken
+						},
+						success: function(data, type, xhr) {
+							console.log('订单', data);
+							var timeLoad = setInterval(function() {
+								clearTimeout(timeLoad), timeLoad = null;
+								if(data.code == 0) {
+									$('#loadingdiv').css('height', '0px');
+									if(data.content.list && data.content.list.length) {
 										//没有customerId的手动加为null
-										data.content.list.forEach(function(ele,index){
-											if(!ele.customer || !ele.customer.customerId){
-												ele.customer = {customerId:null}
+										data.content.list.forEach(function(ele, index) {
+											if(!ele.customer || !ele.customer.customerId) {
+												ele.customer = {
+													customerId: null
+												}
 											}
-											if(ele.endTime){
-												var minutes = parseInt(ele.endTime/(1000*60));
-												ele.endTime = (Math.floor(minutes/60) + "小时" + (minutes%60) + "分" );
+											if(ele.endTime) {
+												var minutes = parseInt(ele.endTime / (1000 * 60));
+												ele.endTime = (Math.floor(minutes / 60) + "小时" + (minutes % 60) + "分");
 											}
-											if(inType == 'yi' || inType == 'dai'){
+											if(inType == 'yi' || inType == 'dai') {
 												ele.zhuangshi = inType
 											}
 										})
-										document.getElementById('infoListDiv').innerHTML = template('infoList',{list:data.content.list,nowState:tabT});
-										if(noButton == 1){
-//											$('.orderBtns').empty()
+										document.getElementById('infoListDiv').innerHTML = template('infoList', {
+											list: data.content.list,
+											nowState: tabT
+										});
+										if(noButton == 1) {
+											//											$('.orderBtns').empty()
 											$('.orderBtns>span:not(.lookwl)').remove();
 
 										}
-										if(fromPage == 'index'){
+										if(fromPage == 'index') {
 											$('.orderBtns>span:not(:last-child)').remove();
 										}
 
-									}else{
-										if(data.content.length){
+									} else {
+										if(data.content.length) {
 											//没有customerId的手动加为null
-											data.content.forEach(function(ele,index){
-												if(!ele.customer || !ele.customer.customerId){
-													ele.customer = {customerId:null}
+											data.content.forEach(function(ele, index) {
+												if(!ele.customer || !ele.customer.customerId) {
+													ele.customer = {
+														customerId: null
+													}
 												}
 
-												if(ele.endTime){
-													var minutes = parseInt(ele.endTime/(1000*60));
-													ele.endTime = (Math.floor(minutes/60) + "小时" + (minutes%60) + "分" );
+												if(ele.endTime) {
+													var minutes = parseInt(ele.endTime / (1000 * 60));
+													ele.endTime = (Math.floor(minutes / 60) + "小时" + (minutes % 60) + "分");
 												}
 											})
-											document.getElementById('infoListDiv').innerHTML = template('infoList',{list:data.content,nowState:tabT});
-											if(noButton == 1){
-//												$('.orderBtns').empty()
+											document.getElementById('infoListDiv').innerHTML = template('infoList', {
+												list: data.content,
+												nowState: tabT
+											});
+											if(noButton == 1) {
+												//												$('.orderBtns').empty()
 												$('.orderBtns>span:not(.lookwl)').remove();
 											}
-											if(fromPage == 'index'){
+											if(fromPage == 'index') {
 												$('.orderBtns>span:not(:last-child)').remove();
 											}
 
-										}else{
+										} else {
 											document.getElementById('infoListDiv').innerHTML = '<div style="text-align: center;padding: 50px;"><img src="../../images/order/order.png" style="width: 100px;margin-bottom: 8px;" /><div class="ft13 disablecl">暂无相关订单</div></div>';
 										}
 									}
 									lazyLoad();
 									//详情取消操作,刷新列表,并滚动到之前的位置
-									if(cancelrefresh){
+									if(cancelrefresh) {
 										$(window).scrollTop(cancelrefresh.SH0);
 									}
 
 									//下拉加载
 									$(window).scroll(function() {
-										var scrollTop = SH0 = $(this).scrollTop(),scrollHeight = $(document).height(),windowHeight = $(this).height();
+										var scrollTop = SH0 = $(this).scrollTop(),
+											scrollHeight = $(document).height(),
+											windowHeight = $(this).height();
 										if(scrollTop + windowHeight == scrollHeight) {
 											if(Spagenum <= data.content.pages && Spagenum == Ypagenum + 1) { //当前页小于等于总页数时请求下一页
 												document.getElementById('upload').innerHTML = "<img src='../../img/Rolling.svg' />";
 												Ypagenum++; //满足加载情况,应到页数+1
-												console.log('发起请求,实到' + Spagenum + '页');console.log('发起请求,应到' + Ypagenum + '页');
-												nowData = {'userID':userId,'identityType':identityT,'showStatus':tabT,'page':Ypagenum,'size':oneSize};
-												if(fromPage == 'index'){
-													nowData = {'userId':userId,'identityType':identityT,'page':Ypagenum,'size':oneSize};
-												}else if(inType == 'dai'){
-													nowData = {'userId':userId,'identityType':identityT,'page':Ypagenum,'size':oneSize};
-												}else if(inType == 'yi'){
-													nowData = {'userId':userId,'identityType':identityT,'page':Ypagenum,'size':oneSize};
+												console.log('发起请求,实到' + Spagenum + '页');
+												console.log('发起请求,应到' + Ypagenum + '页');
+												nowData = {
+													'userID': userId,
+													'identityType': identityT,
+													'showStatus': tabT,
+													'page': Ypagenum,
+													'size': oneSize
+												};
+												if(fromPage == 'index') {
+													nowData = {
+														'userId': userId,
+														'identityType': identityT,
+														'page': Ypagenum,
+														'size': oneSize
+													};
+												} else if(inType == 'dai') {
+													nowData = {
+														'userId': userId,
+														'identityType': identityT,
+														'page': Ypagenum,
+														'size': oneSize
+													};
+												} else if(inType == 'yi') {
+													nowData = {
+														'userId': userId,
+														'identityType': identityT,
+														'page': Ypagenum,
+														'size': oneSize
+													};
 												}
-												mui.ajax(serverUrl + nowApi,{
-							                        data:nowData,
-							                        dataType:'json',
-							                        type:'post',
-							                        timeout:100000,
-							                        headers:{"Authorization":oldToken},
-							                        success:function(data,type,xhr){
-							                            console.log('订单',data);
-						                                if(data.code == 0){
-						                                    $('#loadingdiv').css('height','0px');
-						                                    if(data.content.list && data.content.list.length){
-						                                    		//没有customerId的手动加为null
-																data.content.list.forEach(function(ele,index){
-																	if(!ele.customer || !ele.customer.customerId){
-																		ele.customer = {customerId:null}
+												mui.ajax(serverUrl + nowApi, {
+													data: nowData,
+													dataType: 'json',
+													type: 'post',
+													timeout: 100000,
+													headers: {
+														"Authorization": oldToken
+													},
+													success: function(data, type, xhr) {
+														console.log('订单', data);
+														if(data.code == 0) {
+															$('#loadingdiv').css('height', '0px');
+															if(data.content.list && data.content.list.length) {
+																//没有customerId的手动加为null
+																data.content.list.forEach(function(ele, index) {
+																	if(!ele.customer || !ele.customer.customerId) {
+																		ele.customer = {
+																			customerId: null
+																		}
 																	}
-//																	if(ele.endTime){
-//																		ele.endTime = parseInt(ele.endTime/(1000*60))
-//																	}
-																	if(ele.endTime){
-																		var minutes = parseInt(ele.endTime/(1000*60));
-																		ele.endTime = (Math.floor(minutes/60) + "小时" + (minutes%60) + "分" );
+																	//																	if(ele.endTime){
+																	//																		ele.endTime = parseInt(ele.endTime/(1000*60))
+																	//																	}
+																	if(ele.endTime) {
+																		var minutes = parseInt(ele.endTime / (1000 * 60));
+																		ele.endTime = (Math.floor(minutes / 60) + "小时" + (minutes % 60) + "分");
 																	}
-																	if(inType == 'yi' || inType == 'dai'){
+																	if(inType == 'yi' || inType == 'dai') {
 																		ele.zhuangshi = true
 																	}
 																})
-						                                        document.getElementById('infoListDiv').innerHTML += template('infoList',{list:data.content.list,nowState:tabT});
-						                                    	if(noButton == 1){
-//																	$('.orderBtns').empty()
+																document.getElementById('infoListDiv').innerHTML += template('infoList', {
+																	list: data.content.list,
+																	nowState: tabT
+																});
+																if(noButton == 1) {
+																	//																	$('.orderBtns').empty()
 																	$('.orderBtns>span:not(.lookwl)').remove();
 																}
-						                                    	if(fromPage == 'index'){
+																if(fromPage == 'index') {
 																	$('.orderBtns>span:not(:last-child)').remove();
 																}
-						                                    }
-						                                    lazyLoad();
-						                                }
-							                             document.getElementById('upload').innerHTML = '';
+															}
+															lazyLoad();
+														}
+														document.getElementById('upload').innerHTML = '';
 														Spagenum++; //加载成功,当前页+1
 														console.log('成功+1,实到' + Spagenum);
 														console.log('成功+1,应到' + Spagenum);
-							                        },
-							                        error:function(xhr,type,errorThrown){
-								                        	Ypagenum--; //失败是应到-1
+													},
+													error: function(xhr, type, errorThrown) {
+														Ypagenum--; //失败是应到-1
 														document.getElementById('upload').innerHTML = '';
-							                        }
-							                    });
+													}
+												});
 											} else if(Spagenum == data.content.pages + 1) { //当前页不小于等于总页数时请求下一页
 												document.getElementById('upload').innerHTML = "没有更多了";
 											}
 										}
 									});
 
-								}else{
+								} else {
 									mui.toast(data.message);
 								}
-							},500)
+							}, 500)
 						},
-						error:function(xhr,type,errorThrown){
+						error: function(xhr, type, errorThrown) {
 							console.log('响应失败  !');
-							$('#loadingdiv').css('height','0px');
+							$('#loadingdiv').css('height', '0px');
 							document.getElementById('infoListDiv').innerHTML = '<div style="text-align: center;padding: 50px;"><img src="../../images/order/order.png" style="width: 100px;margin-bottom: 8px;" /><div class="ft13 disablecl">当前网络不好，请重试</div></div>';
 						}
 					});
 				}
 
 				//搜索操作
-				$('#openSearch').click(function(){
-					$('#tabLink2').css('display','block');
-					$(this).css('display','none');
+				$('#openSearch').click(function() {
+					$('#tabLink2').css('display', 'block');
+					$(this).css('display', 'none');
 				})
-				$('#cancelSearch').click(function(){
-					$('#tabLink2').css('display','none');
-					$('#openSearch').css('display','block');
+				$('#cancelSearch').click(function() {
+					$('#tabLink2').css('display', 'none');
+					$('#openSearch').css('display', 'block');
 				})
-				$('#searchf').submit(function(){
+				$('#searchf').submit(function() {
 					var valInt = $('#valInt').val();
-					loadFun('',valInt);
+					loadFun('', valInt);
 					return false;
 				})
-				$('#clickSearch').click(function(){
+				$('#clickSearch').click(function() {
 					var valInt = $('#valInt').val();
-					loadFun('',valInt);
+					loadFun('', valInt);
 				})
 
 				//取消订单
 				cancelOF();
 
 				/*订单评价*/
-				$('.operating11').click(function(){//点取消
-					$('#evaOrder').css('display','none');
+				$('.operating11').click(function() { //点取消
+					$('#evaOrder').css('display', 'none');
 					resetStar();
 				})
-				$('.cancelDiv').click(function(){//点遮罩
-					$('#evaOrder').css('display','none');
+				$('.cancelDiv').click(function() { //点遮罩
+					$('#evaOrder').css('display', 'none');
 					resetStar();
 				});
-				function resetStar(){//重置星级
-					$('#evaluat .mui-icon').each(function(index,ele){
-						$(ele).attr('class','mui-icon mui-icon-star')
+
+				function resetStar() { //重置星级
+					$('#evaluat .mui-icon').each(function(index, ele) {
+						$(ele).attr('class', 'mui-icon mui-icon-star')
 					})
 				}
-				var oneStar=0,twoStar=0,threeStar=0,EvaluatAble=true;
+				var oneStar = 0,
+					twoStar = 0,
+					threeStar = 0,
+					EvaluatAble = true;
 				// 点 星 级
-				mui('.icons').on('tap','i',function(){
-				  	var index = parseInt(this.getAttribute("data-index"));
-				  	var parent = this.parentNode;
-				  	var children = parent.children;
-				  	if(this.classList.contains("mui-icon-star")){
-				  		for(var i=0;i<index;i++){
-			  				children[i].classList.remove('mui-icon-star');
-			  				children[i].classList.add('mui-icon-star-filled');
-				  		}
-				  	}else{
-				  		for (var i = index; i < 5; i++) {
-				  			children[i].classList.add('mui-icon-star')
-				  			children[i].classList.remove('mui-icon-star-filled')
-				  		}
-				  	}
-				  	starIndex = index;
-				  	//数据部分
-				  	oneStar = $('.mui-content-padded').eq(0).find('.mui-icon-star-filled').length;
-				  	twoStar = $('.mui-content-padded').eq(1).find('.mui-icon-star-filled').length;
-				  	threeStar = $('.mui-content-padded').eq(2).find('.mui-icon-star-filled').length;
-			  	});
-				window.evaFun = function(orderNumber,that){
-					$('#evaOrder').css('display','table');
-					document.getElementById('operating22').onclick = function(){
-						if(oneStar==0 || twoStar==0 || threeStar==0){
+				mui('.icons').on('tap', 'i', function() {
+					var index = parseInt(this.getAttribute("data-index"));
+					var parent = this.parentNode;
+					var children = parent.children;
+					if(this.classList.contains("mui-icon-star")) {
+						for(var i = 0; i < index; i++) {
+							children[i].classList.remove('mui-icon-star');
+							children[i].classList.add('mui-icon-star-filled');
+						}
+					} else {
+						for(var i = index; i < 5; i++) {
+							children[i].classList.add('mui-icon-star')
+							children[i].classList.remove('mui-icon-star-filled')
+						}
+					}
+					starIndex = index;
+					//数据部分
+					oneStar = $('.mui-content-padded').eq(0).find('.mui-icon-star-filled').length;
+					twoStar = $('.mui-content-padded').eq(1).find('.mui-icon-star-filled').length;
+					threeStar = $('.mui-content-padded').eq(2).find('.mui-icon-star-filled').length;
+				});
+				window.evaFun = function(orderNumber, that) {
+					$('#evaOrder').css('display', 'table');
+					document.getElementById('operating22').onclick = function() {
+						if(oneStar == 0 || twoStar == 0 || threeStar == 0) {
 							mui.toast('每项请至少选择一个星级！');
-						}else{
+						} else {
 							var dataObj0 = {
-								'userId':userId,
-								'identityType':identityT,
-								'productStar':oneStar,
-								'logisticsStar':twoStar,
-								'serviceStars':threeStar,
-								'orderNumber':orderNumber
+								'userId': userId,
+								'identityType': identityT,
+								'productStar': oneStar,
+								'logisticsStar': twoStar,
+								'serviceStars': threeStar,
+								'orderNumber': orderNumber
 							};
 							console.log(dataObj0);
 							goEvaluation();
-							function goEvaluation(){
-								mui.ajax(serverUrl + '/app/order/evaluation/submit',{
-									data:dataObj0,
-									dataType:'json',
-									type:'post',
-									timeout:20000,
-									headers:{"Authorization":oldToken},
-									success:function(data,type,xhr){
-										console.log('订单评价'+JSON.stringify(data));
-										if(data.code == 0){
-											mui.fire(plus.webview.getWebviewById('center.html'),'OrderNumR');
+
+							function goEvaluation() {
+								mui.ajax(serverUrl + '/app/order/evaluation/submit', {
+									data: dataObj0,
+									dataType: 'json',
+									type: 'post',
+									timeout: 20000,
+									headers: {
+										"Authorization": oldToken
+									},
+									success: function(data, type, xhr) {
+										console.log('订单评价' + JSON.stringify(data));
+										if(data.code == 0) {
+											mui.fire(plus.webview.getWebviewById('center.html'), 'OrderNumR');
 											mui.toast(data.message || '感谢您的评价');
 											resetStar();
-											$('#evaOrder').css('display','none');
+											$('#evaOrder').css('display', 'none');
 											that.onclick = null;
 											//that.innerHTML = '已评价';
 											that.style.display = 'none';
-										}else{
+										} else {
 											mui.toast(data.message);
 
 										}
 									},
-									error:function(xhr,type,errorThrown){
+									error: function(xhr, type, errorThrown) {
 										console.log('响应失败  !');
 										mui.toast('当前网络不好，请重试');
 									}
@@ -1109,7 +1268,6 @@
 						}
 					}
 				}
-
 
 			})
 		</script>

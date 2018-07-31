@@ -20,6 +20,10 @@
 			font-family: "微软雅黑";
 			border-bottom: none;
 		}
+		.messagefitler {
+			-webkit-filter: invert(0.7);
+			filter: invert(0.7);
+		}
 	</style>
 
 	<body>
@@ -27,6 +31,7 @@
 		<header class="mui-bar mui-bar-nav">
 			<a class="headbar mui-action-back mui-icon mui-icon-left-nav mui-pull-left normalSize"></a>
 			<h1 class="mui-title">确认订单</h1>
+			<img src="../../images/center/zixunSvg.svg" onclick="poverTel()" class="mui-pull-right messagefitler" style="width: 25px;margin-top:11px;margin-right: 5px;" />
 		</header>
 		<script src="../../js/statusBar.js"></script>
 		<!--状态栏-->
@@ -156,6 +161,26 @@
 	</body>
 
 	<script>
+		//打开咨询界面
+		function poverTel() {
+			mui.openWindow({
+				url: '../../consultTel.html',
+				id: 'consultTel',
+				styles: {
+					background: 'transparent',
+					bounce: 'vertical',
+					bounceBackground: '#DCDCDC', //灰色
+
+				},
+				waiting: {
+					autoShow: false
+				},
+				show: {
+					aniShow: 'slide-in-bottom', //页面显示动画，默认为”slide-in-right“；
+
+				}
+			})
+		}
 		function materialList() {
 			openview({
 				view: 'materialList.html',

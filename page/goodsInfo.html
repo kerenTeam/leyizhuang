@@ -74,6 +74,10 @@
        .mui-numbox{width: 106px;height: 34px;padding: 0px 34px;}
        .mui-numbox .mui-input-numbox, .mui-numbox .mui-numbox-input{font-size: 14px;}
        .mui-numbox [class*=btn-numbox], .mui-numbox [class*=numbox-btn]{line-height: 0.4!important;}
+       .messagefitler {
+			-webkit-filter: invert(0.7);
+			filter: invert(0.7);
+		}
 	</style>
 
 	<body>
@@ -84,6 +88,8 @@
 			<span class="mui-pull-right ft15 fenxiangBtn1" style="line-height: 50px;">
 				分享
 			</span>
+			<img src="../images/center/zixunSvg.svg" onclick="poverTel()" class="mui-pull-right messagefitler" style="width: 25px;margin-top:11px;margin-right: 10px;" />
+			
 		</header>
 		<script src="../js/statusBar.js"></script><!--状态栏-->
 		<div class="mui-content">
@@ -249,6 +255,26 @@
 	<script src="../js/default.js" type="text/javascript" charset="utf-8"></script>
 	<script src="../js/youxd.js" type="text/javascript" charset="utf-8"></script>
 	<script type="text/javascript">
+		//打开咨询界面
+		function poverTel() {
+			mui.openWindow({
+				url: '../consultTel.html',
+				id: 'consultTel',
+				styles: {
+					background: 'transparent',
+					bounce: 'vertical',
+					bounceBackground: '#DCDCDC', //灰色
+
+				},
+				waiting: {
+					autoShow: false
+				},
+				show: {
+					aniShow: 'slide-in-bottom', //页面显示动画，默认为”slide-in-right“；
+
+				}
+			})
+		}
 		//购物车弹出/关闭
 		function toshare(){
 			$(".am-share").addClass("am-modal-active");

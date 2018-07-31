@@ -193,12 +193,17 @@
 			width: 25%;
 		}
 		.typeDis{margin-bottom: 10px;}
+		.messagefitler {
+			-webkit-filter: invert(0.7);
+			filter: invert(0.7);
+		}
 	</style>
 
 	<body>
 		<header class="mui-bar mui-bar-nav">
 			<a class="headbar mui-action-back mui-icon mui-icon-arrowdown mui-pull-left" style="background-color: #EEEEEE;border-radius: 50%;width: 35px!important;height: 35px;line-height: 35px!important;text-align: center;margin: 5px 10px!important;"></a>
 			<h1 class="mui-title">活动促销</h1>
+			<img src="images/center/zixunSvg.svg" onclick="poverTel()" class="mui-pull-right messagefitler" style="width: 25px;margin-top:11px;" />
 		</header>
 		<script src="js/statusBar.js" type="text/javascript" charset="utf-8"></script>
 		<div class="mui-content" style="padding-top: 50px;">
@@ -282,7 +287,26 @@
 			$('#close').click(function() {
 				plus.webview.currentWebview().close();
 			})
-			
+			//打开咨询界面
+			function poverTel() {
+				mui.openWindow({
+					url: 'consultTel.html',
+					id: 'consultTel',
+					styles: {
+						background: 'transparent',
+						bounce: 'vertical',
+						bounceBackground: '#DCDCDC', //灰色
+
+					},
+					waiting: {
+						autoShow: false
+					},
+					show: {
+						aniShow: 'slide-in-bottom', //页面显示动画，默认为”slide-in-right“；
+
+					}
+				})
+			}
 			//跳转商品详情
 			function goodsInfo(id) {
 				openview({

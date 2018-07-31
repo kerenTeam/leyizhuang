@@ -360,6 +360,7 @@
 					 	$('#jieW').val(position.address.street)
 						}
 					}
+					
 				}
 				// 通过定位模块获取位置信息
 				function getGeocode(){
@@ -385,7 +386,7 @@
 						 	$('#jieW').val(mapStorage[0].township)
 						 	$('#districtW').val(mapStorage[0].district)
 						 	$('#xiaoquIn').val(mapStorage[0].neighborhood)
-//						 	$('#address').val(mapStorage[0].street+mapStorage[0].streetNumber)
+						 	$('#address').val(mapStorage[0].street+mapStorage[0].streetNumber)
 							for(var i=0;i<cityData3.length;i++){
 								if(cityData3[i].text == mapStorage[0].province){
 									for(var j = 0 ;j<cityData3[i].children.length;j++){
