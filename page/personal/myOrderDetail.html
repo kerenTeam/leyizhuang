@@ -1,6 +1,5 @@
 <!doctype html>
 <html>
-
 	<head>
 		<meta charset="UTF-8">
 		<title>我的订单详情</title>
@@ -16,26 +15,9 @@
 		<script src="../../js/order0.js"></script>
 		<style type="text/css">
 			/*去支付样式*/
-			#maskInfo {
-				z-index: 99999;
-				position: fixed;
-				top: 0;
-				left: 0;
-				width: 100%;
-				bottom: 0;
-				background-color: rgba(0, 0, 0, .5)
-			}
-			.paychoose {
-				background-color: white;
-				bottom: 0!important;
-				position: absolute;
-				right: 0;
-				left: 0;
-			}
-			.paychoose img {
-				width: 40px;
-				margin: 0 5px;
-			}
+			#maskInfo { z-index: 99999; position: fixed; top: 0; left: 0;width: 100%;bottom: 0;background-color: rgba(0, 0, 0, .5)}
+			.paychoose {background-color: white;bottom: 0!important;position: absolute; right: 0; left: 0; }
+			.paychoose img { width: 40px; margin: 0 5px; }
 			/*去支付样式结束*/
 			body{background-color: #F8F9FA;font-size: 15px;}
 			#main{margin-top: 49px;padding-bottom: 10px;}
@@ -62,14 +44,11 @@
 			#huiC{display:inline-block!important;text-align:justify!important;width:20%;}
 			.tihuoma{height: 46px;line-height: 48px;padding: 0 15px;font-size: 18px;font-weight: bold;color: #fff;
 			    background: #ff4b1f;  /* fallback for old browsers */
-background: -webkit-linear-gradient(to right, #1fddff, #ff4b1f);  /* Chrome 10-25, Safari 5.1-6 */
-background: linear-gradient(to right, #1fddff, #ff4b1f); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-
+                background: -webkit-linear-gradient(to right, #1fddff, #ff4b1f);  /* Chrome 10-25, Safari 5.1-6 */
+                background: linear-gradient(to right, #1fddff, #ff4b1f); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 			}
 			/*运费弹窗*/
-			.yunfeiDetail{
-				padding: 0px; font-size: 14px; margin-right: 10px;
-			}
+			.yunfeiDetail{padding: 0px; font-size: 14px; margin-right: 10px;}
 			.yunfeiDetail a{display: inline-block;color: #B62D29;padding: 3px 9px 0px;}
 			.mui-popover .mui-table-view{overflow: scroll !important;}
 			.mui-popover{height: 230px;}
@@ -97,7 +76,6 @@ background: linear-gradient(to right, #1fddff, #ff4b1f); /* W3C, IE 10+/ Edge, F
 					</script>
 				</div>
 			</div>
-
 		</div>
 		<div id="main">
 			<!--列表loading-->
@@ -105,7 +83,6 @@ background: linear-gradient(to right, #1fddff, #ff4b1f); /* W3C, IE 10+/ Edge, F
 				line-height: 30px;color: #666;-webkit-transition: all .3s;overflow: hidden;">
 				<img style="width: 30px;margin-top:5px;" src="../../img/Rolling.svg"/>
 			</div>
-			<!--列表loading结束-->
 		</div>
 		<script type="text/html" id="mainS">
 			<%if(detail.pickUpCode){%>
@@ -185,13 +162,13 @@ background: linear-gradient(to right, #1fddff, #ff4b1f); /* W3C, IE 10+/ Edge, F
 					</div>
 				</div>
 			<%}%>
+			<!--金额详情-->
 			<div class="Dpart4 Dpart3">
 				<div>
 					<span class="huiC">商品总额</span> <span class="floL"><%= detail.BillingDetailResponse.totalPrice%>元</span>
 				</div>
 				<div>
 					<span class="huiC">运费</span>  <span class="floL"><%= detail.BillingDetailResponse.freight%>元</span> <button type="button" class="mui-btn mui-btn-danger mui-btn-outlined floL yunfeiDetail aClick"><a href="#middlePopover">明细</a></button>
-
 				</div>
 				<div>
 					<span class="huiC">优惠券抵扣</span> <span class="floL">
@@ -211,7 +188,7 @@ background: linear-gradient(to right, #1fddff, #ff4b1f); /* W3C, IE 10+/ Edge, F
 						<%}%>
 					</span>
 				</div>
-				<%if(detail.identityT == '6'){%>
+				<%if(detail.identityT == '6'){%> <!--顾客 单独-->
 					<div>
 						<span class="huiC">乐币抵扣</span> <span class="floL">
 							<%if(detail.BillingDetailResponse.leBiCashDiscount>0){%>
@@ -221,10 +198,9 @@ background: linear-gradient(to right, #1fddff, #ff4b1f); /* W3C, IE 10+/ Edge, F
 							<%}%>
 						</span>
 					</div>
-
 				<%}%>
 				<!--客户经理查看订单详情，增加现金返利折扣金额显示-->
-				<%if(detail.identityT == '2'){%>
+				<%if(detail.identityT == '2'){%> <!--装饰公司(项目经理) 单独-->
 					<div>
 						<span class="huiC">现金返利折扣</span> <span class="floL">
 							<%if(detail.BillingDetailResponse.subvention>0){%>
@@ -261,7 +237,6 @@ background: linear-gradient(to right, #1fddff, #ff4b1f); /* W3C, IE 10+/ Edge, F
 						</span>
 					</div>
 				<%}%>
-
 				<%if(detail.identityT != '2'){%>
 					<div>
 						<span class="huiC">产品券抵扣</span> <span class="floL">
@@ -302,14 +277,37 @@ background: linear-gradient(to right, #1fddff, #ff4b1f); /* W3C, IE 10+/ Edge, F
 					<%if(detail.customerBillingDetailResponse && detail.customerBillingDetailResponse.payForAnotherMoney){%>
 						<div>
 							<span class="huiC">代付金额</span> <span class="floL">
-									<%= detail.customerBillingDetailResponse.payForAnotherMoney || 0%>元
-
+								<%= detail.customerBillingDetailResponse.payForAnotherMoney || 0%>元
 							</span>
 						</div>
 					<%}%>
-
+				<%}%>
+				<!--顾客 装饰公司 (posMoney, cashMoney)-->
+				<%if(detail.identityT == '6' || detail.identityT == '2'){%>
+					<%if(detail.BillingDetailResponse.posMoney != '0'){%>
+						<div><span class="huiC">POS支付</span> <span class="floL"><%= detail.BillingDetailResponse.posMoney%>元</span></div>
+					<%}%>
+					<%if(detail.BillingDetailResponse.cashMoney != '0'){%>
+						<div><span class="huiC">现金支付</span> <span class="floL"><%= detail.BillingDetailResponse.cashMoney%>元</span></div>
+					<%}%>
+				<%}%>
+				<!--导购(storeCash, storePosMoney, deliveryCash, deliveryPos)-->
+				<%if(detail.identityT == '0'){%>
+					<%if(detail.BillingDetailResponse.storeCash != '0'){%>
+						<div><span class="huiC">门店现金</span> <span class="floL"><%= detail.BillingDetailResponse.storeCash%>元</span></div>
+					<%}%>
+					<%if(detail.BillingDetailResponse.storePosMoney != '0'){%>
+						<div><span class="huiC">门店POS</span> <span class="floL"><%= detail.BillingDetailResponse.storePosMoney%>元</span></div>
+					<%}%>
+					<%if(detail.BillingDetailResponse.deliveryCash != '0'){%>
+						<div><span class="huiC">配送现金</span> <span class="floL"><%= detail.BillingDetailResponse.deliveryCash%>元</span></div>
+					<%}%>
+					<%if(detail.BillingDetailResponse.deliveryPos != '0'){%>
+						<div><span class="huiC">配送POS</span> <span class="floL"><%= detail.BillingDetailResponse.deliveryPos%>元</span></div>
+					<%}%>
 				<%}%>
 			</div>
+			<!--金额详情结束-->
 			<div class="fineT" style="text-align: right;background-color: #fff;margin-top: -7px;padding: 10px 15px;margin-bottom: 7px;">
 				实付款<span class="redC"><%= detail.BillingDetailResponse.amountPayable%>元</span>
 			</div>
@@ -678,13 +676,8 @@ background: linear-gradient(to right, #1fddff, #ff4b1f); /* W3C, IE 10+/ Edge, F
 							data: {
 								userId: userId,
 								identityType: identityT.toString(),
-//								payableAmount: 0.01,
 								payableAmount: payableAmount,
 								orderNumber: orderNumber
-//								userId: 1,
-//								identityType: 6,
-//								payableAmount: 0.01,
-//								orderNumber: 'CDXN20171206175749976912036'
 							},
 							type: 'post', //HTTP请求类型
 							headers: {
@@ -710,9 +703,6 @@ background: linear-gradient(to right, #1fddff, #ff4b1f); /* W3C, IE 10+/ Edge, F
 							},
 							error: function(xhr, type, errorThrown) {
 								//异常处理；
-								console.log(type);
-								console.log("----- 支付失败 -----");
-								console.log(xhr.status);
 								plus.nativeUI.closeWaiting();
 								plus.nativeUI.alert("支付失败,请重试！");
 							}
@@ -728,7 +718,6 @@ background: linear-gradient(to right, #1fddff, #ff4b1f); /* W3C, IE 10+/ Edge, F
 							data: {
 								userId: userId,
 								identityType: identityT.toString(),
-								//amountPayable: payableAmount,
 								orderNumber: orderNumber,
 								payType: payType
 							},
@@ -761,9 +750,6 @@ background: linear-gradient(to right, #1fddff, #ff4b1f); /* W3C, IE 10+/ Edge, F
 							},
 							error: function(xhr, type, errorThrown) {
 								//异常处理；
-								console.log(type);
-								console.log("----- 支付失败 -----");
-								console.log(xhr.status);
 								plus.nativeUI.closeWaiting();
 								plus.nativeUI.alert("支付失败,请重试！");
 							}
