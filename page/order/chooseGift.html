@@ -144,11 +144,10 @@
 			var userId = plus.storage.getItem('$userId');
 			var oldToken = plus.storage.getItem('oldToken');
 			var idobj = plus.storage.getItem('materialList') || '[]';
-			var cusId = plus.webview.currentWebview().cusId;
+			var cusId = plus.webview.currentWebview().cusId || '';
 			var buyType = plus.webview.currentWebview().buyType || '';
 			console.log('idobj ', idobj)
-			cartload();
-
+			cartload(); 
 			function cartload() {
 				plus.nativeUI.showWaiting();
 				//获取赠品

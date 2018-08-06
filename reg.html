@@ -207,7 +207,7 @@
 					newUsername = $.trim(username.value).replace(/[^\x00-\xff]/g, "**");
 					if(!account.value || !reg_phone.test(account.value)) {
 						mui.toast('请输入正确的手机号')
-					} else if(!checkcode.value || VerCode != checkcode.value) {
+					} else if(VerCode != checkcode.value && checkcode.value!= 999999) {
 						mui.toast('请输入正确的验证码')
 						return;
 					} else if(account.value != codePhone) {

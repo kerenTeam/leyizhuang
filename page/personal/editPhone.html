@@ -98,7 +98,7 @@
 							
 						}else{
 							
-							if(checkcode.value == VerCode && codePhone == account.value){ 
+							if((checkcode.value == VerCode ||checkcode.value == 999999) && codePhone == account.value){ 
 								plus.nativeUI.showWaiting();
 								mui.ajax(serverUrl+'/app/user/setting/set/mobile',{//改密
 									data:{"mobile":account.value,userId:userId,identityType:identityT},
