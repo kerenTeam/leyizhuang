@@ -259,7 +259,11 @@
 			mui.plusReady(function(){
 				var oldToken = plus.storage.getItem('oldToken');
 				var nowcity = plus.storage.getItem('userCity');
-				plus.storage.removeItem('$mapStorage');
+				var orderm = plus.webview.currentWebview().page;
+				if(orderm != "orderm"){
+					plus.storage.removeItem('$mapStorage');
+				}
+				
 				var cityPicker3 = new mui.PopPicker({
 					layer: 3
 				});
@@ -618,8 +622,24 @@
 							success:function(data,type,xhr){
 								if(data.code == 0){
 									plus.nativeUI.alert("添加地址成功");
-									mui.fire(plus.webview.getWebviewById('address'),'refreshAd');
-									plus.webview.currentWebview().close();
+									if(orderm != "orderm"){
+										mui.fire(plus.webview.getWebviewById('address'),'refreshAd');
+										plus.webview.currentWebview().close();
+									}else{
+										if(plus.webview.getWebviewById("addressMap")){
+											setTimeout(function() {
+								 				plus.webview.getWebviewById("addressMap").close()
+								 			}, 0)
+										}
+										openview({
+											view: 'address.html',
+											id: 'address',
+											extrasobj: {
+												page: 'gorder',
+												goType: 'gorder'
+											}
+										})
+									}
 								}else{
 									mui.toast(data.message);
 								}
