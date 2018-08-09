@@ -1207,7 +1207,8 @@
 				],
 				"refer": [
 					"page/mailList.html",
-					"page/personal/addressMap.html"
+					"page/personal/addressMap.html",
+					"page/personal/address.html"
 				],
 				"priority": 0
 			},
@@ -1410,7 +1411,8 @@
 					"page/personal/myOrderList.html",
 					"page/order/orderSuccess.html",
 					"page/personal/UnionPayYGoPay.html",
-					"consultTel.html"
+					"consultTel.html",
+					"page/personal/addressMap.html"
 				],
 				"priority": 0
 			},
@@ -2030,6 +2032,13 @@
 				"refer": [
 					"page/personal/myOrderRTdetail.html",
 					"page/personal/myOrderDetail.html"
+				],
+				"priority": 0
+			},
+			"page/personal/addressMap.html": {
+				"resources": [],
+				"refer": [
+					"page/personal/add-address.html"
 				],
 				"priority": 0
 			}

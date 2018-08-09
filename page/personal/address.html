@@ -315,7 +315,11 @@
 
 										addressStorage = [defultAddress];
 
-
+										if(plus.webview.getWebviewById("add-address")){
+								 			setTimeout(function() {
+								 				plus.webview.getWebviewById("add-address").close()
+								 			}, 0)
+										}
 										if(goType == 'pzOrder'){//拍照下单
 											plus.storage.setItem('$addressStorageY2', JSON.stringify(addressStorage));
 											mui.fire(plus.webview.getWebviewById('pzOrder'),'readdstorage');//拍照下单

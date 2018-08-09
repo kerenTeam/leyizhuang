@@ -95,13 +95,26 @@
 						mapAddress.township = ts;
 						mapAddress.adraddress = pr+ct+dt+ts;
 						mapAddress.neighborhood = nb;
-						mapStorage = [mapAddress];
+						mapStorage = [mapAddress]; 
 						plus.storage.setItem('$mapStorage', JSON.stringify(mapStorage));
-						// alert(plus.storage.getItem('$mapStorage'));
 						var list = plus.webview.getWebviewById(pageid);
-						// alert(list)
-						mui.fire(list, 'refreshmapstorage');
-						mui.back();
+						var identityT = plus.webview.currentWebview().CidentityT || JSON.parse(plus.storage.getItem("$identityType")).identityType;
+						
+						if(pageid == "order"){ 
+							openview({
+								view:'add-address.html',
+								id:'add-address',
+								extrasobj: {
+									page: 'orderm',
+									ConeId:plus.webview.currentWebview().ConeId,
+									CidentityT:identityT,
+								}
+							}); 
+						}else{
+							mui.fire(list, 'refreshmapstorage');
+							mui.back();
+						}
+						
 					}
 				})
 //			}())
