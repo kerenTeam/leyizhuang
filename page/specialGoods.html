@@ -26,9 +26,9 @@
 		}
 		
 		.sint {
-			right: 0;
+			right: 10px;
 			top: 2px;
-			left: 0;
+			left: -10px;
 			position: absolute;
 			display: flex;
 			display: -webkit-flex;
@@ -72,7 +72,7 @@
 		
 		.mui-icon-search2 {
 			top: -2px;
-			left: 10px;
+			left: 0px;
 			font-size: 24px!important;
 		}
 		
@@ -169,7 +169,7 @@
 						<span class="back" id="cancelSearch">确认</span>
 					</div>
 				</div>
-				<img src="../../images/center/zixunSvg.svg" onclick="poverTel()" class="mui-pull-right messagefitler" style="position: absolute;top:7px;right:-2px;width: 25px;" />
+				<img src="../images/center/zixunSvg.svg" onclick="poverTel()" class="mui-pull-right messagefitler" style="position: absolute;top:7px;right:-2px;width: 25px;" />
 				
 			</div>
 			
@@ -480,6 +480,16 @@
 						}else{
 							api ='/app/goods/zs/rank/list'
 						}
+						console.log({
+								keywords: keywords,
+								firstCategoryCode: categoryCode,
+								brandId: brandId,
+								specification:specification,
+								userId: userId,
+								identityType: identityT,
+								page: 1,
+								size: oneSize
+							})
 						//商品列表
 						mui.ajax(serverUrl + api, {
 							data: {

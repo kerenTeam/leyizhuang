@@ -489,7 +489,8 @@
       "images/blankCart.png",
       "images/order/c3g.svg",
       "images/order/c1.svg",
-      "images/order/c2g.svg"
+      "images/order/c2g.svg",
+      "js/mui.min.nofast.js"
     ],
     "refer": [
       "login.html",
@@ -1412,7 +1413,8 @@
   "page/specialGoods.html": {
     "refer": [
       "cart.html",
-      "page/goodsInfo.html"
+      "page/goodsInfo.html",
+      "consultTel.html"
     ],
     "resources": []
   },
@@ -1498,6 +1500,7 @@
   "page/personal/addressMap.html": {
     "refer": [
       "page/personal/add-address.html"
-    ]
+    ],
+    "resources": []
   }
 }

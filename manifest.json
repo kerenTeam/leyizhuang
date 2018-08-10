@@ -920,7 +920,8 @@
 					"images/blankCart.png",
 					"images/order/c3g.svg",
 					"images/order/c1.svg",
-					"images/order/c2g.svg"
+					"images/order/c2g.svg",
+					"js/mui.min.nofast.js"
 				],
 				"refer": [
 					"login.html",
@@ -1942,7 +1943,8 @@
 				"resources": [],
 				"refer": [
 					"cart.html",
-					"page/goodsInfo.html"
+					"page/goodsInfo.html",
+					"consultTel.html"
 				],
 				"priority": 0
 			},
