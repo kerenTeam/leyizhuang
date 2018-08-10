@@ -19,7 +19,7 @@
 				padding-bottom: 10px;
 			}
 			/*去支付样式*/
-			
+
 			#maskInfo {
 				z-index: 99999;
 				position: fixed;
@@ -29,7 +29,7 @@
 				bottom: 0;
 				background-color: rgba(0, 0, 0, .5)
 			}
-			
+
 			.paychoose {
 				background-color: white;
 				bottom: 0!important;
@@ -37,13 +37,13 @@
 				right: 0;
 				left: 0;
 			}
-			
+
 			.paychoose img {
 				width: 40px;
 				margin: 0 5px;
 			}
 			/*去支付样式结束*/
-			
+
 			.orderList .h3 a.a1 {
 				white-space: nowrap;
 				color: #555;
@@ -53,23 +53,23 @@
 				overflow: hidden;
 				text-overflow: ellipsis;
 			}
-			
+
 			.dingdanPingjia {
 				padding: 4px 10px;
 				border-color: #c7161e;
 				color: #c7161e;
 			}
-			
+
 			.cancelBtn {
 				padding-top: 3%;
 				margin-bottom: 0;
 			}
-			
+
 			.mui-icon-star-filled,
 			.mui-icon-star {
 				font-size: 24px;
 			}
-			
+
 			.loadOpcity {
 				opacity: 0;
 			}
@@ -483,7 +483,7 @@
 				if(identityT == 2){
 					document.getElementById('khyck').setAttribute('onclick', 'xyedPayF("ST_PREPAY","' + payableAmount + '","' + orderNumber + '")');
 				}
-				
+
 				plus.payment.getChannels(function(channels) {
 					console.log("channel " + JSON.stringify(channels));
 					for(var i in channels) {
@@ -776,6 +776,9 @@
 					$('.mui-title').html("物流");
 					$('#loadingdiv').css("margin-top", 0);
 					$('#openSearch,#tabLink').hide()
+					if(inType == 'dai' || inType == 'yi'){
+						$('#openSearch').show()
+					}
 				} else {
 					$('.mui-title').html("我的订单");
 					$('#loadingdiv').css("margin-top", '42px');
@@ -810,7 +813,7 @@
 
 				}
 
-				//新的取消订单,妈的非要刷新,傻逼
+				//新的取消订单,
 				window.NewcancelFun = function(pageType, cancelParentId) {
 					cancelFun(pageType, cancelParentId, function() {
 						//刷新当前列表
@@ -933,8 +936,14 @@
 						nowData = {
 							'userID': userId,
 							'identityType': identityT,
-							'showStatus': tabT,
-							'condition': condition
+							'showStatus': tabT
+						}
+						if(inType == 'dai' || inType == 'yi'){
+							nowData.keywords = condition
+							console.log(JSON.stringify(nowData))
+						}else{
+							nowData.condition = condition;
+							console.log(JSON.stringify(nowData))
 						}
 					} else if(fromPage == 'index') {
 						nowApi = '/app/delivery/logistics/list';

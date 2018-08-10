@@ -180,7 +180,7 @@ audio:not([controls]) {
 }
 
 input[type="search"] {
-	-webkit-appearance: textfield;
+	-webkit-appearance: initial;
 	-moz-box-sizing: content-box;
 	-webkit-box-sizing: content-box;
 	box-sizing: content-box;
@@ -482,7 +482,7 @@ p.form {
 	background: #ced65b;
 }
 .yellow{
-	background: #ecd156;	
+	background: #ecd156;
 }
 .blue3{
 	background:#51cebe;
