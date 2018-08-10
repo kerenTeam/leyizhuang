@@ -32,7 +32,7 @@
 			<h1 class="mui-title" style="left: 105px!important;text-align: center;right: 100px;">下料清单</h1>
 			<a class="mui-pull-right editAll" id="bianji" style="line-height: 50px;color: #555;">编辑</a>
 			<img src="images/center/zixunSvg.svg" onclick="poverTel()" class="mui-pull-right messagefitler" style="width: 25px;margin-top:11px;margin-right: 10px;" />
-			
+
 		</header>
 		<script src="js/statusBar.js"></script>
 		<!--状态栏-->
@@ -173,7 +173,7 @@
 
 		</script>
 		<div style="height:1rem;"></div>
-		
+
 		<!--选中 数量、金额的合计-->
 		<aside class="btmNav">
 			<a class="dp ft15" style="position: relative;color: #B62D29;">
@@ -185,7 +185,7 @@
 			</a>
 		</aside>
 		<script type="text/javascript" src="js/jquery_cart.js"></script>
-		<script src="js/mui.min.js"></script>
+		<script src="js/mui.min.nofast.js"></script>
 		<script src="js/artTemplate-native.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/default.js" type="text/javascript" charset="utf-8"></script>
 	</body>
@@ -221,10 +221,10 @@
 		mui.plusReady(function() {
 			//下拉刷新当前页
 			downRe(cartload);
-			
+
 			var page = plus.webview.currentWebview().page;
 			var cusId = plus.webview.currentWebview().cusid;
-			
+
 			if(!cusId){
 				cusId = ''
 			}
@@ -236,10 +236,10 @@
 			document.addEventListener('refresh', function(event) {
 				cartload();
 			});
-			
+
 			//监听底部点击，切换编辑和选择按钮的显示--- 选中or不选中
 			document.addEventListener('refreshBtn', function(event) {
-				
+
 				$(".delBtn,.delBtnAll").css("display", "none");
 				$("#allCartData").find("h2").css("visibility", "visible");
 				$('.editAll').html('编辑');
@@ -250,7 +250,7 @@
 			});
 			//购物车数据未空时显示的内容
 			var tipsCont = '<div id="rfcart"><img src="images/blankCart.png" style="width:30%;margin: auto;display: block;margin-top: 40%;" alt="" /><div style="color: #666;text-align: center;margin-top: 30px;font-size: 14px;">你的下料清单还是空的哦</div></div>';
-			
+
 			//获取购物车数据
 			cartload();
 			function cartload() {
@@ -289,7 +289,7 @@
 								if(data.content.deliveryId && data.content.deliveryId != -1){
 									plus.storage.setItem('deliveryId',data.content.deliveryId.toString());//用于订单页面，获取收货地址
 								}
-								
+
 								//料单审核数据 部分
 								if(data.content.auditListRes && data.content.auditListRes.goodsList && data.content.auditListRes.goodsList.length>0){
 									m = m+1;
@@ -331,7 +331,7 @@
 								}
 
 							}
-							
+
 							if(m == 0){//没有数据 隐藏某些编辑按钮
 								$(".editAll,aside").hide();
 								$('#cartData').html(tipsCont);
@@ -342,19 +342,19 @@
 								countFuc();
 								plus.storage.setItem('cartNums', $(".totalNum").html());
 							}
-							
+
 							//*****给首页加自定义事件，刷新app地步的购物车图标的角标数量 *****
 							var index = plus.webview.getLaunchWebview();
 								mui.fire(index, 'cart_refresh');
-								
-								
+
+
 								plus.nativeUI.closeWaiting();
 								mui('.mui-numbox').numbox();//初始化numbox组件
-								
+
 								$('.numberWidget,.mui-numbox button').click(function() {
 									event.stopPropagation();
 								})
-								
+
 								//点击数量时选中，安卓和ios分开处理  ***其他页面同理****
 								var platform = plus.storage.getItem('platform')
 								$('.mui-numbox input').click(function() {
@@ -428,7 +428,7 @@
 															mui.toast('删除成功');
 															$('.delBtnAll').hide();
 															$('.goOrder').show();
-															
+
 															//******自定义以下事件，刷新所有有关购物车数量显示的界面*******
 															mui.fire(plus.webview.getWebviewById('goodList'),'refresh');
 															mui.fire(plus.webview.getWebviewById('page/goodList.html'),'refresh');
@@ -446,7 +446,7 @@
 															mui.fire(plus.webview.getWebviewById('history'),'refresh');
 															mui.fire(plus.webview.getWebviewById('searchGoods'),'refreshscgd');
 															mui.fire(plus.webview.getWebviewById('promotionInfo'),'refresh');
-															
+
 															//刷新购物车列表
 															cartload();
 														} else {
