@@ -913,7 +913,7 @@
 
 				}
 
-				function loadFun(tabT, condition, cancelrefresh) { //搜索和tab切换 ，公用一个加载方法
+				function loadFun(tabT, condition, cancelrefresh, newSearch) { //搜索和tab切换 ，公用一个加载方法
 					var Spagenum = 2,
 						Ypagenum = 1,
 						oneSize = 10;
@@ -931,20 +931,15 @@
 					};
 					console.log(nowData)
 					console.log(oldToken)
-					if(condition) { //搜索字段
+					if(condition) { //普通 搜索 字段
 						nowApi = '/app/order/search';
 						nowData = {
 							'userID': userId,
 							'identityType': identityT,
-							'showStatus': tabT
+							'showStatus': tabT,
+							'condition' : condition
 						}
-						if(inType == 'dai' || inType == 'yi'){
-							nowData.keywords = condition
-							console.log(JSON.stringify(nowData))
-						}else{
-							nowData.condition = condition;
-							console.log(JSON.stringify(nowData))
-						}
+
 					} else if(fromPage == 'index') {
 						nowApi = '/app/delivery/logistics/list';
 						nowData = {
@@ -961,6 +956,7 @@
 							'page': 1,
 							'size': oneSize
 						};
+						newSearch &&( nowData.keywords = newSearch)
 					} else if(inType == 'yi') {
 						nowApi = '/app/order/list/sellerManager/payFor';
 						nowData = {
@@ -969,6 +965,7 @@
 							'page': 1,
 							'size': oneSize
 						};
+						newSearch &&( nowData.keywords = newSearch)
 					}
 					mui.ajax(serverUrl + nowApi, {
 						data: nowData,
@@ -1082,6 +1079,7 @@
 														'page': Ypagenum,
 														'size': oneSize
 													};
+													newSearch && (nowData.keywords = newSearch)
 												} else if(inType == 'yi') {
 													nowData = {
 														'userId': userId,
@@ -1089,6 +1087,7 @@
 														'page': Ypagenum,
 														'size': oneSize
 													};
+													newSearch && (nowData.keywords = newSearch)
 												}
 												mui.ajax(serverUrl + nowApi, {
 													data: nowData,
@@ -1175,12 +1174,20 @@
 				})
 				$('#searchf').submit(function() {
 					var valInt = $('#valInt').val();
-					loadFun('', valInt);
+					if(inType == 'dai' || inType == 'yi'){
+						loadFun('','','',valInt);
+					}else{
+						loadFun('', valInt);
+					}
 					return false;
 				})
 				$('#clickSearch').click(function() {
 					var valInt = $('#valInt').val();
-					loadFun('', valInt);
+					if(inType == 'dai' || inType == 'yi'){
+						loadFun('','','',valInt);
+					}else{
+						loadFun('', valInt);
+					}
 				})
 
 				//取消订单
