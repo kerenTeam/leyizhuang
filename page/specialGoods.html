@@ -72,7 +72,7 @@
 		
 		.mui-icon-search2 {
 			top: -2px;
-			left: -13px;
+			left: 10px;
 			font-size: 24px!important;
 		}
 		
@@ -474,8 +474,14 @@
 
 					function goodsList(categoryCode, keywords, brandId, specification) {
 						plus.nativeUI.showWaiting()
+						var api = ''
+						if(identityT == 6){
+							api = '/app/goods/rank/list'
+						}else{
+							api ='/app/goods/zs/rank/list'
+						}
 						//商品列表
-						mui.ajax(serverUrl + '/app/goods/rank/list', {
+						mui.ajax(serverUrl + api, {
 							data: {
 								keywords: keywords,
 								firstCategoryCode: categoryCode,
@@ -647,7 +653,13 @@
 														Ypagenum++; //满足加载情况,应到页数+1
 														console.log('发起请求,实到' + Spagenum + '页');
 														console.log('发起请求,应到' + Ypagenum + '页');
-														mui.ajax(serverUrl + '/app/goods/rank/list', {
+														var api = ''
+															if(identityT == 6){
+																api = '/app/goods/rank/list'
+															}else{
+																api ='/app/goods/zs/rank/list'
+															}
+														mui.ajax(serverUrl + api, {
 															data: {
 																keywords: keywords,
 																firstCategoryCode: categoryCode,

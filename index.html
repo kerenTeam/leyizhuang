@@ -379,17 +379,17 @@
 		</div>
 
 		<div class="bgcwt">
-			<div class="somenspf ft12 padd10 fttc activecl" id="slogan">
-				<div style="visibility: hidden;">
+			<!--<div class="somenspf ft12 padd10 fttc activecl" id="slogan">
+				<div style="visibility: ;">
 					<img src="images/index/bdchexk.svg" /><span>满1000元包邮</span>
 				</div>
-				<div style="visibility: hidden;">
+				<div style="visibility: ;">
 					<img src="images/index/bdchexk.svg" /><span>电梯免费上楼</span>
 				</div>
-				<div style="visibility: hidden;">
+				<div style="visibility: ;">
 					<img src="images/index/bdchexk.svg" /><span>二绕内均可配送</span>
 				</div>
-			</div>
+			</div>-->
 			<div class="flexw paddv10 ftype" id="iconData" style="margin-top:0 ;">
 				<div data-id="water">
 					<div class="imgb" style="background-color:#B62D29"><img src="images/s.svg" alt="" /></div>水
@@ -421,6 +421,9 @@
 		</div>
 		<div class="specialGoods2" style="margin: 10px 10px -5px 10px;display: none;" onclick="specialGoods()">
 			<img src="images/index/special3.png" style="width: 100%;" />
+		</div>
+		<div class="specialGoods3" style="margin: 10px 10px -5px 10px;display: none;" onclick="specialGoods()">
+			<img src="images/index/special2.png" style="width: 100%;" />
 		</div>
 		<div id="banner2" style="display: none;">
 			<div class="mui-slider slider3">
@@ -1051,6 +1054,7 @@
 						$('.guides,.worker').css('display', '')
 						$('.cusMan,.guides,#banner2').css('display', 'none')
 						getIcon(2)
+						$('.specialGoods3').show()
 					} else { //配送员
 						$('#banner2').css('display', 'none')
 					}
@@ -1062,7 +1066,9 @@
 					}else{
 						mui('#xiaoxiBtn')[0].style.right = '29px';
 					}
-					
+					if(identityT == 2){
+						$('.specialGoods3').show()
+					}
 					//开定时器 获取通知消息 
 					var timeMsg = null;
 					clearInterval(timeMsg);
