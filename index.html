@@ -793,16 +793,11 @@
 			}
 			// 产品券
 			function productCoupon(){
-				var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
-				if(identityT == 2){
-					 mui.alert('暂未开通此功能,敬请期待')
-				}else{
-					openview({
-						view:'page/personal/productCoupon.html',
-						id: 'productCoupon',
-					})
-				}
-
+				openview({
+					view:'page/personal/productCoupon.html',
+					id: 'productCoupon',
+				})
+			  
 			}
 			//跳转地址管理
 			function goaddr(){
