@@ -239,7 +239,8 @@
 				var noButton = plus.webview.currentWebview().isNoButton;
 				if(pingjia){
 					mui('#mui-title1')[0].innerHTML = '待评价';
-				}else{
+				}else{  //这是评价
+					$('#openSearch').css('display','block');
 					mui('#mui-title1')[0].innerHTML = '退货';
 				}
 				loadFun('全部');//初始化
@@ -280,6 +281,7 @@
 					$('#loadingdiv').css('height','32px');
 					var nowApi = '/app/returnOrder/list';
 					var nowData = {'userId':userId,'identityType':identityT,'showStatus':3,'page':1,'size':oneSize};
+					if(condition){nowData.keywords = condition}//加入搜索字段
 					//var nowData = {'userId':53,'identityType':6,'showStatus':3,'page':1,'size':oneSize};
 					if(pingjia){
 						nowApi = '/app/order/list/pending/evaluation';
@@ -323,6 +325,7 @@
 												document.getElementById('upload').innerHTML = "<img src='../../img/Rolling.svg' />";
 												Ypagenum++;console.log('发起请求,实到' + Spagenum + '页');console.log('发起请求,应到' + Ypagenum + '页');
 												nowData = {'userId':userId,'identityType':identityT,'showStatus':3,'page':Spagenum,'size':oneSize};
+												if(condition){nowData.keywords = condition}//加入搜索字段
 												mui.ajax(serverUrl + nowApi,{
 							                        data:nowData,
 							                        dataType:'json',
@@ -407,6 +410,27 @@
 					    }
 				  	});
 				}
+
+
+				//搜索操作
+				$('#openSearch').click(function() {
+					$('#tabLink2').css('display', 'block');
+					$(this).css('display', 'none');
+				})
+				$('#cancelSearch').click(function() {
+					$('#tabLink2').css('display', 'none');
+					$('#openSearch').css('display', 'block');
+				})
+				$('#searchf').submit(function() {
+					var valInt = $('#valInt').val();
+					loadFun('全部', valInt);
+					return false;
+				})
+				$('#clickSearch').click(function() {
+					var valInt = $('#valInt').val();
+					loadFun('全部', valInt);
+				})
+				//搜索操作 结束
 
 				/*订单评价*/
 				$('.operating11').click(function(){//点取消

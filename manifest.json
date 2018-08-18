@@ -1842,7 +1842,8 @@
 				"resources": [],
 				"refer": [
 					"page/personal/myOrderRTdetail.html",
-					"page/personal/myOrderDetail.html"
+					"page/personal/myOrderDetail.html",
+					"page/personal/myOrderRTList.html"
 				],
 				"priority": 0
 			},

@@ -52,6 +52,10 @@
 			.yunfeiDetail a{display: inline-block;color: #B62D29;padding: 3px 9px 0px;}
 			.mui-popover .mui-table-view{overflow: scroll !important;}
 			.mui-popover{height: 230px;}
+			/*收起菜单*/
+			.mui-card{margin: 10px 0 !important;box-shadow: 0 0px 1px rgba(0,0,0,.3) !important;}
+			.mui-navigate-right:after, .mui-push-right:after{font-size: 26px;}
+			.mui-table-view-cell>a:not(.mui-btn){font-size: 15px;}
 		</style>
 	</head>
 
@@ -100,9 +104,9 @@
 					<span class="span2" style="color: #EE9000;"><%= detail.statusDesc%></span>
 				</p>
 			</div>
-			<div class="Dpart1 Dpart2" style="margin-bottom: 0;">
+			<!--<div class="Dpart1 Dpart2" style="margin-bottom: 0;">
 				<span class="huiC">支付方式</span> <span class="mui-pull-right"><%= detail.payType%></span>
-			</div>
+			</div>-->
 			<%if(detail.identityT == '0'){%>
 				<div class="Dpart1 Dpart2">
 					<span class="huiC">导购填写代收款</span> <span class="mui-pull-right"><%= detail.BillingDetailResponse.collectionAmount || '0'%> 元</span>
@@ -162,33 +166,191 @@
 					</div>
 				</div>
 			<%}%>
-			<!--金额详情-->
+			<!-- ******************金额详情*************************-->
+
+			<!--新的改造 做成展开模式-->
+			<div class="mui-card">
+				<ul class="mui-table-view">
+					<li class="mui-table-view-cell mui-collapse mui-active">
+						<a class="mui-navigate-right">订单详情</a>
+						<div class="mui-collapse-content Dpart4 Dpart3">
+							<div>
+								<span class="huiC">商品总额</span> <span class="floL"><%= detail.BillingDetailResponse.totalPrice%>元</span>
+							</div>
+							<div>
+								<span class="huiC">运费</span>  <span class="floL"><%= detail.BillingDetailResponse.freight%>元</span> <button type="button" class="mui-btn mui-btn-danger mui-btn-outlined floL yunfeiDetail aClick"><a href="#middlePopover">明细</a></button>
+							</div>
+							<div>
+								<span class="huiC">优惠券抵扣</span> <span class="floL">
+									<%if(detail.BillingDetailResponse.couponDiscount>0){%>
+										-<%= detail.BillingDetailResponse.couponDiscount%>元
+									<%}else{%>
+										<%= detail.BillingDetailResponse.couponDiscount%>元
+									<%}%>
+								</span>
+							</div>
+							<%if(detail.identityT != '2'){%> <!--不是项目经理-->
+							<div>
+								<span class="huiC">产品券抵扣</span> <span class="floL">
+									<%if(detail.BillingDetailResponse.productCouponDiscount>0){%>
+										-<%= detail.BillingDetailResponse.productCouponDiscount || 0%>元
+									<%}else{%>
+										<%= detail.BillingDetailResponse.productCouponDiscount || 0%>元
+									<%}%>
+								</span>
+							</div>
+							<%}%>
+							<div>
+								<span class="huiC">冲账户余额</span> <span class="floL">
+									<%if(detail.BillingDetailResponse.memberDiscount>0){%>
+										-<%= detail.BillingDetailResponse.memberDiscount%>元
+									<%}else{%>
+										<%= detail.BillingDetailResponse.memberDiscount%>元
+									<%}%>
+								</span>
+							</div>
+							<div>
+								<span class="huiC">促销抵扣</span> <span class="floL">
+									<%if(detail.BillingDetailResponse.promotionDiscount>0){%>
+										-<%= detail.BillingDetailResponse.promotionDiscount%>元
+									<%}else{%>
+										<%= detail.BillingDetailResponse.promotionDiscount%>元
+									<%}%>
+								</span>
+							</div>
+							<!--客户经理查看订单详情，增加现金返利折扣金额显示-->
+							<%if(detail.identityT == '2'){%> <!--装饰公司(项目经理) 单独-->
+								<div>
+									<span class="huiC">现金返利折扣</span> <span class="floL">
+										<%if(detail.BillingDetailResponse.subvention>0){%>
+											-<%= detail.BillingDetailResponse.subvention%>元
+										<%}else{%>
+											<%= detail.BillingDetailResponse.subvention%>元
+										<%}%>
+									</span>
+								</div>
+							<%}%>
+							<div style="color: #4e4e4e !important;font-size: 16px;">
+								<span>订单总价</span> <span class="floL">
+									<%= detail.BillingDetailResponse.orderAmountSubtotal%>元
+								</span>
+							</div>
+						</div>
+					</li>
+				</ul>
+			</div>
+			<% if(detail.BillingDetailResponse.upstairsFee != '0'){%>
+				<div class="mui-card">
+					<ul class="mui-table-view">
+						<li class="mui-table-view-cell mui-collapse">
+							<a class="mui-navigate-right" >其他费用</a>
+							<div class="mui-collapse-content Dpart4 Dpart3">
+								<div>
+									<span class="huiC">上楼费</span> <span class="floL"><%= detail.BillingDetailResponse.upstairsFee%>元</span>
+								</div>
+							</div>
+						</li>
+					</ul>
+				</div>
+			<%}%>
+			<% if( (detail.identityT == '2' && detail.BillingDetailResponse.empCreditMoney != '0') || ( detail.identityT != '2' && detail.BillingDetailResponse.creditMoney != '0') ){%>
+				<div class="mui-card">
+					<ul class="mui-table-view">
+						<li class="mui-table-view-cell mui-collapse">
+							<a class="mui-navigate-right" >额度详情</a>
+							<div class="mui-collapse-content Dpart4 Dpart3">
+								<%if(detail.identityT != '6'){%>
+									<div>
+										<span class="huiC">
+											<%if(detail.identityT == '2'){%>
+												信用金抵扣
+											<%}else{%>
+												信用额度抵扣
+											<%}%>
+										</span>
+										<span class="floL">
+											<!--装饰公司的这一个字段由creditMoney变为empCreditMoney-->
+											<%if(detail.identityT == '2'){%>
+												<%if(detail.BillingDetailResponse.empCreditMoney>0){%>
+													-<%= detail.BillingDetailResponse.empCreditMoney || 0%>元
+												<%}else{%>
+													<%= detail.BillingDetailResponse.empCreditMoney || 0%>元
+												<%}%>
+											<%}else{%>
+												<%if(detail.BillingDetailResponse.creditMoney>0){%>
+													-<%= detail.BillingDetailResponse.creditMoney || 0%>元
+												<%}else{%>
+													<%= detail.BillingDetailResponse.creditMoney || 0%>元
+												<%}%>
+											<%}%>
+
+										</span>
+									</div>
+								<%}%>
+								<div style="color: #4e4e4e !important;font-size: 16px;">
+									<span>额度使用合计</span> <span class="floL">
+										<%= detail.BillingDetailResponse.totalCreditMoney%>元
+									</span>
+								</div>
+							</div>
+						</li>
+					</ul>
+				</div>
+			<% } %>
+			<div class="mui-card">
+				<ul class="mui-table-view">
+					<li class="mui-table-view-cell mui-collapse">
+						<a class="mui-navigate-right" >付款详情</a>
+						<div class="mui-collapse-content Dpart4 Dpart3">
+							<%if(detail.BillingDetailResponse.preDeposit != '0'){%>
+								<div>
+									<span class="huiC">预存款抵扣</span> <span class="floL">
+										<%if(detail.BillingDetailResponse.preDeposit>0){%>
+											-<%= detail.BillingDetailResponse.preDeposit%>元
+										<%}else{%>
+											<%= detail.BillingDetailResponse.preDeposit%>元
+										<%}%>
+									</span>
+								</div>
+							<%}%>
+							<!--顾客 装饰公司 (posMoney, cashMoney)-->
+							<%if(detail.identityT == '6' || detail.identityT == '2'){%>
+								<%if(detail.BillingDetailResponse.posMoney != '0'){%>
+									<div><span class="huiC">POS支付</span> <span class="floL"><%= detail.BillingDetailResponse.posMoney%>元</span></div>
+								<%}%>
+								<%if(detail.BillingDetailResponse.cashMoney != '0'){%>
+									<div><span class="huiC">现金支付</span> <span class="floL"><%= detail.BillingDetailResponse.cashMoney%>元</span></div>
+								<%}%>
+							<%}%>
+							<!--导购(storeCash, storePosMoney, deliveryCash, deliveryPos)-->
+							<%if(detail.identityT == '0'){%>
+								<%if(detail.BillingDetailResponse.storeCash != '0'){%>
+									<div><span class="huiC">门店现金</span> <span class="floL"><%= detail.BillingDetailResponse.storeCash%>元</span></div>
+								<%}%>
+								<%if(detail.BillingDetailResponse.storePosMoney != '0'){%>
+									<div><span class="huiC">门店POS</span> <span class="floL"><%= detail.BillingDetailResponse.storePosMoney%>元</span></div>
+								<%}%>
+								<%if(detail.BillingDetailResponse.deliveryCash != '0'){%>
+									<div><span class="huiC">配送现金</span> <span class="floL"><%= detail.BillingDetailResponse.deliveryCash%>元</span></div>
+								<%}%>
+								<%if(detail.BillingDetailResponse.deliveryPos != '0'){%>
+									<div><span class="huiC">配送POS</span> <span class="floL"><%= detail.BillingDetailResponse.deliveryPos%>元</span></div>
+								<%}%>
+							<%}%>
+							<div style="color: #4e4e4e !important;font-size: 16px;">
+								<span>实付款合计</span> <span class="floL">
+									<%= detail.BillingDetailResponse.amountPayable%>元
+								</span>
+							</div>
+						</div>
+					</li>
+				</ul>
+			</div>
+			<!--新的改造 结束-->
+
 			<div class="Dpart4 Dpart3">
-				<div>
-					<span class="huiC">商品总额</span> <span class="floL"><%= detail.BillingDetailResponse.totalPrice%>元</span>
-				</div>
-				<div>
-					<span class="huiC">运费</span>  <span class="floL"><%= detail.BillingDetailResponse.freight%>元</span> <button type="button" class="mui-btn mui-btn-danger mui-btn-outlined floL yunfeiDetail aClick"><a href="#middlePopover">明细</a></button>
-				</div>
-				<div>
-					<span class="huiC">优惠券抵扣</span> <span class="floL">
-						<%if(detail.BillingDetailResponse.couponDiscount>0){%>
-							-<%= detail.BillingDetailResponse.couponDiscount%>元
-						<%}else{%>
-							<%= detail.BillingDetailResponse.couponDiscount%>元
-						<%}%>
-					</span>
-				</div>
-				<div>
-					<span class="huiC">冲账户余额</span> <span class="floL">
-						<%if(detail.BillingDetailResponse.memberDiscount>0){%>
-							-<%= detail.BillingDetailResponse.memberDiscount%>元
-						<%}else{%>
-							<%= detail.BillingDetailResponse.memberDiscount%>元
-						<%}%>
-					</span>
-				</div>
-				<%if(detail.identityT == '6'){%> <!--顾客 单独-->
+				<!--乐币抵扣 弃用@@@@@@@@@@@@@@@@@-->
+				<!--弃用@@@@@@<%if(detail.identityT == '6'){%>
 					<div>
 						<span class="huiC">乐币抵扣</span> <span class="floL">
 							<%if(detail.BillingDetailResponse.leBiCashDiscount>0){%>
@@ -198,82 +360,26 @@
 							<%}%>
 						</span>
 					</div>
-				<%}%>
-				<!--客户经理查看订单详情，增加现金返利折扣金额显示-->
-				<%if(detail.identityT == '2'){%> <!--装饰公司(项目经理) 单独-->
-					<div>
-						<span class="huiC">现金返利折扣</span> <span class="floL">
-							<%if(detail.BillingDetailResponse.subvention>0){%>
-								-<%= detail.BillingDetailResponse.subvention%>元
-							<%}else{%>
-								<%= detail.BillingDetailResponse.subvention%>元
-							<%}%>
-						</span>
-					</div>
-				<%}%>
-				<div>
-					<span class="huiC">促销抵扣</span> <span class="floL">
-						<%if(detail.BillingDetailResponse.promotionDiscount>0){%>
-							-<%= detail.BillingDetailResponse.promotionDiscount%>元
-						<%}else{%>
-							<%= detail.BillingDetailResponse.promotionDiscount%>元
-						<%}%>
-					</span>
-				</div>
-				<%if(detail.identityT != '6'){%>
-					<div>
-						<span class="huiC">
-							<%if(detail.identityT == '2'){%>
-								信用金抵扣
-							<%}else{%>
-								信用额度抵扣
-							<%}%>
-						</span> <span class="floL">
-							<%if(detail.BillingDetailResponse.creditMoney>0){%>
-								-<%= detail.BillingDetailResponse.creditMoney || 0%>元
-							<%}else{%>
-								<%= detail.BillingDetailResponse.creditMoney || 0%>元
-							<%}%>
-						</span>
-					</div>
-				<%}%>
-				<%if(detail.identityT != '2'){%>
-					<div>
-						<span class="huiC">产品券抵扣</span> <span class="floL">
-							<%if(detail.BillingDetailResponse.productCouponDiscount>0){%>
-								-<%= detail.BillingDetailResponse.productCouponDiscount || 0%>元
-							<%}else{%>
-								<%= detail.BillingDetailResponse.productCouponDiscount || 0%>元
-							<%}%>
-						</span>
-					</div>
-				<%}%>
-				<div>
-					<span class="huiC">预存款抵扣</span> <span class="floL">
-						<%if(detail.BillingDetailResponse.preDeposit>0){%>
-							-<%= detail.BillingDetailResponse.preDeposit%>元
-						<%}else{%>
-							<%= detail.BillingDetailResponse.preDeposit%>元
-						<%}%>
-					</span>
-				</div>
-				<% if(detail.zhuangshi == 'yi'){ %>
+				<%}%>弃用@@@@@@-->
+				<!--代付金额 弃用@@@@@@@@@@@@@@@@@ -->
+				<!--弃用@@@@@@<% if(detail.zhuangshi == 'yi'){ %>
 					<div>
 						<span class="huiC">代付金额</span> <span class="floL"><%= detail.BillingDetailResponse.payForAnotherMoney%>元</span>
 					</div>
 					<div>
 						<span class="huiC">代付方式</span> <span class="floL"><%= detail.BillingDetailResponse.payType%></span>
 					</div>
-				<% } %>
-				<% if(detail.identityT == '2' && detail.BillingDetailResponse.payForAnotherMoney){ %>
+				<% } %>弃用@@@@@@-->
+				<!--代付金额   弃用@@@@@@@@@@@@@@@@@-->
+				<!--项目经理-->
+				<!--弃用@@@@@@<% if(detail.identityT == '2' && detail.BillingDetailResponse.payForAnotherMoney){ %>
 					<div>
 						<span class="huiC">代付金额</span> <span class="floL"><%= detail.BillingDetailResponse.payForAnotherMoney%>元</span>
 					</div>
-				<% } %>
-				<!--<div>
-					<span class="redC">应付金额</span> <span class="floL redC"><%= detail.BillingDetailResponse.leBiCashDiscount%>元</span>
-				</div>-->
-				<%if(detail.identityT == '6'){%>
+				<% } %> 弃用@@@@@@-->
+				<!--代付金额   弃用@@@@@@@@@@@@@@@@@-->
+				<!--顾客-->
+				<!--弃用@@@@@@<%if(detail.identityT == '6'){%>
 					<%if(detail.customerBillingDetailResponse && detail.customerBillingDetailResponse.payForAnotherMoney){%>
 						<div>
 							<span class="huiC">代付金额</span> <span class="floL">
@@ -281,36 +387,15 @@
 							</span>
 						</div>
 					<%}%>
-				<%}%>
-				<!--顾客 装饰公司 (posMoney, cashMoney)-->
-				<%if(detail.identityT == '6' || detail.identityT == '2'){%>
-					<%if(detail.BillingDetailResponse.posMoney != '0'){%>
-						<div><span class="huiC">POS支付</span> <span class="floL"><%= detail.BillingDetailResponse.posMoney%>元</span></div>
-					<%}%>
-					<%if(detail.BillingDetailResponse.cashMoney != '0'){%>
-						<div><span class="huiC">现金支付</span> <span class="floL"><%= detail.BillingDetailResponse.cashMoney%>元</span></div>
-					<%}%>
-				<%}%>
-				<!--导购(storeCash, storePosMoney, deliveryCash, deliveryPos)-->
-				<%if(detail.identityT == '0'){%>
-					<%if(detail.BillingDetailResponse.storeCash != '0'){%>
-						<div><span class="huiC">门店现金</span> <span class="floL"><%= detail.BillingDetailResponse.storeCash%>元</span></div>
-					<%}%>
-					<%if(detail.BillingDetailResponse.storePosMoney != '0'){%>
-						<div><span class="huiC">门店POS</span> <span class="floL"><%= detail.BillingDetailResponse.storePosMoney%>元</span></div>
-					<%}%>
-					<%if(detail.BillingDetailResponse.deliveryCash != '0'){%>
-						<div><span class="huiC">配送现金</span> <span class="floL"><%= detail.BillingDetailResponse.deliveryCash%>元</span></div>
-					<%}%>
-					<%if(detail.BillingDetailResponse.deliveryPos != '0'){%>
-						<div><span class="huiC">配送POS</span> <span class="floL"><%= detail.BillingDetailResponse.deliveryPos%>元</span></div>
-					<%}%>
-				<%}%>
+				<%}%>弃用@@@@@@-->
 			</div>
-			<!--金额详情结束-->
-			<div class="fineT" style="text-align: right;background-color: #fff;margin-top: -7px;padding: 10px 15px;margin-bottom: 7px;">
-				实付款<span class="redC"><%= detail.BillingDetailResponse.amountPayable%>元</span>
-			</div>
+
+
+
+			<!--***********************金额详情结束***********************-->
+
+
+
 			<!--订单评价-->
 			<div class="Dpart3" id="evaluat" style="display: none;">
 				<h4 class="fineB dingdanPJ">订单服务评价</h4>
