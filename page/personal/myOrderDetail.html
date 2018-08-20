@@ -56,6 +56,10 @@
 			.mui-card{margin: 10px 0 !important;box-shadow: 0 0px 1px rgba(0,0,0,.3) !important;}
 			.mui-navigate-right:after, .mui-push-right:after{font-size: 26px;}
 			.mui-table-view-cell>a:not(.mui-btn){font-size: 15px;}
+			.newZhankai li, .mui-table-view-cell>a:not(.mui-btn).mui-active{background-color: #fff !important;}
+			.newZhankai .mui-collapse-content{padding-right: 0 !important;}
+			.Dpart3{margin-bottom: 0;padding-bottom: 0;}
+			.mui-navigate-right:after, .mui-push-right:after{display: none;}
 		</style>
 	</head>
 
@@ -170,8 +174,8 @@
 
 			<!--新的改造 做成展开模式-->
 			<div class="mui-card">
-				<ul class="mui-table-view">
-					<li class="mui-table-view-cell mui-collapse mui-active">
+				<ul class="mui-table-view newZhankai">
+					<li class="mui-table-view-cell  mui-active" >
 						<a class="mui-navigate-right">订单详情</a>
 						<div class="mui-collapse-content Dpart4 Dpart3">
 							<div>
@@ -180,26 +184,6 @@
 							<div>
 								<span class="huiC">运费</span>  <span class="floL"><%= detail.BillingDetailResponse.freight%>元</span> <button type="button" class="mui-btn mui-btn-danger mui-btn-outlined floL yunfeiDetail aClick"><a href="#middlePopover">明细</a></button>
 							</div>
-							<div>
-								<span class="huiC">优惠券抵扣</span> <span class="floL">
-									<%if(detail.BillingDetailResponse.couponDiscount>0){%>
-										-<%= detail.BillingDetailResponse.couponDiscount%>元
-									<%}else{%>
-										<%= detail.BillingDetailResponse.couponDiscount%>元
-									<%}%>
-								</span>
-							</div>
-							<%if(detail.identityT != '2'){%> <!--不是项目经理-->
-							<div>
-								<span class="huiC">产品券抵扣</span> <span class="floL">
-									<%if(detail.BillingDetailResponse.productCouponDiscount>0){%>
-										-<%= detail.BillingDetailResponse.productCouponDiscount || 0%>元
-									<%}else{%>
-										<%= detail.BillingDetailResponse.productCouponDiscount || 0%>元
-									<%}%>
-								</span>
-							</div>
-							<%}%>
 							<div>
 								<span class="huiC">冲账户余额</span> <span class="floL">
 									<%if(detail.BillingDetailResponse.memberDiscount>0){%>
@@ -215,6 +199,26 @@
 										-<%= detail.BillingDetailResponse.promotionDiscount%>元
 									<%}else{%>
 										<%= detail.BillingDetailResponse.promotionDiscount%>元
+									<%}%>
+								</span>
+							</div>
+							<%if(detail.identityT != '2'){%> <!--不是项目经理-->
+							<div>
+								<span class="huiC">产品券抵扣</span> <span class="floL">
+									<%if(detail.BillingDetailResponse.productCouponDiscount>0){%>
+										-<%= detail.BillingDetailResponse.productCouponDiscount || 0%>元
+									<%}else{%>
+										<%= detail.BillingDetailResponse.productCouponDiscount || 0%>元
+									<%}%>
+								</span>
+							</div>
+							<%}%>
+							<div>
+								<span class="huiC">优惠券抵扣</span> <span class="floL">
+									<%if(detail.BillingDetailResponse.couponDiscount>0){%>
+										-<%= detail.BillingDetailResponse.couponDiscount%>元
+									<%}else{%>
+										<%= detail.BillingDetailResponse.couponDiscount%>元
 									<%}%>
 								</span>
 							</div>
@@ -241,8 +245,8 @@
 			</div>
 			<% if(detail.BillingDetailResponse.upstairsFee != '0'){%>
 				<div class="mui-card">
-					<ul class="mui-table-view">
-						<li class="mui-table-view-cell mui-collapse">
+					<ul class="mui-table-view newZhankai">
+						<li class="mui-table-view-cell">
 							<a class="mui-navigate-right" >其他费用</a>
 							<div class="mui-collapse-content Dpart4 Dpart3">
 								<div>
@@ -255,8 +259,8 @@
 			<%}%>
 			<% if( (detail.identityT == '2' && detail.BillingDetailResponse.empCreditMoney != '0') || ( detail.identityT != '2' && detail.BillingDetailResponse.creditMoney != '0') ){%>
 				<div class="mui-card">
-					<ul class="mui-table-view">
-						<li class="mui-table-view-cell mui-collapse">
+					<ul class="mui-table-view newZhankai">
+						<li class="mui-table-view-cell">
 							<a class="mui-navigate-right" >额度详情</a>
 							<div class="mui-collapse-content Dpart4 Dpart3">
 								<%if(detail.identityT != '6'){%>
@@ -298,8 +302,8 @@
 				</div>
 			<% } %>
 			<div class="mui-card">
-				<ul class="mui-table-view">
-					<li class="mui-table-view-cell mui-collapse">
+				<ul class="mui-table-view newZhankai">
+					<li class="mui-table-view-cell ">
 						<a class="mui-navigate-right" >付款详情</a>
 						<div class="mui-collapse-content Dpart4 Dpart3">
 							<%if(detail.BillingDetailResponse.preDeposit != '0'){%>
