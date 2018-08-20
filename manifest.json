@@ -992,7 +992,9 @@
 					"fonts/mui.ttf",
 					"css/configW.css"
 				],
-				"refer": [],
+				"refer": [
+					"page/personal/infoDetail.html"
+				],
 				"priority": 0
 			},
 			"page/guide/myCustomer.html": {

@@ -57,10 +57,14 @@
 				<div class="DWinfoList">
 					<% for(var i=0; i<list.logisticsDetail.length; i++){%>
 						<% if(i == 0){%>
-							<div class="active activecl">
+							<div class="active activecl lalala">
+								<%if(list.logisticsDetail[i].pictures && list.logisticsDetail[i].pictures.length){%>
+									<p><img src="<%=list.logisticsDetail[i].pictures%>" style="position: static;width: 80px;height: 80px;margin: 0 5px;" class="scaleimg"/></p>
+								<%}%>
+								
 								<h5 style="color: #B62D29;"><%= list.logisticsDetail[i].describe%></h5>
 								<p style="color: #B62D29;"><%= list.logisticsDetail[i].createTime%> <span style="color: #B62D29;"> <%= list.logisticsDetail[i].logisticsType%> </span></p>
-								<img src="../../img/huangdian.svg"/>
+								<img src="../../img/huangdian.svg"/> 
 							</div>
 						<%} else{%>
 							<div>
@@ -116,6 +120,21 @@
 							}else{
 								document.getElementById('dataDiv1').innerHTML = '<div style="padding: 20px;text-align: center;">暂无数据</div>';
 							}
+							
+							 var images = [].slice.call(document.querySelectorAll('.scaleimg'));
+						      var urls = [];
+						      images.forEach(function(item) {
+						        urls.push(item.src);
+						      });
+						      mui('.lalala').on('tap', 'img', function() {
+						        var index = images.indexOf(this);
+						        plus.nativeUI.previewImage(urls, {
+						          current: index,
+						          loop: false,
+						          indicator: 'number'
+						        });
+						      });
+							
 						}else{
 							$('#loadingdiv').css('height','0px');
 							mui.toast(data.message);
