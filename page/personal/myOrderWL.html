@@ -59,7 +59,11 @@
 						<% if(i == 0){%>
 							<div class="active activecl lalala">
 								<%if(list.logisticsDetail[i].pictures && list.logisticsDetail[i].pictures.length){%>
-									<p><img src="<%=list.logisticsDetail[i].pictures%>" style="position: static;width: 80px;height: 80px;margin: 0 5px;" class="scaleimg"/></p>
+									<p>
+										<%for(var j = 0; j<list.logisticsDetail[i].pictures.length;j++){%>
+											<img src="<%=list.logisticsDetail[i].pictures[j]%>" style="position: static;width: 60px;height: 60px;margin: 0 5px;" class="scaleimg"/>
+										<%}%>
+									</p>
 								<%}%>
 								
 								<h5 style="color: #B62D29;"><%= list.logisticsDetail[i].describe%></h5>
