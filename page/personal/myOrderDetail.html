@@ -304,13 +304,10 @@
 									<div><span class="huiC">门店其他</span> <span class="floL"><%= detail.BillingDetailResponse.storeOtherMoney%>元</span></div>
 									<!-- G6   -->
 								<%}%>
-							<%}%>
-							<%if(detail.identityT == '6' || detail.identityT == '2'){%>
 								<%if(detail.BillingDetailResponse.stPreDeposit != '0'){%>
 									<div><span class="huiC">门店预存款</span> <span class="floL"><%= detail.BillingDetailResponse.stPreDeposit%>元</span></div>
-									<!-- G6 Z2  -->
+									<!-- G6  -->
 								<%}%>
-
 							<%}%>
 							<%if(detail.identityT == '2' || detail.identityT == '0'){%>
 								<%if(detail.BillingDetailResponse.stPreDeposit != '0'){%>
