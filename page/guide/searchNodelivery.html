@@ -51,7 +51,7 @@
 			background-color: #f9f9f9!important;
 			border: 1px solid #dfdfdf!important;
 			font-size: 12px!important;
-			padding-left: 30px!important;
+			padding-left: 40px!important;
 		}
 
 		.fsearch::-webkit-input-placeholder {
@@ -62,7 +62,7 @@
 
 		.mui-icon-search {
 			position: absolute!important;
-			right: 50px;
+			left: 15px;
 			top: 3px;
 			color: gray;
 			
@@ -204,7 +204,7 @@
 			border-radius: 3px;
 			color: gray;
 		}
-		.mui-bar input[type=search]{height: 36px;font-size: 14px !important;color: #555; padding-left: 20px!important;}
+		.mui-bar input[type=search]{height: 36px;font-size: 14px !important;color: #555; padding-left: 30px!important;}
 		.mui-bar input::-webkit-input-placeholder{font-size: 14px !important;color: #888;}
 		.mui-bar .mui-icon{padding-top: 12px;}
 	</style>
@@ -214,9 +214,9 @@
 			<div class="searchFind">
 				<span class="mui-icon mui-icon-search" style="padding-left: 0;" onclick="submitTest();"></span>
 				<div class="sint">
-					<form onsubmit="submitTest();return false;" id="searchf">
+					<form onsubmit="submitTest();return false;" id="searchf" class="mui-input-row">
 						<!--onsubmit="submitTest();return false;" -->
-						<input type="search" class="fsearch" placeholder="请输入顾客姓名、手机号">
+						<input type="search" class="fsearch mui-input-clear" placeholder="请输入顾客姓名、手机号">
 					</form>
 					<span class="mui-action-back back">取消</span>
 				</div>

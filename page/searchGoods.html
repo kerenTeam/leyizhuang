@@ -19,6 +19,8 @@
 		<script src="../js/artTemplate-native.js"></script>
 	</head>
 	<style type="text/css">
+			.mui-input-row .mui-input-clear~.mui-icon-clear{right: 17px;}
+		
 		header {
 			height: 50px!important;
 			top: 19px!important;
@@ -62,7 +64,7 @@
 
 		.mui-icon-search {
 			position: absolute!important;
-			right: 50px;
+			left: -5px;
 			top: 3px;
 			color: gray;
 		}
@@ -109,7 +111,7 @@
 		.mui-bar input[type=search] {
 		    height: 35px;
 		    margin: 3px 0;
-		    padding-left: 20px!important;
+		    padding-left: 30px!important;
 		}
 		.hotSearch span{background-color: #EEEEEE;}
 	</style>
@@ -119,9 +121,9 @@
 			<div class="searchFind">
 				<span class="mui-icon mui-icon-search" onclick="submitTest();"></span>
 				<div class="sint">
-					<form onsubmit="submitTest();return false;" id="searchf">
+					<form onsubmit="submitTest();return false;" id="searchf" class="mui-input-row">
 						<!--onsubmit="submitTest();return false;" -->
-						<input type="search" class="fsearch" placeholder="请输入商品关键字">
+						<input type="search" class="fsearch mui-input-clear" placeholder="请输入商品关键字">
 					</form>
 					<span class="mui-action-back back">取消</span>
 				</div>

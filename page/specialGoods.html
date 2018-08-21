@@ -154,6 +154,8 @@
 			-webkit-filter: invert(0.7);
 			filter: invert(0.7);
 		}
+		.mui-input-row .mui-input-clear~.mui-icon-clear{top:-4px!important;right: 7px;}
+		
 	</style>
 
 	<body style="padding-bottom: 0px;">
@@ -163,8 +165,8 @@
 				<div class="searchFind">
 					<span class="mui-icon mui-icon-search mui-icon-search2" id="clickSearch"></span>
 					<div class="sint">
-						<form id="searchf">
-							<input type="search" id="valInt" class="fsearch" placeholder="请输入商品关键字">
+						<form id="searchf" class="mui-input-row">
+							<input type="search" id="valInt" class="fsearch mui-input-clear" placeholder="请输入商品关键字">
 						</form>
 						<span class="back" id="cancelSearch">确认</span>
 					</div>

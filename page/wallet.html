@@ -74,7 +74,7 @@
 				</div>
 				<!--列表loading结束-->
 				<div id="infoListDiv"><!--内容-->
-				</div>
+				</div> 
 				<script id="infoList" type="text/html">
 					<%for(var i=0;i<list.length;i++){%>
 						<div class="rechargeConDiv">
@@ -82,7 +82,7 @@
 							<p>充值金额: <%= list[i].changeMoney%></p>
 							<p>充值方式: <%= list[i].type%></p>
 							<%if(list[i].remarks){%>
-								<p>备&nbsp;&nbsp;&nbsp;&nbsp;注:<%=list[i].remarks%></p>
+								<p>备&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;注:<%=list[i].remarks%></p>
 							<%}%>
 						</div>
 					<%}%>
