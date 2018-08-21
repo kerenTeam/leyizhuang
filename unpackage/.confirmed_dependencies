@@ -557,8 +557,9 @@
 			"fonts/mui.ttf",
 			"css/configW.css"
 		],
-		"refer": []
-	},
+		"refer": [
+			"page/personal/infoDetail.html"
+		]	},
 	"page/guide/myCustomer.html": {
 		"resources": [
 			"js/statusBar.js",
@@ -1326,7 +1327,7 @@
 		"refer": [
 			"page/personal/myOrderRTdetail.html",
 			"page/personal/myOrderDetail.html",
-			"page/personal/myOrderRTList.html"
+			"page/personal/myOrderRTList.html" 		
 		],
 		"resources": []
 	},

@@ -3,7 +3,7 @@
 
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-		<title>通知消息</title>
+		<title>消息详情</title>
 		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, width=device-width">
 		<meta name="apple-mobile-web-app-capable" content="yes">
 		<meta name="apple-touch-fullscreen" content="yes">
@@ -228,79 +228,33 @@
 			line-height: 1.6;
 			border-radius: 50%;
 		}
+		.mui-content{background: none;}
+		#questions{background: none;padding: 15px;}
 	</style>
 
 	<body>
 		<header class="mui-bar mui-bar-nav">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left bigSize" style="margin-left: 0;"></a>
-			<h1 class="mui-title">通知消息</h1>
+			<h1 class="mui-title">消息详情</h1>
 		</header>
 
 		<!--状态栏-->
 		<script src="../../js/statusBar.js"></script>
 		<!--状态栏结束-->
 		<div class="mui-content">
+ 
+				<div class="QA qative dyCon" id="questions">
 
-			<div id="QA">
-				<!--大盒子-->
-				<div class="QA qative dyCon" id="questions" style="display: block;">
-
-				</div>
-				<!--盒子一-->
-
-				<script type="text/html" id="listinfo">
-					<%for(var i=0;i<list.length;i++){%>
-					<div class="qashadow" onclick="DTdetail(<%=list[i].messageId%>)">
-						<div class="qtop flexr">
-							<div class="ft14 activecl">
-								类型：<%=list[i].messageType%>
-							</div>
-							<div class="">
-								<span class="disablecl ft12"><%= list[i].createTime%></span>
-								<!--显示未读消息的红点图标-->
-								<%if(i+1 <=noReadNum){%>
-								<span class="mui-badge mui-badge-danger" style="padding: 4px;bottom: 29px;background-color: red;"></span>
-								<%}%>
-							</div>
-
-						</div>
-						<div class="qbot ft14">
-							<%=list[i].detailed%>
-						</div>
-						<%if(list[i].pictureUrl){%>
-						<div class="qbot">
-							<img src="<%=list[i].pictureUrl%>" style="width: 100px;" data-preview-src="" data-preview-group="<%=i+1%>" />
-						</div>
-						<%}%>
-					</div>
-					<%}%>
-				</script>
-			</div>
-			<!--大盒子-->
-
+				</div> 
 		</div>
 	</body>
 	<script src="../../js/default.js" type="text/javascript" charset="utf-8"></script>
 	<script src="../../js/mui.zoom.js"></script>
 	<script src="../../js/mui.previewimage.js"></script>
-	<script type="text/javascript">
-		//动态详情
-		function DTdetail(messageId) {
-			event.stopPropagation();
-			openview({
-				view: 'infoDetail.html',
-				extrasobj: {
-					infoid: messageId
-				}
-			})
-		}
-	</script>
+	
 	<script type="text/javascript">
 
 		mui.plusReady(function() {
-			//下拉刷新 当前页面
-			downRe(shopData);
-			
 			//获取消息数据
 			shopData();
 			
@@ -308,13 +262,14 @@
 				var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
 				var userId = plus.storage.getItem('$userId');
 				var oldToken = plus.storage.getItem('oldToken');
-				var noReadNum = plus.webview.currentWebview().noReadNum;//未读消息数量，用于红点图标的显示
+				var infoid = plus.webview.currentWebview().infoid;
 				
 				plus.nativeUI.showWaiting(); //显示等待框
-				mui.ajax(serverUrl + '/app/user/message/list', {
+				mui.ajax(serverUrl + '/app/user/message/notification', {
 					data: {
 						userId: userId,
-						identityType: identityT
+						identityType: identityT,
+						messageId:infoid
 					},
 					dataType: 'json',
 					type: 'post',
@@ -324,29 +279,9 @@
 					},
 					success: function(data, type, xhr) {
 						plus.nativeUI.closeWaiting();
-						console.log('消息', data);
-						
-						//刷新首页和 以下界面 有关消息图标红点的显示与否
-						var index = plus.webview.getLaunchWebview();
-						mui.fire(index, 'refreshInfoC');
-						mui.fire(plus.webview.getWebviewById('message'), 'refreshInfo');
-						mui.fire(plus.webview.getWebviewById('center.html'), 'refreshInfoC');
-						mui.fire(plus.webview.getWebviewById('dispatching'), 'refreshInfoC');
-						if(data.code == 0) {
-							if(data.content && data.content.length) {
-								for(var i in data.content) {
-									var dt = new Date(data.content[i].createTime).getTime();
-									data.content[i].createTime = getDateDiff(dt);
-								}
-								var html = template("listinfo", {
-									list: data.content,
-									noReadNum: noReadNum
-								});
-								document.getElementById("questions").innerHTML = html;
-							} else {
-								document.getElementById("questions").innerHTML = '<div style="text-align: center;padding: 20px;color: gray;">暂无通知消息</div>'
-							}
-						}
+						$('#questions').html(data.content.detailed)
+						console.log('消息xq', data);
+						 
 						plus.nativeUI.closeWaiting();
 					},
 					error: function(xhr, type, errorThrown) {
