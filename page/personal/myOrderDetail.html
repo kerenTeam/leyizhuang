@@ -979,6 +979,11 @@
 							data.content.identityT = identityT;
 							if(zhuangshi){
 								data.content.zhuangshi = zhuangshi
+								if(data.content.managerBillingDetailResponse){
+									data.content.identityT = 2;
+								}else if(data.content.customerBillingDetailResponse){
+									data.content.identityT = 6;
+								}
 							}
 							data.content.BillingDetailResponse = data.content.customerBillingDetailResponse || data.content.managerBillingDetailResponse || data.content.sellerBillingDetailResponse;
 							document.getElementById('main').innerHTML = template('mainS',{detail:data.content});
