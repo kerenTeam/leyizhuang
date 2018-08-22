@@ -150,13 +150,13 @@
 						华润产品目标销量<span>---</span>
 					</div>
 					<div class="quotaP1 fineB" id="lyzTargetSales">
-						乐意装产品目标销量<span>---</span>
+						乐易装产品目标销量<span>---</span>
 					</div>
 					<div class="quotaP1 fineB" id="tempbalance4">
 						华润产品实际销量<span>---</span>
 					</div> 
 					<div class="quotaP1 fineB" id="lyzFinishSales">
-						乐意装产品实际销量<span>---</span>
+						乐易装产品实际销量<span>---</span>
 					</div> 
 				</div>
 				<div class="noshow" style="background-color: #EEEEEE;text-align: center;font-size: 18px;color: #445252;margin-top: 20px;padding: 10px;">
@@ -264,11 +264,11 @@
 									<div class="mui-media-body ft12">
 										订单号
 									</div> 
-									<div class="mui-media-body ft12">
+									<div class="mui-media-body ft12" style="text-align: right;">
 										华润产<br />品金额
 									</div> 
-									<div class="mui-media-body ft12">
-										乐意装<br />产品金额
+									<div class="mui-media-body ft12" style="text-align: right;">
+										乐易装<br />产品金额
 									</div> 
 								</div>
 							</a>
@@ -284,10 +284,10 @@
 											<div id="">
 												<%=list[i].orderNo2%>
 											</div>
-											<div id="">
+											<div id="" style="text-align: right;">
 												<%=list[i].price || '---'%>
 											</div> 
-											<div id="">
+											<div id="" style="text-align: right;">
 												<%=list[i].lyzPrice || '---'%>
 											</div>
 										</div>
@@ -599,9 +599,9 @@
 								 			}
 											if(ele.ordNo){
 												if(ele.ordNo[0] == 'T'){ 
-													ele.orderNo2 = ele.ordNo.substr(0, 5) + '****' + ele.ordNo.substr(13);
+													ele.orderNo2 = ele.ordNo.substr(0, 5) + '**' + ele.ordNo.substr(13);
 												}else{
-													ele.orderNo2 = ele.ordNo.substr(0, 5) + '****' + ele.ordNo.substr(20);
+													ele.orderNo2 = ele.ordNo.substr(0, 5) + '**' + ele.ordNo.substr(20);
 												}
 											}
 										})
