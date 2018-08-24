@@ -78,7 +78,6 @@ function cancelOF(pageType,cancelParentId){
 		var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
 		var userId = plus.storage.getItem('$userId');
 		var oldToken = plus.storage.getItem('oldToken');
-
 		mui.ajax(serverUrl + '/app/cancelOrder/cancelReasons',{//获取取消原因
 			data:{'userId':userId,'identityType':identityT},
 			dataType:'json',
@@ -134,6 +133,7 @@ function cancelOF(pageType,cancelParentId){
 						'reasonInfo':reasonInfo,'remarksInfo':remarksInfo
 					};
 					console.log(dataObj);
+					mui('.operating3').button('loading');//切换为loading状态
 					mui.ajax(serverUrl + '/app/returnOrder/cancel/order',{//获取取消原因
 						data:dataObj,
 						dataType:'json',
@@ -165,8 +165,10 @@ function cancelOF(pageType,cancelParentId){
 							}else{
 								mui.toast(data.message);
 							}
+							mui('.operating3').button('reset');
 						},
 						error:function(xhr,type,errorThrown){
+							mui('.operating3').button('reset');
 							console.error('取消订单，响应失败  !');
 						}
 					});
