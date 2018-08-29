@@ -39,6 +39,10 @@
 			height: 40px;
 		}
 		.mui-numbox {background: none!important;margin: 3px 2px;}
+		.statisic{padding: 10px;background: #F7F7F7;position: fixed;top: 75px;left: 0;right: 0;text-align: center;}
+		.statisic2{background: #FFFFFF;position: fixed;top: 75px;left: 0;right: 0;text-align: center;}
+		.statisic2 span{display: inline-block;width: 32%;padding: 10px;}
+		.activebd{border-bottom: 1px solid #B42E28;color:#B42E28 ;}
 	</style>
 
 	<body>
@@ -48,7 +52,15 @@
 
 		</header>
 		<script src="../../js/statusBar.js" type="text/javascript" charset="utf-8"></script>
-		<div class="mui-content">
+		<div class="mui-content" style="margin-top: 50px;">
+			<!--<div class="statisic">
+				券总数<span>8</span>&nbsp;&nbsp;&nbsp;&nbsp;未提货<span>1</span>&nbsp;&nbsp;&nbsp;&nbsp;已提货<span>5</span>&nbsp;&nbsp;&nbsp;&nbsp;逾期/退提货券<span>3</span>
+			</div>-->
+			<div class="statisic2">
+				<span class="aClick activebd">未提货明细</span>
+				<span class="aClick">已提货明细</span>
+				<span class="aClick">退提货券</span>
+			</div>
 			<!--商品列表-->
 			<div class="goodsList" id="goodsList" style="margin-bottom: 50px;"></div>
 
@@ -108,11 +120,37 @@
 				if(!cusId){
 					cusId = '';
 				}else{
-					$('.mui-title').html('未提货明细')
+					$('.mui-title').html('<div style="font-size: 13px;">券总数<span>8</span>&nbsp;&nbsp;&nbsp;&nbsp;未提货<span>1</span>&nbsp;&nbsp;&nbsp;&nbsp;已提货<span>5</span>&nbsp;&nbsp;&nbsp;&nbsp;逾期/退提货券<span>3</span></div>')
 				}
 				plus.nativeUI.showWaiting();
+				$('.statisic2 span').unbind('click').click(function(){
+					$('.statisic2 span').removeClass('activebd')
+					$(this).addClass('activebd')
+				})
 				kindType();
 				function kindType() {
+					//统计数量返回app/customer/productCoupon/bycount 
+					mui.ajax(serverUrl + '/app/customer/productCoupon/bycount', {
+						data: {
+							userId:userId,
+							identityType: identityT,
+							cusId:cusId
+						},
+						dataType: 'json',
+						headers: {
+							"Authorization": oldToken
+						},
+						type: 'post',
+						timeout: 50000,
+						success: function(data, type, xhr) {
+							console.log('统计数量返回 ',data)
+						},
+						error: function(xhr, type, errorThrown) {
+							plus.nativeUI.closeWaiting();
+							mui.toast(type)
+							console.log('登录响应失败');
+						}
+					});
 					//产品券列表
 					mui.ajax(serverUrl + '/app/customer/productCoupon/list', {
 						data: {

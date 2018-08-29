@@ -307,8 +307,11 @@
 						if(Apic.length){
 							console.log(Apic);
 							[].forEach.call(Apic,function(ele,index){
-								task.addFile(ele, {key:'files'});
-//								if(index == Apic.length-1){ task.start(); }
+								task.addFile(ele, {key:index.toString()});
+								//task.addFile(ele, {key:'myfiles'});
+								if(index == Apic.length-1){
+									task.start();
+								}
 							})
 						}
 						task.start();
