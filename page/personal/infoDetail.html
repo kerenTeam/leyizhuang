@@ -19,6 +19,7 @@
 
 	</head>
 	<style type="text/css">
+		body{background-color: white;}
 		#userBox {
 			background-color: #F53C42;
 			padding: 0px 0;
@@ -236,14 +237,14 @@
 	<body>
 		<header class="mui-bar mui-bar-nav">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left bigSize" style="margin-left: 0;"></a>
-			<h1 class="mui-title">消息详情</h1>
+			<h1 class="mui-title"></h1>
 		</header>
 
 		<!--状态栏-->
 		<script src="../../js/statusBar.js"></script>
 		<!--状态栏结束-->
-		<div class="mui-content">
- 
+		<div class="mui-content" style="margin-top: 7px;">
+ 				
 				<div class="QA qative dyCon" id="questions">
 
 				</div> 
@@ -280,7 +281,10 @@
 					},
 					success: function(data, type, xhr) {
 						plus.nativeUI.closeWaiting();
-						$('#questions').html(data.content.detailed)
+						var dt = new Date(data.content.createTime).getTime();
+						data.content.createTime = getDateDiff(dt);
+						$('#questions').html('<div class="ft14 activecl fineB" style="padding: 5px 0;margin-bottom: 5px;">类型：'+data.content.messageType+'<span class="mui-pull-right disablecl ft12">'+data.content.createTime+'</span></div>'+data.content.detailed)
+						$('.mui-title').html(data.content.title)
 						console.log('消息xq', data);
 						 
 						plus.nativeUI.closeWaiting();
