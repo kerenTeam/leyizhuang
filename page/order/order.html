@@ -381,7 +381,7 @@
 				<a class="dp ft16" style="color: #B62D29;">
 					<span>应付款：</span>¥<span class="totalMoney">--</span>
 				</a>
-				<button class="onlypay goOrder dp ft16" style="background:#B62D29;color:white;text-shadow:none;border: none;border-radius: 0;-webkit-appearance: button;width:100px;line-height: 0.5rem;">去支付</button>
+				<button class="onlypay goOrder dp ft16" style="background:#B62D29;color:white;text-shadow:none;border: none;border-radius: 0;-webkit-appearance: button;width:100px;line-height: 0.5rem;padding: 0;">去支付</button>
 				<button class="goOrderNp dp ft16" style="background:#B62D29;color:white;text-shadow:none;border: none;border-radius: 0;-webkit-appearance: button;width:100px;line-height: 0.5rem;display: none;">提交</button>
 
 			</aside>
@@ -2157,6 +2157,7 @@
 					// 支付方法
 					//1 货到付款
 					window.facePayF = function(payableAmount, orderNumber) {
+						plus.nativeUI.showWaiting()
 						mui.ajax(serverUrl + '/app/order/handle/cashDelivery', {
 							data: {
 								userId: userId,
@@ -2267,6 +2268,7 @@
 						}
 
 						function gopay(id, payableAmount, orderNumber) {
+							plus.nativeUI.showWaiting()
 							if(id == 'wxpay') {
 								//微信
 								mui.ajax(serverUrl + '/app/wechatpay/order/pay', {
@@ -2335,7 +2337,7 @@
 										plus.nativeUI.alert("获取订单信息失败！");
 									}
 								});
-							} else {
+							} else { 
 								//支付宝
 								mui.ajax(serverUrl + '/app/alipay/order/pay', {
 									data: {
@@ -2406,7 +2408,7 @@
 					}
 					//3.信用额度支付
 					window.xyedPayF = function(payType, payableAmount, orderNumber) {
-
+						plus.nativeUI.showWaiting()
 						mui.ajax(serverUrl + '/app/order/handle/payCredit', {
 							data: {
 								userId: userId,

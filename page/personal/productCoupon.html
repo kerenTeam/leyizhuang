@@ -43,12 +43,14 @@
 		.statisic2{background: #FFFFFF;position: fixed;top: 75px;left: 0;right: 0;text-align: center;}
 		.statisic2 span{display: inline-block;width: 32%;padding: 10px;}
 		.activebd{border-bottom: 1px solid #B42E28;color:#B42E28 ;}
+		.mui-table-view-cell:active{background: none;}
+		.mui-bar .mui-title{left: 5px!important;right: 5px!important;}
 	</style>
 
 	<body>
 		<header class="mui-bar mui-bar-nav" style="padding-right: 15px;">
 			<a id="leftbtn" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-			<h1 class="mui-title"><div style="font-size: 13px;">券总数<span class="ty1"></span>&nbsp;&nbsp;&nbsp;&nbsp;未提货<span class="ty2"></span>&nbsp;&nbsp;&nbsp;&nbsp;已提货<span class="ty3"></span>&nbsp;&nbsp;&nbsp;&nbsp;逾期/退提货券<span class="ty4"></span></div></h1>
+			<h1 class="mui-title"><div style="font-size: 13px;">券总数<span class="ty1"></span>&nbsp;&nbsp;&nbsp;未提货<span class="ty2"></span>&nbsp;&nbsp;&nbsp;已提货<span class="ty3"></span>&nbsp;&nbsp;&nbsp;逾期/退券<span class="ty4"></span></div></h1>
 
 		</header>
 		<script src="../../js/statusBar.js" type="text/javascript" charset="utf-8"></script>
@@ -57,9 +59,9 @@
 				券总数<span>8</span>&nbsp;&nbsp;&nbsp;&nbsp;未提货<span>1</span>&nbsp;&nbsp;&nbsp;&nbsp;已提货<span>5</span>&nbsp;&nbsp;&nbsp;&nbsp;逾期/退提货券<span>3</span>
 			</div>-->
 			<div class="statisic2">
-				<span class="aClick activebd">未提货明细</span>
-				<span class="aClick">已提货明细</span>
-				<span class="aClick">退提货券</span>
+				<span data-id="notUsed" class="aClick activebd">未提货明细</span>
+				<span data-id="used" class="aClick">已提货明细</span>
+				<span data-id="overdue" class="aClick">逾期/退券</span>
 			</div>
 			<!--商品列表-->
 			<div class="goodsList" id="goodsList" style="margin-bottom: 50px;"></div>
@@ -81,17 +83,17 @@
 									<%=list[i].goodsSpecification%> &nbsp;单位:
 									<%=list[i].goodsUnit%>
 								</p>
-								<span class="ft14 activecl">剩余:<%=list[i].leftNumber%>张</span>
+								<span class="ft14 activecl">数量:<%=list[i].leftNumber%>张</span>
 								<div style="display:inline-block;float: right;margin-right: 25px;" class="mui-numbox" data-numbox-step='1' data-numbox-min='1' data-numbox-max='<%=list[i].leftNumber%>'>
 								  <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
 								  <input class="mui-numbox-input" type="number" value="1"/>
 								  <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
 								</div> 
 							</div>
-							<%if(list[i].effectiveStartTime || list[i].effectiveEndTime){%>
-								<div class="activecl2">有效日期：<%=list[i].effectiveStartTime%> ~ <%=list[i].effectiveEndTime%></div>
+							
+						</a><%if(list[i].effectiveStartTime || list[i].effectiveEndTime){%>
+								<div class="activecl2" style="margin: 10px 0 0 30px;">有效日期：<%=list[i].effectiveStartTime%> ~ <%=list[i].effectiveEndTime%></div>
 							<%}%>
-						</a>
 						<%if(list[i].isZG){%>
 							<img data-id="<%=list[i].goodsId%>" data-left="<%=list[i].leftNumber%>" data-isZG="1" class="check" src="../../images/center/uncheck.svg" alt="" />
 						<%}else{%>
@@ -126,47 +128,45 @@
 					$(this).addClass('activebd')
 					if($(this).index() != 0){
 						$('#useCoupon').hide();
+					}else{
+						$('#useCoupon').show();
 					}
-					if($(this).index() == 0){
-						kindType('notUsed')
-					}else if($(this).index() == 1){
-						kindType('used')
-					}else if($(this).index() == 2){
-						kindType('overdue')
-					}
-					
+					kindType($('.activebd').attr('data-id')) 
 				})
-				//统计数量返回app/customer/productCoupon/bycount 
-				mui.ajax(serverUrl + '/app/customer/productCoupon/bycount', {
-					data: {
-						userId:userId,
-						identityType: identityT,
-						cusId:cusId
-					},
-					dataType: 'json',
-					headers: {
-						"Authorization": oldToken
-					},
-					type: 'post',
-					timeout: 50000,
-					success: function(data, type, xhr) {
-						console.log('统计数量返回 ',data)
-						$('.ty2').html(data.content.findAllNotUsedCoupons)
-						$('.ty3').html(data.content.findAllUsedCoupons)
-						$('.ty4').html(data.content.findAllOverdueCoupons)
-						$('.ty1').html(Number($('.ty4').html())+Number($('.ty3').html())+Number($('.ty2').html()))
-						
-					},
-					error: function(xhr, type, errorThrown) {
-						plus.nativeUI.closeWaiting();
-						mui.toast(type)
-						console.log('登录响应失败');
-					}
-				});
+				
 
+				downRe(allfun);
+				allfun()
+				function allfun(){
+					mui.ajax(serverUrl + '/app/customer/productCoupon/bycount', {
+						data: {
+							userId:userId,
+							identityType: identityT,
+							cusId:cusId
+						},
+						dataType: 'json',
+						headers: {
+							"Authorization": oldToken
+						},
+						type: 'post',
+						timeout: 50000,
+						success: function(data, type, xhr) {
+							console.log('统计数量返回 ',data)
+							$('.ty2').html(data.content.findAllNotUsedCoupons)
+							$('.ty3').html(data.content.findAllUsedCoupons)
+							$('.ty4').html(data.content.findAllOverdueCoupons)
+							$('.ty1').html(Number($('.ty4').html())+Number($('.ty3').html())+Number($('.ty2').html()))
+							
+						},
+						error: function(xhr, type, errorThrown) {
+							plus.nativeUI.closeWaiting();
+							mui.toast(type)
+							console.log('登录响应失败');
+						}
+					});
+					kindType($('.activebd').attr('data-id'))
+				}
 				
-				
-				kindType('notUsed');
 				function kindType(types) { 
 					//产品券列表
 					mui.ajax(serverUrl + '/app/customer/productCoupon/list', {
@@ -191,10 +191,13 @@
 										list: data.content
 									}));
 								 	if(types != 'notUsed'){
-								 		$('.check').hide()
+								 		$('.check,.mui-numbox').hide()
 								 		$('.mui-table-view-cell').css('padding-left','0px')
 								 		$('.mui-table-view-cell').css('padding-right','0px')
-								 	} 
+								 		$('#useCoupon').hide();
+								 	} else{
+								 		$('#useCoupon').show();
+								 	}
 								 
 									mui('.mui-numbox').numbox();
 									$('.mui-numbox input').click(function() {
