@@ -63,7 +63,7 @@
 					}
 					window.addEventListener("message", function(e) {
 //						goback(e.data.address)
-						let NewLocation = (e.data.location).split(",")
+						var NewLocation = (e.data.location).split(",")
 
 						var geocoder = new AMap.Geocoder({
 							radius: 1000,

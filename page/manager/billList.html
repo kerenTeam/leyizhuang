@@ -450,7 +450,7 @@
 										})
 									}
 
-									let allpaied = 0
+									var allpaied = 0
 									if(data.content.paidOrderDetails && data.content.paidOrderDetails.length){
 										data.content.paidOrderDetails.forEach(function(ele,index){
 											allpaied += parseFloat(ele.totalRepaymentAmount)
@@ -542,7 +542,7 @@
 									$('#useCoupon').click(function() {
 										$('#useCoupon').attr('disabled', true)
 										plus.nativeUI.showWaiting()
-										let orderDetails = []
+										var orderDetails = []
 										$('.choosed').each(function(){
 											if($(this).attr('data-id')){
 												orderDetails.push({
