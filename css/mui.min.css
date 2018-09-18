@@ -39,26 +39,29 @@
 }
 .picOp{opacity: 0;transition: opacity .5s;}
 /*细边框*/
-.fineT, .fineB{
+.fineT, .fineB, .fineB0{
 	position: relative;
     border:none !important;
 }
-.fineT:before, .fineB:after{
+.fineT:before, .fineB:after, .fineB0:after{
     content: '';
     position: absolute;
     left: 0;
-    background-color: #ccc;
+    background-color: #e4e4e4;
     width: 100%;
     height: 1px;
     -webkit-transform: scaleY(0.5);
             transform: scaleY(0.5);
+}
+.fineB0:after{
+	background-color: #eceaea;
 }
 .fineT:before{
 	top: 0px;
 	-webkit-transform-origin: 0 0;
             transform-origin: 0 0;
 }
-.fineB:after{
+.fineB:after, .fineB0:after{
 	visibility: inherit;
 	bottom: 0px;
 	-webkit-transform-origin: 0 bottom;

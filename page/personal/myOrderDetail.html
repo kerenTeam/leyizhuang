@@ -473,7 +473,7 @@
 	                        <span class="aClick" onclick="cancelFun('<%= detail.orderNumber%>',this)">取消订单</span>
 	                    <% }%>
 	                    <% if(detail.status == 'FINISHED'){%>
-	                        <span class="redC aClick" onclick="openReturns('<%= detail.orderNumber%>','<%= detail.customer.customerId%>','<%=detail.deliveryType%>')">退货</span>
+	                        <span class="redC aClick" onclick="openReturns('<%= detail.orderNumber%>','<%= detail.customer.customerId%>','<%=detail.deliveryType%>', '<%=detail.returnWay%>')">退货</span>
 	                    <% }%>
 	                    <span onclick="comeOnAgain('<%= detail.orderNumber%>','<%= detail.customer.customerId%>')" class="aClick">再来一单</span>
 	                <% }%>
@@ -486,7 +486,7 @@
 
 	                <%if(detail.deliveryType.indexOf('产品券')>-1){%>
 						<%if(detail.status == "FINISHED"){%>
-							<span class="redC aClick" onclick="openReturns('<%= detail.orderNumber%>','<%= detail.customer.customerId%>','<%= detail.deliveryType%>')">退货</span>
+							<span class="redC aClick" onclick="openReturns('<%= detail.orderNumber%>','<%= detail.customer.customerId%>','<%= detail.deliveryType%>', '<%=detail.returnWay%>')">退货</span>
 						<%}%>
 					<%}%>
 				<%}else{%>

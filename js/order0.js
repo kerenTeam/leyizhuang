@@ -49,16 +49,29 @@ function comeOnAgain(orderNo,cusId){
 }
 
 //申请退货
-function openReturns(orderNo,cusId,type){
-	openview({
-		view:'myOrderReturns.html',
-		id:'myOrderReturns',
-		extrasobj:{
-			orderNo:orderNo,
-			cusId:cusId,
-			deliveryType:type
-		}
-	})
+function openReturns(orderNo,cusId,type,opentype){
+	if(opentype == 2 && 0){
+		openview({
+			view:'myOrderReturns.html',
+			id:'myOrderReturns',
+			extrasobj:{
+				orderNo:orderNo,
+				cusId:cusId,
+				deliveryType:type
+			}
+		})
+	}else{
+		openview({
+			view:'myOrderReturnsold.html',
+			id:'myOrderReturnsold',
+			extrasobj:{
+				orderNo:orderNo,
+				cusId:cusId,
+				deliveryType:type
+			}
+		})
+	}
+
 }
 
 //打开订单物流
