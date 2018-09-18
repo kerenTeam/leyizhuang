@@ -579,7 +579,8 @@
     ],
     "refer": [
       "page/guide/searchCustomer.html",
-      "page/guide/customerPage.html"
+      "page/guide/customerPage.html",
+      "page/personal/myOrderList.html"
     ]
   },
   "page/guide/searchCustomer.html": {
@@ -598,7 +599,8 @@
     ],
     "refer": [
       "page/guide/searchCustomer.html",
-      "page/guide/customerPage.html"
+      "page/guide/customerPage.html",
+      "page/personal/myOrderList.html"
     ]
   },
   "page/manager/workerList.html": {

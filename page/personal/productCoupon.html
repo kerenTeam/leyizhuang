@@ -11,6 +11,7 @@
 		<link rel="stylesheet" type="text/css" href="../../css/configW.css" />
 	</head>
 	<style type="text/css">
+		.padd15{padding: 5px 0px 10px 15px;margin-bottom: 10px;}
 		.categray div {
 			width: 80%;
 			vertical-align: top;
@@ -40,11 +41,14 @@
 		}
 		.mui-numbox {background: none!important;margin: 3px 2px;}
 		.statisic{padding: 10px;background: #F7F7F7;position: fixed;top: 75px;left: 0;right: 0;text-align: center;}
-		.statisic2{background: #FFFFFF;position: fixed;top: 75px;left: 0;right: 0;text-align: center;}
+		.statisic2{background: #FFFFFF;position: fixed;top: 74px;left: 0;right: 0;text-align: center;}
 		.statisic2 span{display: inline-block;width: 32%;padding: 10px;}
 		.activebd{border-bottom: 1px solid #B42E28;color:#B42E28 ;}
 		.mui-table-view-cell:active{background: none;}
 		.mui-bar .mui-title{left: 5px!important;right: 5px!important;}
+		.mui-table-view-cell>a:not(.mui-btn).mui-active {
+		    background: none!important;
+		}
 	</style>
 
 	<body>
@@ -58,7 +62,7 @@
 			<!--<div class="statisic">
 				券总数<span>8</span>&nbsp;&nbsp;&nbsp;&nbsp;未提货<span>1</span>&nbsp;&nbsp;&nbsp;&nbsp;已提货<span>5</span>&nbsp;&nbsp;&nbsp;&nbsp;逾期/退提货券<span>3</span>
 			</div>-->
-			<div class="statisic2">
+			<div class="statisic2" style="z-index: 9999;">
 				<span data-id="notUsed" class="aClick activebd">未提货明细</span>
 				<span data-id="used" class="aClick">已提货明细</span>
 				<span data-id="overdue" class="aClick">逾期/退券</span>
@@ -69,7 +73,7 @@
 			<script type="text/html" id="goodsTpl">
 				<ul class="mui-table-view">
 					<%for(var i = 0 ;i<list.length;i++){%>
-					<li class="mui-table-view-cell mui-media" id="<%=list[i].id%>">
+					<li class="mui-table-view-cell mui-media afterBorder" id="<%=list[i].id%>">
 						<a href="javascript:;">
 							<img class="mui-media-object mui-pull-left" src="<%=list[i].coverImageUri || '../../img/editset.png'%>">
 							<div class="mui-media-body" style="width: 65%;">
@@ -91,9 +95,21 @@
 								</div> 
 							</div>
 							
-						</a><%if(list[i].effectiveStartTime || list[i].effectiveEndTime){%>
-								<div class="activecl2" style="margin: 10px 0 0 30px;">有效日期：<%=list[i].effectiveStartTime%> ~ <%=list[i].effectiveEndTime%></div>
+						</a>
+						<div style="margin: 10px 0 0 30px;">
+							<%if(list[i].effectiveStartTime || list[i].effectiveEndTime){%>
+								<div>
+									有效日期：<%=list[i].effectiveStartTime%> ~ <%=list[i].effectiveEndTime%>
+								</div>
 							<%}%>
+							<%if(list[i].useOrderNumber){%>
+								<div class="useOrderNumber activecl2">提货单号：<%=list[i].useOrderNumber%></div>
+							<%}%>
+							<%if(list[i].returnNo){%>
+								<div class="returnNo activecl2">退货单号：<%=list[i].returnNo%></div>
+							<%}%>
+						</div>
+						
 						<%if(list[i].isZG){%>
 							<img data-id="<%=list[i].goodsId%>" data-left="<%=list[i].leftNumber%>" data-isZG="1" class="check" src="../../images/center/uncheck.svg" alt="" />
 						<%}else{%>
@@ -195,8 +211,17 @@
 								 		$('.mui-table-view-cell').css('padding-left','0px')
 								 		$('.mui-table-view-cell').css('padding-right','0px')
 								 		$('#useCoupon').hide();
+								 		if(type == 'used'){
+								 			$('.returnNo').hide();
+								 			$('.useOrderNumber').show();
+								 		}
+								 		if(type == 'overdue'){
+								 			$('.useOrderNumber').hide();
+								 			$('.returnNo').show();
+								 		}
 								 	} else{
 								 		$('#useCoupon').show();
+								 		$('.returnNo,.useOrderNumber').hide();
 								 	}
 								 
 									mui('.mui-numbox').numbox();
@@ -242,7 +267,7 @@
 													mui.alert("专供产品券仅顾客可提货哦")
 													return false;
 												}
-												var qty =$(this).prev().find('.mui-numbox-input').val();
+												var qty =$(this).prev().prev().find('.mui-numbox-input').val();
 												productCouponList.push({"gid":id,"qty":qty,"totalQty":totalQty})
 											})
 											if(flag!=1){

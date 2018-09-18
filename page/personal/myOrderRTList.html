@@ -15,7 +15,12 @@
 		<link rel="stylesheet" href="../../css/feedback.css">
 		<style type="text/css">
 			body{padding-bottom: 10px;}
-
+			.fsearch::-webkit-input-placeholder {
+				color: gray!important;
+				text-align: left;
+				font-size: 12px!important;
+			}
+			.mui-input-clear~.mui-icon-clear{right: 10px!important;top: 7px!important;}
 		</style>
 	</head>
 
@@ -43,8 +48,8 @@
 					<div class="searchFind">
 						<span class="mui-icon mui-icon-search mui-icon-search2" id="clickSearch"></span>
 						<div class="sint">
-							<form id="searchf">
-								<input type="search" id="valInt" class="fsearch" placeholder="订单号、退单号、会员名字及电话、商品">
+							<form id="searchf" class="mui-input-row">
+								<input type="search" id="valInt" class="fsearch mui-input-clear" placeholder="订单号、退单号、会员名字及电话、商品">
 							</form>
 							<span class="back" id="cancelSearch">取消</span>
 						</div>

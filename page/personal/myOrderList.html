@@ -778,6 +778,8 @@
 				var inType = plus.webview.currentWebview().type;
 				var noButton = plus.webview.currentWebview().isNoButton;
 				var fromPage = plus.webview.currentWebview().fromPage;
+				var storeid = plus.webview.currentWebview().storeid;
+				
 				if(fromPage == 'index' || inType == 1 || inType == 'dai' || inType == 'yi') {
 					$('.mui-title').html("物流");
 					$('#loadingdiv').css("margin-top", 0);
@@ -970,6 +972,16 @@
 							'size': oneSize
 						};
 						newSearch &&( nowData.keywords = newSearch)
+					} else if(inType == 'cuspg') {
+						nowApi = '/app/order/fitCompany/list';
+						nowData = {
+							'storeId': storeid,
+							'identityType': 2,
+							'page': 1,
+							'size': oneSize,
+							'showStatus': tabT,
+						};
+						newSearch &&( nowData.keywords = newSearch)
 					}
 					clearTimeout(tabLoadTime);
 					tabLoadTime = setTimeout(function(){
@@ -1094,6 +1106,16 @@
 															'size': oneSize
 														};
 														newSearch && (nowData.keywords = newSearch)
+													}else if(inType == 'cuspg') {
+														nowApi = '/app/order/fitCompany/list';
+														nowData = {
+															'storeId': storeid,
+															'identityType': 2,
+															'page': Ypagenum,
+															'size': oneSize,
+															'showStatus': tabT,
+														};
+														newSearch &&( nowData.keywords = newSearch)
 													}
 													mui.ajax(serverUrl + nowApi, {
 														data: nowData,
@@ -1181,7 +1203,7 @@
 				})
 				$('#searchf').submit(function() {
 					var valInt = $('#valInt').val();
-					if(inType == 'dai' || inType == 'yi'){
+					if(inType == 'dai' || inType == 'yi' || inType == 'cuspg'){
 						loadFun('','','',valInt);
 					}else{
 						loadFun('', valInt);
@@ -1190,7 +1212,7 @@
 				})
 				$('#clickSearch').click(function() {
 					var valInt = $('#valInt').val();
-					if(inType == 'dai' || inType == 'yi'){
+					if(inType == 'dai' || inType == 'yi' || inType == 'cuspg'){
 						loadFun('','','',valInt);
 					}else{
 						loadFun('', valInt);
