@@ -98,7 +98,7 @@ function cancelOF(pageType,cancelParentId){
 			timeout:10000,
 			headers:{"Authorization":oldToken},
 			success:function(data,type,xhr){
-				console.log('取消原因',data);
+				//console.log('取消原因',data);
 				if(data.code == 0){
 					document.getElementById('cancelDiv0').innerHTML = template('cancelDiv0S',{list:data.content});
 				}
