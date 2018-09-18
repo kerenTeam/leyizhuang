@@ -170,8 +170,8 @@
 				var moreInfo = {};//获取用户退货方式和取货地址
 				var cusId = plus.webview.currentWebview().cusId;
 				var platform = plus.storage.getItem('platform');
-				//门店自提无 上门取货
-				if(deliveryType == '门店自提'){
+				//门店自提 和 市场自提  无上门取货
+				if(deliveryType == '门店自提' || deliveryType == '市场自提'){
 					$('.smqh').hide();
 					$('.zhimendian input').trigger('click')
 					$('.fangshiMore').eq(0).css('display','block');

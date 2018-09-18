@@ -462,7 +462,7 @@
 			<div class="footBtn">
 				<% if(!detail.zhuangshi){ %>
 					<!--待付款：UNPAID，待发货：PENDING_SHIPMENT，待收货：PENDING_RECEIVE，已取消：CANCELED，取消中：CANCELING，已完成：FINISHED，拒签：REJECTED，已结案：CLOSED。-->
-					<% if(detail.deliveryType == '送货上门' || detail.deliveryType == '门店自提'){%>
+					<% if(detail.deliveryType == '送货上门' || detail.deliveryType == '市场自提' || detail.deliveryType == '门店自提'){%>
 	                    <% if(detail.status == 'UNPAID'){%>
 	                        <!--<span class="redC aClick" onclick="goToPay('<%= detail.orderNumber%>','<%= detail.price%>')">去支付</span>-->
 	                    <% }%>
@@ -478,7 +478,7 @@
 	                    <span onclick="comeOnAgain('<%= detail.orderNumber%>','<%= detail.customer.customerId%>')" class="aClick">再来一单</span>
 	                <% }%>
 
-	                <% if(detail.deliveryType == '送货上门'){%>
+	                <% if(detail.deliveryType == '送货上门' || detail.deliveryType == '市场自提'){%>
 	                    <% if(detail.status != 'UNPAID' && detail.status != 'CANCELED' && detail.status != 'CANCELING'){%>
 	                        <span onclick="goOrderWL('<%= detail.orderNumber%>')" class="aClick redC lookwl">查看物流</span>
 	                    <% }%>

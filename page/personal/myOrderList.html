@@ -19,7 +19,6 @@
 				padding-bottom: 10px;
 			}
 			/*去支付样式*/
-
 			#maskInfo {
 				z-index: 99999;
 				position: fixed;
@@ -29,7 +28,6 @@
 				bottom: 0;
 				background-color: rgba(0, 0, 0, .5)
 			}
-
 			.paychoose {
 				background-color: white;
 				bottom: 0!important;
@@ -37,13 +35,11 @@
 				right: 0;
 				left: 0;
 			}
-
 			.paychoose img {
 				width: 40px;
 				margin: 0 5px;
 			}
 			/*去支付样式结束*/
-
 			.orderList .h3 a.a1 {
 				white-space: nowrap;
 				color: #555;
@@ -53,23 +49,19 @@
 				overflow: hidden;
 				text-overflow: ellipsis;
 			}
-
 			.dingdanPingjia {
 				padding: 4px 10px;
 				border-color: #c7161e;
 				color: #c7161e;
 			}
-
 			.cancelBtn {
 				padding-top: 3%;
 				margin-bottom: 0;
 			}
-
 			.mui-icon-star-filled,
 			.mui-icon-star {
 				font-size: 24px;
 			}
-
 			.loadOpcity {
 				opacity: 0;
 			}
@@ -77,7 +69,6 @@
 			.cancelBtn button[disabled]{padding: 5px 22px !important;}
 		</style>
 	</head>
-
 	<body>
 		<header class="mui-bar mui-bar-nav fineB" style="padding-right: 15px;">
 			<a id="leftbtn" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
@@ -160,10 +151,11 @@
 							</div>
 							<!--显示状态按钮-->
 							<div class="orderBtns">
+								<!--18-9-18 新增的 市场自提 状态和送货上门 对应状态一样, 只是申请退货时, 只能选择退货到店-->
 								<% if(!list[i].zhuangshi){ %>
 									<!--待付款：UNPAID，待发货：PENDING_SHIPMENT，待收货：PENDING_RECEIVE，已取消：CANCELED，取消中：CANCELING，已完成：FINISHED，拒签：REJECTED，已结案：CLOSED。-->
-									<% if(list[i].deliveryType == '送货上门' || list[i].deliveryType == '门店自提'){%>
-
+									<% if(list[i].deliveryType == '送货上门' || list[i].deliveryType == '市场自提' || list[i].deliveryType == '门店自提'){%>
+										<!--  ^_^ 去支付-->
 										<% if(list[i].status == 'UNPAID'){%>
 											<%if(list[i].isCashDelivery){%>
 												<span class="redC aClick" onclick="goToPay('<%= list[i].orderNo%>','<%= list[i].amountPayable%>',true,'<%=list[i].creditMoney%>','<%=list[i].stCreditMoney%>','<%=list[i].stPreDeposit%>','<%=list[i].preDeposit%>')">去支付</span>
@@ -171,15 +163,18 @@
 												<span class="redC aClick" onclick="goToPay('<%= list[i].orderNo%>','<%= list[i].amountPayable%>',false,'<%=list[i].creditMoney%>','<%=list[i].stCreditMoney%>','<%=list[i].stPreDeposit%>','<%=list[i].preDeposit%>')">去支付</span>
 											<%}%>
 										<% }%>
+										<!--  ^_^ 取消订单-->
 										<% if(list[i].status == 'UNPAID' || list[i].status == 'PENDING_SHIPMENT'){%>
 											<span class="aClick" onclick="NewcancelFun('<%= list[i].orderNo%>',this)">取消订单</span>
 										<% }%>
 										<% if(list[i].deliveryType == '门店自提' && list[i].status == 'PENDING_RECEIVE'){%>
 											<span class="aClick" onclick="NewcancelFun('<%= list[i].orderNo%>',this)">取消订单</span>
 										<% }%>
+										<!--  ^_^ 退货-->
 										<% if(list[i].status == 'FINISHED'){%>
 											<span class="redC aClick" onclick="openReturns('<%= list[i].orderNo%>','<%= list[i].customerId%>','<%=list[i].deliveryType%>', '<%=list[i].returnWay%>')">退货</span>
 										<% }%>
+										<!--  ^_^ 评价-->
 										<% if(list[i].status == 'FINISHED' || list[i].status == 'CLOSED'){%>
 											<% if(list[i].isEvaluated == false){%>
 												<span class="aClick" onclick="evaFun('<%= list[i].orderNo%>',this)">评价</span>
@@ -187,17 +182,19 @@
 												<!--<span class="aClick">已评价</span>-->
 											<% }%>
 										<% }%>
+										<!--  ^_^ 再来一单-->
 										<span onclick="comeOnAgain('<%= list[i].orderNo%>','<%= list[i].customer.customerId%>')" class="aClick">再来一单</span>
 									<% }%>
 
-									<% if(list[i].deliveryType == '送货上门'){%>
-										<!--这里 状态 取反-->
+									<% if(list[i].deliveryType == '送货上门' || list[i].deliveryType == '市场自提'){%>
+										<!--这里 状态 取反--> <!--  ^_^ 查看物流-->
 										<% if(list[i].status != 'UNPAID' && list[i].status != 'CANCELED' && list[i].status != 'CANCELING'){%>
 											<span onclick="goOrderWL('<%= list[i].orderNo%>')" class="aClick redC lookwl">查看物流</span>
 										<% }%>
 									<% }%>
 
 									<%if(list[i].deliveryType.indexOf('产品券')>-1){%>
+										<!--  ^_^ 去支付-->
 										<% if(list[i].status == 'UNPAID'){%>
 											<%if(list[i].isCashDelivery){%>
 												<span class="redC aClick" onclick="goToPay('<%= list[i].orderNo%>','<%= list[i].amountPayable%>',true,'<%=list[i].creditMoney%>','<%=list[i].stCreditMoney%>','<%=list[i].stPreDeposit%>','<%=list[i].preDeposit%>')">去支付</span>
@@ -205,6 +202,7 @@
 												<span class="redC aClick" onclick="goToPay('<%= list[i].orderNo%>','<%= list[i].amountPayable%>',false,'<%=list[i].creditMoney%>','<%=list[i].stCreditMoney%>','<%=list[i].stPreDeposit%>','<%=list[i].preDeposit%>')">去支付</span>
 											<%}%>
 										<% }%>
+										<!--  ^_^ 退货-->
 										<%if(list[i].status == "FINISHED"){%>
 											<span class="redC aClick" onclick="openReturns('<%= list[i].orderNo%>','<%= list[i].customerId%>','<%=list[i].deliveryType%>', '<%=list[i].returnWay%>')">退货</span>
 										<%}%>
@@ -492,7 +490,6 @@
 					console.log("channel " + JSON.stringify(channels));
 					for(var i in channels) {
 						var channel = channels[i];
-						// 过滤掉不支持的支付通道：暂不支持360相关支付
 						if(channel.id == 'qhpay' || channel.id == 'qihoo') {
 							continue;
 						}
@@ -539,14 +536,13 @@
 						data: {
 							userId: userId,
 							identityType: identityT.toString(),
-							//								amountPayable: payableAmount,
 							orderNumber: orderNumber,
 						},
-						type: 'post', //HTTP请求类型
+						type: 'post',
 						headers: {
 							"Authorization": oldToken
 						},
-						timeout: 10000, //超时时间设置为10秒；
+						timeout: 20000,
 						success: function(data) {
 							console.error(data);
 							plus.nativeUI.closeWaiting();
@@ -557,10 +553,8 @@
 							} else {
 								plus.nativeUI.alert("支付失败");
 							}
-
 						},
 						error: function(xhr, type, errorThrown) {
-							//异常处理；
 							console.log(type);
 						}
 					});
@@ -568,7 +562,6 @@
 				window.payfun = function(id, payableAmount, orderNumber) {
 					var varpay;
 					if(id == 'alipay' || id == 'wxpay') {
-						//调用支付功能
 						plus.nativeUI.showWaiting();
 						gopay(id, payableAmount, orderNumber);
 					} else if(id == 'UnionPayY') {
@@ -584,19 +577,14 @@
 							data: {
 								userId: userId,
 								identityType: identityT.toString(),
-								//								payableAmount: 0.01,
 								payableAmount: payableAmount,
 								orderNumber: orderNumber
-								//								userId: 1,
-								//								identityType: 6,
-								//								payableAmount: 0.01,
-								//								orderNumber: 'CDXN20171206175749976912036'
 							},
-							type: 'post', //HTTP请求类型
+							type: 'post',
 							headers: {
 								"Authorization": oldToken
 							},
-							timeout: 20000, //超时时间设置为10秒；
+							timeout: 20000,
 							success: function(data) {
 								if(data.message) {
 									plus.nativeUI.closeWaiting();
@@ -615,21 +603,16 @@
 								}
 							},
 							error: function(xhr, type, errorThrown) {
-								//异常处理；
-								console.log(type);
 								console.log("----- 支付失败 -----");
-								console.log(xhr.status);
 								plus.nativeUI.closeWaiting();
 								plus.nativeUI.alert("支付失败,请重试！");
 							}
 						});
-
 					}
 					//支付宝 , 微信 的支付
 					function gopay(id, payableAmount, orderNumber) {
 						plus.nativeUI.showWaiting()
 						if(id == 'wxpay') {
-							//微信
 							mui.ajax(serverUrl + '/app/wechatpay/order/pay', {
 								data: {
 									userId: userId,
@@ -637,11 +620,11 @@
 									amountPayable: payableAmount,
 									orderNumber: orderNumber,
 								},
-								type: 'post', //HTTP请求类型
+								type: 'post',
 								headers: {
 									"Authorization": oldToken
 								},
-								timeout: 10000, //超时时间设置为10秒；
+								timeout: 20000,
 								success: function(data) {
 									console.error(data);
 									plus.nativeUI.closeWaiting();
@@ -655,7 +638,6 @@
 											"timestamp": parseInt(data.content.timestamp),
 											"sign": data.content.sign
 										};
-										//微信
 										plus.payment.request(pays[id], varpay, function(result) {
 											console.log("----- 支付成功 -----");
 											var result = JSON.stringify(result);
@@ -670,16 +652,12 @@
 
 								},
 								error: function(xhr, type, errorThrown) {
-									//异常处理；
-									console.log(type);
 									console.log("----- 请求订单失败 -----");
-									console.log(xhr.status);
 									plus.nativeUI.closeWaiting();
 									plus.nativeUI.alert("获取订单信息失败！");
 								}
 							});
 						} else {
-							//支付宝
 							mui.ajax(serverUrl + '/app/alipay/order/pay', {
 								data: {
 									userId: userId,
@@ -687,42 +665,34 @@
 									payableAmount: payableAmount,
 									orderNumber: orderNumber,
 								},
-								type: 'post', //HTTP请求类型
+								type: 'post',
 								headers: {
 									"Authorization": oldToken
 								},
-								timeout: 10000, //超时时间设置为10秒；
+								timeout: 10000,
 								success: function(data) {
 									console.error(data);
 									plus.nativeUI.closeWaiting();
 									if(data.code == 0) {
 										varpay = data.content;
 										plus.payment.request(pays[id], varpay, function(result) {
-											console.log("----- 支付成功 -----", JSON.stringify(result));
 											plus.nativeUI.closeWaiting();
 											plus.nativeUI.alert("支付成功");
 											mui.fire(plus.webview.getWebviewById('center.html'), 'refresh');
 											plus.webview.currentWebview().reload();
-
 										}, function(e) {
-											console.log("----- 支付失败 -----");
 											console.log("[" + e.code + "]：" + e.message);
 											plus.nativeUI.closeWaiting();
 											plus.nativeUI.alert("支付失败");
 										});
 									}
-
 								},
 								error: function(xhr, type, errorThrown) {
-									//异常处理；
-									console.log(type);
 									console.log("----- 请求订单失败 -----");
-									console.log(xhr.status);
 									plus.nativeUI.closeWaiting();
 									plus.nativeUI.alert("获取订单信息失败！");
 								}
 							});
-
 						}
 					}
 
@@ -737,11 +707,11 @@
 							payType: payType,
 							orderNumber: orderNumber,
 						},
-						type: 'post', //HTTP请求类型
+						type: 'post',
 						headers: {
 							"Authorization": oldToken
 						},
-						timeout: 10000, //超时时间设置为10秒；
+						timeout: 20000,
 						success: function(data) {
 							console.error(data);
 							plus.nativeUI.closeWaiting();
@@ -752,10 +722,8 @@
 							} else {
 								plus.nativeUI.alert(data.message);
 							}
-
 						},
 						error: function(xhr, type, errorThrown) {
-							//异常处理；
 							console.log(type);
 						}
 					});
@@ -779,7 +747,7 @@
 				var noButton = plus.webview.currentWebview().isNoButton;
 				var fromPage = plus.webview.currentWebview().fromPage;
 				var storeid = plus.webview.currentWebview().storeid;
-				
+
 				if(fromPage == 'index' || inType == 1 || inType == 'dai' || inType == 'yi') {
 					$('.mui-title').html("物流");
 					$('#loadingdiv').css("margin-top", 0);
@@ -803,7 +771,6 @@
 				}
 				//打开订单详情
 				window.openDetail = function(orderNo, evaluat, id, cusid, zhuangshi) {
-					//					if(fromPage != 'index'){
 					openview({
 						view: 'myOrderDetail.html',
 						id: 'myOrderDetail',
@@ -817,8 +784,6 @@
 							zhuangshi: zhuangshi
 						}
 					})
-					//					}
-
 				}
 
 				//新的取消订单,
@@ -858,16 +823,6 @@
 							$(ele).css('display', 'none');
 						}
 					})
-					//					$('#tabLink li').each(function(index,ele){
-					//						if($(ele).attr('class').indexOf('active')>-1){
-					//							if(index == 0){
-					//								loadFun('','',{SH0:SH0});
-					//							}else{
-					//								loadFun(index,'',{SH0:SH0});
-					//							}
-					//							return false;
-					//						}
-					//					})
 				});
 
 				//tab切换
@@ -1137,9 +1092,6 @@
 																				customerId: null
 																			}
 																		}
-																		//																	if(ele.endTime){
-																		//																		ele.endTime = parseInt(ele.endTime/(1000*60))
-																		//																	}
 																		if(ele.endTime) {
 																			var minutes = parseInt(ele.endTime / (1000 * 60));
 																			ele.endTime = (Math.floor(minutes / 60) + "小时" + (minutes % 60) + "分");
@@ -1153,7 +1105,6 @@
 																		nowState: tabT
 																	});
 																	if(noButton == 1) {
-																		//																	$('.orderBtns').empty()
 																		$('.orderBtns>span:not(.lookwl)').remove();
 																	}
 																	if(fromPage == 'index') {
