@@ -49,6 +49,7 @@
 				
 				text-align: right;
 			}*/
+			.arrowdown{position: absolute;left: 62%;margin-top: 12px;font-size: 18px;}
 		</style>
 	</head>
 
@@ -59,11 +60,14 @@
 			<a class="mui-pull-right editAll"></a>
 		</header>
 		<script src="../../js/statusBar.js"></script>
-		<div class="mui-content"> 
-			<div id="curMonth" class="ft16 fttc padd10 activecl2" style="background-color: #EEEEEE;text-align: center;font-size: 17px;color: #445252;margin-top: 0px;padding: 10px;">
-			</div>
+		<div class="mui-content">
+			<span class="mui-icon mui-icon-arrowdown arrowdown" style="display: inline-block;"></span>
+			<input type="month" id="curmonthes" value=""  class="ft16 fttc padd10 activecl2" style="display: inline-block;margin:auto;background-color: #EEEEEE;font-size: 17px;color: #445252;margin-top: 0px;padding: 10px;"/>
+		
+
+		 	
 			<div class="tab-hd tab-hdtwo bgcwt" id="tabLink2" style="z-index: 99;">
-				<ul class="tab-nav ft14">
+				<ul class="tab-nav ft14" id="firsttab">
 				  <li class="aClick active" data-statusId="1">销量</li>
 				  <li class="aClick" data-statusId="0">高端桶数</li>
 				  <li class="aClick" data-statusId="1">活跃高端会员</li>
@@ -114,7 +118,7 @@
 				<div class="mask"><span class="ft20" style="color: #E7475E;" id="availableBalance4">---</span></div>
 				<div class="totalEdu">达标率</div>
 			</div>
-			<div id="quotaPWrap" style="margin-top: 20%;">
+			<div id="quotaPWrap">
 				<div class="quotaP1 fineB tbone" id="limitbalance">
 					目标桶数<span>---</span>
 				</div>
@@ -158,6 +162,7 @@
 					<div class="quotaP1 fineB" id="lyzFinishSales">
 						乐易装产品实际销量<span>---</span>
 					</div> 
+					<div class="quotaP1">(不含运费)</div>
 				</div>
 				<div class="noshow" style="background-color: #EEEEEE;text-align: center;font-size: 18px;color: #445252;margin-top: 20px;padding: 10px;">
 					排行榜
@@ -279,16 +284,16 @@
 									<a href="javascript:;" style="margin-left: 0px;">
 										<div class="mui-media-body ft14 flexr fledw">
 											<div id="">
-												<%=list[i].shipmentTime || '---'%>&nbsp;&nbsp;
+												<%=list[i].shipmentTime || '0'%>&nbsp;&nbsp;
 											</div>
 											<div id="">
 												<%=list[i].orderNo2%>
 											</div>
 											<div id="" style="text-align: right;">
-												<%=list[i].price || '---'%>
+												<%=list[i].price || '0'%>
 											</div> 
 											<div id="" style="text-align: right;">
-												<%=list[i].lyzPrice || '---'%>
+												<%=list[i].lyzPrice || '0'%>
 											</div>
 										</div>
 									</a>
@@ -396,14 +401,41 @@
 				var userId = plus.storage.getItem('$userId');
 				var oldToken = plus.storage.getItem('oldToken');
 				plus.nativeUI.showWaiting();
-				getFour();
-				$('#curMonth').html(new Date().getFullYear()+'年'+(new Date().getMonth()+1)+'月')
-				function getOne(){
+				
+				var monthc = new Date().getMonth()+1;
+				monthc = monthc < 10 ?'0'+monthc :monthc;
+				var yearc = new Date().getFullYear();
+				$('#curmonthes').val(yearc+'-'+monthc)
+				getFour(monthc,yearc);
+				
+				$('#curmonthes').change(function(){
+					yearc = $(this).val().substr(0,4);
+					monthc = $(this).val().substr(5);
+					var actid = $('#firsttab .active').index();
+					if(actid == 1){
+						getOne(monthc,yearc) 
+						loadFun(0);
+						
+					}else if(actid == 3){
+						getThird(monthc,yearc)
+						loadFun(0); 
+					}else if(actid == 2){
+						getTwo(monthc,yearc); 
+						loadFun(0);
+					}else{
+						getFour(monthc,yearc); 
+					}
+				})
+				 
+				function getOne(monthc,yearc){
+					plus.nativeUI.showWaiting()
 					mui.ajax(serverUrl + '/app/statistics/personal', {
 						data: {
 							sellerId: userId,
 							identityType: identityT,
-							flag:'TS'
+							flag:'TS',
+							month:Number(monthc),
+							year:yearc,
 						},
 						dataType: 'json',
 						headers: {
@@ -448,12 +480,15 @@
 						}
 					});
 				}
-				function getTwo(){
+				function getTwo(monthc,yearc){
+					plus.nativeUI.showWaiting()
 					mui.ajax(serverUrl + '/app/statistics/personal', {
 						data: {
 							sellerId: userId,
 							identityType: identityT,
-							flag:'HYS'
+							flag:'HYS',
+							month:Number(monthc),
+							year:yearc,
 						},
 						dataType: 'json',
 						headers: {
@@ -498,12 +533,15 @@
 						}
 					});
 				}
-				function getThird(){
+				function getThird(monthc,yearc){
+					plus.nativeUI.showWaiting()
 					mui.ajax(serverUrl + '/app/statistics/personal', {
 						data: {
 							sellerId: userId,
 							identityType: identityT,
-							flag:'XKF'
+							flag:'XKF',
+							month:Number(monthc),
+							year:yearc,
 						},
 						dataType: 'json',
 						headers: {
@@ -554,12 +592,15 @@
 						}
 					});
 				}
-				function getFour(){
+				function getFour(monthc,yearc){
+					plus.nativeUI.showWaiting()
 					mui.ajax(serverUrl + '/app/statistics/personal', {
 						data: {
 							sellerId: userId,
 							identityType: identityT,
-							flag:'XL'
+							flag:'XL',
+							year:parseInt(yearc),
+							month:parseInt(Number(monthc)),
 						},
 						dataType: 'json',
 						headers: {
@@ -632,26 +673,26 @@
 					$(this).addClass('active');
 //					$('.circle2,.circle,.circle3').hide().css('background','#cccccc')
 					if($(this).index() == 1){
-						getOne()
+						getOne(monthc,yearc)
 //						$('.circle').css('background','#E73A38').show()
 						$('.tbone').show()
 						$('.tbtwo,.tbthird,.tbfour,#salesList').hide()
 						loadFun(0);
 						
 					}else if($(this).index() == 3){
-						getThird()
+						getThird(monthc,yearc)
 						loadFun(0);
 //						$('.circle3').css('background','#E7475E').show()
 						$('.tbthird').show()
 						$('.tbone,.tbtwo,.tbfour,#salesList').hide()
 					}else if($(this).index() == 2){
-						getTwo();
+						getTwo(monthc,yearc);
 //						$('.circle2').css('background','#F8937E').show()
 						$('.tbtwo').show()
 						$('.tbone,.tbthird,.tbfour,#salesList').hide()
 						loadFun(0);
 					}else{
-						getFour();
+						getFour(monthc,yearc);
 //						$('.circle2').css('background','#F8937E').show()
 						$('.tbfour,#salesList').show()
 						$('.tbone,.tbthird,.tbtwo,.noshow').hide()
