@@ -129,6 +129,9 @@
 		<script type="text/javascript">
 			mui.init();
 			mui.plusReady(function() {
+				document.addEventListener('refresh', function(event) {
+					allfun()
+				});
 				var identityT = JSON.parse(plus.storage.getItem("$identityType")).identityType;
 				var userId = plus.storage.getItem('$userId');
 				var oldToken = plus.storage.getItem('oldToken')
@@ -290,7 +293,7 @@
 														console.log('产品券使用',data);
 														if(data.code == 0 ){
 															mui.fire(plus.webview.getWebviewById('cart.html'), 'refresh');
-															kindType();
+//															kindType();
 															openview({
 																view:'../../cart.html',
 																id:'cart',
