@@ -224,7 +224,7 @@
 
 			var page = plus.webview.currentWebview().page;
 			var cusId = plus.webview.currentWebview().cusid;
-
+			mui.fire(plus.webview.getWebviewById('productCoupon'), 'refresh');
 			if(!cusId){
 				cusId = ''
 			}
