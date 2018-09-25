@@ -21,6 +21,10 @@
 				font-size: 12px!important;
 			}
 			.mui-input-clear~.mui-icon-clear{right: 10px!important;top: 7px!important;}
+			.tuihuofangshi{position: relative;bottom: -5px;overflow: hidden;}
+			.tuihuofangshi div{color: #333;font-size: 16px;line-height: 22px;margin-bottom: 0;padding: 0 15px;}
+			.tuihuofangshi div p{color: #333;font-size: 16px;}
+			.tuihuofangshi div span{color: #848484;}
 		</style>
 	</head>
 
@@ -87,8 +91,25 @@
 								<!--<div class="pad10 afterBorder">
 									地址:<%=list[i].shippingAddress%>
 								</div>-->
-								<div class="orderInfo">
+								<div class="orderInfo fineB0" style="padding-bottom: 3px;">
 									共<%= list[i].count%>件商品 退款金额：<span>¥ <%= list[i].returnPrice%></span>
+								</div>
+								<div class="tuihuofangshi">
+									<div>
+										<% if(list[i].customer.customerName){ %>
+											<span>会员名称 : </span><%= list[i].customer.customerName%>
+										<% } %>
+										<% if(list[i].customer.customerPhone){ %>
+											<p style="float: right;"><span>会员电话 : </span><%= list[i].customer.customerPhone%></p>
+										<% } %>
+									</div>
+									<% if(list[i].returnDeliveryType){ %>
+										<% if(list[i].returnDeliveryType == 'RETURN_STORE'){ %>
+											<div><span>退货方式 : </span>退货到店</div>
+										<% }else{ %>
+											<div><span>退货方式 : </span>工地取货</div>
+										<% } %>
+									<% } %>
 								</div>
 								<div class="orderBtns">
 									<!--orderDeliveryType == '送货上门 HOUSE_DELIVERY' ，配送单 ===== 已提交，退货中 -->

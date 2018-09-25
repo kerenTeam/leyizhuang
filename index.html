@@ -293,11 +293,11 @@
 			</div>
 
 		</header>
-		
+
 		<!--状态栏开始-->
 		<style type="text/css" id="headStyle"></style>
 		<div id="sBar" style="background-color: #FFFFFF;position: fixed;width:100%;top: 0;z-index: 9999"></div>
-		
+
 		<div id="justest" style="display: none;background-color: rgba(255,255,255,0.8);color: red;position: fixed;width:100%;top: 68px;z-index: 9999;text-align: center;padding: 20px 0;font-weight: 800;">*****测试版本*****</div>
 		<script type="text/javascript">
 			var immersed = 0;
@@ -801,7 +801,7 @@
 					view:'page/personal/productCoupon.html',
 					id: 'productCoupon',
 				})
-			  
+
 			}
 			//跳转地址管理
 			function goaddr(){
@@ -831,7 +831,7 @@
 				})
 			}
 			mui.plusReady(function() {
-				
+
 				//获取系统
 				if(/android/i.test(navigator.userAgent)) {
 					var systemType = 'ANDROID'
@@ -856,7 +856,7 @@
 				plus.storage.setItem('platform', systemType)
 				plus.storage.setItem('clientId', clientId)
 				plus.storage.setItem('deviceId', deviceId)
-				
+
 				//第一次安装时  打开引导页面
 				var showGuide = plus.storage.getItem("lauchFlag");
 				var funGuide1 = plus.storage.getItem("funGuide1");
@@ -1022,7 +1022,7 @@
 					//app更新
 					checkUpdate(true);
 				} //登录方法结束
-				
+
 				//下拉刷新
 				downRe(pageRd);
 
@@ -1068,7 +1068,7 @@
 					if(identityT == 2){
 						$('.specialGoods3').show()
 					}
-					//开定时器 获取通知消息 
+					//开定时器 获取通知消息
 					var timeMsg = null;
 					clearInterval(timeMsg);
 					document.addEventListener('refreshInfoC', function() {
@@ -1208,7 +1208,7 @@
 											ele.onclick = function() {
 												openview({
 													view: 'page/goodList.html',
-													id: 'goodList', 
+													id: 'goodList',
 													extrasobj: {
 														ctid: ele.getAttribute('data-id'),
 														page: 1
@@ -1506,7 +1506,7 @@
 				mui.alert('此功能暂未开放，敬请期待!')
 
 			}
-			
+
 			function specialGoods() {
 				openview({
 					view: 'page/specialGoods.html',
@@ -1711,7 +1711,7 @@
 					mui.fire(plus.webview.getWebviewById('searchGoods'), 'refreshct');
 					mui.fire(plus.webview.getWebviewById('promotionInfo'), 'refreshct');
 					//下料清单 角标图案的绘制
-					drawBadge('hide'); 
+					drawBadge('hide');
 					if(cartNum != 0) {
 						drawBadge();
 					} else {
@@ -1719,7 +1719,7 @@
 					}
 
 				})
-				
+
 				//监听refreshpage pagerefresh 事件，切换底部菜单的选中界面
 				document.addEventListener('refreshpage', function() {
 					drawBadge('hide');

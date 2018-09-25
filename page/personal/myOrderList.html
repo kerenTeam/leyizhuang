@@ -67,6 +67,11 @@
 			}
 			.mui-input-row .mui-input-clear~.mui-icon-clear{top: 8px;right: 7px;}
 			.cancelBtn button[disabled]{padding: 5px 22px !important;}
+			.tuihuofangshi{position: relative;bottom: -5px;overflow: hidden;}
+			.tuihuofangshi div{color: #333;font-size: 16px;line-height: 24px;margin-bottom: 0;padding: 0 15px;}
+			.tuihuofangshi div p{color: #333;font-size: 16px;}
+			.tuihuofangshi div span{color: #848484;}
+			.pad10{padding: 8px 15px;}
 		</style>
 	</head>
 	<body>
@@ -138,11 +143,20 @@
 								<% } %>
 								<% }%>
 							</p>
+							<div class="tuihuofangshi">
+								<div>
+									<% if(list[i].customerName){ %>
+										<span>会员名称 : </span><%= list[i].customerName%>
+									<% } %>
+									<% if(list[i].customerPhone){ %>
+										<p style="float: right;"><span>会员电话 : </span><%= list[i].customerPhone%></p>
+									<% } %>
+								</div>
+							</div>
 							<div class="pad10 afterBorder">
-								地址:
-								<%=list[i].shippingAddress%><br />
-								<%if(list[i].estateInfo){%> 楼盘:
-								<%=list[i].estateInfo%>
+								<span style="color: #848484;">地址 : </span><%=list[i].shippingAddress%><br />
+								<%if(list[i].estateInfo){%>
+									<span style="color: #848484;">楼盘 : </span><%=list[i].estateInfo%>
 								<%}%>
 							</div>
 							<div class="orderInfo">
@@ -949,7 +963,7 @@
 								"Authorization": oldToken
 							},
 							success: function(data, type, xhr) {
-								//console.log('订单', data);
+								console.log('订单', data);
 								if(data.code == 0) {
 									//console.error('pages == '+ data.content.pages);
 									$('#loadingdiv').css('height', '0px');
