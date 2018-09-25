@@ -50,7 +50,7 @@ function comeOnAgain(orderNo,cusId){
 
 //申请退货
 function openReturns(orderNo,cusId,type,opentype){
-	if(opentype == 2 && 0){
+	if(opentype == 2){
 		openview({
 			view:'myOrderReturns.html',
 			id:'myOrderReturns',

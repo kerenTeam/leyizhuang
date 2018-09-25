@@ -39,6 +39,7 @@
 					            <img class="mui-media-object mui-pull-left" src="<%=list[i].coverImageUri || '../img/editset.png'%>">
 					            <div class="mui-media-body ft16">
 					                <div style="word-break: break-all;white-space: normal;"><%=list[i].goodsName%></div>
+					                <div class="ft14 maincl">商品编码:<%=list[i].sku || '无'%></div>
 					                <p class='mui-ellipsis ft16'>规格:<%=list[i].goodsSpecification%> &nbsp;单位:<%=list[i].goodsUnit%></p>
 						            <span class="activecl2 ft18">¥<%=list[i].retailPrice%></span>
 									<%if(!list[i].materialQty){%>

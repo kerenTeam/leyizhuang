@@ -83,6 +83,9 @@
 								<%if(list[i].isZG){%>
 									<em class="mui-badge mui-badge-warning mui-pull-right" style="color: white;">专供产品券</em>
 								<%}%>
+								<div class="ft14 maincl">商品编码：
+									<%=list[i].sku || '无'%>
+								</div>
 								<p class='mui-ellipsis'>规格:
 									<%=list[i].goodsSpecification%> &nbsp;单位:
 									<%=list[i].goodsUnit%>

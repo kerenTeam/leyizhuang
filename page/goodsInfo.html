@@ -332,7 +332,11 @@
 					console.log('响应失败');
 				}
 			});
-
+console.log({
+					goodsId:goodid,
+					userId:userId,
+					identityType:identityT
+				})
 			//商品详情
 			mui.ajax(serverUrl+'/app/goods/get/goodsDetail',{
 				data:{
@@ -343,7 +347,7 @@
 				dataType:'json',
 				headers: {"Authorization": oldToken},
 				type:'post',
-				timeout:10000,
+				timeout:20000,
 				success:function(data,type,xhr){
 					plus.nativeUI.closeWaiting();
 					console.log('商品详情',data);
@@ -354,13 +358,16 @@
 							if(data.content.isCollect){
 								$('#collt').html('<img src="../img/zan.png"/>取消收藏').attr('data-id','1')
 							}
-							if(data.content.rotationImageUriList){
+							if(data.content.rotationImageUriList && data.content.rotationImageUriList.length){
 								for(var i in data.content.rotationImageUriList){
 									if(!data.content.rotationImageUriList[i]){
 										data.content.rotationImageUriList[i] = '../images/img.svg'
 									}
 								}
 
+							}else{
+								data.content.rotationImageUriList = ['../images/img.svg']
+								
 							}
 							document.getElementById("moll_info").innerHTML = template("infoTpl", {dataobj:data.content});
 							document.getElementById("cartObj").innerHTML = template("cartTpl", {dataobj:data.content});
