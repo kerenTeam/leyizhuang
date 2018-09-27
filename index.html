@@ -677,8 +677,9 @@
 							<div class="titcl ft16" style="word-break: break-all;text-overflow: ellipsis;overflow: hidden;">
 								<%=list[i].goodsName%>
 							</div>
-							<div class="ft14 maincl">商品编码:<%=list[i].sku || '无'%>
-							</div>
+							<%if(list[i].sku){%>
+								<div class="ft14 maincl">商品编码:<%=list[i].sku%></div>
+							<%}%>
 							<p class='mui-ellipsis ft15' style="padding: 5px 0;">规格:
 								<%=list[i].goodsSpecification%> &nbsp;单位:
 								<%=list[i].goodsUnit%>
@@ -716,8 +717,9 @@
 							<div class="titcl ft16" style="word-break: break-all;text-overflow: ellipsis;overflow: hidden;">
 								<%=list[i].goodsName%>
 							</div>
-							<div class="ft14 maincl">商品编码:<%=list[i].sku || '无'%>
-							</div>
+							<%if(list[i].sku){%>
+								<div class="ft14 maincl">商品编码:<%=list[i].sku%></div>
+							<%}%>
 							<p class='mui-ellipsis ft15' style="padding: 5px 0;">规格:
 								<%=list[i].goodsSpecification%> &nbsp;单位:
 								<%=list[i].goodsUnit%>

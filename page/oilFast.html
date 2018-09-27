@@ -58,6 +58,9 @@
 			                <span style="word-break: break-all;white-space: normal;">
 			               		<%=list[i].goodsName%>
 			              	</span> 
+			              	 <%if(list[i].sku){%>
+								<div class="ft14 maincl">商品编码:<%=list[i].sku%></div>
+							<%}%>
 			                <p class='mui-ellipsis ft16'>规格:<%=list[i].goodsSpecification%> &nbsp;单位:<%=list[i].goodsUnit%></p>
 				            <span class="ft18 activecl2">¥<%=list[i].retailPrice%></span>
 							<%if(!list[i].materialQty){%>

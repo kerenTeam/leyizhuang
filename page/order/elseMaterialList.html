@@ -41,6 +41,9 @@
 								<%}%>
 						   	</h2>
 							<div class="priceArea">
+								 <%if(list[i].sku){%>
+									<div class="ft14 maincl" style="margin-top:5px ;">商品编码:<%=list[i].sku%></div>
+								<%}%>
 								<div class="extraBrief" style="margin-top: 5px;">
 									单位：<%=list[i].goodsUnit%>；规格：<%=list[i].goodsSpecification%>
 								</div>

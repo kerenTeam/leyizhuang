@@ -42,8 +42,10 @@
 					                <span style="word-break: break-all;white-space: normal;">
 					               		<%=list[i].goodsName%>
 					              	</span> 
-					                <div class="ft14 maincl">商品编码:<%=list[i].sku || '无'%></div>
-					                <p class='mui-ellipsis'>规格:<%=list[i].goodsSpecification%> &nbsp;单位:<%=list[i].goodsUnit%></p>
+									<%if(list[i].sku){%>
+										<div class="ft14 maincl">商品编码:<%=list[i].sku%></div>
+									<%}%>
+									<p class='mui-ellipsis'>规格:<%=list[i].goodsSpecification%> &nbsp;单位:<%=list[i].goodsUnit%></p>
 						            <span class="activecl2 ft18">¥<%=list[i].retailPrice%></span>
 									<%if(!list[i].materialQty){%>
 										<img style="display:inline-block;float:right;margin-left:5px;vertical-align:middle" data-id="<%=list[i].id%>" class="toCart" src="../images/addcart.svg"/>

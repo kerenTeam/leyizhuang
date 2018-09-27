@@ -122,6 +122,9 @@
 							</div>
 							<div class="proRight">
 								<h4><%=list.goodsList[i].skuName%></h4>
+								 <%if(list.goodsList[i].sku){%>
+									<div class="ft14 maincl">商品编码:<%=list.goodsList[i].sku%></div>
+								<%}%>
 								<p>规格：<%=list.goodsList[i].goodsSpecification%>  单位：<%=list.goodsList[i].goodsUnit%></p>
 								<div class="">
 									<span class="span1">¥<%=list.goodsList[i].retailPrice%></span>

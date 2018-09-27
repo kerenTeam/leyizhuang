@@ -84,6 +84,9 @@
 					    		<%}%>
 						</h2>
 						<div class="priceArea">
+							 <%if(list[i].giftList[j].sku){%>
+									<div class="ft14 maincl" style="margin-top:5px ;">商品编码:<%=list[i].giftList[j].sku%></div>
+								<%}%>
 							<div class="extraBrief ft13">
 								单位：
 								<%=list[i].giftList[j].goodsUnit%>；规格：

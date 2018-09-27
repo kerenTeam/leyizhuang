@@ -167,6 +167,9 @@
 								<em class="mui-badge mui-badge-warning mui-pull-right" style="color: white;">产品券</em>
 								<%}%>
 								<div class="priceArea">
+									 <%if(list[i].sku){%>
+										<div class="ft14 maincl" style="margin-top:5px ;">商品编码:<%=list[i].sku%></div>
+									<%}%>
 									<div class="maincl ft14">
 										单位：
 										<%=list[i].goodsUnit%>；规格：
