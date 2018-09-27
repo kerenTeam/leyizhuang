@@ -312,7 +312,9 @@
 						mui('.fenxiangBtn1')[0].onclick = function(){
 							if(data.content){
 								console.log('商品详情2',JSON.stringify(data));
-								data.content.goodsDetail = data.content.goodsDetail.replace(/[\r\n]/g,"").substring(0, 500)+'......';
+								if(data.content.goodsDetail){
+									data.content.goodsDetail = data.content.goodsDetail.replace(/[\r\n]/g,"").substring(0, 500)+'......';
+								}
 								//示例
 								//http://download.leyizhuang.com.cn:6789/lyzWeb0/upApp/upgrade.html
 								//var url = 'http://119.27.182.129/lyzWeb0/page/goodsInfo.html',

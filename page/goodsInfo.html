@@ -89,7 +89,7 @@
 				分享
 			</span>
 			<img src="../images/center/zixunSvg.svg" onclick="poverTel()" class="mui-pull-right messagefitler" style="width: 25px;margin-top:11px;margin-right: 10px;" />
-			
+
 		</header>
 		<script src="../js/statusBar.js"></script><!--状态栏-->
 		<div class="mui-content">
@@ -367,7 +367,7 @@ console.log({
 
 							}else{
 								data.content.rotationImageUriList = ['../images/img.svg']
-								
+
 							}
 							document.getElementById("moll_info").innerHTML = template("infoTpl", {dataobj:data.content});
 							document.getElementById("cartObj").innerHTML = template("cartTpl", {dataobj:data.content});
@@ -401,7 +401,9 @@ console.log({
 						mui('.fenxiangBtn1')[0].onclick = function(){
 							if(data.content){
 								console.log('商品详情2',JSON.stringify(data));
-								data.content.goodsDetail = data.content.goodsDetail.replace(/[\r\n]/g,"").substring(0, 500)+'......';
+								if(data.content.goodsDetail){
+									data.content.goodsDetail = data.content.goodsDetail.replace(/[\r\n]/g,"").substring(0, 500)+'......';
+								}
 								//示例
 								//http://download.leyizhuang.com.cn:6789/lyzWeb0/upApp/upgrade.html
 								//var url = 'http://119.27.182.129/lyzWeb0/page/goodsInfo.html',
