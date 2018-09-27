@@ -71,6 +71,9 @@
 									<em class="mui-badge mui-badge-warning" style="color: white;position: relative;top: -2px;">产品券</em>
 								<%}%>
 							</div>
+							<% if(dataObj.goodsList[i].sku){ %>
+								<p>商品编码:<%=dataObj.goodsList[i].sku%></p>
+							<% } %>
 							<p> 规格：<%= dataObj.goodsList[i].goodsSpecification%> 单位：<%= dataObj.goodsList[i].goodsUnit%></p>
 							<div>
 								<span class="span1 span1TH">¥<%= dataObj.goodsList[i].retailPrice%></span>
@@ -132,7 +135,7 @@
 					<h3 class="thZhengce" id="openStatusD" data-num='<%= dataObj.returnNumber%>' style="text-align: right;border-top:1px solid #eee">物流详情></h3>
 				</div>
 				<div class="thZhengce noticeRt activecl" style="border-bottom-width: 10px;font-size: 16px!important;">
-			    		*退换货注意事项				 
+			    		*退换货注意事项
 			    </div>
 				<div class="beizhu">
 			    		<h5>退货原因:</h5>
@@ -271,7 +274,7 @@
 									'2)	使用支付宝／微信／银联支付的，依促销分摊后之退款价格原路退回。\n'+
 									'3)	使用会员预存款支付的，依促销分摊后之退款价格原路退回。\n'+
 									'4)	使用现金/ POS 刷卡机，依促销分摊后之退款价格，至门店进行现金退款。';
-								mui.alert(isCanceInfo)	
+								mui.alert(isCanceInfo)
 							})
 						}else{
 							mui.toast(data.message);
