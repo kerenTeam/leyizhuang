@@ -220,6 +220,8 @@
 										<%if(list[i].status == "FINISHED"){%>
 											<span class="redC aClick" onclick="openReturns('<%= list[i].orderNo%>','<%= list[i].customerId%>','<%=list[i].deliveryType%>', '<%=list[i].returnWay%>')">退货</span>
 										<%}%>
+										<!--  ^_^ 再来一单-->  <!--购买产品卷, 18-9-27 要求加, 再来一单按钮-->
+										<span onclick="comeOnAgain('<%= list[i].orderNo%>','<%= list[i].customer.customerId%>')" class="aClick">再来一单</span>
 									<%}%>
 								<% }%>
 							</div>

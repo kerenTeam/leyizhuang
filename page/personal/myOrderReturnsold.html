@@ -68,6 +68,9 @@
 							</div>
 							<div class="proRight proRightTH">
 								<h4><%= list[i].skuName%></h4>
+								<% if(list[i].sku){ %>
+									<p> 商品编码：<%= list[i].sku%> </p>
+								<% } %>
 								<p> 订单数量：<%= list[i].orderQuantity%> 可退数量：<%= list[i].returnableQuantity%></p>
 								<%if(list[i].goodsLine == 'PRESENT'){%>
 									<em class="mui-badge mui-badge-danger biqoqian0">赠品</em>
