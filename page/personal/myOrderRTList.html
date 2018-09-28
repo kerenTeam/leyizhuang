@@ -96,10 +96,10 @@
 								</div>
 								<div class="tuihuofangshi">
 									<div>
-										<% if(list[i].customer.customerName){ %>
+										<% if(list[i].customer && list[i].customer.customerName){ %>
 											<span>会员名称 : </span><%= list[i].customer.customerName%>
 										<% } %>
-										<% if(list[i].customer.customerPhone){ %>
+										<% if(list[i].customer && list[i].customer.customerPhone){ %>
 											<p style="float: right;"><span>会员电话 : </span><%= list[i].customer.customerPhone%></p>
 										<% } %>
 									</div>
