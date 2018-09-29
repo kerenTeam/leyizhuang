@@ -21,6 +21,7 @@
 		<!--引入模板引擎-->
 		<script src="../../js/artTemplate-native.js" type="text/javascript"></script>
 		<style type="text/css">
+			body{padding-bottom: 0!important;}
 			.radio .option{
 			    width: .22rem !important;
 			    height: .22rem !important;
@@ -437,9 +438,9 @@
 										console.log('发起请求,应到' + Ypagenum + '页');
 										var valInt = $('#valInt').val();
 										if(valInt){
-											var dataObj = {'userId' : userId,'identityType':identityT,'page':Ypagenum,'keywords':valInt}
+											var dataObj = {'userId' : userId,'identityType':identityT,'page':Ypagenum,size:10,'keywords':valInt}
 										}else{
-											var dataObj = {'userId' : userId,'identityType':identityT,'page':Ypagenum,}
+											var dataObj = {'userId' : userId,'identityType':identityT,'page':Ypagenum,size:10}
 										}
 									mui.ajax(serverUrl+url,{
 										data:dataObj,
