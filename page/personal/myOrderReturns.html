@@ -92,10 +92,12 @@
 											{{ if value1.message}}
 												<p class="messStr">{{ value1.message }}</p>
 											{{ /if }}
-											{{ if value1.sku}}
-												<p> 商品编码：{{ value1.sku }}</p>
-											{{ /if }}
-											<p> 订单数量：{{ value1.orderQuantity }} 可退数量：{{ value1.returnableQuantity }}</p>
+											<p class="bianma001">
+												{{ if value1.sku}}
+													商品编码：{{ value1.sku }}
+												{{ /if }}
+											</p>
+											<p class="bianma002"> 订单数量：{{ value1.orderQuantity }} 可退数量：{{ value1.returnableQuantity }}</p>
 											{{ if value1.goodsLine == 'PRESENT' }}
 												<em class="mui-badge mui-badge-danger biqoqian0">赠品</em>
 											{{ else if value1.goodsLine == 'PRODUCT_COUPON' }}
@@ -127,10 +129,12 @@
 										</div>
 										<div class="proRight proRightTH">
 											<h4>{{ value1.skuName }}</h4>
-											{{ if value1.sku}}
-												<p> 商品编码：{{ value1.sku }}</p>
-											{{ /if }}
-											<p> 订单数量：{{ value1.orderQuantity }} 可退数量：{{ value1.returnableQuantity }}</p>
+											<p class="bianma001">
+												{{ if value1.sku}}
+													商品编码：{{ value1.sku }}
+												{{ /if }}
+											</p>
+											<p class="bianma002"> 订单数量：{{ value1.orderQuantity }} 可退数量：{{ value1.returnableQuantity }}</p>
 											{{ if value1.goodsLine == 'PRESENT' }}
 												<em class="mui-badge mui-badge-danger biqoqian0">赠品</em>
 											{{ else if value1.goodsLine == 'PRODUCT_COUPON' }}
