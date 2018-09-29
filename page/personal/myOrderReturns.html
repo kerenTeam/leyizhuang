@@ -48,6 +48,8 @@
 			.mui-numbox{border: solid 1px #e4e4e4;}
 			.mui-numbox .mui-input-numbox, .mui-numbox .mui-numbox-input{border-right: solid 1px #e4e4e4!important;border-left: solid 1px #e4e4e4!important;}
 			.messStr{line-height: 10px;font-size: 9px;margin: 0 !important;color: #EE9000;}
+			.new002input[type=tel]{margin: 0;width: 70px;padding: 1px;height: 25px;border: none;background: none;color: #555;}
+			.new002span{font-size: 14px;color: #555;}
 		</style>
 	</head>
 
@@ -105,11 +107,13 @@
 											{{ /if }}
 											<div>
 												<span class="span1 span1TH">¥{{ value1.returnPrice }}</span>
-												<div class="mui-numbox span2 disableClick" data-numbox-min='0' data-numbox-max='0'>
+												<!--18-9-29 取消加减 和 框框-->
+												<div class="span2 disableClick">
 													<div class="clickIn"></div>
-													<button class="mui-btn mui-btn-numbox-minus" type="button">-</button>
-													<input class="mui-input-numbox goodNum" data-groupQty="{{ value1.groupQty }}" data-id="{{ value1.id }}" data-type="{{ value1.goodsLine }}" type="tel" value="0"/>
-													<button class="mui-btn mui-btn-numbox-plus" type="button">+</button>
+													<!--<button class="mui-btn mui-btn-numbox-minus" type="button">-</button>-->
+													<!--<input class="mui-input-numbox goodNum" data-groupQty="{{ value1.groupQty }}" data-id="{{ value1.id }}" data-type="{{ value1.goodsLine }}" type="tel" value="0"/>-->
+													<!--<button class="mui-btn mui-btn-numbox-plus" type="button">+</button>-->
+													<span class="new002span"> 已选：</span><input class="mui-input-numbox goodNum new002input" data-groupQty="{{ value1.groupQty }}" data-id="{{ value1.id }}" data-type="{{ value1.goodsLine }}" type="tel" value="0"/>
 												</div>
 											</div>
 										</div>
