@@ -203,7 +203,7 @@
 							"Authorization": oldToken
 						},
 						type: 'post',
-						timeout: 50000,
+						timeout: 100000,
 						success: function(data, type, xhr) {
 							console.log('产品券列表', data);
 							if(data.code == 0) {
@@ -286,7 +286,7 @@
 													},
 													dataType: 'json',
 													type: 'post',
-													timeout: 10000,
+													timeout: 50000,
 													headers: {
 														"Authorization": oldToken,
 														'Content-Type': 'application/json'
