@@ -389,11 +389,13 @@ input.fsearch::-webkit-input-placeholder{
 .proWrapAll{background-color: #fff;margin-bottom: 10px;}
 .proWrap{display: -webkit-flex;padding: 15px;}
 .proLeft{flex: 2;}
-.proLeft img{width: 100%;height: 100%;}
+.proLeft img{width: 100%;}
 .proRight{flex: 5;padding-left: 20px;}
 .proRight h4{display: -webkit-box;-webkit-box-orient: vertical;-webkit-line-clamp: 2;overflow: hidden;font-size: 16px;line-height: 1.3;min-height: 40px;}
 .proRight p, .proRight div{margin-top: 2%;}
-.proRight p button{border-color: #ccc;color: #c7161e; float: right; padding: 4px 10px; line-height: 1;}
+.proRight p button{border-color: #ccc;color: #c7161e; float: right; padding: 4px 10px; line-height: 1;margin-top: -4px;}
+.bianma001{margin: 0 !important;line-height: 13px;font-size: 12px;color: #2fbdaa;min-height: 13px;}
+.bianma002{margin: 0 !important;}
 .proRight div .span2{float: right;color: #7F8080;}
 .proRight div .span1{font-size: 18px;color: #EE9000;}
 .footBtn{text-align: right;padding: 10px 12px;border-bottom: 1px solid #eee;background-color: #fff;position: fixed;bottom: 0;width: 100%;    box-shadow: 0 0 2px rgba(175, 166, 166, 0.85) !important;}

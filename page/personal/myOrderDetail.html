@@ -430,10 +430,12 @@
 						</div>
 						<div class="proRight">
 							<h4><%= detail.goodsList[i].skuName%></h4>
-							<%if(detail.goodsList[i].sku){%>
-								<div class="ft14 maincl">商品编码:<%=detail.goodsList[i].sku%></div>
-							<%}%>
-							<p>
+							<div class="ft14 maincl bianma001">
+								<%if(detail.goodsList[i].sku){%>
+									商品编码:<%=detail.goodsList[i].sku%>
+								<%}%>
+							</div>
+							<p class="bianma002">
 								规格：<%= detail.goodsList[i].goodsSpecification%>  单位：<%= detail.goodsList[i].goodsUnit%>
 								<% if(detail.statusDesc == '已完成' || detail.statusDesc == '已结案'){%>
 									<% if(!detail.goodsList[i].isEvaluation){%>
@@ -443,14 +445,14 @@
 									<% }%>
 								<% }%>
 							</p>
-							<div>
+							<div class="bianma002">
 								<span class="span1">
+									¥<%= detail.goodsList[i].retailPrice%>
 									<%if(detail.goodsList[i].goodsType == 'PRESENT'){%>
 										<em class="mui-badge mui-badge-danger" style="color: white;position: relative;top: -2px;">赠品</em>
 									<%}else if(detail.goodsList[i].goodsType == 'PRODUCT_COUPON'){%>
 										<em class="mui-badge mui-badge-warning" style="color: white;position: relative;top: -2px;">产品券</em>
 									<%}%>
-									¥<%= detail.goodsList[i].retailPrice%>
 								</span>
 								<span class="span2">
 									x<%= detail.goodsList[i].qty%>
