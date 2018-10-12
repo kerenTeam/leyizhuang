@@ -314,6 +314,8 @@
 								console.log('商品详情2',JSON.stringify(data));
 								if(data.content.goodsDetail){
 									data.content.goodsDetail = data.content.goodsDetail.replace(/[\r\n]/g,"").substring(0, 500)+'......';
+									data.content.ud = userId;
+									data.content.ie = identityT;
 								}
 								//示例
 								//http://download.leyizhuang.com.cn:6789/lyzWeb0/upApp/upgrade.html
