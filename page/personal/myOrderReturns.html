@@ -186,8 +186,12 @@
 						<div id="tuihuodizhi02" onclick="addAddress()">
 							<b id="AD1">---</b> <b id="AD2">---</b>
 							<p style="margin-right: 20px;" id="ADD1">
-								<b id="AD0">省</b> <b id="AD4">市</b> <b id="AD5">区</b> <b id="AD6">街道</b>
-								<b id="AD7">小区</b> <b id="AD8">详细地址</b>
+								<b id="AD0"></b><!--省-->
+								<b id="AD4"></b><!--市-->
+								<b id="AD5"></b><!--区-->
+								<b id="AD6"></b><!--街道-->
+								<b id="AD7"></b><!--小区-->
+								<b id="AD8"></b><!--详细地址-->
 							</p>
 							<span class="mui-icon mui-icon-arrowright"></span>
 						</div>
@@ -531,7 +535,8 @@
 						  	"returnGoodsInfo":goodArray,
 						  	"actInfos": actInfosObj
 						};
-						console.error(dataObj);
+						console.error('提交数据', dataObj);
+						console.error('提交数据'+ JSON.stringify(dataObj));
 						mui.ajax(serverUrl + '/app/returnOrder/create',{
 							data:dataObj,
 							dataType:'json',
